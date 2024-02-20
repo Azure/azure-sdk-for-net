@@ -29,9 +29,23 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            if (ImageReference != null)
+            {
+                ((IJsonModel<SapImageReference>)ImageReference).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OSProfile);
+            if (OSProfile != null)
+            {
+                ((IJsonModel<SapOSProfile>)OSProfile).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

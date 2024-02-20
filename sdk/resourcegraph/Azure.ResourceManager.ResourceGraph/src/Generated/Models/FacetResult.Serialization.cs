@@ -31,14 +31,21 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("data"u8);
+            if (Data != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Data);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Data))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
             writer.WritePropertyName("resultType"u8);

@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
-            JsonSerializer.Serialize(writer, LogPath);
+            if (LogPath != null)
+            {
+                JsonSerializer.Serialize(writer, LogPath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -36,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                ((IJsonModel<SsisAccessCredential>)AccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {

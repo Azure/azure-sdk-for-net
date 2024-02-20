@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AppConfigurationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<AppConfigurationStoreEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {

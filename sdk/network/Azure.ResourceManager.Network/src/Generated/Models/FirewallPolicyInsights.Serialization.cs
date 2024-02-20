@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogAnalyticsResources))
             {
                 writer.WritePropertyName("logAnalyticsResources"u8);
-                writer.WriteObjectValue(LogAnalyticsResources);
+                ((IJsonModel<FirewallPolicyLogAnalyticsResources>)LogAnalyticsResources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

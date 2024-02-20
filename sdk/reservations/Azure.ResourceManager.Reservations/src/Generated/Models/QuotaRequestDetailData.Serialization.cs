@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Reservations
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.Reservations
                 writer.WriteStartArray();
                 foreach (var item in QuotaRequestValue)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SubContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +205,14 @@ namespace Azure.ResourceManager.Reservations
                             List<SubContent> array = new List<SubContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubContent.DeserializeSubContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SubContent.DeserializeSubContent(item));
+                                }
                             }
                             value = array;
                             continue;

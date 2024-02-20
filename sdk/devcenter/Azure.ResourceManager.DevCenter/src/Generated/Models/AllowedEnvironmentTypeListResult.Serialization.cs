@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AllowedEnvironmentTypeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<AllowedEnvironmentTypeData> array = new List<AllowedEnvironmentTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item));
+                        }
                     }
                     value = array;
                     continue;

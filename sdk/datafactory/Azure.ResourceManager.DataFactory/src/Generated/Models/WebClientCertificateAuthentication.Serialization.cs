@@ -28,11 +28,32 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);
-            JsonSerializer.Serialize(writer, Pfx);
+            if (Pfx != null)
+            {
+                JsonSerializer.Serialize(writer, Pfx);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password);
+            if (Password != null)
+            {
+                JsonSerializer.Serialize(writer, Password);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            if (Uri != null)
+            {
+                JsonSerializer.Serialize(writer, Uri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

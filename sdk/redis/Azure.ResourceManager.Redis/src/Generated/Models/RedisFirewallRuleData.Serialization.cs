@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Redis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -51,9 +58,23 @@ namespace Azure.ResourceManager.Redis
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("startIP"u8);
-            writer.WriteStringValue(StartIP.ToString());
+            if (StartIP != null)
+            {
+                writer.WriteStringValue(StartIP.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("endIP"u8);
-            writer.WriteStringValue(EndIP.ToString());
+            if (EndIP != null)
+            {
+                writer.WriteStringValue(EndIP.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

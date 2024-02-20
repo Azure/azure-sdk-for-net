@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Chaos
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -77,14 +84,28 @@ namespace Azure.ResourceManager.Chaos
             writer.WriteStartArray();
             foreach (var item in Steps)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChaosExperimentStep>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectors"u8);
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChaosTargetSelector>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -215,7 +236,14 @@ namespace Azure.ResourceManager.Chaos
                             List<ChaosExperimentStep> array = new List<ChaosExperimentStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChaosExperimentStep.DeserializeChaosExperimentStep(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ChaosExperimentStep.DeserializeChaosExperimentStep(item));
+                                }
                             }
                             steps = array;
                             continue;
@@ -225,7 +253,14 @@ namespace Azure.ResourceManager.Chaos
                             List<ChaosTargetSelector> array = new List<ChaosTargetSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChaosTargetSelector.DeserializeChaosTargetSelector(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ChaosTargetSelector.DeserializeChaosTargetSelector(item));
+                                }
                             }
                             selectors = array;
                             continue;

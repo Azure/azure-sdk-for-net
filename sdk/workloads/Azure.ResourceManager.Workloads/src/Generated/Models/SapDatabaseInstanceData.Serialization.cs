@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatabaseVmDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +126,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -266,7 +280,14 @@ namespace Azure.ResourceManager.Workloads
                             List<DatabaseVmDetails> array = new List<DatabaseVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseVmDetails.DeserializeDatabaseVmDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DatabaseVmDetails.DeserializeDatabaseVmDetails(item));
+                                }
                             }
                             vmDetails = array;
                             continue;

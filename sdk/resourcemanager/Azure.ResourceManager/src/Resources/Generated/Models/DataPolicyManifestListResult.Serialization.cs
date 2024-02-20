@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataPolicyManifestData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<DataPolicyManifestData> array = new List<DataPolicyManifestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item));
+                        }
                     }
                     value = array;
                     continue;

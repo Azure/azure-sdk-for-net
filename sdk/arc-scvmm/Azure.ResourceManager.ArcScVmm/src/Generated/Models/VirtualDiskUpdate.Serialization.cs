@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue(StorageQoSPolicy);
+                ((IJsonModel<StorageQoSPolicyDetails>)StorageQoSPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

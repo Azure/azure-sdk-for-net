@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -86,7 +93,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("networkFabricControllerId"u8);
-            writer.WriteStringValue(NetworkFabricControllerId);
+            if (NetworkFabricControllerId != null)
+            {
+                writer.WriteStringValue(NetworkFabricControllerId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RackCount))
             {
                 writer.WritePropertyName("rackCount"u8);
@@ -104,9 +118,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration);
+            if (TerminalServerConfiguration != null)
+            {
+                ((IJsonModel<TerminalServerConfiguration>)TerminalServerConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("managementNetworkConfiguration"u8);
-            writer.WriteObjectValue(ManagementNetworkConfiguration);
+            if (ManagementNetworkConfiguration != null)
+            {
+                ((IJsonModel<ManagementNetworkConfigurationProperties>)ManagementNetworkConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
             {
                 writer.WritePropertyName("racks"u8);

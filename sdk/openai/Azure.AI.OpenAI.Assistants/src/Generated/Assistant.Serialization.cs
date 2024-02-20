@@ -66,7 +66,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ToolDefinition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("file_ids"u8);
@@ -198,7 +205,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        }
                     }
                     tools = array;
                     continue;

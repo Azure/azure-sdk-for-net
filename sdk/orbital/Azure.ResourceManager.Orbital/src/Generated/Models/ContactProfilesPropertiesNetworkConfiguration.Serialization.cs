@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Orbital.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(NetworkSubnetId);
+            if (NetworkSubnetId != null)
+            {
+                writer.WriteStringValue(NetworkSubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

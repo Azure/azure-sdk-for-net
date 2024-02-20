@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("targetApplianceId"u8);
             writer.WriteStringValue(TargetApplianceId);
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails);
+            if (ProviderSpecificDetails != null)
+            {
+                ((IJsonModel<UpdateApplianceForReplicationProtectedItemProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

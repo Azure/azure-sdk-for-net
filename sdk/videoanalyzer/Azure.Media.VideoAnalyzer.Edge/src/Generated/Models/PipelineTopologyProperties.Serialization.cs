@@ -27,7 +27,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +44,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +61,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +78,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +119,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<ParameterDeclaration> array = new List<ParameterDeclaration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterDeclaration.DeserializeParameterDeclaration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParameterDeclaration.DeserializeParameterDeclaration(item));
+                        }
                     }
                     parameters = array;
                     continue;
@@ -105,7 +140,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<SourceNodeBase> array = new List<SourceNodeBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceNodeBase.DeserializeSourceNodeBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SourceNodeBase.DeserializeSourceNodeBase(item));
+                        }
                     }
                     sources = array;
                     continue;
@@ -119,7 +161,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<ProcessorNodeBase> array = new List<ProcessorNodeBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessorNodeBase.DeserializeProcessorNodeBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProcessorNodeBase.DeserializeProcessorNodeBase(item));
+                        }
                     }
                     processors = array;
                     continue;
@@ -133,7 +182,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<SinkNodeBase> array = new List<SinkNodeBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SinkNodeBase.DeserializeSinkNodeBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SinkNodeBase.DeserializeSinkNodeBase(item));
+                        }
                     }
                     sinks = array;
                     continue;

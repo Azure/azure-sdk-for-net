@@ -39,7 +39,14 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Interpretation)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AnomalyInterpretation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +120,14 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                        }
                     }
                     interpretation = array;
                     continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ErrorFieldContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ErrorFieldContract> array = new List<ErrorFieldContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item));
+                        }
                     }
                     details = array;
                     continue;

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("privateIpAddress"u8);
-            writer.WriteObjectValue(PrivateIPAddress);
+            if (PrivateIPAddress != null)
+            {
+                ((IJsonModel<AvailabilityGroupListenerPrivateIPAddress>)PrivateIPAddress).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("azStackHciSiteId"u8);
-            writer.WriteStringValue(AzStackHciSiteId);
+            if (AzStackHciSiteId != null)
+            {
+                writer.WriteStringValue(AzStackHciSiteId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
@@ -39,7 +46,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("cluster"u8);
-            writer.WriteObjectValue(Cluster);
+            if (Cluster != null)
+            {
+                ((IJsonModel<AzStackHciClusterProperties>)Cluster).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
@@ -51,7 +65,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(FabricContainerId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
-            writer.WriteStringValue(MigrationSolutionId);
+            if (MigrationSolutionId != null)
+            {
+                writer.WriteStringValue(MigrationSolutionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
             {
                 writer.WritePropertyName("migrationHubUri"u8);

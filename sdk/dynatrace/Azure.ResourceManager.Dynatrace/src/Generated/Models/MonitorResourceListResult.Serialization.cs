@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DynatraceMonitorData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorData> array = new List<DynatraceMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorData.DeserializeDynatraceMonitorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DynatraceMonitorData.DeserializeDynatraceMonitorData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<InstancesSearchStringSuggestion> array = new List<InstancesSearchStringSuggestion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancesSearchStringSuggestion.DeserializeInstancesSearchStringSuggestion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InstancesSearchStringSuggestion.DeserializeInstancesSearchStringSuggestion(item));
+                        }
                     }
                     suggestions = array;
                     continue;

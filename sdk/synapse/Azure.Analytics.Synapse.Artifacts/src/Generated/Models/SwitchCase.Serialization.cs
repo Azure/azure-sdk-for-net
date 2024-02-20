@@ -30,7 +30,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +68,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<Activity> array = new List<Activity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Activity.DeserializeActivity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Activity.DeserializeActivity(item));
+                        }
                     }
                     activities = array;
                     continue;

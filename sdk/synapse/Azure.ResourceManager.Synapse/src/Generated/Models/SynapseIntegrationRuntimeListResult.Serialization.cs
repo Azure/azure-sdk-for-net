@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SynapseIntegrationRuntimeData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeData> array = new List<SynapseIntegrationRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item));
+                        }
                     }
                     value = array;
                     continue;

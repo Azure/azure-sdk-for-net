@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
+                ((IJsonModel<PreBackupValidation>)PreBackupValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {

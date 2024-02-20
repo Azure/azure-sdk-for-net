@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
-            writer.WriteObjectValue(NetworkProfile);
+            if (NetworkProfile != null)
+            {
+                ((IJsonModel<FirewallNetworkProfile>)NetworkProfile).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
@@ -85,22 +99,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue(PanoramaConfig);
+                ((IJsonModel<FirewallPanoramaConfiguration>)PanoramaConfig).Write(writer, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue(AssociatedRulestack);
+                ((IJsonModel<RulestackDetails>)AssociatedRulestack).Write(writer, options);
             }
             writer.WritePropertyName("dnsSettings"u8);
-            writer.WriteObjectValue(DnsSettings);
+            if (DnsSettings != null)
+            {
+                ((IJsonModel<FirewallDnsSettings>)DnsSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirewallFrontendSetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,9 +138,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("planData"u8);
-            writer.WriteObjectValue(PlanData);
+            if (PlanData != null)
+            {
+                ((IJsonModel<FirewallBillingPlanInfo>)PlanData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails);
+            if (MarketplaceDetails != null)
+            {
+                ((IJsonModel<PanFirewallMarketplaceDetails>)MarketplaceDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -290,7 +332,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             List<FirewallFrontendSetting> array = new List<FirewallFrontendSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                                }
                             }
                             frontEndSettings = array;
                             continue;

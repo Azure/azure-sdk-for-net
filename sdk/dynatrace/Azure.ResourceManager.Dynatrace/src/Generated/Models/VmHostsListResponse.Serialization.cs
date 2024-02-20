@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DynatraceMonitorVmInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorVmInfo> array = new List<DynatraceMonitorVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<FrontendData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     List<FrontendData> array = new List<FrontendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendData.DeserializeFrontendData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FrontendData.DeserializeFrontendData(item));
+                        }
                     }
                     value = array;
                     continue;

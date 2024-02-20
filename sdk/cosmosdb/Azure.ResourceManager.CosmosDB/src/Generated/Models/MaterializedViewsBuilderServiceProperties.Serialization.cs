@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MaterializedViewsBuilderRegionalService>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MaterializedViewsBuilderRegionalService> array = new List<MaterializedViewsBuilderRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item));
+                        }
                     }
                     locations = array;
                     continue;

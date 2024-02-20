@@ -27,14 +27,35 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo != null)
+            {
+                ((IJsonModel<MySqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo != null)
+            {
+                ((IJsonModel<MySqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MakeSourceServerReadOnly))
@@ -127,7 +148,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> array = new List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item));
+                        }
                     }
                     selectedDatabases = array;
                     continue;

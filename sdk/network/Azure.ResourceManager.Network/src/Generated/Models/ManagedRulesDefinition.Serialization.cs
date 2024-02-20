@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OwaspCrsExclusionEntry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +47,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in ManagedRuleSets)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ManagedRuleSet>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -96,7 +110,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item));
+                        }
                     }
                     exclusions = array;
                     continue;
@@ -106,7 +127,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
+                        }
                     }
                     managedRuleSets = array;
                     continue;

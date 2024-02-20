@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("logicAppResourceId"u8);
-            writer.WriteStringValue(LogicAppResourceId);
+            if (LogicAppResourceId != null)
+            {
+                writer.WriteStringValue(LogicAppResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);

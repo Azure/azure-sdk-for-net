@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlLtrServerBackupOperationData> array = new List<PostgreSqlLtrServerBackupOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(item));
+                        }
                     }
                     value = array;
                     continue;

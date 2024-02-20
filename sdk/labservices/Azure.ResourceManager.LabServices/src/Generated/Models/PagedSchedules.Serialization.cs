@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LabServicesScheduleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabServicesScheduleData> array = new List<LabServicesScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabServicesScheduleData.DeserializeLabServicesScheduleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LabServicesScheduleData.DeserializeLabServicesScheduleData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);

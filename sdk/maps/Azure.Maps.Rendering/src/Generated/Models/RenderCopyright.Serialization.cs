@@ -52,7 +52,14 @@ namespace Azure.Maps.Rendering
                     List<RegionalCopyright> array = new List<RegionalCopyright>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalCopyright.DeserializeRegionalCopyright(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RegionalCopyright.DeserializeRegionalCopyright(item));
+                        }
                     }
                     regions = array;
                     continue;

@@ -28,7 +28,14 @@ namespace Azure.Communication.Messages
 
             writer.WriteStartObject();
             writer.WritePropertyName("template"u8);
-            writer.WriteObjectValue(Template);
+            if (Template != null)
+            {
+                ((IJsonModel<MessageTemplate>)Template).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamAnalyticsClusterJob>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsClusterJob> array = new List<StreamAnalyticsClusterJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob(item));
+                        }
                     }
                     value = array;
                     continue;

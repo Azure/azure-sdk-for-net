@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes);
+                ((IJsonModel<SecretAttributes>)Attributes).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

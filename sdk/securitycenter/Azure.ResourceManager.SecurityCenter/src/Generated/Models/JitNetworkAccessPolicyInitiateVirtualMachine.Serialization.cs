@@ -27,12 +27,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("ports"u8);
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<JitNetworkAccessPolicyInitiatePort>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +103,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyInitiatePort> array = new List<JitNetworkAccessPolicyInitiatePort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyInitiatePort.DeserializeJitNetworkAccessPolicyInitiatePort(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitNetworkAccessPolicyInitiatePort.DeserializeJitNetworkAccessPolicyInitiatePort(item));
+                        }
                     }
                     ports = array;
                     continue;

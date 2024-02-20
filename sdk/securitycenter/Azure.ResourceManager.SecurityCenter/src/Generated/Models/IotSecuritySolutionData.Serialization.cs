@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources);
+                ((IJsonModel<UserDefinedResourcesProperties>)UserDefinedResources).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
             {
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendationConfigurationProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +158,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AdditionalWorkspacesProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -353,7 +374,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                }
                             }
                             recommendationsConfiguration = array;
                             continue;
@@ -376,7 +404,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AdditionalWorkspacesProperties> array = new List<AdditionalWorkspacesProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalWorkspacesProperties.DeserializeAdditionalWorkspacesProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AdditionalWorkspacesProperties.DeserializeAdditionalWorkspacesProperties(item));
+                                }
                             }
                             additionalWorkspaces = array;
                             continue;

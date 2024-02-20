@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue(CreatorRoleAssignment);
+                ((IJsonModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>)CreatorRoleAssignment).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DevCenterUserRoleAssignments>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -188,7 +195,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                             Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                                }
                             }
                             userRoleAssignments = dictionary;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomanageServicePrincipalData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageServicePrincipalData> array = new List<AutomanageServicePrincipalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item));
+                        }
                     }
                     value = array;
                     continue;

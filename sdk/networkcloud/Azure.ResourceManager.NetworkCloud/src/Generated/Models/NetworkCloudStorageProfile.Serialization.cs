@@ -27,19 +27,28 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OSDisk);
+            if (OSDisk != null)
+            {
+                ((IJsonModel<NetworkCloudOSDisk>)OSDisk).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeAttachments)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
-                writer.WriteObjectValue(GuestConfiguration);
+                ((IJsonModel<GuestConfigurationNavigation>)GuestConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
-                writer.WriteObjectValue(LatestAssignmentReport);
+                ((IJsonModel<GuestConfigurationAssignmentReportInfo>)LatestAssignmentReport).Write(writer, options);
             }
             if (Optional.IsDefined(Context))
             {
@@ -138,7 +138,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<GuestConfigurationVmssVmInfo>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -313,7 +320,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
+                        }
                     }
                     vmssVmList = array;
                     continue;

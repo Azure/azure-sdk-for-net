@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WritePropertyName("primingJobName"u8);
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl"u8);
-            writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
+            if (PrimingManifestUri != null)
+            {
+                writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(PrimingJobId))
             {
                 writer.WritePropertyName("primingJobId"u8);

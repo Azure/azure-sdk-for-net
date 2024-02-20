@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -95,17 +102,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow);
+                ((IJsonModel<LogicResourceReference>)Workflow).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                ((IJsonModel<LogicWorkflowRunTrigger>)Trigger).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
             {
@@ -114,14 +121,21 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<LogicWorkflowOutputParameterInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                ((IJsonModel<LogicWorkflowRunTrigger>)Response).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -306,7 +320,14 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowOutputParameterInfo> dictionary = new Dictionary<string, LogicWorkflowOutputParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value));
+                                }
                             }
                             outputs = dictionary;
                             continue;

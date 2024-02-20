@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerAppReplicaData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppReplicaData> array = new List<ContainerAppReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppReplicaData.DeserializeContainerAppReplicaData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppReplicaData.DeserializeContainerAppReplicaData(item));
+                        }
                     }
                     value = array;
                     continue;

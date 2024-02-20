@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MacSecConfig))
             {
                 writer.WritePropertyName("macSecConfig"u8);
-                writer.WriteObjectValue(MacSecConfig);
+                ((IJsonModel<ExpressRouteLinkMacSecConfig>)MacSecConfig).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

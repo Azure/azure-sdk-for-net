@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.EdgeOrder
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,10 +73,17 @@ namespace Azure.ResourceManager.EdgeOrder
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                ((IJsonModel<EdgeOrderShippingAddress>)ShippingAddress).Write(writer, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            if (ContactDetails != null)
+            {
+                ((IJsonModel<EdgeOrderAddressContactDetails>)ContactDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);

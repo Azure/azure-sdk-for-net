@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,12 +73,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                ((IJsonModel<DevCenterImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<DevCenterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -96,12 +103,12 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
-                writer.WriteObjectValue(ImageValidationErrorDetails);
+                ((IJsonModel<ImageValidationErrorDetails>)ImageValidationErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
-                writer.WriteObjectValue(ActiveImageReference);
+                ((IJsonModel<DevCenterImageReference>)ActiveImageReference).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

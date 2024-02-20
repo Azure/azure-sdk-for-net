@@ -20,7 +20,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            if (ConfidenceScores != null)
+            {
+                writer.WriteObjectValue(ConfidenceScores);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sentences"u8);
             writer.WriteStartArray();
             foreach (var item in Sentences)
@@ -34,7 +41,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
@@ -89,7 +103,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWarning.DeserializeDocumentWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentWarning.DeserializeDocumentWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

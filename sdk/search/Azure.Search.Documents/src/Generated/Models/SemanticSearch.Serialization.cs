@@ -27,7 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +65,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SemanticConfiguration> array = new List<SemanticConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SemanticConfiguration.DeserializeSemanticConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SemanticConfiguration.DeserializeSemanticConfiguration(item));
+                        }
                     }
                     configurations = array;
                     continue;

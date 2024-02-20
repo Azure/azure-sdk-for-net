@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ServicePrincipal != null)
                 {
                     writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue(ServicePrincipal);
+                    ((IJsonModel<KubernetesServicePrincipalUpdateContent>)ServicePrincipal).Write(writer, options);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ManagedIdentity != null)
                 {
                     writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue(ManagedIdentity);
+                    ((IJsonModel<KubernetesAzureBlobManagedIdentityUpdateContent>)ManagedIdentity).Write(writer, options);
                 }
                 else
                 {

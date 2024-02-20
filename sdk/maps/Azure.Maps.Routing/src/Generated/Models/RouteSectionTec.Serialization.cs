@@ -41,7 +41,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteSectionTecCause> array = new List<RouteSectionTecCause>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteSectionTecCause.DeserializeRouteSectionTecCause(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteSectionTecCause.DeserializeRouteSectionTecCause(item));
+                        }
                     }
                     causes = array;
                     continue;

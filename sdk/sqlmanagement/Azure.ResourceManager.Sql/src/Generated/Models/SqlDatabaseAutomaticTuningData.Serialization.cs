@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Options)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<AutomaticTuningOptions>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -181,7 +195,14 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, AutomaticTuningOptions> dictionary = new Dictionary<string, AutomaticTuningOptions>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomaticTuningOptions.DeserializeAutomaticTuningOptions(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, AutomaticTuningOptions.DeserializeAutomaticTuningOptions(property1.Value));
+                                }
                             }
                             options0 = dictionary;
                             continue;

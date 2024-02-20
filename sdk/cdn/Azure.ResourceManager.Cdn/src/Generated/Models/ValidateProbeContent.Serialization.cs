@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("probeURL"u8);
-            writer.WriteStringValue(ProbeUri.AbsoluteUri);
+            if (ProbeUri != null)
+            {
+                writer.WriteStringValue(ProbeUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

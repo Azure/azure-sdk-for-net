@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManifestArtifactFormat>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ManifestArtifactFormat> array = new List<ManifestArtifactFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item));
+                        }
                     }
                     artifacts = array;
                     continue;

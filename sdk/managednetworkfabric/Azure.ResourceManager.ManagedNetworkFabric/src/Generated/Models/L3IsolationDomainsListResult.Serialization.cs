@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkFabricL3IsolationDomainData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricL3IsolationDomainData> array = new List<NetworkFabricL3IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(item));
+                        }
                     }
                     value = array;
                     continue;

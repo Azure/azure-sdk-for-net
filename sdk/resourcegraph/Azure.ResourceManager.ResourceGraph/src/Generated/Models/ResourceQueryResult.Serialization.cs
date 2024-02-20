@@ -38,21 +38,35 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStringValue(SkipToken);
             }
             writer.WritePropertyName("data"u8);
+            if (Data != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Data);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Data))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Facet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +152,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<Facet> array = new List<Facet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Facet.DeserializeFacet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Facet.DeserializeFacet(item));
+                        }
                     }
                     facets = array;
                     continue;

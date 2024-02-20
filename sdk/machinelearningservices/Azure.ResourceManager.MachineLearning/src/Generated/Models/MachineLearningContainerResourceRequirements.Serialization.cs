@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceLimits != null)
                 {
                     writer.WritePropertyName("containerResourceLimits"u8);
-                    writer.WriteObjectValue(ContainerResourceLimits);
+                    ((IJsonModel<MachineLearningContainerResourceSettings>)ContainerResourceLimits).Write(writer, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceRequests != null)
                 {
                     writer.WritePropertyName("containerResourceRequests"u8);
-                    writer.WriteObjectValue(ContainerResourceRequests);
+                    ((IJsonModel<MachineLearningContainerResourceSettings>)ContainerResourceRequests).Write(writer, options);
                 }
                 else
                 {

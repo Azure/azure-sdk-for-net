@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(RunAsAccountId);
             }
             writer.WritePropertyName("policyId"u8);
-            writer.WriteStringValue(PolicyId);
+            if (PolicyId != null)
+            {
+                writer.WriteStringValue(PolicyId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

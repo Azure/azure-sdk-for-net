@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ReservationsSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewEnabled))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties);
+                ((IJsonModel<PurchaseRequestPropertiesReservedResourceProperties>)ReservedResourceProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Synapse.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("clusterResourceId"u8);
-            writer.WriteStringValue(KustoPoolResourceId);
+            if (KustoPoolResourceId != null)
+            {
+                writer.WriteStringValue(KustoPoolResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
             if (options.Format != "W" && Optional.IsDefined(DatabaseName))

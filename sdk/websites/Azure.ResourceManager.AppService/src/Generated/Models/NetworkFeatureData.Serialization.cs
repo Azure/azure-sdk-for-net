@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
-                writer.WriteObjectValue(VirtualNetworkConnection);
+                ((IJsonModel<AppServiceVirtualNetworkProperties>)VirtualNetworkConnection).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RelayServiceConnectionEntityData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +95,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnectionsV2)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +219,14 @@ namespace Azure.ResourceManager.AppService
                             List<RelayServiceConnectionEntityData> array = new List<RelayServiceConnectionEntityData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item));
+                                }
                             }
                             hybridConnections = array;
                             continue;
@@ -212,7 +240,14 @@ namespace Azure.ResourceManager.AppService
                             List<HybridConnectionData> array = new List<HybridConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                                }
                             }
                             hybridConnectionsV2 = array;
                             continue;

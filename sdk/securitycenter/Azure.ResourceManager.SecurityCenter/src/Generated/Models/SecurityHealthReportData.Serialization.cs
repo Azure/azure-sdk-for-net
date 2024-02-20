@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -53,22 +60,22 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                ((IJsonModel<HealthReportResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentDetails))
             {
                 writer.WritePropertyName("environmentDetails"u8);
-                writer.WriteObjectValue(EnvironmentDetails);
+                ((IJsonModel<EnvironmentDetails>)EnvironmentDetails).Write(writer, options);
             }
             if (Optional.IsDefined(HealthDataClassification))
             {
                 writer.WritePropertyName("healthDataClassification"u8);
-                writer.WriteObjectValue(HealthDataClassification);
+                ((IJsonModel<HealthDataClassification>)HealthDataClassification).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<HealthReportStatus>)Status).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AffectedDefendersPlans))
             {
@@ -107,7 +114,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityHealthReportIssue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -286,7 +300,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityHealthReportIssue> array = new List<SecurityHealthReportIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item));
+                                }
                             }
                             issues = array;
                             continue;

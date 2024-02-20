@@ -32,11 +32,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(RecoveryFabricName);
             }
             writer.WritePropertyName("recoveryNetworkId"u8);
-            writer.WriteStringValue(RecoveryNetworkId);
+            if (RecoveryNetworkId != null)
+            {
+                writer.WriteStringValue(RecoveryNetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
-                writer.WriteObjectValue(FabricSpecificDetails);
+                ((IJsonModel<FabricSpecificCreateNetworkMappingContent>)FabricSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -16,7 +16,14 @@ namespace Azure.MixedReality.RemoteRendering
         {
             writer.WriteStartObject();
             writer.WritePropertyName("settings"u8);
-            writer.WriteObjectValue(Settings);
+            if (Settings != null)
+            {
+                writer.WriteObjectValue(Settings);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SphereCatalogData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereCatalogData> array = new List<SphereCatalogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereCatalogData.DeserializeSphereCatalogData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SphereCatalogData.DeserializeSphereCatalogData(item));
+                        }
                     }
                     value = array;
                     continue;

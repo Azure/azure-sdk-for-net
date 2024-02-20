@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
-            writer.WriteStringValue(TargetResourceId);
+            if (TargetResourceId != null)
+            {
+                writer.WriteStringValue(TargetResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sourceIPAddress"u8);
             writer.WriteStringValue(SourceIPAddress);
             writer.WritePropertyName("destinationIPAddress"u8);

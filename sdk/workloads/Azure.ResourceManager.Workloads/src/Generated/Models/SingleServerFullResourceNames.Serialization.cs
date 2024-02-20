@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                writer.WriteObjectValue(VirtualMachine);
+                ((IJsonModel<VirtualMachineResourceNames>)VirtualMachine).Write(writer, options);
             }
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());

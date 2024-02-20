@@ -55,7 +55,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -95,14 +102,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Offerings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityCenterCloudOffering>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(EnvironmentData))
             {
                 writer.WritePropertyName("environmentData"u8);
-                writer.WriteObjectValue(EnvironmentData);
+                ((IJsonModel<SecurityConnectorEnvironment>)EnvironmentData).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -258,7 +272,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityCenterCloudOffering> array = new List<SecurityCenterCloudOffering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item));
+                                }
                             }
                             offerings = array;
                             continue;

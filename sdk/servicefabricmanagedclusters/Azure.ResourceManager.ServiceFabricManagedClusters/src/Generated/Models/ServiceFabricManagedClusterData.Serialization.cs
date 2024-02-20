@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<ServiceFabricManagedClustersSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -53,7 +60,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -103,19 +117,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ClusterCertificateThumbprints)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +161,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterLoadBalancingRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +183,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceFabricManagedNetworkSecurityRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -170,14 +200,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in Clients)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterClientCertificate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                ((IJsonModel<ManagedClusterAzureActiveDirectory>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FabricSettings))
             {
@@ -185,7 +222,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterFabricSettingsSection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +276,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
+                ((IJsonModel<ApplicationTypeVersionsCleanupPolicy>)ApplicationTypeVersionsCleanupPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(IsIPv6Enabled))
             {
@@ -250,7 +294,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterIPTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +321,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AuxiliarySubnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -280,7 +338,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterServiceEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -312,7 +377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription);
+                ((IJsonModel<ManagedClusterUpgradePolicy>)UpgradeDescription).Write(writer, options);
             }
             if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
             {
@@ -575,7 +640,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterLoadBalancingRule> array = new List<ManagedClusterLoadBalancingRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterLoadBalancingRule.DeserializeManagedClusterLoadBalancingRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterLoadBalancingRule.DeserializeManagedClusterLoadBalancingRule(item));
+                                }
                             }
                             loadBalancingRules = array;
                             continue;
@@ -598,7 +670,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                }
                             }
                             networkSecurityRules = array;
                             continue;
@@ -612,7 +691,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterClientCertificate> array = new List<ManagedClusterClientCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterClientCertificate.DeserializeManagedClusterClientCertificate(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterClientCertificate.DeserializeManagedClusterClientCertificate(item));
+                                }
                             }
                             clients = array;
                             continue;
@@ -635,7 +721,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ClusterFabricSettingsSection> array = new List<ClusterFabricSettingsSection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterFabricSettingsSection.DeserializeClusterFabricSettingsSection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ClusterFabricSettingsSection.DeserializeClusterFabricSettingsSection(item));
+                                }
                             }
                             fabricSettings = array;
                             continue;
@@ -736,7 +829,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterIPTag> array = new List<ManagedClusterIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item));
+                                }
                             }
                             ipTags = array;
                             continue;
@@ -768,7 +868,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterSubnet> array = new List<ManagedClusterSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterSubnet.DeserializeManagedClusterSubnet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterSubnet.DeserializeManagedClusterSubnet(item));
+                                }
                             }
                             auxiliarySubnets = array;
                             continue;
@@ -782,7 +889,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterServiceEndpoint> array = new List<ManagedClusterServiceEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterServiceEndpoint.DeserializeManagedClusterServiceEndpoint(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterServiceEndpoint.DeserializeManagedClusterServiceEndpoint(item));
+                                }
                             }
                             serviceEndpoints = array;
                             continue;

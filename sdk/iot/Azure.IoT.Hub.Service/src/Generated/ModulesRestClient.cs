@@ -361,7 +361,14 @@ namespace Azure.IoT.Hub.Service
                         List<ModuleIdentity> array = new List<ModuleIdentity>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -393,7 +400,14 @@ namespace Azure.IoT.Hub.Service
                         List<ModuleIdentity> array = new List<ModuleIdentity>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

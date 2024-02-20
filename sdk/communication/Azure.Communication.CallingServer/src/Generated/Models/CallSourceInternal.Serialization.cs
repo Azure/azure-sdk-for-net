@@ -27,7 +27,14 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("identifier"u8);
-            writer.WriteObjectValue(Identifier);
+            if (Identifier != null)
+            {
+                writer.WriteObjectValue(Identifier);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

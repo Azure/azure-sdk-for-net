@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus);
+                ((IJsonModel<ExtensionOperationStatus>)SensitiveDataDiscoveryOperationStatus).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(MalwareScanningOperationStatus);
+                ((IJsonModel<ExtensionOperationStatus>)MalwareScanningOperationStatus).Write(writer, options);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();

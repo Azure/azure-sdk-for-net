@@ -19,9 +19,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            writer.WriteObjectValue(ResourceManagerEndpoint);
+            if (ResourceManagerEndpoint != null)
+            {
+                writer.WriteObjectValue(ResourceManagerEndpoint);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tempScriptPath"u8);
-            writer.WriteObjectValue(TempScriptPath);
+            if (TempScriptPath != null)
+            {
+                writer.WriteObjectValue(TempScriptPath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);

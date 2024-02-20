@@ -185,7 +185,14 @@ namespace Azure.Search.Documents
                 writer.WriteStartArray();
                 foreach (var item in VectorQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -457,7 +464,14 @@ namespace Azure.Search.Documents
                     List<VectorQuery> array = new List<VectorQuery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorQuery.DeserializeVectorQuery(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VectorQuery.DeserializeVectorQuery(item));
+                        }
                     }
                     vectorQueries = array;
                     continue;

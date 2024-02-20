@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 if (GitHubActionConfiguration != null)
                 {
                     writer.WritePropertyName("gitHubActionConfiguration"u8);
-                    writer.WriteObjectValue(GitHubActionConfiguration);
+                    ((IJsonModel<GitHubActionConfiguration>)GitHubActionConfiguration).Write(writer, options);
                 }
                 else
                 {

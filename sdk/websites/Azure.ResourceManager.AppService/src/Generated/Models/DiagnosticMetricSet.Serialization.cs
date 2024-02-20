@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiagnosticMetricSample>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +158,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSample> array = new List<DiagnosticMetricSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item));
+                        }
                     }
                     values = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.PolicyInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("policyAssignmentId"u8);
-            writer.WriteStringValue(PolicyAssignmentId);
+            if (PolicyAssignmentId != null)
+            {
+                writer.WriteStringValue(PolicyAssignmentId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
@@ -83,7 +97,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AttestationEvidence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -252,7 +273,14 @@ namespace Azure.ResourceManager.PolicyInsights
                             List<AttestationEvidence> array = new List<AttestationEvidence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                }
                             }
                             evidence = array;
                             continue;

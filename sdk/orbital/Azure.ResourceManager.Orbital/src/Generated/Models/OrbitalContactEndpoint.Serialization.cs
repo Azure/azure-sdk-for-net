@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.Orbital.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
-            writer.WriteStringValue(IPAddress.ToString());
+            if (IPAddress != null)
+            {
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("endPointName"u8);
             writer.WriteStringValue(EndPointName);
             writer.WritePropertyName("port"u8);

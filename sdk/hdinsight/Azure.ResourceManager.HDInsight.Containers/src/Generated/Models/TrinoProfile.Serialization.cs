@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue(CatalogOptions);
+                ((IJsonModel<CatalogOptions>)CatalogOptions).Write(writer, options);
             }
             if (Optional.IsDefined(Coordinator))
             {
                 writer.WritePropertyName("coordinator"u8);
-                writer.WriteObjectValue(Coordinator);
+                ((IJsonModel<TrinoCoordinator>)Coordinator).Write(writer, options);
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec);
+                ((IJsonModel<TrinoUserPluginListResult>)UserPluginsSpec).Write(writer, options);
             }
             if (Optional.IsDefined(UserTelemetrySpec))
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
-                writer.WriteObjectValue(UserTelemetrySpec);
+                ((IJsonModel<TrinoUserTelemetry>)UserTelemetrySpec).Write(writer, options);
             }
             if (Optional.IsDefined(Worker))
             {
                 writer.WritePropertyName("worker"u8);
-                writer.WriteObjectValue(Worker);
+                ((IJsonModel<TrinoWorker>)Worker).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

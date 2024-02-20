@@ -36,10 +36,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
-                writer.WriteObjectValue(GitHubClientSecret);
+                ((IJsonModel<FactoryGitHubClientSecret>)GitHubClientSecret).Write(writer, options);
             }
             writer.WritePropertyName("gitHubAccessTokenBaseUrl"u8);
-            writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
+            if (GitHubAccessTokenBaseUri != null)
+            {
+                writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

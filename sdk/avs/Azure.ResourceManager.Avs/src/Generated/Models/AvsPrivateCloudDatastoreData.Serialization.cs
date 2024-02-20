@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Avs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(DiskPoolVolume))
             {
                 writer.WritePropertyName("diskPoolVolume"u8);
-                writer.WriteObjectValue(DiskPoolVolume);
+                ((IJsonModel<DiskPoolVolume>)DiskPoolVolume).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

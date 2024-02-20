@@ -19,11 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);
-            writer.WriteObjectValue(Pfx);
+            if (Pfx != null)
+            {
+                writer.WriteObjectValue(Pfx);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            if (Password != null)
+            {
+                writer.WriteObjectValue(Password);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Url);
+            if (Url != null)
+            {
+                writer.WriteObjectValue(Url);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();

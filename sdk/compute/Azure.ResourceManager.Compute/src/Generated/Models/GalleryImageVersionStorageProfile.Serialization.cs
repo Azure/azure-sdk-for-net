@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(GallerySource);
+                ((IJsonModel<GalleryArtifactVersionFullSource>)GallerySource).Write(writer, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                ((IJsonModel<GalleryOSDiskImage>)OSDiskImage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GalleryDataDiskImage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item));
+                        }
                     }
                     dataDiskImages = array;
                     continue;

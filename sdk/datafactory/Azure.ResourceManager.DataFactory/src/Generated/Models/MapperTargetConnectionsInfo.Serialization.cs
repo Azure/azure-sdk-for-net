@@ -32,14 +32,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetEntities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapperTable>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection);
+                ((IJsonModel<MapperConnection>)Connection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataMapperMappings))
             {
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataMapperMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataMapperMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,19 +71,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Relationships)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +144,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperTable> array = new List<MapperTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperTable.DeserializeMapperTable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapperTable.DeserializeMapperTable(item));
+                        }
                     }
                     targetEntities = array;
                     continue;
@@ -151,7 +174,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataMapperMapping> array = new List<DataMapperMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataMapperMapping.DeserializeDataMapperMapping(item));
+                        }
                     }
                     dataMapperMappings = array;
                     continue;

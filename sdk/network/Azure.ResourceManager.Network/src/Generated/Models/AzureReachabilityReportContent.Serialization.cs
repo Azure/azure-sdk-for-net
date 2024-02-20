@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation);
+            if (ProviderLocation != null)
+            {
+                ((IJsonModel<AzureReachabilityReportLocation>)ProviderLocation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);

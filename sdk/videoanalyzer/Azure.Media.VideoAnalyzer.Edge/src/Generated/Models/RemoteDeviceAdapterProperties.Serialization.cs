@@ -21,9 +21,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            if (Target != null)
+            {
+                writer.WriteObjectValue(Target);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            if (IotHubDeviceConnection != null)
+            {
+                writer.WriteObjectValue(IotHubDeviceConnection);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

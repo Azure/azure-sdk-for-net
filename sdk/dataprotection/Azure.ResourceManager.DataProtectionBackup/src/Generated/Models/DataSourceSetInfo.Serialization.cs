@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
@@ -61,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceProperties))
             {
                 writer.WritePropertyName("resourceProperties"u8);
-                writer.WriteObjectValue(ResourceProperties);
+                ((IJsonModel<BaseResourceProperties>)ResourceProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

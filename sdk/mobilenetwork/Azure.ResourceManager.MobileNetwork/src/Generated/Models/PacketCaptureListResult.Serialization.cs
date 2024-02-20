@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MobileNetworkPacketCaptureData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkPacketCaptureData> array = new List<MobileNetworkPacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(item));
+                        }
                     }
                     value = array;
                     continue;

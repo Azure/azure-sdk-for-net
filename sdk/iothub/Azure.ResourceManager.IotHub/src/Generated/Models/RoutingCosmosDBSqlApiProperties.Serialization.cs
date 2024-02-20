@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("endpointUri"u8);
-            writer.WriteStringValue(EndpointUri.AbsoluteUri);
+            if (EndpointUri != null)
+            {
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ManagedIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryKey))
             {

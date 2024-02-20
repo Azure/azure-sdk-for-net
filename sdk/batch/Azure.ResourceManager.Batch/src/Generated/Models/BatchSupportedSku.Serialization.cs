@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchSkuCapability> array = new List<BatchSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

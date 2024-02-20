@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue(DatadogOrganizationProperties);
+                ((IJsonModel<DatadogOrganizationProperties>)DatadogOrganizationProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                ((IJsonModel<UserInfo>)UserInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {

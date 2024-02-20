@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy);
+                ((IJsonModel<Office365PolicyProperties>)O365Policy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

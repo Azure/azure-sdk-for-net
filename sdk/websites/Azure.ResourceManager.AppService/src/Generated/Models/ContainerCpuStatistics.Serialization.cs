@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
-                writer.WriteObjectValue(CpuUsage);
+                ((IJsonModel<ContainerCpuUsage>)CpuUsage).Write(writer, options);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue(ThrottlingData);
+                ((IJsonModel<ContainerThrottlingInfo>)ThrottlingData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ClusterJob>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterJob> array = new List<ClusterJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterJob.DeserializeClusterJob(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterJob.DeserializeClusterJob(item));
+                        }
                     }
                     value = array;
                     continue;

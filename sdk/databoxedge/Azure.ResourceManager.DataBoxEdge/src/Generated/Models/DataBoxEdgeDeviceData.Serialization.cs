@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<DataBoxEdgeSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -162,17 +169,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails);
+                ((IJsonModel<DataBoxEdgeResourceMoveDetails>)ResourceMoveDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                ((IJsonModel<EdgeProfile>)EdgeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
-                writer.WriteObjectValue(DataResidency);
+                ((IJsonModel<DataResidency>)DataResidency).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

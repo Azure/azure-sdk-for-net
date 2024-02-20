@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExchangePeeringFacility>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<ExchangePeeringFacility> array = new List<ExchangePeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item));
+                        }
                     }
                     peeringFacilities = array;
                     continue;

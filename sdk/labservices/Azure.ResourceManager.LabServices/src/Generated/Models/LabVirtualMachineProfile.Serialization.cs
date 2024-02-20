@@ -29,18 +29,32 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            if (ImageReference != null)
+            {
+                ((IJsonModel<LabVirtualMachineImageReference>)ImageReference).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<LabServicesSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                ((IJsonModel<LabVirtualMachineAdditionalCapability>)AdditionalCapabilities).Write(writer, options);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
@@ -50,11 +64,18 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
-            writer.WriteObjectValue(AdminUser);
+            if (AdminUser != null)
+            {
+                ((IJsonModel<LabVirtualMachineCredential>)AdminUser).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(NonAdminUser))
             {
                 writer.WritePropertyName("nonAdminUser"u8);
-                writer.WriteObjectValue(NonAdminUser);
+                ((IJsonModel<LabVirtualMachineCredential>)NonAdminUser).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

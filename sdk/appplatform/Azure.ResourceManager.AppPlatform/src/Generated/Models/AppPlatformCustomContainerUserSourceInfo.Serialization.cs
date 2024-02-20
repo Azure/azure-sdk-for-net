@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
-                writer.WriteObjectValue(CustomContainer);
+                ((IJsonModel<AppPlatformCustomContainer>)CustomContainer).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);

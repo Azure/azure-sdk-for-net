@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataShare.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,7 +75,14 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
             writer.WritePropertyName("sqlServerResourceId"u8);
-            writer.WriteStringValue(SqlServerResourceId);
+            if (SqlServerResourceId != null)
+            {
+                writer.WriteStringValue(SqlServerResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
             writer.WriteEndObject();

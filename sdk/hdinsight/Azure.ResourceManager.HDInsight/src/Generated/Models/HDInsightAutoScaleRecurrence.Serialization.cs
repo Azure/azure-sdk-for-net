@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedule)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightAutoScaleSchedule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightAutoScaleSchedule> array = new List<HDInsightAutoScaleSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightAutoScaleSchedule.DeserializeHDInsightAutoScaleSchedule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightAutoScaleSchedule.DeserializeHDInsightAutoScaleSchedule(item));
+                        }
                     }
                     schedule = array;
                     continue;

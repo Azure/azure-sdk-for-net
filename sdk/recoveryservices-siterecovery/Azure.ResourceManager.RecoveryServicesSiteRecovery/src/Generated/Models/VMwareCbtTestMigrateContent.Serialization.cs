@@ -27,16 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointId"u8);
-            writer.WriteStringValue(RecoveryPointId);
+            if (RecoveryPointId != null)
+            {
+                writer.WriteStringValue(RecoveryPointId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("networkId"u8);
-            writer.WriteStringValue(NetworkId);
+            if (NetworkId != null)
+            {
+                writer.WriteStringValue(NetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareCbtNicContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicContent> array = new List<VMwareCbtNicContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicContent.DeserializeVMwareCbtNicContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareCbtNicContent.DeserializeVMwareCbtNicContent(item));
+                        }
                     }
                     vmNics = array;
                     continue;

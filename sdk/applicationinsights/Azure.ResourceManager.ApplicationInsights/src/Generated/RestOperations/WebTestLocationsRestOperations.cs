@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentWebTestLocation> array = new List<ApplicationInsightsComponentWebTestLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentWebTestLocation> array = new List<ApplicationInsightsComponentWebTestLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

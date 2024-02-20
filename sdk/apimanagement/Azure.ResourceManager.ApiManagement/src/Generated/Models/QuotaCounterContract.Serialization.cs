@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                ((IJsonModel<QuotaCounterValueContractProperties>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

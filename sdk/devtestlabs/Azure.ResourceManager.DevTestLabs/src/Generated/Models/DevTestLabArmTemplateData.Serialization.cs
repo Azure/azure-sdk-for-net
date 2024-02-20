@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ParametersValueFilesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabParametersValueFileInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -271,7 +285,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabParametersValueFileInfo> array = new List<DevTestLabParametersValueFileInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabParametersValueFileInfo.DeserializeDevTestLabParametersValueFileInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabParametersValueFileInfo.DeserializeDevTestLabParametersValueFileInfo(item));
+                                }
                             }
                             parametersValueFilesInfo = array;
                             continue;

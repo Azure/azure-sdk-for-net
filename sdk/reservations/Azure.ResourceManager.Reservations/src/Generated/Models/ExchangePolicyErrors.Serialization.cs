@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteStartArray();
                     foreach (var item in PolicyErrors)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ExchangePolicyError>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ExchangePolicyError> array = new List<ExchangePolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item));
+                        }
                     }
                     policyErrors = array;
                     continue;

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<DesktopVirtualizationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                ((IJsonModel<HostPoolRegistrationInfo>)RegistrationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(VmTemplate))
             {
@@ -198,7 +205,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                ((IJsonModel<SessionHostAgentUpdateProperties>)AgentUpdate).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -206,7 +213,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DesktopVirtualizationPrivateEndpointConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -558,7 +572,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

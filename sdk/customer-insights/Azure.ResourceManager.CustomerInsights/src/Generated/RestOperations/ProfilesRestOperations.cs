@@ -433,7 +433,14 @@ namespace Azure.ResourceManager.CustomerInsights
                         List<KpiDefinition> array = new List<KpiDefinition>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(KpiDefinition.DeserializeKpiDefinition(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(KpiDefinition.DeserializeKpiDefinition(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -469,7 +476,14 @@ namespace Azure.ResourceManager.CustomerInsights
                         List<KpiDefinition> array = new List<KpiDefinition>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(KpiDefinition.DeserializeKpiDefinition(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(KpiDefinition.DeserializeKpiDefinition(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -102,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob);
+                ((IJsonModel<CurrentJobDetails>)CurrentJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CriticalJobHistory))
             {
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in CriticalJobHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CriticalJobHistoryDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                ((IJsonModel<MigrationProviderSpecificSettings>)ProviderSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -306,7 +320,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     healthErrors = array;
                     continue;
@@ -343,7 +364,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<CriticalJobHistoryDetails> array = new List<CriticalJobHistoryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item));
+                        }
                     }
                     criticalJobHistory = array;
                     continue;

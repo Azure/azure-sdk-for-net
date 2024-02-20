@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServerAdvancedThreatProtectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServerAdvancedThreatProtectionData> array = new List<ServerAdvancedThreatProtectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(item));
+                        }
                     }
                     value = array;
                     continue;

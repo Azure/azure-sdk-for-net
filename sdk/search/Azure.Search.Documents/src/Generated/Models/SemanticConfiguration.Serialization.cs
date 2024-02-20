@@ -18,7 +18,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
-            writer.WriteObjectValue(PrioritizedFields);
+            if (PrioritizedFields != null)
+            {
+                writer.WriteObjectValue(PrioritizedFields);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

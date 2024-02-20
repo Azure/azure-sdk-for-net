@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Avs.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetId"u8);
-            writer.WriteStringValue(TargetId);
+            if (TargetId != null)
+            {
+                writer.WriteStringValue(TargetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
             if (Optional.IsDefined(MountOption))

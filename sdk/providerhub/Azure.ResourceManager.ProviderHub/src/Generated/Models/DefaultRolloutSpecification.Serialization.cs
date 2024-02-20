@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
-                writer.WriteObjectValue(Canary);
+                ((IJsonModel<CanaryTrafficRegionRolloutConfiguration>)Canary).Write(writer, options);
             }
             if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
-                writer.WriteObjectValue(LowTraffic);
+                ((IJsonModel<TrafficRegionRolloutConfiguration>)LowTraffic).Write(writer, options);
             }
             if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
-                writer.WriteObjectValue(MediumTraffic);
+                ((IJsonModel<TrafficRegionRolloutConfiguration>)MediumTraffic).Write(writer, options);
             }
             if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
-                writer.WriteObjectValue(HighTraffic);
+                ((IJsonModel<TrafficRegionRolloutConfiguration>)HighTraffic).Write(writer, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupOne);
+                ((IJsonModel<TrafficRegionRolloutConfiguration>)RestOfTheWorldGroupOne).Write(writer, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupTwo);
+                ((IJsonModel<TrafficRegionRolloutConfiguration>)RestOfTheWorldGroupTwo).Write(writer, options);
             }
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration);
+                ((IJsonModel<ProviderRegistrationData>)ProviderRegistration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceTypeRegistrationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +201,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        }
                     }
                     resourceTypeRegistrations = array;
                     continue;

@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerPrivateEndpointConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                ((IJsonModel<ServerExternalAdministrator>)Administrators).Write(writer, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -259,7 +266,14 @@ namespace Azure.ResourceManager.Sql.Models
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

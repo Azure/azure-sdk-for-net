@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MySqlPerformanceTier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPerformanceTier> array = new List<MySqlPerformanceTier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPerformanceTier.DeserializeMySqlPerformanceTier(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MySqlPerformanceTier.DeserializeMySqlPerformanceTier(item));
+                        }
                     }
                     value = array;
                     continue;

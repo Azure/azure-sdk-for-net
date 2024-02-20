@@ -41,13 +41,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
             writer.WritePropertyName("authUri"u8);
-            writer.WriteStringValue(AuthUri.AbsoluteUri);
+            if (AuthUri != null)
+            {
+                writer.WriteStringValue(AuthUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tokenUri"u8);
-            writer.WriteStringValue(TokenUri.AbsoluteUri);
+            if (TokenUri != null)
+            {
+                writer.WriteStringValue(TokenUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authProviderX509CertUrl"u8);
-            writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
+            if (AuthProviderX509CertUri != null)
+            {
+                writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("clientX509CertUrl"u8);
-            writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
+            if (ClientX509CertUri != null)
+            {
+                writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);

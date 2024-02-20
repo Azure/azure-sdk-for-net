@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Sql.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("destinationManagedDatabaseId"u8);
-            writer.WriteStringValue(DestinationManagedDatabaseId);
+            if (DestinationManagedDatabaseId != null)
+            {
+                writer.WriteStringValue(DestinationManagedDatabaseId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -28,7 +28,14 @@ namespace Azure.DigitalTwins.Core
                     List<DigitalTwinsEventRoute> array = new List<DigitalTwinsEventRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsEventRoute.DeserializeDigitalTwinsEventRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DigitalTwinsEventRoute.DeserializeDigitalTwinsEventRoute(item));
+                        }
                     }
                     value = array;
                     continue;

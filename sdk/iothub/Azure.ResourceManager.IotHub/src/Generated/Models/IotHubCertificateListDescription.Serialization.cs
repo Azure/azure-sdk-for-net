@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubCertificateDescriptionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubCertificateDescriptionData> array = new List<IotHubCertificateDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(item));
+                        }
                     }
                     value = array;
                     continue;

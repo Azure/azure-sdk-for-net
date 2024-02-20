@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CdnUsage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnUsage> array = new List<CdnUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnUsage.DeserializeCdnUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CdnUsage.DeserializeCdnUsage(item));
+                        }
                     }
                     value = array;
                     continue;

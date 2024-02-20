@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReplicationEligibilityResultData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationEligibilityResultData> array = new List<ReplicationEligibilityResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(item));
+                        }
                     }
                     value = array;
                     continue;

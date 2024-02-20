@@ -31,7 +31,14 @@ namespace Azure.Maps.Search.Models
                     List<PolygonObject> array = new List<PolygonObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolygonObject.DeserializePolygonObject(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolygonObject.DeserializePolygonObject(item));
+                        }
                     }
                     additionalData = array;
                     continue;

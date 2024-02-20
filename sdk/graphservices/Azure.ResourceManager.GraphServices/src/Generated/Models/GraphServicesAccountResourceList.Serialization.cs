@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.GraphServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GraphServicesAccountResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.GraphServices.Models
                     List<GraphServicesAccountResourceData> array = new List<GraphServicesAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

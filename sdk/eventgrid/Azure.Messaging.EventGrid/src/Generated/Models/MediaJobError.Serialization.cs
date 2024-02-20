@@ -67,7 +67,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        }
                     }
                     details = array;
                     continue;

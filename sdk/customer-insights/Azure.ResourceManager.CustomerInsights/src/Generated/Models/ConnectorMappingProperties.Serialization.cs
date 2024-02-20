@@ -42,20 +42,55 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteBooleanValue(HasHeader.Value);
             }
             writer.WritePropertyName("errorManagement"u8);
-            writer.WriteObjectValue(ErrorManagement);
+            if (ErrorManagement != null)
+            {
+                ((IJsonModel<ConnectorMappingErrorManagement>)ErrorManagement).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("format"u8);
-            writer.WriteObjectValue(Format);
+            if (Format != null)
+            {
+                ((IJsonModel<ConnectorMappingFormat>)Format).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue(Availability);
+            if (Availability != null)
+            {
+                ((IJsonModel<ConnectorMappingAvailability>)Availability).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ConnectorMappingStructure>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("completeOperation"u8);
-            writer.WriteObjectValue(CompleteOperation);
+            if (CompleteOperation != null)
+            {
+                ((IJsonModel<ConnectorMappingCompleteOperation>)CompleteOperation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -145,7 +180,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ConnectorMappingStructure> array = new List<ConnectorMappingStructure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item));
+                        }
                     }
                     structure = array;
                     continue;

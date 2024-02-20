@@ -37,7 +37,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<MediaJobOutput> array = new List<MediaJobOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobOutput.DeserializeMediaJobOutput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaJobOutput.DeserializeMediaJobOutput(item));
+                        }
                     }
                     outputs = array;
                     continue;

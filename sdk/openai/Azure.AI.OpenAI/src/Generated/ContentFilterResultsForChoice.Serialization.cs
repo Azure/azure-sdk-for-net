@@ -30,27 +30,27 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue(Sexual);
+                ((IJsonModel<ContentFilterResult>)Sexual).Write(writer, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue(Violence);
+                ((IJsonModel<ContentFilterResult>)Violence).Write(writer, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue(Hate);
+                ((IJsonModel<ContentFilterResult>)Hate).Write(writer, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue(SelfHarm);
+                ((IJsonModel<ContentFilterResult>)SelfHarm).Write(writer, options);
             }
             if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
-                writer.WriteObjectValue(Profanity);
+                ((IJsonModel<ContentFilterDetectionResult>)Profanity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomBlocklists))
             {
@@ -58,7 +58,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in CustomBlocklists)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentFilterBlocklistIdResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -70,12 +77,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ProtectedMaterialText))
             {
                 writer.WritePropertyName("protected_material_text"u8);
-                writer.WriteObjectValue(ProtectedMaterialText);
+                ((IJsonModel<ContentFilterDetectionResult>)ProtectedMaterialText).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectedMaterialCode))
             {
                 writer.WritePropertyName("protected_material_code"u8);
-                writer.WriteObjectValue(ProtectedMaterialCode);
+                ((IJsonModel<ContentFilterCitedDetectionResult>)ProtectedMaterialCode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,7 +189,14 @@ namespace Azure.AI.OpenAI
                     List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item));
+                        }
                     }
                     customBlocklists = array;
                     continue;

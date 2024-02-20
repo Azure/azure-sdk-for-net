@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in QueryExperiences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerHeatMapQueryExperience>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +141,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerHeatMapQueryExperience> array = new List<TrafficManagerHeatMapQueryExperience>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerHeatMapQueryExperience.DeserializeTrafficManagerHeatMapQueryExperience(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrafficManagerHeatMapQueryExperience.DeserializeTrafficManagerHeatMapQueryExperience(item));
+                        }
                     }
                     queryExperiences = array;
                     continue;

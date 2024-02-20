@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (BaseEnvironmentSource != null)
                 {
                     writer.WritePropertyName("baseEnvironmentSource"u8);
-                    writer.WriteObjectValue(BaseEnvironmentSource);
+                    ((IJsonModel<BaseEnvironmentSource>)BaseEnvironmentSource).Write(writer, options);
                 }
                 else
                 {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("inferencingServer"u8);
-            writer.WriteObjectValue(InferencingServer);
+            if (InferencingServer != null)
+            {
+                ((IJsonModel<InferencingServer>)InferencingServer).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Inputs)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ModelPackageInput>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -80,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelConfiguration != null)
                 {
                     writer.WritePropertyName("modelConfiguration"u8);
-                    writer.WriteObjectValue(ModelConfiguration);
+                    ((IJsonModel<ModelConfiguration>)ModelConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -196,7 +210,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ModelPackageInput> array = new List<ModelPackageInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        }
                     }
                     inputs = array;
                     continue;

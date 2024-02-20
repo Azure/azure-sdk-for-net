@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation != null)
+            {
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -67,7 +81,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials);
+            if (AdministratorCredentials != null)
+            {
+                ((IJsonModel<AdministrativeCredentials>)AdministratorCredentials).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -104,7 +125,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("rackId"u8);
-            writer.WriteStringValue(RackId);
+            if (RackId != null)
+            {
+                writer.WriteStringValue(RackId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementFeature))

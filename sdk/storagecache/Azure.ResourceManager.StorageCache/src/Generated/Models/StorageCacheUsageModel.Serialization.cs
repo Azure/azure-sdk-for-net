@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                ((IJsonModel<StorageCacheUsageModelDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(ModelName))
             {

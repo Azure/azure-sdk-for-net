@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ParameterNameOverride)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UriSigningParamIdentifier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<UriSigningParamIdentifier> array = new List<UriSigningParamIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UriSigningParamIdentifier.DeserializeUriSigningParamIdentifier(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UriSigningParamIdentifier.DeserializeUriSigningParamIdentifier(item));
+                        }
                     }
                     parameterNameOverride = array;
                     continue;

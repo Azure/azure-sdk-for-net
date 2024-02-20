@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountId"u8);
-            writer.WriteStringValue(StorageAccountId);
+            if (StorageAccountId != null)
+            {
+                writer.WriteStringValue(StorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(SharePassword))

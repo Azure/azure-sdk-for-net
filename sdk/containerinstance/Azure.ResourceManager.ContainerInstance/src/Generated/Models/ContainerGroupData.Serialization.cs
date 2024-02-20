@@ -59,7 +59,14 @@ namespace Azure.ResourceManager.ContainerInstance
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.ContainerInstance
             writer.WriteStartArray();
             foreach (var item in Containers)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerInstanceContainer>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ImageRegistryCredentials))
@@ -96,7 +110,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in ImageRegistryCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerGroupImageRegistryCredential>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +129,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress);
+                ((IJsonModel<ContainerGroupIPAddress>)IPAddress).Write(writer, options);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
@@ -118,19 +139,26 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerVolume>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                ((IJsonModel<ContainerGroupInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                ((IJsonModel<ContainerGroupDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SubnetIds))
             {
@@ -138,14 +166,21 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerGroupSubnetId>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                ((IJsonModel<ContainerGroupDnsConfiguration>)DnsConfig).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -155,7 +190,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                ((IJsonModel<ContainerGroupEncryptionProperties>)EncryptionProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InitContainers))
             {
@@ -163,7 +198,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InitContainerDefinitionContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -173,14 +215,21 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeploymentExtensionSpec>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties);
+                ((IJsonModel<ConfidentialComputeProperties>)ConfidentialComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -340,7 +389,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
+                                }
                             }
                             containers = array;
                             continue;
@@ -354,7 +410,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item));
+                                }
                             }
                             imageRegistryCredentials = array;
                             continue;
@@ -391,7 +454,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerVolume> array = new List<ContainerVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolume.DeserializeContainerVolume(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerVolume.DeserializeContainerVolume(item));
+                                }
                             }
                             volumes = array;
                             continue;
@@ -423,7 +493,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupSubnetId> array = new List<ContainerGroupSubnetId>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item));
+                                }
                             }
                             subnetIds = array;
                             continue;
@@ -464,7 +541,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item));
+                                }
                             }
                             initContainers = array;
                             continue;
@@ -478,7 +562,14 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item));
+                                }
                             }
                             extensions = array;
                             continue;

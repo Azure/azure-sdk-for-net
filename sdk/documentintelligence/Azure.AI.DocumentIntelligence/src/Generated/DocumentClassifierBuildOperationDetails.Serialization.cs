@@ -30,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result);
+                ((IJsonModel<DocumentClassifierDetails>)Result).Write(writer, options);
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
@@ -48,7 +48,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
-            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (ResourceLocation != null)
+            {
+                writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
@@ -68,7 +75,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<DocumentIntelligenceError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

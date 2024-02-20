@@ -28,7 +28,14 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_path"u8);
-            writer.WriteObjectValue(InternalDetails);
+            if (InternalDetails != null)
+            {
+                ((IJsonModel<InternalMessageTextFilePathDetails>)InternalDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);

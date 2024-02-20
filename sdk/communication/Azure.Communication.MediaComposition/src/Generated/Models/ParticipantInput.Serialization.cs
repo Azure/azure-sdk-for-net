@@ -18,7 +18,14 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteObjectValue(ServiceId);
+            if (ServiceId != null)
+            {
+                writer.WriteObjectValue(ServiceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("call"u8);
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);

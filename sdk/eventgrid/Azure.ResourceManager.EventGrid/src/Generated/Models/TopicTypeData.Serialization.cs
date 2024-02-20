@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.EventGrid
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEnforcedPermissions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TopicTypeAdditionalEnforcedPermission>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -289,7 +303,14 @@ namespace Azure.ResourceManager.EventGrid
                             List<TopicTypeAdditionalEnforcedPermission> array = new List<TopicTypeAdditionalEnforcedPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                                }
                             }
                             additionalEnforcedPermissions = array;
                             continue;

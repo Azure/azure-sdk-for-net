@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
-            writer.WriteStringValue(PolicyId);
+            if (PolicyId != null)
+            {
+                writer.WriteStringValue(PolicyId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails);
+            if (ProviderSpecificDetails != null)
+            {
+                ((IJsonModel<EnableMigrationProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in FilesNotSyncingErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServerEndpointFilesNotSyncingError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +191,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointFilesNotSyncingError> array = new List<ServerEndpointFilesNotSyncingError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item));
+                        }
                     }
                     filesNotSyncingErrors = array;
                     continue;

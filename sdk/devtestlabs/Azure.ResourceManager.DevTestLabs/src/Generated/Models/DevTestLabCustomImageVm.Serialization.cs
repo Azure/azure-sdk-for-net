@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WindowsOSInfo))
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
-                writer.WriteObjectValue(WindowsOSInfo);
+                ((IJsonModel<WindowsOSInfo>)WindowsOSInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxOSInfo))
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
-                writer.WriteObjectValue(LinuxOSInfo);
+                ((IJsonModel<LinuxOSInfo>)LinuxOSInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

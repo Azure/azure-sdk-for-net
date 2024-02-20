@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in IndexColumns)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<IndexColumn>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -65,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {
@@ -191,7 +198,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<IndexColumn> array = new List<IndexColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IndexColumn.DeserializeIndexColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IndexColumn.DeserializeIndexColumn(item));
+                        }
                     }
                     indexColumns = array;
                     continue;

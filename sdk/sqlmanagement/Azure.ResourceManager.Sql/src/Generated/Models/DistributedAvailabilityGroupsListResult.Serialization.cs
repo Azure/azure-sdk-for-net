@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DistributedAvailabilityGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DistributedAvailabilityGroupData> array = new List<DistributedAvailabilityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

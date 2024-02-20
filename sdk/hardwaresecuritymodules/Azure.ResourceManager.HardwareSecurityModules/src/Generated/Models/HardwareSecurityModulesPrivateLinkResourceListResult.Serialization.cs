@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HardwareSecurityModulesPrivateLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<HardwareSecurityModulesPrivateLinkData> array = new List<HardwareSecurityModulesPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item));
+                        }
                     }
                     value = array;
                     continue;

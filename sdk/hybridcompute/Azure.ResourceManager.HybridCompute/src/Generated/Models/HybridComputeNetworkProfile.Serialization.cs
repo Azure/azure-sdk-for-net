@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeNetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeNetworkInterface> array = new List<HybridComputeNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item));
+                        }
                     }
                     networkInterfaces = array;
                     continue;

@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -141,7 +148,14 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationServerVmDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +177,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -363,7 +377,14 @@ namespace Azure.ResourceManager.Workloads
                             List<ApplicationServerVmDetails> array = new List<ApplicationServerVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item));
+                                }
                             }
                             vmDetails = array;
                             continue;

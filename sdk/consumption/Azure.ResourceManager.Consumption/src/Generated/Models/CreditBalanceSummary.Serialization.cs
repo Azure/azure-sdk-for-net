@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
             {
                 writer.WritePropertyName("estimatedBalance"u8);
-                writer.WriteObjectValue(EstimatedBalance);
+                ((IJsonModel<ConsumptionAmount>)EstimatedBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
             {
                 writer.WritePropertyName("currentBalance"u8);
-                writer.WriteObjectValue(CurrentBalance);
+                ((IJsonModel<ConsumptionAmount>)CurrentBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(EstimatedBalanceInBillingCurrency);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)EstimatedBalanceInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

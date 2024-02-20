@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in ScalingRules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ScalingRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScalingRule> array = new List<ScalingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingRule.DeserializeScalingRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScalingRule.DeserializeScalingRule(item));
+                        }
                     }
                     scalingRules = array;
                     continue;

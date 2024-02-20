@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue(PublicNetwork);
+                ((IJsonModel<SignalRNetworkAcl>)PublicNetwork).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRPrivateEndpointAcl>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRPrivateEndpointAcl> array = new List<SignalRPrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item));
+                        }
                     }
                     privateEndpoints = array;
                     continue;

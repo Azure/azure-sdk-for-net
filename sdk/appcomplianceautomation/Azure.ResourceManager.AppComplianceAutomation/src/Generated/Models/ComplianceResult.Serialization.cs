@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Category>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Category> array = new List<Category>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Category.DeserializeCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Category.DeserializeCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

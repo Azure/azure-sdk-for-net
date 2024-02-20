@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EffectiveRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveRoute> array = new List<EffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
+                        }
                     }
                     value = array;
                     continue;

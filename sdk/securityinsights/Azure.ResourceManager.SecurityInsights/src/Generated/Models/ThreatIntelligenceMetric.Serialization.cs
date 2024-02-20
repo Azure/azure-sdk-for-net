@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatTypeMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceMetricEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +142,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        }
                     }
                     threatTypeMetrics = array;
                     continue;
@@ -135,7 +163,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        }
                     }
                     patternTypeMetrics = array;
                     continue;
@@ -149,7 +184,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        }
                     }
                     sourceMetrics = array;
                     continue;

@@ -122,7 +122,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetricAvailability> array = new List<MetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        }
                     }
                     metricAvailabilities = array;
                     continue;
@@ -141,7 +148,14 @@ namespace Azure.Monitor.Query.Models
                     List<LocalizableString> array = new List<LocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalizableString.DeserializeLocalizableString(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LocalizableString.DeserializeLocalizableString(item));
+                        }
                     }
                     dimensions = array;
                     continue;

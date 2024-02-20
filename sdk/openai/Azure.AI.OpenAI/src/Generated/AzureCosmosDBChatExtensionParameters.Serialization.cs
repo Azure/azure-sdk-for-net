@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                ((IJsonModel<OnYourDataAuthenticationOptions>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -59,11 +59,18 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             writer.WritePropertyName("fieldsMapping"u8);
-            writer.WriteObjectValue(FieldMappingOptions);
+            if (FieldMappingOptions != null)
+            {
+                ((IJsonModel<AzureCosmosDBFieldMappingOptions>)FieldMappingOptions).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
+                ((IJsonModel<OnYourDataVectorizationSource>)EmbeddingDependency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

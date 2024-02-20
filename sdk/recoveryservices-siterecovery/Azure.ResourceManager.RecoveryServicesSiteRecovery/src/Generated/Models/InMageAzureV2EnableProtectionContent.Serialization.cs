@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageAzureV2DiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -303,7 +310,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2DiskDetails> array = new List<InMageAzureV2DiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item));
+                        }
                     }
                     disksToInclude = array;
                     continue;

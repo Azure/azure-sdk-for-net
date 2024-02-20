@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table);
+                ((IJsonModel<DataTableResponseObject>)Table).Write(writer, options);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
-                writer.WriteObjectValue(RenderingProperties);
+                ((IJsonModel<DiagnosticDataRendering>)RenderingProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

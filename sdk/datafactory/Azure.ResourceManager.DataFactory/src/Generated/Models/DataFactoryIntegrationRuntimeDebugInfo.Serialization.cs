@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties != null)
+            {
+                ((IJsonModel<DataFactoryIntegrationRuntimeProperties>)Properties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);

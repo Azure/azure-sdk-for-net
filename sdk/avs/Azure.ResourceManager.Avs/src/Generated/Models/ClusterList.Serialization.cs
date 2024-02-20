@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvsPrivateCloudClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsPrivateCloudClusterData> array = new List<AvsPrivateCloudClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvsPrivateCloudClusterData.DeserializeAvsPrivateCloudClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

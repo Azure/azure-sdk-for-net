@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Kusto
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<KustoSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.Kusto
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -117,14 +131,21 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoClusterTrustedExternalTenant>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                ((IJsonModel<OptimizedAutoscale>)OptimizedAutoscale).Write(writer, options);
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
@@ -139,12 +160,12 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                ((IJsonModel<KustoClusterVirtualNetworkConfiguration>)VirtualNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<KustoKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
@@ -154,7 +175,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                ((IJsonModel<KustoLanguageExtensionList>)LanguageExtensions).Write(writer, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -187,7 +208,14 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AcceptedAudience>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -227,14 +255,21 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
             {
                 writer.WritePropertyName("migrationCluster"u8);
-                writer.WriteObjectValue(MigrationCluster);
+                ((IJsonModel<MigrationClusterProperties>)MigrationCluster).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -453,7 +488,14 @@ namespace Azure.ResourceManager.Kusto
                             List<KustoClusterTrustedExternalTenant> array = new List<KustoClusterTrustedExternalTenant>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item));
+                                }
                             }
                             trustedExternalTenants = array;
                             continue;
@@ -571,7 +613,14 @@ namespace Azure.ResourceManager.Kusto
                             List<AcceptedAudience> array = new List<AcceptedAudience>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AcceptedAudience.DeserializeAcceptedAudience(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AcceptedAudience.DeserializeAcceptedAudience(item));
+                                }
                             }
                             acceptedAudiences = array;
                             continue;
@@ -631,7 +680,14 @@ namespace Azure.ResourceManager.Kusto
                             List<KustoPrivateEndpointConnectionData> array = new List<KustoPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

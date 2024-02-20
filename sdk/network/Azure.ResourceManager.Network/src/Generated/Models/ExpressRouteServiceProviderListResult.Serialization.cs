@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteServiceProvider>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteServiceProvider> array = new List<ExpressRouteServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(item));
+                        }
                     }
                     value = array;
                     continue;

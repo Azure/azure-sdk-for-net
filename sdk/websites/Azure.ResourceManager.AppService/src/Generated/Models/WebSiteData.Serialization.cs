@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HostNameSslState>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +176,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue(SiteConfig);
+                ((IJsonModel<SiteConfigProperties>)SiteConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -196,7 +210,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile);
+                    ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.AppService
                 if (CloningInfo != null)
                 {
                     writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue(CloningInfo);
+                    ((IJsonModel<CloningInfo>)CloningInfo).Write(writer, options);
                 }
                 else
                 {
@@ -309,7 +323,7 @@ namespace Azure.ResourceManager.AppService
                 if (SlotSwapStatus != null)
                 {
                     writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue(SlotSwapStatus);
+                    ((IJsonModel<SlotSwapStatus>)SlotSwapStatus).Write(writer, options);
                 }
                 else
                 {
@@ -595,7 +609,14 @@ namespace Azure.ResourceManager.AppService
                             List<HostNameSslState> array = new List<HostNameSslState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                }
                             }
                             hostNameSslStates = array;
                             continue;

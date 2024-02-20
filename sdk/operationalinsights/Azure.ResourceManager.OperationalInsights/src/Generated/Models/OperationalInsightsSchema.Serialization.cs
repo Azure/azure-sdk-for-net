@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalInsightsColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in StandardColumns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalInsightsColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +197,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        }
                     }
                     columns = array;
                     continue;
@@ -197,7 +218,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        }
                     }
                     standardColumns = array;
                     continue;

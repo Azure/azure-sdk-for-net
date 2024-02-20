@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceSecurityGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<DeviceSecurityGroupData> array = new List<DeviceSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

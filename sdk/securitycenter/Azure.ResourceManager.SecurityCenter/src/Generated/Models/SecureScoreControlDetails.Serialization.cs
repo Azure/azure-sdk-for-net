@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                ((IJsonModel<SecureScoreControlDefinitionItem>)Definition).Write(writer, options);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();

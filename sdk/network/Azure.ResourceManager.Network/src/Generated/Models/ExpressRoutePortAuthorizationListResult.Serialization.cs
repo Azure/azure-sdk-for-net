@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRoutePortAuthorizationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRoutePortAuthorizationData> array = new List<ExpressRoutePortAuthorizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(item));
+                        }
                     }
                     value = array;
                     continue;

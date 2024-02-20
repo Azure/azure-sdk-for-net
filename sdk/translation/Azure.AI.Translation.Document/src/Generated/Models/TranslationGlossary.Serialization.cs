@@ -16,7 +16,14 @@ namespace Azure.AI.Translation.Document
         {
             writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl"u8);
-            writer.WriteStringValue(GlossaryUri.AbsoluteUri);
+            if (GlossaryUri != null)
+            {
+                writer.WriteStringValue(GlossaryUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             if (Optional.IsDefined(FormatVersion))

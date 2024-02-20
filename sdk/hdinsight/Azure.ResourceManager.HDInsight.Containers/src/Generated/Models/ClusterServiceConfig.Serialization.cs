@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Files)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ClusterConfigFile>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterConfigFile> array = new List<ClusterConfigFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterConfigFile.DeserializeClusterConfigFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterConfigFile.DeserializeClusterConfigFile(item));
+                        }
                     }
                     files = array;
                     continue;

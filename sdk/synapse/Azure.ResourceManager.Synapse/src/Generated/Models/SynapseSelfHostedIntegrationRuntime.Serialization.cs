@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                ((IJsonModel<SynapseLinkedIntegrationRuntimeType>)LinkedInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

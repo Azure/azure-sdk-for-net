@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WritePropertyName("hintType"u8);
             writer.WriteStringValue(HintType.ToString());
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("schedulingExecution"u8);
             writer.WriteStringValue(SchedulingExecution.ToString());
             writer.WritePropertyName("scope"u8);

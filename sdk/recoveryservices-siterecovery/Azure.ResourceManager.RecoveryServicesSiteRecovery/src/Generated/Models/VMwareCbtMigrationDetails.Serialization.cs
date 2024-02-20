@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile);
+                ((IJsonModel<VMwareCbtSecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareCbtProtectedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareCbtNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -293,12 +307,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
             {
                 writer.WritePropertyName("applianceMonitoringDetails"u8);
-                writer.WriteObjectValue(ApplianceMonitoringDetails);
+                ((IJsonModel<ApplianceMonitoringDetails>)ApplianceMonitoringDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails);
+                ((IJsonModel<GatewayOperationDetails>)GatewayOperationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
@@ -561,7 +575,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtProtectedDiskDetails> array = new List<VMwareCbtProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        }
                     }
                     protectedDisks = array;
                     continue;
@@ -593,7 +614,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicDetails> array = new List<VMwareCbtNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys);
+                ((IJsonModel<AgentRegistrationKeys>)Keys).Write(writer, options);
             }
             if (Optional.IsDefined(Id))
             {

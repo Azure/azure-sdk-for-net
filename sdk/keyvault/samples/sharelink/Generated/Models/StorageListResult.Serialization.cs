@@ -32,7 +32,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     List<StorageAccountItem> array = new List<StorageAccountItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountItem.DeserializeStorageAccountItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageAccountItem.DeserializeStorageAccountItem(item));
+                        }
                     }
                     value = array;
                     continue;

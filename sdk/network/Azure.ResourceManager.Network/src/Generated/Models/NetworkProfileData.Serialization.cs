@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerNetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ContainerNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerNetworkInterfaceConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -222,7 +236,14 @@ namespace Azure.ResourceManager.Network
                             List<ContainerNetworkInterface> array = new List<ContainerNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterface.DeserializeContainerNetworkInterface(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerNetworkInterface.DeserializeContainerNetworkInterface(item));
+                                }
                             }
                             containerNetworkInterfaces = array;
                             continue;
@@ -236,7 +257,14 @@ namespace Azure.ResourceManager.Network
                             List<ContainerNetworkInterfaceConfiguration> array = new List<ContainerNetworkInterfaceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(item));
+                                }
                             }
                             containerNetworkInterfaceConfigurations = array;
                             continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoDatabaseData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabaseData> array = new List<KustoDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item));
+                        }
                     }
                     value = array;
                     continue;

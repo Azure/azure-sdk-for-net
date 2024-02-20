@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformSupportedBuildpackData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSupportedBuildpackData> array = new List<AppPlatformSupportedBuildpackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformSupportedBuildpackData.DeserializeAppPlatformSupportedBuildpackData(item));
+                        }
                     }
                     value = array;
                     continue;

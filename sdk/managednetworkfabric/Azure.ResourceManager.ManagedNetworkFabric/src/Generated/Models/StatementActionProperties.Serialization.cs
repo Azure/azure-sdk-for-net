@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
-                writer.WriteObjectValue(IPCommunityProperties);
+                ((IJsonModel<ActionIPCommunityProperties>)IPCommunityProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
-                writer.WriteObjectValue(IPExtendedCommunityProperties);
+                ((IJsonModel<ActionIPExtendedCommunityProperties>)IPExtendedCommunityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

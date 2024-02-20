@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScVmmVirtualNetworkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmVirtualNetworkData> array = new List<ScVmmVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(item));
+                        }
                     }
                     value = array;
                     continue;

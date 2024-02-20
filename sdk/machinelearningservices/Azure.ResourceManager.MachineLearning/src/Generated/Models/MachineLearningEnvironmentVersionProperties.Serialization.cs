@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
-                writer.WriteObjectValue(Build);
+                ((IJsonModel<MachineLearningBuildContext>)Build).Write(writer, options);
             }
             if (Optional.IsDefined(CondaFile))
             {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
-                writer.WriteObjectValue(InferenceConfig);
+                ((IJsonModel<MachineLearningInferenceContainerProperties>)InferenceConfig).Write(writer, options);
             }
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {

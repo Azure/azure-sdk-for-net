@@ -37,7 +37,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     List<DocumentFilterConjunctionGroupInfo> array = new List<DocumentFilterConjunctionGroupInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFilterConjunctionGroupInfo.DeserializeDocumentFilterConjunctionGroupInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentFilterConjunctionGroupInfo.DeserializeDocumentFilterConjunctionGroupInfo(item));
+                        }
                     }
                     documentFilterGroups = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HeaderField>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<HeaderField> array = new List<HeaderField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderField.DeserializeHeaderField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HeaderField.DeserializeHeaderField(item));
+                        }
                     }
                     headers = array;
                     continue;

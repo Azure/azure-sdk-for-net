@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("scalingMetric"u8);
             writer.WriteStringValue(ScalingMetric);
             writer.WritePropertyName("comparisonRule"u8);
-            writer.WriteObjectValue(ComparisonRule);
+            if (ComparisonRule != null)
+            {
+                ((IJsonModel<HDInsightComparisonRule>)ComparisonRule).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Synapse
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,7 +78,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                ((IJsonModel<BigDataPoolAutoScaleProperties>)AutoScale).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue(AutoPause);
+                ((IJsonModel<BigDataPoolAutoPauseProperties>)AutoPause).Write(writer, options);
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -106,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue(DynamicExecutorAllocation);
+                ((IJsonModel<SynapseDynamicExecutorAllocation>)DynamicExecutorAllocation).Write(writer, options);
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue(LibraryRequirements);
+                ((IJsonModel<BigDataPoolLibraryRequirements>)LibraryRequirements).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -129,14 +136,21 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BigDataPoolLibraryInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue(SparkConfigProperties);
+                ((IJsonModel<BigDataPoolSparkConfigProperties>)SparkConfigProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -392,7 +406,14 @@ namespace Azure.ResourceManager.Synapse
                             List<BigDataPoolLibraryInfo> array = new List<BigDataPoolLibraryInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item));
+                                }
                             }
                             customLibraries = array;
                             continue;

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                ((IJsonModel<LogicContentLink>)ContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {

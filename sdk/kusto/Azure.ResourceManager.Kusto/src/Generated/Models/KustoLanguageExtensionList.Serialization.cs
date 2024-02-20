@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoLanguageExtension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
+                        }
                     }
                     value = array;
                     continue;

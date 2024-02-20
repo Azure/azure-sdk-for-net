@@ -27,27 +27,41 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
-            writer.WriteStringValue(TargetResourceId);
+            if (TargetResourceId != null)
+            {
+                writer.WriteStringValue(TargetResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(FlowAnalyticsConfiguration);
+                ((IJsonModel<TrafficAnalyticsProperties>)FlowAnalyticsConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("storageId"u8);
-            writer.WriteStringValue(StorageId);
+            if (StorageId != null)
+            {
+                writer.WriteStringValue(StorageId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                ((IJsonModel<RetentionPolicyParameters>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                ((IJsonModel<FlowLogProperties>)Format).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

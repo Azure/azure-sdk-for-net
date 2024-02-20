@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStoreParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataStoreSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupDataSourceParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupDataSourceSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataStoreSettings> array = new List<DataStoreSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
+                        }
                     }
                     dataStoreParametersList = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
+                        }
                     }
                     backupDatasourceParametersList = array;
                     continue;

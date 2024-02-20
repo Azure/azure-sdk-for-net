@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(UsageDataCollectionPolicy))
             {
                 writer.WritePropertyName("usageDataCollectionPolicy"u8);
-                writer.WriteObjectValue(UsageDataCollectionPolicy);
+                ((IJsonModel<EdgeUsageDataCollectionPolicy>)UsageDataCollectionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

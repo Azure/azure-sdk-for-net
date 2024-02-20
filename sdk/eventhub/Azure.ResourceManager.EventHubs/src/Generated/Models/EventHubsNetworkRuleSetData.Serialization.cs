@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.EventHubs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsNetworkRuleSetVirtualNetworkRules>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +95,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsNetworkRuleSetIPRules>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +233,14 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsNetworkRuleSetVirtualNetworkRules> array = new List<EventHubsNetworkRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsNetworkRuleSetVirtualNetworkRules.DeserializeEventHubsNetworkRuleSetVirtualNetworkRules(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventHubsNetworkRuleSetVirtualNetworkRules.DeserializeEventHubsNetworkRuleSetVirtualNetworkRules(item));
+                                }
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -226,7 +254,14 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsNetworkRuleSetIPRules> array = new List<EventHubsNetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsNetworkRuleSetIPRules.DeserializeEventHubsNetworkRuleSetIPRules(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventHubsNetworkRuleSetIPRules.DeserializeEventHubsNetworkRuleSetIPRules(item));
+                                }
                             }
                             ipRules = array;
                             continue;

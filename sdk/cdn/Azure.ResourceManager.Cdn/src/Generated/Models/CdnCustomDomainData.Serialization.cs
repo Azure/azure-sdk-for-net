@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -75,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
                 if (CustomDomainHttpsContent != null)
                 {
                     writer.WritePropertyName("customHttpsParameters"u8);
-                    writer.WriteObjectValue(CustomDomainHttpsContent);
+                    ((IJsonModel<CustomDomainHttpsContent>)CustomDomainHttpsContent).Write(writer, options);
                 }
                 else
                 {

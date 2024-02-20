@@ -43,17 +43,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 foreach (var item in BillingPlans)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WriteStringValue(item0.ToString());
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteStringValue(item0.ToString());
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
@@ -83,14 +85,21 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SkuProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Msrp))
             {
                 writer.WritePropertyName("msrp"u8);
-                writer.WriteObjectValue(Msrp);
+                ((IJsonModel<ReservationCatalogMsrp>)Msrp).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
@@ -98,7 +107,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SkuRestriction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +134,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -248,7 +271,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuProperty> array = new List<SkuProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuProperty.DeserializeSkuProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SkuProperty.DeserializeSkuProperty(item));
+                        }
                     }
                     skuProperties = array;
                     continue;
@@ -271,7 +301,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuRestriction> array = new List<SkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuRestriction.DeserializeSkuRestriction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SkuRestriction.DeserializeSkuRestriction(item));
+                        }
                     }
                     restrictions = array;
                     continue;
@@ -295,7 +332,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuCapability> array = new List<SkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

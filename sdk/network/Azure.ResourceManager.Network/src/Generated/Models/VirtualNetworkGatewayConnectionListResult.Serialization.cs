@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualNetworkGatewayConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkGatewayConnectionData> array = new List<VirtualNetworkGatewayConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

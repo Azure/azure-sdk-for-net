@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentSubStateDetails))
             {
                 writer.WritePropertyName("currentSubStateDetails"u8);
-                writer.WriteObjectValue(CurrentSubStateDetails);
+                ((IJsonModel<PostgreSqlMigrationSubStateDetails>)CurrentSubStateDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

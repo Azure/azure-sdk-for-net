@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
-                writer.WriteObjectValue(Datasource);
+                ((IJsonModel<StreamingJobOutputDataSource>)Datasource).Write(writer, options);
             }
             if (Optional.IsDefined(TimeFrame))
             {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                ((IJsonModel<StreamAnalyticsDataSerialization>)Serialization).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                ((IJsonModel<StreamingJobDiagnostics>)Diagnostics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -81,14 +81,21 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in LastOutputEventTimestamps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LastOutputEventTimestamp>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                ((IJsonModel<StreamingJobOutputWatermarkProperties>)WatermarkSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -239,7 +246,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<LastOutputEventTimestamp> array = new List<LastOutputEventTimestamp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item));
+                                }
                             }
                             lastOutputEventTimestamps = array;
                             continue;

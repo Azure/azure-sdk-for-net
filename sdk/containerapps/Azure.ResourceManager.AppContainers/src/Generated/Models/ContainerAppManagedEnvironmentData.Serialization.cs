@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration);
+                ((IJsonModel<ContainerAppVnetConfiguration>)VnetConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
@@ -107,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration);
+                ((IJsonModel<ContainerAppLogsConfiguration>)AppLogsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration);
+                ((IJsonModel<ContainerAppCustomDomainConfiguration>)CustomDomainConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
@@ -130,19 +137,26 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppWorkloadProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue(KedaConfiguration);
+                ((IJsonModel<KedaConfiguration>)KedaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue(DaprConfiguration);
+                ((IJsonModel<DaprConfiguration>)DaprConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(InfrastructureResourceGroup))
             {
@@ -152,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue(PeerAuthentication);
+                ((IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>)PeerAuthentication).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -365,7 +379,14 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWorkloadProfile> array = new List<ContainerAppWorkloadProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item));
+                                }
                             }
                             workloadProfiles = array;
                             continue;

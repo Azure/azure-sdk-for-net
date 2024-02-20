@@ -18,7 +18,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
-            writer.WriteObjectValue(DataSourceParameter);
+            if (DataSourceParameter != null)
+            {
+                writer.WriteObjectValue(DataSourceParameter);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
@@ -46,7 +53,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -55,7 +69,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -248,7 +269,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataFeedMetric> array = new List<DataFeedMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFeedMetric.DeserializeDataFeedMetric(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFeedMetric.DeserializeDataFeedMetric(item));
+                        }
                     }
                     metrics = array;
                     continue;
@@ -262,7 +290,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataFeedDimension> array = new List<DataFeedDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFeedDimension.DeserializeDataFeedDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFeedDimension.DeserializeDataFeedDimension(item));
+                        }
                     }
                     dimension = array;
                     continue;

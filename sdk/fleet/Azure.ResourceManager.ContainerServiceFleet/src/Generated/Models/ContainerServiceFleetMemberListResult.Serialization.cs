@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerServiceFleetMemberData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetMemberData> array = new List<ContainerServiceFleetMemberData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(item));
+                        }
                     }
                     value = array;
                     continue;

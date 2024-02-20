@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ReportingInterval))
             {
                 writer.WritePropertyName("reportingInterval"u8);

@@ -32,9 +32,23 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIPAddress.ToString());
+            if (StartIPAddress != null)
+            {
+                writer.WriteStringValue(StartIPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIPAddress.ToString());
+            if (EndIPAddress != null)
+            {
+                writer.WriteStringValue(EndIPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

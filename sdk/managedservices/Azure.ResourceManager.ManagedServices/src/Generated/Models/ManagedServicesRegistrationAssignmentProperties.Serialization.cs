@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("registrationDefinitionId"u8);
-            writer.WriteStringValue(RegistrationId);
+            if (RegistrationId != null)
+            {
+                writer.WriteStringValue(RegistrationId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -36,7 +43,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (options.Format != "W" && Optional.IsDefined(RegistrationDefinition))
             {
                 writer.WritePropertyName("registrationDefinition"u8);
-                writer.WriteObjectValue(RegistrationDefinition);
+                ((IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>)RegistrationDefinition).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

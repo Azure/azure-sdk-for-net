@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(Size);
             }
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            if (ReferenceTrigger != null)
+            {
+                ((IJsonModel<DataFactoryTriggerReference>)ReferenceTrigger).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

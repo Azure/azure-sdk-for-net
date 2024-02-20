@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue(MappingProperties);
+                ((IJsonModel<ConnectorMappingProperties>)MappingProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {

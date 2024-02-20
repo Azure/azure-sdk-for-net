@@ -43,7 +43,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     List<SparkSession> array = new List<SparkSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkSession.DeserializeSparkSession(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkSession.DeserializeSparkSession(item));
+                        }
                     }
                     sessions = array;
                     continue;

@@ -32,18 +32,46 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(ActiveLocation.Value.ToString());
             }
             writer.WritePropertyName("targetHciClusterId"u8);
-            writer.WriteStringValue(TargetHciClusterId);
+            if (TargetHciClusterId != null)
+            {
+                writer.WriteStringValue(TargetHciClusterId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetArcClusterCustomLocationId"u8);
-            writer.WriteStringValue(TargetArcClusterCustomLocationId);
+            if (TargetArcClusterCustomLocationId != null)
+            {
+                writer.WriteStringValue(TargetArcClusterCustomLocationId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(TargetAzStackHciClusterName))
             {
                 writer.WritePropertyName("targetAzStackHciClusterName"u8);
                 writer.WriteStringValue(TargetAzStackHciClusterName);
             }
             writer.WritePropertyName("storageContainerId"u8);
-            writer.WriteStringValue(StorageContainerId);
+            if (StorageContainerId != null)
+            {
+                writer.WriteStringValue(StorageContainerId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetResourceGroupId"u8);
-            writer.WriteStringValue(TargetResourceGroupId);
+            if (TargetResourceGroupId != null)
+            {
+                writer.WriteStringValue(TargetResourceGroupId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
@@ -55,14 +83,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VMwareToAzStackHciDiskInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("nicsToInclude"u8);
             writer.WriteStartArray();
             foreach (var item in NicsToInclude)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VMwareToAzStackHciNicInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
@@ -71,7 +113,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareToAzStackHciProtectedDiskProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +130,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareToAzStackHciProtectedNicProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                ((IJsonModel<ProtectedItemDynamicMemoryConfig>)DynamicMemoryConfig).Write(writer, options);
             }
             if (Optional.IsDefined(TargetMemoryInMegaBytes))
             {
@@ -143,7 +199,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(FirmwareType);
             }
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
-            writer.WriteStringValue(FabricDiscoveryMachineId);
+            if (FabricDiscoveryMachineId != null)
+            {
+                writer.WriteStringValue(FabricDiscoveryMachineId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(SourceVmName))
             {
                 writer.WritePropertyName("sourceVmName"u8);
@@ -380,7 +443,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciDiskInput> array = new List<VMwareToAzStackHciDiskInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciDiskInput.DeserializeVMwareToAzStackHciDiskInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareToAzStackHciDiskInput.DeserializeVMwareToAzStackHciDiskInput(item));
+                        }
                     }
                     disksToInclude = array;
                     continue;
@@ -390,7 +460,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciNicInput> array = new List<VMwareToAzStackHciNicInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciNicInput.DeserializeVMwareToAzStackHciNicInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareToAzStackHciNicInput.DeserializeVMwareToAzStackHciNicInput(item));
+                        }
                     }
                     nicsToInclude = array;
                     continue;
@@ -404,7 +481,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciProtectedDiskProperties> array = new List<VMwareToAzStackHciProtectedDiskProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciProtectedDiskProperties.DeserializeVMwareToAzStackHciProtectedDiskProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareToAzStackHciProtectedDiskProperties.DeserializeVMwareToAzStackHciProtectedDiskProperties(item));
+                        }
                     }
                     protectedDisks = array;
                     continue;
@@ -418,7 +502,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<VMwareToAzStackHciProtectedNicProperties> array = new List<VMwareToAzStackHciProtectedNicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareToAzStackHciProtectedNicProperties.DeserializeVMwareToAzStackHciProtectedNicProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareToAzStackHciProtectedNicProperties.DeserializeVMwareToAzStackHciProtectedNicProperties(item));
+                        }
                     }
                     protectedNics = array;
                     continue;

@@ -30,9 +30,23 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            if (Geometry != null)
+            {
+                ((IJsonModel<AreaGeometry>)Geometry).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties != null)
+            {
+                ((IJsonModel<AreaProperties>)Properties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

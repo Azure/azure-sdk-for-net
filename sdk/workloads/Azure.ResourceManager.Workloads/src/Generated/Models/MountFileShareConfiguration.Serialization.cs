@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Workloads.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(FileShareId);
+            if (FileShareId != null)
+            {
+                writer.WriteStringValue(FileShareId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("privateEndpointId"u8);
-            writer.WriteStringValue(PrivateEndpointId);
+            if (PrivateEndpointId != null)
+            {
+                writer.WriteStringValue(PrivateEndpointId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

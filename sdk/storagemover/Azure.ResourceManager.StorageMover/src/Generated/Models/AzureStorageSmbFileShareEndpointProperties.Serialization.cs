@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.StorageMover.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountResourceId"u8);
-            writer.WriteStringValue(StorageAccountResourceId);
+            if (StorageAccountResourceId != null)
+            {
+                writer.WriteStringValue(StorageAccountResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
             writer.WritePropertyName("endpointType"u8);

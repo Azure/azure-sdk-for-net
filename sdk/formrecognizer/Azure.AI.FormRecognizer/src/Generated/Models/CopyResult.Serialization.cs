@@ -38,7 +38,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        }
                     }
                     errors = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CostManagement
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                ((IJsonModel<AlertPropertiesDefinition>)Definition).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                ((IJsonModel<AlertPropertiesDetails>)Details).Write(writer, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {

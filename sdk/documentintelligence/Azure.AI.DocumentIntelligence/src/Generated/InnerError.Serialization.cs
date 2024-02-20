@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(InnerErrorObject))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerErrorObject);
+                ((IJsonModel<InnerError>)InnerErrorObject).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

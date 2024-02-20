@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ColumnNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningStudioInputColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<MachineLearningStudioInputColumn> array = new List<MachineLearningStudioInputColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item));
+                        }
                     }
                     columnNames = array;
                     continue;

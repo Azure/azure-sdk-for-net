@@ -42,19 +42,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobFunctionInput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                ((IJsonModel<StreamingJobFunctionOutput>)Output).Write(writer, options);
             }
             if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
-                writer.WriteObjectValue(Binding);
+                ((IJsonModel<StreamingJobFunctionBinding>)Binding).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                }
                             }
                             inputs = array;
                             continue;

@@ -37,14 +37,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CategoryConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CategoryConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration);
+                ((IJsonModel<TargetBranchConfiguration>)BranchConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(InheritFromParentState))
             {
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CategoryConfiguration> array = new List<CategoryConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item));
+                        }
                     }
                     categoryConfigurations = array;
                     continue;

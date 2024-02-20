@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedSecurityRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +85,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in EffectiveNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EffectiveNetworkSecurityGroups>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +188,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                                }
                             }
                             rules = array;
                             continue;
@@ -190,7 +218,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<EffectiveNetworkSecurityGroups> array = new List<EffectiveNetworkSecurityGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.EffectiveNetworkSecurityGroups.DeserializeEffectiveNetworkSecurityGroups(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.EffectiveNetworkSecurityGroups.DeserializeEffectiveNetworkSecurityGroups(item));
+                                }
                             }
                             effectiveNetworkSecurityGroups = array;
                             continue;

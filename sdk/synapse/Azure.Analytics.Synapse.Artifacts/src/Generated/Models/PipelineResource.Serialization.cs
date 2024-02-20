@@ -32,7 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +68,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -69,12 +90,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -85,12 +108,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in RunDimensions)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -173,7 +198,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<Activity> array = new List<Activity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Activity.DeserializeActivity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Activity.DeserializeActivity(item));
+                                }
                             }
                             activities = array;
                             continue;
@@ -187,7 +219,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterSpecification.DeserializeParameterSpecification(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ParameterSpecification.DeserializeParameterSpecification(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;
@@ -201,7 +240,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, VariableSpecification> dictionary = new Dictionary<string, VariableSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, VariableSpecification.DeserializeVariableSpecification(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, VariableSpecification.DeserializeVariableSpecification(property1.Value));
+                                }
                             }
                             variables = dictionary;
                             continue;

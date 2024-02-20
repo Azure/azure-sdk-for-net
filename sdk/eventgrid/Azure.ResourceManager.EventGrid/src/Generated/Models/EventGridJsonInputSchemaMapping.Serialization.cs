@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteObjectValue(Id);
+                ((IJsonModel<JsonField>)Id).Write(writer, options);
             }
             if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
-                writer.WriteObjectValue(Topic);
+                ((IJsonModel<JsonField>)Topic).Write(writer, options);
             }
             if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
-                writer.WriteObjectValue(EventTime);
+                ((IJsonModel<JsonField>)EventTime).Write(writer, options);
             }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
-                writer.WriteObjectValue(EventType);
+                ((IJsonModel<JsonFieldWithDefault>)EventType).Write(writer, options);
             }
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
-                writer.WriteObjectValue(Subject);
+                ((IJsonModel<JsonFieldWithDefault>)Subject).Write(writer, options);
             }
             if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
-                writer.WriteObjectValue(DataVersion);
+                ((IJsonModel<JsonFieldWithDefault>)DataVersion).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

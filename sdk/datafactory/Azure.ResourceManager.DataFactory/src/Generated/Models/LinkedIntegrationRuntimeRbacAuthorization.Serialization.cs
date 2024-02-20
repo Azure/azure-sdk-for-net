@@ -27,11 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);

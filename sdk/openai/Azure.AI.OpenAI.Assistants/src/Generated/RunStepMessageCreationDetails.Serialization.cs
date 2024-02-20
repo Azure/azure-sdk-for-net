@@ -28,7 +28,14 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("message_creation"u8);
-            writer.WriteObjectValue(MessageCreation);
+            if (MessageCreation != null)
+            {
+                ((IJsonModel<RunStepMessageCreationReference>)MessageCreation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

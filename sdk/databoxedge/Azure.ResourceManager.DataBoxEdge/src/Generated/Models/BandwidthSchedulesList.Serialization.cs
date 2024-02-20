@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BandwidthScheduleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<BandwidthScheduleData> array = new List<BandwidthScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item));
+                        }
                     }
                     value = array;
                     continue;

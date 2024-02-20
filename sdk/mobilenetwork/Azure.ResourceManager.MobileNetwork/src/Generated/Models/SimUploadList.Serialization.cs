@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in Sims)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SimNameAndProperties>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<SimNameAndProperties> array = new List<SimNameAndProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item));
+                        }
                     }
                     sims = array;
                     continue;

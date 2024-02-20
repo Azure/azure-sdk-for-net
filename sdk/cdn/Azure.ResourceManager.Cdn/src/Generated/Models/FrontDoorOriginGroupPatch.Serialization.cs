@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings);
+                ((IJsonModel<LoadBalancingSettings>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings);
+                ((IJsonModel<HealthProbeSettings>)HealthProbeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {

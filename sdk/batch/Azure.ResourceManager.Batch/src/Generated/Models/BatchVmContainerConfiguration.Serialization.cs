@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchVmContainerRegistry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +128,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        }
                     }
                     containerRegistries = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VideoGroupVideo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroupVideo> array = new List<VideoGroupVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        }
                     }
                     videos = array;
                     continue;

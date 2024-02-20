@@ -36,9 +36,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("authenticationIdentity"u8);
-            writer.WriteObjectValue(AuthenticationIdentity);
+            if (AuthenticationIdentity != null)
+            {
+                ((IJsonModel<DataReplicationIdentity>)AuthenticationIdentity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("resourceAccessIdentity"u8);
-            writer.WriteObjectValue(ResourceAccessIdentity);
+            if (ResourceAccessIdentity != null)
+            {
+                ((IJsonModel<DataReplicationIdentity>)ResourceAccessIdentity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
@@ -65,12 +79,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            if (CustomProperties != null)
+            {
+                ((IJsonModel<DraModelCustomProperties>)CustomProperties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -190,7 +218,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        }
                     }
                     healthErrors = array;
                     continue;

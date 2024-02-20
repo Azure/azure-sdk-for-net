@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GitHubRepoData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubRepoData> array = new List<GitHubRepoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubRepoData.DeserializeGitHubRepoData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GitHubRepoData.DeserializeGitHubRepoData(item));
+                        }
                     }
                     value = array;
                     continue;

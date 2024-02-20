@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,12 +70,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications"u8);
-                writer.WriteObjectValue(AlertNotifications);
+                ((IJsonModel<SecurityContactPropertiesAlertNotifications>)AlertNotifications).Write(writer, options);
             }
             if (Optional.IsDefined(NotificationsByRole))
             {
                 writer.WritePropertyName("notificationsByRole"u8);
-                writer.WriteObjectValue(NotificationsByRole);
+                ((IJsonModel<SecurityContactPropertiesNotificationsByRole>)NotificationsByRole).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

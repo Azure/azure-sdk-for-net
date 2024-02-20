@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
-                writer.WriteObjectValue(Akamai);
+                ((IJsonModel<AkamaiAccessControl>)Akamai).Write(writer, options);
             }
             if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue(IPs);
+                ((IJsonModel<IPAccessControl>)IPs).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,19 +32,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceProviderAuthorization>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication);
+                ((IJsonModel<ResourceProviderAuthentication>)ProviderAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
-                writer.WriteObjectValue(ThirdPartyProviderAuthorization);
+                ((IJsonModel<ThirdPartyProviderAuthorization>)ThirdPartyProviderAuthorization).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item));
+                        }
                     }
                     providerAuthorizations = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue(Requests);
+                ((IJsonModel<RequestsBasedTrigger>)Requests).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -42,14 +42,21 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StatusCodesBasedTrigger>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue(SlowRequests);
+                ((IJsonModel<SlowRequestsBasedTrigger>)SlowRequests).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SlowRequestsBasedTrigger>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +81,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StatusCodesRangeBasedTrigger>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +167,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item));
+                        }
                     }
                     statusCodes = array;
                     continue;
@@ -169,7 +197,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item));
+                        }
                     }
                     slowRequestsWithPath = array;
                     continue;
@@ -183,7 +218,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item));
+                        }
                     }
                     statusCodesRange = array;
                     continue;

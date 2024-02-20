@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (JobStatus != null)
                 {
                     writer.WritePropertyName("jobStatus"u8);
-                    writer.WriteObjectValue(JobStatus);
+                    ((IJsonModel<MoverResourceJobStatus>)JobStatus).Write(writer, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors);
+                    ((IJsonModel<MoveResourceError>)Errors).Write(writer, options);
                 }
                 else
                 {

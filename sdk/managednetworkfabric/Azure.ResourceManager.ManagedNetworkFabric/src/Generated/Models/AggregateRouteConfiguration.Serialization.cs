@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AggregateRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AggregateRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        }
                     }
                     ipv4Routes = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        }
                     }
                     ipv6Routes = array;
                     continue;

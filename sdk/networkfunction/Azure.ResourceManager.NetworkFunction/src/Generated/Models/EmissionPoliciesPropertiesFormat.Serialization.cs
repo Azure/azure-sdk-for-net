@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in EmissionDestinations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmissionPolicyDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<EmissionPolicyDestination> array = new List<EmissionPolicyDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item));
+                        }
                     }
                     emissionDestinations = array;
                     continue;

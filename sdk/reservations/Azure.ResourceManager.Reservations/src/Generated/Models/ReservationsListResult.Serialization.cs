@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationDetailData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue(Summary);
+                ((IJsonModel<ReservationSummary>)Summary).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationDetailData> array = new List<ReservationDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                        }
                     }
                     value = array;
                     continue;

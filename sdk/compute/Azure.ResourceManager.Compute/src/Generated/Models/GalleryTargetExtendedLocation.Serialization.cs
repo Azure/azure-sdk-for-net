@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<GalleryExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<EncryptionImages>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

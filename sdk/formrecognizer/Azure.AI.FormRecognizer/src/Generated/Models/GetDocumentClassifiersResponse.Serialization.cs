@@ -29,7 +29,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentClassifierDetails> array = new List<DocumentClassifierDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentClassifierDetails.DeserializeDocumentClassifierDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentClassifierDetails.DeserializeDocumentClassifierDetails(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("webTestId"u8);
-            writer.WriteStringValue(WebTestId);
+            if (WebTestId != null)
+            {
+                writer.WriteStringValue(WebTestId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("componentId"u8);
-            writer.WriteStringValue(ComponentId);
+            if (ComponentId != null)
+            {
+                writer.WriteStringValue(ComponentId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("failedLocationCount"u8);
             writer.WriteNumberValue(FailedLocationCount);
             writer.WritePropertyName("odata.type"u8);

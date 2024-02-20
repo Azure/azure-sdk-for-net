@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(ActionStatus))
             {
                 writer.WritePropertyName("actionStatus"u8);
-                writer.WriteObjectValue(ActionStatus);
+                ((IJsonModel<ServiceAlertActionStatus>)ActionStatus).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {

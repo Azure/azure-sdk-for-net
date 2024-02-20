@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("serviceUri"u8);
-            writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            if (ServiceUri != null)
+            {
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);

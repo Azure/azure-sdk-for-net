@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -57,12 +64,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterStorageCapacityInfo);
+                ((IJsonModel<EdgeClusterStorageViewInfo>)ClusterStorageCapacityInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterComputeCapacityInfo);
+                ((IJsonModel<EdgeClusterCapacityViewInfo>)ClusterComputeCapacityInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in NodeCapacityInfos)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<HostCapacity>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -195,7 +209,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             Dictionary<string, HostCapacity> dictionary = new Dictionary<string, HostCapacity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
+                                }
                             }
                             nodeCapacityInfos = dictionary;
                             continue;

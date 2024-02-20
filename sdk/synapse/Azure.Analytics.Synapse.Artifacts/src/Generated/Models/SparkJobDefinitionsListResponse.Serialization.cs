@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<SparkJobDefinitionResource> array = new List<SparkJobDefinitionResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(item));
+                        }
                     }
                     value = array;
                     continue;

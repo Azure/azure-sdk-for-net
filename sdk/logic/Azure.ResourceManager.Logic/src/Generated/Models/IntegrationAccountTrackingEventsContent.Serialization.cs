@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in Events)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<IntegrationAccountTrackingEvent>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountTrackingEvent> array = new List<IntegrationAccountTrackingEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item));
+                        }
                     }
                     events = array;
                     continue;

@@ -32,15 +32,29 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
+            if (VirtualMachineConfiguration != null)
+            {
+                ((IJsonModel<SapVirtualMachineConfiguration>)VirtualMachineConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
             if (Optional.IsDefined(DiskConfiguration))
             {
                 writer.WritePropertyName("diskConfiguration"u8);
-                writer.WriteObjectValue(DiskConfiguration);
+                ((IJsonModel<DiskConfiguration>)DiskConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

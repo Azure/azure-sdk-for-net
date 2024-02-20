@@ -28,9 +28,23 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("customDocumentModels"u8);
-            writer.WriteObjectValue(CustomDocumentModels);
+            if (CustomDocumentModels != null)
+            {
+                ((IJsonModel<CustomDocumentModelsDetails>)CustomDocumentModels).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
-            writer.WriteObjectValue(CustomNeuralDocumentModelBuilds);
+            if (CustomNeuralDocumentModelBuilds != null)
+            {
+                ((IJsonModel<QuotaDetails>)CustomNeuralDocumentModelBuilds).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

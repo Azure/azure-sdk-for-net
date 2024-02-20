@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourcesResponseEndpointsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourcesResponseCustomDomainsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseEndpointsItem> array = new List<ResourcesResponseEndpointsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item));
+                        }
                     }
                     endpoints = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseCustomDomainsItem> array = new List<ResourcesResponseCustomDomainsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item));
+                        }
                     }
                     customDomains = array;
                     continue;

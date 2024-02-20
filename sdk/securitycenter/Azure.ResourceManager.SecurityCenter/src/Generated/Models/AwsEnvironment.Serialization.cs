@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData);
+                ((IJsonModel<AwsOrganizationalInfo>)OrganizationalData).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Regions))
             {

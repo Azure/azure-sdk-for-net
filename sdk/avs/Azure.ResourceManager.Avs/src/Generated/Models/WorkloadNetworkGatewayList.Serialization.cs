@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkloadNetworkGatewayData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkGatewayData> array = new List<WorkloadNetworkGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(item));
+                        }
                     }
                     value = array;
                     continue;

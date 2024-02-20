@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapVirtualInstanceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapVirtualInstanceData> array = new List<SapVirtualInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item));
+                        }
                     }
                     value = array;
                     continue;

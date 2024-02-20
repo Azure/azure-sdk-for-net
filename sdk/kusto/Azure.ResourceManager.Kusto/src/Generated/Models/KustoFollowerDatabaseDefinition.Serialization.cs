@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Kusto.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("clusterResourceId"u8);
-            writer.WriteStringValue(ClusterResourceId);
+            if (ClusterResourceId != null)
+            {
+                writer.WriteStringValue(ClusterResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
             if (options.Format != "W" && Optional.IsDefined(DatabaseName))
@@ -38,7 +45,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {

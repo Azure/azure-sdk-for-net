@@ -22,7 +22,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +60,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<PipelineTopology> array = new List<PipelineTopology>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineTopology.DeserializePipelineTopology(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineTopology.DeserializePipelineTopology(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.HealthcareApis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -83,12 +90,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
-                writer.WriteObjectValue(IngestionEndpointConfiguration);
+                ((IJsonModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>)IngestionEndpointConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
-                writer.WriteObjectValue(DeviceMapping);
+                ((IJsonModel<HealthcareApisIotMappingProperties>)DeviceMapping).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

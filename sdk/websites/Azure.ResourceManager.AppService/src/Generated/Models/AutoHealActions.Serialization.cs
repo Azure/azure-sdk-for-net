@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
-                writer.WriteObjectValue(CustomAction);
+                ((IJsonModel<AutoHealCustomAction>)CustomAction).Write(writer, options);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(OverrideSettings))
             {
                 writer.WritePropertyName("overrideSettings"u8);
-                writer.WriteObjectValue(OverrideSettings);
+                ((IJsonModel<UpgradeOverrideSettings>)OverrideSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

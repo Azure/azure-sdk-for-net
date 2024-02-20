@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BlobContainerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobContainerData> array = new List<BlobContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobContainerData.DeserializeBlobContainerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BlobContainerData.DeserializeBlobContainerData(item));
+                        }
                     }
                     value = array;
                     continue;

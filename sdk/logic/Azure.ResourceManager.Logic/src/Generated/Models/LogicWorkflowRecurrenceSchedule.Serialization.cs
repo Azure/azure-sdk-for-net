@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogicWorkflowRecurrenceScheduleOccurrence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +195,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRecurrenceScheduleOccurrence> array = new List<LogicWorkflowRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item));
+                        }
                     }
                     monthlyOccurrences = array;
                     continue;

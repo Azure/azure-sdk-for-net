@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationJobScheduleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationJobScheduleData> array = new List<AutomationJobScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationJobScheduleData.DeserializeAutomationJobScheduleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationJobScheduleData.DeserializeAutomationJobScheduleData(item));
+                        }
                     }
                     value = array;
                     continue;

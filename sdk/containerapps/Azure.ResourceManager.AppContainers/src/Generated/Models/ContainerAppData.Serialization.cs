@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<ContainerAppExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -123,12 +130,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<ContainerAppConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                ((IJsonModel<ContainerAppTemplate>)Template).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
             {
@@ -136,12 +143,14 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in OutboundIPAddressList)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

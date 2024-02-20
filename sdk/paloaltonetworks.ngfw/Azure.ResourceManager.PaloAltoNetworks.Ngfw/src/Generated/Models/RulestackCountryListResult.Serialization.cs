@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RulestackCountry>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<RulestackCountry> array = new List<RulestackCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulestackCountry.DeserializeRulestackCountry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RulestackCountry.DeserializeRulestackCountry(item));
+                        }
                     }
                     value = array;
                     continue;

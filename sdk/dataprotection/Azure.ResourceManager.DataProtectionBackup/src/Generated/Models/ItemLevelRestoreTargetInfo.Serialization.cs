@@ -30,20 +30,34 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ItemLevelRestoreCriteria>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DatasourceInfo);
+            if (DatasourceInfo != null)
+            {
+                ((IJsonModel<DataSourceInfo>)DatasourceInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DatasourceSetInfo);
+                ((IJsonModel<DataSourceSetInfo>)DatasourceSetInfo).Write(writer, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DatasourceAuthCredentials);
+                ((IJsonModel<DataProtectionBackupAuthCredentials>)DatasourceAuthCredentials).Write(writer, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -108,7 +122,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ItemLevelRestoreCriteria> array = new List<ItemLevelRestoreCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemLevelRestoreCriteria.DeserializeItemLevelRestoreCriteria(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ItemLevelRestoreCriteria.DeserializeItemLevelRestoreCriteria(item));
+                        }
                     }
                     restoreCriteria = array;
                     continue;

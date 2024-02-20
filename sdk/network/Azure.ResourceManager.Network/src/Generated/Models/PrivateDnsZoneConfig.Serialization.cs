@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecordSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecordSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +129,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<RecordSet> array = new List<RecordSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecordSet.DeserializeRecordSet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecordSet.DeserializeRecordSet(item));
+                                }
                             }
                             recordSets = array;
                             continue;

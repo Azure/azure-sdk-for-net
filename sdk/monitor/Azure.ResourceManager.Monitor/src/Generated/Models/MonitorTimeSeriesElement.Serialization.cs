@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadatavalues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorMetadataValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorMetricValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetadataValue> array = new List<MonitorMetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        }
                     }
                     metadatavalues = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricValue> array = new List<MonitorMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        }
                     }
                     data = array;
                     continue;

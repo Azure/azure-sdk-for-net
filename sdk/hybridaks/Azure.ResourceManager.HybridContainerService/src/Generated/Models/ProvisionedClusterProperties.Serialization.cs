@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                ((IJsonModel<LinuxProfileProperties>)LinuxProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
-                writer.WriteObjectValue(ControlPlane);
+                ((IJsonModel<ProvisionedClusterControlPlaneProfile>)ControlPlane).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<ProvisionedClusterNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<StorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterVmAccessProfile))
             {
                 writer.WritePropertyName("clusterVMAccessProfile"u8);
-                writer.WriteObjectValue(ClusterVmAccessProfile);
+                ((IJsonModel<ClusterVmAccessProfile>)ClusterVmAccessProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
@@ -62,14 +62,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridContainerServiceNamedAgentPoolProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
-                writer.WriteObjectValue(CloudProviderProfile);
+                ((IJsonModel<ProvisionedClusterCloudProviderProfile>)CloudProviderProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -79,17 +86,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ProvisionedClusterStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue(LicenseProfile);
+                ((IJsonModel<ProvisionedClusterLicenseProfile>)LicenseProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile);
+                ((IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>)AutoScalerProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -204,7 +211,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceNamedAgentPoolProfile> array = new List<HybridContainerServiceNamedAgentPoolProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item));
+                        }
                     }
                     agentPoolProfiles = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<USProgramBrief> array = new List<USProgramBrief>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(USProgramBrief.DeserializeUSProgramBrief(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(USProgramBrief.DeserializeUSProgramBrief(item));
+                        }
                     }
                     programBriefs = array;
                     continue;

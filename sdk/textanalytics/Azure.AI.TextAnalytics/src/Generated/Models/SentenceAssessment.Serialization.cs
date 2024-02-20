@@ -18,7 +18,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            if (ConfidenceScores != null)
+            {
+                writer.WriteObjectValue(ConfidenceScores);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);

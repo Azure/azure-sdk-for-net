@@ -33,7 +33,14 @@ namespace Azure.Quantum.Jobs.Models
                     List<JobDetails> array = new List<JobDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobDetails.DeserializeJobDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JobDetails.DeserializeJobDetails(item));
+                        }
                     }
                     value = array;
                     continue;

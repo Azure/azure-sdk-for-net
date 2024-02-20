@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ReplicationProviderSettings))
             {
                 writer.WritePropertyName("replicationProviderSettings"u8);
-                writer.WriteObjectValue(ReplicationProviderSettings);
+                ((IJsonModel<PolicyProviderSpecificContent>)ReplicationProviderSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

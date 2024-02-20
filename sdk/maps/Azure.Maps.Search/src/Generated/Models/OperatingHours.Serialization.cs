@@ -37,7 +37,14 @@ namespace Azure.Maps.Search.Models
                     List<OperatingHoursTimeRange> array = new List<OperatingHoursTimeRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperatingHoursTimeRange.DeserializeOperatingHoursTimeRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperatingHoursTimeRange.DeserializeOperatingHoursTimeRange(item));
+                        }
                     }
                     timeRanges = array;
                     continue;

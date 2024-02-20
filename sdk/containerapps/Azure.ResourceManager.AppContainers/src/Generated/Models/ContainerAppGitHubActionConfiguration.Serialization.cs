@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
-                writer.WriteObjectValue(RegistryInfo);
+                ((IJsonModel<ContainerAppRegistryInfo>)RegistryInfo).Write(writer, options);
             }
             if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
-                writer.WriteObjectValue(AzureCredentials);
+                ((IJsonModel<ContainerAppCredentials>)AzureCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(ContextPath))
             {

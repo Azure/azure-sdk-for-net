@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                ((IJsonModel<CognitiveServicesCapacityConfig>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAccountCallRateLimit>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +147,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountCallRateLimit> array = new List<ServiceAccountCallRateLimit>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item));
+                        }
                     }
                     rateLimits = array;
                     continue;

@@ -26,7 +26,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(SourceDisplayName);
             }
             writer.WritePropertyName("participantToAdd"u8);
-            writer.WriteObjectValue(ParticipantToAdd);
+            if (ParticipantToAdd != null)
+            {
+                writer.WriteObjectValue(ParticipantToAdd);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ArcScVmm
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation);
+            if (ExtendedLocation != null)
+            {
+                JsonSerializer.Serialize(writer, ExtendedLocation);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.ArcScVmm
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -147,7 +161,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkInterfaces>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +178,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -411,7 +439,14 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<NetworkInterfaces> array = new List<NetworkInterfaces>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                }
                             }
                             networkInterfaces = array;
                             continue;
@@ -425,7 +460,14 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<VirtualDisk> array = new List<VirtualDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                                }
                             }
                             disks = array;
                             continue;

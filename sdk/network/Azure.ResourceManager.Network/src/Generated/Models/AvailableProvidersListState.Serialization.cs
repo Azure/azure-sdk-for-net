@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Cities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableProvidersListCity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
+                        }
                     }
                     cities = array;
                     continue;

@@ -20,7 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(Text);
+            if (Text != null)
+            {
+                writer.WriteObjectValue(Text);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Parameters))
@@ -29,7 +36,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +80,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ScriptActivityParameter> array = new List<ScriptActivityParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

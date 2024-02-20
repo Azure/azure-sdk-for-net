@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                ((IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualNetworkGatewayIPConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -130,12 +137,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<VirtualNetworkGatewaySku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(VpnClientConfiguration))
             {
                 writer.WritePropertyName("vpnClientConfiguration"u8);
-                writer.WriteObjectValue(VpnClientConfiguration);
+                ((IJsonModel<VpnClientConfiguration>)VpnClientConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -143,19 +150,26 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkGatewayPolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualNetworkGatewayPolicyGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings);
+                ((IJsonModel<BgpSettings>)BgpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRoutes))
             {
                 writer.WritePropertyName("customRoutes"u8);
-                writer.WriteObjectValue(CustomRoutes);
+                ((IJsonModel<AddressSpace>)CustomRoutes).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -188,7 +202,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualNetworkGatewayNatRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -378,7 +399,14 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item));
+                                }
                             }
                             ipConfigurations = array;
                             continue;
@@ -482,7 +510,14 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayPolicyGroup> array = new List<VirtualNetworkGatewayPolicyGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item));
+                                }
                             }
                             virtualNetworkGatewayPolicyGroups = array;
                             continue;
@@ -555,7 +590,14 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayNatRuleData> array = new List<VirtualNetworkGatewayNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(item));
+                                }
                             }
                             natRules = array;
                             continue;

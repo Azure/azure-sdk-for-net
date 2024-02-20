@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                ((IJsonModel<CalculatePriceResultPropertiesBillingCurrencyTotal>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(NetTotal))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                ((IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PaymentSchedule))
             {
@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PaymentSchedule)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PaymentDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +237,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<PaymentDetail> array = new List<PaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        }
                     }
                     paymentSchedule = array;
                     continue;

@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -86,14 +93,21 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppAccountActiveDirectory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<NetAppAccountEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
@@ -247,7 +261,14 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
+                                }
                             }
                             activeDirectories = array;
                             continue;

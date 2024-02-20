@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JsonWebKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        }
                     }
                     keys = array;
                     continue;

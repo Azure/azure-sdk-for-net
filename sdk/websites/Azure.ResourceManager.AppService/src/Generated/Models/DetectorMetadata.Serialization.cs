@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                ((IJsonModel<DetectorDataSource>)DataSource).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

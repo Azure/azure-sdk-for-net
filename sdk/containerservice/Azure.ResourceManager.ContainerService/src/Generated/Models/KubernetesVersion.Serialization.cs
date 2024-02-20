@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                ((IJsonModel<KubernetesVersionCapabilities>)Capabilities).Write(writer, options);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<KubernetesPatchVersion>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     Dictionary<string, KubernetesPatchVersion> dictionary = new Dictionary<string, KubernetesPatchVersion>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value));
+                        }
                     }
                     patchVersions = dictionary;
                     continue;

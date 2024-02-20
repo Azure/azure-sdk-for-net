@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementOpenIdConnectProviderData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementOpenIdConnectProviderData> array = new List<ApiManagementOpenIdConnectProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                ((IJsonModel<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig>)DynamicMemoryConfig).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

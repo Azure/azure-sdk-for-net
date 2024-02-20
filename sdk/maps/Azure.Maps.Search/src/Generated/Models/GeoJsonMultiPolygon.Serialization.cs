@@ -20,37 +20,43 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
-                if (item == null)
+                if (item != null)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    if (item0 == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStartArray();
-                    foreach (var item1 in item0)
+                    foreach (var item0 in item)
                     {
-                        if (item1 == null)
+                        if (item0 != null)
+                        {
+                            writer.WriteStartArray();
+                            foreach (var item1 in item0)
+                            {
+                                if (item1 != null)
+                                {
+                                    writer.WriteStartArray();
+                                    foreach (var item2 in item1)
+                                    {
+                                        writer.WriteNumberValue(item2);
+                                    }
+                                    writer.WriteEndArray();
+                                }
+                                else
+                                {
+                                    writer.WriteNullValue();
+                                }
+                            }
+                            writer.WriteEndArray();
+                        }
+                        else
                         {
                             writer.WriteNullValue();
-                            continue;
                         }
-                        writer.WriteStartArray();
-                        foreach (var item2 in item1)
-                        {
-                            writer.WriteNumberValue(item2);
-                        }
-                        writer.WriteEndArray();
                     }
                     writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.LabServices
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,27 +73,27 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                ((IJsonModel<LabAutoShutdownProfile>)AutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                ((IJsonModel<LabConnectionProfile>)ConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                ((IJsonModel<LabVirtualMachineProfile>)VirtualMachineProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<LabSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                ((IJsonModel<LabRosterProfile>)RosterProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<LabNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {

@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            if (Configuration != null)
+            {
+                ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

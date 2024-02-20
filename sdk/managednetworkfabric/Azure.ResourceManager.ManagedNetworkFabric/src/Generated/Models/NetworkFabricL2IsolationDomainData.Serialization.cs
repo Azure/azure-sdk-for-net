@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("networkFabricId"u8);
-            writer.WriteStringValue(NetworkFabricId);
+            if (NetworkFabricId != null)
+            {
+                writer.WriteStringValue(NetworkFabricId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
             if (Optional.IsDefined(Mtu))

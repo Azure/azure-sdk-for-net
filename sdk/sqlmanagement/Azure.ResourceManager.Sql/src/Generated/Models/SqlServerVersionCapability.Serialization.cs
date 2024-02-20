@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EditionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedElasticPoolEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticPoolEditionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +136,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EditionCapability> array = new List<EditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EditionCapability.DeserializeEditionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EditionCapability.DeserializeEditionCapability(item));
+                        }
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +157,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolEditionCapability> array = new List<ElasticPoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
+                        }
                     }
                     supportedElasticPoolEditions = array;
                     continue;

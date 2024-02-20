@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkToNetworkInterconnectData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkToNetworkInterconnectData> array = new List<NetworkToNetworkInterconnectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(item));
+                        }
                     }
                     value = array;
                     continue;

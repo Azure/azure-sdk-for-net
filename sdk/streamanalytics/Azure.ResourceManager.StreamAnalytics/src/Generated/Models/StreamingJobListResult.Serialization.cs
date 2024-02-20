@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobData> array = new List<StreamingJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobData.DeserializeStreamingJobData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingJobData.DeserializeStreamingJobData(item));
+                        }
                     }
                     value = array;
                     continue;

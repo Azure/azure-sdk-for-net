@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SystemServices)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<MachineLearningComputeSystemService>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration);
+                    ((IJsonModel<MachineLearningSslConfiguration>)SslConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration);
+                    ((IJsonModel<MachineLearningAksNetworkingConfiguration>)AksNetworkingConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -196,7 +203,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeSystemService> array = new List<MachineLearningComputeSystemService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeSystemService.DeserializeMachineLearningComputeSystemService(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningComputeSystemService.DeserializeMachineLearningComputeSystemService(item));
+                        }
                     }
                     systemServices = array;
                     continue;

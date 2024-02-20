@@ -50,7 +50,14 @@ namespace Azure.AI.Language.QuestionAnswering
                     List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeError(item));
+                        }
                     }
                     details = array;
                     continue;

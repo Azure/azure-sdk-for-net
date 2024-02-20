@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NicIPConfigurationResourceSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +149,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<NicIPConfigurationResourceSettings> array = new List<NicIPConfigurationResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicIPConfigurationResourceSettings.DeserializeNicIPConfigurationResourceSettings(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NicIPConfigurationResourceSettings.DeserializeNicIPConfigurationResourceSettings(item));
+                        }
                     }
                     ipConfigurations = array;
                     continue;

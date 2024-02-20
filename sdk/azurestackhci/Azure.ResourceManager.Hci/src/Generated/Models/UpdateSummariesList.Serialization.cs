@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UpdateSummaryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Hci.Models
                     List<UpdateSummaryData> array = new List<UpdateSummaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateSummaryData.DeserializeUpdateSummaryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UpdateSummaryData.DeserializeUpdateSummaryData(item));
+                        }
                     }
                     value = array;
                     continue;

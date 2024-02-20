@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Support
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -103,17 +110,17 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                ((IJsonModel<SupportContactProfile>)ContactDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement);
+                ((IJsonModel<SupportServiceLevelAgreement>)ServiceLevelAgreement).Write(writer, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer);
+                ((IJsonModel<SupportEngineer>)SupportEngineer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -168,12 +175,12 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails);
+                ((IJsonModel<TechnicalTicketDetails>)TechnicalTicketDetails).Write(writer, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails);
+                ((IJsonModel<QuotaTicketDetails>)QuotaTicketDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -181,7 +188,14 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecondaryConsent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -469,7 +483,14 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsent> array = new List<SecondaryConsent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                                }
                             }
                             secondaryConsent = array;
                             continue;

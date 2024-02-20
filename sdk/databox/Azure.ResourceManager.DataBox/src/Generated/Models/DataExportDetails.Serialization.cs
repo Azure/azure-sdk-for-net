@@ -27,14 +27,28 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
-            writer.WriteObjectValue(TransferConfiguration);
+            if (TransferConfiguration != null)
+            {
+                ((IJsonModel<TransferConfiguration>)TransferConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
+            if (AccountDetails != null)
+            {
+                ((IJsonModel<DataAccountDetails>)AccountDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

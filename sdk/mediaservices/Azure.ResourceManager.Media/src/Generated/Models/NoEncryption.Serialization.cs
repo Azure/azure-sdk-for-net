@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                ((IJsonModel<MediaEnabledProtocols>)EnabledProtocols).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

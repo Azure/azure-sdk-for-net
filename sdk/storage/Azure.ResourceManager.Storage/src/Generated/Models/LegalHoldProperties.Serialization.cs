@@ -37,14 +37,21 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LegalHoldTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedAppendWritesHistory))
             {
                 writer.WritePropertyName("protectedAppendWritesHistory"u8);
-                writer.WriteObjectValue(ProtectedAppendWritesHistory);
+                ((IJsonModel<ProtectedAppendWritesHistory>)ProtectedAppendWritesHistory).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
+                        }
                     }
                     tags = array;
                     continue;

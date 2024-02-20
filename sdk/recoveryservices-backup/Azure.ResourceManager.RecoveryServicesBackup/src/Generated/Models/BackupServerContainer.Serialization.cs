@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<DpmContainerExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {

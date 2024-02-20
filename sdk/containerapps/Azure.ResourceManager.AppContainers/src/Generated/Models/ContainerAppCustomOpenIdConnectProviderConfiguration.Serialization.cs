@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                ((IJsonModel<ContainerAppOpenIdConnectRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                ((IJsonModel<ContainerAppOpenIdConnectLogin>)Login).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

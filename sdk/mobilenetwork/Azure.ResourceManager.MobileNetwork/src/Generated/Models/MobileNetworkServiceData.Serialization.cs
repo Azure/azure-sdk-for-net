@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -73,13 +80,20 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(ServiceQosPolicy))
             {
                 writer.WritePropertyName("serviceQosPolicy"u8);
-                writer.WriteObjectValue(ServiceQosPolicy);
+                ((IJsonModel<MobileNetworkQosPolicy>)ServiceQosPolicy).Write(writer, options);
             }
             writer.WritePropertyName("pccRules"u8);
             writer.WriteStartArray();
             foreach (var item in PccRules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PccRuleConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -215,7 +229,14 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<PccRuleConfiguration> array = new List<PccRuleConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PccRuleConfiguration.DeserializePccRuleConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PccRuleConfiguration.DeserializePccRuleConfiguration(item));
+                                }
                             }
                             pccRules = array;
                             continue;

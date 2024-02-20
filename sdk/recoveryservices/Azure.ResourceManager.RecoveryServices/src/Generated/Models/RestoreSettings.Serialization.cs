@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
+                ((IJsonModel<CrossSubscriptionRestoreSettings>)CrossSubscriptionRestoreSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

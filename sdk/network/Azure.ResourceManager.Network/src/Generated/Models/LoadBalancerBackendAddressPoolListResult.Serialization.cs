@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackendAddressPoolData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                        }
                     }
                     value = array;
                     continue;

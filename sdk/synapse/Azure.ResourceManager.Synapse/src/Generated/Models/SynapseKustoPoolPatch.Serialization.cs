@@ -41,12 +41,19 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SynapseDataSourceSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                ((IJsonModel<SynapseOptimizedAutoscale>)OptimizedAutoscale).Write(writer, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
@@ -108,7 +115,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                ((IJsonModel<SynapseLanguageExtensionsList>)LanguageExtensions).Write(writer, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {

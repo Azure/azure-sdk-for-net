@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAssociationLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                        }
                     }
                     value = array;
                     continue;

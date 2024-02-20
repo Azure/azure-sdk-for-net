@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue(AccountInfo);
+                ((IJsonModel<DynatraceAccountInfo>)AccountInfo).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentInfo))
             {
                 writer.WritePropertyName("environmentInfo"u8);
-                writer.WriteObjectValue(EnvironmentInfo);
+                ((IJsonModel<DynatraceEnvironmentInfo>)EnvironmentInfo).Write(writer, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties);
+                ((IJsonModel<DynatraceSingleSignOnProperties>)SingleSignOnProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

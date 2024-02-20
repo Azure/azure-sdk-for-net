@@ -22,7 +22,14 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
+            if (ValueInternal != null)
+            {
+                writer.WriteObjectValue(ValueInternal);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
@@ -52,7 +59,14 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            if (DimensionFilter != null)
+            {
+                writer.WriteObjectValue(DimensionFilter);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

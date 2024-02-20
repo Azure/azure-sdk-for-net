@@ -31,7 +31,14 @@ namespace Azure.Communication.Messages
             writer.WriteStartArray();
             foreach (var item in Receipts)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MessageReceipt>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.Communication.Messages
                     List<MessageReceipt> array = new List<MessageReceipt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageReceipt.DeserializeMessageReceipt(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MessageReceipt.DeserializeMessageReceipt(item));
+                        }
                     }
                     receipts = array;
                     continue;

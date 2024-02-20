@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ExecutionSummary)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptActionExecutionSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -187,7 +201,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptActionExecutionSummary> array = new List<ScriptActionExecutionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item));
+                        }
                     }
                     executionSummary = array;
                     continue;

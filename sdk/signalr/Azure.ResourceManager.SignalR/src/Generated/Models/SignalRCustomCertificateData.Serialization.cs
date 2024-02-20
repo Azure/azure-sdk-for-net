@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SignalR
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("keyVaultBaseUri"u8);
-            writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
+            if (KeyVaultBaseUri != null)
+            {
+                writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
             if (Optional.IsDefined(KeyVaultSecretVersion))

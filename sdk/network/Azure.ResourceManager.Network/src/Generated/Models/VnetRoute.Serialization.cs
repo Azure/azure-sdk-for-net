@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig);
+                ((IJsonModel<StaticRoutesConfig>)StaticRoutesConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StaticRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +55,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpConnections)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +129,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        }
                     }
                     staticRoutes = array;
                     continue;
@@ -129,7 +150,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     bgpConnections = array;
                     continue;

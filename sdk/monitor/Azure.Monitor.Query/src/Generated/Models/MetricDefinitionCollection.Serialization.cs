@@ -26,7 +26,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetricDefinition> array = new List<MetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDefinition.DeserializeMetricDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricDefinition.DeserializeMetricDefinition(item));
+                        }
                     }
                     value = array;
                     continue;

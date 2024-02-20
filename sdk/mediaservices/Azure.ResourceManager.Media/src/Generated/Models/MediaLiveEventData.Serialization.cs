@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Media
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,17 +78,17 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                ((IJsonModel<LiveEventInput>)Input).Write(writer, options);
             }
             if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteObjectValue(Preview);
+                ((IJsonModel<LiveEventPreview>)Preview).Write(writer, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue(Encoding);
+                ((IJsonModel<LiveEventEncoding>)Encoding).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Transcriptions))
             {
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Transcriptions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LiveEventTranscription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +120,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                writer.WriteObjectValue(CrossSiteAccessPolicies);
+                ((IJsonModel<CrossSiteAccessPolicies>)CrossSiteAccessPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(UseStaticHostname))
             {
@@ -293,7 +307,14 @@ namespace Azure.ResourceManager.Media
                             List<LiveEventTranscription> array = new List<LiveEventTranscription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item));
+                                }
                             }
                             transcriptions = array;
                             continue;

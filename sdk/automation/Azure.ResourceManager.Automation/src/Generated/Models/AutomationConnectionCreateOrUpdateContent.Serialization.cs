@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteObjectValue(ConnectionType);
+            if (ConnectionType != null)
+            {
+                ((IJsonModel<ConnectionTypeAssociationProperty>)ConnectionType).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(FieldDefinitionValues))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);

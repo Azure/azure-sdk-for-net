@@ -17,7 +17,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUri.AbsoluteUri);
+            if (ContainerUri != null)
+            {
+                writer.WriteStringValue(ContainerUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("fileList"u8);
             writer.WriteStringValue(FileList);
             writer.WriteEndObject();

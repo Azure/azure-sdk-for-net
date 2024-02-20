@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.AppConfiguration
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<AppConfigurationSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.AppConfiguration
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<AppConfigurationStoreEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -98,7 +112,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<AppConfigurationPrivateEndpointConnectionReference>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -301,7 +322,14 @@ namespace Azure.ResourceManager.AppConfiguration
                             List<AppConfigurationPrivateEndpointConnectionReference> array = new List<AppConfigurationPrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppConfigurationPrivateEndpointConnectionReference.DeserializeAppConfigurationPrivateEndpointConnectionReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AppConfigurationPrivateEndpointConnectionReference.DeserializeAppConfigurationPrivateEndpointConnectionReference(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

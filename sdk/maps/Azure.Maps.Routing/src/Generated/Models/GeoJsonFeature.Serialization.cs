@@ -16,7 +16,14 @@ namespace Azure.Maps.Routing.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            if (Geometry != null)
+            {
+                writer.WriteObjectValue(Geometry);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);

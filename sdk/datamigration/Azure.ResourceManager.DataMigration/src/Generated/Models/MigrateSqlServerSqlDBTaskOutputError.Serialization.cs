@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ReportableException>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {

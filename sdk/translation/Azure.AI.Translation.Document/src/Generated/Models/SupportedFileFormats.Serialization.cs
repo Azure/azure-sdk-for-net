@@ -27,7 +27,14 @@ namespace Azure.AI.Translation.Document.Models
                     List<DocumentTranslationFileFormat> array = new List<DocumentTranslationFileFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(item));
+                        }
                     }
                     value = array;
                     continue;

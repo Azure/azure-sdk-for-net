@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters);
+            if (CertificateSourceParameters != null)
+            {
+                ((IJsonModel<CdnCertificateSource>)CertificateSourceParameters).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);

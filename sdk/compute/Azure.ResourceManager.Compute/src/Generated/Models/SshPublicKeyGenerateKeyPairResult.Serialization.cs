@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("publicKey"u8);
             writer.WriteStringValue(PublicKey);
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

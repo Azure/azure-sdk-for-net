@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.DnsResolver
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -73,7 +80,14 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<InboundEndpointIPConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -205,7 +219,14 @@ namespace Azure.ResourceManager.DnsResolver
                             List<InboundEndpointIPConfiguration> array = new List<InboundEndpointIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundEndpointIPConfiguration.DeserializeInboundEndpointIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(InboundEndpointIPConfiguration.DeserializeInboundEndpointIPConfiguration(item));
+                                }
                             }
                             ipConfigurations = array;
                             continue;

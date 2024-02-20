@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Marketplace
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -108,12 +115,14 @@ namespace Azure.ResourceManager.Marketplace
                 foreach (var item in IconFileUris)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStringValue(item.Value.AbsoluteUri);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
                 }
                 writer.WriteEndObject();
             }
@@ -123,7 +132,14 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStorePlan>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -322,7 +338,14 @@ namespace Azure.ResourceManager.Marketplace
                             List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                                }
                             }
                             plans = array;
                             continue;

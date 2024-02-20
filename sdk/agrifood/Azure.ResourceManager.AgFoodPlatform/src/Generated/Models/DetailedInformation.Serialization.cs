@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue(UnitsSupported);
+                ((IJsonModel<UnitSystemsInfo>)UnitsSupported).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {

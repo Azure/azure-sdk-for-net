@@ -54,7 +54,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,18 +71,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("trainedModelName"u8);
-            writer.WriteObjectValue(TrainedModelName);
+            if (TrainedModelName != null)
+            {
+                writer.WriteObjectValue(TrainedModelName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
-            writer.WriteObjectValue(TrainedModelLinkedServiceName);
+            if (TrainedModelLinkedServiceName != null)
+            {
+                writer.WriteObjectValue(TrainedModelLinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("trainedModelFilePath"u8);
-            writer.WriteObjectValue(TrainedModelFilePath);
+            if (TrainedModelFilePath != null)
+            {
+                writer.WriteObjectValue(TrainedModelFilePath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -167,7 +202,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -181,7 +223,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserProperty.DeserializeUserProperty(item));
+                        }
                     }
                     userProperties = array;
                     continue;

@@ -30,13 +30,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ConfigurationFilters>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails);
+                ((IJsonModel<CustomerSubscriptionDetails>)CustomerSubscriptionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ConfigurationFilters> array = new List<ConfigurationFilters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item));
+                        }
                     }
                     configurationFilters = array;
                     continue;

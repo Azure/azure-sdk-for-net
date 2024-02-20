@@ -20,7 +20,14 @@ namespace Azure.Communication.PhoneNumbers
             writer.WritePropertyName("assignmentType"u8);
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities"u8);
-            writer.WriteObjectValue(Capabilities);
+            if (Capabilities != null)
+            {
+                writer.WriteObjectValue(Capabilities);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode"u8);

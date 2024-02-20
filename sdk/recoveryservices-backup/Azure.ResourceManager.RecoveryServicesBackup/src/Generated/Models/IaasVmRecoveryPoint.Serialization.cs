@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
-                writer.WriteObjectValue(KeyAndSecret);
+                ((IJsonModel<KeyAndSecretDetails>)KeyAndSecret).Write(writer, options);
             }
             if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecoveryPointTierInformationV2>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
-                writer.WriteObjectValue(RecoveryPointDiskConfiguration);
+                ((IJsonModel<RecoveryPointDiskConfiguration>)RecoveryPointDiskConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<RecoveryPointMoveReadinessInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -126,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties);
+                ((IJsonModel<RecoveryPointProperties>)RecoveryPointProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {
@@ -262,7 +276,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RecoveryPointTierInformationV2> array = new List<RecoveryPointTierInformationV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointTierInformationV2.DeserializeRecoveryPointTierInformationV2(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecoveryPointTierInformationV2.DeserializeRecoveryPointTierInformationV2(item));
+                        }
                     }
                     recoveryPointTierDetails = array;
                     continue;
@@ -327,7 +348,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, RecoveryPointMoveReadinessInfo> dictionary = new Dictionary<string, RecoveryPointMoveReadinessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(property0.Value));
+                        }
                     }
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;

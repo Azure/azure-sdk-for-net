@@ -42,14 +42,21 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentIntelligenceError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                ((IJsonModel<InnerError>)Innererror).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +129,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentIntelligenceError> array = new List<DocumentIntelligenceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentIntelligenceError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeDocumentIntelligenceError(item));
+                        }
                     }
                     details = array;
                     continue;

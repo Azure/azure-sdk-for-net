@@ -879,7 +879,14 @@ namespace Azure.ResourceManager.AppService
                         List<HostingEnvironmentDiagnostics> array = new List<HostingEnvironmentDiagnostics>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -913,7 +920,14 @@ namespace Azure.ResourceManager.AppService
                         List<HostingEnvironmentDiagnostics> array = new List<HostingEnvironmentDiagnostics>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1783,7 +1797,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceOperation> array = new List<AppServiceOperation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceOperation.DeserializeAppServiceOperation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceOperation.DeserializeAppServiceOperation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1817,7 +1838,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceOperation> array = new List<AppServiceOperation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceOperation.DeserializeAppServiceOperation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceOperation.DeserializeAppServiceOperation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

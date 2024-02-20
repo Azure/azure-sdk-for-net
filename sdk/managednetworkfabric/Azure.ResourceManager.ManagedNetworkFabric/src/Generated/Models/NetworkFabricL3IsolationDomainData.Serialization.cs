@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -81,15 +88,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration);
+                ((IJsonModel<AggregateRouteConfiguration>)AggregateRouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
+                ((IJsonModel<ConnectedSubnetRoutePolicy>)ConnectedSubnetRoutePolicy).Write(writer, options);
             }
             writer.WritePropertyName("networkFabricId"u8);
-            writer.WriteStringValue(NetworkFabricId);
+            if (NetworkFabricId != null)
+            {
+                writer.WriteStringValue(NetworkFabricId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);

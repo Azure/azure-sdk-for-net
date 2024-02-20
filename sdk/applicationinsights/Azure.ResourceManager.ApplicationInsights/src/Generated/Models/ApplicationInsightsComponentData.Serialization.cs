@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -172,7 +179,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateLinkScopedResourceContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -487,7 +501,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<PrivateLinkScopedResourceContent> array = new List<PrivateLinkScopedResourceContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item));
+                                }
                             }
                             privateLinkScopedResources = array;
                             continue;

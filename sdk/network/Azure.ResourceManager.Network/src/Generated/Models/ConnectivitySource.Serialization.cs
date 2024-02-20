@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);

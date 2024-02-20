@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DdosProtectionPlanData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<DdosProtectionPlanData> array = new List<DdosProtectionPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item));
+                        }
                     }
                     value = array;
                     continue;

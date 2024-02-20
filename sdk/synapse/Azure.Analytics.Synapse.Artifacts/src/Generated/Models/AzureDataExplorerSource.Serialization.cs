@@ -20,7 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
-            writer.WriteObjectValue(Query);
+            if (Query != null)
+            {
+                writer.WriteObjectValue(Query);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(NoTruncation))
             {
                 writer.WritePropertyName("noTruncation"u8);

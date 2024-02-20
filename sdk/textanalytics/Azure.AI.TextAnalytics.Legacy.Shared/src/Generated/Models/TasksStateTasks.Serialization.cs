@@ -59,7 +59,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     List<TasksStateTasksEntityRecognitionTasksItem> array = new List<TasksStateTasksEntityRecognitionTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksEntityRecognitionTasksItem.DeserializeTasksStateTasksEntityRecognitionTasksItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TasksStateTasksEntityRecognitionTasksItem.DeserializeTasksStateTasksEntityRecognitionTasksItem(item));
+                        }
                     }
                     entityRecognitionTasks = array;
                     continue;
@@ -73,7 +80,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     List<TasksStateTasksEntityRecognitionPiiTasksItem> array = new List<TasksStateTasksEntityRecognitionPiiTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksEntityRecognitionPiiTasksItem.DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TasksStateTasksEntityRecognitionPiiTasksItem.DeserializeTasksStateTasksEntityRecognitionPiiTasksItem(item));
+                        }
                     }
                     entityRecognitionPiiTasks = array;
                     continue;
@@ -87,7 +101,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     List<TasksStateTasksKeyPhraseExtractionTasksItem> array = new List<TasksStateTasksKeyPhraseExtractionTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksKeyPhraseExtractionTasksItem.DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TasksStateTasksKeyPhraseExtractionTasksItem.DeserializeTasksStateTasksKeyPhraseExtractionTasksItem(item));
+                        }
                     }
                     keyPhraseExtractionTasks = array;
                     continue;
@@ -101,7 +122,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     List<TasksStateTasksEntityLinkingTasksItem> array = new List<TasksStateTasksEntityLinkingTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksEntityLinkingTasksItem.DeserializeTasksStateTasksEntityLinkingTasksItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TasksStateTasksEntityLinkingTasksItem.DeserializeTasksStateTasksEntityLinkingTasksItem(item));
+                        }
                     }
                     entityLinkingTasks = array;
                     continue;
@@ -115,7 +143,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     List<TasksStateTasksSentimentAnalysisTasksItem> array = new List<TasksStateTasksSentimentAnalysisTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksSentimentAnalysisTasksItem.DeserializeTasksStateTasksSentimentAnalysisTasksItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TasksStateTasksSentimentAnalysisTasksItem.DeserializeTasksStateTasksSentimentAnalysisTasksItem(item));
+                        }
                     }
                     sentimentAnalysisTasks = array;
                     continue;

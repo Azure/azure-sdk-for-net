@@ -16,7 +16,14 @@ namespace Azure.AI.Translation.Document
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl"u8);
-            writer.WriteStringValue(SourceUri.AbsoluteUri);
+            if (SourceUri != null)
+            {
+                writer.WriteStringValue(SourceUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);

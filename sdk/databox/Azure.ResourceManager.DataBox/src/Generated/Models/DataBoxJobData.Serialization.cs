@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataBox
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<DataBoxSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.DataBox
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -121,7 +135,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                ((IJsonModel<DataBoxBasicJobDetails>)Details).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
@@ -136,7 +150,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                ((IJsonModel<JobDeliveryInfo>)DeliveryInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {

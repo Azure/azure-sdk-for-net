@@ -21,7 +21,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteNumberValue(Channel.Value);
             }
             writer.WritePropertyName("participant"u8);
-            writer.WriteObjectValue(Participant);
+            if (Participant != null)
+            {
+                writer.WriteObjectValue(Participant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

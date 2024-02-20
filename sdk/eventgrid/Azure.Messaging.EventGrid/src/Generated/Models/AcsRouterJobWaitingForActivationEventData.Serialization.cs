@@ -53,7 +53,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRouterWorkerSelector> array = new List<AcsRouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item));
+                        }
                     }
                     expiredAttachedWorkerSelectors = array;
                     continue;
@@ -67,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRouterWorkerSelector> array = new List<AcsRouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsRouterWorkerSelector.DeserializeAcsRouterWorkerSelector(item));
+                        }
                     }
                     expiredRequestedWorkerSelectors = array;
                     continue;

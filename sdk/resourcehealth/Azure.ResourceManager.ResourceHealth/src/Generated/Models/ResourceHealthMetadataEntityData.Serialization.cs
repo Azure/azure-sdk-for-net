@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ResourceHealth
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in SupportedValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetadataSupportedValueDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +225,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<MetadataSupportedValueDetail> array = new List<MetadataSupportedValueDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                }
                             }
                             supportedValues = array;
                             continue;

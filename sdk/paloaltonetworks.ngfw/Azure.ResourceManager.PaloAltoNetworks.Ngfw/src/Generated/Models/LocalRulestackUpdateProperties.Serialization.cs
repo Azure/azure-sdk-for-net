@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices);
+                ((IJsonModel<RulestackSecurityServices>)SecurityServices).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPExtendedCommunityRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPExtendedCommunityRule> array = new List<IPExtendedCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item));
+                                }
                             }
                             ipExtendedCommunityRules = array;
                             continue;

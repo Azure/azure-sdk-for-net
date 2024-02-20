@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAutomationRuleSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationRuleSet> array = new List<SecurityAutomationRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
+                        }
                     }
                     ruleSets = array;
                     continue;

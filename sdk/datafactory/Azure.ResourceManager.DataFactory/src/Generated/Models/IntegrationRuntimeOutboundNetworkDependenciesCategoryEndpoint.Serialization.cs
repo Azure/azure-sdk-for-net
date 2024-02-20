@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        }
                     }
                     endpoints = array;
                     continue;

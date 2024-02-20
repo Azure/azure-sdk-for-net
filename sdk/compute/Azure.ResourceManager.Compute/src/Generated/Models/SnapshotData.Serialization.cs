@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SnapshotSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -97,17 +104,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                ((IJsonModel<DiskPurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                ((IJsonModel<DiskCreationData>)CreationData).Write(writer, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                ((IJsonModel<EncryptionSettingsGroup>)EncryptionSettingsGroup).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +159,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<DiskSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -187,7 +194,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue(CopyCompletionError);
+                ((IJsonModel<CopyCompletionError>)CopyCompletionError).Write(writer, options);
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {

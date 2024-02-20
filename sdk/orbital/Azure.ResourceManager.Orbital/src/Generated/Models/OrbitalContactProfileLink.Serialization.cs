@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStartArray();
             foreach (var item in Channels)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<OrbitalContactProfileLinkChannel>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -135,7 +142,14 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        }
                     }
                     channels = array;
                     continue;

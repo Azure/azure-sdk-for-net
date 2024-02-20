@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedPrivateEndpointModelData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<ManagedPrivateEndpointModelData> array = new List<ManagedPrivateEndpointModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item));
+                        }
                     }
                     value = array;
                     continue;

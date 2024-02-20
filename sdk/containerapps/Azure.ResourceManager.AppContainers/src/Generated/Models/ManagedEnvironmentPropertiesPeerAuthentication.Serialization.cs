@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Mtls))
             {
                 writer.WritePropertyName("mtls"u8);
-                writer.WriteObjectValue(Mtls);
+                ((IJsonModel<Mtls>)Mtls).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

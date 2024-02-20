@@ -31,25 +31,46 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("targetName"u8);
+            if (TargetName != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetName);
 #else
-            using (JsonDocument document = JsonDocument.Parse(TargetName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(TargetName))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("userName"u8);
+            if (UserName != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
-            using (JsonDocument document = JsonDocument.Parse(UserName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(UserName))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            if (Password != null)
+            {
+                ((IJsonModel<SynapseSecretBase>)Password).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("outputBlobSasUrl"u8);
-            writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
+            if (OutputBlobSasUri != null)
+            {
+                writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

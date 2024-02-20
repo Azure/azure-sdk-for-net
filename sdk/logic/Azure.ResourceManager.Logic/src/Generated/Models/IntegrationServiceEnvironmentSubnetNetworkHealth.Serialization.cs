@@ -32,14 +32,21 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundNetworkDependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IntegrationServiceEnvironmentNetworkDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
-                writer.WriteObjectValue(OutboundNetworkHealth);
+                ((IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>)OutboundNetworkHealth).Write(writer, options);
             }
             writer.WritePropertyName("networkDependencyHealthState"u8);
             writer.WriteStringValue(NetworkDependencyHealthState.ToString());
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceEnvironmentNetworkDependency> array = new List<IntegrationServiceEnvironmentNetworkDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationServiceEnvironmentNetworkDependency.DeserializeIntegrationServiceEnvironmentNetworkDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationServiceEnvironmentNetworkDependency.DeserializeIntegrationServiceEnvironmentNetworkDependency(item));
+                        }
                     }
                     outboundNetworkDependencies = array;
                     continue;

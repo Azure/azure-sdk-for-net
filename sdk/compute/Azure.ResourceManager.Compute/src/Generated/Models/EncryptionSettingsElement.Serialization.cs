@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
-                writer.WriteObjectValue(DiskEncryptionKey);
+                ((IJsonModel<KeyVaultAndSecretReference>)DiskEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                ((IJsonModel<KeyVaultAndKeyReference>)KeyEncryptionKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

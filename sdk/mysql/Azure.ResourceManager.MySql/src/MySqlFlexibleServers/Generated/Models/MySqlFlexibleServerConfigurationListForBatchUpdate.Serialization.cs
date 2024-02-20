@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MySqlFlexibleServerConfigurationForBatchUpdate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerConfigurationForBatchUpdate> array = new List<MySqlFlexibleServerConfigurationForBatchUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerConfigurationForBatchUpdate.DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MySqlFlexibleServerConfigurationForBatchUpdate.DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(item));
+                        }
                     }
                     value = array;
                     continue;

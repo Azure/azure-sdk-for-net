@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -123,7 +130,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HciUpdateStep>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -337,7 +351,14 @@ namespace Azure.ResourceManager.Hci
                                     List<HciUpdateStep> array = new List<HciUpdateStep>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(HciUpdateStep.DeserializeHciUpdateStep(item));
+                                        if (item.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array.Add(HciUpdateStep.DeserializeHciUpdateStep(item));
+                                        }
                                     }
                                     steps = array;
                                     continue;

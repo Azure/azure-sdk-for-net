@@ -33,7 +33,14 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Header)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Body)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +67,14 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Footer)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +84,14 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteStartArray();
                 foreach (var item in Buttons)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatsAppMessageTemplateBindingsButton>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +153,14 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        }
                     }
                     header = array;
                     continue;
@@ -139,7 +174,14 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        }
                     }
                     body = array;
                     continue;
@@ -153,7 +195,14 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        }
                     }
                     footer = array;
                     continue;
@@ -167,7 +216,14 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsButton> array = new List<WhatsAppMessageTemplateBindingsButton>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item));
+                        }
                     }
                     buttons = array;
                     continue;

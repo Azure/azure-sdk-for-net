@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword);
+                ((IJsonModel<AsymmetricEncryptedSecret>)EncryptedPassword).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
@@ -61,7 +68,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ShareAccessRight>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +182,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<ShareAccessRight> array = new List<ShareAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareAccessRight.DeserializeShareAccessRight(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ShareAccessRight.DeserializeShareAccessRight(item));
+                                }
                             }
                             shareAccessRights = array;
                             continue;

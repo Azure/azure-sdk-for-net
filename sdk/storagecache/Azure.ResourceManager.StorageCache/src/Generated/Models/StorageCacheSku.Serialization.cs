@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageCacheSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageCacheSkuLocationInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +86,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageCacheRestriction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +159,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuCapability> array = new List<StorageCacheSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;
@@ -166,7 +194,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuLocationInfo> array = new List<StorageCacheSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item));
+                        }
                     }
                     locationInfo = array;
                     continue;
@@ -185,7 +220,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheRestriction> array = new List<StorageCacheRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item));
+                        }
                     }
                     restrictions = array;
                     continue;

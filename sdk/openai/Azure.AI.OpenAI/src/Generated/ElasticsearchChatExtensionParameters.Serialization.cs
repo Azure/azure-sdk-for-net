@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                ((IJsonModel<OnYourDataAuthenticationOptions>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -53,13 +53,20 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
+            if (Endpoint != null)
+            {
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
             if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fieldsMapping"u8);
-                writer.WriteObjectValue(FieldMappingOptions);
+                ((IJsonModel<ElasticsearchIndexFieldMappingOptions>)FieldMappingOptions).Write(writer, options);
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -69,7 +76,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
+                ((IJsonModel<OnYourDataVectorizationSource>)EmbeddingDependency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

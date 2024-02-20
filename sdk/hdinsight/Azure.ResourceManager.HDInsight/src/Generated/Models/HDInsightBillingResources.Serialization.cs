@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightBillingMeters>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskBillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightDiskBillingMeters>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingMeters> array = new List<HDInsightBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item));
+                        }
                     }
                     billingMeters = array;
                     continue;
@@ -128,7 +149,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightDiskBillingMeters> array = new List<HDInsightDiskBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item));
+                        }
                     }
                     diskBillingMeters = array;
                     continue;

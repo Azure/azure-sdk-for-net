@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineRunCommandData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<MachineRunCommandData> array = new List<MachineRunCommandData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item));
+                        }
                     }
                     value = array;
                     continue;

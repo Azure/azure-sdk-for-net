@@ -37,7 +37,14 @@ namespace Azure.Data.Tables.Models
                     List<TableItem> array = new List<TableItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableItem.DeserializeTableItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TableItem.DeserializeTableItem(item));
+                        }
                     }
                     value = array;
                     continue;

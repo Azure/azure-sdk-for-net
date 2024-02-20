@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StreamingPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingPath>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPath> array = new List<StreamingPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPath.DeserializeStreamingPath(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingPath.DeserializeStreamingPath(item));
+                        }
                     }
                     streamingPaths = array;
                     continue;

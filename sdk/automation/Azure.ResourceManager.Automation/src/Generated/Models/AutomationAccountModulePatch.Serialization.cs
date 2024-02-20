@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                ((IJsonModel<AutomationContentLink>)ContentLink).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

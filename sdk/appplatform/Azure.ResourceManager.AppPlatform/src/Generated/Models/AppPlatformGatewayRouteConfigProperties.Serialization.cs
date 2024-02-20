@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
-                writer.WriteObjectValue(OpenApi);
+                ((IJsonModel<GatewayRouteConfigOpenApiProperties>)OpenApi).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformGatewayApiRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +155,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        }
                     }
                     routes = array;
                     continue;

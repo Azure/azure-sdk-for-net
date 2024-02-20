@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
-                writer.WriteObjectValue(Pattern);
+                ((IJsonModel<ResourceTypeAliasPattern>)Pattern).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<ResourceTypeAliasPathMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

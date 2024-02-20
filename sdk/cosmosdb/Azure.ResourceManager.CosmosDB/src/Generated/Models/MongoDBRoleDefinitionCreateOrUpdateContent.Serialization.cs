@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Privileges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MongoDBPrivilege>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MongoDBRole>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +162,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                                }
                             }
                             privileges = array;
                             continue;
@@ -162,7 +183,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                }
                             }
                             roles = array;
                             continue;

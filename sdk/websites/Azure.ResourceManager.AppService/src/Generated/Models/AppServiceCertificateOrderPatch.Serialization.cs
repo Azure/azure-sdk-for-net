@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -61,7 +68,14 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in Certificates)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<AppServiceCertificateProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -108,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SignedCertificate))
             {
                 writer.WritePropertyName("signedCertificate"u8);
-                writer.WriteObjectValue(SignedCertificate);
+                ((IJsonModel<AppServiceCertificateDetails>)SignedCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(Csr))
             {
@@ -118,12 +132,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(Intermediate))
             {
                 writer.WritePropertyName("intermediate"u8);
-                writer.WriteObjectValue(Intermediate);
+                ((IJsonModel<AppServiceCertificateDetails>)Intermediate).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Root))
             {
                 writer.WritePropertyName("root"u8);
-                writer.WriteObjectValue(Root);
+                ((IJsonModel<AppServiceCertificateDetails>)Root).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
@@ -163,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                ((IJsonModel<CertificateOrderContact>)Contact).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -280,7 +294,14 @@ namespace Azure.ResourceManager.AppService.Models
                             Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
+                                }
                             }
                             certificates = dictionary;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryTimerTriggerUpdateContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +49,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistrySourceTriggerUpdateContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
-                writer.WriteObjectValue(BaseImageTrigger);
+                ((IJsonModel<ContainerRegistryBaseImageTriggerUpdateContent>)BaseImageTrigger).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +119,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTimerTriggerUpdateContent> array = new List<ContainerRegistryTimerTriggerUpdateContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTimerTriggerUpdateContent.DeserializeContainerRegistryTimerTriggerUpdateContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistryTimerTriggerUpdateContent.DeserializeContainerRegistryTimerTriggerUpdateContent(item));
+                        }
                     }
                     timerTriggers = array;
                     continue;
@@ -119,7 +140,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistrySourceTriggerUpdateContent> array = new List<ContainerRegistrySourceTriggerUpdateContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistrySourceTriggerUpdateContent.DeserializeContainerRegistrySourceTriggerUpdateContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistrySourceTriggerUpdateContent.DeserializeContainerRegistrySourceTriggerUpdateContent(item));
+                        }
                     }
                     sourceTriggers = array;
                     continue;

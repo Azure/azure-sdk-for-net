@@ -58,7 +58,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TrainResult> array = new List<TrainResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrainResult.DeserializeTrainResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrainResult.DeserializeTrainResult(item));
+                        }
                     }
                     composedTrainResults = array;
                     continue;

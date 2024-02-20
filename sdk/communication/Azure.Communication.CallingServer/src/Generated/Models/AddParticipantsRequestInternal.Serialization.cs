@@ -24,7 +24,14 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in ParticipantsToAdd)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(InvitationTimeoutInSeconds))

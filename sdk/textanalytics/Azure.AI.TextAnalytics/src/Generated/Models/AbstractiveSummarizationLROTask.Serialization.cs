@@ -16,7 +16,14 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            if (Parameters != null)
+            {
+                writer.WriteObjectValue(Parameters);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))

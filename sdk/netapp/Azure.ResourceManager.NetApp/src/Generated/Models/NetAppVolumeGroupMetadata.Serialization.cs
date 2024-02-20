@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in GlobalPlacementRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppVolumePlacementRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        }
                     }
                     globalPlacementRules = array;
                     continue;

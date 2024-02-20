@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PolicyMembers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VpnServerConfigurationPolicyGroupMember>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +84,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +220,14 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigurationPolicyGroupMember> array = new List<VpnServerConfigurationPolicyGroupMember>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigurationPolicyGroupMember.DeserializeVpnServerConfigurationPolicyGroupMember(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VpnServerConfigurationPolicyGroupMember.DeserializeVpnServerConfigurationPolicyGroupMember(item));
+                                }
                             }
                             policyMembers = array;
                             continue;
@@ -220,7 +241,14 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             p2sConnectionConfigurations = array;
                             continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -53,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                ((IJsonModel<IotSeverityMetrics>)Metrics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DevicesMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +90,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopAlertedDevices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotSecurityAlertedDevice>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceAlerts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotSecurityDeviceAlert>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +124,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in MostPrevalentDeviceRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotSecurityDeviceRecommendation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -213,7 +248,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecuritySolutionAnalyticsModelDevicesMetrics> array = new List<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item));
+                                }
                             }
                             devicesMetrics = array;
                             continue;
@@ -227,7 +269,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityAlertedDevice> array = new List<IotSecurityAlertedDevice>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityAlertedDevice.DeserializeIotSecurityAlertedDevice(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IotSecurityAlertedDevice.DeserializeIotSecurityAlertedDevice(item));
+                                }
                             }
                             topAlertedDevices = array;
                             continue;
@@ -241,7 +290,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityDeviceAlert> array = new List<IotSecurityDeviceAlert>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityDeviceAlert.DeserializeIotSecurityDeviceAlert(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IotSecurityDeviceAlert.DeserializeIotSecurityDeviceAlert(item));
+                                }
                             }
                             mostPrevalentDeviceAlerts = array;
                             continue;
@@ -255,7 +311,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityDeviceRecommendation> array = new List<IotSecurityDeviceRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityDeviceRecommendation.DeserializeIotSecurityDeviceRecommendation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IotSecurityDeviceRecommendation.DeserializeIotSecurityDeviceRecommendation(item));
+                                }
                             }
                             mostPrevalentDeviceRecommendations = array;
                             continue;

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<DesktopVirtualizationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("hostPoolArmPath"u8);
-            writer.WriteStringValue(HostPoolId);
+            if (HostPoolId != null)
+            {
+                writer.WriteStringValue(HostPoolId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 if (WorkspaceId != null)

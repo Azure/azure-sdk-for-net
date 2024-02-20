@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificContent)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReplicationProviderSpecificContainerCreationContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationProviderSpecificContainerCreationContent> array = new List<ReplicationProviderSpecificContainerCreationContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProviderSpecificContainerCreationContent.DeserializeReplicationProviderSpecificContainerCreationContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReplicationProviderSpecificContainerCreationContent.DeserializeReplicationProviderSpecificContainerCreationContent(item));
+                        }
                     }
                     providerSpecificContent = array;
                     continue;

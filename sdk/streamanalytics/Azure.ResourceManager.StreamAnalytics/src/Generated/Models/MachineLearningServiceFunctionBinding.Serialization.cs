@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningServiceInputColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningServiceOutputColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +179,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceInputColumn> array = new List<MachineLearningServiceInputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item));
+                                }
                             }
                             inputs = array;
                             continue;
@@ -179,7 +200,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceOutputColumn> array = new List<MachineLearningServiceOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item));
+                                }
                             }
                             outputs = array;
                             continue;

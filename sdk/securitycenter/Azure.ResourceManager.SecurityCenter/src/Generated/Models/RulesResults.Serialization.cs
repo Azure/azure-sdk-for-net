@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlVulnerabilityAssessmentBaselineRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SqlVulnerabilityAssessmentBaselineRuleData> array = new List<SqlVulnerabilityAssessmentBaselineRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVulnerabilityAssessmentBaselineRuleData.DeserializeSqlVulnerabilityAssessmentBaselineRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlVulnerabilityAssessmentBaselineRuleData.DeserializeSqlVulnerabilityAssessmentBaselineRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

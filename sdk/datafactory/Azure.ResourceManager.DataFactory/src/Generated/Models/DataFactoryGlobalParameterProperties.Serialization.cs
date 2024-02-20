@@ -29,14 +29,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(GlobalParameterType.ToString());
             writer.WritePropertyName("value"u8);
+            if (Value != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Value))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

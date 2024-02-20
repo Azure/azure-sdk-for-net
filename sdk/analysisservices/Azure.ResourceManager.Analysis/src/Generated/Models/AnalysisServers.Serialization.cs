@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartArray();
             foreach (var item in AnalysisResources)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AnalysisServerData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisServerData> array = new List<AnalysisServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalysisServerData.DeserializeAnalysisServerData(item));
+                        }
                     }
                     value = array;
                     continue;

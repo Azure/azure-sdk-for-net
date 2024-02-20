@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteFilterRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteCircuitPeeringData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +106,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPv6Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteCircuitPeeringData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -227,7 +248,14 @@ namespace Azure.ResourceManager.Network
                             List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
+                                }
                             }
                             rules = array;
                             continue;
@@ -241,7 +269,14 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                }
                             }
                             peerings = array;
                             continue;
@@ -255,7 +290,14 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                }
                             }
                             ipv6Peerings = array;
                             continue;

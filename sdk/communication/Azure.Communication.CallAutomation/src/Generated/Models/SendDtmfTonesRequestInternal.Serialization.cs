@@ -23,7 +23,14 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            if (TargetParticipant != null)
+            {
+                writer.WriteObjectValue(TargetParticipant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

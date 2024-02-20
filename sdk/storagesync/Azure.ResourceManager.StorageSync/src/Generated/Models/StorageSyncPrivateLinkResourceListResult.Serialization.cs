@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageSyncPrivateLinkResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncPrivateLinkResource> array = new List<StorageSyncPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(item));
+                        }
                     }
                     value = array;
                     continue;

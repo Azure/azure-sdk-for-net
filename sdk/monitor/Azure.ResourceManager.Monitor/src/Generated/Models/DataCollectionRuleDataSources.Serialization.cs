@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PerformanceCounters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PerfCounterDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsEventLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WindowsEventLogDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Syslog)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SyslogDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +83,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExtensionDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +100,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogFilesDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +117,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in IisLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IisLogsDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +134,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsFirewallLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WindowsFirewallLogsDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +151,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PrometheusForwarder)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrometheusForwarderDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,14 +168,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PlatformTelemetry)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PlatformTelemetryDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataImports))
             {
                 writer.WritePropertyName("dataImports"u8);
-                writer.WriteObjectValue(DataImports);
+                ((IJsonModel<DataSourcesSpecDataImports>)DataImports).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,7 +245,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PerfCounterDataSource> array = new List<PerfCounterDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfCounterDataSource.DeserializePerfCounterDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PerfCounterDataSource.DeserializePerfCounterDataSource(item));
+                        }
                     }
                     performanceCounters = array;
                     continue;
@@ -196,7 +266,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WindowsEventLogDataSource> array = new List<WindowsEventLogDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WindowsEventLogDataSource.DeserializeWindowsEventLogDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WindowsEventLogDataSource.DeserializeWindowsEventLogDataSource(item));
+                        }
                     }
                     windowsEventLogs = array;
                     continue;
@@ -210,7 +287,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<SyslogDataSource> array = new List<SyslogDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyslogDataSource.DeserializeSyslogDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SyslogDataSource.DeserializeSyslogDataSource(item));
+                        }
                     }
                     syslog = array;
                     continue;
@@ -224,7 +308,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ExtensionDataSource> array = new List<ExtensionDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionDataSource.DeserializeExtensionDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExtensionDataSource.DeserializeExtensionDataSource(item));
+                        }
                     }
                     extensions = array;
                     continue;
@@ -238,7 +329,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogFilesDataSource> array = new List<LogFilesDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item));
+                        }
                     }
                     logFiles = array;
                     continue;
@@ -252,7 +350,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<IisLogsDataSource> array = new List<IisLogsDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item));
+                        }
                     }
                     iisLogs = array;
                     continue;
@@ -266,7 +371,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item));
+                        }
                     }
                     windowsFirewallLogs = array;
                     continue;
@@ -280,7 +392,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item));
+                        }
                     }
                     prometheusForwarder = array;
                     continue;
@@ -294,7 +413,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item));
+                        }
                     }
                     platformTelemetry = array;
                     continue;

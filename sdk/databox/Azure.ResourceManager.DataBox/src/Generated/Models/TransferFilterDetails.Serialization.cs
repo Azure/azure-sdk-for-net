@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
-                writer.WriteObjectValue(BlobFilterDetails);
+                ((IJsonModel<BlobFilterDetails>)BlobFilterDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
-                writer.WriteObjectValue(AzureFileFilterDetails);
+                ((IJsonModel<AzureFileFilterDetails>)AzureFileFilterDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FilterFileDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<FilterFileDetails> array = new List<FilterFileDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FilterFileDetails.DeserializeFilterFileDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.FilterFileDetails.DeserializeFilterFileDetails(item));
+                        }
                     }
                     filterFileDetails = array;
                     continue;

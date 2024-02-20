@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceLogCategory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<ResourceLogCategory> array = new List<ResourceLogCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceLogCategory.DeserializeResourceLogCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceLogCategory.DeserializeResourceLogCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

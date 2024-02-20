@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Annotations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MessageTextAnnotation>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +97,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<MessageTextAnnotation> array = new List<MessageTextAnnotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTextAnnotation.DeserializeMessageTextAnnotation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MessageTextAnnotation.DeserializeMessageTextAnnotation(item));
+                        }
                     }
                     annotations = array;
                     continue;

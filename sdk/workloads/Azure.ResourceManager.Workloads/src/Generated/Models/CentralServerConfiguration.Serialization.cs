@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Workloads.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
+            if (VirtualMachineConfiguration != null)
+            {
+                ((IJsonModel<SapVirtualMachineConfiguration>)VirtualMachineConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

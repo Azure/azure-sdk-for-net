@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(IpamEnabled.Value.ToString());
             }
             writer.WritePropertyName("networkId"u8);
-            writer.WriteStringValue(NetworkId);
+            if (NetworkId != null)
+            {
+                writer.WriteStringValue(NetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);

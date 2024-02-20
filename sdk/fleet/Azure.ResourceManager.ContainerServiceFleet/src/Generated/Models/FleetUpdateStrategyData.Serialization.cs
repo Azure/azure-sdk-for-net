@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy);
+                ((IJsonModel<ContainerServiceFleetUpdateRunStrategy>)Strategy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

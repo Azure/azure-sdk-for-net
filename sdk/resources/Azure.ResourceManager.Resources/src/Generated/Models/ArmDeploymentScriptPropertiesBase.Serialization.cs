@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                ((IJsonModel<ContainerConfiguration>)ContainerSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings);
+                ((IJsonModel<ScriptStorageConfiguration>)StorageAccountSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ScriptStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {

@@ -47,7 +47,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InferenceEvidence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +144,14 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<InferenceEvidence> array = new List<InferenceEvidence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InferenceEvidence.DeserializeInferenceEvidence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InferenceEvidence.DeserializeInferenceEvidence(item));
+                        }
                     }
                     evidence = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ContainerServiceFleetUpdateStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -42,14 +42,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServiceFleetUpdateGroupStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
-                writer.WriteObjectValue(AfterStageWaitStatus);
+                ((IJsonModel<ContainerServiceFleetWaitStatus>)AfterStageWaitStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +127,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateGroupStatus> array = new List<ContainerServiceFleetUpdateGroupStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item));
+                        }
                     }
                     groups = array;
                     continue;

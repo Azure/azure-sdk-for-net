@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementSkuCapabilities>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +120,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCapabilities> array = new List<ApiManagementSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item));
+                        }
                     }
                     capabilities = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureStorageAccountContainerCredential>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureStorageAccountContainerCredential> array = new List<AzureStorageAccountContainerCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        }
                     }
                     containerCredentials = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
-                writer.WriteObjectValue(RecommendedMachineConfiguration);
+                ((IJsonModel<RecommendedMachineConfiguration>)RecommendedMachineConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

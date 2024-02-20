@@ -32,7 +32,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +82,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<ParameterDefinition> array = new List<ParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterDefinition.DeserializeParameterDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParameterDefinition.DeserializeParameterDefinition(item));
+                        }
                     }
                     parameters = array;
                     continue;

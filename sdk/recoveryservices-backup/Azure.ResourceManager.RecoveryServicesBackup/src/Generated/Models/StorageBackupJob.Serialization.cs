@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<StorageBackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsUserTriggered))
             {
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<StorageErrorInfo> array = new List<StorageErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

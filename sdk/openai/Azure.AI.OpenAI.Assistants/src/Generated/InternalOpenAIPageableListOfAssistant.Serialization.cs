@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<Assistant>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("first_id"u8);
@@ -99,7 +106,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<Assistant> array = new List<Assistant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assistant.DeserializeAssistant(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Assistant.DeserializeAssistant(item));
+                        }
                     }
                     data = array;
                     continue;

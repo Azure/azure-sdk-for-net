@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<TriggerResource> array = new List<TriggerResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerResource.DeserializeTriggerResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TriggerResource.DeserializeTriggerResource(item));
+                        }
                     }
                     value = array;
                     continue;

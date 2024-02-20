@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in TasksList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IaasVmBackupJobTaskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmBackupJobTaskDetails> array = new List<IaasVmBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmBackupJobTaskDetails.DeserializeIaasVmBackupJobTaskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IaasVmBackupJobTaskDetails.DeserializeIaasVmBackupJobTaskDetails(item));
+                        }
                     }
                     tasksList = array;
                     continue;

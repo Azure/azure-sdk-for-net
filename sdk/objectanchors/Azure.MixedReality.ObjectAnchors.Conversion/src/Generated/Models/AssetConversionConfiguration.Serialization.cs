@@ -42,7 +42,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             writer.WritePropertyName("gravity"u8);
-            writer.WriteObjectValue(GravityWrapper);
+            if (GravityWrapper != null)
+            {
+                writer.WriteObjectValue(GravityWrapper);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)

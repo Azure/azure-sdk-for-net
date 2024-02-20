@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue(Message);
+                ((IJsonModel<RoutingMessage>)Message).Write(writer, options);
             }
             if (Optional.IsDefined(Twin))
             {
                 writer.WritePropertyName("twin"u8);
-                writer.WriteObjectValue(Twin);
+                ((IJsonModel<RoutingTwin>)Twin).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

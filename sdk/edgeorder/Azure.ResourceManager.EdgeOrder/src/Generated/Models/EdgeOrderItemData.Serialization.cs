@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.EdgeOrder
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -64,16 +71,37 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue(OrderItemDetails);
+            if (OrderItemDetails != null)
+            {
+                ((IJsonModel<EdgeOrderItemDetails>)OrderItemDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue(AddressDetails);
+            if (AddressDetails != null)
+            {
+                ((IJsonModel<EdgeOrderItemAddressDetails>)AddressDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WritePropertyName("orderId"u8);
-            writer.WriteStringValue(OrderId);
+            if (OrderId != null)
+            {
+                writer.WriteStringValue(OrderId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Licenses)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContentKeyPolicyPlayReadyLicense>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ResponseCustomData))
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyPlayReadyLicense> array = new List<ContentKeyPolicyPlayReadyLicense>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item));
+                        }
                     }
                     licenses = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.Maps.Search.Models
                     List<PointOfInterestCategory> array = new List<PointOfInterestCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PointOfInterestCategory.DeserializePointOfInterestCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PointOfInterestCategory.DeserializePointOfInterestCategory(item));
+                        }
                     }
                     poiCategories = array;
                     continue;

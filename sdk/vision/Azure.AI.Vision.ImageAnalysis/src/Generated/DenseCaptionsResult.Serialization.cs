@@ -31,7 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DenseCaption>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DenseCaption> array = new List<DenseCaption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DenseCaption.DeserializeDenseCaption(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DenseCaption.DeserializeDenseCaption(item));
+                        }
                     }
                     values = array;
                     continue;

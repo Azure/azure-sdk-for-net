@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkbookTemplateGallery>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,17 +116,26 @@ namespace Azure.ResourceManager.ApplicationInsights
                 foreach (var item in LocalizedGalleries)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item.Value)
+                        {
+                            if (item0 != null)
+                            {
+                                ((IJsonModel<WorkbookTemplateLocalizedGallery>)item0).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
@@ -254,7 +277,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                                }
                             }
                             galleries = array;
                             continue;
@@ -277,7 +307,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                                     List<WorkbookTemplateLocalizedGallery> array = new List<WorkbookTemplateLocalizedGallery>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item));
+                                        if (item.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item));
+                                        }
                                     }
                                     dictionary.Add(property1.Name, array);
                                 }

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RulesEngineHeaderAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RulesEngineHeaderAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +65,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (RouteConfigurationOverride != null)
                 {
                     writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue(RouteConfigurationOverride);
+                    ((IJsonModel<RouteConfiguration>)RouteConfigurationOverride).Write(writer, options);
                 }
                 else
                 {
@@ -112,7 +126,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        }
                     }
                     requestHeaderActions = array;
                     continue;
@@ -126,7 +147,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        }
                     }
                     responseHeaderActions = array;
                     continue;

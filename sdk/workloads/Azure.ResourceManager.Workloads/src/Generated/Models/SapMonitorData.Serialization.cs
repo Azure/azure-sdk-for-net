@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<UserAssignedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -97,7 +104,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedRGConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(LogAnalyticsWorkspaceArmId))
             {

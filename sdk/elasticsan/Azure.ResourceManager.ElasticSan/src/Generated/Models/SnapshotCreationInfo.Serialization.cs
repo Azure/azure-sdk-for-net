@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceId"u8);
-            writer.WriteStringValue(SourceId);
+            if (SourceId != null)
+            {
+                writer.WriteStringValue(SourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

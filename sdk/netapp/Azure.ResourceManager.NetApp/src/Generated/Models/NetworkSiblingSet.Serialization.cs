@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in NicInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NicInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +162,14 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NicInfo> array = new List<NicInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicInfo.DeserializeNicInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NicInfo.DeserializeNicInfo(item));
+                        }
                     }
                     nicInfoList = array;
                     continue;

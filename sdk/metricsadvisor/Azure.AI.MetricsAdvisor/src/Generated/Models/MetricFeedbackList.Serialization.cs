@@ -38,7 +38,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<MetricFeedback> array = new List<MetricFeedback>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricFeedback.DeserializeMetricFeedback(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricFeedback.DeserializeMetricFeedback(item));
+                        }
                     }
                     value = array;
                     continue;

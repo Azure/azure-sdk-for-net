@@ -36,7 +36,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentFilterResultsForPrompt>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,11 +51,25 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<Choice>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            if (Usage != null)
+            {
+                ((IJsonModel<CompletionsUsage>)Usage).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

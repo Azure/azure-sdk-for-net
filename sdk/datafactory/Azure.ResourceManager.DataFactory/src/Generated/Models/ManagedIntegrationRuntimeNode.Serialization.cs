@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedIntegrationRuntimeError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                        }
                     }
                     errors = array;
                     continue;

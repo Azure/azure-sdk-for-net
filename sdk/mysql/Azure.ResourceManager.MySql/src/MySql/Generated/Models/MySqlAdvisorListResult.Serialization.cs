@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MySqlAdvisorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlAdvisorData> array = new List<MySqlAdvisorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlAdvisorData.DeserializeMySqlAdvisorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MySqlAdvisorData.DeserializeMySqlAdvisorData(item));
+                        }
                     }
                     value = array;
                     continue;

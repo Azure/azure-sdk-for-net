@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MarketplaceGalleryImageData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Hci.Models
                     List<MarketplaceGalleryImageData> array = new List<MarketplaceGalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(item));
+                        }
                     }
                     value = array;
                     continue;

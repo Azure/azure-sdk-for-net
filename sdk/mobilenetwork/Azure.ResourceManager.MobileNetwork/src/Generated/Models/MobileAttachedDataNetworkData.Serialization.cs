@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneDataInterface"u8);
-            writer.WriteObjectValue(UserPlaneDataInterface);
+            if (UserPlaneDataInterface != null)
+            {
+                ((IJsonModel<MobileNetworkInterfaceProperties>)UserPlaneDataInterface).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
@@ -80,7 +94,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
-                writer.WriteObjectValue(NaptConfiguration);
+                ((IJsonModel<NaptConfiguration>)NaptConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {

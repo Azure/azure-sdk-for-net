@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RateLimitRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RateLimitRule> array = new List<RateLimitRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RateLimitRule.DeserializeRateLimitRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RateLimitRule.DeserializeRateLimitRule(item));
+                        }
                     }
                     rules = array;
                     continue;

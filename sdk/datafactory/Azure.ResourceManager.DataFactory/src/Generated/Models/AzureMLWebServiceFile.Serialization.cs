@@ -28,9 +28,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("filePath"u8);
-            JsonSerializer.Serialize(writer, FilePath);
+            if (FilePath != null)
+            {
+                JsonSerializer.Serialize(writer, FilePath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (LinkedServiceName != null)
+            {
+                JsonSerializer.Serialize(writer, LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

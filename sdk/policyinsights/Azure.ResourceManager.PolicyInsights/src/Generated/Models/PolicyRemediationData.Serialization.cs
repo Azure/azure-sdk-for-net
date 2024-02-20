@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.PolicyInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -83,12 +90,12 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<RemediationFilters>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus);
+                ((IJsonModel<RemediationDeploymentSummary>)DeploymentStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
-                writer.WriteObjectValue(FailureThreshold);
+                ((IJsonModel<RemediationPropertiesFailureThreshold>)FailureThreshold).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (LinkedServiceName != null)
+            {
+                JsonSerializer.Serialize(writer, LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);

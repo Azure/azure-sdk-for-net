@@ -30,14 +30,21 @@ namespace Azure.ResourceManager.OperationalInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
+            if (Properties != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Properties))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Properties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.OperationalInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

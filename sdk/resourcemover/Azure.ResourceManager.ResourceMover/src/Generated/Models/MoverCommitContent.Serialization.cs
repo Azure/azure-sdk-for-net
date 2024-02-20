@@ -35,12 +35,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartArray();
             foreach (var item in MoverResources)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStringValue(item);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MoverResourceInputType))

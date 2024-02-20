@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vaultRetention"u8);
-            writer.WriteObjectValue(VaultRetention);
+            if (VaultRetention != null)
+            {
+                ((IJsonModel<BackupRetentionPolicy>)VaultRetention).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("snapshotRetentionInDays"u8);
             writer.WriteNumberValue(SnapshotRetentionInDays);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

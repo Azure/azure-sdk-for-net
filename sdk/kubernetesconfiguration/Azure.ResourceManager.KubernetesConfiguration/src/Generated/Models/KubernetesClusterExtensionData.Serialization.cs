@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                ((IJsonModel<KubernetesClusterExtensionScope>)Scope).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
@@ -154,7 +161,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<KubernetesClusterExtensionStatus>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -427,7 +441,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesClusterExtensionStatus> array = new List<KubernetesClusterExtensionStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item));
+                                }
                             }
                             statuses = array;
                             continue;

@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementApprovalStage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +155,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementApprovalStage> array = new List<RoleManagementApprovalStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item));
+                        }
                     }
                     approvalStages = array;
                     continue;

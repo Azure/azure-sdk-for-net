@@ -18,7 +18,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue(HookParameter);
+            if (HookParameter != null)
+            {
+                writer.WriteObjectValue(HookParameter);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);

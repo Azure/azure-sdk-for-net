@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DnsForwardingRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsForwardingRuleData> array = new List<DnsForwardingRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsForwardingRuleData.DeserializeDnsForwardingRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DnsForwardingRuleData.DeserializeDnsForwardingRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

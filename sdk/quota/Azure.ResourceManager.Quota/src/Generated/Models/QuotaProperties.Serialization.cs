@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit);
+                ((IJsonModel<QuotaLimitJsonObject>)Limit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<QuotaRequestResourceName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceTypeName))
             {

@@ -56,7 +56,14 @@ namespace Azure.IoT.Hub.Service
             content.JsonWriter.WriteStartArray();
             foreach (var item in devices)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

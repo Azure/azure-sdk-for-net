@@ -32,7 +32,14 @@ namespace Azure.Communication.CallingServer
                     List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
+                        }
                     }
                     participants = array;
                     continue;

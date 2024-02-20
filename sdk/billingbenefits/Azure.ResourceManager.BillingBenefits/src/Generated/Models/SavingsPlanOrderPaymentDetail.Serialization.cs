@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                ((IJsonModel<BillingBenefitsPrice>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                ((IJsonModel<BillingBenefitsPrice>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                ((IJsonModel<BillingBenefitsExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {

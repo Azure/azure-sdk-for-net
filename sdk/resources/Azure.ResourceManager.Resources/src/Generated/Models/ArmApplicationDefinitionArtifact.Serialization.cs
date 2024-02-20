@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ArtifactType.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

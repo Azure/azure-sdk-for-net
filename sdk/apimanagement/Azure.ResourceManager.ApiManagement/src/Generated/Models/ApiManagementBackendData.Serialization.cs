@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ApiManagement
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,22 +75,22 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<BackendProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<BackendCredentialsContract>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue(Proxy);
+                ((IJsonModel<BackendProxyContract>)Proxy).Write(writer, options);
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                ((IJsonModel<BackendTlsProperties>)Tls).Write(writer, options);
             }
             if (Optional.IsDefined(Uri))
             {

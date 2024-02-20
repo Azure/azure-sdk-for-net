@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyContractData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PolicyContractData> array = new List<PolicyContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyContractData.DeserializePolicyContractData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolicyContractData.DeserializePolicyContractData(item));
+                        }
                     }
                     value = array;
                     continue;

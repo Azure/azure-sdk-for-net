@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
             {
                 writer.WritePropertyName("applicableSchedule"u8);
-                writer.WriteObjectValue(ApplicableSchedule);
+                ((IJsonModel<DevTestLabApplicableSchedule>)ApplicableSchedule).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

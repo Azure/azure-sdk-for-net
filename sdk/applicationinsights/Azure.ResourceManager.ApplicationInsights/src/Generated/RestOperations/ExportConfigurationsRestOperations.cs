@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -178,7 +192,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -214,7 +235,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentExportConfiguration> array = new List<ApplicationInsightsComponentExportConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

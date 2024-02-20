@@ -21,7 +21,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Transport.Value.ToString());
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            if (Endpoint != null)
+            {
+                writer.WriteObjectValue(Endpoint);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);

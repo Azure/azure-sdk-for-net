@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<EntityParameterSpecification>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -56,34 +63,71 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("clusterSize"u8);
-            JsonSerializer.Serialize(writer, ClusterSize);
+            if (ClusterSize != null)
+            {
+                JsonSerializer.Serialize(writer, ClusterSize);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("timeToLive"u8);
-            JsonSerializer.Serialize(writer, TimeToLiveExpression);
+            if (TimeToLiveExpression != null)
+            {
+                JsonSerializer.Serialize(writer, TimeToLiveExpression);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("version"u8);
-            JsonSerializer.Serialize(writer, Version);
+            if (Version != null)
+            {
+                JsonSerializer.Serialize(writer, Version);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (LinkedServiceName != null)
+            {
+                JsonSerializer.Serialize(writer, LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("hostSubscriptionId"u8);
-            JsonSerializer.Serialize(writer, HostSubscriptionId);
+            if (HostSubscriptionId != null)
+            {
+                JsonSerializer.Serialize(writer, HostSubscriptionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -95,9 +139,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
-            JsonSerializer.Serialize(writer, Tenant);
+            if (Tenant != null)
+            {
+                JsonSerializer.Serialize(writer, Tenant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("clusterResourceGroup"u8);
-            JsonSerializer.Serialize(writer, ClusterResourceGroup);
+            if (ClusterResourceGroup != null)
+            {
+                JsonSerializer.Serialize(writer, ClusterResourceGroup);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
@@ -129,7 +187,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLinkedServiceNames)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -291,7 +356,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFactoryScriptAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -308,7 +380,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                ((IJsonModel<DataFactoryCredentialReference>)Credential).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -417,7 +489,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        }
                     }
                     parameters = dictionary;
                     continue;
@@ -559,7 +638,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                }
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -704,7 +790,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryScriptAction> array = new List<DataFactoryScriptAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryScriptAction.DeserializeDataFactoryScriptAction(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataFactoryScriptAction.DeserializeDataFactoryScriptAction(item));
+                                }
                             }
                             scriptActions = array;
                             continue;

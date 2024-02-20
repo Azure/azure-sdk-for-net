@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail);
+                ((IJsonModel<BackupErrorDetail>)ErrorDetail).Write(writer, options);
             }
             if (Optional.IsDefined(SourceResourceId))
             {

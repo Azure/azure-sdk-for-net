@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AssessmentResult)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceSegment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +194,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ComplianceSegment> array = new List<ComplianceSegment>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComplianceSegment.DeserializeComplianceSegment(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ComplianceSegment.DeserializeComplianceSegment(item));
+                                }
                             }
                             assessmentResult = array;
                             continue;

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                ((IJsonModel<SapTablePartitionSettings>)PartitionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {

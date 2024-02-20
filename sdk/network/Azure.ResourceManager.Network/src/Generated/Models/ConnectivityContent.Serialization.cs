@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source != null)
+            {
+                ((IJsonModel<ConnectivitySource>)Source).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            if (Destination != null)
+            {
+                ((IJsonModel<ConnectivityDestination>)Destination).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -38,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                ((IJsonModel<ProtocolConfiguration>)ProtocolConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {

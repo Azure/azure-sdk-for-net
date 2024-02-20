@@ -33,7 +33,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in CustomTrials)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClinicalTrialDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in RegistryFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClinicalTrialRegistryFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +114,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialDetails> array = new List<ClinicalTrialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item));
+                        }
                     }
                     customTrials = array;
                     continue;
@@ -114,7 +135,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialRegistryFilter> array = new List<ClinicalTrialRegistryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item));
+                        }
                     }
                     registryFilters = array;
                     continue;

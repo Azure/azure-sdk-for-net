@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesFluxConfigurationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesFluxConfigurationData> array = new List<KubernetesFluxConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(item));
+                        }
                     }
                     value = array;
                     continue;

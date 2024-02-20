@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SearchServiceIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceIPRule> array = new List<SearchServiceIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceIPRule.DeserializeSearchServiceIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchServiceIPRule.DeserializeSearchServiceIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;

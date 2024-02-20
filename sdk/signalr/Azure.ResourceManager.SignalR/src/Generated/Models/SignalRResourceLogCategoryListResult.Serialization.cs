@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRResourceLogCategory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRResourceLogCategory> array = new List<SignalRResourceLogCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

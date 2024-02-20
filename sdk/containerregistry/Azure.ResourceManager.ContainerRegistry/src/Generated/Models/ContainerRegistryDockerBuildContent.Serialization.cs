@@ -59,7 +59,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryRunArgument>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,11 +76,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
+            if (Platform != null)
+            {
+                ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SourceLocation))
             {
@@ -83,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<ContainerRegistryCredentials>)Credentials).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
@@ -210,7 +224,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        }
                     }
                     arguments = array;
                     continue;

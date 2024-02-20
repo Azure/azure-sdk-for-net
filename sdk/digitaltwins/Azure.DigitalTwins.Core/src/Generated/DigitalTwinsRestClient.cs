@@ -162,12 +162,14 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -338,12 +340,14 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -550,12 +554,14 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopDevicesList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotSecurityAggregatedAlertTopDevice>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -320,7 +334,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityAggregatedAlertTopDevice> array = new List<IotSecurityAggregatedAlertTopDevice>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item));
+                                }
                             }
                             topDevicesList = array;
                             continue;

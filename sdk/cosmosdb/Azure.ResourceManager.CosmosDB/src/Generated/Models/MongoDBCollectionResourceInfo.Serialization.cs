@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MongoDBIndex>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                ((IJsonModel<ResourceRestoreParameters>)RestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -140,7 +147,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBIndex> array = new List<MongoDBIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
+                        }
                     }
                     indexes = array;
                     continue;

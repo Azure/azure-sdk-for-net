@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TrainingSettings != null)
                 {
                     writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue(TrainingSettings);
+                    ((IJsonModel<ClassificationTrainingSettings>)TrainingSettings).Write(writer, options);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings);
+                    ((IJsonModel<TableVerticalFeaturizationSettings>)FeaturizationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FixedParameters != null)
                 {
                     writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters);
+                    ((IJsonModel<TableFixedParameters>)FixedParameters).Write(writer, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings);
+                    ((IJsonModel<TableVerticalLimitSettings>)LimitSettings).Write(writer, options);
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NCrossValidations != null)
                 {
                     writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue(NCrossValidations);
+                    ((IJsonModel<NCrossValidations>)NCrossValidations).Write(writer, options);
                 }
                 else
                 {
@@ -128,7 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<TableParameterSubspace>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -142,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    ((IJsonModel<TableSweepSettings>)SweepSettings).Write(writer, options);
                 }
                 else
                 {
@@ -154,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TestData != null)
                 {
                     writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue(TestData);
+                    ((IJsonModel<MachineLearningTableJobInput>)TestData).Write(writer, options);
                 }
                 else
                 {
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -229,7 +236,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            if (TrainingData != null)
+            {
+                ((IJsonModel<MachineLearningTableJobInput>)TrainingData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -385,7 +399,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<TableParameterSubspace> array = new List<TableParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                        }
                     }
                     searchSpace = array;
                     continue;

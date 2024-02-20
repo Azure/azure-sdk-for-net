@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseSelfHostedIntegrationRuntimeNode>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseLinkedIntegrationRuntime>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -293,7 +307,14 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseSelfHostedIntegrationRuntimeNode> array = new List<SynapseSelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item));
+                                }
                             }
                             nodes = array;
                             continue;
@@ -368,7 +389,14 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseLinkedIntegrationRuntime> array = new List<SynapseLinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item));
+                                }
                             }
                             links = array;
                             continue;

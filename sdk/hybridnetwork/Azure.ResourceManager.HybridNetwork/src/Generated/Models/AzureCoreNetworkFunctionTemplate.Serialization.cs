@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkFunctionApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureCoreNetworkFunctionApplication>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureCoreNetworkFunctionApplication> array = new List<AzureCoreNetworkFunctionApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureCoreNetworkFunctionApplication.DeserializeAzureCoreNetworkFunctionApplication(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureCoreNetworkFunctionApplication.DeserializeAzureCoreNetworkFunctionApplication(item));
+                        }
                     }
                     networkFunctionApplications = array;
                     continue;

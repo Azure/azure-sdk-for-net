@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("primaryFabricId"u8);
-            writer.WriteStringValue(PrimaryFabricId);
+            if (PrimaryFabricId != null)
+            {
+                writer.WriteStringValue(PrimaryFabricId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("recoveryFabricId"u8);
-            writer.WriteStringValue(RecoveryFabricId);
+            if (RecoveryFabricId != null)
+            {
+                writer.WriteStringValue(RecoveryFabricId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
@@ -39,7 +53,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SiteRecoveryPlanGroup>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProviderSpecificContent))
@@ -48,7 +69,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificContent)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecoveryPlanProviderSpecificContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +151,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                        }
                     }
                     groups = array;
                     continue;
@@ -137,7 +172,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProviderSpecificContent> array = new List<RecoveryPlanProviderSpecificContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProviderSpecificContent.DeserializeRecoveryPlanProviderSpecificContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecoveryPlanProviderSpecificContent.DeserializeRecoveryPlanProviderSpecificContent(item));
+                        }
                     }
                     providerSpecificContent = array;
                     continue;

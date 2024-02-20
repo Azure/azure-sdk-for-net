@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Pk))
             {
                 writer.WritePropertyName("pk"u8);
-                writer.WriteObjectValue(Pk);
+                ((IJsonModel<UefiKey>)Pk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Kek))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Kek)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UefiKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Db)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UefiKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Dbx)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UefiKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +146,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UefiKey.DeserializeUefiKey(item));
+                        }
                     }
                     kek = array;
                     continue;
@@ -139,7 +167,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UefiKey.DeserializeUefiKey(item));
+                        }
                     }
                     db = array;
                     continue;
@@ -153,7 +188,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UefiKey.DeserializeUefiKey(item));
+                        }
                     }
                     dbx = array;
                     continue;

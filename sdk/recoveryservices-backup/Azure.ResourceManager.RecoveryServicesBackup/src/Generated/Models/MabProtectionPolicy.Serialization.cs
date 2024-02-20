@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                ((IJsonModel<BackupSchedulePolicy>)SchedulePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                ((IJsonModel<BackupRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {

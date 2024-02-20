@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig);
+                ((IJsonModel<HybridConnectionConfig>)HybridConnectionConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CredentialResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     List<CredentialResult> array = new List<CredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        }
                     }
                     kubeconfigs = array;
                     continue;

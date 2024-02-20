@@ -29,9 +29,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
             writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
-            writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
+            if (PrimaryStagingAzureStorageAccountId != null)
+            {
+                writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("recoveryResourceGroupId"u8);
-            writer.WriteStringValue(RecoveryResourceGroupId);
+            if (RecoveryResourceGroupId != null)
+            {
+                writer.WriteStringValue(RecoveryResourceGroupId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
@@ -50,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)DiskEncryptionInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

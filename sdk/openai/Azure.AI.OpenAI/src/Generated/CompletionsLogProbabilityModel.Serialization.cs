@@ -38,35 +38,41 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in TokenLogProbabilities)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteNumberValue(item.Value);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteNumberValue(item.Value);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("top_logprobs"u8);
             writer.WriteStartArray();
             foreach (var item in TopLogProbabilities)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        if (item0.Value != null)
+                        {
+                            writer.WriteNumberValue(item0.Value.Value);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
+                    }
+                    writer.WriteEndObject();
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStartObject();
-                foreach (var item0 in item)
-                {
-                    writer.WritePropertyName(item0.Key);
-                    if (item0.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteNumberValue(item0.Value.Value);
-                }
-                writer.WriteEndObject();
             }
             writer.WriteEndArray();
             writer.WritePropertyName("text_offset"u8);

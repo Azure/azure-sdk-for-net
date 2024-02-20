@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                ((IJsonModel<PostgreSqlServerPrivateLinkServiceConnectionStateProperty>)PrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

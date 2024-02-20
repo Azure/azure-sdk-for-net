@@ -85,7 +85,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     Dictionary<string, RunNotebookParameter> dictionary = new Dictionary<string, RunNotebookParameter>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RunNotebookParameter.DeserializeRunNotebookParameter(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, RunNotebookParameter.DeserializeRunNotebookParameter(property0.Value));
+                        }
                     }
                     parameters = dictionary;
                     continue;

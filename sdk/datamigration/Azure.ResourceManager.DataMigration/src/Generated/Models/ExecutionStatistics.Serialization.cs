@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<WaitStatistics>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -151,7 +158,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value));
+                        }
                     }
                     waitStats = dictionary;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in TimesInWeek)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServiceTimeInWeek>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,14 +80,21 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedTimes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServiceTimeSpan>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                ((IJsonModel<ContainerServiceMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -167,7 +188,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item));
+                                }
                             }
                             timeInWeek = array;
                             continue;
@@ -181,7 +209,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item));
+                                }
                             }
                             notAllowedTime = array;
                             continue;

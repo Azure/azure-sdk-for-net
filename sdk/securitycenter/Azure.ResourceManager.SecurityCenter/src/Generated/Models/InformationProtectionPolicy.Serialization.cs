@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in Labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SensitivityLabel>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +91,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in InformationTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SecurityInformationTypeInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -188,7 +209,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SensitivityLabel> dictionary = new Dictionary<string, SensitivityLabel>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value));
+                                }
                             }
                             labels = dictionary;
                             continue;
@@ -202,7 +230,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SecurityInformationTypeInfo> dictionary = new Dictionary<string, SecurityInformationTypeInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value));
+                                }
                             }
                             informationTypes = dictionary;
                             continue;

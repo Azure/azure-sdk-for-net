@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                ((IJsonModel<StoreWriteSettings>)StoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                ((IJsonModel<JsonWriteSettings>)FormatSettings).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Workloads.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl"u8);
-            writer.WriteStringValue(BomUri.AbsoluteUri);
+            if (BomUri != null)
+            {
+                writer.WriteStringValue(BomUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
             writer.WritePropertyName("sapBitsStorageAccountId"u8);
@@ -39,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
+                ((IJsonModel<HighAvailabilitySoftwareConfiguration>)HighAvailabilitySoftwareConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());

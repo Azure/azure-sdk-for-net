@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupModificationItemInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupModificationItemInfo> array = new List<SmartGroupModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item));
+                        }
                     }
                     modifications = array;
                     continue;

@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationSet)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationActivityParameterValidationSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +218,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterValidationSet> array = new List<AutomationActivityParameterValidationSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item));
+                        }
                     }
                     validationSet = array;
                     continue;

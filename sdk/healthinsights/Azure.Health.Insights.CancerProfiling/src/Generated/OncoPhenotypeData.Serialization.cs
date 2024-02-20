@@ -31,13 +31,20 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PatientRecord>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<OncoPhenotypeModelConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +95,14 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PatientRecord.DeserializePatientRecord(item));
+                        }
                     }
                     patients = array;
                     continue;

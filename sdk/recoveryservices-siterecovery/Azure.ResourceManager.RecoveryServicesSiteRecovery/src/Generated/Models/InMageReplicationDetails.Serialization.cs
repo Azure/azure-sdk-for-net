@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                ((IJsonModel<SiteRecoveryOSDiskDetails>)OSDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectionStage))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue(ResyncDetails);
+                ((IJsonModel<InitialReplicationDetails>)ResyncDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionWindowStartOn))
             {
@@ -103,7 +103,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageProtectedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentDetails))
             {
                 writer.WritePropertyName("agentDetails"u8);
-                writer.WriteObjectValue(AgentDetails);
+                ((IJsonModel<InMageAgentDetails>)AgentDetails).Write(writer, options);
             }
             if (Optional.IsDefined(VCenterInfrastructureId))
             {
@@ -184,7 +191,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +228,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -453,7 +474,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageProtectedDiskDetails> array = new List<InMageProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageProtectedDiskDetails.DeserializeInMageProtectedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageProtectedDiskDetails.DeserializeInMageProtectedDiskDetails(item));
+                        }
                     }
                     protectedDisks = array;
                     continue;
@@ -557,7 +585,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;
@@ -599,7 +634,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     validationErrors = array;
                     continue;

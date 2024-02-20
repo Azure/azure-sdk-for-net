@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri"u8);
-            writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            if (ServiceUri != null)
+            {
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);

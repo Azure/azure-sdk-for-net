@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("roleId"u8);
-            writer.WriteStringValue(RoleId);
+            if (RoleId != null)
+            {
+                writer.WriteStringValue(RoleId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

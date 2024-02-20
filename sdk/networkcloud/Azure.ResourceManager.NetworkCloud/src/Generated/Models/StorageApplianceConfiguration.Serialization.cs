@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials);
+            if (AdminCredentials != null)
+            {
+                ((IJsonModel<AdministrativeCredentials>)AdminCredentials).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);

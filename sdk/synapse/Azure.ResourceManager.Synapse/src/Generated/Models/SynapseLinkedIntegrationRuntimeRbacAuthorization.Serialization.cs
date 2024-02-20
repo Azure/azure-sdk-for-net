@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Synapse.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

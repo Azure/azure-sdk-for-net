@@ -25,7 +25,14 @@ namespace Azure.Communication.NetworkTraversal
             writer.WriteStartArray();
             foreach (var item in IceServers)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -51,7 +58,14 @@ namespace Azure.Communication.NetworkTraversal
                     List<CommunicationIceServer> array = new List<CommunicationIceServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationIceServer.DeserializeCommunicationIceServer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommunicationIceServer.DeserializeCommunicationIceServer(item));
+                        }
                     }
                     iceServers = array;
                     continue;

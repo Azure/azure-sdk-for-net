@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ResourceHealth
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Info)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthKeyValueItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -246,7 +260,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthKeyValueItem> array = new List<ResourceHealthKeyValueItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item));
+                                }
                             }
                             info = array;
                             continue;

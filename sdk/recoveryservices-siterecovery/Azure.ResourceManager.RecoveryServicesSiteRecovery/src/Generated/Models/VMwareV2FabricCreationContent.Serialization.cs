@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(PhysicalSiteId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
-            writer.WriteStringValue(MigrationSolutionId);
+            if (MigrationSolutionId != null)
+            {
+                writer.WriteStringValue(MigrationSolutionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

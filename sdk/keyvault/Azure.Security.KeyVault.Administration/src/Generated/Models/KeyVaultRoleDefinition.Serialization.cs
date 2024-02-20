@@ -39,7 +39,14 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.Security.KeyVault.Administration
                             List<KeyVaultPermission> array = new List<KeyVaultPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
+                                }
                             }
                             permissions = array;
                             continue;

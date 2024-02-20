@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisUpgradeNotification>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item));
+                        }
                     }
                     value = array;
                     continue;

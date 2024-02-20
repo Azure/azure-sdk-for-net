@@ -37,7 +37,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in MediaProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +99,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<MediaProfile> array = new List<MediaProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaProfile.DeserializeMediaProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaProfile.DeserializeMediaProfile(item));
+                        }
                     }
                     mediaProfiles = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HubData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<HubData> array = new List<HubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubData.DeserializeHubData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HubData.DeserializeHubData(item));
+                        }
                     }
                     value = array;
                     continue;

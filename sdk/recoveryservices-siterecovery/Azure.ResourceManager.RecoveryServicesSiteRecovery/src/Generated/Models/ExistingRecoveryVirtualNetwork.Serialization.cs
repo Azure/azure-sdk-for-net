@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryVirtualNetworkId"u8);
-            writer.WriteStringValue(RecoveryVirtualNetworkId);
+            if (RecoveryVirtualNetworkId != null)
+            {
+                writer.WriteStringValue(RecoveryVirtualNetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RecoverySubnetName))
             {
                 writer.WritePropertyName("recoverySubnetName"u8);

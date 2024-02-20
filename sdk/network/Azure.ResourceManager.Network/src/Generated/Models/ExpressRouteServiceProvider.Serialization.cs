@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BandwidthsOffered)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteServiceProviderBandwidthsOffered>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -213,7 +220,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ExpressRouteServiceProviderBandwidthsOffered> array = new List<ExpressRouteServiceProviderBandwidthsOffered>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteServiceProviderBandwidthsOffered.DeserializeExpressRouteServiceProviderBandwidthsOffered(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteServiceProviderBandwidthsOffered.DeserializeExpressRouteServiceProviderBandwidthsOffered(item));
+                                }
                             }
                             bandwidthsOffered = array;
                             continue;

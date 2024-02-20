@@ -35,14 +35,21 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("parameters"u8);
+            if (Parameters != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Parameters))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

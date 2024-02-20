@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
-                writer.WriteObjectValue(CloudServiceConfiguration);
+                ((IJsonModel<BatchCloudServiceConfiguration>)CloudServiceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VmConfiguration);
+                ((IJsonModel<BatchVmConfiguration>)VmConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

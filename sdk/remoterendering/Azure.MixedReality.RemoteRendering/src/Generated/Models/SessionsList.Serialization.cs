@@ -28,7 +28,14 @@ namespace Azure.MixedReality.RemoteRendering
                     List<RenderingSession> array = new List<RenderingSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RenderingSession.DeserializeRenderingSession(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RenderingSession.DeserializeRenderingSession(item));
+                        }
                     }
                     sessions = array;
                     continue;

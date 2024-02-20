@@ -23,7 +23,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("roles"u8);
-            writer.WriteObjectValue(Roles);
+            if (Roles != null)
+            {
+                writer.WriteObjectValue(Roles);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

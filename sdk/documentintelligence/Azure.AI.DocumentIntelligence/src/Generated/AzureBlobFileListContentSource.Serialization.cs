@@ -28,7 +28,14 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            if (ContainerUrl != null)
+            {
+                writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("fileList"u8);
             writer.WriteStringValue(FileList);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

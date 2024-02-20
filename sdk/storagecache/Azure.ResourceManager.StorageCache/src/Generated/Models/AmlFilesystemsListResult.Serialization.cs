@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AmlFileSystemData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemData> array = new List<AmlFileSystemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item));
+                        }
                     }
                     value = array;
                     continue;

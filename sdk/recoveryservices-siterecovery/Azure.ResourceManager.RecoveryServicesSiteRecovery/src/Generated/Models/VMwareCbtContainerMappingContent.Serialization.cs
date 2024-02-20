@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WritePropertyName("storageAccountId"u8);
-            writer.WriteStringValue(StorageAccountId);
+            if (StorageAccountId != null)
+            {
+                writer.WriteStringValue(StorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);

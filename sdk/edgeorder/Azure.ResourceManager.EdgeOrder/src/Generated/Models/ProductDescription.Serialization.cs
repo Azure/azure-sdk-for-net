@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProductLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +182,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductLink> array = new List<ProductLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductLink.DeserializeProductLink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProductLink.DeserializeProductLink(item));
+                        }
                     }
                     links = array;
                     continue;

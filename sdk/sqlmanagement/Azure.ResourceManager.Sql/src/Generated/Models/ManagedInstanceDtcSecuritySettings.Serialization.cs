@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
-                writer.WriteObjectValue(TransactionManagerCommunicationSettings);
+                ((IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)TransactionManagerCommunicationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsXATransactionsEnabled))
             {

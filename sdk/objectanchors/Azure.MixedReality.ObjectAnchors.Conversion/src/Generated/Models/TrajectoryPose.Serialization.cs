@@ -17,9 +17,23 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rotation"u8);
-            writer.WriteObjectValue(RotationWrapper);
+            if (RotationWrapper != null)
+            {
+                writer.WriteObjectValue(RotationWrapper);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("translation"u8);
-            writer.WriteObjectValue(TranslationWrapper);
+            if (TranslationWrapper != null)
+            {
+                writer.WriteObjectValue(TranslationWrapper);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

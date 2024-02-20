@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.IotHub.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("exportBlobContainerUri"u8);
-            writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
+            if (ExportBlobContainerUri != null)
+            {
+                writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("excludeKeys"u8);
             writer.WriteBooleanValue(ExcludeKeys);
             if (Optional.IsDefined(ExportBlobName))
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ManagedIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {

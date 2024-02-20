@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelSettings != null)
                 {
                     writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings);
+                    ((IJsonModel<ImageModelSettingsObjectDetection>)ModelSettings).Write(writer, options);
                 }
                 else
                 {
@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ImageModelDistributionSettingsObjectDetection>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -61,13 +68,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("limitSettings"u8);
-            writer.WriteObjectValue(LimitSettings);
+            if (LimitSettings != null)
+            {
+                ((IJsonModel<ImageLimitSettings>)LimitSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    ((IJsonModel<ImageSweepSettings>)SweepSettings).Write(writer, options);
                 }
                 else
                 {
@@ -79,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -118,7 +132,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            if (TrainingData != null)
+            {
+                ((IJsonModel<MachineLearningTableJobInput>)TrainingData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -201,7 +222,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ImageModelDistributionSettingsObjectDetection> array = new List<ImageModelDistributionSettingsObjectDetection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageModelDistributionSettingsObjectDetection.DeserializeImageModelDistributionSettingsObjectDetection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImageModelDistributionSettingsObjectDetection.DeserializeImageModelDistributionSettingsObjectDetection(item));
+                        }
                     }
                     searchSpace = array;
                     continue;

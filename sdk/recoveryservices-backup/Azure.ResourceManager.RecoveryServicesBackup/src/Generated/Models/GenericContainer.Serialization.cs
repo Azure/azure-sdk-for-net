@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInformation))
             {
                 writer.WritePropertyName("extendedInformation"u8);
-                writer.WriteObjectValue(ExtendedInformation);
+                ((IJsonModel<GenericContainerExtendedInfo>)ExtendedInformation).Write(writer, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {

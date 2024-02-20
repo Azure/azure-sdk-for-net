@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
-                writer.WriteObjectValue(RecommendedConfiguration);
+                ((IJsonModel<DiskVolumeConfiguration>)RecommendedConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SupportedConfigurationsDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SupportedConfigurationsDiskDetails> array = new List<SupportedConfigurationsDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConfigurationsDiskDetails.DeserializeSupportedConfigurationsDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SupportedConfigurationsDiskDetails.DeserializeSupportedConfigurationsDiskDetails(item));
+                        }
                     }
                     supportedConfigurations = array;
                     continue;

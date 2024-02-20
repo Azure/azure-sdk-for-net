@@ -32,26 +32,40 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in JobStages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxJobStage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            if (ContactDetails != null)
+            {
+                ((IJsonModel<DataBoxContactDetails>)ContactDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage);
+                ((IJsonModel<PackageShippingDetails>)DeliveryPackage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage);
+                ((IJsonModel<PackageShippingDetails>)ReturnPackage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -59,7 +73,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataImportDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +90,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataExportDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,12 +106,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                ((IJsonModel<DataBoxOrderPreferences>)Preferences).Write(writer, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                ((IJsonModel<ReverseShippingDetails>)ReverseShippingDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
@@ -91,7 +119,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CopyLogDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,12 +143,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails);
+                ((IJsonModel<DeviceErasureDetails>)DeviceErasureDetails).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                ((IJsonModel<DataBoxKeyEncryptionKey>)KeyEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
@@ -133,12 +168,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob);
+                ((IJsonModel<LastMitigationActionOnJob>)LastMitigationActionOnJob).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress);
+                ((IJsonModel<DataCenterAddressResult>)DataCenterAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
@@ -216,7 +251,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxJobStage> array = new List<DataBoxJobStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
+                        }
                     }
                     jobStages = array;
                     continue;
@@ -262,7 +304,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataImportDetails> array = new List<DataImportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        }
                     }
                     dataImportDetails = array;
                     continue;
@@ -276,7 +325,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataExportDetails> array = new List<DataExportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        }
                     }
                     dataExportDetails = array;
                     continue;
@@ -313,7 +369,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<CopyLogDetails> array = new List<CopyLogDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item));
+                        }
                     }
                     copyLogDetails = array;
                     continue;

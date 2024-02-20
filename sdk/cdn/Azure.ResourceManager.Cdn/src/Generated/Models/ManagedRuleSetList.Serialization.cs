@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WafPolicyManagedRuleSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
+                        }
                     }
                     managedRuleSets = array;
                     continue;

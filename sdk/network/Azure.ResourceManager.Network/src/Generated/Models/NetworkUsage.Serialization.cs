@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            if (Name != null)
+            {
+                ((IJsonModel<NetworkUsageName>)Name).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
-                writer.WriteObjectValue(PreTask);
+                ((IJsonModel<SoftwareUpdateConfigurationTaskProperties>)PreTask).Write(writer, options);
             }
             if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
-                writer.WriteObjectValue(PostTask);
+                ((IJsonModel<SoftwareUpdateConfigurationTaskProperties>)PostTask).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

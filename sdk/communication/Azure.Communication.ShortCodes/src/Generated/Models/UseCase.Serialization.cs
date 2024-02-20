@@ -27,7 +27,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Examples)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +69,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<MessageExampleSequence> array = new List<MessageExampleSequence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageExampleSequence.DeserializeMessageExampleSequence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MessageExampleSequence.DeserializeMessageExampleSequence(item));
+                        }
                     }
                     examples = array;
                     continue;

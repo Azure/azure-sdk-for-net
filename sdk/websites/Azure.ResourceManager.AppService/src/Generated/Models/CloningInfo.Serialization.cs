@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteBooleanValue(CloneSourceControl.Value);
             }
             writer.WritePropertyName("sourceWebAppId"u8);
-            writer.WriteStringValue(SourceWebAppId);
+            if (SourceWebAppId != null)
+            {
+                writer.WriteStringValue(SourceWebAppId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SourceWebAppLocation))
             {
                 writer.WritePropertyName("sourceWebAppLocation"u8);

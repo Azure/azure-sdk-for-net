@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<JitNetworkAccessPolicyInitiateVirtualMachine>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Justification))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyInitiateVirtualMachine> array = new List<JitNetworkAccessPolicyInitiateVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item));
+                        }
                     }
                     virtualMachines = array;
                     continue;

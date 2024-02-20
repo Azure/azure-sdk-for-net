@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RelayHybridConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayHybridConnectionData> array = new List<RelayHybridConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayHybridConnectionData.DeserializeRelayHybridConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RelayHybridConnectionData.DeserializeRelayHybridConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

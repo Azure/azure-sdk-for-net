@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                ((IJsonModel<ScalingActionTime>)RampUpStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                ((IJsonModel<ScalingActionTime>)PeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                ((IJsonModel<ScalingActionTime>)RampDownStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                ((IJsonModel<ScalingActionTime>)OffPeakStartTime).Write(writer, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {

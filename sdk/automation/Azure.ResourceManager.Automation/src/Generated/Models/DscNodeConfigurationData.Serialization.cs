@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Automation
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(Source))
             {

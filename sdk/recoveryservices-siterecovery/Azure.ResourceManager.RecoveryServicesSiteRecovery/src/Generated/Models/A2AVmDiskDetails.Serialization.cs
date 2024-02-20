@@ -27,11 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("diskUri"u8);
-            writer.WriteStringValue(DiskUri.AbsoluteUri);
+            if (DiskUri != null)
+            {
+                writer.WriteStringValue(DiskUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("recoveryAzureStorageAccountId"u8);
-            writer.WriteStringValue(RecoveryAzureStorageAccountId);
+            if (RecoveryAzureStorageAccountId != null)
+            {
+                writer.WriteStringValue(RecoveryAzureStorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
-            writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
+            if (PrimaryStagingAzureStorageAccountId != null)
+            {
+                writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

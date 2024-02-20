@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
-                writer.WriteObjectValue(GeographicHierarchy);
+                ((IJsonModel<TrafficManagerRegion>)GeographicHierarchy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

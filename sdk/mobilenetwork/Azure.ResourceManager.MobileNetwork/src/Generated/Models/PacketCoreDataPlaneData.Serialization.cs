@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneAccessInterface"u8);
-            writer.WriteObjectValue(UserPlaneAccessInterface);
+            if (UserPlaneAccessInterface != null)
+            {
+                ((IJsonModel<MobileNetworkInterfaceProperties>)UserPlaneAccessInterface).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);

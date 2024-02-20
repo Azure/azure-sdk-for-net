@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EsuKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +155,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EsuKey.DeserializeEsuKey(item));
+                        }
                     }
                     esuKeys = array;
                     continue;

@@ -55,7 +55,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InboundSecurityRules>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +170,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<InboundSecurityRules> array = new List<InboundSecurityRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundSecurityRules.DeserializeInboundSecurityRules(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(InboundSecurityRules.DeserializeInboundSecurityRules(item));
+                                }
                             }
                             rules = array;
                             continue;

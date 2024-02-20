@@ -43,7 +43,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     List<SparkBatchJob> array = new List<SparkBatchJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkBatchJob.DeserializeSparkBatchJob(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkBatchJob.DeserializeSparkBatchJob(item));
+                        }
                     }
                     sessions = array;
                     continue;

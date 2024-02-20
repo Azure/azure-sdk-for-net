@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
-            writer.WriteStringValue(CertificateUri.AbsoluteUri);
+            if (CertificateUri != null)
+            {
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("certificateStore"u8);
             writer.WriteStringValue(CertificateStore);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

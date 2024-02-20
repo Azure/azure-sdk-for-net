@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                ((IJsonModel<AddressSpace>)AddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
-                writer.WriteObjectValue(DhcpOptions);
+                ((IJsonModel<DhcpOptions>)DhcpOptions).Write(writer, options);
             }
             if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
@@ -93,7 +93,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SubnetData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualNetworkPeeringData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +149,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
-                writer.WriteObjectValue(BgpCommunities);
+                ((IJsonModel<VirtualNetworkBgpCommunities>)BgpCommunities).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<VirtualNetworkEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
@@ -148,7 +162,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPAllocations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +179,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FlowLogData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -335,7 +363,14 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SubnetData.DeserializeSubnetData(item));
+                                }
                             }
                             subnets = array;
                             continue;
@@ -349,7 +384,14 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                                }
                             }
                             virtualNetworkPeerings = array;
                             continue;
@@ -426,7 +468,14 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             ipAllocations = array;
                             continue;
@@ -440,7 +489,14 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                }
                             }
                             flowLogs = array;
                             continue;

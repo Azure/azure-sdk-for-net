@@ -31,9 +31,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("frontendConfiguration"u8);
-            writer.WriteObjectValue(FrontendConfiguration);
+            if (FrontendConfiguration != null)
+            {
+                ((IJsonModel<FirewallEndpointConfiguration>)FrontendConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("backendConfiguration"u8);
-            writer.WriteObjectValue(BackendConfiguration);
+            if (BackendConfiguration != null)
+            {
+                ((IJsonModel<FirewallEndpointConfiguration>)BackendConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

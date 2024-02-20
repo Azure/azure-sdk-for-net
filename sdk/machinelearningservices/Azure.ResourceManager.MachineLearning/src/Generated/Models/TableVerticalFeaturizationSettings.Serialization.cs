@@ -80,17 +80,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in TransformerParams)
                     {
                         writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
+                        if (item.Value != null)
+                        {
+                            writer.WriteStartArray();
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 != null)
+                                {
+                                    ((IJsonModel<ColumnTransformer>)item0).Write(writer, options);
+                                }
+                                else
+                                {
+                                    writer.WriteNullValue();
+                                }
+                            }
+                            writer.WriteEndArray();
+                        }
+                        else
                         {
                             writer.WriteNullValue();
-                            continue;
                         }
-                        writer.WriteStartArray();
-                        foreach (var item0 in item.Value)
-                        {
-                            writer.WriteObjectValue(item0);
-                        }
-                        writer.WriteEndArray();
                     }
                     writer.WriteEndObject();
                 }
@@ -226,7 +235,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             List<ColumnTransformer> array = new List<ColumnTransformer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ColumnTransformer.DeserializeColumnTransformer(item));
+                                }
                             }
                             dictionary.Add(property0.Name, array);
                         }

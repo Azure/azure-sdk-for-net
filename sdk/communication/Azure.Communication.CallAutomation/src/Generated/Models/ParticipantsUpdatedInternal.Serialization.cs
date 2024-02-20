@@ -35,7 +35,14 @@ namespace Azure.Communication.CallAutomation
                     List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
+                        }
                     }
                     participants = array;
                     continue;

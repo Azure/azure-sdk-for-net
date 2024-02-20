@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<OperationalInsightsMetricName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {

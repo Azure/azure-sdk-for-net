@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(RuleQosPolicy))
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
-                writer.WriteObjectValue(RuleQosPolicy);
+                ((IJsonModel<PccRuleQosPolicy>)RuleQosPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficControl))
             {
@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in ServiceDataFlowTemplates)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MobileNetworkServiceDataFlowTemplate>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkServiceDataFlowTemplate> array = new List<MobileNetworkServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
+                        }
                     }
                     serviceDataFlowTemplates = array;
                     continue;

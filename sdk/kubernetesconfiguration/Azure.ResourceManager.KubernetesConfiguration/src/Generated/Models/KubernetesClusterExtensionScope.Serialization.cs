@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster);
+                    ((IJsonModel<ScopeCluster>)Cluster).Write(writer, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Namespace != null)
                 {
                     writer.WritePropertyName("namespace"u8);
-                    writer.WriteObjectValue(Namespace);
+                    ((IJsonModel<ScopeNamespace>)Namespace).Write(writer, options);
                 }
                 else
                 {

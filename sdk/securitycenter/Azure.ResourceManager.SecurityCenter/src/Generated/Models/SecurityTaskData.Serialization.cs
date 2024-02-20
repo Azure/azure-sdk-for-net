@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SecurityTaskParameters))
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
-                writer.WriteObjectValue(SecurityTaskParameters);
+                ((IJsonModel<SecurityTaskProperties>)SecurityTaskParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastStateChangedOn))
             {

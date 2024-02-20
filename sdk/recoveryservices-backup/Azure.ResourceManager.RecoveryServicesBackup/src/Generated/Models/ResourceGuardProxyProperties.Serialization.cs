@@ -27,14 +27,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGuardResourceId"u8);
-            writer.WriteStringValue(ResourceGuardResourceId);
+            if (ResourceGuardResourceId != null)
+            {
+                writer.WriteStringValue(ResourceGuardResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceGuardOperationDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +122,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ResourceGuardOperationDetail> array = new List<ResourceGuardOperationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item));
+                        }
                     }
                     resourceGuardOperationDetails = array;
                     continue;

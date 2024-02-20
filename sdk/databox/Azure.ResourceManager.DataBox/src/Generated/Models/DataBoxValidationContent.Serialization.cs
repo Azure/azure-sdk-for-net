@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataBoxValidationInputContent>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

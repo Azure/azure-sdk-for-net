@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ResourceHealth
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -61,7 +68,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusBanners)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmergingIssueBannerType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +85,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusActiveEvents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmergingIssueActiveEventType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +197,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueBannerType> array = new List<EmergingIssueBannerType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item));
+                                }
                             }
                             statusBanners = array;
                             continue;
@@ -190,7 +218,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueActiveEventType> array = new List<EmergingIssueActiveEventType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item));
+                                }
                             }
                             statusActiveEvents = array;
                             continue;

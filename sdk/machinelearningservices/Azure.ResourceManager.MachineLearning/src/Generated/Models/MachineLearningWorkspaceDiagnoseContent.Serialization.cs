@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                ((IJsonModel<MachineLearningWorkspaceDiagnoseProperties>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

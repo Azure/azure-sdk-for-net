@@ -32,12 +32,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Repositories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConfigServerGitPatternRepository>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
@@ -144,7 +158,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerGitPatternRepository> array = new List<ConfigServerGitPatternRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item));
+                        }
                     }
                     repositories = array;
                     continue;

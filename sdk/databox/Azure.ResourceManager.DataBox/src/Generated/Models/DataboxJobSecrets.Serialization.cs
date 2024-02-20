@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in PodSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxSecret>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                ((IJsonModel<DataCenterAccessSecurityCode>)DataCenterAccessSecurityCode).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxSecret> array = new List<DataBoxSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxSecret.DeserializeDataBoxSecret(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxSecret.DeserializeDataBoxSecret(item));
+                        }
                     }
                     podSecrets = array;
                     continue;

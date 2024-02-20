@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Pages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FacebookPage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<FacebookPage> array = new List<FacebookPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacebookPage.DeserializeFacebookPage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FacebookPage.DeserializeFacebookPage(item));
+                        }
                     }
                     pages = array;
                     continue;

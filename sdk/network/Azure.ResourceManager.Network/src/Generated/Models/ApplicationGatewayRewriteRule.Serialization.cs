@@ -42,14 +42,21 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationGatewayRewriteRuleCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
-                writer.WriteObjectValue(ActionSet);
+                ((IJsonModel<ApplicationGatewayRewriteRuleActionSet>)ActionSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,7 +127,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        }
                     }
                     conditions = array;
                     continue;

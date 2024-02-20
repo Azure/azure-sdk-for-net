@@ -430,19 +430,21 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in parameterValueSpecification)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        content.JsonWriter.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        content.JsonWriter.WriteNullValue();
+                    }
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;

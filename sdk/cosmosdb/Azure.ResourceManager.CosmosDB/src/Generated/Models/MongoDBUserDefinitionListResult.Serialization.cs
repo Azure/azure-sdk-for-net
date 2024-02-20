@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MongoDBUserDefinitionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBUserDefinitionData> array = new List<MongoDBUserDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MongoDBUserDefinitionData.DeserializeMongoDBUserDefinitionData(item));
+                        }
                     }
                     value = array;
                     continue;

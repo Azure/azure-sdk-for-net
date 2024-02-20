@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StackMajorVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Frameworks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationStack>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +81,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in IsDeprecated)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationStack>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
+                        }
                     }
                     majorVersions = array;
                     continue;
@@ -157,7 +185,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeApplicationStack(item));
+                        }
                     }
                     frameworks = array;
                     continue;
@@ -171,7 +206,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeApplicationStack(item));
+                        }
                     }
                     isDeprecated = array;
                     continue;

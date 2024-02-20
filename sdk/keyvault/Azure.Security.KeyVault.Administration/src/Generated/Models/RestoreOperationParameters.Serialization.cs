@@ -16,7 +16,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sasTokenParameters"u8);
-            writer.WriteObjectValue(SasTokenParameters);
+            if (SasTokenParameters != null)
+            {
+                writer.WriteObjectValue(SasTokenParameters);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("folderToRestore"u8);
             writer.WriteStringValue(FolderToRestore);
             writer.WriteEndObject();

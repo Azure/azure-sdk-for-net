@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SiteReference))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference);
+                ((IJsonModel<DeploymentResourceIdReference>)NetworkServiceDesignVersionResourceReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
             {
@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in DesiredStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    if (item.Value != null)
+                    {
+                        JsonSerializer.Serialize(writer, item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in LastStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    if (item.Value != null)
+                    {
+                        JsonSerializer.Serialize(writer, item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -227,7 +241,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        }
                     }
                     desiredStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -246,7 +267,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        }
                     }
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;

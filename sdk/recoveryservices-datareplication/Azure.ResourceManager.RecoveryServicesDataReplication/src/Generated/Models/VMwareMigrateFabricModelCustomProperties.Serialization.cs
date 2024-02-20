@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareSiteId"u8);
-            writer.WriteStringValue(VMwareSiteId);
+            if (VMwareSiteId != null)
+            {
+                writer.WriteStringValue(VMwareSiteId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("migrationSolutionId"u8);
-            writer.WriteStringValue(MigrationSolutionId);
+            if (MigrationSolutionId != null)
+            {
+                writer.WriteStringValue(MigrationSolutionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

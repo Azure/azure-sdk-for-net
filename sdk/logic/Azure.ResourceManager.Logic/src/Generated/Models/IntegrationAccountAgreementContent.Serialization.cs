@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
-                writer.WriteObjectValue(AS2);
+                ((IJsonModel<AS2AgreementContent>)AS2).Write(writer, options);
             }
             if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
-                writer.WriteObjectValue(X12);
+                ((IJsonModel<X12AgreementContent>)X12).Write(writer, options);
             }
             if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
-                writer.WriteObjectValue(Edifact);
+                ((IJsonModel<EdifactAgreementContent>)Edifact).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -81,9 +88,23 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UeAmbr);
+            if (UeAmbr != null)
+            {
+                ((IJsonModel<Ambr>)UeAmbr).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("defaultSlice"u8);
-            JsonSerializer.Serialize(writer, DefaultSlice);
+            if (DefaultSlice != null)
+            {
+                JsonSerializer.Serialize(writer, DefaultSlice);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
@@ -98,7 +119,14 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MobileNetworkSliceConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -265,7 +293,14 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                }
                             }
                             sliceConfigurations = array;
                             continue;

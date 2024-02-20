@@ -43,30 +43,34 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
                         {
-                            writer.WriteNullValue();
-                            continue;
-                        }
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
+                                using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                                {
+                                    JsonSerializer.Serialize(writer, document.RootElement);
+                                }
 #endif
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
                     }
-                    writer.WriteEndObject();
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -88,12 +92,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue(TemporaryDisk);
+                ((IJsonModel<AppTemporaryDisk>)TemporaryDisk).Write(writer, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue(PersistentDisk);
+                ((IJsonModel<AppPersistentDisk>)PersistentDisk).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -101,7 +105,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppCustomPersistentDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,19 +127,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppLoadedCertificate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons);
+                ((IJsonModel<AppVnetAddons>)VnetAddons).Write(writer, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue(IngressSettings);
+                ((IJsonModel<AppIngressSettings>)IngressSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -282,7 +300,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppCustomPersistentDisk> array = new List<AppCustomPersistentDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        }
                     }
                     customPersistentDisks = array;
                     continue;
@@ -305,7 +330,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppLoadedCertificate> array = new List<AppLoadedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        }
                     }
                     loadedCertificates = array;
                     continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageCacheData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheData> array = new List<StorageCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheData.DeserializeStorageCacheData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageCacheData.DeserializeStorageCacheData(item));
+                        }
                     }
                     value = array;
                     continue;

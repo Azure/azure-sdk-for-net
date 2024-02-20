@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Automation
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -51,9 +58,23 @@ namespace Azure.ResourceManager.Automation
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("updateConfiguration"u8);
-            writer.WriteObjectValue(UpdateConfiguration);
+            if (UpdateConfiguration != null)
+            {
+                ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)UpdateConfiguration).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("scheduleInfo"u8);
-            writer.WriteObjectValue(ScheduleInfo);
+            if (ScheduleInfo != null)
+            {
+                ((IJsonModel<SoftwareUpdateConfigurationScheduleProperties>)ScheduleInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -62,7 +83,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<AutomationResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -87,7 +108,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                ((IJsonModel<SoftwareUpdateConfigurationTasks>)Tasks).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

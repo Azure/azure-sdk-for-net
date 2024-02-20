@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleEligibilityScheduleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleEligibilityScheduleData> array = new List<RoleEligibilityScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(item));
+                        }
                     }
                     value = array;
                     continue;

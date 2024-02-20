@@ -17,7 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            if (Endpoint != null)
+            {
+                writer.WriteObjectValue(Endpoint);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
@@ -29,7 +36,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(SamplingOptions);
             }
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation);
+            if (Operation != null)
+            {
+                writer.WriteObjectValue(Operation);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -38,7 +52,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -102,7 +123,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeInput.DeserializeNodeInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NodeInput.DeserializeNodeInput(item));
+                        }
                     }
                     inputs = array;
                     continue;

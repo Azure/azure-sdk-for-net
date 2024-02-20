@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue(AppInsightsSettings);
+                ((IJsonModel<AppInsightsWebAppStackSettings>)AppInsightsSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue(GitHubActionSettings);
+                ((IJsonModel<GitHubActionWebAppStackSettings>)GitHubActionSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AppSettingsDictionary))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
-                writer.WriteObjectValue(SiteConfigPropertiesDictionary);
+                ((IJsonModel<SiteConfigPropertiesDictionary>)SiteConfigPropertiesDictionary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
             {

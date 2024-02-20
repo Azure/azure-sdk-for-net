@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                ((IJsonModel<ServiceBusFilterAction>)Action).Write(writer, options);
             }
             if (Optional.IsDefined(FilterType))
             {
@@ -68,12 +75,12 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
-                writer.WriteObjectValue(SqlFilter);
+                ((IJsonModel<ServiceBusSqlFilter>)SqlFilter).Write(writer, options);
             }
             if (Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
-                writer.WriteObjectValue(CorrelationFilter);
+                ((IJsonModel<ServiceBusCorrelationFilter>)CorrelationFilter).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

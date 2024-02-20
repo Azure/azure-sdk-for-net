@@ -19,7 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            if (LinkedServiceName != null)
+            {
+                writer.WriteObjectValue(LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);

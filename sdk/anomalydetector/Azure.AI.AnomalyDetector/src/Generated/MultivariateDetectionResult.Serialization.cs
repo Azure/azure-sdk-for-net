@@ -30,12 +30,26 @@ namespace Azure.AI.AnomalyDetector
             writer.WritePropertyName("resultId"u8);
             writer.WriteStringValue(ResultId);
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue(Summary);
+            if (Summary != null)
+            {
+                ((IJsonModel<MultivariateBatchDetectionResultSummary>)Summary).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (var item in Results)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AnomalyState>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +112,14 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyState> array = new List<AnomalyState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyState.DeserializeAnomalyState(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnomalyState.DeserializeAnomalyState(item));
+                        }
                     }
                     results = array;
                     continue;

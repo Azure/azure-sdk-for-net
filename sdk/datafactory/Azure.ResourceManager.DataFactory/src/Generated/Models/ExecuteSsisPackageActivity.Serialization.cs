@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                ((IJsonModel<PipelineActivityPolicy>)Policy).Write(writer, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +79,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityUserProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
+            if (PackageLocation != null)
+            {
+                ((IJsonModel<SsisPackageLocation>)PackageLocation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -98,10 +119,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                ((IJsonModel<SsisExecutionCredential>)ExecutionCredential).Write(writer, options);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
+            if (ConnectVia != null)
+            {
+                ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -109,7 +137,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SsisExecutionParameter>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +155,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SsisExecutionParameter>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -131,18 +173,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
+                                ((IJsonModel<SsisExecutionParameter>)item0.Value).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -153,18 +204,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
+                                ((IJsonModel<SsisExecutionParameter>)item0.Value).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -175,14 +235,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SsisPropertyOverride>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                ((IJsonModel<SsisLogLocation>)LogLocation).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -305,7 +372,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -319,7 +393,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        }
                     }
                     userProperties = array;
                     continue;
@@ -388,7 +469,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                }
                             }
                             projectParameters = dictionary;
                             continue;
@@ -402,7 +490,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                }
                             }
                             packageParameters = dictionary;
                             continue;
@@ -425,7 +520,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        if (property2.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary0.Add(property2.Name, null);
+                                        }
+                                        else
+                                        {
+                                            dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        }
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -451,7 +553,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        if (property2.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary0.Add(property2.Name, null);
+                                        }
+                                        else
+                                        {
+                                            dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        }
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -468,7 +577,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisPropertyOverride> dictionary = new Dictionary<string, SsisPropertyOverride>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                }
                             }
                             propertyOverrides = dictionary;
                             continue;

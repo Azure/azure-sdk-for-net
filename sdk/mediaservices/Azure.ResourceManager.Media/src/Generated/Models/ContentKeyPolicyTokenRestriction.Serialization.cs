@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue(PrimaryVerificationKey);
+                if (PrimaryVerificationKey != null)
+                {
+                    ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)PrimaryVerificationKey).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             else
             {
@@ -45,7 +52,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentKeyPolicyTokenClaim>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +168,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyRestrictionTokenKey> array = new List<ContentKeyPolicyRestrictionTokenKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item));
+                        }
                     }
                     alternateVerificationKeys = array;
                     continue;
@@ -161,7 +189,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyTokenClaim> array = new List<ContentKeyPolicyTokenClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item));
+                        }
                     }
                     requiredClaims = array;
                     continue;

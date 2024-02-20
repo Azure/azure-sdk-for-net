@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in StepsList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UpsertManagedServerOperationStep>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
+                        }
                     }
                     stepsList = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevCenterUsage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterUsage> array = new List<DevCenterUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterUsage.DeserializeDevCenterUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevCenterUsage.DeserializeDevCenterUsage(item));
+                        }
                     }
                     value = array;
                     continue;

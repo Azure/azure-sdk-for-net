@@ -57,7 +57,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<TargetRelation> array = new List<TargetRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRelation.DeserializeTargetRelation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TargetRelation.DeserializeTargetRelation(item));
+                        }
                     }
                     relations = array;
                     continue;

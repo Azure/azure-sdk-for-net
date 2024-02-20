@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableBandwidths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRoutePortsLocationBandwidths>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +218,14 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRoutePortsLocationBandwidths> array = new List<ExpressRoutePortsLocationBandwidths>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRoutePortsLocationBandwidths.DeserializeExpressRoutePortsLocationBandwidths(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRoutePortsLocationBandwidths.DeserializeExpressRoutePortsLocationBandwidths(item));
+                                }
                             }
                             availableBandwidths = array;
                             continue;

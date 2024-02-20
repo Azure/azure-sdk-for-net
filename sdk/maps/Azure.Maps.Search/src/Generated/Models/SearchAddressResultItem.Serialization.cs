@@ -128,7 +128,14 @@ namespace Azure.Maps.Search.Models
                     List<FacilityEntryPoint> array = new List<FacilityEntryPoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacilityEntryPoint.DeserializeFacilityEntryPoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FacilityEntryPoint.DeserializeFacilityEntryPoint(item));
+                        }
                     }
                     entryPoints = array;
                     continue;

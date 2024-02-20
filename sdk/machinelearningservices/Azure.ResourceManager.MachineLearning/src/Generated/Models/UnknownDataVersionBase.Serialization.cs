@@ -29,13 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri"u8);
-            writer.WriteStringValue(DataUri.AbsoluteUri);
+            if (DataUri != null)
+            {
+                writer.WriteStringValue(DataUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {

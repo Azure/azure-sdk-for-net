@@ -31,7 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DetectedPerson>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedPerson> array = new List<DetectedPerson>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedPerson.DeserializeDetectedPerson(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectedPerson.DeserializeDetectedPerson(item));
+                        }
                     }
                     values = array;
                     continue;

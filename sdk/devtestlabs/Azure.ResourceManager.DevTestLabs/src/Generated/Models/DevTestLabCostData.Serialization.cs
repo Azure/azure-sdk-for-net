@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,12 +73,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
-                writer.WriteObjectValue(TargetCost);
+                ((IJsonModel<DevTestLabTargetCost>)TargetCost).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
-                writer.WriteObjectValue(LabCostSummary);
+                ((IJsonModel<LabCostSummaryProperties>)LabCostSummary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
@@ -79,7 +86,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in LabCostDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabCostDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +103,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ResourceCosts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabResourceCost>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -261,7 +282,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabCostDetails> array = new List<DevTestLabCostDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item));
+                                }
                             }
                             labCostDetails = array;
                             continue;
@@ -275,7 +303,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabResourceCost> array = new List<DevTestLabResourceCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item));
+                                }
                             }
                             resourceCosts = array;
                             continue;

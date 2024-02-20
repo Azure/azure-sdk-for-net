@@ -27,14 +27,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("thumbprint"u8);
+            if (Thumbprint != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Thumbprint))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ThumbprintSecondary))
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);

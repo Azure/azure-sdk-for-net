@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in Entry)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NameDescriptionObject>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<NameDescriptionObject> array = new List<NameDescriptionObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item));
+                        }
                     }
                     entry = array;
                     continue;

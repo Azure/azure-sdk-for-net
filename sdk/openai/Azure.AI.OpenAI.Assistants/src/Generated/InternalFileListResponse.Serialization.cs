@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<OpenAIFile>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +97,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<OpenAIFile> array = new List<OpenAIFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAIFile.DeserializeOpenAIFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OpenAIFile.DeserializeOpenAIFile(item));
+                        }
                     }
                     data = array;
                     continue;

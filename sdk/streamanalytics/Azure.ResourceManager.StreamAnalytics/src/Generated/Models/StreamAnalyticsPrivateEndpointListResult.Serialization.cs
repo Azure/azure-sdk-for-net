@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamAnalyticsPrivateEndpointData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsPrivateEndpointData> array = new List<StreamAnalyticsPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StorageCacheSkuInfo>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,7 +55,14 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -82,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health);
+                ((IJsonModel<StorageCacheHealth>)Health).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
             {
@@ -90,12 +97,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in MountAddresses)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -112,32 +121,32 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(UpgradeStatus))
             {
                 writer.WritePropertyName("upgradeStatus"u8);
-                writer.WriteObjectValue(UpgradeStatus);
+                ((IJsonModel<StorageCacheUpgradeStatus>)UpgradeStatus).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                ((IJsonModel<StorageCacheUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
-                writer.WriteObjectValue(NetworkSettings);
+                ((IJsonModel<StorageCacheNetworkSettings>)NetworkSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                ((IJsonModel<StorageCacheEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                ((IJsonModel<StorageCacheSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
-                writer.WriteObjectValue(DirectoryServicesSettings);
+                ((IJsonModel<StorageCacheDirectorySettings>)DirectoryServicesSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -155,7 +164,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in PrimingJobs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrimingJob>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +181,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in SpaceAllocation)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageTargetSpaceAllocation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -438,7 +461,14 @@ namespace Azure.ResourceManager.StorageCache
                             List<PrimingJob> array = new List<PrimingJob>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrimingJob.DeserializePrimingJob(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrimingJob.DeserializePrimingJob(item));
+                                }
                             }
                             primingJobs = array;
                             continue;
@@ -452,7 +482,14 @@ namespace Azure.ResourceManager.StorageCache
                             List<StorageTargetSpaceAllocation> array = new List<StorageTargetSpaceAllocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item));
+                                }
                             }
                             spaceAllocation = array;
                             continue;

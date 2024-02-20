@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials);
+            if (AdminCredentials != null)
+            {
+                ((IJsonModel<PostgreSqlMigrationAdminCredentials>)AdminCredentials).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);

@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement);
+            if (ReceiveAgreement != null)
+            {
+                ((IJsonModel<X12OneWayAgreement>)ReceiveAgreement).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement);
+            if (SendAgreement != null)
+            {
+                ((IJsonModel<X12OneWayAgreement>)SendAgreement).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

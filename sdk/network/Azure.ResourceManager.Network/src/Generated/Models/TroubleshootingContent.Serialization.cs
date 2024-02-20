@@ -27,13 +27,34 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
-            writer.WriteStringValue(TargetResourceId);
+            if (TargetResourceId != null)
+            {
+                writer.WriteStringValue(TargetResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("storageId"u8);
-            writer.WriteStringValue(StorageId);
+            if (StorageId != null)
+            {
+                writer.WriteStringValue(StorageId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("storagePath"u8);
-            writer.WriteStringValue(StorageUri.AbsoluteUri);
+            if (StorageUri != null)
+            {
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

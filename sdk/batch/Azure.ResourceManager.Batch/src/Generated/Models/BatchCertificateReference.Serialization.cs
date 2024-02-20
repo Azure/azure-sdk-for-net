@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Batch.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(StoreLocation))
             {
                 writer.WritePropertyName("storeLocation"u8);

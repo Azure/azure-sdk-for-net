@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticSanPrivateLinkResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanPrivateLinkResource> array = new List<ElasticSanPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item));
+                        }
                     }
                     value = array;
                     continue;

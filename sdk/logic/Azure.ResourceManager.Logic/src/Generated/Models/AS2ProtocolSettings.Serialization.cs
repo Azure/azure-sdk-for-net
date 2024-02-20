@@ -27,19 +27,68 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("messageConnectionSettings"u8);
-            writer.WriteObjectValue(MessageConnectionSettings);
+            if (MessageConnectionSettings != null)
+            {
+                ((IJsonModel<AS2MessageConnectionSettings>)MessageConnectionSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("acknowledgementConnectionSettings"u8);
-            writer.WriteObjectValue(AcknowledgementConnectionSettings);
+            if (AcknowledgementConnectionSettings != null)
+            {
+                ((IJsonModel<AS2AcknowledgementConnectionSettings>)AcknowledgementConnectionSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("mdnSettings"u8);
-            writer.WriteObjectValue(MdnSettings);
+            if (MdnSettings != null)
+            {
+                ((IJsonModel<AS2MdnSettings>)MdnSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            if (SecuritySettings != null)
+            {
+                ((IJsonModel<AS2SecuritySettings>)SecuritySettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            if (ValidationSettings != null)
+            {
+                ((IJsonModel<AS2ValidationSettings>)ValidationSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            if (EnvelopeSettings != null)
+            {
+                ((IJsonModel<AS2EnvelopeSettings>)EnvelopeSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("errorSettings"u8);
-            writer.WriteObjectValue(ErrorSettings);
+            if (ErrorSettings != null)
+            {
+                ((IJsonModel<AS2ErrorSettings>)ErrorSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

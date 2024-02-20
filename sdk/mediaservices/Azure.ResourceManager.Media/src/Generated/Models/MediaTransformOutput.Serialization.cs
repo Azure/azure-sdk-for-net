@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(RelativePriority.Value.ToString());
             }
             writer.WritePropertyName("preset"u8);
-            writer.WriteObjectValue(Preset);
+            if (Preset != null)
+            {
+                ((IJsonModel<MediaTransformPreset>)Preset).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

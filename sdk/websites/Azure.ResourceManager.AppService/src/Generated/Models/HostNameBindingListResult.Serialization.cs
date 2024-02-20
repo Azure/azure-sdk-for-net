@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HostNameBindingData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostNameBindingData> array = new List<HostNameBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostNameBindingData.DeserializeHostNameBindingData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HostNameBindingData.DeserializeHostNameBindingData(item));
+                        }
                     }
                     value = array;
                     continue;

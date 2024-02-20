@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ElasticSan
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
-            writer.WriteObjectValue(CreationData);
+            if (CreationData != null)
+            {
+                ((IJsonModel<SnapshotCreationInfo>)CreationData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

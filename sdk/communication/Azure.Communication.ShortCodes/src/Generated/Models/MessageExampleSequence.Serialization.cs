@@ -22,7 +22,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<MessageExample> array = new List<MessageExample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageExample.DeserializeMessageExample(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MessageExample.DeserializeMessageExample(item));
+                        }
                     }
                     messages = array;
                     continue;

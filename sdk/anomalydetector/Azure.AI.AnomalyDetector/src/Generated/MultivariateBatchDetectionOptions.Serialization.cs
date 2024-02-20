@@ -28,7 +28,14 @@ namespace Azure.AI.AnomalyDetector
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource.AbsoluteUri);
+            if (DataSource != null)
+            {
+                writer.WriteStringValue(DataSource.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TopContributorCount))
             {
                 writer.WritePropertyName("topContributorCount"u8);

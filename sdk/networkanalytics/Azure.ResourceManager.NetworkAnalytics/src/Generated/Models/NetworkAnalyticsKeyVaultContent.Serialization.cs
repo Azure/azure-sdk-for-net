@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultUrl"u8);
-            writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            if (KeyVaultUri != null)
+            {
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

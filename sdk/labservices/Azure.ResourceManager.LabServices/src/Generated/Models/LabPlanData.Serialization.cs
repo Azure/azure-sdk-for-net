@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.LabServices
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,17 +78,17 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile);
+                ((IJsonModel<LabConnectionProfile>)DefaultConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile);
+                ((IJsonModel<LabAutoShutdownProfile>)DefaultAutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile);
+                ((IJsonModel<LabPlanNetworkProfile>)DefaultNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo);
+                ((IJsonModel<LabPlanSupportInfo>)SupportInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {

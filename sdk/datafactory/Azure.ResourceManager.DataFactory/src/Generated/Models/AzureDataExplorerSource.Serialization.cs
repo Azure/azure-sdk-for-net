@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
-            JsonSerializer.Serialize(writer, Query);
+            if (Query != null)
+            {
+                JsonSerializer.Serialize(writer, Query);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(NoTruncation))
             {
                 writer.WritePropertyName("noTruncation"u8);

@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableScaleUnits)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkVirtualApplianceSkuInstances>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +242,14 @@ namespace Azure.ResourceManager.Network
                             List<NetworkVirtualApplianceSkuInstances> array = new List<NetworkVirtualApplianceSkuInstances>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item));
+                                }
                             }
                             availableScaleUnits = array;
                             continue;

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<AppPlatformErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(IsTraceEnabled))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(AppInsightsAgentVersions))
             {
                 writer.WritePropertyName("appInsightsAgentVersions"u8);
-                writer.WriteObjectValue(AppInsightsAgentVersions);
+                ((IJsonModel<ApplicationInsightsAgentVersions>)AppInsightsAgentVersions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

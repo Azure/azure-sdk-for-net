@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Confluent
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -84,9 +91,23 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail);
+            if (OfferDetail != null)
+            {
+                ((IJsonModel<ConfluentOfferDetail>)OfferDetail).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail);
+            if (UserDetail != null)
+            {
+                ((IJsonModel<ConfluentUserDetail>)UserDetail).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(ResourceName);
             }
             writer.WritePropertyName("warning"u8);
-            JsonSerializer.Serialize(writer, Warning);
+            if (Warning != null)
+            {
+                JsonSerializer.Serialize(writer, Warning);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

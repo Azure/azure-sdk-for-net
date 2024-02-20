@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
+                ((IJsonModel<DeadLetterWithResourceIdentity>)DeadLetterDestinationWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(EventTimeToLive))
             {

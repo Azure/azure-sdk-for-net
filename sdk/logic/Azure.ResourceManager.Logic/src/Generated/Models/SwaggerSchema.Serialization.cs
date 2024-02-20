@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue(Items);
+                ((IJsonModel<SwaggerSchema>)Items).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -53,7 +53,14 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SwaggerSchema>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SwaggerSchema>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,12 +126,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
-                writer.WriteObjectValue(Xml);
+                ((IJsonModel<SwaggerXml>)Xml).Write(writer, options);
             }
             if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
-                writer.WriteObjectValue(ExternalDocs);
+                ((IJsonModel<SwaggerExternalDocumentation>)ExternalDocs).Write(writer, options);
             }
             if (Optional.IsDefined(Example))
             {
@@ -139,22 +153,22 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
-                writer.WriteObjectValue(DynamicSchemaOld);
+                ((IJsonModel<SwaggerCustomDynamicSchema>)DynamicSchemaOld).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
-                writer.WriteObjectValue(DynamicSchemaNew);
+                ((IJsonModel<SwaggerCustomDynamicProperties>)DynamicSchemaNew).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
-                writer.WriteObjectValue(DynamicListNew);
+                ((IJsonModel<SwaggerCustomDynamicList>)DynamicListNew).Write(writer, options);
             }
             if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
-                writer.WriteObjectValue(DynamicTree);
+                ((IJsonModel<SwaggerCustomDynamicTree>)DynamicTree).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -255,7 +269,14 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerSchema> dictionary = new Dictionary<string, SwaggerSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value));
+                        }
                     }
                     properties = dictionary;
                     continue;
@@ -310,7 +331,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<SwaggerSchema> array = new List<SwaggerSchema>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSwaggerSchema(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSwaggerSchema(item));
+                        }
                     }
                     allOf = array;
                     continue;

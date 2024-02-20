@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalizationClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<OperationalizationClusterData> array = new List<OperationalizationClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

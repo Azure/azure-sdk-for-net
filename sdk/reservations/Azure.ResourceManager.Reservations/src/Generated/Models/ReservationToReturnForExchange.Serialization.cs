@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue(BillingRefundAmount);
+                ((IJsonModel<PurchasePrice>)BillingRefundAmount).Write(writer, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue(BillingInformation);
+                ((IJsonModel<BillingInformation>)BillingInformation).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {

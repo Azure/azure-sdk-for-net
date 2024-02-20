@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CompilationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteCompilationError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RouteCompilationError> array = new List<RouteCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCompilationError.DeserializeRouteCompilationError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteCompilationError.DeserializeRouteCompilationError(item));
+                        }
                     }
                     compilationErrors = array;
                     continue;

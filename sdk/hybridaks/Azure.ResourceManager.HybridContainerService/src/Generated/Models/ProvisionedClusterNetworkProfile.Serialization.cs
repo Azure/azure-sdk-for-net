@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile);
+                ((IJsonModel<ProvisionedClusterLoadBalancerProfile>)LoadBalancerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkPolicy))
             {

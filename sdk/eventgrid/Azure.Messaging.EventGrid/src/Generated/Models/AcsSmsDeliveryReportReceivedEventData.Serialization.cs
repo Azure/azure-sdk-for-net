@@ -51,7 +51,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsSmsDeliveryAttemptProperties> array = new List<AcsSmsDeliveryAttemptProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsSmsDeliveryAttemptProperties.DeserializeAcsSmsDeliveryAttemptProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsSmsDeliveryAttemptProperties.DeserializeAcsSmsDeliveryAttemptProperties(item));
+                        }
                     }
                     deliveryAttempts = array;
                     continue;

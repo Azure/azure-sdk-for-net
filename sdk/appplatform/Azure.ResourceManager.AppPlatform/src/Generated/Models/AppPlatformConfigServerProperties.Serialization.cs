@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<AppPlatformErrorInfo>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
-                writer.WriteObjectValue(ConfigServer);
+                ((IJsonModel<ConfigServerSettings>)ConfigServer).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -47,14 +47,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VaultBackupJobErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<VaultBackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(EntityFriendlyName))
             {
@@ -179,7 +186,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<VaultBackupJobErrorInfo> array = new List<VaultBackupJobErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

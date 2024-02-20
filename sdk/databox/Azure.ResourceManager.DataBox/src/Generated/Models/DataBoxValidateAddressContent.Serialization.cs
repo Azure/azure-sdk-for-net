@@ -27,13 +27,20 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue(ShippingAddress);
+            if (ShippingAddress != null)
+            {
+                ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());

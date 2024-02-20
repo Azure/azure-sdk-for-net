@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue(FilterGroup);
+                ((IJsonModel<FilterGroup>)FilterGroup).Write(writer, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {

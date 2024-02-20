@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaJobErrorDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +151,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        }
                     }
                     details = array;
                     continue;

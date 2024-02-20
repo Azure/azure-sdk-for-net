@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SimStaticIPProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -234,7 +241,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                             List<SimStaticIPProperties> array = new List<SimStaticIPProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                                }
                             }
                             staticIPConfiguration = array;
                             continue;

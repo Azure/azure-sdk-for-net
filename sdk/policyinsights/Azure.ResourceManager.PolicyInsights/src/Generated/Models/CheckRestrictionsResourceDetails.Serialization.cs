@@ -27,14 +27,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceContent"u8);
+            if (ResourceContent != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResourceContent);
 #else
-            using (JsonDocument document = JsonDocument.Parse(ResourceContent))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(ResourceContent))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);

@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<WebApplicationRuleMatchCondition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
@@ -156,7 +163,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<WebApplicationRuleMatchCondition> array = new List<WebApplicationRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationRuleMatchCondition.DeserializeWebApplicationRuleMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebApplicationRuleMatchCondition.DeserializeWebApplicationRuleMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;

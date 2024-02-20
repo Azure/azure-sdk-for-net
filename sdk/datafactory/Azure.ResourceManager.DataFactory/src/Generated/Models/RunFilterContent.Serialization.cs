@@ -41,7 +41,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RunQueryFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RunQueryOrderBy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +140,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryFilter> array = new List<RunQueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
+                        }
                     }
                     filters = array;
                     continue;
@@ -140,7 +161,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
+                        }
                     }
                     orderBy = array;
                     continue;

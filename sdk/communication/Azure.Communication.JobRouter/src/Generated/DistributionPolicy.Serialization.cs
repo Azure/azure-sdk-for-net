@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue(Mode);
+                ((IJsonModel<DistributionMode>)Mode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

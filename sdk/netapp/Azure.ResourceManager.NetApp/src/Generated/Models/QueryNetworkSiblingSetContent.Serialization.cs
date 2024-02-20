@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WritePropertyName("networkSiblingSetId"u8);
             writer.WriteStringValue(NetworkSiblingSetId);
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

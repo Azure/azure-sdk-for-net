@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in PolicyRules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataProtectionBasePolicyRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceTypes"u8);
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBasePolicyRule> array = new List<DataProtectionBasePolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item));
+                        }
                     }
                     policyRules = array;
                     continue;

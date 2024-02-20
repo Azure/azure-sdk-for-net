@@ -28,14 +28,28 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
-            JsonSerializer.Serialize(writer, PackagePath);
+            if (PackagePath != null)
+            {
+                JsonSerializer.Serialize(writer, PackagePath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-            JsonSerializer.Serialize(writer, PackageContent);
+            if (PackageContent != null)
+            {
+                JsonSerializer.Serialize(writer, PackageContent);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);

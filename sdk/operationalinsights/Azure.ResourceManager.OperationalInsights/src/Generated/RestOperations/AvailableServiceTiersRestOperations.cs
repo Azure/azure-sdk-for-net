@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.OperationalInsights
                         List<OperationalInsightsAvailableServiceTier> array = new List<OperationalInsightsAvailableServiceTier>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.OperationalInsights
                         List<OperationalInsightsAvailableServiceTier> array = new List<OperationalInsightsAvailableServiceTier>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

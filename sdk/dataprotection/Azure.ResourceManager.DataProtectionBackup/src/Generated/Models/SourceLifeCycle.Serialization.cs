@@ -27,16 +27,37 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue(DeleteAfter);
+            if (DeleteAfter != null)
+            {
+                ((IJsonModel<DataProtectionBackupDeleteSetting>)DeleteAfter).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue(SourceDataStore);
+            if (SourceDataStore != null)
+            {
+                ((IJsonModel<DataStoreInfoBase>)SourceDataStore).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TargetCopySetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +125,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<TargetCopySetting> array = new List<TargetCopySetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TargetCopySetting.DeserializeTargetCopySetting(item));
+                        }
                     }
                     targetDataStoreCopySettings = array;
                     continue;

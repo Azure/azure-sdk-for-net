@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Containers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ContainerInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -233,7 +247,14 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, ContainerInfo> dictionary = new Dictionary<string, ContainerInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value));
+                                }
                             }
                             containers = dictionary;
                             continue;

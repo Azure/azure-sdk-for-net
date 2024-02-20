@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabArtifactParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +141,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabArtifactParameter> array = new List<DevTestLabArtifactParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabArtifactParameter.DeserializeDevTestLabArtifactParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevTestLabArtifactParameter.DeserializeDevTestLabArtifactParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

@@ -27,14 +27,35 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            if (ConnectionInfo != null)
+            {
+                ((IJsonModel<SqlConnectionInfo>)ConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("backupFileShare"u8);
-            writer.WriteObjectValue(BackupFileShare);
+            if (BackupFileShare != null)
+            {
+                ((IJsonModel<FileShare>)BackupFileShare).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SelectedCertificateInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +118,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SelectedCertificateInput> array = new List<SelectedCertificateInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item));
+                        }
                     }
                     selectedCertificates = array;
                     continue;

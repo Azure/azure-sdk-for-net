@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Indicators))
             {
                 writer.WritePropertyName("indicators"u8);
-                writer.WriteObjectValue(Indicators);
+                ((IJsonModel<TIDataConnectorDataTypesIndicators>)Indicators).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

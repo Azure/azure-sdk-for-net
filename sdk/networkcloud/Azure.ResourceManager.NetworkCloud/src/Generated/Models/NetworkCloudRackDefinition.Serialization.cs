@@ -37,12 +37,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BareMetalMachineConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BareMetalMachineConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("networkRackId"u8);
-            writer.WriteStringValue(NetworkRackId);
+            if (NetworkRackId != null)
+            {
+                writer.WriteStringValue(NetworkRackId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RackLocation))
             {
                 writer.WritePropertyName("rackLocation"u8);
@@ -51,14 +65,28 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WritePropertyName("rackSerialNumber"u8);
             writer.WriteStringValue(RackSerialNumber);
             writer.WritePropertyName("rackSkuId"u8);
-            writer.WriteStringValue(RackSkuId);
+            if (RackSkuId != null)
+            {
+                writer.WriteStringValue(RackSkuId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(StorageApplianceConfigurationData))
             {
                 writer.WritePropertyName("storageApplianceConfigurationData"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageApplianceConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageApplianceConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +153,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        }
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
@@ -159,7 +194,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        }
                     }
                     storageApplianceConfigurationData = array;
                     continue;

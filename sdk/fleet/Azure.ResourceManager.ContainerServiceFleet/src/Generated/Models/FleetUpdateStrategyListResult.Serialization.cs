@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<FleetUpdateStrategyData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<FleetUpdateStrategyData> array = new List<FleetUpdateStrategyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FleetUpdateStrategyData.DeserializeFleetUpdateStrategyData(item));
+                        }
                     }
                     value = array;
                     continue;

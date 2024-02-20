@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue(PortCondition);
+                ((IJsonModel<AccessControlListPortCondition>)PortCondition).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition);
+                ((IJsonModel<VlanMatchCondition>)VlanMatchCondition).Write(writer, options);
             }
             if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition);
+                ((IJsonModel<IPMatchCondition>)IPCondition).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

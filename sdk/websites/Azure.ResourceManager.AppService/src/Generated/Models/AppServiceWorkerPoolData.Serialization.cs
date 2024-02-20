@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -41,7 +41,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

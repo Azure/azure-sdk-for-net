@@ -10400,7 +10400,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10437,7 +10444,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10752,7 +10766,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10788,7 +10809,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10847,7 +10875,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10884,7 +10919,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10942,7 +10984,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10978,7 +11027,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -24619,7 +24675,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -24658,7 +24721,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -24995,7 +25065,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25033,7 +25110,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25096,7 +25180,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25135,7 +25226,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25197,7 +25295,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25235,7 +25340,14 @@ namespace Azure.ResourceManager.AppService
                         List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -30260,7 +30372,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -30296,7 +30415,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -32888,7 +33014,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -32922,7 +33055,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vaultBaseUrl"u8);
-            writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            if (VaultBaseUri != null)
+            {
+                writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion"u8);

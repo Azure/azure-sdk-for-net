@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToAttach)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataDisksToAttach>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToDetach)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataDisksToDetach>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToAttach> array = new List<DataDisksToAttach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item));
+                        }
                     }
                     dataDisksToAttach = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToDetach> array = new List<DataDisksToDetach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item));
+                        }
                     }
                     dataDisksToDetach = array;
                     continue;

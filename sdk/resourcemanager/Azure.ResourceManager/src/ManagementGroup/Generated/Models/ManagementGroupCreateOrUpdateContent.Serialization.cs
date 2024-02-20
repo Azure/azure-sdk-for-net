@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                ((IJsonModel<CreateManagementGroupDetails>)Details).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
@@ -73,7 +73,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Children)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ManagementGroupChildOptions>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -198,7 +205,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             List<ManagementGroupChildOptions> array = new List<ManagementGroupChildOptions>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item));
+                                }
                             }
                             children = array;
                             continue;

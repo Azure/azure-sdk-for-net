@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria);
+                ((IJsonModel<ScheduledQueryRuleCriteria>)Criteria).Write(writer, options);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                ((IJsonModel<ScheduledQueryRuleActions>)Actions).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {

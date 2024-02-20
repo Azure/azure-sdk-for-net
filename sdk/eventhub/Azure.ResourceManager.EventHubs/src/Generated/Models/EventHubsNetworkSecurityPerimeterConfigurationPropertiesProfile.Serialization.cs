@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsNspAccessRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNspAccessRule> array = new List<EventHubsNspAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item));
+                        }
                     }
                     accessRules = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatabaseOperationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseOperationData> array = new List<DatabaseOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseOperationData.DeserializeDatabaseOperationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatabaseOperationData.DeserializeDatabaseOperationData(item));
+                        }
                     }
                     value = array;
                     continue;

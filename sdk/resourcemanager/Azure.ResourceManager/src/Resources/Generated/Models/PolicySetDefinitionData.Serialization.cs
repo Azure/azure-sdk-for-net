@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -84,7 +91,14 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ArmPolicyParameter>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -94,7 +108,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyDefinitionReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +125,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitionGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyDefinitionGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +260,14 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;
@@ -246,7 +281,14 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionReference> array = new List<PolicyDefinitionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
+                                }
                             }
                             policyDefinitions = array;
                             continue;
@@ -260,7 +302,14 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionGroup> array = new List<PolicyDefinitionGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
+                                }
                             }
                             policyDefinitionGroups = array;
                             continue;

@@ -87,7 +87,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<ArtifactManifestPlatform> array = new List<ArtifactManifestPlatform>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ArtifactManifestPlatform.DeserializeArtifactManifestPlatform(item));
+                        }
                     }
                     references = array;
                     continue;

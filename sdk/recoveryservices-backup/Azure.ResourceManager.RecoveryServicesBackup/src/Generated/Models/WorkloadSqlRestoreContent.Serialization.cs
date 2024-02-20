@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateDirectoryPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlDataDirectoryMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
+                ((IJsonModel<TargetRestoreInfo>)TargetInfo).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
@@ -85,12 +92,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+                ((IJsonModel<UserAssignedManagedIdentityDetails>)UserAssignedManagedIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters);
+                ((IJsonModel<SnapshotRestoreContent>)SnapshotRestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
@@ -190,7 +197,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectoryMapping> array = new List<SqlDataDirectoryMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item));
+                        }
                     }
                     alternateDirectoryPaths = array;
                     continue;

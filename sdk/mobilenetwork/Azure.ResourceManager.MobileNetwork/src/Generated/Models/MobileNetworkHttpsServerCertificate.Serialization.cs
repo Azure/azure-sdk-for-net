@@ -27,11 +27,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
-            writer.WriteStringValue(CertificateUri.AbsoluteUri);
+            if (CertificateUri != null)
+            {
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
-                writer.WriteObjectValue(Provisioning);
+                ((IJsonModel<MobileNetworkCertificateProvisioning>)Provisioning).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

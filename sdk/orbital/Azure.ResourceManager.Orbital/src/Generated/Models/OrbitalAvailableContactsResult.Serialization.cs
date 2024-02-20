@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OrbitalAvailableContact>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalAvailableContact> array = new List<OrbitalAvailableContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item));
+                        }
                     }
                     value = array;
                     continue;

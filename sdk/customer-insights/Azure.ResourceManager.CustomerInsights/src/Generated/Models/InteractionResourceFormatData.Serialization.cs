@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -57,17 +64,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 foreach (var item in Attributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WriteStringValue(item0);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
@@ -100,18 +109,20 @@ namespace Azure.ResourceManager.CustomerInsights
                 foreach (var item in LocalizedAttributes)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            writer.WriteStringValue(item0.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteStringValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -146,7 +157,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PropertyDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +219,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Participant>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -216,7 +241,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in DataSourcePrecedenceRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataSourcePrecedence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -478,7 +510,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                }
                             }
                             fields = array;
                             continue;
@@ -557,7 +596,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<Participant> array = new List<Participant>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Participant.DeserializeParticipant(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Participant.DeserializeParticipant(item));
+                                }
                             }
                             participantProfiles = array;
                             continue;
@@ -576,7 +622,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                                }
                             }
                             dataSourcePrecedenceRules = array;
                             continue;

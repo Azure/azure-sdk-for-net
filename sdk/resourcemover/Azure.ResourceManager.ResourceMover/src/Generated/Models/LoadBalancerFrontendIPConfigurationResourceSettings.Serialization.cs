@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                ((IJsonModel<SubnetReferenceInfo>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(Zones))
             {

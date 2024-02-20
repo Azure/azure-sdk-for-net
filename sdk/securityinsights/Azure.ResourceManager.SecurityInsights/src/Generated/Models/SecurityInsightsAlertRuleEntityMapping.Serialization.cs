@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityInsightsFieldMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsFieldMapping> array = new List<SecurityInsightsFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsFieldMapping.DeserializeSecurityInsightsFieldMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityInsightsFieldMapping.DeserializeSecurityInsightsFieldMapping(item));
+                        }
                     }
                     fieldMappings = array;
                     continue;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                ((IJsonModel<IntegrationRuntimeReference>)ConnectVia).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<EntityParameterSpecification>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -56,34 +63,71 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            if (Uri != null)
+            {
+                JsonSerializer.Serialize(writer, Uri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("servicePrincipalId"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalId);
+            if (ServicePrincipalId != null)
+            {
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("servicePrincipalKey"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            if (ServicePrincipalKey != null)
+            {
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tenant"u8);
-            JsonSerializer.Serialize(writer, Tenant);
+            if (Tenant != null)
+            {
+                JsonSerializer.Serialize(writer, Tenant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("aadResourceId"u8);
-            JsonSerializer.Serialize(writer, AadResourceId);
+            if (AadResourceId != null)
+            {
+                JsonSerializer.Serialize(writer, AadResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -168,7 +212,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        }
                     }
                     parameters = dictionary;
                     continue;

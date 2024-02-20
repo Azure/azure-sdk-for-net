@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet);
+            if (Subnet != null)
+            {
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);

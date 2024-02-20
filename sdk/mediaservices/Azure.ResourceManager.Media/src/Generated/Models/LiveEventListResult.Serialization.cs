@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaLiveEventData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaLiveEventData> array = new List<MediaLiveEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item));
+                        }
                     }
                     value = array;
                     continue;

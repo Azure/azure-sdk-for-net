@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<FacetErrorDetails>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("expression"u8);
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
+                        }
                     }
                     errors = array;
                     continue;

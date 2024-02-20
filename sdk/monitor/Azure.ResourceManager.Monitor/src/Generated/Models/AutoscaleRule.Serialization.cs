@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("metricTrigger"u8);
-            writer.WriteObjectValue(MetricTrigger);
+            if (MetricTrigger != null)
+            {
+                ((IJsonModel<MetricTrigger>)MetricTrigger).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("scaleAction"u8);
-            writer.WriteObjectValue(ScaleAction);
+            if (ScaleAction != null)
+            {
+                ((IJsonModel<MonitorScaleAction>)ScaleAction).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

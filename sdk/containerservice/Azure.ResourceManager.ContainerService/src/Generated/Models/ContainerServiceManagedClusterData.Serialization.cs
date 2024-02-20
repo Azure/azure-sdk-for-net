@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ManagedClusterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(ClusterIdentity);
+                ((IJsonModel<ManagedClusterIdentity>)ClusterIdentity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                ((IJsonModel<ContainerServicePowerState>)PowerState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxAgentPools))
             {
@@ -135,24 +142,31 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterAgentPoolProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                ((IJsonModel<ContainerServiceLinuxProfile>)LinuxProfile).Write(writer, options);
             }
             if (Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile);
+                ((IJsonModel<ManagedClusterWindowsProfile>)WindowsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipalProfile))
             {
                 writer.WritePropertyName("servicePrincipalProfile"u8);
-                writer.WriteObjectValue(ServicePrincipalProfile);
+                ((IJsonModel<ManagedClusterServicePrincipalProfile>)ServicePrincipalProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AddonProfiles))
             {
@@ -161,19 +175,26 @@ namespace Azure.ResourceManager.ContainerService
                 foreach (var item in AddonProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ManagedClusterAddonProfile>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(PodIdentityProfile))
             {
                 writer.WritePropertyName("podIdentityProfile"u8);
-                writer.WriteObjectValue(PodIdentityProfile);
+                ((IJsonModel<ManagedClusterPodIdentityProfile>)PodIdentityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OidcIssuerProfile))
             {
                 writer.WritePropertyName("oidcIssuerProfile"u8);
-                writer.WriteObjectValue(OidcIssuerProfile);
+                ((IJsonModel<ManagedClusterOidcIssuerProfile>)OidcIssuerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NodeResourceGroup))
             {
@@ -198,32 +219,32 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<ContainerServiceNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
-                writer.WriteObjectValue(AadProfile);
+                ((IJsonModel<ManagedClusterAadProfile>)AadProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AutoUpgradeProfile))
             {
                 writer.WritePropertyName("autoUpgradeProfile"u8);
-                writer.WriteObjectValue(AutoUpgradeProfile);
+                ((IJsonModel<ManagedClusterAutoUpgradeProfile>)AutoUpgradeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                ((IJsonModel<ClusterUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile);
+                ((IJsonModel<ManagedClusterAutoScalerProfile>)AutoScalerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ApiServerAccessProfile))
             {
                 writer.WritePropertyName("apiServerAccessProfile"u8);
-                writer.WriteObjectValue(ApiServerAccessProfile);
+                ((IJsonModel<ManagedClusterApiServerAccessProfile>)ApiServerAccessProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
@@ -237,7 +258,14 @@ namespace Azure.ResourceManager.ContainerService
                 foreach (var item in IdentityProfile)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ContainerServiceUserAssignedIdentity>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -247,7 +275,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServicePrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -259,17 +294,17 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                ((IJsonModel<ManagedClusterHttpProxyConfig>)HttpProxyConfig).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<ManagedClusterSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<ManagedClusterStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -279,17 +314,17 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(WorkloadAutoScalerProfile))
             {
                 writer.WritePropertyName("workloadAutoScalerProfile"u8);
-                writer.WriteObjectValue(WorkloadAutoScalerProfile);
+                ((IJsonModel<ManagedClusterWorkloadAutoScalerProfile>)WorkloadAutoScalerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AzureMonitorProfile))
             {
                 writer.WritePropertyName("azureMonitorProfile"u8);
-                writer.WriteObjectValue(AzureMonitorProfile);
+                ((IJsonModel<ManagedClusterAzureMonitorProfile>)AzureMonitorProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceMeshProfile))
             {
                 writer.WritePropertyName("serviceMeshProfile"u8);
-                writer.WriteObjectValue(ServiceMeshProfile);
+                ((IJsonModel<ServiceMeshProfile>)ServiceMeshProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -533,7 +568,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<ManagedClusterAgentPoolProfile> array = new List<ManagedClusterAgentPoolProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterAgentPoolProfile.DeserializeManagedClusterAgentPoolProfile(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedClusterAgentPoolProfile.DeserializeManagedClusterAgentPoolProfile(item));
+                                }
                             }
                             agentPoolProfiles = array;
                             continue;
@@ -574,7 +616,14 @@ namespace Azure.ResourceManager.ContainerService
                             Dictionary<string, ManagedClusterAddonProfile> dictionary = new Dictionary<string, ManagedClusterAddonProfile>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ManagedClusterAddonProfile.DeserializeManagedClusterAddonProfile(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ManagedClusterAddonProfile.DeserializeManagedClusterAddonProfile(property1.Value));
+                                }
                             }
                             addonProfiles = dictionary;
                             continue;
@@ -701,7 +750,14 @@ namespace Azure.ResourceManager.ContainerService
                             Dictionary<string, ContainerServiceUserAssignedIdentity> dictionary = new Dictionary<string, ContainerServiceUserAssignedIdentity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property1.Value));
+                                }
                             }
                             identityProfile = dictionary;
                             continue;
@@ -715,7 +771,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                                }
                             }
                             privateLinkResources = array;
                             continue;

@@ -42,7 +42,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("span"u8);
-            writer.WriteObjectValue(Span);
+            if (Span != null)
+            {
+                ((IJsonModel<DocumentSpan>)Span).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

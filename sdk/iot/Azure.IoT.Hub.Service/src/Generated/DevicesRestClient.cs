@@ -74,7 +74,14 @@ namespace Azure.IoT.Hub.Service
                         List<DeviceIdentity> array = new List<DeviceIdentity>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -100,7 +107,14 @@ namespace Azure.IoT.Hub.Service
                         List<DeviceIdentity> array = new List<DeviceIdentity>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

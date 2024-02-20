@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AnalysisResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceType))
             {

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryProcessServer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MasterTargetServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MasterTargetServer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +67,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RunAsAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryRunAsAccount>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails);
+                ((IJsonModel<SiteRecoveryVersionDetails>)AgentVersionDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -208,7 +229,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageFabricSwitchProviderBlockingErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -299,7 +327,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProcessServer> array = new List<SiteRecoveryProcessServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item));
+                        }
                     }
                     processServers = array;
                     continue;
@@ -313,7 +348,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MasterTargetServer> array = new List<MasterTargetServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MasterTargetServer.DeserializeMasterTargetServer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MasterTargetServer.DeserializeMasterTargetServer(item));
+                        }
                     }
                     masterTargetServers = array;
                     continue;
@@ -327,7 +369,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryRunAsAccount> array = new List<SiteRecoveryRunAsAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item));
+                        }
                     }
                     runAsAccounts = array;
                     continue;
@@ -526,7 +575,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageFabricSwitchProviderBlockingErrorDetails> array = new List<InMageFabricSwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageFabricSwitchProviderBlockingErrorDetails.DeserializeInMageFabricSwitchProviderBlockingErrorDetails(item));
+                        }
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;

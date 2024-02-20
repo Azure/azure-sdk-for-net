@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
-                writer.WriteObjectValue(KubernetesService);
+                ((IJsonModel<DefenderForContainersAwsOfferingKubernetesService>)KubernetesService).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
-                writer.WriteObjectValue(KubernetesScubaReader);
+                ((IJsonModel<DefenderForContainersAwsOfferingKubernetesScubaReader>)KubernetesScubaReader).Write(writer, options);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
-                writer.WriteObjectValue(CloudWatchToKinesis);
+                ((IJsonModel<DefenderForContainersAwsOfferingCloudWatchToKinesis>)CloudWatchToKinesis).Write(writer, options);
             }
             if (Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
-                writer.WriteObjectValue(KinesisToS3);
+                ((IJsonModel<DefenderForContainersAwsOfferingKinesisToS3>)KinesisToS3).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessment);
+                ((IJsonModel<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment>)ContainerVulnerabilityAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
-                writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
+                ((IJsonModel<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask>)ContainerVulnerabilityAssessmentTask).Write(writer, options);
             }
             if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersImageAssessment>)MdcContainersImageAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>)MdcContainersAgentlessDiscoveryK8S).Write(writer, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

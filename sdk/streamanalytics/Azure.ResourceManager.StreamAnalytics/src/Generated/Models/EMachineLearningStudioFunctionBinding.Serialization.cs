@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs);
+                ((IJsonModel<MachineLearningStudioInputs>)Inputs).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningStudioOutputColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +158,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningStudioOutputColumn> array = new List<MachineLearningStudioOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item));
+                                }
                             }
                             outputs = array;
                             continue;

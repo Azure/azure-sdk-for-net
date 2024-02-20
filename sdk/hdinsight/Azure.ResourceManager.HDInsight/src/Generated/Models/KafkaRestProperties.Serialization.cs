@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue(ClientGroupInfo);
+                ((IJsonModel<ClientGroupInfo>)ClientGroupInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {

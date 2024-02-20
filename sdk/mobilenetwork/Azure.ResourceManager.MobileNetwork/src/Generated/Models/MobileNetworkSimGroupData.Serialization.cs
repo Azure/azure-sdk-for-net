@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)UserAssignedIdentity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey);
+                ((IJsonModel<KeyVaultKey>)EncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(MobileNetwork))
             {

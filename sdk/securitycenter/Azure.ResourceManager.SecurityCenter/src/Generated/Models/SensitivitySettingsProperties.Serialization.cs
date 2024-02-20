@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MipInformation))
             {
                 writer.WritePropertyName("mipInformation"u8);
-                writer.WriteObjectValue(MipInformation);
+                ((IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>)MipInformation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

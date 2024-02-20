@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
-                writer.WriteObjectValue(Components);
+                ((IJsonModel<IstioComponents>)Components).Write(writer, options);
             }
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue(CertificateAuthority);
+                ((IJsonModel<IstioCertificateAuthority>)CertificateAuthority).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Revisions))
             {

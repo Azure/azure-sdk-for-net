@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -70,7 +77,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiskPoolIscsiTargetPortalGroupAcl>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +94,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedDiskIscsiLun>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +217,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                }
                             }
                             staticAcls = array;
                             continue;
@@ -210,7 +238,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                }
                             }
                             luns = array;
                             continue;

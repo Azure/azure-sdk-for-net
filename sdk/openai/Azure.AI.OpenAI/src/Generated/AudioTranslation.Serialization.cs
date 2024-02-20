@@ -50,7 +50,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Segments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AudioTranslationSegment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +145,14 @@ namespace Azure.AI.OpenAI
                     List<AudioTranslationSegment> array = new List<AudioTranslationSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranslationSegment.DeserializeAudioTranslationSegment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AudioTranslationSegment.DeserializeAudioTranslationSegment(item));
+                        }
                     }
                     segments = array;
                     continue;

@@ -53,7 +53,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DocumentSpan>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Words))
@@ -62,7 +69,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Words)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentWord>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +86,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in SelectionMarks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentSelectionMark>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +103,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Lines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentLine>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +120,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Barcodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentBarcode>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +137,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Formulas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentFormula>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +247,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        }
                     }
                     spans = array;
                     continue;
@@ -219,7 +268,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentWord> array = new List<DocumentWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWord.DeserializeDocumentWord(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentWord.DeserializeDocumentWord(item));
+                        }
                     }
                     words = array;
                     continue;
@@ -233,7 +289,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item));
+                        }
                     }
                     selectionMarks = array;
                     continue;
@@ -247,7 +310,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLine> array = new List<DocumentLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLine.DeserializeDocumentLine(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentLine.DeserializeDocumentLine(item));
+                        }
                     }
                     lines = array;
                     continue;
@@ -261,7 +331,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentBarcode> array = new List<DocumentBarcode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                        }
                     }
                     barcodes = array;
                     continue;
@@ -275,7 +352,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFormula> array = new List<DocumentFormula>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                        }
                     }
                     formulas = array;
                     continue;

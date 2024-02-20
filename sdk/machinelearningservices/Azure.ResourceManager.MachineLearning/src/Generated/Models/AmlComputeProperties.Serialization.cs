@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (VirtualMachineImage != null)
                 {
                     writer.WritePropertyName("virtualMachineImage"u8);
-                    writer.WriteObjectValue(VirtualMachineImage);
+                    ((IJsonModel<VirtualMachineImage>)VirtualMachineImage).Write(writer, options);
                 }
                 else
                 {
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                ((IJsonModel<AmlComputeScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
                     writer.WritePropertyName("userAccountCredentials"u8);
-                    writer.WriteObjectValue(UserAccountCredentials);
+                    ((IJsonModel<MachineLearningUserAccountCredentials>)UserAccountCredentials).Write(writer, options);
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet);
+                    ((IJsonModel<ResourceId>)Subnet).Write(writer, options);
                 }
                 else
                 {
@@ -110,7 +110,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Errors)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<MachineLearningError>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -148,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NodeStateCounts != null)
                 {
                     writer.WritePropertyName("nodeStateCounts"u8);
-                    writer.WriteObjectValue(NodeStateCounts);
+                    ((IJsonModel<MachineLearningNodeStateCounts>)NodeStateCounts).Write(writer, options);
                 }
                 else
                 {
@@ -353,7 +360,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        }
                     }
                     errors = array;
                     continue;

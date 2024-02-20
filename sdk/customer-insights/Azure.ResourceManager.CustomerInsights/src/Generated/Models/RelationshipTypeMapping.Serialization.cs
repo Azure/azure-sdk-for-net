@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in FieldMappings)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RelationshipTypeFieldMapping>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipTypeFieldMapping> array = new List<RelationshipTypeFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item));
+                        }
                     }
                     fieldMappings = array;
                     continue;

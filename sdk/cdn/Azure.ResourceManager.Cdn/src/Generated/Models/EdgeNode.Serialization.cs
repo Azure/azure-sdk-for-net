@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Cdn.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPAddressGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +163,14 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<IPAddressGroup> array = new List<IPAddressGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
+                                }
                             }
                             ipAddressGroups = array;
                             continue;

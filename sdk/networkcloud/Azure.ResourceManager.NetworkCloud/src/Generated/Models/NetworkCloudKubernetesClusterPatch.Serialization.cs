@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-                writer.WriteObjectValue(ControlPlaneNodeConfiguration);
+                ((IJsonModel<ControlPlaneNodePatchConfiguration>)ControlPlaneNodeConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                ((IJsonModel<LoginRoutes>)Routes).Write(writer, options);
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue(TokenStore);
+                ((IJsonModel<AppServiceTokenStore>)TokenStore).Write(writer, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration);
+                ((IJsonModel<WebAppCookieExpiration>)CookieExpiration).Write(writer, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce);
+                ((IJsonModel<LoginFlowNonceSettings>)Nonce).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

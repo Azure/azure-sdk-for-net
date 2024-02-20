@@ -31,7 +31,14 @@ namespace Azure.AI.Language.QuestionAnswering
                     List<TextAnswer> array = new List<TextAnswer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnswer.DeserializeTextAnswer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextAnswer.DeserializeTextAnswer(item));
+                        }
                     }
                     answers = array;
                     continue;

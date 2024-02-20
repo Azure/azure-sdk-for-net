@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AzureGroundingEnhancementLineSpan>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +97,14 @@ namespace Azure.AI.OpenAI
                     List<AzureGroundingEnhancementLineSpan> array = new List<AzureGroundingEnhancementLineSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureGroundingEnhancementLineSpan.DeserializeAzureGroundingEnhancementLineSpan(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureGroundingEnhancementLineSpan.DeserializeAzureGroundingEnhancementLineSpan(item));
+                        }
                     }
                     spans = array;
                     continue;

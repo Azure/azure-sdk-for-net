@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TroubleshootingRecommendedActions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
+                        }
                     }
                     recommendedActions = array;
                     continue;

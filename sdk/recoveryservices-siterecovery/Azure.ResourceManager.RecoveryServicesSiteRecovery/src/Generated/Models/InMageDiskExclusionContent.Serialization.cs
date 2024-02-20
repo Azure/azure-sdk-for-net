@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageVolumeExclusionOptions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskSignatureOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageDiskSignatureExclusionOptions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageVolumeExclusionOptions> array = new List<InMageVolumeExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                        }
                     }
                     volumeOptions = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskSignatureExclusionOptions> array = new List<InMageDiskSignatureExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                        }
                     }
                     diskSignatureOptions = array;
                     continue;

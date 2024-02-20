@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                ((IJsonModel<HttpSettingsRoutes>)Routes).Write(writer, options);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
-                writer.WriteObjectValue(ForwardProxy);
+                ((IJsonModel<ContainerAppForwardProxy>)ForwardProxy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -41,7 +41,14 @@ namespace Azure.AI.Language.QuestionAnswering
                     List<KnowledgeBaseAnswerPrompt> array = new List<KnowledgeBaseAnswerPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseAnswerPrompt.DeserializeKnowledgeBaseAnswerPrompt(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KnowledgeBaseAnswerPrompt.DeserializeKnowledgeBaseAnswerPrompt(item));
+                        }
                     }
                     prompts = array;
                     continue;

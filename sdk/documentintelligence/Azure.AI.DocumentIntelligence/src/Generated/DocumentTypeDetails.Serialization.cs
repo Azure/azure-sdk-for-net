@@ -42,7 +42,14 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in FieldSchema)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<DocumentFieldSchema>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(FieldConfidence))
@@ -121,7 +128,14 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentFieldSchema.DeserializeDocumentFieldSchema(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DocumentFieldSchema.DeserializeDocumentFieldSchema(property0.Value));
+                        }
                     }
                     fieldSchema = dictionary;
                     continue;

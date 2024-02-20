@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -53,7 +60,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SolutionMetadataProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +161,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item));
+                                }
                             }
                             solutions = array;
                             continue;

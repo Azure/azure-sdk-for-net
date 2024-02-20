@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Media
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                ((IJsonModel<MediaJobInputBasicProperties>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaJobOutput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -265,7 +279,14 @@ namespace Azure.ResourceManager.Media
                             List<MediaJobOutput> array = new List<MediaJobOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaJobOutput.DeserializeMediaJobOutput(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MediaJobOutput.DeserializeMediaJobOutput(item));
+                                }
                             }
                             outputs = array;
                             continue;

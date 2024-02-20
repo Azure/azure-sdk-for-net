@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementPolicyData> array = new List<RoleManagementPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementPolicyData.DeserializeRoleManagementPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleManagementPolicyData.DeserializeRoleManagementPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -43,7 +43,14 @@ namespace Azure.Data.SchemaRegistry.Models
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeErrorDetail(item));
+                        }
                     }
                     details = array;
                     continue;

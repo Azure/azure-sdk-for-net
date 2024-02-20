@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in InfoMoverResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AffectedMoverResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        }
                     }
                     moveResources = array;
                     continue;

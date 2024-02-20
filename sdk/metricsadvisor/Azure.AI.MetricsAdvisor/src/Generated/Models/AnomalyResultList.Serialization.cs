@@ -33,7 +33,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataPointAnomaly> array = new List<DataPointAnomaly>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPointAnomaly.DeserializeDataPointAnomaly(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataPointAnomaly.DeserializeDataPointAnomaly(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthBotData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.HealthBot.Models
                     List<HealthBotData> array = new List<HealthBotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthBotData.DeserializeHealthBotData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthBotData.DeserializeHealthBotData(item));
+                        }
                     }
                     value = array;
                     continue;

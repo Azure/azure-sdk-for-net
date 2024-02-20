@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(BmcConnectionString);
             }
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials);
+            if (BmcCredentials != null)
+            {
+                ((IJsonModel<AdministrativeCredentials>)BmcCredentials).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);

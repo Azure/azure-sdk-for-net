@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue(AllowedPrincipals);
+                ((IJsonModel<AppServiceAadAllowedPrincipals>)AllowedPrincipals).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {

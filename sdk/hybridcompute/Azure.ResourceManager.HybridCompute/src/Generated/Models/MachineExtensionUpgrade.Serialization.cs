@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ExtensionTargets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ExtensionTargetProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, ExtensionTargetProperties> dictionary = new Dictionary<string, ExtensionTargetProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value));
+                        }
                     }
                     extensionTargets = dictionary;
                     continue;

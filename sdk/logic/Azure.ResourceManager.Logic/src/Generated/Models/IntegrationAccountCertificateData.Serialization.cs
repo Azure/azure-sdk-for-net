@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                ((IJsonModel<IntegrationAccountKeyVaultKeyReference>)Key).Write(writer, options);
             }
             if (Optional.IsDefined(PublicCertificate))
             {

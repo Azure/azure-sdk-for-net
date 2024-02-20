@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
             if (Optional.IsCollectionDefined(SearchPaths))

@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.IotHub.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("inputBlobContainerUri"u8);
-            writer.WriteStringValue(InputBlobContainerUri.AbsoluteUri);
+            if (InputBlobContainerUri != null)
+            {
+                writer.WriteStringValue(InputBlobContainerUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("outputBlobContainerUri"u8);
-            writer.WriteStringValue(OutputBlobContainerUri.AbsoluteUri);
+            if (OutputBlobContainerUri != null)
+            {
+                writer.WriteStringValue(OutputBlobContainerUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(InputBlobName))
             {
                 writer.WritePropertyName("inputBlobName"u8);
@@ -48,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ManagedIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
