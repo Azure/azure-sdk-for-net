@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterCapability> array = new List<DevCenterCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterCapability.DeserializeDevCenterCapability(item));
+                        array.Add(DevCenterCapability.DeserializeDevCenterCapability(item, options));
                     }
                     capabilities = array;
                     continue;

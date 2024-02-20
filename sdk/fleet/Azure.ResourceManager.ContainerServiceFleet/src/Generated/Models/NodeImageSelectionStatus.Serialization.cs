@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<NodeImageVersion> array = new List<NodeImageVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item));
+                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
                     }
                     selectedNodeImageVersions = array;
                     continue;

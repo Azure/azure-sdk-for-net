@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridFilter> array = new List<EventGridFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridFilter.DeserializeEventGridFilter(item));
+                        array.Add(EventGridFilter.DeserializeEventGridFilter(item, options));
                     }
                     filters = array;
                     continue;

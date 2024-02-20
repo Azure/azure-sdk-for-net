@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            recommendedMachineConfiguration = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value);
+                            recommendedMachineConfiguration = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

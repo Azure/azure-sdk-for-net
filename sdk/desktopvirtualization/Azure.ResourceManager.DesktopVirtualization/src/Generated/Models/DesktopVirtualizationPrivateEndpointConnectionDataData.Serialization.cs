@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

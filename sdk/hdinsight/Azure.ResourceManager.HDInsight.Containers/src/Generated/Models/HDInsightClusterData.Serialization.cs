@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            computeProfile = ComputeProfile.DeserializeComputeProfile(property0.Value);
+                            computeProfile = ComputeProfile.DeserializeComputeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterProfile"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value);
+                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

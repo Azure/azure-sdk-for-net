@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterJobProperties.DeserializeClusterJobProperties(property.Value);
+                    properties = ClusterJobProperties.DeserializeClusterJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanData> array = new List<ElasticSanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanData.DeserializeElasticSanData(item));
+                        array.Add(ElasticSanData.DeserializeElasticSanData(item, options));
                     }
                     value = array;
                     continue;

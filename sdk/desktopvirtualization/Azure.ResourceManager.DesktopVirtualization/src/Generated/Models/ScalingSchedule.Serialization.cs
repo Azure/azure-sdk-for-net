@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offPeakLoadBalancingAlgorithm"u8))

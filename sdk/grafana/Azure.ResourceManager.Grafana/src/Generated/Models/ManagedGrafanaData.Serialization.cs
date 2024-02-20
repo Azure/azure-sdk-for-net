@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Grafana
                     {
                         continue;
                     }
-                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value);
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Grafana
                     {
                         continue;
                     }
-                    properties = ManagedGrafanaProperties.DeserializeManagedGrafanaProperties(property.Value);
+                    properties = ManagedGrafanaProperties.DeserializeManagedGrafanaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

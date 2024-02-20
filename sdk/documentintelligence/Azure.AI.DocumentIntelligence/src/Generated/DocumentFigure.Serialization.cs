@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value);
+                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("footnotes"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFootnote> array = new List<DocumentFootnote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item));
+                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item, options));
                     }
                     footnotes = array;
                     continue;
