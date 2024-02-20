@@ -303,6 +303,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall);
         requestOptions.AddPolicy(new ObservablePolicy("B"), PipelinePosition.PerTry);
+        requestOptions.AddPolicy(new ObservablePolicy("C"), PipelinePosition.BeforeTransport);
 
         PipelineMessage message = pipeline.CreateMessage();
         message.Apply(requestOptions);
@@ -311,11 +312,13 @@ public class ClientPipelineTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(7, observations.Count);
+        Assert.AreEqual(9, observations.Count);
         Assert.AreEqual("Request:A", observations[index++]);
         Assert.AreEqual("Request:RetryPolicy", observations[index++]);
         Assert.AreEqual("Request:B", observations[index++]);
+        Assert.AreEqual("Request:C", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Response:C", observations[index++]);
         Assert.AreEqual("Response:B", observations[index++]);
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);

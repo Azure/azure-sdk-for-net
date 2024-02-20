@@ -11,6 +11,83 @@ namespace System.ClientModel.Tests.Options;
 
 public class PipelineMessageClassifierTests
 {
+    [Theory]
+    [TestCase(500)]
+    [TestCase(429)]
+    [TestCase(408)]
+    [TestCase(502)]
+    [TestCase(503)]
+    [TestCase(504)]
+    public void RetriesStatusCodes(int code)
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(code));
+
+        Assert.True(classifier.TryClassify(message, exception: default, out bool isRetriable));
+        Assert.True(isRetriable);
+    }
+
+    [Test]
+    public void RetriesClientResultExceptionsWithoutCode()
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(0));
+
+        ClientResultException exception = new(message.Response!);
+        Assert.True(classifier.TryClassify(message, exception, out bool isRetriable));
+        Assert.True(isRetriable);
+    }
+
+    [Test]
+    public void DoesntRetryClientResultExceptionsWithStatusCode()
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(500));
+
+        ClientResultException exception = new(message.Response!);
+        Assert.True(classifier.TryClassify(message, exception, out bool isRetriable));
+        Assert.False(isRetriable);
+    }
+
+    [Test]
+    public void RetriesNonUserOperationCancelledExceptions()
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
+        MockPipelineMessage message = new MockPipelineMessage();
+
+        Assert.True(classifier.TryClassify(message, exception: new OperationCanceledException(), out bool isRetriable));
+        Assert.True(isRetriable);
+    }
+
+    [Test]
+    [TestCase(100, false)]
+    [TestCase(200, false)]
+    [TestCase(201, false)]
+    [TestCase(202, false)]
+    [TestCase(204, false)]
+    [TestCase(300, false)]
+    [TestCase(304, false)]
+    [TestCase(400, true)]
+    [TestCase(404, true)]
+    [TestCase(412, true)]
+    [TestCase(429, true)]
+    [TestCase(500, true)]
+    [TestCase(502, true)]
+    [TestCase(503, true)]
+    [TestCase(504, true)]
+    public void DefaultClassifierClassifiesError(int code, bool isError)
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(code));
+
+        Assert.True(classifier.TryClassify(message, out bool responseIsError));
+        Assert.AreEqual(isError, responseIsError);
+    }
+
     [Test]
     public void ClassifiesSingleCodeAsNonError()
     {

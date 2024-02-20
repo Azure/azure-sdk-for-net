@@ -55,7 +55,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20231114.3
+          --version 1.0.0-dev.20240216.5
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
