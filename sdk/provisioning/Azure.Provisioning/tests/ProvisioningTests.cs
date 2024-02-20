@@ -186,17 +186,16 @@ namespace Azure.Provisioning.Tests
             var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignParameter(data => data.Location, new Parameter(output2));
+            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", isSecure: false));
 
             WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
 
             frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
-            frontEnd2.AssignParameter(data => data.Location, new Parameter(output2));
 
             var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());
 
-            Assert.AreEqual(4, infra.GetParameters().Count());
+            Assert.AreEqual(3, infra.GetParameters().Count());
             Assert.AreEqual(4, infra.GetOutputs().Count());
 
             Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
