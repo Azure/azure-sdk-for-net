@@ -55,7 +55,7 @@ namespace System.ClientModel.Primitives
         /// </summary>
         /// <param name="subtype">The multipart sub type.</param>
         /// <param name="boundary">The boundary string for the multipart form data content.</param>
-        public Multipart(string subtype, string boundary): this(subtype, boundary, new List<MultipartBodyPart>())
+        public Multipart(string subtype, string boundary) : this(subtype, boundary, new List<MultipartBodyPart>())
         {
         }
 
@@ -136,7 +136,7 @@ namespace System.ClientModel.Primitives
         ///  get serialized to multipart/form-data MIME type.
         /// </summary>
         /// <param name="content">The content to add to the collection.</param>
-        public virtual void Add(BinaryData content)
+        public virtual void Add(object content)
         {
             AddInternal(content, null);
         }
@@ -147,7 +147,7 @@ namespace System.ClientModel.Primitives
         /// </summary>
         /// <param name="content">The content to add to the collection.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public virtual void Add(BinaryData content, Dictionary<string, string> headers)
+        public virtual void Add(object content, Dictionary<string, string> headers)
         {
             AddInternal(content, headers);
         }
@@ -174,11 +174,51 @@ namespace System.ClientModel.Primitives
                 for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
                 {
                     // Write divider, headers, and content.
-                    BinaryData content = _nestedContent[contentIndex].Content;
+                    object content = _nestedContent[contentIndex].Content;
                     Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
-                    byte[] buffer = content.ToArray();
-                    stream.Write(buffer, 0, buffer.Length);
+                    byte[] buffer;
+                    switch (content)
+                    {
+                        case BinaryData b:
+                            buffer = b.ToArray();
+                            stream.Write(buffer, 0, buffer.Length);
+                            break;
+                        case string str:
+                            buffer = Encoding.UTF8.GetBytes(str);
+                            stream.Write(buffer, 0, buffer.Length);
+                            break;
+                        case byte[] bytes:
+                            buffer = bytes;
+                            stream.Write(buffer, 0, buffer.Length);
+                            break;
+                        case Int32 int32Data:
+                            buffer = BitConverter.GetBytes(int32Data);
+                            stream.Write(buffer, 0, buffer.Length);
+                            break;
+                        case Stream streamData:
+                            //buffer = new byte[streamData.Length];
+                            //int numBytesToRead = (int)streamData.Length;
+                            buffer = new byte[1024];
+                            int numBytesToRead = 1024;
+                            int numBytesRead = 0;
+                            while (numBytesToRead > 0)
+                            {
+                                // Read may return anything from 0 to numBytesToRead.
+                                int n = streamData.Read(buffer, 0, numBytesToRead);
+
+                                // Break when the end of the file is reached.
+                                if (n == 0)
+                                    break;
+
+                                numBytesRead += n;
+                                stream.Write(buffer, 0, n);
+                            }
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unsupported content type");
+                    }
+                    //stream.Write(buffer, 0, buffer.Length);
                     //content.WriteTo(stream, cancellationToken);
                 }
 
@@ -217,28 +257,52 @@ namespace System.ClientModel.Primitives
                     //BinaryData content = _nestedContent[contentIndex].Content;
                     Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
-                    /*
                     byte[] buffer;
                     switch (_nestedContent[contentIndex].Content)
                     {
                         case BinaryData binaryData:
                             buffer = binaryData.ToArray();
+                            stream.Write(buffer, 0, buffer.Length);
                             break;
                         case string str:
                             buffer = Encoding.UTF8.GetBytes(str);
+                            stream.Write(buffer, 0, buffer.Length);
                             break;
                         case byte[] bytes:
                             buffer = bytes;
+                            stream.Write(buffer, 0, buffer.Length);
                             break;
                         case Int32 int32Data:
                             buffer = BitConverter.GetBytes(int32Data);
+                            stream.Write(buffer, 0, buffer.Length);
+                            break;
+                        case Stream streamData:
+                            //buffer = new byte[streamData.Length];
+                            //int numBytesToRead = (int)streamData.Length;
+                            buffer = new byte[1024];
+                            int numBytesToRead = 1024;
+                            int numBytesRead = 0;
+                            while (numBytesToRead > 0)
+                            {
+                                // Read may return anything from 0 to numBytesToRead.
+                                int n = streamData.Read(buffer, 0, numBytesToRead);
+
+                                // Break when the end of the file is reached.
+                                if (n == 0)
+                                    break;
+
+                                numBytesRead += n;
+                                //numBytesToRead -= n;
+                                stream.Write(buffer, 0, n);
+                            }
+                            //numBytesToRead = bytes.Length;
+                            //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                             break;
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
-                    */
-                    byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
-                    stream.Write(buffer, 0, buffer.Length);
+                    //byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
+                    //stream.Write(buffer, 0, buffer.Length);
                 }
 
                 // Write footer boundary.
@@ -280,8 +344,53 @@ namespace System.ClientModel.Primitives
                     // Write divider, headers, and content.
                     Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     await EncodeStringToStreamAsync(stream, SerializeHeadersToString(output, contentIndex, headers), cancellationToken).ConfigureAwait(false);
-                    byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
-                    await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                    //byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
+                    byte[] buffer;
+                    switch (_nestedContent[contentIndex].Content)
+                    {
+                        case BinaryData binaryData:
+                            buffer = binaryData.ToArray();
+                            await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            break;
+                        case string str:
+                            buffer = Encoding.UTF8.GetBytes(str);
+                            await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            break;
+                        case byte[] bytes:
+                            buffer = bytes;
+                            await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            break;
+                        case Int32 int32Data:
+                            buffer = BitConverter.GetBytes(int32Data);
+                            await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            break;
+                        case Stream streamData:
+                            //buffer = new byte[streamData.Length];
+                            //int numBytesToRead = (int)streamData.Length;
+                            buffer = new byte[1024];
+                            int numBytesToRead = 1024;
+                            int numBytesRead = 0;
+                            while (numBytesToRead > 0)
+                            {
+                                // Read may return anything from 0 to numBytesToRead.
+                                int n = streamData.Read(buffer, 0, numBytesToRead);
+
+                                // Break when the end of the file is reached.
+                                if (n == 0)
+                                    break;
+
+                                numBytesRead += n;
+                                //numBytesToRead -= n;
+                                //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                                await stream.WriteAsync(buffer, 0, n, cancellationToken).ConfigureAwait(false);
+                            }
+                            //numBytesToRead = bytes.Length;
+                            //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unsupported content type");
+                    }
+                    //await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Write footer boundary.
@@ -364,7 +473,7 @@ namespace System.ClientModel.Primitives
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        private void AddInternal(BinaryData content, Dictionary<string, string> headers)
+        private void AddInternal(object content, Dictionary<string, string> headers)
         {
             var part = new MultipartBodyPart(content, headers);
             _nestedContent.Add(part);

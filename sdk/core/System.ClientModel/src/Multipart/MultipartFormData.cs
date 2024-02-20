@@ -48,7 +48,7 @@ namespace System.ClientModel.Primitives
         /// </summary>
         /// <param name="content">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
-        public void Add(BinaryData content, string name)
+        public void Add(object content, string name)
         {
             AddInternal(content, null, name, null);
         }
@@ -58,7 +58,7 @@ namespace System.ClientModel.Primitives
         /// <param name="content">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(BinaryData content, string name, Dictionary<string, string> headers)
+        public void Add(object content, string name, Dictionary<string, string> headers)
         {
             AddInternal(content, headers, name, null);
         }
@@ -69,7 +69,7 @@ namespace System.ClientModel.Primitives
         /// <param name="name">The name for the request content to add.</param>
         /// <param name="fileName">The file name for the request content to add to the collection.</param>
         /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(BinaryData content, string name, string fileName, Dictionary<string, string> headers)
+        public void Add(object content, string name, string fileName, Dictionary<string, string> headers)
         {
             AddInternal(content, headers, name, fileName);
         }
@@ -145,7 +145,7 @@ namespace System.ClientModel.Primitives
             return ContentType;
         }
 
-        private void AddInternal(BinaryData content, Dictionary<string, string> headers, string name, string fileName)
+        private void AddInternal(object content, Dictionary<string, string> headers, string name, string fileName)
         {
             if (headers == null)
             {
@@ -169,10 +169,21 @@ namespace System.ClientModel.Primitives
             }
             if (!headers.ContainsKey("Content-Type"))
             {
+                /*
                 var value = content.MediaType;
                 if (value != null)
                 {
                     headers.Add("Content-Type", value);
+                }
+                */
+                switch (content)
+                {
+                    case BinaryData binaryData:
+                        headers.Add("Content-Type", binaryData.MediaType);
+                        break;
+                    case byte[] b:
+                        headers.Add("Content-Type", "application/octet-stream");
+                        break;
                 }
             }
             base.Add(content, headers);

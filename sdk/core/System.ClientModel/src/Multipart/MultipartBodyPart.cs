@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives
     public class MultipartBodyPart
     {
         /// <summary> The request content of this part. </summary>
-        public readonly BinaryData Content;
+        public readonly object Content;
         /// <summary> The headers of this content part. </summary>
         public Dictionary<string, string> Headers;
 
@@ -21,7 +21,7 @@ namespace System.ClientModel.Primitives
         ///  </summary>
         ///  <param name="content">The content of the body part.</param>
         /// <param name="headers">The headers of this body part.</param>
-        public MultipartBodyPart(BinaryData content, Dictionary<string, string> headers)
+        public MultipartBodyPart(object content, Dictionary<string, string> headers)
         {
             Content = content;
             Headers = headers;
