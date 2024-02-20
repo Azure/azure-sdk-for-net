@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceCertificateDetails(document.RootElement, options);
+            return DeserializeResourceCertificateDetails(document.RootElement, options);
         }
 
         internal static UnknownResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownResourceCertificateDetails(document.RootElement, options);
+                        return DeserializeResourceCertificateDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support '{options.Format}' format.");

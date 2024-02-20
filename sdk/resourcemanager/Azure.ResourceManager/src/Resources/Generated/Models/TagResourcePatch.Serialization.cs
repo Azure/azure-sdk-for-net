@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = Tag.DeserializeTag(property.Value);
+                    properties = Tag.DeserializeTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

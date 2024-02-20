@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item, options));
                     }
                     commonNames = array;
                     continue;

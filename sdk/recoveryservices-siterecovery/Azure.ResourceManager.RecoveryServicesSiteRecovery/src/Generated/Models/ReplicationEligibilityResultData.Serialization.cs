@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = ReplicationEligibilityResultProperties.DeserializeReplicationEligibilityResultProperties(property.Value);
+                    properties = ReplicationEligibilityResultProperties.DeserializeReplicationEligibilityResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

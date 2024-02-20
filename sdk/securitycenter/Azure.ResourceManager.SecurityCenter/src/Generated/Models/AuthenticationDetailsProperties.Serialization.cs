@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element);
-                    case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element);
-                    case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
+                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element, options);
+                    case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element, options);
+                    case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element, options);
                 }
             }
-            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element);
+            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element, options);
         }
 
         BinaryData IPersistableModel<AuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

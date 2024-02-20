@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ResourceHealthDetails> array = new List<ResourceHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item));
+                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item, options));
                     }
                     resourceHealthDetails = array;
                     continue;

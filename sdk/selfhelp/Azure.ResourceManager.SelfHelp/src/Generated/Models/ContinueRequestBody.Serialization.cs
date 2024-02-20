@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item, options));
                     }
                     responses = array;
                     continue;

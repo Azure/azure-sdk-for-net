@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciEventModelCustomProperties.DeserializeHyperVToAzStackHciEventModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciEventModelCustomProperties.DeserializeHyperVToAzStackHciEventModelCustomProperties(element, options);
                 }
             }
-            return UnknownEventModelCustomProperties.DeserializeUnknownEventModelCustomProperties(element);
+            return UnknownEventModelCustomProperties.DeserializeUnknownEventModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<EventModelCustomProperties>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    properties = PurviewPrivateLinkResourceProperties.DeserializePurviewPrivateLinkResourceProperties(property.Value);
+                    properties = PurviewPrivateLinkResourceProperties.DeserializePurviewPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPortRule> array = new List<JitNetworkAccessPortRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item));
+                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item, options));
                     }
                     ports = array;
                     continue;

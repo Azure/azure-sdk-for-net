@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVHostDetails> array = new List<HyperVHostDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item, options));
                     }
                     hyperVHosts = array;
                     continue;

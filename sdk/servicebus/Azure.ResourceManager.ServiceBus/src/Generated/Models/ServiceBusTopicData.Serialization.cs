@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value);
+                            countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultMessageTimeToLive"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<CurrentUsagesBaseData> array = new List<CurrentUsagesBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item));
+                        array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item, options));
                     }
                     value = array;
                     continue;

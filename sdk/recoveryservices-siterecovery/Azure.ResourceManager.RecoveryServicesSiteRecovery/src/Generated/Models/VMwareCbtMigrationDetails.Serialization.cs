@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value);
+                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtProtectedDiskDetails> array = new List<VMwareCbtProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicDetails> array = new List<VMwareCbtNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value);
+                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gatewayOperationDetails"u8))
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationName"u8))

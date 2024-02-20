@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         continue;
                     }
-                    sku = PurviewAccountSku.DeserializePurviewAccountSku(property.Value);
+                    sku = PurviewAccountSku.DeserializePurviewAccountSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(property0.Value);
+                            accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudConnectors"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property0.Value);
+                            cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdAt"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property0.Value);
+                            endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(property0.Value);
+                            ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedEventHubState"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property0.Value);
+                            managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourcesPublicNetworkAccess"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Purview
                             List<PurviewPrivateEndpointConnectionData> array = new List<PurviewPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item));
+                                array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

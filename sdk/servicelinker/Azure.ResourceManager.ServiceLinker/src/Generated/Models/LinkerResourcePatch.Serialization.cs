@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value);
+                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value);
+                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientType"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 vnetSolution = null;
                                 continue;
                             }
-                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value);
+                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))

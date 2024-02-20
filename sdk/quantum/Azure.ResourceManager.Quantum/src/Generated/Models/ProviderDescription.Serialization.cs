@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    properties = ProviderProperties.DeserializeProviderProperties(property.Value);
+                    properties = ProviderProperties.DeserializeProviderProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value);
+                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    encryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value);
+                    encryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rolloverEncryptionDetails"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    rolloverEncryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value);
+                    rolloverEncryptionDetails = SiteRecoveryEncryptionDetails.DeserializeSiteRecoveryEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internalIdentifier"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value);
+                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("healthErrorDetails"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrorDetails = array;
                     continue;

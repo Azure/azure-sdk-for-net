@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
+                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recommendationsConfiguration"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item, options));
                             }
                             recommendationsConfiguration = array;
                             continue;

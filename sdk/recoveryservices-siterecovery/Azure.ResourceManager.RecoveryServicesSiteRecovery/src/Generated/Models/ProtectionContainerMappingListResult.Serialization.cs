@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ProtectionContainerMappingData> array = new List<ProtectionContainerMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(item));
+                        array.Add(ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(item, options));
                     }
                     value = array;
                     continue;

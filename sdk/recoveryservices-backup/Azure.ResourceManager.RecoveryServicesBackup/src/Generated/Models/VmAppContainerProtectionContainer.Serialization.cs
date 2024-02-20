@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value);
+                    extendedInfo = WorkloadContainerExtendedInfo.DeserializeWorkloadContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadType"u8))

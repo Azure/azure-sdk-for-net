@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        array.Add(SearchResult.DeserializeSearchResult(item, options));
                     }
                     searchResults = array;
                     continue;
