@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value);
+                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryCapacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value);
+                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRefreshedTime"u8))

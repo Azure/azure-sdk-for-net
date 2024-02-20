@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineNetworkInterfaceReference> array = new List<VirtualMachineNetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item));
+                        array.Add(VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineNetworkInterfaceConfiguration> array = new List<VirtualMachineNetworkInterfaceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item));
+                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item, options));
                     }
                     networkInterfaceConfigurations = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ExportDatasetConfiguration.DeserializeExportDatasetConfiguration(property.Value);
+                    configuration = ExportDatasetConfiguration.DeserializeExportDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

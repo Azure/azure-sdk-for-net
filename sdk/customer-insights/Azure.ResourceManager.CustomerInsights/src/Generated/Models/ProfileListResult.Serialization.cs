@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileResourceFormatData> array = new List<ProfileResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileResourceFormatData.DeserializeProfileResourceFormatData(item));
+                        array.Add(ProfileResourceFormatData.DeserializeProfileResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

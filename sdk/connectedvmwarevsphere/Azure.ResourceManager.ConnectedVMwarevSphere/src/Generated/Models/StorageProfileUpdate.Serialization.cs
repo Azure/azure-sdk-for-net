@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVirtualDiskUpdate> array = new List<VMwareVirtualDiskUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVirtualDiskUpdate.DeserializeVMwareVirtualDiskUpdate(item));
+                        array.Add(VMwareVirtualDiskUpdate.DeserializeVMwareVirtualDiskUpdate(item, options));
                     }
                     disks = array;
                     continue;

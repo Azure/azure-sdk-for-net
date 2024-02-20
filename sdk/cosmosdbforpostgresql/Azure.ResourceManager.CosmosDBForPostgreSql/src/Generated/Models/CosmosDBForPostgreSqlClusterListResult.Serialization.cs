@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlClusterData> array = new List<CosmosDBForPostgreSqlClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(item));
+                        array.Add(CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(item, options));
                     }
                     value = array;
                     continue;

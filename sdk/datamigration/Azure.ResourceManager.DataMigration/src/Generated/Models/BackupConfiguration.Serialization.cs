@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value);
+                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value);
+                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

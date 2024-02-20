@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value);
+                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesRoleResources"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value);
+                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))

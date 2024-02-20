@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value);
+                    jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

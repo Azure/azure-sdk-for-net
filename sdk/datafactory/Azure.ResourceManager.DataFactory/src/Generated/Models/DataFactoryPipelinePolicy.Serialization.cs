@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    elapsedTimeMetric = PipelineElapsedTimeMetricPolicy.DeserializePipelineElapsedTimeMetricPolicy(property.Value);
+                    elapsedTimeMetric = PipelineElapsedTimeMetricPolicy.DeserializePipelineElapsedTimeMetricPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

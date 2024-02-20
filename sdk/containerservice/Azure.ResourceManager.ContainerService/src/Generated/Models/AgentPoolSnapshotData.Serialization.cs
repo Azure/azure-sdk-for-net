@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
+                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("snapshotType"u8))

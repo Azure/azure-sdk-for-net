@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeApiErrorBase> array = new List<ComputeApiErrorBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item));
+                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item, options));
                     }
                     details = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("code"u8))

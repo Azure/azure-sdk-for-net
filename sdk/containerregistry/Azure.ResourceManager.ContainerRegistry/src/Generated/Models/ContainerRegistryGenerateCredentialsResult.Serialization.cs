@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item, options));
                     }
                     passwords = array;
                     continue;

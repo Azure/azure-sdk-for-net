@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

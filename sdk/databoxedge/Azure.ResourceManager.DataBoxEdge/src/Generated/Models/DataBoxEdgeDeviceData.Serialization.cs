@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    sku = DataBoxEdgeSku.DeserializeDataBoxEdgeSku(property.Value);
+                    sku = DataBoxEdgeSku.DeserializeDataBoxEdgeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value);
+                            resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("edgeProfile"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
+                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataResidency"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            dataResidency = DataResidency.DeserializeDataResidency(property0.Value);
+                            dataResidency = DataResidency.DeserializeDataResidency(property0.Value, options);
                             continue;
                         }
                     }

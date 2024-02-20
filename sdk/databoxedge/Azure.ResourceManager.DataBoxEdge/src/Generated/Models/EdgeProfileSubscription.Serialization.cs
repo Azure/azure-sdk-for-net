@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
+                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item, options));
                             }
                             registeredFeatures = array;
                             continue;

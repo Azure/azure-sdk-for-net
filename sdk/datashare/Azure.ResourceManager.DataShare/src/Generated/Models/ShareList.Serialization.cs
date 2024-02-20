@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareData> array = new List<DataShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareData.DeserializeDataShareData(item));
+                        array.Add(DataShareData.DeserializeDataShareData(item, options));
                     }
                     value = array;
                     continue;

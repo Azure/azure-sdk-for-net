@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = ExceptionTrigger.DeserializeExceptionTrigger(property.Value);
+                    trigger = ExceptionTrigger.DeserializeExceptionTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -98,7 +98,7 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionAction> array = new List<ExceptionAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionAction.DeserializeExceptionAction(item));
+                        array.Add(ExceptionAction.DeserializeExceptionAction(item, options));
                     }
                     actions = array;
                     continue;

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalSharingStatus> array = new List<RegionalSharingStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item));
+                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item, options));
                     }
                     summary = array;
                     continue;

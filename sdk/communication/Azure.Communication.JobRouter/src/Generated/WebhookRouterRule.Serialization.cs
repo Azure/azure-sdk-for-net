@@ -105,7 +105,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value);
+                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("webhookUri"u8))

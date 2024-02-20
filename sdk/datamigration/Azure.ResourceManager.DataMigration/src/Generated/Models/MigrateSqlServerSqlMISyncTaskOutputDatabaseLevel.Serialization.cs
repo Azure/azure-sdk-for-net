@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
+                    fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
+                    lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<BackupSetInfo> array = new List<BackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item));
+                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;

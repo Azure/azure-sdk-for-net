@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value);
+                    trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalOrderDetails"u8))

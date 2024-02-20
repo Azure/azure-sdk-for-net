@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSource.DeserializeDataFlowSource(item));
+                                array.Add(DataFlowSource.DeserializeDataFlowSource(item, options));
                             }
                             sources = array;
                             continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSink.DeserializeDataFlowSink(item));
+                                array.Add(DataFlowSink.DeserializeDataFlowSink(item, options));
                             }
                             sinks = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowTransformation> array = new List<DataFlowTransformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
+                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item, options));
                             }
                             transformations = array;
                             continue;

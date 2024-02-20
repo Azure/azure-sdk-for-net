@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    properties = ContainerAppCertificateProperties.DeserializeContainerAppCertificateProperties(property.Value);
+                    properties = ContainerAppCertificateProperties.DeserializeContainerAppCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

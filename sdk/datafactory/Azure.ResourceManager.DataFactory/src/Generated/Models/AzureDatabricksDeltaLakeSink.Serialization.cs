@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    importSettings = AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(property.Value);
+                    importSettings = AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

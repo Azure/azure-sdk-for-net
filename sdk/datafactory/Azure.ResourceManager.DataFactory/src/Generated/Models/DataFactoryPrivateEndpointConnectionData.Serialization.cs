@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateEndpointConnectionProperties.DeserializeDataFactoryPrivateEndpointConnectionProperties(property.Value);
+                    properties = DataFactoryPrivateEndpointConnectionProperties.DeserializeDataFactoryPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

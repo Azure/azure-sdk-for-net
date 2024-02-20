@@ -86,12 +86,12 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "bestWorker": return BestWorkerMode.DeserializeBestWorkerMode(element);
-                    case "longestIdle": return LongestIdleMode.DeserializeLongestIdleMode(element);
-                    case "roundRobin": return RoundRobinMode.DeserializeRoundRobinMode(element);
+                    case "bestWorker": return BestWorkerMode.DeserializeBestWorkerMode(element, options);
+                    case "longestIdle": return LongestIdleMode.DeserializeLongestIdleMode(element, options);
+                    case "roundRobin": return RoundRobinMode.DeserializeRoundRobinMode(element, options);
                 }
             }
-            return UnknownDistributionMode.DeserializeUnknownDistributionMode(element);
+            return UnknownDistributionMode.DeserializeUnknownDistributionMode(element, options);
         }
 
         BinaryData IPersistableModel<DistributionMode>.Write(ModelReaderWriterOptions options)

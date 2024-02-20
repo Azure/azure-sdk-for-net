@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<KubernetesVersion> array = new List<KubernetesVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item));
+                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item, options));
                     }
                     values = array;
                     continue;

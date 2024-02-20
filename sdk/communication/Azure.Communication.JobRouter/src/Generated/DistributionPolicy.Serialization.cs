@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    mode = DistributionMode.DeserializeDistributionMode(property.Value);
+                    mode = DistributionMode.DeserializeDistributionMode(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

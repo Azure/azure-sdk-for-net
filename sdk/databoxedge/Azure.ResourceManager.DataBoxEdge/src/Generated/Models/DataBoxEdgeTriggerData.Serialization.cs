@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "FileEvent": return EdgeFileEventTrigger.DeserializeEdgeFileEventTrigger(element);
-                    case "PeriodicTimerEvent": return PeriodicTimerEventTrigger.DeserializePeriodicTimerEventTrigger(element);
+                    case "FileEvent": return EdgeFileEventTrigger.DeserializeEdgeFileEventTrigger(element, options);
+                    case "PeriodicTimerEvent": return PeriodicTimerEventTrigger.DeserializePeriodicTimerEventTrigger(element, options);
                 }
             }
-            return UnknownTrigger.DeserializeUnknownTrigger(element);
+            return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeTriggerData>.Write(ModelReaderWriterOptions options)

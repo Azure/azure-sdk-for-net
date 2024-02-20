@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<SqlDedicatedGatewayRegionalService> array = new List<SqlDedicatedGatewayRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDedicatedGatewayRegionalService.DeserializeSqlDedicatedGatewayRegionalService(item));
+                        array.Add(SqlDedicatedGatewayRegionalService.DeserializeSqlDedicatedGatewayRegionalService(item, options));
                     }
                     locations = array;
                     continue;

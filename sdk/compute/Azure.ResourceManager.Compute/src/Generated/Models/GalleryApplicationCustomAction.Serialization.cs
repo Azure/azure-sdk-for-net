@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationCustomActionParameter> array = new List<GalleryApplicationCustomActionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationCustomActionParameter.DeserializeGalleryApplicationCustomActionParameter(item));
+                        array.Add(GalleryApplicationCustomActionParameter.DeserializeGalleryApplicationCustomActionParameter(item, options));
                     }
                     parameters = array;
                     continue;

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item, options));
                     }
                     daysOfMonth = array;
                     continue;

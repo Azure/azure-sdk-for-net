@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             virtualMachines = array;
                             continue;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             virtualMachineScaleSets = array;
                             continue;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             availabilitySets = array;
                             continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value);
+                            colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("intent"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value);
+                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value, options);
                             continue;
                         }
                     }

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value);
+                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

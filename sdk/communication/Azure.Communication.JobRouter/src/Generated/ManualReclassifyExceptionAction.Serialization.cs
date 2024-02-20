@@ -124,7 +124,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     workerSelectors = array;
                     continue;
