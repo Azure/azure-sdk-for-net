@@ -71,9 +71,9 @@ namespace Azure.Provisioning.Tests
         public void GetResourcesChildConstructs(bool recursive)
         {
             var infra = new TestInfrastructure();
-            _ = new ResourceGroup(infra, "rg1");
+            var rg1 = new ResourceGroup(infra, "rg1");
 
-            var childScope = infra.AddFrontEndWebSite();
+            var childScope = infra.AddFrontEndWebSite(resourceGroup: rg1);
             _ = new ResourceGroup(childScope, "rg2");
 
             var expected = recursive ? 10 : 6;

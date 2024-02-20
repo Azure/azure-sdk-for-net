@@ -3,14 +3,15 @@
 
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
+using Azure.Provisioning.ResourceManager;
 
 namespace Azure.Provisioning.Tests
 {
     public static class TestExtensions
     {
-        public static TestFrontEndWebSite AddFrontEndWebSite(this IConstruct construct, KeyVault? keyVault = null, AppServicePlan? appServicePlan = null)
+        public static TestFrontEndWebSite AddFrontEndWebSite(this IConstruct construct, KeyVault? keyVault = null, AppServicePlan? appServicePlan = null, ResourceGroup? resourceGroup = null)
         {
-            return new TestFrontEndWebSite(construct, keyVault, appServicePlan);
+            return new TestFrontEndWebSite(construct, keyVault, appServicePlan, resourceGroup);
         }
 
         public static TestCommonSqlDatabase AddCommonSqlDatabase(this IConstruct construct, KeyVault? keyVault = null)
