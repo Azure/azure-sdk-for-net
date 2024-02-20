@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element);
-                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element);
-                    case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
+                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
+                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
+                    case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
                 }
             }
-            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element);
+            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<SapSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

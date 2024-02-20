@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value);
+                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value);
+                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("throughputProvisionedMBps"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value);
+                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value);
+                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hsm"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value);
+                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value);
+                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
                             continue;
                         }
                     }

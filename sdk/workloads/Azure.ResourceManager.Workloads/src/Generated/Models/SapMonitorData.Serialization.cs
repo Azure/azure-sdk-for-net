@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
+                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsWorkspaceArmId"u8))

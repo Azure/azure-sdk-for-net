@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value);
+                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("monitorConfig"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value);
+                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpoints"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item));
+                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item, options));
                             }
                             endpoints = array;
                             continue;

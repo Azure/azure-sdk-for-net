@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapAvailabilityZonePair> array = new List<SapAvailabilityZonePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item));
+                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item, options));
                     }
                     availabilityZonePairs = array;
                     continue;

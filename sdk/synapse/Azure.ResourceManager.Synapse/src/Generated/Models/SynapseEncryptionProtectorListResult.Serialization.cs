@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseEncryptionProtectorData> array = new List<SynapseEncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(item));
+                        array.Add(SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(item, options));
                     }
                     value = array;
                     continue;

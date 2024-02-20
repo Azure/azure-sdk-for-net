@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value);
+                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSerialization(document.RootElement, options);
+            return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
         }
 
         internal static UnknownSerialization DeserializeUnknownSerialization(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSerialization(document.RootElement, options);
+                        return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{options.Format}' format.");

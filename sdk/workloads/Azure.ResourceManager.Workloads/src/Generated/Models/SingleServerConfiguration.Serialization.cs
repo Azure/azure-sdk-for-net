@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
+                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customResourceNames"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value);
+                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentType"u8))

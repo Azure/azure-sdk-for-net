@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Synapse
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventGrid": return SynapseEventGridDataConnection.DeserializeSynapseEventGridDataConnection(element);
-                    case "EventHub": return SynapseEventHubDataConnection.DeserializeSynapseEventHubDataConnection(element);
-                    case "IotHub": return SynapseIotHubDataConnection.DeserializeSynapseIotHubDataConnection(element);
+                    case "EventGrid": return SynapseEventGridDataConnection.DeserializeSynapseEventGridDataConnection(element, options);
+                    case "EventHub": return SynapseEventHubDataConnection.DeserializeSynapseEventHubDataConnection(element, options);
+                    case "IotHub": return SynapseIotHubDataConnection.DeserializeSynapseIotHubDataConnection(element, options);
                 }
             }
-            return UnknownDataConnection.DeserializeUnknownDataConnection(element);
+            return UnknownDataConnection.DeserializeUnknownDataConnection(element, options);
         }
 
         BinaryData IPersistableModel<SynapseDataConnectionData>.Write(ModelReaderWriterOptions options)

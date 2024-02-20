@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value);
+                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compatibilityLevel"u8))

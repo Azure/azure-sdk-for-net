@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsentEnabled> array = new List<SecondaryConsentEnabled>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item));
+                                array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item, options));
                             }
                             secondaryConsentEnabled = array;
                             continue;
