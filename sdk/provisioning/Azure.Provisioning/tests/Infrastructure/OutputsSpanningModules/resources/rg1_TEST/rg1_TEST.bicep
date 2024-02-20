@@ -1,3 +1,6 @@
+@description('Enable soft delete')
+param enableSoftDelete string
+
 @secure()
 @description('')
 param SERVICE_API_IDENTITY_PRINCIPAL_ID string
@@ -48,13 +51,14 @@ resource applicationSettingsResource_MAMFSSuFs 'Microsoft.Web/sites/config@2021-
 
 resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
-  location: webSite_dOTaZfna6.location
+  location: 'westus'
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'
     sku: {
       name: 'standard'
       family: 'A'
     }
+    enableSoftDelete: enableSoftDelete
     enableRbacAuthorization: true
   }
 }

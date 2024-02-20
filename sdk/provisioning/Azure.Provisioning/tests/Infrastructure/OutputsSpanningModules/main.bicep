@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+@description('Enable soft delete')
+param enableSoftDelete string
+
 
 resource resourceGroup_AVG5HpqPz 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg1-TEST'
@@ -29,6 +32,7 @@ module rg1_TEST './resources/rg1_TEST/rg1_TEST.bicep' = {
   name: 'rg1_TEST'
   scope: resourceGroup_AVG5HpqPz
   params: {
+    enableSoftDelete: enableSoftDelete
     SERVICE_API_IDENTITY_PRINCIPAL_ID: rg3_TEST.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
   }
 }
@@ -38,7 +42,6 @@ module rg2_TEST './resources/rg2_TEST/rg2_TEST.bicep' = {
   scope: resourceGroup_hu2r8JaSi
   params: {
     STORAGE_PRINCIPAL_ID: rg1_TEST.outputs.STORAGE_PRINCIPAL_ID
-    LOCATION: rg1_TEST.outputs.LOCATION
   }
 }
 

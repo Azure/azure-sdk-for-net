@@ -71,6 +71,43 @@ namespace Azure.Provisioning.Tests
             infra.Build(GetOutputPath());
         }
 
+        [TearDown]
+        public void ValidateBicep()
+        {
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                return;
+            }
+
+            try
+            {
+                var path = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.bicep");
+                var args = Path.Combine(
+                    TestEnvironment.RepositoryRoot,
+                    "eng",
+                    "scripts",
+                    $"Validate-Bicep.ps1 {path}");
+                var processInfo = new ProcessStartInfo("pwsh.exe", args)
+                {
+                    UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true,
+                };
+                var process = Process.Start(processInfo);
+                while (!process!.HasExited && !process!.StandardError.EndOfStream)
+                {
+                    var error = process.StandardError.ReadLine();
+                    TestContext.Progress.WriteLine(error);
+                    if (error!.StartsWith("ERROR"))
+                    {
+                        Assert.Fail(error);
+                    }
+                }
+            }
+            finally
+            {
+                File.Delete(Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.json"));
+            }
+        }
+
         [Test]
         public void ResourceGroupOnly()
         {
@@ -159,17 +196,16 @@ namespace Azure.Provisioning.Tests
             var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignParameter(data => data.Location, new Parameter(output2));
+            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", isSecure: false));
 
             WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
 
             frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
-            frontEnd2.AssignParameter(data => data.Location, new Parameter(output2));
 
             var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());
 
-            Assert.AreEqual(4, infra.GetParameters().Count());
+            Assert.AreEqual(3, infra.GetParameters().Count());
             Assert.AreEqual(4, infra.GetOutputs().Count());
 
             Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
