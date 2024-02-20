@@ -104,7 +104,7 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            infra.AddBlobService(name: "photos");
+            infra.AddBlobService();
             infra.Build(GetOutputPath());
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            var blob = infra.AddBlobService(name: "photos");
+            var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
             {
                 IsEnabled = true

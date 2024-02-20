@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Support Topic Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Unique resource Id. </summary>
+        [WirePath("pesId")]
         public ResourceIdentifier PesId { get; }
     }
 }

@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> List of ramp-up rules. </summary>
+        [WirePath("rampUpRules")]
         public IList<RampUpRule> RampUpRules { get; }
     }
 }

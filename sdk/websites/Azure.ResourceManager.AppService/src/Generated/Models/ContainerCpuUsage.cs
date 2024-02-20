@@ -68,12 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the total usage. </summary>
+        [WirePath("totalUsage")]
         public long? TotalUsage { get; set; }
         /// <summary> Gets the per cpu usage. </summary>
+        [WirePath("perCpuUsage")]
         public IList<long> PerCpuUsage { get; }
         /// <summary> Gets or sets the kernel mode usage. </summary>
+        [WirePath("kernelModeUsage")]
         public long? KernelModeUsage { get; set; }
         /// <summary> Gets or sets the user mode usage. </summary>
+        [WirePath("userModeUsage")]
         public long? UserModeUsage { get; set; }
     }
 }

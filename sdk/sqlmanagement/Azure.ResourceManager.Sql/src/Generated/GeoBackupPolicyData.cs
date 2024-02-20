@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Backup policy location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The state of the geo backup policy. </summary>
+        [WirePath("properties.state")]
         public GeoBackupPolicyState State { get; set; }
         /// <summary> The storage type of the geo backup policy. </summary>
+        [WirePath("properties.storageType")]
         public string StorageType { get; }
     }
 }

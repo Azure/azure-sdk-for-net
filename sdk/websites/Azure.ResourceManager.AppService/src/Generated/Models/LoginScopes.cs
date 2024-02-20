@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

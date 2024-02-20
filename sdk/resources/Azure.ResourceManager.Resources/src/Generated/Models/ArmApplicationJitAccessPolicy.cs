@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Whether the JIT access is enabled. </summary>
+        [WirePath("jitAccessEnabled")]
         public bool JitAccessEnabled { get; set; }
         /// <summary> JIT approval mode. </summary>
+        [WirePath("jitApprovalMode")]
         public JitApprovalMode? JitApprovalMode { get; set; }
         /// <summary> The JIT approvers. </summary>
+        [WirePath("jitApprovers")]
         public IList<JitApprover> JitApprovers { get; }
         /// <summary> The maximum duration JIT access is granted. This is an ISO8601 time period value. </summary>
+        [WirePath("maximumJitAccessDuration")]
         public TimeSpan? MaximumJitAccessDuration { get; set; }
     }
 }

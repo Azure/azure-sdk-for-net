@@ -84,12 +84,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Key Vault resource Id. </summary>
+        [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
         /// <summary> Key Vault secret name. </summary>
+        [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
+        [WirePath("properties.provisioningState")]
         public KeyVaultSecretStatus? ProvisioningState { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine(" {");
                         foreach (var item in Containers)
                         {
-                            builder.Append($"        {item.Key}:");
+                            builder.Append($"        '{item.Key}':");
                             AppendChildObject(builder, item.Value, options, 6, false);
                         }
                         builder.AppendLine("    }");

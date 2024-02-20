@@ -227,7 +227,7 @@ namespace Azure.Provisioning.Storage
 {
     public partial class BlobService : Azure.Provisioning.Resource<Azure.ResourceManager.Storage.BlobServiceData>
     {
-        public BlobService(Azure.Provisioning.IConstruct scope, string name = "blob") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Storage.BlobServiceData>)) { }
+        public BlobService(Azure.Provisioning.IConstruct scope) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Storage.BlobServiceData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
     public partial class StorageAccount : Azure.Provisioning.Resource<Azure.ResourceManager.Storage.StorageAccountData>
@@ -238,7 +238,7 @@ namespace Azure.Provisioning.Storage
     }
     public static partial class StorageExtensions
     {
-        public static Azure.Provisioning.Storage.BlobService AddBlobService(this Azure.Provisioning.IConstruct scope, string name = "blob") { throw null; }
+        public static Azure.Provisioning.Storage.BlobService AddBlobService(this Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.Storage.StorageAccount AddStorageAccount(this Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Storage.Models.StorageKind kind, Azure.ResourceManager.Storage.Models.StorageSkuName sku, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "sa") { throw null; }
     }
 }

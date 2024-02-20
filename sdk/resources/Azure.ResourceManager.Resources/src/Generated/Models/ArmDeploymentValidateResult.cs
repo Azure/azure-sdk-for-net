@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment validation error. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
         /// <summary> The template deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentPropertiesExtended Properties { get; }
     }
 }
