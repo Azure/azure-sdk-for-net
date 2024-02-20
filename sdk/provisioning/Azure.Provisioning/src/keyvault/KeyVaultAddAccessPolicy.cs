@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
@@ -32,8 +31,7 @@ namespace Azure.Provisioning.KeyVaults
                         })
                 }))
         {
-            ParameterOverrides.Add(Properties.AccessPolicies[0], new Dictionary<string, Parameter> { { nameof(KeyVaultAccessPolicy.ObjectId), principalIdParameter } });
-            Parameters.Add(principalIdParameter);
+            AssignParameter(p => p.AccessPolicies[0].ObjectId, principalIdParameter);
         }
 
         private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)

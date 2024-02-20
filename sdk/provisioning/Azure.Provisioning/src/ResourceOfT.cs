@@ -75,26 +75,25 @@ namespace Azure.Provisioning
             if (propertySelector is LambdaExpression lambda)
             {
                 root = lambda.Parameters[0];
-                if (lambda.Body is MemberExpression member)
+                switch (lambda.Body)
                 {
-                    GetBicepExpression(member, ref expression);
-                    body = member.Expression;
-                    name = member.Member.Name;
-                }
-                else if (lambda.Body is UnaryExpression { NodeType: ExpressionType.Convert, Operand: MemberExpression member2 })
-                {
-                    GetBicepExpression(member2, ref expression);
-                    body = member2.Expression;
-                    name = member2.Member.Name;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Invalid expression type.");
+                    case MemberExpression memberExpression:
+                        GetBicepExpression(memberExpression, ref expression);
+                        body = memberExpression.Expression;
+                        name = memberExpression.Member.Name;
+                        break;
+                    case UnaryExpression { NodeType: ExpressionType.Convert, Operand: MemberExpression memberExpression }:
+                        GetBicepExpression(memberExpression, ref expression);
+                        body = memberExpression.Expression;
+                        name = memberExpression.Member.Name;
+                        break;
+                    default:
+                        throw new InvalidOperationException($"Unsupported expression type {lambda.Body.GetType().Name}");
                 }
             }
             else
             {
-                throw new InvalidOperationException("Invalid expression type.");
+                throw new InvalidOperationException($"Unsupported expression type {propertySelector.GetType().Name}");
             }
 
             object instance = Expression.Lambda(body!, root).Compile().DynamicInvoke(Properties)!;
@@ -114,6 +113,8 @@ namespace Azure.Provisioning
                         GetBicepExpression(memberExpression.Expression, ref result);
                     }
                     break;
+                case MethodCallExpression methodCallExpression:
+                    break; // skip
                 case ParameterExpression parameterExpression:
                     return; // we have reached the root
                 default:
