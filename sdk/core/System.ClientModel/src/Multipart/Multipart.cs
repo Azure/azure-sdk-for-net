@@ -20,6 +20,7 @@ namespace System.ClientModel.Primitives
     {
         private const string CrLf = "\r\n";
         private const string ColonSP = ": ";
+        private const int BufferSize = 1024;
 
         private protected static readonly int s_crlfLength = GetEncodedLength(CrLf);
         private protected static readonly int s_dashDashLength = GetEncodedLength("--");
@@ -197,12 +198,10 @@ namespace System.ClientModel.Primitives
                             stream.Write(buffer, 0, buffer.Length);
                             break;
                         case Stream streamData:
-                            //buffer = new byte[streamData.Length];
-                            //int numBytesToRead = (int)streamData.Length;
-                            buffer = new byte[1024];
-                            int numBytesToRead = 1024;
-                            int numBytesRead = 0;
-                            while (numBytesToRead > 0)
+                            buffer = new byte[BufferSize];
+                            int numBytesToRead = BufferSize;
+                            long numBytesRemaining = streamData.Length;
+                            while (numBytesRemaining > 0)
                             {
                                 // Read may return anything from 0 to numBytesToRead.
                                 int n = streamData.Read(buffer, 0, numBytesToRead);
@@ -211,15 +210,13 @@ namespace System.ClientModel.Primitives
                                 if (n == 0)
                                     break;
 
-                                numBytesRead += n;
+                                numBytesRemaining -= n;
                                 stream.Write(buffer, 0, n);
                             }
                             break;
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
-                    //stream.Write(buffer, 0, buffer.Length);
-                    //content.WriteTo(stream, cancellationToken);
                 }
 
                 // Write footer boundary.
@@ -277,12 +274,10 @@ namespace System.ClientModel.Primitives
                             stream.Write(buffer, 0, buffer.Length);
                             break;
                         case Stream streamData:
-                            //buffer = new byte[streamData.Length];
-                            //int numBytesToRead = (int)streamData.Length;
-                            buffer = new byte[1024];
-                            int numBytesToRead = 1024;
-                            int numBytesRead = 0;
-                            while (numBytesToRead > 0)
+                            buffer = new byte[BufferSize];
+                            int numBytesToRead = BufferSize;
+                            long numBytesRemaining = streamData.Length;
+                            while (numBytesRemaining > 0)
                             {
                                 // Read may return anything from 0 to numBytesToRead.
                                 int n = streamData.Read(buffer, 0, numBytesToRead);
@@ -291,18 +286,13 @@ namespace System.ClientModel.Primitives
                                 if (n == 0)
                                     break;
 
-                                numBytesRead += n;
-                                //numBytesToRead -= n;
+                                numBytesRemaining -= n;
                                 stream.Write(buffer, 0, n);
                             }
-                            //numBytesToRead = bytes.Length;
-                            //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                             break;
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
-                    //byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
-                    //stream.Write(buffer, 0, buffer.Length);
                 }
 
                 // Write footer boundary.
@@ -360,17 +350,15 @@ namespace System.ClientModel.Primitives
                             buffer = bytes;
                             await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                             break;
-                        case Int32 int32Data:
-                            buffer = BitConverter.GetBytes(int32Data);
+                        case int i:
+                            buffer = BitConverter.GetBytes(i);
                             await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                             break;
                         case Stream streamData:
-                            //buffer = new byte[streamData.Length];
-                            //int numBytesToRead = (int)streamData.Length;
-                            buffer = new byte[1024];
-                            int numBytesToRead = 1024;
-                            int numBytesRead = 0;
-                            while (numBytesToRead > 0)
+                            buffer = new byte[BufferSize];
+                            int numBytesToRead = BufferSize;
+                            long numBytesRemaining = streamData.Length;
+                            while (numBytesRemaining > 0)
                             {
                                 // Read may return anything from 0 to numBytesToRead.
                                 int n = streamData.Read(buffer, 0, numBytesToRead);
@@ -379,18 +367,13 @@ namespace System.ClientModel.Primitives
                                 if (n == 0)
                                     break;
 
-                                numBytesRead += n;
-                                //numBytesToRead -= n;
-                                //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                                numBytesRemaining -= n;
                                 await stream.WriteAsync(buffer, 0, n, cancellationToken).ConfigureAwait(false);
                             }
-                            //numBytesToRead = bytes.Length;
-                            //await streamData.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                             break;
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
-                    //await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Write footer boundary.
@@ -460,14 +443,13 @@ namespace System.ClientModel.Primitives
                     }
                 }
                 parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
-                //multipartContent.ContentParts.Add(new MultipartContentPart(BinaryData.FromStream(section.Body), headers));
             }
             return parts;
-            //return multipartContent;
         }
 
         private protected static IReadOnlyList<MultipartBodyPart> Read(BinaryData data, string subType = "mixed", string boundary = null)
         {
+            //return multipartContent;
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return ReadAsync(data, subType, boundary).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
