@@ -18,7 +18,7 @@ namespace Azure.Data.SchemaRegistry.Tests
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
-        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync, RecordedTestMode.Playback)
+        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync)
         {
             TestDiagnostics = false;
             _serviceVersion = version;
