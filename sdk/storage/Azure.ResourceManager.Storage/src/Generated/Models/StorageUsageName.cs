@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets a string describing the resource name. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Gets a localized string describing the resource name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine(" {");
                         foreach (var item in FunctionKeys)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine(" {");
                         foreach (var item in SystemKeys)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");

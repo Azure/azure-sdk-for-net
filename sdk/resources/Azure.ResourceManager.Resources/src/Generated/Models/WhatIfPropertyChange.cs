@@ -82,8 +82,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The path of the property. </summary>
+        [WirePath("path")]
         public string Path { get; }
         /// <summary> The type of property change. </summary>
+        [WirePath("propertyChangeType")]
         public WhatIfPropertyChangeType PropertyChangeType { get; }
         /// <summary>
         /// The value of the property before the deployment is executed.
@@ -115,6 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("before")]
         public BinaryData Before { get; }
         /// <summary>
         /// The value of the property after the deployment is executed.
@@ -146,8 +149,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("after")]
         public BinaryData After { get; }
         /// <summary> Nested property changes. </summary>
+        [WirePath("children")]
         public IReadOnlyList<WhatIfPropertyChange> Children { get; }
     }
 }

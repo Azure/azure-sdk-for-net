@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine(" {");
                         foreach (var item in AppSettingsOverrides)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");

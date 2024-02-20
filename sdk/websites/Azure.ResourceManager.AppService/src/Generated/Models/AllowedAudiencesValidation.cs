@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
     }
 }

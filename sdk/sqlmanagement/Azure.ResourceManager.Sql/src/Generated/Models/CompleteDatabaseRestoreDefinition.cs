@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The last backup name to apply. </summary>
+        [WirePath("lastBackupName")]
         public string LastBackupName { get; }
     }
 }

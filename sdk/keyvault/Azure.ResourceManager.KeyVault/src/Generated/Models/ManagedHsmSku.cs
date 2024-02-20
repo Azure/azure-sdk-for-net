@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> SKU Family of the managed HSM Pool. </summary>
+        [WirePath("family")]
         public ManagedHsmSkuFamily Family { get; set; }
         /// <summary> SKU of the managed HSM Pool. </summary>
+        [WirePath("name")]
         public ManagedHsmSkuName Name { get; set; }
     }
 }

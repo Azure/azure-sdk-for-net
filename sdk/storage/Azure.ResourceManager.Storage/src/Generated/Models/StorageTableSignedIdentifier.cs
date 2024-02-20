@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> unique-64-character-value of the stored access policy. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Access policy. </summary>
+        [WirePath("accessPolicy")]
         public StorageTableAccessPolicy AccessPolicy { get; set; }
     }
 }

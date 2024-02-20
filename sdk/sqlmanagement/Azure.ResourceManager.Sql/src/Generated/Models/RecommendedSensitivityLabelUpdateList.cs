@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the operations. </summary>
+        [WirePath("operations")]
         public IList<RecommendedSensitivityLabelUpdate> Operations { get; }
     }
 }

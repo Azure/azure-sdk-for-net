@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Keywords to be used for generating domain recommendations. </summary>
+        [WirePath("keywords")]
         public string Keywords { get; set; }
         /// <summary> Maximum number of recommendations. </summary>
+        [WirePath("maxDomainRecommendations")]
         public int? MaxDomainRecommendations { get; set; }
     }
 }

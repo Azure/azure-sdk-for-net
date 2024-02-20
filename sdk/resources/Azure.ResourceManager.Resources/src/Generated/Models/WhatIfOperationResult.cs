@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Status of the What-If operation. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Error when What-If operation fails. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
         /// <summary> List of resource changes predicted by What-If operation. </summary>
+        [WirePath("properties.changes")]
         public IReadOnlyList<WhatIfChange> Changes { get; }
     }
 }

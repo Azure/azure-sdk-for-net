@@ -115,41 +115,58 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Current status of the App Service Environment. </summary>
+        [WirePath("properties.status")]
         public HostingEnvironmentStatus? Status { get; }
         /// <summary> Description of the Virtual Network. </summary>
+        [WirePath("properties.virtualNetwork")]
         public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+        [WirePath("properties.internalLoadBalancingMode")]
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
         /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
+        [WirePath("properties.multiSize")]
         public string MultiSize { get; set; }
         /// <summary> Number of front-end instances. </summary>
+        [WirePath("properties.multiRoleCount")]
         public int? MultiRoleCount { get; }
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
+        [WirePath("properties.ipsslAddressCount")]
         public int? IPSslAddressCount { get; set; }
         /// <summary> DNS suffix of the App Service Environment. </summary>
+        [WirePath("properties.dnsSuffix")]
         public string DnsSuffix { get; set; }
         /// <summary> Maximum number of VMs in the App Service Environment. </summary>
+        [WirePath("properties.maximumNumberOfMachines")]
         public int? MaximumNumberOfMachines { get; }
         /// <summary> Scale factor for front-ends. </summary>
+        [WirePath("properties.frontEndScaleFactor")]
         public int? FrontEndScaleFactor { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
         /// </summary>
+        [WirePath("properties.suspended")]
         public bool? IsSuspended { get; }
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
+        [WirePath("properties.clusterSettings")]
         public IList<AppServiceNameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
+        [WirePath("properties.userWhitelistedIpRanges")]
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
+        [WirePath("properties.hasLinuxWorkers")]
         public bool? HasLinuxWorkers { get; }
         /// <summary> Dedicated Host Count. </summary>
+        [WirePath("properties.dedicatedHostCount")]
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

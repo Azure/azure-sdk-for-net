@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine(" {");
                         foreach (var item in EnvironmentVariables)
                         {
-                            builder.Append($"        {item.Key}:");
+                            builder.Append($"        '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");

@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> HTML snippet. </summary>
+        [WirePath("html")]
         public string Html { get; }
     }
 }

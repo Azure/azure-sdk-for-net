@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Value of pair. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Type of database. </summary>
+        [WirePath("type")]
         public ConnectionStringType ConnectionStringType { get; set; }
     }
 }

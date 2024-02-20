@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Point in time for which counter was measured. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
         /// <summary> Name of the server on which the measurement is made. </summary>
+        [WirePath("instanceName")]
         public string InstanceName { get; }
         /// <summary> Value of counter at a certain time. </summary>
+        [WirePath("value")]
         public double? Value { get; }
     }
 }

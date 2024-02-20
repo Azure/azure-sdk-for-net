@@ -93,20 +93,28 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The parent application id. </summary>
+        [WirePath("properties.applicationResourceId")]
         public string ApplicationResourceId { get; set; }
         /// <summary> The publisher tenant id. </summary>
+        [WirePath("properties.publisherTenantId")]
         public Guid? PublisherTenantId { get; }
         /// <summary> The JIT authorization policies. </summary>
+        [WirePath("properties.jitAuthorizationPolicies")]
         public IList<JitAuthorizationPolicies> JitAuthorizationPolicies { get; }
         /// <summary> The JIT request properties. </summary>
+        [WirePath("properties.jitSchedulingPolicy")]
         public JitSchedulingPolicy JitSchedulingPolicy { get; set; }
         /// <summary> The JIT request provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The JIT request state. </summary>
+        [WirePath("properties.jitRequestState")]
         public JitRequestState? JitRequestState { get; }
         /// <summary> The client entity that created the JIT request. </summary>
+        [WirePath("properties.createdBy")]
         public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
+        [WirePath("properties.updatedBy")]
         public ArmApplicationDetails UpdatedBy { get; }
     }
 }

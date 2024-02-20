@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The target ID for the resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

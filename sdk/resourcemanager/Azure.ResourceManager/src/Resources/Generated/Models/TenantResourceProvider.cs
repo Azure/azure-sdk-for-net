@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The namespace of the resource provider. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; }
         /// <summary> The collection of provider resource types. </summary>
+        [WirePath("resourceTypes")]
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
     }
 }
