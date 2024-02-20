@@ -170,7 +170,7 @@ namespace Azure.Provisioning.Tests
             infra.Build(GetOutputPath());
 
             Assert.AreEqual(3, infra.GetParameters().Count());
-            Assert.AreEqual(3, infra.GetOutputs().Count());
+            Assert.AreEqual(4, infra.GetOutputs().Count());
 
             Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
             Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());

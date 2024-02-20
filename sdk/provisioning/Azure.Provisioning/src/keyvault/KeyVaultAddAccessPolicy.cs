@@ -53,7 +53,7 @@ namespace Azure.Provisioning.KeyVaults
             var result = base.FindParentInScope(scope);
             if (result is null)
             {
-                result = scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope, "kv");
+                result = scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope, name: "kv");
             }
             return result;
         }
