@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RecipientEmailContract> array = new List<RecipientEmailContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecipientEmailContract.DeserializeRecipientEmailContract(item));
+                        array.Add(RecipientEmailContract.DeserializeRecipientEmailContract(item, options));
                     }
                     value = array;
                     continue;

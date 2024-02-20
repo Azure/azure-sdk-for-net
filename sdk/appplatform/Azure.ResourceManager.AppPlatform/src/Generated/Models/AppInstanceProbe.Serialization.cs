@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value);
+                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disableProbe"u8))

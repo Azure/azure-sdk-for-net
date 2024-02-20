@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = FacebookChannelProperties.DeserializeFacebookChannelProperties(property.Value);
+                    properties = FacebookChannelProperties.DeserializeFacebookChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

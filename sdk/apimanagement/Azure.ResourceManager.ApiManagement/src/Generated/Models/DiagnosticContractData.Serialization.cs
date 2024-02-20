@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value);
+                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frontend"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
+                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backend"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
+                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logClientIp"u8))

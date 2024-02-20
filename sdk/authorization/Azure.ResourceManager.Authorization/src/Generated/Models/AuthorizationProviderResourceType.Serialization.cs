@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item));
+                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item, options));
                     }
                     operations = array;
                     continue;

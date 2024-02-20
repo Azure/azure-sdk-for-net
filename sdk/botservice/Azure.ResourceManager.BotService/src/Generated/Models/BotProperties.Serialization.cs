@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServicePrivateEndpointConnectionData> array = new List<BotServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item));
+                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;

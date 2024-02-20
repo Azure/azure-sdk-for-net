@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                             List<IPConfiguration> array = new List<IPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfiguration.DeserializeIPConfiguration(item));
+                                array.Add(IPConfiguration.DeserializeIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            dnsSettings = InterfaceDnsSettings.DeserializeInterfaceDnsSettings(property0.Value);
+                            dnsSettings = InterfaceDnsSettings.DeserializeInterfaceDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = NetworkInterfaceStatus.DeserializeNetworkInterfaceStatus(property0.Value);
+                            status = NetworkInterfaceStatus.DeserializeNetworkInterfaceStatus(property0.Value, options);
                             continue;
                         }
                     }

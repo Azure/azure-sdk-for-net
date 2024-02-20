@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("origins"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value);
+                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value, options);
                             continue;
                         }
                     }

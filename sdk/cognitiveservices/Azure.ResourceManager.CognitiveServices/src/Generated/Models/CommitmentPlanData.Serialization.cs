@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(property.Value);
+                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

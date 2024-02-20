@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationStoreApiKey> array = new List<AppConfigurationStoreApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(item));
+                        array.Add(AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(item, options));
                     }
                     value = array;
                     continue;

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value);
+                    registry = BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workingDirectory"u8))

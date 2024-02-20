@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkDnsServiceData> array = new List<WorkloadNetworkDnsServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(item));
+                        array.Add(WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(item, options));
                     }
                     value = array;
                     continue;
