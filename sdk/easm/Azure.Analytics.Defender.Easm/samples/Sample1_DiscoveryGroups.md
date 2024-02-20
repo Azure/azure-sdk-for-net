@@ -9,11 +9,8 @@ This code sample demonstrates how to create and manage discovery groups in an EA
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
-                "<Your_Subscription_Id>",
-                "<Your_Resource_Group_Name>",
-                "<Your_Workspace_Name>",
                 new DefaultAzureCredential());
 ```
 
@@ -31,24 +28,24 @@ hosts[1] = "<host2>.com";
 string[] domains = new string[2];
 domains[0] = "<domain1>.com";
 domains[1] = "<domain2>.com";
-                        DiscoGroupData request = new DiscoGroupData();
+                        DiscoveryGroupData request = new DiscoveryGroupData();
 foreach (var host in hosts)
 {
-    DiscoSource seed = new DiscoSource();
-    seed.Kind = DiscoSourceKind.Host;
+    DiscoverySource seed = new DiscoverySource();
+    seed.Kind = DiscoverySourceKind.Host;
     seed.Name = host;
     request.Seeds.Add(seed);
 }
 foreach (var domain in domains)
 {
-    DiscoSource seed = new DiscoSource();
-    seed.Kind = DiscoSourceKind.Domain;
+    DiscoverySource seed = new DiscoverySource();
+    seed.Kind = DiscoverySourceKind.Domain;
     seed.Name = domain;
     request.Seeds.Add(seed);
 }
 
 request.Description = discoveryGroupDescription;
-client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
+client.CreateOrReplaceDiscoveryGroup(discoveryGroupName, request);
 ```
 
 ## Run the Discovery Group
@@ -56,14 +53,14 @@ client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
 Discovery groups created through the API's `createOrReplace` method aren't run automatically, so we need to start the run ourselves.
 
 ```C# Snippet:Sample2_DiscoveryGroups_Run
-client.RunDiscoGroup(discoveryGroupName);
-Pageable<DiscoGroup> response = client.GetDiscoGroups();
-foreach (DiscoGroup discoGroup in response)
+client.RunDiscoveryGroup(discoveryGroupName);
+Pageable<DiscoveryGroup> response = client.GetDiscoveryGroups();
+foreach (DiscoveryGroup discoGroup in response)
 {
     Console.WriteLine(discoGroup.Name);
-    Pageable<DiscoRunResult> discoRunPageResponse = client.GetRuns(discoGroup.Name);
+    Pageable<DiscoveryRunResult> discoRunPageResponse = client.GetDiscoveryGroupRuns(discoGroup.Name);
     int index = 0;
-    foreach (DiscoRunResult discoRun in discoRunPageResponse)
+    foreach (DiscoveryRunResult discoRun in discoRunPageResponse)
     {
         Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
         if (++index == 5){

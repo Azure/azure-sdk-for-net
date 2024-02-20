@@ -8,11 +8,8 @@ In this example, we'll go over how a saved filter could be used to synchronize t
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample4_SavedFilters_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
-                "<Your_Subscription_Id>",
-                "<Your_Resource_Group_Name>",
-                "<Your_Workspace_Name>",
                 new DefaultAzureCredential());
 ```
 

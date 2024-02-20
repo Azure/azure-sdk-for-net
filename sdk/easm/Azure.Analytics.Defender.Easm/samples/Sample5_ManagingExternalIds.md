@@ -7,11 +7,8 @@ External IDs can be a useful method of keeping track of assets in multiple syste
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample5_ExternalIds_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
-                "<Your_Subscription_Id>",
-                "<Your_Resource_Group_Name>",
-                "<Your_Workspace_Name>",
                 new DefaultAzureCredential());
 ```
 

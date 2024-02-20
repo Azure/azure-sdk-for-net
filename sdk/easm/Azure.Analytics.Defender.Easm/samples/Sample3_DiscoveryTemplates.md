@@ -8,11 +8,8 @@ Instead of manually importing discovery seeds for your discovery run, you can us
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample3_DiscoTemplates_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
-                "<Your_Subscription_Id>",
-                "<Your_Resource_Group_Name>",
-                "<Your_Workspace_Name>",
                 new DefaultAzureCredential());
 ```
 
@@ -22,8 +19,8 @@ The `DiscoveryTemplatesList` method can be used to find a discovery template usi
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Templates
             string partialName = "<partial_name>";
-                        var response = client.GetDiscoTemplates(partialName);
-foreach (DiscoTemplate template in response)
+                        var response = client.GetDiscoveryTemplates(partialName);
+foreach (DiscoveryTemplate template in response)
 {
     Console.WriteLine($"{template.Id}: {template.DisplayName}");
 }
@@ -36,11 +33,11 @@ To get more detail about a disco template, we can use the `DiscoveryTemplatesGet
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Template_Seeds
             string templateId = Console.ReadLine();
-                        var discoTemplateResponse = client.GetDiscoTemplate(templateId);
-DiscoTemplate discoTemplate = discoTemplateResponse.Value;
+                        var discoTemplateResponse = client.GetDiscoveryTemplate(templateId);
+DiscoveryTemplate discoTemplate = discoTemplateResponse.Value;
 Console.WriteLine($"Chosen template id: {discoTemplate.Id}");
 Console.WriteLine("The following names will be used:");
-foreach (DiscoSource seed in discoTemplate.Seeds)
+foreach (DiscoverySource seed in discoTemplate.Seeds)
 {
     Console.WriteLine($"{seed.Kind}: {seed.Name}");
 }
@@ -52,8 +49,8 @@ To start a discovery from a template, we can use `DiscoveryRun` method with a te
 
 ```C# Snippet:Sample3_DiscoTemplates_Run_Disco_Group
 string groupName = "Discovery Group from Template";
-DiscoGroupData discoGroupRequest = new DiscoGroupData();
+DiscoveryGroupData discoGroupRequest = new DiscoveryGroupData();
 discoGroupRequest.TemplateId = templateId;
-client.CreateOrReplaceDiscoGroup(groupName, discoGroupRequest);
-client.RunDiscoGroup(groupName);
+client.CreateOrReplaceDiscoveryGroup(groupName, discoGroupRequest);
+client.RunDiscoveryGroup(groupName);
 ```
