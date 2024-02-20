@@ -82,7 +82,6 @@ namespace Azure.Provisioning
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, object> createProperties) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Provisioning.Parameter> Parameters { get { throw null; } }
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
