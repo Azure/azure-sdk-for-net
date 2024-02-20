@@ -240,8 +240,8 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
   parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
-    SCM_DO_BUILD_DURING_DEPLOYMENT: 'False'
-    ENABLE_ORYX_BUILD: 'True'
+    'SCM_DO_BUILD_DURING_DEPLOYMENT': 'False'
+    'ENABLE_ORYX_BUILD': 'True'
   }
 }
 

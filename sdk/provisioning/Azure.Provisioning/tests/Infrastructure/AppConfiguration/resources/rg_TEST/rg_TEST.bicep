@@ -8,3 +8,5 @@ resource appConfigurationStore_sgecYnln3 'Microsoft.AppConfiguration/configurati
   properties: {
   }
 }
+
+output appConfigurationStore_sgecYnln3_endpoint string = appConfigurationStore_sgecYnln3.properties.endpoint

@@ -14,4 +14,4 @@ module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
   scope: resourceGroup_I6QNkoPsb
 }
 
-output appConfigurationStore_sgecYnln3_endpoint string = appConfigurationStore_sgecYnln3.properties.endpoint
+output appConfigurationStore_sgecYnln3_endpoint string = rg_TEST.outputs.appConfigurationStore_sgecYnln3_endpoint

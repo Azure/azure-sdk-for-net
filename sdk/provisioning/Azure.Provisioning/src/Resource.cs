@@ -174,7 +174,7 @@ namespace Azure.Provisioning
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
         private protected Output AddOutput(string name, object instance, string propertyName, string expression, bool isLiteral = false, bool isSecure = false)
         {
-            var result = new Output(name, $"{Name}.{expression}", Scope, isLiteral, isSecure);
+            var result = new Output(name, $"{Name}.{expression}", Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
         }

@@ -22,7 +22,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   tags: {
-    key: 'value'
+    'key': 'value'
   }
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'
@@ -243,8 +243,8 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
   parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
-    SCM_DO_BUILD_DURING_DEPLOYMENT: 'False'
-    ENABLE_ORYX_BUILD: 'True'
+    'SCM_DO_BUILD_DURING_DEPLOYMENT': 'False'
+    'ENABLE_ORYX_BUILD': 'True'
   }
 }
 

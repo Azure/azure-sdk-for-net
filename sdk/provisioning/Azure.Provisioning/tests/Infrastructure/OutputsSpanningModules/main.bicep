@@ -11,7 +11,7 @@ resource resourceGroup_AVG5HpqPz 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg1-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'TEST'
+    'azd-env-name': 'TEST'
   }
 }
 
@@ -19,7 +19,7 @@ resource resourceGroup_hu2r8JaSi 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg2-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'TEST'
+    'azd-env-name': 'TEST'
   }
 }
 
