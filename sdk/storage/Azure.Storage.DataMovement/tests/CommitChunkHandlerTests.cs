@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetPutBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueuePutBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>()))
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsAny<StorageResourceItemProperties>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetExceptionPutBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueuePutBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>()))
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<StorageResourceItemProperties>()))
                 .Throws(new RequestFailedException("Mock Request Error"));
             return mock;
         }

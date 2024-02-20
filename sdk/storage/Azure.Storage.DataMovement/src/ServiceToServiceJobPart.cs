@@ -224,12 +224,16 @@ namespace Azure.Storage.DataMovement
                 List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
                 if (_destinationResource.TransferType == DataTransferOrder.Unordered)
                 {
-                    await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
+                    await QueueStageBlockRequests(commitBlockList, length, sourceProperties).ConfigureAwait(false);
                 }
                 else // Sequential
                 {
                     // Queue the first partitioned block task
-                    await QueueStageBlockRequest(commitBlockList[0].Offset, commitBlockList[0].Length, length).ConfigureAwait(false);
+                    await QueueStageBlockRequest(
+                        commitBlockList[0].Offset,
+                        commitBlockList[0].Length,
+                        length,
+                        sourceProperties).ConfigureAwait(false);
                 }
             }
             else
@@ -366,7 +370,10 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> commitBlockList, long expectedLength)
+        private async Task QueueStageBlockRequests(
+            List<(long Offset, long Size)> commitBlockList,
+            long expectedLength,
+            StorageResourceItemProperties sourceProperties)
         {
             _queueingTasks = true;
             // Partition the stream into individual blocks
@@ -378,14 +385,22 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Queue partitioned block task
-                await QueueStageBlockRequest(block.Offset, block.Length, expectedLength).ConfigureAwait(false);
+                await QueueStageBlockRequest(
+                    block.Offset,
+                    block.Length,
+                    expectedLength,
+                    sourceProperties).ConfigureAwait(false);
             }
 
             _queueingTasks = false;
             await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
-        private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
+        private Task QueueStageBlockRequest(
+            long offset,
+            long blockSize,
+            long expectedLength,
+            StorageResourceItemProperties properties)
         {
             return QueueChunkToChannelAsync(
                 async () =>

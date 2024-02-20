@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement
         private static Task _processStageChunkEvents;
 
         #region Delegate Definitions
-        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
         public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                         _blockSize :
                                         _expectedLength - newOffset;
-                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
+                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength, _sourceProperties).ConfigureAwait(false);
                     }
                 }
                 else

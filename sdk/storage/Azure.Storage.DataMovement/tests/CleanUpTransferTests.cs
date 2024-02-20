@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
