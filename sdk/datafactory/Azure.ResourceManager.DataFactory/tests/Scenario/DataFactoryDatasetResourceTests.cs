@@ -2213,5 +2213,41 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 });
             });
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Avro_Create()
+        {
+            await DatasetCreate("avro", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new AvroDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"record\",\"name\": \"HybridDelivery.ClientLibraryJob\",\"fields\": [{\"name\": \"TIMESTAMP\",\"type\": [\"string\",\"null\"]}]}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.avro",
+                        FolderPath = "querytest"
+                    }
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Json_Create()
+        {
+            await DatasetCreate("json", CreateAzureBlobStorageLinkedService, (string linkedServiceName) =>
+            {
+                return new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                {
+                    Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"object\",\"properties\": {\"studentName\": {\"type\": \"string\"},\"age\": {\"type\": \"integer\"},\"gender\": {\"type\": \"string\"},\"studentID\": {\"type\": \"string\"},\"major\": {\"type\": \"string\"},\"grades\": {\"type\": \"object\",\"properties\": {\"math\": {\"type\": \"integer\"},\"english\": {\"type\": \"integer\"},\"programming\": {\"type\": \"integer\"}}},\"contact\": {\"type\":\"object\",\"properties\": {\"phone\": {\"type\": \"string\"},\"email\": {\"type\": \"string\"}}}}}")),
+                    DataLocation = new AzureBlobStorageLocation()
+                    {
+                        FileName = "TestQuerySchema.json",
+                        FolderPath = "querytest"
+                    }
+                });
+            });
+        }
     }
 }
