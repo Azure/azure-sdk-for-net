@@ -59,7 +59,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the parameters of the resource.
         /// </summary>
-        public IList<Parameter> Parameters { get; }
+        internal IList<Parameter> Parameters { get; }
 
         internal IConstruct? ModuleScope { get; set; }
 
@@ -155,6 +155,9 @@ namespace Azure.Provisioning
             {
                 ParameterOverrides.Add(instance, new Dictionary<string, Parameter> {  { propertyName, parameter } });
             }
+            Scope.AddParameter(parameter);
+            //TODO: We should not need this instead a parameter should have a reference to the resource it is associated with but belong to the construct only.
+            //https://github.com/Azure/azure-sdk-for-net/issues/42066
             Parameters.Add(parameter);
         }
 
