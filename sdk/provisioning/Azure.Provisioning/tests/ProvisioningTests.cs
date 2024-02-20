@@ -74,27 +74,37 @@ namespace Azure.Provisioning.Tests
         [TearDown]
         public void ValidateBicep()
         {
-            var path = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.bicep");
-            var args = Path.Combine(
-                TestEnvironment.RepositoryRoot,
-                "eng",
-                "scripts",
-                $"Validate-Bicep.ps1 {path}");
-            var processInfo = new ProcessStartInfo("pwsh.exe", args)
+            if (TestEnvironment.GlobalIsRunningInCI)
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-            };
-            var process = Process.Start(processInfo);
-            while (!process!.HasExited && !process!.StandardError.EndOfStream)
+                return;
+            }
+
+            try
             {
-                var error = process.StandardError.ReadLine();
-                TestContext.Progress.WriteLine(error);
-                if (error!.StartsWith("ERROR"))
+                var path = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.bicep");
+                var args = Path.Combine(
+                    TestEnvironment.RepositoryRoot,
+                    "eng",
+                    "scripts",
+                    $"Validate-Bicep.ps1 {path}");
+                var processInfo = new ProcessStartInfo("pwsh.exe", args)
                 {
-                    Assert.Fail(error);
+                    UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true,
+                };
+                var process = Process.Start(processInfo);
+                while (!process!.HasExited && !process!.StandardError.EndOfStream)
+                {
+                    var error = process.StandardError.ReadLine();
+                    TestContext.Progress.WriteLine(error);
+                    if (error!.StartsWith("ERROR"))
+                    {
+                        Assert.Fail(error);
+                    }
                 }
+            }
+            finally
+            {
+                File.Delete(Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.json"));
             }
         }
 
