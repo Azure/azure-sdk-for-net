@@ -160,17 +160,14 @@ namespace Azure.Provisioning
         /// <param name="name">The name of the output.</param>
         /// <param name="instance">The instance which contains the property for the output.</param>
         /// <param name="propertyName">The property name to output.</param>
+        /// <param name="expression">The expression from the lambda</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
-        private protected Output AddOutput(string name, object instance, string propertyName, bool isLiteral = false, bool isSecure = false)
+        private protected Output AddOutput(string name, object instance, string propertyName, string expression, bool isLiteral = false, bool isSecure = false)
         {
-            string? reference = GetReference(instance.GetType(), ResourceData.GetType(), propertyName, Name.ToCamelCase());
-
-            if (reference is null)
-                throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {ResourceData.GetType().Name}");
-            var result = new Output(name, reference, Scope, isLiteral, isSecure);
+            var result = new Output(name, $"{Name}.{expression}", Scope, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
         }

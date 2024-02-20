@@ -58,16 +58,15 @@ namespace Azure.Provisioning.Storage
                 {
                     continue;
                 }
-                if (char.IsDigit(c) && !char.IsLower(c))
+                if (char.IsLetter(c))
                 {
-                    stringBuilder.Append(char.ToLower(c));
+                    stringBuilder.Append(char.ToLowerInvariant(c));
                 }
                 else
                 {
                     stringBuilder.Append(c);
                 }
             }
-            stringBuilder.Append('-');
             stringBuilder.Append(Guid.NewGuid().ToString("N"));
 
             return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));

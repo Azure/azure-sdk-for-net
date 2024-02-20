@@ -37,7 +37,7 @@ namespace Azure.Provisioning.Tests
 
             WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
             var frontEndPrincipalId = frontEnd.AddOutput(
-                website => website.Identity.PrincipalId,
+                website => website.Identity.PrincipalId, //Identity.PrincipalId
                 "SERVICE_API_IDENTITY_PRINCIPAL_ID",
                 isSecure: true);
 

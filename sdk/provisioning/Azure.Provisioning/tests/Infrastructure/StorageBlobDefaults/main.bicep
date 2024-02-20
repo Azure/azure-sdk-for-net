@@ -5,13 +5,13 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'TEST'
+    'azd-env-name': 'TEST'
   }
 }
 
-resource storageAccount_SIHb28RDV 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_8fTaUIzOg 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   scope: resourceGroup_I6QNkoPsb
-  name: 'photoAcct-4f6f922c331347'
+  name: 'photoacct2af3506bedd4415'
   location: 'westus'
   sku: {
     name: 'Premium_LRS'
@@ -21,8 +21,8 @@ resource storageAccount_SIHb28RDV 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_lyt6uqODr 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_SIHb28RDV
+resource blobService_1iUqwyvnt 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_8fTaUIzOg
   name: 'default'
   properties: {
     cors: {
