@@ -6,6 +6,7 @@ using Azure.Provisioning.ResourceManager;
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using Azure.Provisioning.AppService;
@@ -165,8 +166,14 @@ namespace Azure.Provisioning.Tests
             frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
             frontEnd2.AssignParameter(data => data.Location, new Parameter(output2));
 
-            _ = new TestFrontEndWebSite(infra, parent: rg3);
+            var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());
+
+            Assert.AreEqual(3, infra.GetParameters().Count());
+            Assert.AreEqual(3, infra.GetOutputs().Count());
+
+            Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
+            Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());
         }
 
         private static string GetGitRoot()

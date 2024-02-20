@@ -28,6 +28,9 @@ resource resourceGroup_Q4i0lpa1h 'Microsoft.Resources/resourceGroups@2023-07-01'
 module rg1_TEST './resources/rg1_TEST/rg1_TEST.bicep' = {
   name: 'rg1_TEST'
   scope: resourceGroup_AVG5HpqPz
+  params: {
+    SERVICE_API_IDENTITY_PRINCIPAL_ID: rg3_TEST.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
+  }
 }
 
 module rg2_TEST './resources/rg2_TEST/rg2_TEST.bicep' = {

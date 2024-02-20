@@ -1,3 +1,7 @@
+@secure()
+@description('')
+param SERVICE_API_IDENTITY_PRINCIPAL_ID string
+
 
 resource appServicePlan_viooTTlOI 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -44,7 +48,7 @@ resource applicationSettingsResource_MAMFSSuFs 'Microsoft.Web/sites/config@2021-
 
 resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
-  location: LOCATION
+  location: webSite_dOTaZfna6.location
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'
     sku: {
