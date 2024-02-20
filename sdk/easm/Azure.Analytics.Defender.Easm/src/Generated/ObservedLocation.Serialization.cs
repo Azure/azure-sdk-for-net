@@ -100,8 +100,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<Location> value = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<ObservedLocationDetails> value = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    value = Location.DeserializeLocation(property.Value);
+                    value = ObservedLocationDetails.DeserializeObservedLocationDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sources"u8))
@@ -125,10 +125,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;

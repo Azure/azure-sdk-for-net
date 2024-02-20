@@ -118,7 +118,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<string> email = default;
             Optional<IReadOnlyList<ObservedString>> names = default;
             Optional<IReadOnlyList<ObservedString>> organizations = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -165,10 +165,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactAsset(email.Value, Optional.ToList(names), Optional.ToList(organizations), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ContactAsset(serializedAdditionalRawData, email.Value, Optional.ToList(names), Optional.ToList(organizations), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count));
         }
 
         BinaryData IPersistableModel<ContactAsset>.Write(ModelReaderWriterOptions options)
@@ -242,14 +242,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContactAsset FromResponse(Response response)
+        internal static new ContactAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeContactAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

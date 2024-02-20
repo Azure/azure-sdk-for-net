@@ -12,55 +12,23 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The IpAddressAsset. </summary>
-    public partial class IpAddressAsset
+    public partial class IpAddressAsset : InventoryAsset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
         internal IpAddressAsset()
         {
             Asns = new ChangeTrackingList<ObservedLong>();
-            Reputations = new ChangeTrackingList<Reputation>();
+            Reputations = new ChangeTrackingList<ReputationDetails>();
             WebComponents = new ChangeTrackingList<WebComponent>();
             NetRanges = new ChangeTrackingList<ObservedString>();
             Headers = new ChangeTrackingList<ObservedHeader>();
-            Attributes = new ChangeTrackingList<Attribute>();
-            Cookies = new ChangeTrackingList<Cookie>();
+            Attributes = new ChangeTrackingList<AttributeDetails>();
+            Cookies = new ChangeTrackingList<CookieDetails>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
-            Services = new ChangeTrackingList<Service>();
+            Services = new ChangeTrackingList<AssetService>();
             IpBlocks = new ChangeTrackingList<IpBlock>();
-            Sources = new ChangeTrackingList<Source>();
-            Banners = new ChangeTrackingList<Banner>();
+            Sources = new ChangeTrackingList<SourceDetails>();
+            Banners = new ChangeTrackingList<BannerDetails>();
             ScanMetadata = new ChangeTrackingList<ScanMetadata>();
             NsRecord = new ChangeTrackingList<ObservedBoolean>();
             MxRecord = new ChangeTrackingList<ObservedBoolean>();
@@ -71,6 +39,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipAddress"></param>
         /// <param name="asns"></param>
         /// <param name="reputations"></param>
@@ -96,8 +65,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpAddressAsset(string ipAddress, IReadOnlyList<ObservedLong> asns, IReadOnlyList<Reputation> reputations, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedString> netRanges, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<Cookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Service> services, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Banner> banners, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedString> hosts, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpAddressAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, string ipAddress, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ReputationDetails> reputations, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedString> netRanges, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<AttributeDetails> attributes, IReadOnlyList<CookieDetails> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<AssetService> services, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<BannerDetails> banners, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedString> hosts, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(serializedAdditionalRawData)
         {
             IpAddress = ipAddress;
             Asns = asns;
@@ -124,7 +92,6 @@ namespace Azure.Analytics.Defender.Easm
             SslServerConfig = sslServerConfig;
             Ipv4 = ipv4;
             Ipv6 = ipv6;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ip address. </summary>
@@ -132,7 +99,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the asns. </summary>
         public IReadOnlyList<ObservedLong> Asns { get; }
         /// <summary> Gets the reputations. </summary>
-        public IReadOnlyList<Reputation> Reputations { get; }
+        public IReadOnlyList<ReputationDetails> Reputations { get; }
         /// <summary> Gets the web components. </summary>
         public IReadOnlyList<WebComponent> WebComponents { get; }
         /// <summary> Gets the net ranges. </summary>
@@ -140,17 +107,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the headers. </summary>
         public IReadOnlyList<ObservedHeader> Headers { get; }
         /// <summary> Gets the attributes. </summary>
-        public IReadOnlyList<Attribute> Attributes { get; }
+        public IReadOnlyList<AttributeDetails> Attributes { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<Cookie> Cookies { get; }
+        public IReadOnlyList<CookieDetails> Cookies { get; }
         /// <summary> Gets the ssl certs. </summary>
         public IReadOnlyList<SslCertAsset> SslCerts { get; }
         /// <summary> Gets the services. </summary>
-        public IReadOnlyList<Service> Services { get; }
+        public IReadOnlyList<AssetService> Services { get; }
         /// <summary> Gets the ip blocks. </summary>
         public IReadOnlyList<IpBlock> IpBlocks { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>
@@ -158,7 +125,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the banners. </summary>
-        public IReadOnlyList<Banner> Banners { get; }
+        public IReadOnlyList<BannerDetails> Banners { get; }
         /// <summary> Gets the scan metadata. </summary>
         public IReadOnlyList<ScanMetadata> ScanMetadata { get; }
         /// <summary> Gets the ns record. </summary>

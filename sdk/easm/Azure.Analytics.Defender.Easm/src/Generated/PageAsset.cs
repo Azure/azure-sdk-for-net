@@ -12,40 +12,8 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The PageAsset. </summary>
-    public partial class PageAsset
+    public partial class PageAsset : InventoryAsset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
         internal PageAsset()
         {
@@ -65,21 +33,21 @@ namespace Azure.Analytics.Defender.Easm
             Titles = new ChangeTrackingList<ObservedString>();
             Languages = new ChangeTrackingList<ObservedString>();
             ResponseHeaders = new ChangeTrackingList<ObservedHeader>();
-            Cookies = new ChangeTrackingList<Cookie>();
+            Cookies = new ChangeTrackingList<CookieDetails>();
             WebComponents = new ChangeTrackingList<WebComponent>();
-            Attributes = new ChangeTrackingList<Attribute>();
+            Attributes = new ChangeTrackingList<AttributeDetails>();
             AssetSecurityPolicies = new ChangeTrackingList<AssetSecurityPolicy>();
             ResponseBodyMinhashSignatures = new ChangeTrackingList<ObservedIntegers>();
             FullDomMinhashSignatures = new ChangeTrackingList<ObservedIntegers>();
             ResponseBodyHashSignatures = new ChangeTrackingList<ObservedString>();
             Errors = new ChangeTrackingList<ObservedString>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
             RedirectUrls = new ChangeTrackingList<ObservedString>();
             FinalUrls = new ChangeTrackingList<ObservedString>();
             FinalResponseCodes = new ChangeTrackingList<ObservedInteger>();
             ParkedPage = new ChangeTrackingList<ObservedBoolean>();
-            ResourceUrls = new ChangeTrackingList<ResourceUrl>();
+            ResourceUrls = new ChangeTrackingList<ResourceUri>();
             Guids = new ChangeTrackingList<GuidPair>();
             FinalIpAddresses = new ChangeTrackingList<ObservedString>();
             Asns = new ChangeTrackingList<ObservedLong>();
@@ -88,7 +56,7 @@ namespace Azure.Analytics.Defender.Easm
             FinalIpBlocks = new ChangeTrackingList<IpBlock>();
             ResponseBodies = new ChangeTrackingList<ObservedString>();
             Location = new ChangeTrackingList<ObservedLocation>();
-            Services = new ChangeTrackingList<Service>();
+            Services = new ChangeTrackingList<AssetService>();
             Cnames = new ChangeTrackingList<ObservedString>();
             Cdns = new ChangeTrackingList<ObservedString>();
             SslServerConfig = new ChangeTrackingList<SslServerConfig>();
@@ -98,6 +66,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"></param>
         /// <param name="httpMethod"></param>
         /// <param name="service"></param>
@@ -159,8 +128,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PageAsset(Uri url, string httpMethod, string service, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<ObservedBoolean> successful, IReadOnlyList<ObservedInteger> httpResponseCodes, IReadOnlyList<ObservedString> httpResponseMessages, IReadOnlyList<ObservedLong> responseTimes, IReadOnlyList<ObservedBoolean> frames, IReadOnlyList<ObservedBoolean> windows, IReadOnlyList<ObservedBoolean> nonHtmlFrames, IReadOnlyList<ObservedBoolean> undirectedContent, IReadOnlyList<ObservedString> contentTypes, IReadOnlyList<ObservedLong> contentLengths, IReadOnlyList<ObservedString> windowNames, IReadOnlyList<ObservedString> charsets, IReadOnlyList<ObservedString> titles, IReadOnlyList<ObservedString> languages, IReadOnlyList<ObservedHeader> responseHeaders, IReadOnlyList<Cookie> cookies, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<Attribute> attributes, IReadOnlyList<AssetSecurityPolicy> assetSecurityPolicies, IReadOnlyList<ObservedIntegers> responseBodyMinhashSignatures, IReadOnlyList<ObservedIntegers> fullDomMinhashSignatures, IReadOnlyList<ObservedString> responseBodyHashSignatures, IReadOnlyList<ObservedString> errors, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IReadOnlyList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IReadOnlyList<ObservedString> finalUrls, IReadOnlyList<ObservedInteger> finalResponseCodes, IReadOnlyList<ObservedBoolean> parkedPage, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<GuidPair> guids, IReadOnlyList<ObservedString> finalIpAddresses, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedLong> finalAsns, IReadOnlyList<IpBlock> finalIpBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IReadOnlyList<ObservedLocation> location, IReadOnlyList<Service> services, string siteStatus, IReadOnlyList<ObservedString> cnames, IReadOnlyList<ObservedString> cdns, string host, string domain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PageAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, Uri url, string httpMethod, string service, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<ObservedBoolean> successful, IReadOnlyList<ObservedInteger> httpResponseCodes, IReadOnlyList<ObservedString> httpResponseMessages, IReadOnlyList<ObservedLong> responseTimes, IReadOnlyList<ObservedBoolean> frames, IReadOnlyList<ObservedBoolean> windows, IReadOnlyList<ObservedBoolean> nonHtmlFrames, IReadOnlyList<ObservedBoolean> undirectedContent, IReadOnlyList<ObservedString> contentTypes, IReadOnlyList<ObservedLong> contentLengths, IReadOnlyList<ObservedString> windowNames, IReadOnlyList<ObservedString> charsets, IReadOnlyList<ObservedString> titles, IReadOnlyList<ObservedString> languages, IReadOnlyList<ObservedHeader> responseHeaders, IReadOnlyList<CookieDetails> cookies, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<AttributeDetails> attributes, IReadOnlyList<AssetSecurityPolicy> assetSecurityPolicies, IReadOnlyList<ObservedIntegers> responseBodyMinhashSignatures, IReadOnlyList<ObservedIntegers> fullDomMinhashSignatures, IReadOnlyList<ObservedString> responseBodyHashSignatures, IReadOnlyList<ObservedString> errors, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IReadOnlyList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IReadOnlyList<ObservedString> finalUrls, IReadOnlyList<ObservedInteger> finalResponseCodes, IReadOnlyList<ObservedBoolean> parkedPage, IReadOnlyList<ResourceUri> resourceUrls, IReadOnlyList<GuidPair> guids, IReadOnlyList<ObservedString> finalIpAddresses, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedLong> finalAsns, IReadOnlyList<IpBlock> finalIpBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IReadOnlyList<ObservedLocation> location, IReadOnlyList<AssetService> services, string siteStatus, IReadOnlyList<ObservedString> cnames, IReadOnlyList<ObservedString> cdns, string host, string domain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6) : base(serializedAdditionalRawData)
         {
             Url = url;
             HttpMethod = httpMethod;
@@ -223,7 +191,6 @@ namespace Azure.Analytics.Defender.Easm
             GdprAssetSecurityPolicies = gdprAssetSecurityPolicies;
             Ipv4 = ipv4;
             Ipv6 = ipv6;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the url. </summary>
@@ -265,11 +232,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the response headers. </summary>
         public IReadOnlyList<ObservedHeader> ResponseHeaders { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<Cookie> Cookies { get; }
+        public IReadOnlyList<CookieDetails> Cookies { get; }
         /// <summary> Gets the web components. </summary>
         public IReadOnlyList<WebComponent> WebComponents { get; }
         /// <summary> Gets the attributes. </summary>
-        public IReadOnlyList<Attribute> Attributes { get; }
+        public IReadOnlyList<AttributeDetails> Attributes { get; }
         /// <summary> Gets the asset security policies. </summary>
         public IReadOnlyList<AssetSecurityPolicy> AssetSecurityPolicies { get; }
         /// <summary> Gets the response body minhash signatures. </summary>
@@ -283,7 +250,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the ssl certs. </summary>
         public IReadOnlyList<SslCertAsset> SslCerts { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>
@@ -305,7 +272,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the parked page. </summary>
         public IReadOnlyList<ObservedBoolean> ParkedPage { get; }
         /// <summary> Gets the resource urls. </summary>
-        public IReadOnlyList<ResourceUrl> ResourceUrls { get; }
+        public IReadOnlyList<ResourceUri> ResourceUrls { get; }
         /// <summary> Gets the guids. </summary>
         public IReadOnlyList<GuidPair> Guids { get; }
         /// <summary> Gets the final ip addresses. </summary>
@@ -329,7 +296,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the location. </summary>
         public IReadOnlyList<ObservedLocation> Location { get; }
         /// <summary> Gets the services. </summary>
-        public IReadOnlyList<Service> Services { get; }
+        public IReadOnlyList<AssetService> Services { get; }
         /// <summary> Gets the site status. </summary>
         public string SiteStatus { get; }
         /// <summary> Gets the cnames. </summary>

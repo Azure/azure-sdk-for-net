@@ -287,20 +287,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             Optional<string> ipAddress = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
-            Optional<IReadOnlyList<Reputation>> reputations = default;
+            Optional<IReadOnlyList<ReputationDetails>> reputations = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<ObservedString>> netRanges = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<Attribute>> attributes = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
+            Optional<IReadOnlyList<CookieDetails>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<Service>> services = default;
+            Optional<IReadOnlyList<AssetService>> services = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<Banner>> banners = default;
+            Optional<IReadOnlyList<BannerDetails>> banners = default;
             Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
             Optional<IReadOnlyList<ObservedBoolean>> nsRecord = default;
             Optional<IReadOnlyList<ObservedBoolean>> mxRecord = default;
@@ -339,10 +339,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Reputation> array = new List<Reputation>();
+                    List<ReputationDetails> array = new List<ReputationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Reputation.DeserializeReputation(item));
+                        array.Add(ReputationDetails.DeserializeReputationDetails(item));
                     }
                     reputations = array;
                     continue;
@@ -395,10 +395,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Attribute> array = new List<Attribute>();
+                    List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Attribute.DeserializeAttribute(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
                     }
                     attributes = array;
                     continue;
@@ -409,10 +409,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item));
                     }
                     cookies = array;
                     continue;
@@ -437,10 +437,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Service> array = new List<Service>();
+                    List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Service.DeserializeService(item));
+                        array.Add(AssetService.DeserializeAssetService(item));
                     }
                     services = array;
                     continue;
@@ -465,10 +465,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -506,10 +506,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Banner> array = new List<Banner>();
+                    List<BannerDetails> array = new List<BannerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Banner.DeserializeBanner(item));
+                        array.Add(BannerDetails.DeserializeBannerDetails(item));
                     }
                     banners = array;
                     continue;
@@ -636,7 +636,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IpAddressAsset(ipAddress.Value, Optional.ToList(asns), Optional.ToList(reputations), Optional.ToList(webComponents), Optional.ToList(netRanges), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(services), Optional.ToList(ipBlocks), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(banners), Optional.ToList(scanMetadata), Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(location), Optional.ToList(hosts), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6), serializedAdditionalRawData);
+            return new IpAddressAsset(serializedAdditionalRawData, ipAddress.Value, Optional.ToList(asns), Optional.ToList(reputations), Optional.ToList(webComponents), Optional.ToList(netRanges), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(services), Optional.ToList(ipBlocks), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(banners), Optional.ToList(scanMetadata), Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(location), Optional.ToList(hosts), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6));
         }
 
         BinaryData IPersistableModel<IpAddressAsset>.Write(ModelReaderWriterOptions options)
@@ -672,14 +672,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IpAddressAsset FromResponse(Response response)
+        internal static new IpAddressAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeIpAddressAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

@@ -619,16 +619,16 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> titles = default;
             Optional<IReadOnlyList<ObservedString>> languages = default;
             Optional<IReadOnlyList<ObservedHeader>> responseHeaders = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<CookieDetails>> cookies = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
-            Optional<IReadOnlyList<Attribute>> attributes = default;
+            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
             Optional<IReadOnlyList<AssetSecurityPolicy>> assetSecurityPolicies = default;
             Optional<IReadOnlyList<ObservedIntegers>> responseBodyMinhashSignatures = default;
             Optional<IReadOnlyList<ObservedIntegers>> fullDomMinhashSignatures = default;
             Optional<IReadOnlyList<ObservedString>> responseBodyHashSignatures = default;
             Optional<IReadOnlyList<ObservedString>> errors = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -639,7 +639,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> finalUrls = default;
             Optional<IReadOnlyList<ObservedInteger>> finalResponseCodes = default;
             Optional<IReadOnlyList<ObservedBoolean>> parkedPage = default;
-            Optional<IReadOnlyList<ResourceUrl>> resourceUrls = default;
+            Optional<IReadOnlyList<ResourceUri>> resourceUrls = default;
             Optional<IReadOnlyList<GuidPair>> guids = default;
             Optional<IReadOnlyList<ObservedString>> finalIpAddresses = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
@@ -651,7 +651,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<ObservedBoolean> rootUrl = default;
             Optional<bool> isRootUrl = default;
             Optional<IReadOnlyList<ObservedLocation>> location = default;
-            Optional<IReadOnlyList<Service>> services = default;
+            Optional<IReadOnlyList<AssetService>> services = default;
             Optional<string> siteStatus = default;
             Optional<IReadOnlyList<ObservedString>> cnames = default;
             Optional<IReadOnlyList<ObservedString>> cdns = default;
@@ -914,10 +914,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item));
                     }
                     cookies = array;
                     continue;
@@ -942,10 +942,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Attribute> array = new List<Attribute>();
+                    List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Attribute.DeserializeAttribute(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
                     }
                     attributes = array;
                     continue;
@@ -1040,10 +1040,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -1160,10 +1160,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ResourceUrl> array = new List<ResourceUrl>();
+                    List<ResourceUri> array = new List<ResourceUri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUrl.DeserializeResourceUrl(item));
+                        array.Add(ResourceUri.DeserializeResourceUri(item));
                     }
                     resourceUrls = array;
                     continue;
@@ -1313,10 +1313,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Service> array = new List<Service>();
+                    List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Easm.Service.DeserializeService(item));
+                        array.Add(AssetService.DeserializeAssetService(item));
                     }
                     services = array;
                     continue;
@@ -1426,7 +1426,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PageAsset(url.Value, httpMethod.Value, service.Value, Optional.ToList(ipAddresses), Optional.ToList(successful), Optional.ToList(httpResponseCodes), Optional.ToList(httpResponseMessages), Optional.ToList(responseTimes), Optional.ToList(frames), Optional.ToList(windows), Optional.ToList(nonHtmlFrames), Optional.ToList(undirectedContent), Optional.ToList(contentTypes), Optional.ToList(contentLengths), Optional.ToList(windowNames), Optional.ToList(charsets), Optional.ToList(titles), Optional.ToList(languages), Optional.ToList(responseHeaders), Optional.ToList(cookies), Optional.ToList(webComponents), Optional.ToList(attributes), Optional.ToList(assetSecurityPolicies), Optional.ToList(responseBodyMinhashSignatures), Optional.ToList(fullDomMinhashSignatures), Optional.ToList(responseBodyHashSignatures), Optional.ToList(errors), Optional.ToList(sslCerts), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), cause.Value, referrer.Value, Optional.ToList(redirectUrls), Optional.ToNullable(redirectType), Optional.ToList(finalUrls), Optional.ToList(finalResponseCodes), Optional.ToList(parkedPage), Optional.ToList(resourceUrls), Optional.ToList(guids), Optional.ToList(finalIpAddresses), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(finalAsns), Optional.ToList(finalIpBlocks), Optional.ToList(responseBodies), domainAsset.Value, rootUrl.Value, Optional.ToNullable(isRootUrl), Optional.ToList(location), Optional.ToList(services), siteStatus.Value, Optional.ToList(cnames), Optional.ToList(cdns), host.Value, domain.Value, Optional.ToList(sslServerConfig), Optional.ToList(gdprAssetSecurityPolicies), Optional.ToList(ipv4), Optional.ToList(ipv6), serializedAdditionalRawData);
+            return new PageAsset(serializedAdditionalRawData, url.Value, httpMethod.Value, service.Value, Optional.ToList(ipAddresses), Optional.ToList(successful), Optional.ToList(httpResponseCodes), Optional.ToList(httpResponseMessages), Optional.ToList(responseTimes), Optional.ToList(frames), Optional.ToList(windows), Optional.ToList(nonHtmlFrames), Optional.ToList(undirectedContent), Optional.ToList(contentTypes), Optional.ToList(contentLengths), Optional.ToList(windowNames), Optional.ToList(charsets), Optional.ToList(titles), Optional.ToList(languages), Optional.ToList(responseHeaders), Optional.ToList(cookies), Optional.ToList(webComponents), Optional.ToList(attributes), Optional.ToList(assetSecurityPolicies), Optional.ToList(responseBodyMinhashSignatures), Optional.ToList(fullDomMinhashSignatures), Optional.ToList(responseBodyHashSignatures), Optional.ToList(errors), Optional.ToList(sslCerts), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), cause.Value, referrer.Value, Optional.ToList(redirectUrls), Optional.ToNullable(redirectType), Optional.ToList(finalUrls), Optional.ToList(finalResponseCodes), Optional.ToList(parkedPage), Optional.ToList(resourceUrls), Optional.ToList(guids), Optional.ToList(finalIpAddresses), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(finalAsns), Optional.ToList(finalIpBlocks), Optional.ToList(responseBodies), domainAsset.Value, rootUrl.Value, Optional.ToNullable(isRootUrl), Optional.ToList(location), Optional.ToList(services), siteStatus.Value, Optional.ToList(cnames), Optional.ToList(cdns), host.Value, domain.Value, Optional.ToList(sslServerConfig), Optional.ToList(gdprAssetSecurityPolicies), Optional.ToList(ipv4), Optional.ToList(ipv6));
         }
 
         BinaryData IPersistableModel<PageAsset>.Write(ModelReaderWriterOptions options)
@@ -1462,14 +1462,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PageAsset FromResponse(Response response)
+        internal static new PageAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializePageAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

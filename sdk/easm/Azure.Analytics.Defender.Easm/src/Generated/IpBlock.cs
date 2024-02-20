@@ -49,20 +49,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
         internal IpBlock()
         {
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
-        /// <param name="ipBlockProperty"></param>
+        /// <param name="ipBlockName"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpBlock(string ipBlockProperty, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpBlock(string ipBlockName, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IpBlockProperty = ipBlockProperty;
+            IpBlockName = ipBlockName;
             Sources = sources;
             FirstSeen = firstSeen;
             LastSeen = lastSeen;
@@ -71,10 +71,10 @@ namespace Azure.Analytics.Defender.Easm
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the ip block property. </summary>
-        public string IpBlockProperty { get; }
+        /// <summary> Gets the ip block name. </summary>
+        public string IpBlockName { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

@@ -157,11 +157,11 @@ namespace Azure.Analytics.Defender.Easm
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<Cve>> cve = default;
+            Optional<IReadOnlyList<CveDetails>> cve = default;
             Optional<long> endOfLife = default;
             Optional<bool> recent = default;
-            Optional<IReadOnlyList<Port>> ports = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<PortDetails>> ports = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<string> service = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,10 +229,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cve> array = new List<Cve>();
+                    List<CveDetails> array = new List<CveDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Easm.Cve.DeserializeCve(item));
+                        array.Add(CveDetails.DeserializeCveDetails(item));
                     }
                     cve = array;
                     continue;
@@ -261,10 +261,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Port> array = new List<Port>();
+                    List<PortDetails> array = new List<PortDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Port.DeserializePort(item));
+                        array.Add(PortDetails.DeserializePortDetails(item));
                     }
                     ports = array;
                     continue;
@@ -275,10 +275,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;

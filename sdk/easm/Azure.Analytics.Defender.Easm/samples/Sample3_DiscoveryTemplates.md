@@ -1,6 +1,7 @@
 # Create Discovery Groups using Templates
 
-This sample shows you how to create discovery groups using templates provided by the client.
+Instead of manually importing discovery seeds for your discovery run, you can use discovery templates. Discovery templates consist of pre-defined discovery seeds. The following example demonstrates how to search for a discovery template and use it to create a discovery group.
+
 
 ## Create an EASM Client
 

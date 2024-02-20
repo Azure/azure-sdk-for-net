@@ -325,7 +325,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<string> serialNumber = default;
             Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
             Optional<IReadOnlyList<string>> issuerAlternativeNames = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -466,10 +466,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -720,7 +720,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SslCertAsset(sha1.Value, Optional.ToList(subjectCommonNames), Optional.ToList(organizations), Optional.ToList(organizationalUnits), Optional.ToList(issuerCommonNames), sigAlgName.Value, Optional.ToNullable(invalidAfter), serialNumber.Value, Optional.ToList(subjectAlternativeNames), Optional.ToList(issuerAlternativeNames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(invalidBefore), Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(subjectLocality), Optional.ToList(subjectState), Optional.ToList(subjectCountry), Optional.ToList(issuerLocality), Optional.ToList(issuerState), Optional.ToList(issuerCountry), Optional.ToList(subjectOrganizations), Optional.ToList(subjectOrganizationalUnits), Optional.ToList(issuerOrganizations), Optional.ToList(issuerOrganizationalUnits), Optional.ToNullable(version), Optional.ToNullable(certificateAuthority), Optional.ToNullable(selfSigned), sigAlgOid.Value, Optional.ToNullable(recent), Optional.ToNullable(validationType), serializedAdditionalRawData);
+            return new SslCertAsset(serializedAdditionalRawData, sha1.Value, Optional.ToList(subjectCommonNames), Optional.ToList(organizations), Optional.ToList(organizationalUnits), Optional.ToList(issuerCommonNames), sigAlgName.Value, Optional.ToNullable(invalidAfter), serialNumber.Value, Optional.ToList(subjectAlternativeNames), Optional.ToList(issuerAlternativeNames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(invalidBefore), Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(subjectLocality), Optional.ToList(subjectState), Optional.ToList(subjectCountry), Optional.ToList(issuerLocality), Optional.ToList(issuerState), Optional.ToList(issuerCountry), Optional.ToList(subjectOrganizations), Optional.ToList(subjectOrganizationalUnits), Optional.ToList(issuerOrganizations), Optional.ToList(issuerOrganizationalUnits), Optional.ToNullable(version), Optional.ToNullable(certificateAuthority), Optional.ToNullable(selfSigned), sigAlgOid.Value, Optional.ToNullable(recent), Optional.ToNullable(validationType));
         }
 
         BinaryData IPersistableModel<SslCertAsset>.Write(ModelReaderWriterOptions options)
@@ -756,14 +756,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SslCertAsset FromResponse(Response response)
+        internal static new SslCertAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSslCertAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="ObservedBoolean"/>. </summary>
         internal ObservedBoolean()
         {
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObservedBoolean"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        internal ObservedBoolean(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? value, IReadOnlyList<Source> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
+        internal ObservedBoolean(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? value, IReadOnlyList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
         {
             Value = value;
             Sources = sources;
@@ -37,6 +37,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the value. </summary>
         public bool? Value { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
     }
 }

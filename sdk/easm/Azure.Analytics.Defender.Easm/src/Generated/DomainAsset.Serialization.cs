@@ -363,7 +363,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<SoaRecord>> soaRecords = default;
             Optional<DateTimeOffset> detailedFromWhoisAt = default;
             Optional<IReadOnlyList<ObservedString>> registrarNames = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -619,10 +619,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;

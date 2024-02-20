@@ -365,19 +365,19 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> ipAddresses = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<Attribute>> attributes = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
+            Optional<IReadOnlyList<CookieDetails>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
             Optional<IReadOnlyList<ObservedString>> parentHosts = default;
             Optional<IReadOnlyList<ObservedString>> childHosts = default;
             Optional<HostCore> hostCore = default;
-            Optional<IReadOnlyList<Service>> services = default;
+            Optional<IReadOnlyList<AssetService>> services = default;
             Optional<IReadOnlyList<ObservedString>> cnames = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<ResourceUrl>> resourceUrls = default;
+            Optional<IReadOnlyList<ResourceUri>> resourceUrls = default;
             Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
@@ -390,7 +390,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedBoolean>> nxdomain = default;
             Optional<IReadOnlyList<SslServerConfig>> sslServerConfig = default;
             Optional<IReadOnlyList<ObservedBoolean>> isWildcard = default;
-            Optional<IReadOnlyList<Banner>> banners = default;
+            Optional<IReadOnlyList<BannerDetails>> banners = default;
             Optional<IReadOnlyList<ObservedBoolean>> ipv4 = default;
             Optional<IReadOnlyList<ObservedBoolean>> ipv6 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -455,10 +455,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Attribute> array = new List<Attribute>();
+                    List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Attribute.DeserializeAttribute(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
                     }
                     attributes = array;
                     continue;
@@ -469,10 +469,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item));
                     }
                     cookies = array;
                     continue;
@@ -534,10 +534,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Service> array = new List<Service>();
+                    List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Service.DeserializeService(item));
+                        array.Add(AssetService.DeserializeAssetService(item));
                     }
                     services = array;
                     continue;
@@ -562,10 +562,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -603,10 +603,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ResourceUrl> array = new List<ResourceUrl>();
+                    List<ResourceUri> array = new List<ResourceUri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUrl.DeserializeResourceUrl(item));
+                        array.Add(ResourceUri.DeserializeResourceUri(item));
                     }
                     resourceUrls = array;
                     continue;
@@ -780,10 +780,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Banner> array = new List<Banner>();
+                    List<BannerDetails> array = new List<BannerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Banner.DeserializeBanner(item));
+                        array.Add(BannerDetails.DeserializeBannerDetails(item));
                     }
                     banners = array;
                     continue;
@@ -822,7 +822,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostAsset(host.Value, domain.Value, Optional.ToList(ipAddresses), Optional.ToList(webComponents), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(parentHosts), Optional.ToList(childHosts), hostCore.Value, Optional.ToList(services), Optional.ToList(cnames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(resourceUrls), Optional.ToList(scanMetadata), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(responseBodies), domainAsset.Value, Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(webserver), Optional.ToList(location), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToList(isWildcard), Optional.ToList(banners), Optional.ToList(ipv4), Optional.ToList(ipv6), serializedAdditionalRawData);
+            return new HostAsset(serializedAdditionalRawData, host.Value, domain.Value, Optional.ToList(ipAddresses), Optional.ToList(webComponents), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(parentHosts), Optional.ToList(childHosts), hostCore.Value, Optional.ToList(services), Optional.ToList(cnames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(resourceUrls), Optional.ToList(scanMetadata), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(responseBodies), domainAsset.Value, Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(webserver), Optional.ToList(location), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToList(isWildcard), Optional.ToList(banners), Optional.ToList(ipv4), Optional.ToList(ipv6));
         }
 
         BinaryData IPersistableModel<HostAsset>.Write(ModelReaderWriterOptions options)
@@ -858,14 +858,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HostAsset FromResponse(Response response)
+        internal static new HostAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeHostAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

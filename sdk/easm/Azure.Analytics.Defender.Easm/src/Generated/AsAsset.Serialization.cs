@@ -296,7 +296,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> orgIds = default;
             Optional<IReadOnlyList<ObservedString>> countries = default;
             Optional<IReadOnlyList<ObservedString>> registries = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -404,10 +404,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -650,7 +650,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsAsset(Optional.ToNullable(asn), Optional.ToList(asNames), Optional.ToList(orgNames), Optional.ToList(orgIds), Optional.ToList(countries), Optional.ToList(registries), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(registrantContacts), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarNames), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(detailedFromWhoisAt), serializedAdditionalRawData);
+            return new AsAsset(serializedAdditionalRawData, Optional.ToNullable(asn), Optional.ToList(asNames), Optional.ToList(orgNames), Optional.ToList(orgIds), Optional.ToList(countries), Optional.ToList(registries), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(registrantContacts), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarNames), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(detailedFromWhoisAt));
         }
 
         BinaryData IPersistableModel<AsAsset>.Write(ModelReaderWriterOptions options)
@@ -686,14 +686,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AsAsset FromResponse(Response response)
+        internal static new AsAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAsAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

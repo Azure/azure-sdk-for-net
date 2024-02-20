@@ -343,9 +343,9 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> netRanges = default;
             Optional<string> startIp = default;
             Optional<string> endIp = default;
-            Optional<IReadOnlyList<Reputation>> reputations = default;
+            Optional<IReadOnlyList<ReputationDetails>> reputations = default;
             Optional<DateTimeOffset> detailedFromWhoisAt = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -526,10 +526,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Reputation> array = new List<Reputation>();
+                    List<ReputationDetails> array = new List<ReputationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Reputation.DeserializeReputation(item));
+                        array.Add(ReputationDetails.DeserializeReputationDetails(item));
                     }
                     reputations = array;
                     continue;
@@ -549,10 +549,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -748,7 +748,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IpBlockAsset(ipBlock.Value, Optional.ToList(asns), Optional.ToList(bgpPrefixes), Optional.ToList(netNames), Optional.ToList(registrantContacts), Optional.ToList(registrantOrgs), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(netRanges), startIp.Value, endIp.Value, Optional.ToList(reputations), Optional.ToNullable(detailedFromWhoisAt), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(location), Optional.ToList(registrarExpiresAt), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6), serializedAdditionalRawData);
+            return new IpBlockAsset(serializedAdditionalRawData, ipBlock.Value, Optional.ToList(asns), Optional.ToList(bgpPrefixes), Optional.ToList(netNames), Optional.ToList(registrantContacts), Optional.ToList(registrantOrgs), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(netRanges), startIp.Value, endIp.Value, Optional.ToList(reputations), Optional.ToNullable(detailedFromWhoisAt), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(location), Optional.ToList(registrarExpiresAt), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6));
         }
 
         BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options)
@@ -784,14 +784,14 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IpBlockAsset FromResponse(Response response)
+        internal static new IpBlockAsset FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeIpBlockAsset(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

@@ -50,9 +50,9 @@ namespace Azure.Analytics.Defender.Easm
         internal WebComponent()
         {
             RuleId = new ChangeTrackingList<string>();
-            Cve = new ChangeTrackingList<Cve>();
-            Ports = new ChangeTrackingList<Port>();
-            Sources = new ChangeTrackingList<Source>();
+            Cve = new ChangeTrackingList<CveDetails>();
+            Ports = new ChangeTrackingList<PortDetails>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebComponent"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sources"></param>
         /// <param name="service"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Cve> cve, long? endOfLife, bool? recent, IReadOnlyList<Port> ports, IReadOnlyList<Source> sources, string service, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<CveDetails> cve, long? endOfLife, bool? recent, IReadOnlyList<PortDetails> ports, IReadOnlyList<SourceDetails> sources, string service, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -103,15 +103,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the cve. </summary>
-        public IReadOnlyList<Cve> Cve { get; }
+        public IReadOnlyList<CveDetails> Cve { get; }
         /// <summary> Gets the end of life. </summary>
         public long? EndOfLife { get; }
         /// <summary> Gets the recent. </summary>
         public bool? Recent { get; }
         /// <summary> Gets the ports. </summary>
-        public IReadOnlyList<Port> Ports { get; }
+        public IReadOnlyList<PortDetails> Ports { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the service. </summary>
         public string Service { get; }
     }

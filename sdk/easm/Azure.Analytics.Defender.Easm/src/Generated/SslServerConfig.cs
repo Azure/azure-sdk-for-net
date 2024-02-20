@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             TlsVersions = new ChangeTrackingList<string>();
             CipherSuites = new ChangeTrackingList<string>();
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SslServerConfig"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="sources"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SslServerConfig(IReadOnlyList<string> tlsVersions, IReadOnlyList<string> cipherSuites, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Source> sources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SslServerConfig(IReadOnlyList<string> tlsVersions, IReadOnlyList<string> cipherSuites, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<SourceDetails> sources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TlsVersions = tlsVersions;
             CipherSuites = cipherSuites;
@@ -84,6 +84,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
     }
 }
