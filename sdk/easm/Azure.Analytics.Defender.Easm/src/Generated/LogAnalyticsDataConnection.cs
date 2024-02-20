@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -37,10 +38,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage)
+        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> serializedAdditionalRawData, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/> for deserialization. </summary>
+        internal LogAnalyticsDataConnection()
+        {
         }
 
         /// <summary> properties. </summary>

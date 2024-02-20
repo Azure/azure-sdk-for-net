@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,278 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class AsAsset
+    public partial class AsAsset : IUtf8JsonSerializable, IJsonModel<AsAsset>
     {
-        internal static AsAsset DeserializeAsAsset(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsAsset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AsAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AsAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AsAsset)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Asn))
+            {
+                writer.WritePropertyName("asn"u8);
+                writer.WriteNumberValue(Asn.Value);
+            }
+            if (Optional.IsCollectionDefined(AsNames))
+            {
+                writer.WritePropertyName("asNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in AsNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OrgNames))
+            {
+                writer.WritePropertyName("orgNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in OrgNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OrgIds))
+            {
+                writer.WritePropertyName("orgIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in OrgIds)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Countries))
+            {
+                writer.WritePropertyName("countries"u8);
+                writer.WriteStartArray();
+                foreach (var item in Countries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Registries))
+            {
+                writer.WritePropertyName("registries"u8);
+                writer.WriteStartArray();
+                foreach (var item in Registries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsCollectionDefined(RegistrarCreatedAt))
+            {
+                writer.WritePropertyName("registrarCreatedAt"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrarCreatedAt)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RegistrarUpdatedAt))
+            {
+                writer.WritePropertyName("registrarUpdatedAt"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrarUpdatedAt)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RegistrantContacts))
+            {
+                writer.WritePropertyName("registrantContacts"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrantContacts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminContacts))
+            {
+                writer.WritePropertyName("adminContacts"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminContacts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TechnicalContacts))
+            {
+                writer.WritePropertyName("technicalContacts"u8);
+                writer.WriteStartArray();
+                foreach (var item in TechnicalContacts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RegistrarNames))
+            {
+                writer.WritePropertyName("registrarNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrarNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RegistrantNames))
+            {
+                writer.WritePropertyName("registrantNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrantNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminNames))
+            {
+                writer.WritePropertyName("adminNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TechnicalNames))
+            {
+                writer.WritePropertyName("technicalNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in TechnicalNames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminOrgs))
+            {
+                writer.WritePropertyName("adminOrgs"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminOrgs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TechnicalOrgs))
+            {
+                writer.WritePropertyName("technicalOrgs"u8);
+                writer.WriteStartArray();
+                foreach (var item in TechnicalOrgs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RegistrantPhones))
+            {
+                writer.WritePropertyName("registrantPhones"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistrantPhones)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminPhones))
+            {
+                writer.WritePropertyName("adminPhones"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminPhones)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TechnicalPhones))
+            {
+                writer.WritePropertyName("technicalPhones"u8);
+                writer.WriteStartArray();
+                foreach (var item in TechnicalPhones)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DetailedFromWhoisAt))
+            {
+                writer.WritePropertyName("detailedFromWhoisAt"u8);
+                writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AsAsset IJsonModel<AsAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AsAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AsAsset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAsAsset(document.RootElement, options);
+        }
+
+        internal static AsAsset DeserializeAsAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,7 +296,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> orgIds = default;
             Optional<IReadOnlyList<ObservedString>> countries = default;
             Optional<IReadOnlyList<ObservedString>> registries = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -46,6 +315,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> adminPhones = default;
             Optional<IReadOnlyList<ObservedString>> technicalPhones = default;
             Optional<DateTimeOffset> detailedFromWhoisAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"u8))
@@ -133,10 +404,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -373,9 +644,45 @@ namespace Azure.Analytics.Defender.Easm
                     detailedFromWhoisAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AsAsset(Optional.ToNullable(asn), Optional.ToList(asNames), Optional.ToList(orgNames), Optional.ToList(orgIds), Optional.ToList(countries), Optional.ToList(registries), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(registrantContacts), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarNames), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(detailedFromWhoisAt));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AsAsset(Optional.ToNullable(asn), Optional.ToList(asNames), Optional.ToList(orgNames), Optional.ToList(orgIds), Optional.ToList(countries), Optional.ToList(registries), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(registrantContacts), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarNames), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(detailedFromWhoisAt), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AsAsset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AsAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AsAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AsAsset IPersistableModel<AsAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AsAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAsAsset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AsAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AsAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -383,6 +690,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAsAsset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

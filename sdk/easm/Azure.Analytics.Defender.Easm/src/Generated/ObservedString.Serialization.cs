@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,20 +14,100 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class ObservedString
+    public partial class ObservedString : IUtf8JsonSerializable, IJsonModel<ObservedString>
     {
-        internal static ObservedString DeserializeObservedString(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObservedString>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ObservedString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ObservedString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ObservedString)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(Recent))
+            {
+                writer.WritePropertyName("recent"u8);
+                writer.WriteBooleanValue(Recent.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ObservedString IJsonModel<ObservedString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ObservedString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ObservedString)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeObservedString(document.RootElement, options);
+        }
+
+        internal static ObservedString DeserializeObservedString(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> value = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
             Optional<bool> recent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -40,10 +121,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -84,16 +165,60 @@ namespace Azure.Analytics.Defender.Easm
                     recent = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ObservedString(Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), value.Value, Optional.ToList(sources));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ObservedString(Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), serializedAdditionalRawData, value.Value, Optional.ToList(sources));
         }
+
+        BinaryData IPersistableModel<ObservedString>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ObservedString>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ObservedString)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ObservedString IPersistableModel<ObservedString>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ObservedString>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeObservedString(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ObservedString)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ObservedString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ObservedString FromResponse(Response response)
+        internal static new ObservedString FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeObservedString(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -14,21 +14,53 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The HostAsset. </summary>
     public partial class HostAsset
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HostAsset"/>. </summary>
         internal HostAsset()
         {
             IpAddresses = new ChangeTrackingList<ObservedString>();
             WebComponents = new ChangeTrackingList<WebComponent>();
             Headers = new ChangeTrackingList<ObservedHeader>();
-            Attributes = new ChangeTrackingList<AttributeDetails>();
-            Cookies = new ChangeTrackingList<CookieDetails>();
+            Attributes = new ChangeTrackingList<Attribute>();
+            Cookies = new ChangeTrackingList<Cookie>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
             ParentHosts = new ChangeTrackingList<ObservedString>();
             ChildHosts = new ChangeTrackingList<ObservedString>();
-            Services = new ChangeTrackingList<AssetService>();
+            Services = new ChangeTrackingList<Service>();
             Cnames = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<SourceDetails>();
-            ResourceUrls = new ChangeTrackingList<ResourceUri>();
+            Sources = new ChangeTrackingList<Source>();
+            ResourceUrls = new ChangeTrackingList<ResourceUrl>();
             ScanMetadata = new ChangeTrackingList<ScanMetadata>();
             Asns = new ChangeTrackingList<ObservedLong>();
             IpBlocks = new ChangeTrackingList<IpBlock>();
@@ -40,7 +72,7 @@ namespace Azure.Analytics.Defender.Easm
             Nxdomain = new ChangeTrackingList<ObservedBoolean>();
             SslServerConfig = new ChangeTrackingList<SslServerConfig>();
             IsWildcard = new ChangeTrackingList<ObservedBoolean>();
-            Banners = new ChangeTrackingList<BannerDetails>();
+            Banners = new ChangeTrackingList<Banner>();
             Ipv4 = new ChangeTrackingList<ObservedBoolean>();
             Ipv6 = new ChangeTrackingList<ObservedBoolean>();
         }
@@ -79,7 +111,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="banners"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal HostAsset(string host, string domain, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<AttributeDetails> attributes, IReadOnlyList<CookieDetails> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<ObservedString> parentHosts, IReadOnlyList<ObservedString> childHosts, HostCore hostCore, IReadOnlyList<AssetService> services, IReadOnlyList<ObservedString> cnames, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ResourceUri> resourceUrls, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedBoolean> webserver, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<ObservedBoolean> isWildcard, IReadOnlyList<BannerDetails> banners, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostAsset(string host, string domain, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<Cookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<ObservedString> parentHosts, IReadOnlyList<ObservedString> childHosts, HostCore hostCore, IReadOnlyList<Service> services, IReadOnlyList<ObservedString> cnames, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedBoolean> webserver, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<ObservedBoolean> isWildcard, IReadOnlyList<Banner> banners, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Host = host;
             Domain = domain;
@@ -114,6 +147,7 @@ namespace Azure.Analytics.Defender.Easm
             Banners = banners;
             Ipv4 = ipv4;
             Ipv6 = ipv6;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the host. </summary>
@@ -127,9 +161,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the headers. </summary>
         public IReadOnlyList<ObservedHeader> Headers { get; }
         /// <summary> Gets the attributes. </summary>
-        public IReadOnlyList<AttributeDetails> Attributes { get; }
+        public IReadOnlyList<Attribute> Attributes { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<CookieDetails> Cookies { get; }
+        public IReadOnlyList<Cookie> Cookies { get; }
         /// <summary> Gets the ssl certs. </summary>
         public IReadOnlyList<SslCertAsset> SslCerts { get; }
         /// <summary> Gets the parent hosts. </summary>
@@ -139,11 +173,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the host core. </summary>
         public HostCore HostCore { get; }
         /// <summary> Gets the services. </summary>
-        public IReadOnlyList<AssetService> Services { get; }
+        public IReadOnlyList<Service> Services { get; }
         /// <summary> Gets the cnames. </summary>
         public IReadOnlyList<ObservedString> Cnames { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>
@@ -151,7 +185,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the resource urls. </summary>
-        public IReadOnlyList<ResourceUri> ResourceUrls { get; }
+        public IReadOnlyList<ResourceUrl> ResourceUrls { get; }
         /// <summary> Gets the scan metadata. </summary>
         public IReadOnlyList<ScanMetadata> ScanMetadata { get; }
         /// <summary> Gets the asns. </summary>
@@ -177,7 +211,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the is wildcard. </summary>
         public IReadOnlyList<ObservedBoolean> IsWildcard { get; }
         /// <summary> Gets the banners. </summary>
-        public IReadOnlyList<BannerDetails> Banners { get; }
+        public IReadOnlyList<Banner> Banners { get; }
         /// <summary> Gets the ipv 4. </summary>
         public IReadOnlyList<ObservedBoolean> Ipv4 { get; }
         /// <summary> Gets the ipv 6. </summary>

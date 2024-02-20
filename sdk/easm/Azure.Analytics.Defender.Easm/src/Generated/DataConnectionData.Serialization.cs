@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DataConnectionData : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDataConnectionData))]
+    public partial class DataConnectionData : IUtf8JsonSerializable, IJsonModel<DataConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -37,7 +49,92 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        DataConnectionData IJsonModel<DataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataConnectionData(document.RootElement, options);
+        }
+
+        internal static DataConnectionData DeserializeDataConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "logAnalytics": return LogAnalyticsDataConnectionData.DeserializeLogAnalyticsDataConnectionData(element);
+                    case "azureDataExplorer": return AzureDataExplorerDataConnectionData.DeserializeAzureDataExplorerDataConnectionData(element);
+                }
+            }
+            return UnknownDataConnectionData.DeserializeUnknownDataConnectionData(element);
+        }
+
+        BinaryData IPersistableModel<DataConnectionData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataConnectionData IPersistableModel<DataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataConnectionData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataConnectionData(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,348 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class HostAsset
+    public partial class HostAsset : IUtf8JsonSerializable, IJsonModel<HostAsset>
     {
-        internal static HostAsset DeserializeHostAsset(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostAsset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HostAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostAsset)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Host))
+            {
+                writer.WritePropertyName("host"u8);
+                writer.WriteStringValue(Host);
+            }
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("domain"u8);
+                writer.WriteStringValue(Domain);
+            }
+            if (Optional.IsCollectionDefined(IpAddresses))
+            {
+                writer.WritePropertyName("ipAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpAddresses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(WebComponents))
+            {
+                writer.WritePropertyName("webComponents"u8);
+                writer.WriteStartArray();
+                foreach (var item in WebComponents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Headers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Attributes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Cookies))
+            {
+                writer.WritePropertyName("cookies"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cookies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SslCerts))
+            {
+                writer.WritePropertyName("sslCerts"u8);
+                writer.WriteStartArray();
+                foreach (var item in SslCerts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ParentHosts))
+            {
+                writer.WritePropertyName("parentHosts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ParentHosts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ChildHosts))
+            {
+                writer.WritePropertyName("childHosts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildHosts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HostCore))
+            {
+                writer.WritePropertyName("hostCore"u8);
+                writer.WriteObjectValue(HostCore);
+            }
+            if (Optional.IsCollectionDefined(Services))
+            {
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartArray();
+                foreach (var item in Services)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Cnames))
+            {
+                writer.WritePropertyName("cnames"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cnames)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsCollectionDefined(ResourceUrls))
+            {
+                writer.WritePropertyName("resourceUrls"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceUrls)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ScanMetadata))
+            {
+                writer.WritePropertyName("scanMetadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScanMetadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Asns))
+            {
+                writer.WritePropertyName("asns"u8);
+                writer.WriteStartArray();
+                foreach (var item in Asns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IpBlocks))
+            {
+                writer.WritePropertyName("ipBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpBlocks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ResponseBodies))
+            {
+                writer.WritePropertyName("responseBodies"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResponseBodies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DomainAsset))
+            {
+                writer.WritePropertyName("domainAsset"u8);
+                writer.WriteObjectValue(DomainAsset);
+            }
+            if (Optional.IsCollectionDefined(NsRecord))
+            {
+                writer.WritePropertyName("nsRecord"u8);
+                writer.WriteStartArray();
+                foreach (var item in NsRecord)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MxRecord))
+            {
+                writer.WritePropertyName("mxRecord"u8);
+                writer.WriteStartArray();
+                foreach (var item in MxRecord)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Webserver))
+            {
+                writer.WritePropertyName("webserver"u8);
+                writer.WriteStartArray();
+                foreach (var item in Webserver)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStartArray();
+                foreach (var item in Location)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Nxdomain))
+            {
+                writer.WritePropertyName("nxdomain"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nxdomain)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SslServerConfig))
+            {
+                writer.WritePropertyName("sslServerConfig"u8);
+                writer.WriteStartArray();
+                foreach (var item in SslServerConfig)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IsWildcard))
+            {
+                writer.WritePropertyName("isWildcard"u8);
+                writer.WriteStartArray();
+                foreach (var item in IsWildcard)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Banners))
+            {
+                writer.WritePropertyName("banners"u8);
+                writer.WriteStartArray();
+                foreach (var item in Banners)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Ipv4))
+            {
+                writer.WritePropertyName("ipv4"u8);
+                writer.WriteStartArray();
+                foreach (var item in Ipv4)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Ipv6))
+            {
+                writer.WritePropertyName("ipv6"u8);
+                writer.WriteStartArray();
+                foreach (var item in Ipv6)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HostAsset IJsonModel<HostAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostAsset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostAsset(document.RootElement, options);
+        }
+
+        internal static HostAsset DeserializeHostAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,19 +365,19 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> ipAddresses = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
-            Optional<IReadOnlyList<CookieDetails>> cookies = default;
+            Optional<IReadOnlyList<Attribute>> attributes = default;
+            Optional<IReadOnlyList<Cookie>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
             Optional<IReadOnlyList<ObservedString>> parentHosts = default;
             Optional<IReadOnlyList<ObservedString>> childHosts = default;
             Optional<HostCore> hostCore = default;
-            Optional<IReadOnlyList<AssetService>> services = default;
+            Optional<IReadOnlyList<Service>> services = default;
             Optional<IReadOnlyList<ObservedString>> cnames = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<ResourceUri>> resourceUrls = default;
+            Optional<IReadOnlyList<ResourceUrl>> resourceUrls = default;
             Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
@@ -51,9 +390,11 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedBoolean>> nxdomain = default;
             Optional<IReadOnlyList<SslServerConfig>> sslServerConfig = default;
             Optional<IReadOnlyList<ObservedBoolean>> isWildcard = default;
-            Optional<IReadOnlyList<BannerDetails>> banners = default;
+            Optional<IReadOnlyList<Banner>> banners = default;
             Optional<IReadOnlyList<ObservedBoolean>> ipv4 = default;
             Optional<IReadOnlyList<ObservedBoolean>> ipv6 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -114,10 +455,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<AttributeDetails> array = new List<AttributeDetails>();
+                    List<Attribute> array = new List<Attribute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
+                        array.Add(Attribute.DeserializeAttribute(item));
                     }
                     attributes = array;
                     continue;
@@ -128,10 +469,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<CookieDetails> array = new List<CookieDetails>();
+                    List<Cookie> array = new List<Cookie>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CookieDetails.DeserializeCookieDetails(item));
+                        array.Add(Cookie.DeserializeCookie(item));
                     }
                     cookies = array;
                     continue;
@@ -193,10 +534,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<AssetService> array = new List<AssetService>();
+                    List<Service> array = new List<Service>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetService.DeserializeAssetService(item));
+                        array.Add(Service.DeserializeService(item));
                     }
                     services = array;
                     continue;
@@ -221,10 +562,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -262,10 +603,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ResourceUri> array = new List<ResourceUri>();
+                    List<ResourceUrl> array = new List<ResourceUrl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUri.DeserializeResourceUri(item));
+                        array.Add(ResourceUrl.DeserializeResourceUrl(item));
                     }
                     resourceUrls = array;
                     continue;
@@ -439,10 +780,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<BannerDetails> array = new List<BannerDetails>();
+                    List<Banner> array = new List<Banner>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BannerDetails.DeserializeBannerDetails(item));
+                        array.Add(Banner.DeserializeBanner(item));
                     }
                     banners = array;
                     continue;
@@ -475,9 +816,45 @@ namespace Azure.Analytics.Defender.Easm
                     ipv6 = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HostAsset(host.Value, domain.Value, Optional.ToList(ipAddresses), Optional.ToList(webComponents), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(parentHosts), Optional.ToList(childHosts), hostCore.Value, Optional.ToList(services), Optional.ToList(cnames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(resourceUrls), Optional.ToList(scanMetadata), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(responseBodies), domainAsset.Value, Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(webserver), Optional.ToList(location), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToList(isWildcard), Optional.ToList(banners), Optional.ToList(ipv4), Optional.ToList(ipv6));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HostAsset(host.Value, domain.Value, Optional.ToList(ipAddresses), Optional.ToList(webComponents), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(parentHosts), Optional.ToList(childHosts), hostCore.Value, Optional.ToList(services), Optional.ToList(cnames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(resourceUrls), Optional.ToList(scanMetadata), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(responseBodies), domainAsset.Value, Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(webserver), Optional.ToList(location), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToList(isWildcard), Optional.ToList(banners), Optional.ToList(ipv4), Optional.ToList(ipv6), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HostAsset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HostAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HostAsset IPersistableModel<HostAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHostAsset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HostAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -485,6 +862,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeHostAsset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

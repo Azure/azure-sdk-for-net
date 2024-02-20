@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class AssetUpdateData : IUtf8JsonSerializable
+    public partial class AssetUpdateData : IUtf8JsonSerializable, IJsonModel<AssetUpdateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetUpdateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssetUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
@@ -41,7 +53,135 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("transfers"u8);
                 writer.WriteStringValue(Transfers.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        AssetUpdateData IJsonModel<AssetUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetUpdateData(document.RootElement, options);
+        }
+
+        internal static AssetUpdateData DeserializeAssetUpdateData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AssetUpdateState> state = default;
+            Optional<string> externalId = default;
+            Optional<IDictionary<string, bool>> labels = default;
+            Optional<AssetUpdateTransfers> transfers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new AssetUpdateState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("externalId"u8))
+                {
+                    externalId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("labels"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetBoolean());
+                    }
+                    labels = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("transfers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transfers = new AssetUpdateTransfers(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssetUpdateData(Optional.ToNullable(state), externalId.Value, Optional.ToDictionary(labels), Optional.ToNullable(transfers), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AssetUpdateData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AssetUpdateData IPersistableModel<AssetUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssetUpdateData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssetUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetUpdateData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetUpdateData(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

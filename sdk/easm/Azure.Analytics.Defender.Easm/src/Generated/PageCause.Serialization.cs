@@ -5,16 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class PageCause
+    public partial class PageCause : IUtf8JsonSerializable, IJsonModel<PageCause>
     {
-        internal static PageCause DeserializePageCause(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PageCause>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PageCause>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PageCause)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Cause))
+            {
+                writer.WritePropertyName("cause"u8);
+                writer.WriteStringValue(Cause);
+            }
+            if (Optional.IsDefined(CauseElementXPath))
+            {
+                writer.WritePropertyName("causeElementXPath"u8);
+                writer.WriteStringValue(CauseElementXPath);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsDefined(PossibleMatches))
+            {
+                writer.WritePropertyName("possibleMatches"u8);
+                writer.WriteNumberValue(PossibleMatches.Value);
+            }
+            if (Optional.IsDefined(LoopDetected))
+            {
+                writer.WritePropertyName("loopDetected"u8);
+                writer.WriteBooleanValue(LoopDetected.Value);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(DomChangeIndex))
+            {
+                writer.WritePropertyName("domChangeIndex"u8);
+                writer.WriteNumberValue(DomChangeIndex.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PageCause IJsonModel<PageCause>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PageCause)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePageCause(document.RootElement, options);
+        }
+
+        internal static PageCause DeserializePageCause(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +107,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<bool> loopDetected = default;
             Optional<int> version = default;
             Optional<int> domChangeIndex = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cause"u8))
@@ -79,9 +162,45 @@ namespace Azure.Analytics.Defender.Easm
                     domChangeIndex = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PageCause(cause.Value, causeElementXPath.Value, location.Value, Optional.ToNullable(possibleMatches), Optional.ToNullable(loopDetected), Optional.ToNullable(version), Optional.ToNullable(domChangeIndex));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PageCause(cause.Value, causeElementXPath.Value, location.Value, Optional.ToNullable(possibleMatches), Optional.ToNullable(loopDetected), Optional.ToNullable(version), Optional.ToNullable(domChangeIndex), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PageCause>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PageCause)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PageCause IPersistableModel<PageCause>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PageCause>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePageCause(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PageCause)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PageCause>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -89,6 +208,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializePageCause(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

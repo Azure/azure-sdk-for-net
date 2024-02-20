@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class AzureDataExplorerDataConnectionProperties : IUtf8JsonSerializable
+    public partial class AzureDataExplorerDataConnectionProperties : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerDataConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerDataConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDataExplorerDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterName))
             {
@@ -31,11 +42,40 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerDataConnectionProperties DeserializeAzureDataExplorerDataConnectionProperties(JsonElement element)
+        AzureDataExplorerDataConnectionProperties IJsonModel<AzureDataExplorerDataConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
+        }
+
+        internal static AzureDataExplorerDataConnectionProperties DeserializeAzureDataExplorerDataConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +83,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<string> clusterName = default;
             Optional<string> region = default;
             Optional<string> databaseName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -60,20 +102,56 @@ namespace Azure.Analytics.Defender.Easm
                     databaseName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureDataExplorerDataConnectionProperties(clusterName.Value, region.Value, databaseName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureDataExplorerDataConnectionProperties(serializedAdditionalRawData, clusterName.Value, region.Value, databaseName.Value);
         }
+
+        BinaryData IPersistableModel<AzureDataExplorerDataConnectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureDataExplorerDataConnectionProperties IPersistableModel<AzureDataExplorerDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDataExplorerDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureDataExplorerDataConnectionProperties FromResponse(Response response)
+        internal static new AzureDataExplorerDataConnectionProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAzureDataExplorerDataConnectionProperties(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Defender.Easm
         internal ObservedIntegers()
         {
             Values = new ChangeTrackingList<int>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<Source>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObservedIntegers"/>. </summary>
@@ -26,9 +26,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"></param>
         /// <param name="sources"></param>
-        internal ObservedIntegers(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IReadOnlyList<int> values, IReadOnlyList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent)
+        internal ObservedIntegers(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<int> values, IReadOnlyList<Source> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
         {
             Values = values;
             Sources = sources;
@@ -37,6 +38,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the values. </summary>
         public IReadOnlyList<int> Values { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
@@ -22,9 +23,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="headerName"></param>
         /// <param name="headerValue"></param>
-        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent)
+        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;

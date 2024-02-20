@@ -14,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The DependentResource. </summary>
     public partial class DependentResource
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DependentResource"/>. </summary>
         internal DependentResource()
         {
@@ -46,7 +78,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastObservedValidation"></param>
         /// <param name="lastObservedActualSriHash"></param>
         /// <param name="lastObservedExpectedSriHash"></param>
-        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IReadOnlyList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, Uri url, bool? cached, IReadOnlyList<SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IReadOnlyList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, Uri url, bool? cached, IReadOnlyList<SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Md5 = md5;
             ResponseBodySize = responseBodySize;
@@ -72,6 +105,7 @@ namespace Azure.Analytics.Defender.Easm
             LastObservedValidation = lastObservedValidation;
             LastObservedActualSriHash = lastObservedActualSriHash;
             LastObservedExpectedSriHash = lastObservedExpectedSriHash;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the md 5. </summary>

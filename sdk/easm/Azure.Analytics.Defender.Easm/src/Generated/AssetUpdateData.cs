@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A request body used to update an asset. </summary>
     public partial class AssetUpdateData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssetUpdateData"/>. </summary>
         public AssetUpdateData()
         {
@@ -24,12 +57,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
         /// <param name="labels"> Any Labels to update the asset with. </param>
         /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
-        internal AssetUpdateData(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetUpdateData(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             ExternalId = externalId;
             Labels = labels;
             Transfers = transfers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state to update the asset to. </summary>

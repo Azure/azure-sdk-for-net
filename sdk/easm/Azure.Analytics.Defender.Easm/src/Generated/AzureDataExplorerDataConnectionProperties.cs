@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The AzureDataExplorerDataConnectionProperties. </summary>
@@ -16,10 +19,11 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionProperties"/>. </summary>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clusterName"> The azure data explorer cluster name. </param>
         /// <param name="region"> The azure data explorer region. </param>
         /// <param name="databaseName"> The azure data explorer database name. </param>
-        internal AzureDataExplorerDataConnectionProperties(string clusterName, string region, string databaseName)
+        internal AzureDataExplorerDataConnectionProperties(IDictionary<string, BinaryData> serializedAdditionalRawData, string clusterName, string region, string databaseName) : base(serializedAdditionalRawData)
         {
             ClusterName = clusterName;
             Region = region;

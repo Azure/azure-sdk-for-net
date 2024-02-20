@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,138 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class WebComponent
+    public partial class WebComponent : IUtf8JsonSerializable, IJsonModel<WebComponent>
     {
-        internal static WebComponent DeserializeWebComponent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebComponent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebComponent)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsCollectionDefined(RuleId))
+            {
+                writer.WritePropertyName("ruleId"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleId)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsCollectionDefined(Cve))
+            {
+                writer.WritePropertyName("cve"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cve)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EndOfLife))
+            {
+                writer.WritePropertyName("endOfLife"u8);
+                writer.WriteNumberValue(EndOfLife.Value);
+            }
+            if (Optional.IsDefined(Recent))
+            {
+                writer.WritePropertyName("recent"u8);
+                writer.WriteBooleanValue(Recent.Value);
+            }
+            if (Optional.IsCollectionDefined(Ports))
+            {
+                writer.WritePropertyName("ports"u8);
+                writer.WriteStartArray();
+                foreach (var item in Ports)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Service))
+            {
+                writer.WritePropertyName("service"u8);
+                writer.WriteStringValue(Service);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebComponent IJsonModel<WebComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebComponent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebComponent(document.RootElement, options);
+        }
+
+        internal static WebComponent DeserializeWebComponent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,12 +157,14 @@ namespace Azure.Analytics.Defender.Easm
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<CveDetails>> cve = default;
+            Optional<IReadOnlyList<Cve>> cve = default;
             Optional<long> endOfLife = default;
             Optional<bool> recent = default;
-            Optional<IReadOnlyList<PortDetails>> ports = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Port>> ports = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<string> service = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,10 +229,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<CveDetails> array = new List<CveDetails>();
+                    List<Cve> array = new List<Cve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveDetails.DeserializeCveDetails(item));
+                        array.Add(Easm.Cve.DeserializeCve(item));
                     }
                     cve = array;
                     continue;
@@ -130,10 +261,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<PortDetails> array = new List<PortDetails>();
+                    List<Port> array = new List<Port>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortDetails.DeserializePortDetails(item));
+                        array.Add(Port.DeserializePort(item));
                     }
                     ports = array;
                     continue;
@@ -144,10 +275,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -157,9 +288,45 @@ namespace Azure.Analytics.Defender.Easm
                     service = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebComponent(name.Value, type.Value, version.Value, Optional.ToList(ruleId), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(cve), Optional.ToNullable(endOfLife), Optional.ToNullable(recent), Optional.ToList(ports), Optional.ToList(sources), service.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebComponent(name.Value, type.Value, version.Value, Optional.ToList(ruleId), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(cve), Optional.ToNullable(endOfLife), Optional.ToNullable(recent), Optional.ToList(ports), Optional.ToList(sources), service.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebComponent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebComponent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebComponent IPersistableModel<WebComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebComponent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebComponent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -167,6 +334,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeWebComponent(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

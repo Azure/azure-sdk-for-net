@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,183 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DependentResource
+    public partial class DependentResource : IUtf8JsonSerializable, IJsonModel<DependentResource>
     {
-        internal static DependentResource DeserializeDependentResource(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DependentResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DependentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DependentResource)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Md5))
+            {
+                writer.WritePropertyName("md5"u8);
+                writer.WriteStringValue(Md5);
+            }
+            if (Optional.IsDefined(ResponseBodySize))
+            {
+                writer.WritePropertyName("responseBodySize"u8);
+                writer.WriteNumberValue(ResponseBodySize.Value);
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(FirstSeenCrawlGuid))
+            {
+                writer.WritePropertyName("firstSeenCrawlGuid"u8);
+                writer.WriteStringValue(FirstSeenCrawlGuid);
+            }
+            if (Optional.IsDefined(FirstSeenPageGuid))
+            {
+                writer.WritePropertyName("firstSeenPageGuid"u8);
+                writer.WriteStringValue(FirstSeenPageGuid);
+            }
+            if (Optional.IsDefined(FirstSeenResourceGuid))
+            {
+                writer.WritePropertyName("firstSeenResourceGuid"u8);
+                writer.WriteStringValue(FirstSeenResourceGuid);
+            }
+            if (Optional.IsDefined(LastSeenCrawlGuid))
+            {
+                writer.WritePropertyName("lastSeenCrawlGuid"u8);
+                writer.WriteStringValue(LastSeenCrawlGuid);
+            }
+            if (Optional.IsDefined(LastSeenPageGuid))
+            {
+                writer.WritePropertyName("lastSeenPageGuid"u8);
+                writer.WriteStringValue(LastSeenPageGuid);
+            }
+            if (Optional.IsDefined(LastSeenResourceGuid))
+            {
+                writer.WritePropertyName("lastSeenResourceGuid"u8);
+                writer.WriteStringValue(LastSeenResourceGuid);
+            }
+            if (Optional.IsCollectionDefined(ResponseBodyMinhash))
+            {
+                writer.WritePropertyName("responseBodyMinhash"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResponseBodyMinhash)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WritePropertyName("contentType"u8);
+                writer.WriteStringValue(ContentType);
+            }
+            if (Optional.IsDefined(Sha256))
+            {
+                writer.WritePropertyName("sha256"u8);
+                writer.WriteStringValue(Sha256);
+            }
+            if (Optional.IsDefined(Sha384))
+            {
+                writer.WritePropertyName("sha384"u8);
+                writer.WriteStringValue(Sha384);
+            }
+            if (Optional.IsDefined(Sha512))
+            {
+                writer.WritePropertyName("sha512"u8);
+                writer.WriteStringValue(Sha512);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Cached))
+            {
+                writer.WritePropertyName("cached"u8);
+                writer.WriteBooleanValue(Cached.Value);
+            }
+            if (Optional.IsCollectionDefined(SriChecks))
+            {
+                writer.WritePropertyName("sriChecks"u8);
+                writer.WriteStartArray();
+                foreach (var item in SriChecks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Host))
+            {
+                writer.WritePropertyName("host"u8);
+                writer.WriteStringValue(Host);
+            }
+            if (Optional.IsDefined(LastObservedViolation))
+            {
+                writer.WritePropertyName("lastObservedViolation"u8);
+                writer.WriteStringValue(LastObservedViolation.Value, "O");
+            }
+            if (Optional.IsDefined(LastObservedValidation))
+            {
+                writer.WritePropertyName("lastObservedValidation"u8);
+                writer.WriteStringValue(LastObservedValidation.Value, "O");
+            }
+            if (Optional.IsDefined(LastObservedActualSriHash))
+            {
+                writer.WritePropertyName("lastObservedActualSriHash"u8);
+                writer.WriteStringValue(LastObservedActualSriHash);
+            }
+            if (Optional.IsDefined(LastObservedExpectedSriHash))
+            {
+                writer.WritePropertyName("lastObservedExpectedSriHash"u8);
+                writer.WriteStringValue(LastObservedExpectedSriHash);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DependentResource IJsonModel<DependentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DependentResource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDependentResource(document.RootElement, options);
+        }
+
+        internal static DependentResource DeserializeDependentResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +219,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<DateTimeOffset> lastObservedValidation = default;
             Optional<string> lastObservedActualSriHash = default;
             Optional<string> lastObservedExpectedSriHash = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("md5"u8))
@@ -217,9 +393,45 @@ namespace Azure.Analytics.Defender.Easm
                     lastObservedExpectedSriHash = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DependentResource(md5.Value, Optional.ToNullable(responseBodySize), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), firstSeenCrawlGuid.Value, firstSeenPageGuid.Value, firstSeenResourceGuid.Value, lastSeenCrawlGuid.Value, lastSeenPageGuid.Value, lastSeenResourceGuid.Value, Optional.ToList(responseBodyMinhash), contentType.Value, sha256.Value, sha384.Value, sha512.Value, url.Value, Optional.ToNullable(cached), Optional.ToList(sriChecks), host.Value, Optional.ToNullable(lastObservedViolation), Optional.ToNullable(lastObservedValidation), lastObservedActualSriHash.Value, lastObservedExpectedSriHash.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DependentResource(md5.Value, Optional.ToNullable(responseBodySize), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), firstSeenCrawlGuid.Value, firstSeenPageGuid.Value, firstSeenResourceGuid.Value, lastSeenCrawlGuid.Value, lastSeenPageGuid.Value, lastSeenResourceGuid.Value, Optional.ToList(responseBodyMinhash), contentType.Value, sha256.Value, sha384.Value, sha512.Value, url.Value, Optional.ToNullable(cached), Optional.ToList(sriChecks), host.Value, Optional.ToNullable(lastObservedViolation), Optional.ToNullable(lastObservedValidation), lastObservedActualSriHash.Value, lastObservedExpectedSriHash.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DependentResource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DependentResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DependentResource IPersistableModel<DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDependentResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependentResource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DependentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -227,6 +439,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDependentResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

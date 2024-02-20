@@ -14,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The IpBlockAsset. </summary>
     public partial class IpBlockAsset
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
         internal IpBlockAsset()
         {
@@ -27,8 +59,8 @@ namespace Azure.Analytics.Defender.Easm
             RegistrarCreatedAt = new ChangeTrackingList<ObservedLong>();
             RegistrarUpdatedAt = new ChangeTrackingList<ObservedLong>();
             NetRanges = new ChangeTrackingList<ObservedString>();
-            Reputations = new ChangeTrackingList<ReputationDetails>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Reputations = new ChangeTrackingList<Reputation>();
+            Sources = new ChangeTrackingList<Source>();
             Location = new ChangeTrackingList<ObservedLocation>();
             RegistrarExpiresAt = new ChangeTrackingList<ObservedLong>();
             RegistrantNames = new ChangeTrackingList<ObservedString>();
@@ -73,7 +105,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpBlockAsset(string ipBlock, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ObservedString> bgpPrefixes, IReadOnlyList<ObservedString> netNames, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> netRanges, string startIp, string endIp, IReadOnlyList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IpBlockAsset(string ipBlock, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ObservedString> bgpPrefixes, IReadOnlyList<ObservedString> netNames, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> netRanges, string startIp, string endIp, IReadOnlyList<Reputation> reputations, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IpBlock = ipBlock;
             Asns = asns;
@@ -106,6 +139,7 @@ namespace Azure.Analytics.Defender.Easm
             TechnicalPhones = technicalPhones;
             Ipv4 = ipv4;
             Ipv6 = ipv6;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ip block. </summary>
@@ -135,11 +169,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the end ip. </summary>
         public string EndIp { get; }
         /// <summary> Gets the reputations. </summary>
-        public IReadOnlyList<ReputationDetails> Reputations { get; }
+        public IReadOnlyList<Reputation> Reputations { get; }
         /// <summary> Gets the detailed from whois at. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

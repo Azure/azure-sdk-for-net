@@ -14,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The DomainAsset. </summary>
     public partial class DomainAsset
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DomainAsset"/>. </summary>
         internal DomainAsset()
         {
@@ -32,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
             RegistrarExpiresAt = new ChangeTrackingList<ObservedLong>();
             SoaRecords = new ChangeTrackingList<SoaRecord>();
             RegistrarNames = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<Source>();
             ParkedDomain = new ChangeTrackingList<ObservedBoolean>();
             RegistrantNames = new ChangeTrackingList<ObservedString>();
             AdminNames = new ChangeTrackingList<ObservedString>();
@@ -76,7 +108,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        internal DomainAsset(string domain, long? whoisId, IReadOnlyList<ObservedInteger> registrarIanaIds, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<AlexaInfo> alexaInfos, IReadOnlyList<ObservedString> nameServers, IReadOnlyList<ObservedString> mailServers, IReadOnlyList<ObservedString> whoisServers, IReadOnlyList<ObservedString> domainStatuses, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<ObservedString> registrarNames, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedBoolean> parkedDomain, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainAsset(string domain, long? whoisId, IReadOnlyList<ObservedInteger> registrarIanaIds, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<AlexaInfo> alexaInfos, IReadOnlyList<ObservedString> nameServers, IReadOnlyList<ObservedString> mailServers, IReadOnlyList<ObservedString> whoisServers, IReadOnlyList<ObservedString> domainStatuses, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<SoaRecord> soaRecords, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<ObservedString> registrarNames, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedBoolean> parkedDomain, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Domain = domain;
             WhoisId = whoisId;
@@ -109,6 +142,7 @@ namespace Azure.Analytics.Defender.Easm
             RegistrantPhones = registrantPhones;
             AdminPhones = adminPhones;
             TechnicalPhones = technicalPhones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the domain. </summary>
@@ -148,7 +182,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the registrar names. </summary>
         public IReadOnlyList<ObservedString> RegistrarNames { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

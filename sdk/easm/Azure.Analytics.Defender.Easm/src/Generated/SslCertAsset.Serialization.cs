@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,10 +14,303 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class SslCertAsset
+    public partial class SslCertAsset : IUtf8JsonSerializable, IJsonModel<SslCertAsset>
     {
-        internal static SslCertAsset DeserializeSslCertAsset(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SslCertAsset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SslCertAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SslCertAsset)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sha1))
+            {
+                writer.WritePropertyName("sha1"u8);
+                writer.WriteStringValue(Sha1);
+            }
+            if (Optional.IsCollectionDefined(SubjectCommonNames))
+            {
+                writer.WritePropertyName("subjectCommonNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectCommonNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Organizations))
+            {
+                writer.WritePropertyName("organizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Organizations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OrganizationalUnits))
+            {
+                writer.WritePropertyName("organizationalUnits"u8);
+                writer.WriteStartArray();
+                foreach (var item in OrganizationalUnits)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerCommonNames))
+            {
+                writer.WritePropertyName("issuerCommonNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerCommonNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SigAlgName))
+            {
+                writer.WritePropertyName("sigAlgName"u8);
+                writer.WriteStringValue(SigAlgName);
+            }
+            if (Optional.IsDefined(InvalidAfter))
+            {
+                writer.WritePropertyName("invalidAfter"u8);
+                writer.WriteStringValue(InvalidAfter.Value, "O");
+            }
+            if (Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            {
+                writer.WritePropertyName("subjectAlternativeNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectAlternativeNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerAlternativeNames))
+            {
+                writer.WritePropertyName("issuerAlternativeNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerAlternativeNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(InvalidBefore))
+            {
+                writer.WritePropertyName("invalidBefore"u8);
+                writer.WriteStringValue(InvalidBefore.Value, "O");
+            }
+            if (Optional.IsDefined(KeySize))
+            {
+                writer.WritePropertyName("keySize"u8);
+                writer.WriteNumberValue(KeySize.Value);
+            }
+            if (Optional.IsDefined(KeyAlgorithm))
+            {
+                writer.WritePropertyName("keyAlgorithm"u8);
+                writer.WriteStringValue(KeyAlgorithm);
+            }
+            if (Optional.IsCollectionDefined(SubjectLocality))
+            {
+                writer.WritePropertyName("subjectLocality"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectLocality)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubjectState))
+            {
+                writer.WritePropertyName("subjectState"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectState)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubjectCountry))
+            {
+                writer.WritePropertyName("subjectCountry"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectCountry)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerLocality))
+            {
+                writer.WritePropertyName("issuerLocality"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerLocality)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerState))
+            {
+                writer.WritePropertyName("issuerState"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerState)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerCountry))
+            {
+                writer.WritePropertyName("issuerCountry"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerCountry)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubjectOrganizations))
+            {
+                writer.WritePropertyName("subjectOrganizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectOrganizations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubjectOrganizationalUnits))
+            {
+                writer.WritePropertyName("subjectOrganizationalUnits"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectOrganizationalUnits)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerOrganizations))
+            {
+                writer.WritePropertyName("issuerOrganizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerOrganizations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IssuerOrganizationalUnits))
+            {
+                writer.WritePropertyName("issuerOrganizationalUnits"u8);
+                writer.WriteStartArray();
+                foreach (var item in IssuerOrganizationalUnits)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(CertificateAuthority))
+            {
+                writer.WritePropertyName("certificateAuthority"u8);
+                writer.WriteBooleanValue(CertificateAuthority.Value);
+            }
+            if (Optional.IsDefined(SelfSigned))
+            {
+                writer.WritePropertyName("selfSigned"u8);
+                writer.WriteBooleanValue(SelfSigned.Value);
+            }
+            if (Optional.IsDefined(SigAlgOid))
+            {
+                writer.WritePropertyName("sigAlgOid"u8);
+                writer.WriteStringValue(SigAlgOid);
+            }
+            if (Optional.IsDefined(Recent))
+            {
+                writer.WritePropertyName("recent"u8);
+                writer.WriteBooleanValue(Recent.Value);
+            }
+            if (Optional.IsDefined(ValidationType))
+            {
+                writer.WritePropertyName("validationType"u8);
+                writer.WriteStringValue(ValidationType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SslCertAsset IJsonModel<SslCertAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SslCertAsset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSslCertAsset(document.RootElement, options);
+        }
+
+        internal static SslCertAsset DeserializeSslCertAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,7 +325,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<string> serialNumber = default;
             Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
             Optional<IReadOnlyList<string>> issuerAlternativeNames = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -54,6 +348,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<string> sigAlgOid = default;
             Optional<bool> recent = default;
             Optional<SslCertAssetValidationType> validationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sha1"u8))
@@ -170,10 +466,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -418,9 +714,45 @@ namespace Azure.Analytics.Defender.Easm
                     validationType = new SslCertAssetValidationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SslCertAsset(sha1.Value, Optional.ToList(subjectCommonNames), Optional.ToList(organizations), Optional.ToList(organizationalUnits), Optional.ToList(issuerCommonNames), sigAlgName.Value, Optional.ToNullable(invalidAfter), serialNumber.Value, Optional.ToList(subjectAlternativeNames), Optional.ToList(issuerAlternativeNames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(invalidBefore), Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(subjectLocality), Optional.ToList(subjectState), Optional.ToList(subjectCountry), Optional.ToList(issuerLocality), Optional.ToList(issuerState), Optional.ToList(issuerCountry), Optional.ToList(subjectOrganizations), Optional.ToList(subjectOrganizationalUnits), Optional.ToList(issuerOrganizations), Optional.ToList(issuerOrganizationalUnits), Optional.ToNullable(version), Optional.ToNullable(certificateAuthority), Optional.ToNullable(selfSigned), sigAlgOid.Value, Optional.ToNullable(recent), Optional.ToNullable(validationType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SslCertAsset(sha1.Value, Optional.ToList(subjectCommonNames), Optional.ToList(organizations), Optional.ToList(organizationalUnits), Optional.ToList(issuerCommonNames), sigAlgName.Value, Optional.ToNullable(invalidAfter), serialNumber.Value, Optional.ToList(subjectAlternativeNames), Optional.ToList(issuerAlternativeNames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(invalidBefore), Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(subjectLocality), Optional.ToList(subjectState), Optional.ToList(subjectCountry), Optional.ToList(issuerLocality), Optional.ToList(issuerState), Optional.ToList(issuerCountry), Optional.ToList(subjectOrganizations), Optional.ToList(subjectOrganizationalUnits), Optional.ToList(issuerOrganizations), Optional.ToList(issuerOrganizationalUnits), Optional.ToNullable(version), Optional.ToNullable(certificateAuthority), Optional.ToNullable(selfSigned), sigAlgOid.Value, Optional.ToNullable(recent), Optional.ToNullable(validationType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SslCertAsset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SslCertAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SslCertAsset IPersistableModel<SslCertAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SslCertAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSslCertAsset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SslCertAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SslCertAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -428,6 +760,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSslCertAsset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

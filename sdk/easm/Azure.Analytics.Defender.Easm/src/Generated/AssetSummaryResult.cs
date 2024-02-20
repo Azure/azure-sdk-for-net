@@ -14,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The collection of asset summaries. </summary>
     public partial class AssetSummaryResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssetSummaryResult"/>. </summary>
         internal AssetSummaryResult()
         {
@@ -31,7 +63,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"> The count of assets matching the request parameters. </param>
         /// <param name="link"> The link to the corresponding asset details. </param>
         /// <param name="children"> The corresponding child entities.  For metric categories this will contain metrics.  For filters with groupBy and segmentBy this will contain facets. </param>
-        internal AssetSummaryResult(string displayName, string description, DateTimeOffset? updatedAt, string metricCategory, string metric, string filter, string labelName, long? count, string link, IReadOnlyList<AssetSummaryResult> children)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetSummaryResult(string displayName, string description, DateTimeOffset? updatedAt, string metricCategory, string metric, string filter, string labelName, long? count, string link, IReadOnlyList<AssetSummaryResult> children, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -43,6 +76,7 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
             Link = link;
             Children = children;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the summary response.  Depending on the request time this will either be the asset filter, risk category, or risk metric. </summary>

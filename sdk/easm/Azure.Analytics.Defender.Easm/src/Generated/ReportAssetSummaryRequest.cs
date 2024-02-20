@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </summary>
     public partial class ReportAssetSummaryRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryRequest"/>. </summary>
         public ReportAssetSummaryRequest()
         {
@@ -28,7 +61,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="groupBy"> A parameter to group the assets by (first level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="labelName"> Currently unused. </param>
-        internal ReportAssetSummaryRequest(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportAssetSummaryRequest(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricCategories = metricCategories;
             Metrics = metrics;
@@ -36,6 +70,7 @@ namespace Azure.Analytics.Defender.Easm
             GroupBy = groupBy;
             SegmentBy = segmentBy;
             LabelName = labelName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Categories to retrieve risk reporting data for. </summary>

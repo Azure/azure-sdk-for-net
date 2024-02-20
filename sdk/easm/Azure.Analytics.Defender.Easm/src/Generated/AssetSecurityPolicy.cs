@@ -14,10 +14,42 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The AssetSecurityPolicy. </summary>
     public partial class AssetSecurityPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssetSecurityPolicy"/>. </summary>
         internal AssetSecurityPolicy()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<Source>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetSecurityPolicy"/>. </summary>
@@ -29,7 +61,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="sources"></param>
-        internal AssetSecurityPolicy(string policyName, bool? isAffected, string description, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IReadOnlyList<SourceDetails> sources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetSecurityPolicy(string policyName, bool? isAffected, string description, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IReadOnlyList<Source> sources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyName = policyName;
             IsAffected = isAffected;
@@ -39,6 +72,7 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
             Recent = recent;
             Sources = sources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the policy name. </summary>
@@ -56,6 +90,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the recent. </summary>
         public bool? Recent { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
     }
 }

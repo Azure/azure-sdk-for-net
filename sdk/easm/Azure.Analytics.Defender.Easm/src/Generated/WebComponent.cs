@@ -14,13 +14,45 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The WebComponent. </summary>
     public partial class WebComponent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WebComponent"/>. </summary>
         internal WebComponent()
         {
             RuleId = new ChangeTrackingList<string>();
-            Cve = new ChangeTrackingList<CveDetails>();
-            Ports = new ChangeTrackingList<PortDetails>();
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Cve = new ChangeTrackingList<Cve>();
+            Ports = new ChangeTrackingList<Port>();
+            Sources = new ChangeTrackingList<Source>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebComponent"/>. </summary>
@@ -37,7 +69,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="ports"></param>
         /// <param name="sources"></param>
         /// <param name="service"></param>
-        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<CveDetails> cve, long? endOfLife, bool? recent, IReadOnlyList<PortDetails> ports, IReadOnlyList<SourceDetails> sources, string service)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Cve> cve, long? endOfLife, bool? recent, IReadOnlyList<Port> ports, IReadOnlyList<Source> sources, string service, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -52,6 +85,7 @@ namespace Azure.Analytics.Defender.Easm
             Ports = ports;
             Sources = sources;
             Service = service;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>
@@ -69,15 +103,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the cve. </summary>
-        public IReadOnlyList<CveDetails> Cve { get; }
+        public IReadOnlyList<Cve> Cve { get; }
         /// <summary> Gets the end of life. </summary>
         public long? EndOfLife { get; }
         /// <summary> Gets the recent. </summary>
         public bool? Recent { get; }
         /// <summary> Gets the ports. </summary>
-        public IReadOnlyList<PortDetails> Ports { get; }
+        public IReadOnlyList<Port> Ports { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
         /// <summary> Gets the service. </summary>
         public string Service { get; }
     }

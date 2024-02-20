@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The Cvss3Summary. </summary>
     public partial class Cvss3Summary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Cvss3Summary"/>. </summary>
         internal Cvss3Summary()
         {
@@ -33,7 +68,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reportConfidence"></param>
         /// <param name="exploitabilityScore"></param>
         /// <param name="impactScore"></param>
-        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             VectorString = vectorString;
@@ -52,6 +88,7 @@ namespace Azure.Analytics.Defender.Easm
             ReportConfidence = reportConfidence;
             ExploitabilityScore = exploitabilityScore;
             ImpactScore = impactScore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the version. </summary>

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The HostCore. </summary>
     public partial class HostCore
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HostCore"/>. </summary>
         internal HostCore()
         {
@@ -56,7 +89,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="domainSpamReputationScore"></param>
         /// <param name="domainScamReputationScore"></param>
         /// <param name="uuid"></param>
-        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Host = host;
             Domain = domain;
@@ -96,6 +130,7 @@ namespace Azure.Analytics.Defender.Easm
             DomainSpamReputationScore = domainSpamReputationScore;
             DomainScamReputationScore = domainScamReputationScore;
             Uuid = uuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the host. </summary>

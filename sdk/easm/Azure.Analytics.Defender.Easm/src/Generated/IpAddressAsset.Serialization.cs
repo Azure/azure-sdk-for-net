@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,30 +14,293 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class IpAddressAsset
+    public partial class IpAddressAsset : IUtf8JsonSerializable, IJsonModel<IpAddressAsset>
     {
-        internal static IpAddressAsset DeserializeIpAddressAsset(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpAddressAsset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IpAddressAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IpAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IpAddress);
+            }
+            if (Optional.IsCollectionDefined(Asns))
+            {
+                writer.WritePropertyName("asns"u8);
+                writer.WriteStartArray();
+                foreach (var item in Asns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Reputations))
+            {
+                writer.WritePropertyName("reputations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Reputations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(WebComponents))
+            {
+                writer.WritePropertyName("webComponents"u8);
+                writer.WriteStartArray();
+                foreach (var item in WebComponents)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NetRanges))
+            {
+                writer.WritePropertyName("netRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetRanges)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Headers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Attributes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Cookies))
+            {
+                writer.WritePropertyName("cookies"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cookies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SslCerts))
+            {
+                writer.WritePropertyName("sslCerts"u8);
+                writer.WriteStartArray();
+                foreach (var item in SslCerts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Services))
+            {
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartArray();
+                foreach (var item in Services)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IpBlocks))
+            {
+                writer.WritePropertyName("ipBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpBlocks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstSeen))
+            {
+                writer.WritePropertyName("firstSeen"u8);
+                writer.WriteStringValue(FirstSeen.Value, "O");
+            }
+            if (Optional.IsDefined(LastSeen))
+            {
+                writer.WritePropertyName("lastSeen"u8);
+                writer.WriteStringValue(LastSeen.Value, "O");
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsCollectionDefined(Banners))
+            {
+                writer.WritePropertyName("banners"u8);
+                writer.WriteStartArray();
+                foreach (var item in Banners)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ScanMetadata))
+            {
+                writer.WritePropertyName("scanMetadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScanMetadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NsRecord))
+            {
+                writer.WritePropertyName("nsRecord"u8);
+                writer.WriteStartArray();
+                foreach (var item in NsRecord)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MxRecord))
+            {
+                writer.WritePropertyName("mxRecord"u8);
+                writer.WriteStartArray();
+                foreach (var item in MxRecord)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStartArray();
+                foreach (var item in Location)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Hosts))
+            {
+                writer.WritePropertyName("hosts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Hosts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Nxdomain))
+            {
+                writer.WritePropertyName("nxdomain"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nxdomain)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SslServerConfig))
+            {
+                writer.WritePropertyName("sslServerConfig"u8);
+                writer.WriteStartArray();
+                foreach (var item in SslServerConfig)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Ipv4))
+            {
+                writer.WritePropertyName("ipv4"u8);
+                writer.WriteBooleanValue(Ipv4.Value);
+            }
+            if (Optional.IsDefined(Ipv6))
+            {
+                writer.WritePropertyName("ipv6"u8);
+                writer.WriteBooleanValue(Ipv6.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IpAddressAsset IJsonModel<IpAddressAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIpAddressAsset(document.RootElement, options);
+        }
+
+        internal static IpAddressAsset DeserializeIpAddressAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ipAddress = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
-            Optional<IReadOnlyList<ReputationDetails>> reputations = default;
+            Optional<IReadOnlyList<Reputation>> reputations = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<ObservedString>> netRanges = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
-            Optional<IReadOnlyList<CookieDetails>> cookies = default;
+            Optional<IReadOnlyList<Attribute>> attributes = default;
+            Optional<IReadOnlyList<Cookie>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<AssetService>> services = default;
+            Optional<IReadOnlyList<Service>> services = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            Optional<IReadOnlyList<Source>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<BannerDetails>> banners = default;
+            Optional<IReadOnlyList<Banner>> banners = default;
             Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
             Optional<IReadOnlyList<ObservedBoolean>> nsRecord = default;
             Optional<IReadOnlyList<ObservedBoolean>> mxRecord = default;
@@ -46,6 +310,8 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<SslServerConfig>> sslServerConfig = default;
             Optional<bool> ipv4 = default;
             Optional<bool> ipv6 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -73,10 +339,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ReputationDetails> array = new List<ReputationDetails>();
+                    List<Reputation> array = new List<Reputation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReputationDetails.DeserializeReputationDetails(item));
+                        array.Add(Reputation.DeserializeReputation(item));
                     }
                     reputations = array;
                     continue;
@@ -129,10 +395,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<AttributeDetails> array = new List<AttributeDetails>();
+                    List<Attribute> array = new List<Attribute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
+                        array.Add(Attribute.DeserializeAttribute(item));
                     }
                     attributes = array;
                     continue;
@@ -143,10 +409,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<CookieDetails> array = new List<CookieDetails>();
+                    List<Cookie> array = new List<Cookie>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CookieDetails.DeserializeCookieDetails(item));
+                        array.Add(Cookie.DeserializeCookie(item));
                     }
                     cookies = array;
                     continue;
@@ -171,10 +437,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<AssetService> array = new List<AssetService>();
+                    List<Service> array = new List<Service>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetService.DeserializeAssetService(item));
+                        array.Add(Service.DeserializeService(item));
                     }
                     services = array;
                     continue;
@@ -199,10 +465,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<Source> array = new List<Source>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(Source.DeserializeSource(item));
                     }
                     sources = array;
                     continue;
@@ -240,10 +506,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<BannerDetails> array = new List<BannerDetails>();
+                    List<Banner> array = new List<Banner>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BannerDetails.DeserializeBannerDetails(item));
+                        array.Add(Banner.DeserializeBanner(item));
                     }
                     banners = array;
                     continue;
@@ -364,9 +630,45 @@ namespace Azure.Analytics.Defender.Easm
                     ipv6 = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IpAddressAsset(ipAddress.Value, Optional.ToList(asns), Optional.ToList(reputations), Optional.ToList(webComponents), Optional.ToList(netRanges), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(services), Optional.ToList(ipBlocks), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(banners), Optional.ToList(scanMetadata), Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(location), Optional.ToList(hosts), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IpAddressAsset(ipAddress.Value, Optional.ToList(asns), Optional.ToList(reputations), Optional.ToList(webComponents), Optional.ToList(netRanges), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(services), Optional.ToList(ipBlocks), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(banners), Optional.ToList(scanMetadata), Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(location), Optional.ToList(hosts), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IpAddressAsset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IpAddressAsset IPersistableModel<IpAddressAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIpAddressAsset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IpAddressAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -374,6 +676,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeIpAddressAsset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

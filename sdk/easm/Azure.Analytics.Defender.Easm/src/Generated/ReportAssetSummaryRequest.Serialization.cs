@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class ReportAssetSummaryRequest : IUtf8JsonSerializable
+    public partial class ReportAssetSummaryRequest : IUtf8JsonSerializable, IJsonModel<ReportAssetSummaryRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportAssetSummaryRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReportAssetSummaryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MetricCategories))
             {
@@ -60,7 +72,157 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        ReportAssetSummaryRequest IJsonModel<ReportAssetSummaryRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportAssetSummaryRequest(document.RootElement, options);
+        }
+
+        internal static ReportAssetSummaryRequest DeserializeReportAssetSummaryRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> metricCategories = default;
+            Optional<IList<string>> metrics = default;
+            Optional<IList<string>> filters = default;
+            Optional<string> groupBy = default;
+            Optional<string> segmentBy = default;
+            Optional<string> labelName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("metricCategories"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    metricCategories = array;
+                    continue;
+                }
+                if (property.NameEquals("metrics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    metrics = array;
+                    continue;
+                }
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    filters = array;
+                    continue;
+                }
+                if (property.NameEquals("groupBy"u8))
+                {
+                    groupBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("segmentBy"u8))
+                {
+                    segmentBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("labelName"u8))
+                {
+                    labelName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReportAssetSummaryRequest(Optional.ToList(metricCategories), Optional.ToList(metrics), Optional.ToList(filters), groupBy.Value, segmentBy.Value, labelName.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ReportAssetSummaryRequest>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReportAssetSummaryRequest IPersistableModel<ReportAssetSummaryRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReportAssetSummaryRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReportAssetSummaryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReportAssetSummaryRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReportAssetSummaryRequest(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="ObservedLong"/>. </summary>
         internal ObservedLong()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<Source>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObservedLong"/>. </summary>
@@ -25,9 +25,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        internal ObservedLong(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, long? value, IReadOnlyList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent)
+        internal ObservedLong(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, long? value, IReadOnlyList<Source> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
         {
             Value = value;
             Sources = sources;
@@ -36,6 +37,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the value. </summary>
         public long? Value { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
     }
 }

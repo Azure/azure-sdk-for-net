@@ -17,7 +17,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="ObservedLocation"/>. </summary>
         internal ObservedLocation()
         {
-            Sources = new ChangeTrackingList<SourceDetails>();
+            Sources = new ChangeTrackingList<Source>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObservedLocation"/>. </summary>
@@ -25,17 +25,18 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        internal ObservedLocation(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, ObservedLocationDetails value, IReadOnlyList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent)
+        internal ObservedLocation(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, Location value, IReadOnlyList<Source> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
         {
             Value = value;
             Sources = sources;
         }
 
         /// <summary> Gets the value. </summary>
-        public ObservedLocationDetails Value { get; }
+        public Location Value { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+        public IReadOnlyList<Source> Sources { get; }
     }
 }

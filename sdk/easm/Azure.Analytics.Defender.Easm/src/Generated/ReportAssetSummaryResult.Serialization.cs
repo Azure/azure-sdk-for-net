@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,15 +14,70 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class ReportAssetSummaryResult
+    public partial class ReportAssetSummaryResult : IUtf8JsonSerializable, IJsonModel<ReportAssetSummaryResult>
     {
-        internal static ReportAssetSummaryResult DeserializeReportAssetSummaryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportAssetSummaryResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReportAssetSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AssetSummaries))
+            {
+                writer.WritePropertyName("assetSummaries"u8);
+                writer.WriteStartArray();
+                foreach (var item in AssetSummaries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReportAssetSummaryResult IJsonModel<ReportAssetSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportAssetSummaryResult(document.RootElement, options);
+        }
+
+        internal static ReportAssetSummaryResult DeserializeReportAssetSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<AssetSummaryResult>> assetSummaries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetSummaries"u8))
@@ -37,9 +94,45 @@ namespace Azure.Analytics.Defender.Easm
                     assetSummaries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReportAssetSummaryResult(Optional.ToList(assetSummaries));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReportAssetSummaryResult(Optional.ToList(assetSummaries), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReportAssetSummaryResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReportAssetSummaryResult IPersistableModel<ReportAssetSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReportAssetSummaryResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReportAssetSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -47,6 +140,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeReportAssetSummaryResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
