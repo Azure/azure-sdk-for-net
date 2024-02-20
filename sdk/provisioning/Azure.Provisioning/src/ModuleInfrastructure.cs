@@ -47,15 +47,8 @@ namespace Azure.Provisioning
                 // ToList to avoid modifying the collection while iterating
                 foreach (var output in construct.GetOutputs(false).ToList())
                 {
-                    var moduleOutput = new Output(
-                        output.Name,
-                        output.Value,
-                        output.Resource.ModuleScope!,
-                        output.Resource,
-                        output.IsLiteral,
-                        output.IsSecure);
-
-                    output.Resource.ModuleScope!.AddOutput(moduleOutput);
+                    output.ModuleSource = output.Resource.ModuleScope!;
+                    output.Resource.ModuleScope!.AddOutput(output);
                 }
             }
         }

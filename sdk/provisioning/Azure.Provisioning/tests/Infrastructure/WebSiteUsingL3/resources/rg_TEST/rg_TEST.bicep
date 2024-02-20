@@ -6,6 +6,14 @@ param sqlAdminPassword string
 @description('Application user password')
 param appUserPassword string
 
+@secure()
+@description('SQL Server administrator password')
+param sqlAdminPassword string
+
+@secure()
+@description('Application user password')
+param appUserPassword string
+
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -40,7 +48,7 @@ resource keyVaultAddAccessPolicy_NWCGclP20 'Microsoft.KeyVault/vaults/accessPoli
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: webSite_W5EweSXEq.identity.principalId
+        objectId: SERVICE_API_IDENTITY_PRINCIPAL_ID
         permissions: {
           secrets: [
             'get'

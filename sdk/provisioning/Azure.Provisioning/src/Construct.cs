@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Azure.Provisioning.ResourceManager;
+using Microsoft.Extensions.Azure;
 
 namespace Azure.Provisioning
 {
@@ -193,18 +194,21 @@ namespace Azure.Provisioning
             stream.WriteLine($"  scope: {GetScopeName()}");
 
             var parametersToWrite = new HashSet<Parameter>();
-            GetAllParametersRecursive(this, parametersToWrite, false);
-            if (parametersToWrite.Count() > 0)
+            var outputs = new HashSet<Output>(GetOutputs());
+            foreach (var p in GetParameters(false))
+            {
+                if (!ShouldExposeParameter(p, outputs))
+                {
+                    continue;
+                }
+                parametersToWrite.Add(p);
+            }
+            if (parametersToWrite.Count > 0)
             {
                 stream.WriteLine($"  params: {{");
                 foreach (var parameter in parametersToWrite)
                 {
-                    var value = parameter.IsFromOutput
-                        ? parameter.IsLiteral
-                            ? $"'{parameter.Value}'"
-                            : parameter.Value
-                        : parameter.Name;
-                    stream.WriteLine($"    {parameter.Name}: {value}");
+                    stream.WriteLine($"    {parameter.Name}: {parameter.GetParameterString(Scope!)}");
                 }
                 stream.WriteLine($"  }}");
             }
@@ -275,13 +279,13 @@ namespace Azure.Provisioning
             foreach (var output in outputsToWrite)
             {
                 string value;
-                if (output.IsLiteral || output.Source.Equals(this))
+                if (output.IsLiteral || ReferenceEquals(this, output.ModuleSource))
                 {
                     value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
                 }
                 else
                 {
-                    value = $"{output.Source.Name}.outputs.{output.Name}";
+                    value = $"{output.ModuleSource!.Name}.outputs.{output.Name}";
                 }
                 string name = output.Name;
                 stream.WriteLine($"output {name} string = {value}");
@@ -304,10 +308,15 @@ namespace Azure.Provisioning
 
         private void WriteParameters(MemoryStream stream)
         {
-            var parametersToWrite = new HashSet<Parameter>();
-            GetAllParametersRecursive(this, parametersToWrite, false);
-            foreach (var parameter in parametersToWrite)
+            // var parametersToWrite = new HashSet<Parameter>();
+            // GetAllParametersRecursive(this, parametersToWrite, false);
+            var outputs = new HashSet<Output>(GetOutputs());
+            foreach (var parameter in GetParameters(true))
             {
+                if (!ShouldExposeParameter(parameter, outputs))
+                {
+                    continue;
+                }
                 string defaultValue = parameter.DefaultValue is null ? string.Empty : $" = '{parameter.DefaultValue}'";
 
                 if (parameter.IsSecure)
@@ -316,6 +325,12 @@ namespace Azure.Provisioning
                 stream.WriteLine($"@description('{parameter.Description}')");
                 stream.WriteLine($"param {parameter.Name} string{defaultValue}{Environment.NewLine}");
             }
+        }
+
+        private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)
+        {
+            // Don't expose the parameter if the output that was used to create the parameter is already in scope.
+            return parameter.Output == null || !outputs.Contains(parameter.Output);
         }
 
         private void GetAllParametersRecursive(IConstruct construct, HashSet<Parameter> visited, bool isChild)

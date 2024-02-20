@@ -241,7 +241,7 @@ namespace Azure.Provisioning
                 var dict = new Dictionary<string, string>();
                 foreach (var kvp in parameter.Value)
                 {
-                    dict.Add(kvp.Key, GetParameterString(kvp.Value, ModuleScope!));
+                    dict.Add(kvp.Key, kvp.Value.GetParameterString(ModuleScope!));
                 }
                 bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
             }
@@ -271,23 +271,6 @@ namespace Azure.Provisioning
                 default:
                     return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
             }
-        }
-
-        private static string GetParameterString(Parameter parameter, IConstruct scope)
-        {
-            // If the parameter is a parameter of the module scope, use the parameter name.
-            if (scope.GetParameters(false).Any(p => p.Name == parameter.Name))
-            {
-                return parameter.Name;
-            }
-            // If the parameter is an output from the current scope, use its Value.
-            if (parameter.Source is null || ReferenceEquals(parameter.Source, scope))
-            {
-                return parameter.Value!;
-            }
-
-            // Otherwise it is an output from a different scope, use the full reference.
-            return $"{parameter.Source.Name}.outputs.{parameter.Name}";
         }
 
         private static void WriteLines(int depth, BinaryData data, MemoryStream stream, Resource resource)

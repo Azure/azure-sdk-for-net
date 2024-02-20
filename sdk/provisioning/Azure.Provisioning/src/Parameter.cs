@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Provisioning
 {
     /// <summary>
@@ -30,6 +33,7 @@ namespace Azure.Provisioning
         internal bool IsLiteral { get; }
         internal string? Value { get; }
         internal IConstruct? Source { get; }
+        internal Output? Output { get; }
 
         /// <summary>
         ///
@@ -43,6 +47,7 @@ namespace Azure.Provisioning
             IsLiteral = output.IsLiteral;
             Value = output.Value;
             Source = output.Source;
+            Output = output;
         }
 
         internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, string? value)
@@ -68,6 +73,23 @@ namespace Azure.Provisioning
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
+        }
+
+        internal string GetParameterString(IConstruct parentScope)
+        {
+            // If the parameter is not from an output, use the parameter name.
+            if (Output == null)
+            {
+                return Name;
+            }
+            // If the parameter is an output from the current scope, use its Value.
+            if (ReferenceEquals(Output!.ModuleSource, parentScope))
+            {
+                return Value!;
+            }
+
+            // Otherwise it is an output from a different scope, use the full reference.
+            return $"{Output!.ModuleSource!.Name}.outputs.{Name}";
         }
     }
 }

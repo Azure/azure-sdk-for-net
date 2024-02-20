@@ -1,6 +1,3 @@
-@description('')
-param LOCATION string
-
 
 resource appServicePlan_viooTTlOI 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -64,7 +61,7 @@ resource keyVaultAddAccessPolicy_lQ2z7dHpX 'Microsoft.KeyVault/vaults/accessPoli
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: webSite_Y34mQ7HgU.identity.principalId
+        objectId: SERVICE_API_IDENTITY_PRINCIPAL_ID
         permissions: {
           secrets: [
             'get'

@@ -1,11 +1,5 @@
 targetScope = 'subscription'
 
-@description('')
-param LOCATION string
-
-@description('')
-param STORAGE_PRINCIPAL_ID string
-
 
 resource resourceGroup_AVG5HpqPz 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg1-TEST'
@@ -34,17 +28,14 @@ resource resourceGroup_Q4i0lpa1h 'Microsoft.Resources/resourceGroups@2023-07-01'
 module rg1_TEST './resources/rg1_TEST/rg1_TEST.bicep' = {
   name: 'rg1_TEST'
   scope: resourceGroup_AVG5HpqPz
-  params: {
-    LOCATION: webSite_dOTaZfna6.location
-  }
 }
 
 module rg2_TEST './resources/rg2_TEST/rg2_TEST.bicep' = {
   name: 'rg2_TEST'
   scope: resourceGroup_hu2r8JaSi
   params: {
-    STORAGE_PRINCIPAL_ID: webSite_dOTaZfna6.identity.principalId
-    LOCATION: webSite_dOTaZfna6.location
+    STORAGE_PRINCIPAL_ID: rg1_TEST.outputs.STORAGE_PRINCIPAL_ID
+    LOCATION: rg1_TEST.outputs.LOCATION
   }
 }
 

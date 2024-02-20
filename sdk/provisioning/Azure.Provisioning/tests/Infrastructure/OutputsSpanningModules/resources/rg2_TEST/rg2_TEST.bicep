@@ -4,6 +4,12 @@ param STORAGE_PRINCIPAL_ID string
 @description('')
 param LOCATION string
 
+@description('')
+param STORAGE_PRINCIPAL_ID string
+
+@description('')
+param LOCATION string
+
 
 resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'

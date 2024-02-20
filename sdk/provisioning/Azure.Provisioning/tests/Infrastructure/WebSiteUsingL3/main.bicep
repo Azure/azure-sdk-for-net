@@ -5,6 +5,10 @@ targetScope = 'subscription'
 param sqlAdminPassword string
 
 @secure()
+@description('SQL Server administrator password')
+param sqlAdminPassword string
+
+@secure()
 @description('Application user password')
 param appUserPassword string
 
