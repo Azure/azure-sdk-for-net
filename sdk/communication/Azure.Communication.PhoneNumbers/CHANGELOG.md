@@ -1,16 +1,11 @@
 # Release History
 
 ## 1.3.0-beta.4 (2024-02-20)
-### Other Changes
-- Merged other unmerged changes form beta releases
-
-## 1.3.0-beta.3 (2024-02-02)
 ### Features Added
 - Added support for API version `2023-10-01-preview`, This gives us functionality for Do Not Resell Consent Changes.
 - Users will now be able to purchase from countries like `IT`, `AT`, `FR`, `NO`, `PT`. They can do so by agreeing not to resell phone numbers by setting consentToNotResellNumbers to true.
 - Added support for 10DLC changes.
 
-### Breaking Changes
 ## 1.3.0-beta.2 (2023-08-31)
 
 ### Bugs Fixed
