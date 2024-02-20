@@ -2890,7 +2890,7 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine(" {");
                         foreach (var item in AzureStorageAccounts)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             AppendChildObject(builder, item.Value, options, 4, false);
                         }
                         builder.AppendLine("  }");

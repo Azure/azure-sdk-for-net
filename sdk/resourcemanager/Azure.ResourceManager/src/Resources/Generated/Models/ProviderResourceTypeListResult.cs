@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> An array of resource types. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ProviderResourceType> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

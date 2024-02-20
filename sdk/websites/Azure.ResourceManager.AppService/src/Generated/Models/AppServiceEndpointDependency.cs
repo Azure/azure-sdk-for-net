@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The IP Addresses and Ports used when connecting to DomainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<AppServiceEndpointDetail> EndpointDetails { get; }
     }
 }

@@ -30,6 +30,7 @@ namespace Azure.Provisioning.AppConfiguration
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: "free"))
         {
+            AddOutput(store => store.Endpoint, $"{Name}_endpoint");
         }
 
         /// <inheritdoc/>

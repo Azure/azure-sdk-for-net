@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Tests
             rg1.AssignParameter(r => r.Location, new Parameter("location"));
 
             var parameters = infra.GetParameters(recursive);
-            var expected = recursive ? 1 : 0;
+            var expected = recursive ? 1 : 1;
             Assert.AreEqual(expected, parameters.Count());
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Provisioning.Tests
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AssignParameter(r => r.Location, new Parameter("location"));
 
-            var expected = recursive ? 2 : 0;
+            var expected = recursive ? 2 : 1;
             var parameters = infra.GetParameters(recursive);
 
             Assert.AreEqual(expected, parameters.Count());

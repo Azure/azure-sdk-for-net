@@ -141,7 +141,7 @@ namespace Azure.Provisioning
             IEnumerable<Parameter> result = _parameters;
             if (recursive)
             {
-                result = result.Concat(GetResources(true).SelectMany(c => c.Parameters));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetParameters(true)));
             }
             return result;
         }

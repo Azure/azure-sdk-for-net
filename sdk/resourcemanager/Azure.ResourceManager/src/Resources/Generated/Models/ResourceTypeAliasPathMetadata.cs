@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The type of the token that the alias path is referring to. </summary>
+        [WirePath("type")]
         public ResourceTypeAliasPathTokenType? TokenType { get; }
         /// <summary> The attributes of the token that the alias path is referring to. </summary>
+        [WirePath("attributes")]
         public ResourceTypeAliasPathAttributes? Attributes { get; }
     }
 }

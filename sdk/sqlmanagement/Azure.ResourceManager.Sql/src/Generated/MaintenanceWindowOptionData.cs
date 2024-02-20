@@ -83,18 +83,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Whether maintenance windows are enabled for the database. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}. </summary>
+        [WirePath("properties.maintenanceWindowCycles")]
         public IList<MaintenanceWindowTimeRange> MaintenanceWindowCycles { get; }
         /// <summary> Minimum duration of maintenance window. </summary>
+        [WirePath("properties.minDurationInMinutes")]
         public int? MinDurationInMinutes { get; set; }
         /// <summary> Default duration for maintenance window. </summary>
+        [WirePath("properties.defaultDurationInMinutes")]
         public int? DefaultDurationInMinutes { get; set; }
         /// <summary> Minimum number of maintenance windows cycles to be set on the database. </summary>
+        [WirePath("properties.minCycles")]
         public int? MinCycles { get; set; }
         /// <summary> Time granularity in minutes for maintenance windows. </summary>
+        [WirePath("properties.timeGranularityInMinutes")]
         public int? TimeGranularityInMinutes { get; set; }
         /// <summary> Whether we allow multiple maintenance windows per cycle. </summary>
+        [WirePath("properties.allowMultipleMaintenanceWindowsPerCycle")]
         public bool? AllowMultipleMaintenanceWindowsPerCycle { get; set; }
     }
 }

@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ManagedHsmPrivateLinkResourceData> Value { get; }
     }
 }

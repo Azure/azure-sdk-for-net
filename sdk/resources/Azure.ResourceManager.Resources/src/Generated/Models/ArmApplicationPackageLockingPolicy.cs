@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deny assignment excluded actions. </summary>
+        [WirePath("allowedActions")]
         public IList<string> AllowedActions { get; }
         /// <summary> The deny assignment excluded data actions. </summary>
+        [WirePath("allowedDataActions")]
         public IList<string> AllowedDataActions { get; }
     }
 }
