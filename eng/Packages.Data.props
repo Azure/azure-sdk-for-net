@@ -128,13 +128,13 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.11.0-alpha.20240213.7" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.8.0-alpha.20240213.2" />
-    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.0-alpha.20240213.5" />
-    <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0-alpha.20240213.1" />
-    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.1.0-alpha.20240213.1" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.3.0-alpha.20240213.1" />
-    <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.0-alpha.20240215.2" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.11.0-alpha.20240219.2" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.8.0-alpha.20240217.1" />
+    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.0-alpha.20240217.1" />
+    <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0-alpha.20240217.1" />
+    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.1.0-alpha.20240217.1" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.3.0-alpha.20240217.1" />
+    <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.0-alpha.20240217.1" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />
