@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleMatchCondition> array = new List<NetworkTapRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item));
+                        array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleAction> array = new List<NetworkTapRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item));
+                        array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item, options));
                     }
                     actions = array;
                     continue;

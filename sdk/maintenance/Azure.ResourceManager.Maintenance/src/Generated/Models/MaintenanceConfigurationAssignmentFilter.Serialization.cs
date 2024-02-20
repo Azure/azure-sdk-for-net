@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value);
+                    tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

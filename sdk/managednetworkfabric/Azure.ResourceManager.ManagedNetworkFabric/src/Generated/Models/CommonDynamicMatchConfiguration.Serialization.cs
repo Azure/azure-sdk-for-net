@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<VlanGroupProperties> array = new List<VlanGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item, options));
                     }
                     vlanGroups = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<PortGroupProperties> array = new List<PortGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item, options));
                     }
                     portGroups = array;
                     continue;

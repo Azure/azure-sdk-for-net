@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     userDefinedRouteResults = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     networkSecurityRuleResults = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     resourceLockResults = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     dnsResolutionResults = array;
                     continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     storageAccountResults = array;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     keyVaultResults = array;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     containerRegistryResults = array;
                     continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     applicationInsightsResults = array;
                     continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     otherResults = array;
                     continue;

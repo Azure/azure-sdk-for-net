@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<LinuxSshPublicKey> array = new List<LinuxSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinuxSshPublicKey.DeserializeLinuxSshPublicKey(item));
+                        array.Add(LinuxSshPublicKey.DeserializeLinuxSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;

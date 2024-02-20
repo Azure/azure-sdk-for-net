@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreOfferResult> array = new List<PrivateStoreOfferResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
+                        array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item, options));
                     }
                     value = array;
                     continue;

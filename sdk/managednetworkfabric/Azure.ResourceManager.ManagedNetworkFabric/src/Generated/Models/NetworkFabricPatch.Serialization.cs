@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value);
+                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value);
+                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -97,18 +97,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element);
-                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element);
-                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element);
-                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element);
-                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element);
-                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element);
-                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element);
-                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element);
-                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element);
+                    case "AccessKey": return AccessKeyAuthTypeWorkspaceConnectionProperties.DeserializeAccessKeyAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "ApiKey": return ApiKeyAuthWorkspaceConnectionProperties.DeserializeApiKeyAuthWorkspaceConnectionProperties(element, options);
+                    case "CustomKeys": return CustomKeysWorkspaceConnectionProperties.DeserializeCustomKeysWorkspaceConnectionProperties(element, options);
+                    case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element, options);
+                    case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element, options);
+                    case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element, options);
+                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element, options);
+                    case "ServicePrincipal": return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element, options);
+                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element, options);
                 }
             }
-            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element);
+            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

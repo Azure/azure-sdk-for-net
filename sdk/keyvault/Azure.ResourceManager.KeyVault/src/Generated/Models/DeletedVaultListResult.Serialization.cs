@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<DeletedKeyVaultData> array = new List<DeletedKeyVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedKeyVaultData.DeserializeDeletedKeyVaultData(item));
+                        array.Add(DeletedKeyVaultData.DeserializeDeletedKeyVaultData(item, options));
                     }
                     value = array;
                     continue;

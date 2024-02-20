@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    properties = MachineExtensionProperties.DeserializeMachineExtensionProperties(property.Value);
+                    properties = MachineExtensionProperties.DeserializeMachineExtensionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

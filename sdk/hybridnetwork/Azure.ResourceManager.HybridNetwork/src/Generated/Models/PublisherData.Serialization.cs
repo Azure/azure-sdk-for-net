@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = PublisherPropertiesFormat.DeserializePublisherPropertiesFormat(property.Value);
+                    properties = PublisherPropertiesFormat.DeserializePublisherPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

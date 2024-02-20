@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    items = DeserializeSwaggerSchema(property.Value);
+                    items = DeserializeSwaggerSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerSchema> dictionary = new Dictionary<string, SwaggerSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<SwaggerSchema> array = new List<SwaggerSchema>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSwaggerSchema(item));
+                        array.Add(DeserializeSwaggerSchema(item, options));
                     }
                     allOf = array;
                     continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    xml = SwaggerXml.DeserializeSwaggerXml(property.Value);
+                    xml = SwaggerXml.DeserializeSwaggerXml(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("externalDocs"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value);
+                    externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("example"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value);
+                    dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicSchemaNew"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value);
+                    dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicListNew"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value);
+                    dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicTree"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value);
+                    dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

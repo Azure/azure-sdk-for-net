@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         }
                         if (property0.NameEquals("controlPlaneProfile"u8))
                         {
-                            controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value);
+                            controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value, options);
                             continue;
                         }
                     }

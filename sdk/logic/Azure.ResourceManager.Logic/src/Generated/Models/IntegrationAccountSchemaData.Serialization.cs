@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                     }

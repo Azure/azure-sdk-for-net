@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningSkuDetail> array = new List<MachineLearningSkuDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail(item));
+                        array.Add(MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail(item, options));
                     }
                     value = array;
                     continue;

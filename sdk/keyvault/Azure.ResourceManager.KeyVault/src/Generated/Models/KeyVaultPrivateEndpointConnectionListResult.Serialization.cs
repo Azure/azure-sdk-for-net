@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateEndpointConnectionData> array = new List<KeyVaultPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

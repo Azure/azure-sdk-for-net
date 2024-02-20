@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value);
+                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            trigger = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value);
+                            trigger = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowOutputParameterInfo> dictionary = new Dictionary<string, LogicWorkflowOutputParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value));
+                                dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value, options));
                             }
                             outputs = dictionary;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            response = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value);
+                            response = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
                             continue;
                         }
                     }

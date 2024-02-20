@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value);
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fixedParameters"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         fixedParameters = null;
                         continue;
                     }
-                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value);
+                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value);
+                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<NlpParameterSubspace> array = new List<NlpParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item));
+                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item, options));
                     }
                     searchSpace = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value);
+                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logVerbosity"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

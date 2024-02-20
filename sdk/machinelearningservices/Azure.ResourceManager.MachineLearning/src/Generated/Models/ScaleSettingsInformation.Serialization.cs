@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
+                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
