@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            windowsServerFailoverClusterDomainProfile = WindowsServerFailoverClusterDomainProfile.DeserializeWindowsServerFailoverClusterDomainProfile(property0.Value);
+                            windowsServerFailoverClusterDomainProfile = WindowsServerFailoverClusterDomainProfile.DeserializeWindowsServerFailoverClusterDomainProfile(property0.Value, options);
                             continue;
                         }
                     }

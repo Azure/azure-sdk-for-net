@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return SynapseManagedIntegrationRuntimeStatus.DeserializeSynapseManagedIntegrationRuntimeStatus(element);
-                    case "SelfHosted": return SynapseSelfHostedIntegrationRuntimeStatus.DeserializeSynapseSelfHostedIntegrationRuntimeStatus(element);
+                    case "Managed": return SynapseManagedIntegrationRuntimeStatus.DeserializeSynapseManagedIntegrationRuntimeStatus(element, options);
+                    case "SelfHosted": return SynapseSelfHostedIntegrationRuntimeStatus.DeserializeSynapseSelfHostedIntegrationRuntimeStatus(element, options);
                 }
             }
-            return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element);
+            return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element, options);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

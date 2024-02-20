@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Subscription
                     {
                         continue;
                     }
-                    properties = SubscriptionAliasProperties.DeserializeSubscriptionAliasProperties(property.Value);
+                    properties = SubscriptionAliasProperties.DeserializeSubscriptionAliasProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceWorkerPoolData> array = new List<AppServiceWorkerPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(item));
+                        array.Add(AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(item, options));
                     }
                     value = array;
                     continue;

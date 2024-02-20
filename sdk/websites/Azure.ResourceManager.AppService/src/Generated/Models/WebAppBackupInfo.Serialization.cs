@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(property0.Value);
+                            backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                             }
                             databases = array;
                             continue;

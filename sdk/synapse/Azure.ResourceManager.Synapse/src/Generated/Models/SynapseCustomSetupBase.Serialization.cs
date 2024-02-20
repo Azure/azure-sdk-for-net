@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CmdkeySetup": return SynapseCmdkeySetup.DeserializeSynapseCmdkeySetup(element);
-                    case "ComponentSetup": return SynapseComponentSetup.DeserializeSynapseComponentSetup(element);
-                    case "EnvironmentVariableSetup": return SynapseEnvironmentVariableSetup.DeserializeSynapseEnvironmentVariableSetup(element);
+                    case "CmdkeySetup": return SynapseCmdkeySetup.DeserializeSynapseCmdkeySetup(element, options);
+                    case "ComponentSetup": return SynapseComponentSetup.DeserializeSynapseComponentSetup(element, options);
+                    case "EnvironmentVariableSetup": return SynapseEnvironmentVariableSetup.DeserializeSynapseEnvironmentVariableSetup(element, options);
                 }
             }
-            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element, options);
         }
 
         BinaryData IPersistableModel<SynapseCustomSetupBase>.Write(ModelReaderWriterOptions options)

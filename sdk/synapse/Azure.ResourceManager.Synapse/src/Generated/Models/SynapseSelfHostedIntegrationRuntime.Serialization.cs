@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value);
+                            linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value, options);
                             continue;
                         }
                     }

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubPrivateLink> array = new List<WebPubSubPrivateLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(item));
+                        array.Add(WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(item, options));
                     }
                     value = array;
                     continue;
