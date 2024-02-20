@@ -174,23 +174,6 @@
     {
       "type": "Microsoft.EventHub/namespaces",
       "apiVersion": "[variables('apiVersion')]",
-      "name": "[variables('baseNameCustom2022')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "Standard",
-        "tier": "Standard",
-        "capacity": 5
-      },
-      "properties": {
-        "zoneRedundant": false,
-        "isAutoInflateEnabled": false,
-        "maximumThroughputUnits": 0,
-        "kafkaEnabled": true
-      }
-    },
-    {
-      "type": "Microsoft.EventHub/namespaces",
-      "apiVersion": "[variables('apiVersion')]",
       "name": "[variables('baseNameProtobuf2022')]",
       "location": "[parameters('location')]",
       "sku": {
@@ -372,16 +355,6 @@
       "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameJson2022'))]" ],
       "properties": {
         "schemaType": "json"
-      }
-    },
-    {
-      "type": "Microsoft.EventHub/namespaces/schemagroups",
-      "apiVersion": "[variables('apiVersion')]",
-      "name": "[format('{0}/{1}', variables('baseNameCustom2022'), variables('schemaRegistryGroup'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameCustom2022'))]" ],
-      "properties": {
-        "schemaType": "custom"
       }
     },
     //{

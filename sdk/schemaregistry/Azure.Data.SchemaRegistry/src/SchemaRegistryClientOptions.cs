@@ -9,7 +9,6 @@ namespace Azure.Data.SchemaRegistry
     /// <summary>
     /// The options for <see cref="SchemaRegistryClient"/>.
     /// </summary>
-    //[CodeGenSuppress("ServiceVersion")]
     public partial class SchemaRegistryClientOptions : ClientOptions
     {
         internal string Version { get; }

@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> The schema content of a schema, along with id and meta properties. </summary>
-    internal partial class Schema
+    /// <summary> The list of int32s with server paging support. </summary>
+    internal partial class Int32sList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +47,35 @@ namespace Azure.Data.SchemaRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Schema"/>. </summary>
-        /// <param name="definition"> The content of the schema. </param>
-        /// <param name="properties"> The properties of the schema. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> or <paramref name="properties"/> is null. </exception>
-        public Schema(string definition, SchemaProperties properties)
+        /// <summary> Initializes a new instance of <see cref="Int32sList"/>. </summary>
+        /// <param name="value"> The collection of pageable items. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal Int32sList(IEnumerable<int> value)
         {
-            Argument.AssertNotNull(definition, nameof(definition));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(value, nameof(value));
 
-            Definition = definition;
-            Properties = properties;
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schema"/>. </summary>
-        /// <param name="definition"> The content of the schema. </param>
-        /// <param name="properties"> The properties of the schema. </param>
+        /// <summary> Initializes a new instance of <see cref="Int32sList"/>. </summary>
+        /// <param name="value"> The collection of pageable items. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Schema(string definition, SchemaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Int32sList(IReadOnlyList<int> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Definition = definition;
-            Properties = properties;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schema"/> for deserialization. </summary>
-        internal Schema()
+        /// <summary> Initializes a new instance of <see cref="Int32sList"/> for deserialization. </summary>
+        internal Int32sList()
         {
         }
 
-        /// <summary> The content of the schema. </summary>
-        public string Definition { get; set; }
-        /// <summary> The properties of the schema. </summary>
-        public SchemaProperties Properties { get; set; }
+        /// <summary> The collection of pageable items. </summary>
+        public IReadOnlyList<int> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
     }
 }

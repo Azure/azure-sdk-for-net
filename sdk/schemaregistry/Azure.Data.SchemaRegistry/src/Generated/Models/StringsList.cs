@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> Schema Group resource. </summary>
-    internal partial class SchemaGroup
+    /// <summary> The list of strings with server paging support. </summary>
+    internal partial class StringsList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +47,35 @@ namespace Azure.Data.SchemaRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SchemaGroup"/>. </summary>
-        internal SchemaGroup()
+        /// <summary> Initializes a new instance of <see cref="StringsList"/>. </summary>
+        /// <param name="value"> The collection of pageable items. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal StringsList(IEnumerable<string> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaGroup"/>. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
+        /// <summary> Initializes a new instance of <see cref="StringsList"/>. </summary>
+        /// <param name="value"> The collection of pageable items. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaGroup(string groupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StringsList(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GroupName = groupName;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of schema group. </summary>
-        public string GroupName { get; }
+        /// <summary> Initializes a new instance of <see cref="StringsList"/> for deserialization. </summary>
+        internal StringsList()
+        {
+        }
+
+        /// <summary> The collection of pageable items. </summary>
+        public IReadOnlyList<string> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
     }
 }
