@@ -27,6 +27,9 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberAssignmentType assignmentType = default;
             DateTimeOffset purchaseDate = default;
             PhoneNumberCost cost = default;
+            Optional<string> operatorId = default;
+            Optional<string> operatorName = default;
+            Optional<PhoneNumberSource> phoneNumberSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,8 +72,27 @@ namespace Azure.Communication.PhoneNumbers
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
+                if (property.NameEquals("operatorId"u8))
+                {
+                    operatorId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operatorName"u8))
+                {
+                    operatorName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("phoneNumberSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    phoneNumberSource = new PhoneNumberSource(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId.Value, operatorName.Value, Optional.ToNullable(phoneNumberSource));
         }
     }
 }
