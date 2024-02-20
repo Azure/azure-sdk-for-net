@@ -6,14 +6,6 @@ param sqlAdminPassword string
 @description('Application user password')
 param appUserPassword string
 
-@secure()
-@description('SQL Server administrator password')
-param sqlAdminPassword string
-
-@secure()
-@description('Application user password')
-param appUserPassword string
-
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -30,7 +22,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   tags: {
-    key: 'value'
+    'key': 'value'
   }
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'

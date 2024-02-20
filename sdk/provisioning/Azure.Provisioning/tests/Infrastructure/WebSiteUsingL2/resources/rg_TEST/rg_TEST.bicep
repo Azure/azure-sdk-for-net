@@ -6,22 +6,6 @@ param sqlAdminPassword string
 @description('Application user password')
 param appUserPassword string
 
-@secure()
-@description('SQL Server administrator password')
-param sqlAdminPassword string
-
-@secure()
-@description('SQL Server administrator password')
-param sqlAdminPassword string
-
-@secure()
-@description('Application user password')
-param appUserPassword string
-
-@secure()
-@description('SQL Server administrator password')
-param sqlAdminPassword string
-
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'

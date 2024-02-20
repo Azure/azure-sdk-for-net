@@ -8,10 +8,6 @@ param sqlAdminPassword string
 @description('Application user password')
 param appUserPassword string
 
-@secure()
-@description('SQL Server administrator password')
-param sqlAdminPassword string
-
 
 resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg-TEST'

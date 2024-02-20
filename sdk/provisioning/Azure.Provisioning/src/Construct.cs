@@ -308,10 +308,10 @@ namespace Azure.Provisioning
 
         private void WriteParameters(MemoryStream stream)
         {
-            // var parametersToWrite = new HashSet<Parameter>();
-            // GetAllParametersRecursive(this, parametersToWrite, false);
+            var parametersToWrite = new HashSet<Parameter>();
+            GetAllParametersRecursive(this, parametersToWrite, false);
             var outputs = new HashSet<Output>(GetOutputs());
-            foreach (var parameter in GetParameters(true))
+            foreach (var parameter in parametersToWrite)
             {
                 if (!ShouldExposeParameter(parameter, outputs))
                 {

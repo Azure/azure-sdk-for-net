@@ -21,7 +21,7 @@ resource resourceGroup_Q4i0lpa1h 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg3-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'TEST'
+    'azd-env-name': 'TEST'
   }
 }
 
