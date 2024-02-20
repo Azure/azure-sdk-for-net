@@ -67,6 +67,7 @@ internal static class ResourceExtensions
                     {
                         SdkVersionUtils.IsDistro = true;
                     }
+
                     break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
@@ -74,8 +75,11 @@ internal static class ResourceExtensions
                         aksResourceProcessor = aksResourceProcessor ?? new AksResourceProcessor();
                         aksResourceProcessor.MapAttributeToProperty(attribute);
                     }
+
                     break;
             }
+
+            azureMonitorResource.UserDefinedAttributes = resource.Attributes.ToList();
 
             if (metricsData != null && attribute.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && attribute.Value != null)
             {

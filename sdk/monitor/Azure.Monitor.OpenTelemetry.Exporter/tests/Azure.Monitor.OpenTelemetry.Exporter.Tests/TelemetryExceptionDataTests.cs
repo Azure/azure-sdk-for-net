@@ -376,6 +376,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(exceptionData.Exceptions[0].HasFullStack);
         }
 
+        [Fact]
+        public void ValidatePropertiesFromAzureMonitorResource()
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
+
+            var ex = new Exception("Exception Message");
+            logger.Log(LogLevel.Information, ex, "Log Message");
+
+            var azureMonitorResource = new AzureMonitorResource();
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key1", "value1"));
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key2", "value2"));
+
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0], azureMonitorResource);
+            Assert.Equal("value1", exceptionData.Properties["key1"]);
+            Assert.Equal("value2", exceptionData.Properties["key2"]);
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private Exception CreateException(int stackDepth)
         {

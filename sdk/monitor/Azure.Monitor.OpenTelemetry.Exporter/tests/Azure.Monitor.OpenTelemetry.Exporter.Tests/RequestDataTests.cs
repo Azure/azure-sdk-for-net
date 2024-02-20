@@ -221,6 +221,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
         }
 
+        [Fact]
+        public void ValidatePropertiesFromAzureMonitorResource()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Server);
+            Assert.NotNull(activity);
+
+            var azureMonitorResource = new AzureMonitorResource();
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key1", "value1"));
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key2", "value2"));
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, azureMonitorResource);
+
+            Assert.Equal(2, requestData.Properties.Count);
+            Assert.Equal("value1", requestData.Properties["key1"]);
+            Assert.Equal("value2", requestData.Properties["key2"]);
+        }
+
         private ActivityLink AddActivityLink(long enqueuedTime)
         {
             ActivityTagsCollection tags = new ActivityTagsCollection

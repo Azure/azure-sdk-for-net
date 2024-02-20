@@ -10,12 +10,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RemoteDependencyData
     {
-        public RemoteDependencyData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
+        public RemoteDependencyData(
+            int version,
+            Activity activity,
+            ref ActivityTagsProcessor activityTagsProcessor,
+            AzureMonitorResource? azureMonitorResource = null) : base(version)
         {
             string? dependencyName = null;
             bool isNewSchemaVersion = false;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
+            azureMonitorResource?.CopyUserDefinedAttributes(Properties);
 
             if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
             {

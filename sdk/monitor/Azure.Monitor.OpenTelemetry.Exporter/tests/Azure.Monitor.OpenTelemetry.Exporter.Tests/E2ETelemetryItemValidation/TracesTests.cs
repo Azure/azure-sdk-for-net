@@ -22,6 +22,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
+        private static readonly Dictionary<string, string> s_defaultProperties = new()
+        {
+            {
+                "telemetry.sdk.name", "opentelemetry"
+            },
+            {
+                "telemetry.sdk.version", "1.7.0"
+            },
+            {
+                "service.name", "unknown_service:dotnet"
+            },
+        };
+
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
         public TracesTests(ITestOutputHelper output)
@@ -180,7 +193,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
-                expectedProperties: null,
+                expectedProperties: new Dictionary<string, string>
+                {
+                    {"telemetry.sdk.name", "opentelemetry"},
+                    {"telemetry.sdk.version", "1.7.0"},
+                    {"service.name", "unknown_service:dotnet"},
+                },
                 expectedSuccess: false);
 
             var exceptionTelemetryItem = telemetryItems.First(x => x.Name == "Exception");
@@ -271,7 +289,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: traceId,
                 expectedSpanId: spanId,
                 expectedAuthUserId: "TestUser",
-                expectedProperties: null);
+                expectedProperties: s_defaultProperties);
 
             Assert.True(logTelemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(logTelemetryItems!);

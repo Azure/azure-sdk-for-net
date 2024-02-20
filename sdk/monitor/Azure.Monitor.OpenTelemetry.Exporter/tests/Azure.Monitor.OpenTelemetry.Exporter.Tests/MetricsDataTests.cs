@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -191,6 +192,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("_OTELRESOURCE_", metricDataPoint.Name);
             Assert.Equal(0, metricDataPoint.Value);
             Assert.Empty(metricsData.Properties);
+        }
+
+        [Fact]
+        public void ValidatePropertiesFromAzureMonitorResource()
+        {
+            var metrics = new List<Metric>();
+
+            using var meter = new Meter(nameof(ValidatePropertiesFromAzureMonitorResource));
+            using var provider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meter.Name)
+                .AddInMemoryExporter(metrics)
+                .Build();
+
+            var doubleCounter = meter.CreateCounter<double>("TestDoubleCounter");
+            doubleCounter.Add(123.45, new KeyValuePair<string, object?>("tag", "value"));
+
+            provider.ForceFlush();
+
+            var enumerator = metrics[0].GetMetricPoints().GetEnumerator();
+            enumerator.MoveNext();
+            var metricPoint = enumerator.Current;
+
+            var azureMonitorResource = new AzureMonitorResource();
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key1", "value1"));
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key2", "value2"));
+
+            var metricData = new MetricsData(Version, metrics[0], metricPoint, azureMonitorResource);
+            Assert.Equal("value1", metricData.Properties["key1"]);
+            Assert.Equal("value2", metricData.Properties["key2"]);
         }
     }
 }

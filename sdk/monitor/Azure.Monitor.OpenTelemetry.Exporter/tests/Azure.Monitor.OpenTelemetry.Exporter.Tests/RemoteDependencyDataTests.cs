@@ -190,5 +190,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(activity.DisplayName, remoteDependencyDataName);
         }
+
+        [Fact]
+        public void ValidatePropertiesFromAzureMonitorResource()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+
+            var azureMonitorResource = new AzureMonitorResource();
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key1", "value1"));
+            azureMonitorResource.UserDefinedAttributes.Add(
+                new KeyValuePair<string, object>("key2", "value2"));
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor, azureMonitorResource);
+            Assert.Equal("value1", remoteDependencyData.Properties["key1"]);
+            Assert.Equal("value2", remoteDependencyData.Properties["key2"]);
+        }
     }
 }
