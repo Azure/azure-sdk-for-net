@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    display = OperationDisplay.DeserializeOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

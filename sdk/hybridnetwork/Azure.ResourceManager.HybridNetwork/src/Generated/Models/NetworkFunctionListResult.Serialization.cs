@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NetworkFunctionData> array = new List<NetworkFunctionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFunctionData.DeserializeNetworkFunctionData(item));
+                        array.Add(NetworkFunctionData.DeserializeNetworkFunctionData(item, options));
                     }
                     value = array;
                     continue;

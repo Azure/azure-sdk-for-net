@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Marketplace
                             List<PrivateStorePlanDetails> array = new List<PrivateStorePlanDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(item));
+                                array.Add(PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(item, options));
                             }
                             plansDetails = array;
                             continue;

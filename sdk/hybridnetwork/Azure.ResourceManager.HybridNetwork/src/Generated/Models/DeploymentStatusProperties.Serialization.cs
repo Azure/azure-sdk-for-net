@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value);
+                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
+                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     List<CredentialResult> array = new List<CredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        array.Add(CredentialResult.DeserializeCredentialResult(item, options));
                     }
                     kubeconfigs = array;
                     continue;

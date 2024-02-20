@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    esuProfile = LicenseProfileMachineInstanceViewEsuProperties.DeserializeLicenseProfileMachineInstanceViewEsuProperties(property.Value);
+                    esuProfile = LicenseProfileMachineInstanceViewEsuProperties.DeserializeLicenseProfileMachineInstanceViewEsuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("productProfile"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             List<HybridComputeProductFeature> array = new List<HybridComputeProductFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item));
+                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item, options));
                             }
                             productFeatures = array;
                             continue;

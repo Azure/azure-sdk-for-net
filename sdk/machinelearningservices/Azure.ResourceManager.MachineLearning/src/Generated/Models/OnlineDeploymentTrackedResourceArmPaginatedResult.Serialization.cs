@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningOnlineDeploymentData> array = new List<MachineLearningOnlineDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(item));
+                        array.Add(MachineLearningOnlineDeploymentData.DeserializeMachineLearningOnlineDeploymentData(item, options));
                     }
                     value = array;
                     continue;

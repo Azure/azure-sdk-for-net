@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<IPPrefixRule> array = new List<IPPrefixRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item));
+                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item, options));
                             }
                             ipPrefixRules = array;
                             continue;

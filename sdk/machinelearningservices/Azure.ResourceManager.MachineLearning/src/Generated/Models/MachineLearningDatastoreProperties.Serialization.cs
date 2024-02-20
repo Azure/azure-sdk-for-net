@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element);
-                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
-                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
-                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
-                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
-                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element);
+                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element, options);
+                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element, options);
+                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element, options);
+                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element, options);
+                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element, options);
+                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }
-            return UnknownDatastore.DeserializeUnknownDatastore(element);
+            return UnknownDatastore.DeserializeUnknownDatastore(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

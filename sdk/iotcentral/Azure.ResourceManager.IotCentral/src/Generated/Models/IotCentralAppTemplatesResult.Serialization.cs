@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplate> array = new List<IotCentralAppTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplate.DeserializeIotCentralAppTemplate(item));
+                        array.Add(IotCentralAppTemplate.DeserializeIotCentralAppTemplate(item, options));
                     }
                     value = array;
                     continue;

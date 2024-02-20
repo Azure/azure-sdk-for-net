@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = WorkspaceConnectionSharedAccessSignature.DeserializeWorkspaceConnectionSharedAccessSignature(property.Value);
+                    credentials = WorkspaceConnectionSharedAccessSignature.DeserializeWorkspaceConnectionSharedAccessSignature(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

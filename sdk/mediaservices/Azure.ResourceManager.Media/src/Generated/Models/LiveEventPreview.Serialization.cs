@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventEndpoint> array = new List<LiveEventEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                         accessControl = null;
                         continue;
                     }
-                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value);
+                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previewLocator"u8))

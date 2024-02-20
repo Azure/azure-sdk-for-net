@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;

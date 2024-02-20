@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.IotCentral
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = IotCentralPrivateLinkServiceConnectionState.DeserializeIotCentralPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = IotCentralPrivateLinkServiceConnectionState.DeserializeIotCentralPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

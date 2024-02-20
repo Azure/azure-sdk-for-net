@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value);
+                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parentClusterResourceId"u8))

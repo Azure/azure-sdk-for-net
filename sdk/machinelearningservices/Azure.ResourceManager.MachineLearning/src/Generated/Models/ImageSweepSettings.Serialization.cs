@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithm"u8))

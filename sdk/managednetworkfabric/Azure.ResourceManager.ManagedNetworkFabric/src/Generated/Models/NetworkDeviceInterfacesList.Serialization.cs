@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkDeviceInterfaceData> array = new List<NetworkDeviceInterfaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(item));
+                        array.Add(NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(item, options));
                     }
                     value = array;
                     continue;

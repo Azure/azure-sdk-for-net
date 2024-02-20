@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
+                    forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("frequency"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
+                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shortSeriesHandlingConfig"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         targetLags = null;
                         continue;
                     }
-                    targetLags = TargetLags.DeserializeTargetLags(property.Value);
+                    targetLags = TargetLags.DeserializeTargetLags(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetRollingWindowSize"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         targetRollingWindowSize = null;
                         continue;
                     }
-                    targetRollingWindowSize = TargetRollingWindowSize.DeserializeTargetRollingWindowSize(property.Value);
+                    targetRollingWindowSize = TargetRollingWindowSize.DeserializeTargetRollingWindowSize(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeColumnName"u8))

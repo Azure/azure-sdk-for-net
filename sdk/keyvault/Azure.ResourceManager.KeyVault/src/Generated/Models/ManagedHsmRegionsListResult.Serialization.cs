@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmGeoReplicatedRegion> array = new List<ManagedHsmGeoReplicatedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item));
+                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item, options));
                     }
                     value = array;
                     continue;

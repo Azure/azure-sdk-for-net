@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blobReferenceForConsumption = null;
                         continue;
                     }
-                    blobReferenceForConsumption = BlobReferenceForConsumptionDto.DeserializeBlobReferenceForConsumptionDto(property.Value);
+                    blobReferenceForConsumption = BlobReferenceForConsumptionDto.DeserializeBlobReferenceForConsumptionDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pendingUploadId"u8))

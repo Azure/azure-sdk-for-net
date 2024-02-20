@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSkuPatch.DeserializeMachineLearningSkuPatch(property.Value);
+                    sku = MachineLearningSkuPatch.DeserializeMachineLearningSkuPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

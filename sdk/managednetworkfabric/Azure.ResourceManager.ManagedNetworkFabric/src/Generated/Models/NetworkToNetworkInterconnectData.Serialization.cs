@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value);
+                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionBLayer3Configuration"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value);
+                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value);
+                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value);
+                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("egressAclId"u8))
