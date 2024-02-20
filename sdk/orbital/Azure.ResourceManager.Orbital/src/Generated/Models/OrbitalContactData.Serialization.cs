@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            antennaConfiguration = OrbitalContactAntennaConfiguration.DeserializeOrbitalContactAntennaConfiguration(property0.Value);
+                            antennaConfiguration = OrbitalContactAntennaConfiguration.DeserializeOrbitalContactAntennaConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactProfile"u8))

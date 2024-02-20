@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item));
+                        array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item, options));
                     }
                     logAnalytics = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item));
+                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item, options));
                     }
                     monitoringAccounts = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value);
+                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventHubs"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDestination> array = new List<DataCollectionRuleEventHubDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item));
+                        array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item, options));
                     }
                     eventHubs = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDirectDestination> array = new List<DataCollectionRuleEventHubDirectDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item));
+                        array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item, options));
                     }
                     eventHubsDirect = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageBlobsDirect = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageTableDestination> array = new List<DataCollectionRuleStorageTableDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item));
+                        array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item, options));
                     }
                     storageTablesDirect = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageAccounts = array;
                     continue;

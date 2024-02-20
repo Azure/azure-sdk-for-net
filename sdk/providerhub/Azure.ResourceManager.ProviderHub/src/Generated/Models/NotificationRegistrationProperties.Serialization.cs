@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<NotificationEndpoint> array = new List<NotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item));
+                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item, options));
                     }
                     notificationEndpoints = array;
                     continue;

@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         }
                         if (property0.NameEquals("networkProfile"u8))
                         {
-                            networkProfile = FirewallNetworkProfile.DeserializeFirewallNetworkProfile(property0.Value);
+                            networkProfile = FirewallNetworkProfile.DeserializeFirewallNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isPanoramaManaged"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            panoramaConfig = FirewallPanoramaConfiguration.DeserializeFirewallPanoramaConfiguration(property0.Value);
+                            panoramaConfig = FirewallPanoramaConfiguration.DeserializeFirewallPanoramaConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("associatedRulestack"u8))
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            associatedRulestack = RulestackDetails.DeserializeRulestackDetails(property0.Value);
+                            associatedRulestack = RulestackDetails.DeserializeRulestackDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
                         {
-                            dnsSettings = FirewallDnsSettings.DeserializeFirewallDnsSettings(property0.Value);
+                            dnsSettings = FirewallDnsSettings.DeserializeFirewallDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frontEndSettings"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             List<FirewallFrontendSetting> array = new List<FirewallFrontendSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                                array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item, options));
                             }
                             frontEndSettings = array;
                             continue;
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         }
                         if (property0.NameEquals("planData"u8))
                         {
-                            planData = FirewallBillingPlanInfo.DeserializeFirewallBillingPlanInfo(property0.Value);
+                            planData = FirewallBillingPlanInfo.DeserializeFirewallBillingPlanInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceDetails"u8))
                         {
-                            marketplaceDetails = PanFirewallMarketplaceDetails.DeserializePanFirewallMarketplaceDetails(property0.Value);
+                            marketplaceDetails = PanFirewallMarketplaceDetails.DeserializePanFirewallMarketplaceDetails(property0.Value, options);
                             continue;
                         }
                     }

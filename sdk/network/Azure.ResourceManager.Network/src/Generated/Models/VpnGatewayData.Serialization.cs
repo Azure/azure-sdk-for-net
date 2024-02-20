@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnConnectionData> array = new List<VpnConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnConnectionData.DeserializeVpnConnectionData(item));
+                                array.Add(VpnConnectionData.DeserializeVpnConnectionData(item, options));
                             }
                             connections = array;
                             continue;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnGatewayIPConfiguration> array = new List<VpnGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item));
+                                array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnGatewayNatRuleData> array = new List<VpnGatewayNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item));
+                                array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item, options));
                             }
                             natRules = array;
                             continue;

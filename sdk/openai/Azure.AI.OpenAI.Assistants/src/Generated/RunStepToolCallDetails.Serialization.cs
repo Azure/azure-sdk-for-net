@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStepToolCall> array = new List<RunStepToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStepToolCall.DeserializeRunStepToolCall(item));
+                        array.Add(RunStepToolCall.DeserializeRunStepToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;

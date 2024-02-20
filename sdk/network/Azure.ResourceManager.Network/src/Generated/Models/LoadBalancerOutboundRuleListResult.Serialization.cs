@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<OutboundRuleData> array = new List<OutboundRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
+                        array.Add(OutboundRuleData.DeserializeOutboundRuleData(item, options));
                     }
                     value = array;
                     continue;

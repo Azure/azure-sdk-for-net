@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringServiceData> array = new List<PeeringServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringServiceData.DeserializePeeringServiceData(item));
+                        array.Add(PeeringServiceData.DeserializePeeringServiceData(item, options));
                     }
                     value = array;
                     continue;

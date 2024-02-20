@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                     List<AudioTranscriptionSegment> array = new List<AudioTranscriptionSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item));
+                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item, options));
                     }
                     segments = array;
                     continue;

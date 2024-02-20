@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = PolicySignaturesOverridesForIdpsProperties.DeserializePolicySignaturesOverridesForIdpsProperties(property.Value);
+                    properties = PolicySignaturesOverridesForIdpsProperties.DeserializePolicySignaturesOverridesForIdpsProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalAvailableContact> array = new List<OrbitalAvailableContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item));
+                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item, options));
                     }
                     value = array;
                     continue;

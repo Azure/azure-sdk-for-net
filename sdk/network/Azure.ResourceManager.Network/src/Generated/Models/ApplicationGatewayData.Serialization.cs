@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = ApplicationGatewaySku.DeserializeApplicationGatewaySku(property0.Value);
+                            sku = ApplicationGatewaySku.DeserializeApplicationGatewaySku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sslPolicy"u8))
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value);
+                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("operationalState"u8))
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayIPConfiguration> array = new List<ApplicationGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item));
+                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item, options));
                             }
                             gatewayIPConfigurations = array;
                             continue;
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayAuthenticationCertificate> array = new List<ApplicationGatewayAuthenticationCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayAuthenticationCertificate.DeserializeApplicationGatewayAuthenticationCertificate(item));
+                                array.Add(ApplicationGatewayAuthenticationCertificate.DeserializeApplicationGatewayAuthenticationCertificate(item, options));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayTrustedRootCertificate> array = new List<ApplicationGatewayTrustedRootCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayTrustedRootCertificate.DeserializeApplicationGatewayTrustedRootCertificate(item));
+                                array.Add(ApplicationGatewayTrustedRootCertificate.DeserializeApplicationGatewayTrustedRootCertificate(item, options));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayTrustedClientCertificate> array = new List<ApplicationGatewayTrustedClientCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayTrustedClientCertificate.DeserializeApplicationGatewayTrustedClientCertificate(item));
+                                array.Add(ApplicationGatewayTrustedClientCertificate.DeserializeApplicationGatewayTrustedClientCertificate(item, options));
                             }
                             trustedClientCertificates = array;
                             continue;
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewaySslCertificate> array = new List<ApplicationGatewaySslCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewaySslCertificate.DeserializeApplicationGatewaySslCertificate(item));
+                                array.Add(ApplicationGatewaySslCertificate.DeserializeApplicationGatewaySslCertificate(item, options));
                             }
                             sslCertificates = array;
                             continue;
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayFrontendIPConfiguration> array = new List<ApplicationGatewayFrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayFrontendIPConfiguration.DeserializeApplicationGatewayFrontendIPConfiguration(item));
+                                array.Add(ApplicationGatewayFrontendIPConfiguration.DeserializeApplicationGatewayFrontendIPConfiguration(item, options));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayFrontendPort> array = new List<ApplicationGatewayFrontendPort>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayFrontendPort.DeserializeApplicationGatewayFrontendPort(item));
+                                array.Add(ApplicationGatewayFrontendPort.DeserializeApplicationGatewayFrontendPort(item, options));
                             }
                             frontendPorts = array;
                             continue;
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayProbe> array = new List<ApplicationGatewayProbe>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayProbe.DeserializeApplicationGatewayProbe(item));
+                                array.Add(ApplicationGatewayProbe.DeserializeApplicationGatewayProbe(item, options));
                             }
                             probes = array;
                             continue;
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayBackendAddressPool> array = new List<ApplicationGatewayBackendAddressPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(item));
+                                array.Add(ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(item, options));
                             }
                             backendAddressPools = array;
                             continue;
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayBackendHttpSettings> array = new List<ApplicationGatewayBackendHttpSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(item));
+                                array.Add(ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(item, options));
                             }
                             backendHttpSettingsCollection = array;
                             continue;
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayBackendSettings> array = new List<ApplicationGatewayBackendSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayBackendSettings.DeserializeApplicationGatewayBackendSettings(item));
+                                array.Add(ApplicationGatewayBackendSettings.DeserializeApplicationGatewayBackendSettings(item, options));
                             }
                             backendSettingsCollection = array;
                             continue;
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayHttpListener> array = new List<ApplicationGatewayHttpListener>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayHttpListener.DeserializeApplicationGatewayHttpListener(item));
+                                array.Add(ApplicationGatewayHttpListener.DeserializeApplicationGatewayHttpListener(item, options));
                             }
                             httpListeners = array;
                             continue;
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayListener> array = new List<ApplicationGatewayListener>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayListener.DeserializeApplicationGatewayListener(item));
+                                array.Add(ApplicationGatewayListener.DeserializeApplicationGatewayListener(item, options));
                             }
                             listeners = array;
                             continue;
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewaySslProfile> array = new List<ApplicationGatewaySslProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewaySslProfile.DeserializeApplicationGatewaySslProfile(item));
+                                array.Add(ApplicationGatewaySslProfile.DeserializeApplicationGatewaySslProfile(item, options));
                             }
                             sslProfiles = array;
                             continue;
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayUrlPathMap> array = new List<ApplicationGatewayUrlPathMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayUrlPathMap.DeserializeApplicationGatewayUrlPathMap(item));
+                                array.Add(ApplicationGatewayUrlPathMap.DeserializeApplicationGatewayUrlPathMap(item, options));
                             }
                             urlPathMaps = array;
                             continue;
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayRequestRoutingRule> array = new List<ApplicationGatewayRequestRoutingRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayRequestRoutingRule.DeserializeApplicationGatewayRequestRoutingRule(item));
+                                array.Add(ApplicationGatewayRequestRoutingRule.DeserializeApplicationGatewayRequestRoutingRule(item, options));
                             }
                             requestRoutingRules = array;
                             continue;
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayRoutingRule> array = new List<ApplicationGatewayRoutingRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayRoutingRule.DeserializeApplicationGatewayRoutingRule(item));
+                                array.Add(ApplicationGatewayRoutingRule.DeserializeApplicationGatewayRoutingRule(item, options));
                             }
                             routingRules = array;
                             continue;
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayRewriteRuleSet> array = new List<ApplicationGatewayRewriteRuleSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayRewriteRuleSet.DeserializeApplicationGatewayRewriteRuleSet(item));
+                                array.Add(ApplicationGatewayRewriteRuleSet.DeserializeApplicationGatewayRewriteRuleSet(item, options));
                             }
                             rewriteRuleSets = array;
                             continue;
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayRedirectConfiguration> array = new List<ApplicationGatewayRedirectConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayRedirectConfiguration.DeserializeApplicationGatewayRedirectConfiguration(item));
+                                array.Add(ApplicationGatewayRedirectConfiguration.DeserializeApplicationGatewayRedirectConfiguration(item, options));
                             }
                             redirectConfigurations = array;
                             continue;
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            webApplicationFirewallConfiguration = ApplicationGatewayWebApplicationFirewallConfiguration.DeserializeApplicationGatewayWebApplicationFirewallConfiguration(property0.Value);
+                            webApplicationFirewallConfiguration = ApplicationGatewayWebApplicationFirewallConfiguration.DeserializeApplicationGatewayWebApplicationFirewallConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"u8))
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoscaleConfiguration = ApplicationGatewayAutoscaleConfiguration.DeserializeApplicationGatewayAutoscaleConfiguration(property0.Value);
+                            autoscaleConfiguration = ApplicationGatewayAutoscaleConfiguration.DeserializeApplicationGatewayAutoscaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkConfigurations"u8))
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayPrivateLinkConfiguration> array = new List<ApplicationGatewayPrivateLinkConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPrivateLinkConfiguration.DeserializeApplicationGatewayPrivateLinkConfiguration(item));
+                                array.Add(ApplicationGatewayPrivateLinkConfiguration.DeserializeApplicationGatewayPrivateLinkConfiguration(item, options));
                             }
                             privateLinkConfigurations = array;
                             continue;
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayPrivateEndpointConnectionData> array = new List<ApplicationGatewayPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(item));
+                                array.Add(ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayCustomError> array = new List<ApplicationGatewayCustomError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item));
+                                array.Add(ApplicationGatewayCustomError.DeserializeApplicationGatewayCustomError(item, options));
                             }
                             customErrorConfigurations = array;
                             continue;
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayLoadDistributionPolicy> array = new List<ApplicationGatewayLoadDistributionPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayLoadDistributionPolicy.DeserializeApplicationGatewayLoadDistributionPolicy(item));
+                                array.Add(ApplicationGatewayLoadDistributionPolicy.DeserializeApplicationGatewayLoadDistributionPolicy(item, options));
                             }
                             loadDistributionPolicies = array;
                             continue;
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            globalConfiguration = ApplicationGatewayGlobalConfiguration.DeserializeApplicationGatewayGlobalConfiguration(property0.Value);
+                            globalConfiguration = ApplicationGatewayGlobalConfiguration.DeserializeApplicationGatewayGlobalConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultPredefinedSslPolicy"u8))

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsUsageMetric> array = new List<OperationalInsightsUsageMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(item));
+                        array.Add(OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(item, options));
                     }
                     value = array;
                     continue;

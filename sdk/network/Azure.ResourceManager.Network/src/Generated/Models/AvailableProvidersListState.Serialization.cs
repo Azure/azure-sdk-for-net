@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
+                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item, options));
                     }
                     cities = array;
                     continue;

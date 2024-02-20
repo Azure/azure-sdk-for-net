@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -142,7 +142,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value);
+                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delta"u8))
@@ -151,7 +151,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("content_filter_results"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enhancements"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
+                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

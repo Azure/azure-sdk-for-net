@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value);
+                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                     {
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = SystemData.DeserializeSystemData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

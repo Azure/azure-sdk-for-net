@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteProviderPortData> array = new List<ExpressRouteProviderPortData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(item));
+                        array.Add(ExpressRouteProviderPortData.DeserializeExpressRouteProviderPortData(item, options));
                     }
                     value = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MySql
                     {
                         continue;
                     }
-                    properties = MySqlPrivateLinkResourceProperties.DeserializeMySqlPrivateLinkResourceProperties(property.Value);
+                    properties = MySqlPrivateLinkResourceProperties.DeserializeMySqlPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
