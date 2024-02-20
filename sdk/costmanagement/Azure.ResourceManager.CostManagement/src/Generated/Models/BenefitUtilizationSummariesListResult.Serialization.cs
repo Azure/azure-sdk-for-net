@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<BenefitUtilizationSummary> array = new List<BenefitUtilizationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item));
+                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item, options));
                     }
                     value = array;
                     continue;

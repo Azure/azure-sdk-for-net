@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item, options));
                     }
                     value = array;
                     continue;

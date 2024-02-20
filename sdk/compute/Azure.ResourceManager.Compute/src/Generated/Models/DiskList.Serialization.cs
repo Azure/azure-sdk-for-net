@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ManagedDiskData> array = new List<ManagedDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedDiskData.DeserializeManagedDiskData(item));
+                        array.Add(ManagedDiskData.DeserializeManagedDiskData(item, options));
                     }
                     value = array;
                     continue;

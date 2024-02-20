@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySource> array = new List<PowerQuerySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item));
+                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item, options));
                             }
                             sources = array;
                             continue;

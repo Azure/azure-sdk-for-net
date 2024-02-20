@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item, options));
                     }
                     connectionErrors = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraError> array = new List<CassandraError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraError.DeserializeCassandraError(item));
+                        array.Add(CassandraError.DeserializeCassandraError(item, options));
                     }
                     errors = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item));
+                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item, options));
                     }
                     dataCenters = array;
                     continue;

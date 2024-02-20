@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value);
+                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("previousKeys"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute
                             List<KeyForDiskEncryptionSet> array = new List<KeyForDiskEncryptionSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(item));
+                                array.Add(KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(item, options));
                             }
                             previousKeys = array;
                             continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(property0.Value);
+                            autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("federatedClientId"u8))

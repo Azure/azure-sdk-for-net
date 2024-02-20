@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            costWithNoReservedInstances = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            costWithNoReservedInstances = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recommendedQuantity"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            totalCostWithReservedInstances = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            totalCostWithReservedInstances = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("netSavings"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            netSavings = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            netSavings = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firstUsageDate"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionSkuProperty> array = new List<ConsumptionSkuProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item));
+                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item, options));
                             }
                             skuProperties = array;
                             continue;

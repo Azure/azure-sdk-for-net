@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandDocumentBase> array = new List<RunCommandDocumentBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item));
+                        array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item, options));
                     }
                     value = array;
                     continue;

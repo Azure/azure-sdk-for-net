@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppManagedEnvironmentData> array = new List<ContainerAppManagedEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(item));
+                        array.Add(ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(item, options));
                     }
                     value = array;
                     continue;

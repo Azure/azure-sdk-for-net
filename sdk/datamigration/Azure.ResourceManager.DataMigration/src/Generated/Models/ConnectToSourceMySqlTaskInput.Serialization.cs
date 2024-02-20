@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))

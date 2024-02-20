@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sku = AvailableServiceSkuSku.DeserializeAvailableServiceSkuSku(property.Value);
+                    sku = AvailableServiceSkuSku.DeserializeAvailableServiceSkuSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = AvailableServiceSkuCapacity.DeserializeAvailableServiceSkuCapacity(property.Value);
+                    capacity = AvailableServiceSkuCapacity.DeserializeAvailableServiceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

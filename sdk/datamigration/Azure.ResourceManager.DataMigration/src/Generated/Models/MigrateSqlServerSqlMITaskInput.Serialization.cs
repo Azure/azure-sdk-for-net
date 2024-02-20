@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupBlobShare"u8))
                 {
-                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value);
+                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupMode"u8))
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

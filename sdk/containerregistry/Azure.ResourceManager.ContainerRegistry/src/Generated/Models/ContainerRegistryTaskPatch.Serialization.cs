@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value);
+                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
+                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolName"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value);
+                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value);
+                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
+                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"u8))

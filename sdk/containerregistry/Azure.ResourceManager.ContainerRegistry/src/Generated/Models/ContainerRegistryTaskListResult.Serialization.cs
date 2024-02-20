@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskData> array = new List<ContainerRegistryTaskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(item));
+                        array.Add(ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(item, options));
                     }
                     value = array;
                     continue;

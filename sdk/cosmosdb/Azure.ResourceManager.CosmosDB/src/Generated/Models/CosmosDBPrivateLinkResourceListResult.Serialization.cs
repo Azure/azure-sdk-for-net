@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPrivateLinkResourceData> array = new List<CosmosDBPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(item));
+                        array.Add(CosmosDBPrivateLinkResourceData.DeserializeCosmosDBPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

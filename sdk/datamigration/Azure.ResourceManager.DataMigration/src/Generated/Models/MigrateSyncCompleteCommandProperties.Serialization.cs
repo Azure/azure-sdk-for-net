@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value);
+                    input = MigrateSyncCompleteCommandInput.DeserializeMigrateSyncCompleteCommandInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value);
+                    output = MigrateSyncCompleteCommandOutput.DeserializeMigrateSyncCompleteCommandOutput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commandId"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;

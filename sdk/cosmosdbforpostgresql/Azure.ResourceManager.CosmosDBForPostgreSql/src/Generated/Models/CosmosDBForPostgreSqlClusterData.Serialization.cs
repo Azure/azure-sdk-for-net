@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value);
+                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preferredPrimaryZone"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlServerNameItem> array = new List<CosmosDBForPostgreSqlServerNameItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item));
+                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item, options));
                             }
                             serverNames = array;
                             continue;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> array = new List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item));
+                                array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -71,14 +71,14 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "conditional": return ConditionalQueueSelectorAttachment.DeserializeConditionalQueueSelectorAttachment(element);
-                    case "passThrough": return PassThroughQueueSelectorAttachment.DeserializePassThroughQueueSelectorAttachment(element);
-                    case "ruleEngine": return RuleEngineQueueSelectorAttachment.DeserializeRuleEngineQueueSelectorAttachment(element);
-                    case "static": return StaticQueueSelectorAttachment.DeserializeStaticQueueSelectorAttachment(element);
-                    case "weightedAllocation": return WeightedAllocationQueueSelectorAttachment.DeserializeWeightedAllocationQueueSelectorAttachment(element);
+                    case "conditional": return ConditionalQueueSelectorAttachment.DeserializeConditionalQueueSelectorAttachment(element, options);
+                    case "passThrough": return PassThroughQueueSelectorAttachment.DeserializePassThroughQueueSelectorAttachment(element, options);
+                    case "ruleEngine": return RuleEngineQueueSelectorAttachment.DeserializeRuleEngineQueueSelectorAttachment(element, options);
+                    case "static": return StaticQueueSelectorAttachment.DeserializeStaticQueueSelectorAttachment(element, options);
+                    case "weightedAllocation": return WeightedAllocationQueueSelectorAttachment.DeserializeWeightedAllocationQueueSelectorAttachment(element, options);
                 }
             }
-            return UnknownQueueSelectorAttachment.DeserializeUnknownQueueSelectorAttachment(element);
+            return UnknownQueueSelectorAttachment.DeserializeUnknownQueueSelectorAttachment(element, options);
         }
 
         BinaryData IPersistableModel<QueueSelectorAttachment>.Write(ModelReaderWriterOptions options)

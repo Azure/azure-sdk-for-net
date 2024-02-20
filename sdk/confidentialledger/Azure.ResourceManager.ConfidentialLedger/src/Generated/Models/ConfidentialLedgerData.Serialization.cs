@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         continue;
                     }
-                    properties = ConfidentialLedgerProperties.DeserializeConfidentialLedgerProperties(property.Value);
+                    properties = ConfidentialLedgerProperties.DeserializeConfidentialLedgerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

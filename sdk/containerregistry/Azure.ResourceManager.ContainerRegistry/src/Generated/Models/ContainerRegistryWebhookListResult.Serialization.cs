@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryWebhookData> array = new List<ContainerRegistryWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item));
+                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item, options));
                     }
                     value = array;
                     continue;

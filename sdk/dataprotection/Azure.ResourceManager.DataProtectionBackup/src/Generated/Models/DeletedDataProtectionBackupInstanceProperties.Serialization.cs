@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    deletionInfo = BackupInstanceDeletionInfo.DeserializeBackupInstanceDeletionInfo(property.Value);
+                    deletionInfo = BackupInstanceDeletionInfo.DeserializeBackupInstanceDeletionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("dataSourceInfo"u8))
                 {
-                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSourceSetInfo"u8))
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyInfo"u8))
                 {
-                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value);
+                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectionStatus"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value);
+                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentProtectionState"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

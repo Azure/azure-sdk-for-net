@@ -71,12 +71,12 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element);
-                    case "queueAndMatch": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element);
-                    case "suspend": return SuspendMode.DeserializeSuspendMode(element);
+                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
+                    case "queueAndMatch": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
+                    case "suspend": return SuspendMode.DeserializeSuspendMode(element, options);
                 }
             }
-            return UnknownJobMatchingMode.DeserializeUnknownJobMatchingMode(element);
+            return UnknownJobMatchingMode.DeserializeUnknownJobMatchingMode(element, options);
         }
 
         BinaryData IPersistableModel<JobMatchingMode>.Write(ModelReaderWriterOptions options)

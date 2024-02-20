@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

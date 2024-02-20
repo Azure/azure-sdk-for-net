@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value);
+                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

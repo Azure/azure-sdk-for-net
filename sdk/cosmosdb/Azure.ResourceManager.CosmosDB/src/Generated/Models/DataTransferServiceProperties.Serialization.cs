@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferRegionalService> array = new List<DataTransferRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item));
+                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item, options));
                     }
                     locations = array;
                     continue;

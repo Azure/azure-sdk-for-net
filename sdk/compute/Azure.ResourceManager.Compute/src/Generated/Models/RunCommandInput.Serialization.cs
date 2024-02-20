@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     parameters = array;
                     continue;

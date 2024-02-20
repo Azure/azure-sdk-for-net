@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value);
+                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value);
+                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runHistory"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value);
+                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partitionData"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value);
+                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value, options);
                             continue;
                         }
                     }

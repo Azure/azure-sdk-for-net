@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppJobScaleRule> array = new List<ContainerAppJobScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppJobScaleRule.DeserializeContainerAppJobScaleRule(item));
+                        array.Add(ContainerAppJobScaleRule.DeserializeContainerAppJobScaleRule(item, options));
                     }
                     rules = array;
                     continue;

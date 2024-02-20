@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ApplianceNetworkConfiguration> array = new List<ApplianceNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceNetworkConfiguration.DeserializeApplianceNetworkConfiguration(item));
+                        array.Add(ApplianceNetworkConfiguration.DeserializeApplianceNetworkConfiguration(item, options));
                     }
                     networkConfigurations = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxAccountCredentialDetails> array = new List<DataBoxAccountCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item));
+                        array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item, options));
                     }
                     accountCredentialDetails = array;
                     continue;

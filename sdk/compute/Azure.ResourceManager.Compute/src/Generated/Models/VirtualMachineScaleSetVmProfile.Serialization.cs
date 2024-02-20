@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineScaleSetOSProfile.DeserializeVirtualMachineScaleSetOSProfile(property.Value);
+                    osProfile = VirtualMachineScaleSetOSProfile.DeserializeVirtualMachineScaleSetOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = VirtualMachineScaleSetStorageProfile.DeserializeVirtualMachineScaleSetStorageProfile(property.Value);
+                    storageProfile = VirtualMachineScaleSetStorageProfile.DeserializeVirtualMachineScaleSetStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value);
+                    networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value);
+                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value);
+                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledEventsProfile"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value);
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userData"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value);
+                    capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationProfile"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value);
+                    applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
+                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value);
+                    securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeCreated"u8))
