@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageServicePrincipalData> array = new List<AutomanageServicePrincipalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item));
+                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item, options));
                     }
                     value = array;
                     continue;

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TieringCostRehydrationInfo": return TieringCostRehydrationInfo.DeserializeTieringCostRehydrationInfo(element);
-                    case "TieringCostSavingInfo": return TieringCostSavingInfo.DeserializeTieringCostSavingInfo(element);
+                    case "TieringCostRehydrationInfo": return TieringCostRehydrationInfo.DeserializeTieringCostRehydrationInfo(element, options);
+                    case "TieringCostSavingInfo": return TieringCostSavingInfo.DeserializeTieringCostSavingInfo(element, options);
                 }
             }
-            return UnknownTieringCostInfo.DeserializeUnknownTieringCostInfo(element);
+            return UnknownTieringCostInfo.DeserializeUnknownTieringCostInfo(element, options);
         }
 
         BinaryData IPersistableModel<TieringCostInfo>.Write(ModelReaderWriterOptions options)

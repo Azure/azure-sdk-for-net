@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPlannedFailoverModelCustomProperties(document.RootElement, options);
+            return DeserializePlannedFailoverModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownPlannedFailoverModelCustomProperties DeserializeUnknownPlannedFailoverModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPlannedFailoverModelCustomProperties(document.RootElement, options);
+                        return DeserializePlannedFailoverModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support '{options.Format}' format.");

@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRoutePortsLocationBandwidths> array = new List<ExpressRoutePortsLocationBandwidths>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRoutePortsLocationBandwidths.DeserializeExpressRoutePortsLocationBandwidths(item));
+                                array.Add(ExpressRoutePortsLocationBandwidths.DeserializeExpressRoutePortsLocationBandwidths(item, options));
                             }
                             availableBandwidths = array;
                             continue;

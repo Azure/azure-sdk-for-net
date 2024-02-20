@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element);
-                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element);
+                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element, options);
+                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element, options);
                 }
             }
-            return UnknownAddon.DeserializeUnknownAddon(element);
+            return UnknownAddon.DeserializeUnknownAddon(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options)

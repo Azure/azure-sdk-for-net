@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraViewGetResultData> array = new List<CassandraViewGetResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraViewGetResultData.DeserializeCassandraViewGetResultData(item));
+                        array.Add(CassandraViewGetResultData.DeserializeCassandraViewGetResultData(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitoredResourceDetails> array = new List<DynatraceMonitoredResourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails(item));
+                        array.Add(DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails(item, options));
                     }
                     value = array;
                     continue;

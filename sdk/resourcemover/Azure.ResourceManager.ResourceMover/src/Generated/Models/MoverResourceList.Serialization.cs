@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceData> array = new List<MoverResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceData.DeserializeMoverResourceData(item));
+                        array.Add(MoverResourceData.DeserializeMoverResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         summaryCollection = null;
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))

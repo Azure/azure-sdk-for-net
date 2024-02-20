@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
+                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureCredentials"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);
+                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contextPath"u8))

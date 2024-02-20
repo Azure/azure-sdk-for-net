@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputBasicProperties> array = new List<MediaJobInputBasicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMediaJobInputBasicProperties(item));
+                        array.Add(DeserializeMediaJobInputBasicProperties(item, options));
                     }
                     inputs = array;
                     continue;

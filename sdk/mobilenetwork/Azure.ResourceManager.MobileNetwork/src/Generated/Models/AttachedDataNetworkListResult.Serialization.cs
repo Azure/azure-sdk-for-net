@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileAttachedDataNetworkData> array = new List<MobileAttachedDataNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(item));
+                        array.Add(MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(item, options));
                     }
                     value = array;
                     continue;

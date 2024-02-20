@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                             List<HDInsightIPConfiguration> array = new List<HDInsightIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item));
+                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;

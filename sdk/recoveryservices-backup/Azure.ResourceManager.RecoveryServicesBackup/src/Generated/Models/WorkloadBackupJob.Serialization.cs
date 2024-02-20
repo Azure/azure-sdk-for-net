@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadErrorInfo> array = new List<WorkloadErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item));
+                        array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadBackupJobExtendedInfo.DeserializeWorkloadBackupJobExtendedInfo(property.Value);
+                    extendedInfo = WorkloadBackupJobExtendedInfo.DeserializeWorkloadBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

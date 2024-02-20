@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkManagerScopes = NetworkManagerPropertiesNetworkManagerScopes.DeserializeNetworkManagerPropertiesNetworkManagerScopes(property0.Value);
+                            networkManagerScopes = NetworkManagerPropertiesNetworkManagerScopes.DeserializeNetworkManagerPropertiesNetworkManagerScopes(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkManagerScopeAccesses"u8))

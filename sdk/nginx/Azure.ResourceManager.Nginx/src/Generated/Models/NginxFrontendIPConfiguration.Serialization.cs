@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxPrivateIPAddress> array = new List<NginxPrivateIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item));
+                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item, options));
                     }
                     privateIPAddresses = array;
                     continue;

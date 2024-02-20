@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = TelephonyChannelProperties.DeserializeTelephonyChannelProperties(property.Value);
+                    properties = TelephonyChannelProperties.DeserializeTelephonyChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

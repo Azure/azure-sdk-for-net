@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = NetezzaPartitionSettings.DeserializeNetezzaPartitionSettings(property.Value);
+                    partitionSettings = NetezzaPartitionSettings.DeserializeNetezzaPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

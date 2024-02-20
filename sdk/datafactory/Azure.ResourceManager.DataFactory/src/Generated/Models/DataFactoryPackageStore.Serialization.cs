@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageStoreLinkedService"u8))
                 {
-                    packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

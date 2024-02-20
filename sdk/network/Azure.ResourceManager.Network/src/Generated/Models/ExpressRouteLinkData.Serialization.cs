@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value);
+                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value, options);
                             continue;
                         }
                     }

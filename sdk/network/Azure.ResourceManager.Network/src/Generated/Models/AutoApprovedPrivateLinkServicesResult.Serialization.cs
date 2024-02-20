@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AutoApprovedPrivateLinkService> array = new List<AutoApprovedPrivateLinkService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(item));
+                        array.Add(AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(item, options));
                     }
                     value = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SynapseIntegrationRuntimeProperties.DeserializeSynapseIntegrationRuntimeProperties(property.Value);
+                    properties = SynapseIntegrationRuntimeProperties.DeserializeSynapseIntegrationRuntimeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

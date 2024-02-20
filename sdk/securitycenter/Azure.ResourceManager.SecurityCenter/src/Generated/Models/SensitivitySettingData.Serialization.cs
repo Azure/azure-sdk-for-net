@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SensitivitySettingsProperties.DeserializeSensitivitySettingsProperties(property.Value);
+                    properties = SensitivitySettingsProperties.DeserializeSensitivitySettingsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
+                    ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("caching"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value);
+                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))

@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FacetError": return FacetError.DeserializeFacetError(element);
-                    case "FacetResult": return FacetResult.DeserializeFacetResult(element);
+                    case "FacetError": return FacetError.DeserializeFacetError(element, options);
+                    case "FacetResult": return FacetResult.DeserializeFacetResult(element, options);
                 }
             }
-            return UnknownFacet.DeserializeUnknownFacet(element);
+            return UnknownFacet.DeserializeUnknownFacet(element, options);
         }
 
         BinaryData IPersistableModel<Facet>.Write(ModelReaderWriterOptions options)

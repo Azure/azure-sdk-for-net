@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleRecurrence> array = new List<AlertProcessingRuleRecurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item));
+                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item, options));
                     }
                     recurrences = array;
                     continue;

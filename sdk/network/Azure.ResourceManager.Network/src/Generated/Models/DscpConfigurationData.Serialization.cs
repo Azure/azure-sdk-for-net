@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                             }
                             sourceIPRanges = array;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                             }
                             destinationIPRanges = array;
                             continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                             }
                             sourcePortRanges = array;
                             continue;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                             }
                             destinationPortRanges = array;
                             continue;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                             List<DscpQosDefinition> array = new List<DscpQosDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
+                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item, options));
                             }
                             qosDefinitionCollection = array;
                             continue;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             associatedNetworkInterfaces = array;
                             continue;

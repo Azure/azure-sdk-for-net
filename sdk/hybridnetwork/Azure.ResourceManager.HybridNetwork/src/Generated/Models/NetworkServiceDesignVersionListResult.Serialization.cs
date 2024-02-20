@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NetworkServiceDesignVersionData> array = new List<NetworkServiceDesignVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(item));
+                        array.Add(NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(item, options));
                     }
                     value = array;
                     continue;

@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            helmOperatorProperties = HelmOperatorProperties.DeserializeHelmOperatorProperties(property0.Value);
+                            helmOperatorProperties = HelmOperatorProperties.DeserializeHelmOperatorProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            complianceStatus = KubernetesConfigurationComplianceStatus.DeserializeKubernetesConfigurationComplianceStatus(property0.Value);
+                            complianceStatus = KubernetesConfigurationComplianceStatus.DeserializeKubernetesConfigurationComplianceStatus(property0.Value, options);
                             continue;
                         }
                     }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("deliverToDcPackageDetails"u8))
                 {
-                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value);
+                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpressionErrorInfo> array = new List<LogicExpressionErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpressionErrorInfo(item));
+                        array.Add(DeserializeLogicExpressionErrorInfo(item, options));
                     }
                     details = array;
                     continue;

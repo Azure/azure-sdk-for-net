@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value);
+                    istio = IstioServiceMesh.DeserializeIstioServiceMesh(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

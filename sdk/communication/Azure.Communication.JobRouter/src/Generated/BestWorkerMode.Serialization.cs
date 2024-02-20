@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRule = RouterRule.DeserializeRouterRule(property.Value);
+                    scoringRule = RouterRule.DeserializeRouterRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scoringRuleOptions"u8))
@@ -117,7 +117,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minConcurrentOffers"u8))

@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxAccountCopyLogDetails.DeserializeDataBoxAccountCopyLogDetails(element);
-                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskCopyLogDetails.DeserializeDataBoxCustomerDiskCopyLogDetails(element);
-                    case "DataBoxDisk": return DataBoxDiskCopyLogDetails.DeserializeDataBoxDiskCopyLogDetails(element);
-                    case "DataBoxHeavy": return DataBoxHeavyAccountCopyLogDetails.DeserializeDataBoxHeavyAccountCopyLogDetails(element);
+                    case "DataBox": return DataBoxAccountCopyLogDetails.DeserializeDataBoxAccountCopyLogDetails(element, options);
+                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskCopyLogDetails.DeserializeDataBoxCustomerDiskCopyLogDetails(element, options);
+                    case "DataBoxDisk": return DataBoxDiskCopyLogDetails.DeserializeDataBoxDiskCopyLogDetails(element, options);
+                    case "DataBoxHeavy": return DataBoxHeavyAccountCopyLogDetails.DeserializeDataBoxHeavyAccountCopyLogDetails(element, options);
                 }
             }
-            return UnknownCopyLogDetails.DeserializeUnknownCopyLogDetails(element);
+            return UnknownCopyLogDetails.DeserializeUnknownCopyLogDetails(element, options);
         }
 
         BinaryData IPersistableModel<CopyLogDetails>.Write(ModelReaderWriterOptions options)

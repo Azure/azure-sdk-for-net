@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorRuleSetData> array = new List<FrontDoorRuleSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(item));
+                        array.Add(FrontDoorRuleSetData.DeserializeFrontDoorRuleSetData(item, options));
                     }
                     value = array;
                     continue;

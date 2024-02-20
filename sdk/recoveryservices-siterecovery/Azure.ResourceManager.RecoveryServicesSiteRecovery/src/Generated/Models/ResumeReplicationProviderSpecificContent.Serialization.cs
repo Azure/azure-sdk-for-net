@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VMwareCbt": return VMwareCbtResumeReplicationContent.DeserializeVMwareCbtResumeReplicationContent(element);
+                    case "VMwareCbt": return VMwareCbtResumeReplicationContent.DeserializeVMwareCbtResumeReplicationContent(element, options);
                 }
             }
-            return UnknownResumeReplicationProviderSpecificContent.DeserializeUnknownResumeReplicationProviderSpecificContent(element);
+            return UnknownResumeReplicationProviderSpecificContent.DeserializeUnknownResumeReplicationProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<ResumeReplicationProviderSpecificContent>.Write(ModelReaderWriterOptions options)

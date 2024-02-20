@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVIPConfigDetails> array = new List<HyperVIPConfigDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item));
+                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item, options));
                     }
                     ipConfigs = array;
                     continue;

@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
+                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item, options));
                             }
                             validationDetail = array;
                             continue;

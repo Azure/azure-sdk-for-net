@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value);
+                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restoredLogs"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value);
+                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resultStatistics"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value);
+                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("plan"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value);
+                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

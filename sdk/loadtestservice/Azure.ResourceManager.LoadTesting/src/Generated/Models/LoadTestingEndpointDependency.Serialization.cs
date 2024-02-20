@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDetail> array = new List<LoadTestingEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item));
+                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

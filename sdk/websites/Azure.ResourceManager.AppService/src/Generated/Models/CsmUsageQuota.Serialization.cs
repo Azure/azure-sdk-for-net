@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    name = LocalizableString.DeserializeLocalizableString(property.Value);
+                    name = LocalizableString.DeserializeLocalizableString(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

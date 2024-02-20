@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value);
+                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

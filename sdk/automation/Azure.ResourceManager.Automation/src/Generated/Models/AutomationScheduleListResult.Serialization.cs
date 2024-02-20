@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationScheduleData> array = new List<AutomationScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationScheduleData.DeserializeAutomationScheduleData(item));
+                        array.Add(AutomationScheduleData.DeserializeAutomationScheduleData(item, options));
                     }
                     value = array;
                     continue;

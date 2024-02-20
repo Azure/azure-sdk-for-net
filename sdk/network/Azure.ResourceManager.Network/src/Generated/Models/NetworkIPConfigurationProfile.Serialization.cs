@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

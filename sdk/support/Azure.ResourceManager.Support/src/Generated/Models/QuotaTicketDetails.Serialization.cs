@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportQuotaChangeContent> array = new List<SupportQuotaChangeContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item));
+                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item, options));
                     }
                     quotaChangeRequests = array;
                     continue;

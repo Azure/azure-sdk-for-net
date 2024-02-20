@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessPolicyVirtualMachine> array = new List<JitNetworkAccessPolicyVirtualMachine>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item));
+                                array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item, options));
                             }
                             virtualMachines = array;
                             continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessRequestInfo> array = new List<JitNetworkAccessRequestInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item));
+                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item, options));
                             }
                             requests = array;
                             continue;

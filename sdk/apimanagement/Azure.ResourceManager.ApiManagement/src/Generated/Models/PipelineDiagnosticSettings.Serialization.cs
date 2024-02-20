@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    request = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value);
+                    response = HttpMessageDiagnostic.DeserializeHttpMessageDiagnostic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

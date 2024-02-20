@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value);
+                    windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxOsInfo"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value);
+                    linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

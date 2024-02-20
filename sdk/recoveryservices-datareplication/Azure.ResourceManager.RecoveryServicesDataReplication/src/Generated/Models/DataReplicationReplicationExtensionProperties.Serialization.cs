@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ReplicationExtensionModelCustomProperties.DeserializeReplicationExtensionModelCustomProperties(property.Value);
+                    customProperties = ReplicationExtensionModelCustomProperties.DeserializeReplicationExtensionModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value);
+                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("contentKeyLocation"u8))
                 {
-                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value);
+                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))

@@ -98,7 +98,7 @@ namespace Azure.AI.Translation.Text
                     List<TransliterableScript> array = new List<TransliterableScript>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TransliterableScript.DeserializeTransliterableScript(item));
+                        array.Add(TransliterableScript.DeserializeTransliterableScript(item, options));
                     }
                     scripts = array;
                     continue;

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DefaultResourceProperties": return DefaultResourceProperties.DeserializeDefaultResourceProperties(element);
+                    case "DefaultResourceProperties": return DefaultResourceProperties.DeserializeDefaultResourceProperties(element, options);
                 }
             }
-            return UnknownBaseResourceProperties.DeserializeUnknownBaseResourceProperties(element);
+            return UnknownBaseResourceProperties.DeserializeUnknownBaseResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<BaseResourceProperties>.Write(ModelReaderWriterOptions options)

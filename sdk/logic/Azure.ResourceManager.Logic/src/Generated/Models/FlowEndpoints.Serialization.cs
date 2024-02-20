@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item, options));
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item, options));
                     }
                     accessEndpointIPAddresses = array;
                     continue;

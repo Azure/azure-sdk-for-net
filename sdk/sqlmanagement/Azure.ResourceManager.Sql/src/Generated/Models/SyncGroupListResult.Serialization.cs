@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupData> array = new List<SyncGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupData.DeserializeSyncGroupData(item));
+                        array.Add(SyncGroupData.DeserializeSyncGroupData(item, options));
                     }
                     value = array;
                     continue;

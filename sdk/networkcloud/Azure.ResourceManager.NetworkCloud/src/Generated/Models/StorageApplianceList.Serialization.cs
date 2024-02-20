@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudStorageApplianceData> array = new List<NetworkCloudStorageApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(item));
+                        array.Add(NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(item, options));
                     }
                     value = array;
                     continue;

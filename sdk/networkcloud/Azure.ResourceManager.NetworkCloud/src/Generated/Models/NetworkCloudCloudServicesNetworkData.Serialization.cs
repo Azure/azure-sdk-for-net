@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<EgressEndpoint> array = new List<EgressEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item, options));
                             }
                             additionalEgressEndpoints = array;
                             continue;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<EgressEndpoint> array = new List<EgressEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item, options));
                             }
                             enabledEgressEndpoints = array;
                             continue;

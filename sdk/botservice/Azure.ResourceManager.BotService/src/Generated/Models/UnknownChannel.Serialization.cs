@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChannel(document.RootElement, options);
+            return DeserializeBotChannelProperties(document.RootElement, options);
         }
 
         internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChannel(document.RootElement, options);
+                        return DeserializeBotChannelProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{options.Format}' format.");

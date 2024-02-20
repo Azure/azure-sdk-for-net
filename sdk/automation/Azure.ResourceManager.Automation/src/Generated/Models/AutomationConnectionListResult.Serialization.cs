@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationConnectionData> array = new List<AutomationConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationConnectionData.DeserializeAutomationConnectionData(item));
+                        array.Add(AutomationConnectionData.DeserializeAutomationConnectionData(item, options));
                     }
                     value = array;
                     continue;

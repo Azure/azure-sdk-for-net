@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationRefundRequestProperties.DeserializeReservationRefundRequestProperties(property.Value);
+                    properties = ReservationRefundRequestProperties.DeserializeReservationRefundRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

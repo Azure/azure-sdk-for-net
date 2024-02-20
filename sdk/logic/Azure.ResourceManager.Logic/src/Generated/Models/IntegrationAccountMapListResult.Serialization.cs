@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountMapData> array = new List<IntegrationAccountMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountMapData.DeserializeIntegrationAccountMapData(item));
+                        array.Add(IntegrationAccountMapData.DeserializeIntegrationAccountMapData(item, options));
                     }
                     value = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<DirectLineSite> array = new List<DirectLineSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectLineSite.DeserializeDirectLineSite(item));
+                        array.Add(DirectLineSite.DeserializeDirectLineSite(item, options));
                     }
                     sites = array;
                     continue;

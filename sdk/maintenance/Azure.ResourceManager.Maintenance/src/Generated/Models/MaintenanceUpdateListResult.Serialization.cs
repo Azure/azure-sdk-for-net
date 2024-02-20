@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item));
+                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item, options));
                     }
                     value = array;
                     continue;

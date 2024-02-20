@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            networkProfile = LabNetworkProfile.DeserializeLabNetworkProfile(property0.Value);
+                            networkProfile = LabNetworkProfile.DeserializeLabNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

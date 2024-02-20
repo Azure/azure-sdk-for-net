@@ -73,10 +73,10 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "function": return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element);
+                    case "function": return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element, options);
                 }
             }
-            return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element);
+            return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element, options);
         }
 
         BinaryData IPersistableModel<RequiredToolCall>.Write(ModelReaderWriterOptions options)

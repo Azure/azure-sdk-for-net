@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ServiceFabricVmSizeResourceData> array = new List<ServiceFabricVmSizeResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(item));
+                        array.Add(ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
+                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item, options));
                             }
                             healthChecks = array;
                             continue;

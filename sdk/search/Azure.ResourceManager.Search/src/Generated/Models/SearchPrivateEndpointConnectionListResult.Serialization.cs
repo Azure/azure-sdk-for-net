@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchPrivateEndpointConnectionData> array = new List<SearchPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item));
+                        array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

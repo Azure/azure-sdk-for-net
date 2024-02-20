@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InMageAzureV2": return InMageAzureV2SwitchProviderContent.DeserializeInMageAzureV2SwitchProviderContent(element);
+                    case "InMageAzureV2": return InMageAzureV2SwitchProviderContent.DeserializeInMageAzureV2SwitchProviderContent(element, options);
                 }
             }
-            return UnknownSwitchProviderSpecificContent.DeserializeUnknownSwitchProviderSpecificContent(element);
+            return UnknownSwitchProviderSpecificContent.DeserializeUnknownSwitchProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SwitchProviderSpecificContent>.Write(ModelReaderWriterOptions options)

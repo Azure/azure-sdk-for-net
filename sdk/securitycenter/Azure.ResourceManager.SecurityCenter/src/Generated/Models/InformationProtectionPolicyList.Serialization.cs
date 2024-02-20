@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionPolicy> array = new List<InformationProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item));
+                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item, options));
                     }
                     value = array;
                     continue;

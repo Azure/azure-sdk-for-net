@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value);
+                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HealthBot
                     {
                         continue;
                     }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value);
+                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

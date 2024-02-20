@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationEligibilityResultErrorInfo> array = new List<ReplicationEligibilityResultErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationEligibilityResultErrorInfo.DeserializeReplicationEligibilityResultErrorInfo(item));
+                        array.Add(ReplicationEligibilityResultErrorInfo.DeserializeReplicationEligibilityResultErrorInfo(item, options));
                     }
                     errors = array;
                     continue;

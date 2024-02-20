@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
+                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item, options));
                             }
                             connectableResources = array;
                             continue;

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnection(document.RootElement, options);
+            return DeserializeKustoDataConnectionData(document.RootElement, options);
         }
 
         internal static UnknownDataConnection DeserializeUnknownDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataConnection(document.RootElement, options);
+                        return DeserializeKustoDataConnectionData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KustoDataConnectionData)} does not support '{options.Format}' format.");

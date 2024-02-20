@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ArtifactStoreData> array = new List<ArtifactStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArtifactStoreData.DeserializeArtifactStoreData(item));
+                        array.Add(ArtifactStoreData.DeserializeArtifactStoreData(item, options));
                     }
                     value = array;
                     continue;

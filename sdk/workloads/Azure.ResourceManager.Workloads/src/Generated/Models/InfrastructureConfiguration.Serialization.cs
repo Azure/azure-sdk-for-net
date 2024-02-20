@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SingleServer": return SingleServerConfiguration.DeserializeSingleServerConfiguration(element);
-                    case "ThreeTier": return ThreeTierConfiguration.DeserializeThreeTierConfiguration(element);
+                    case "SingleServer": return SingleServerConfiguration.DeserializeSingleServerConfiguration(element, options);
+                    case "ThreeTier": return ThreeTierConfiguration.DeserializeThreeTierConfiguration(element, options);
                 }
             }
-            return UnknownInfrastructureConfiguration.DeserializeUnknownInfrastructureConfiguration(element);
+            return UnknownInfrastructureConfiguration.DeserializeUnknownInfrastructureConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<InfrastructureConfiguration>.Write(ModelReaderWriterOptions options)

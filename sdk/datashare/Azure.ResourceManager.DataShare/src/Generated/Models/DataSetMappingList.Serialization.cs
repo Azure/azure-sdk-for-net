@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ShareDataSetMappingData> array = new List<ShareDataSetMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareDataSetMappingData.DeserializeShareDataSetMappingData(item));
+                        array.Add(ShareDataSetMappingData.DeserializeShareDataSetMappingData(item, options));
                     }
                     value = array;
                     continue;

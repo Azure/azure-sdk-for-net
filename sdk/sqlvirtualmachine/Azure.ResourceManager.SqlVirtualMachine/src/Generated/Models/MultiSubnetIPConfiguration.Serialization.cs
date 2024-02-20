@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlVirtualMachineInstance"u8))

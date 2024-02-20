@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> array = new List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCustomDomainVerificationFailureInfoDetailsItem.DeserializeContainerAppCustomDomainVerificationFailureInfoDetailsItem(item));
+                        array.Add(ContainerAppCustomDomainVerificationFailureInfoDetailsItem.DeserializeContainerAppCustomDomainVerificationFailureInfoDetailsItem(item, options));
                     }
                     details = array;
                     continue;

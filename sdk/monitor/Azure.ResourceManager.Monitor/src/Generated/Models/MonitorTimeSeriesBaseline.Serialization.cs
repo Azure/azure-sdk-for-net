@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricSingleDimension> array = new List<MonitorMetricSingleDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item));
+                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorSingleBaseline> array = new List<MonitorSingleBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item));
+                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item, options));
                     }
                     data = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorBaselineMetadata> array = new List<MonitorBaselineMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item));
+                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item, options));
                     }
                     metadataValues = array;
                     continue;

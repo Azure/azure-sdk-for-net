@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsDataExportData> array = new List<OperationalInsightsDataExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(item));
+                        array.Add(OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(item, options));
                     }
                     value = array;
                     continue;

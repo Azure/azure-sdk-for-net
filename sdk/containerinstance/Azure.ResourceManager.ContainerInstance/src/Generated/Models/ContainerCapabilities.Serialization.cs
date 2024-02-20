@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value);
+                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

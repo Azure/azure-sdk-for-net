@@ -106,7 +106,7 @@ namespace Azure.AI.OpenAI
                     List<AzureGroundingEnhancementCoordinatePoint> array = new List<AzureGroundingEnhancementCoordinatePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureGroundingEnhancementCoordinatePoint.DeserializeAzureGroundingEnhancementCoordinatePoint(item));
+                        array.Add(AzureGroundingEnhancementCoordinatePoint.DeserializeAzureGroundingEnhancementCoordinatePoint(item, options));
                     }
                     polygon = array;
                     continue;

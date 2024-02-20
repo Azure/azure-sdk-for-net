@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value);
+                            azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetPlatform"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
+                            sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetConnectionInfo"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
+                            targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databasesInfo"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataMigration
                             List<DatabaseInfo> array = new List<DatabaseInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseInfo.DeserializeDatabaseInfo(item));
+                                array.Add(DatabaseInfo.DeserializeDatabaseInfo(item, options));
                             }
                             databasesInfo = array;
                             continue;

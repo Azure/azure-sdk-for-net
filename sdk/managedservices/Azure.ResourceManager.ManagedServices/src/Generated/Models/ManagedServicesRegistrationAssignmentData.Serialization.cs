@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationAssignmentProperties.DeserializeManagedServicesRegistrationAssignmentProperties(property.Value);
+                    properties = ManagedServicesRegistrationAssignmentProperties.DeserializeManagedServicesRegistrationAssignmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

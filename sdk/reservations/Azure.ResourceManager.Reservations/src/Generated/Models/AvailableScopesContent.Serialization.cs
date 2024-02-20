@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = AvailableScopeRequestProperties.DeserializeAvailableScopeRequestProperties(property.Value);
+                    properties = AvailableScopeRequestProperties.DeserializeAvailableScopeRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

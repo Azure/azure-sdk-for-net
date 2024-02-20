@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value);
+                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ip"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value);
+                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

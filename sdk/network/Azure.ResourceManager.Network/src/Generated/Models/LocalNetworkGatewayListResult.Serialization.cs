@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<LocalNetworkGatewayData> array = new List<LocalNetworkGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(item));
+                        array.Add(LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(item, options));
                     }
                     value = array;
                     continue;

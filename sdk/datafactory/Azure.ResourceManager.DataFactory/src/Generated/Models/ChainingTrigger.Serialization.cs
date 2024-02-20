@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value);
+                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryPipelineReference> array = new List<DataFactoryPipelineReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(item));
+                                array.Add(DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(item, options));
                             }
                             dependsOn = array;
                             continue;

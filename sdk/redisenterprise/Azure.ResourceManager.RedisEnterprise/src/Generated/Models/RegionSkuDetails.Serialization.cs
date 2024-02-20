@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseRegionSkuDetail> array = new List<RedisEnterpriseRegionSkuDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(item));
+                        array.Add(RedisEnterpriseRegionSkuDetail.DeserializeRedisEnterpriseRegionSkuDetail(item, options));
                     }
                     value = array;
                     continue;

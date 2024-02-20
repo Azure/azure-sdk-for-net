@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputePrivateLinkResourceData> array = new List<ComputePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item));
+                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

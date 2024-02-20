@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningEstimatedVmPrice> array = new List<MachineLearningEstimatedVmPrice>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningEstimatedVmPrice.DeserializeMachineLearningEstimatedVmPrice(item));
+                        array.Add(MachineLearningEstimatedVmPrice.DeserializeMachineLearningEstimatedVmPrice(item, options));
                     }
                     values = array;
                     continue;

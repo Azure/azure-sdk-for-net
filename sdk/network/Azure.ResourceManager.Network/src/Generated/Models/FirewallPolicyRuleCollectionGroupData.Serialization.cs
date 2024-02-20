@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                             List<FirewallPolicyRuleCollectionInfo> array = new List<FirewallPolicyRuleCollectionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallPolicyRuleCollectionInfo.DeserializeFirewallPolicyRuleCollectionInfo(item));
+                                array.Add(FirewallPolicyRuleCollectionInfo.DeserializeFirewallPolicyRuleCollectionInfo(item, options));
                             }
                             ruleCollections = array;
                             continue;

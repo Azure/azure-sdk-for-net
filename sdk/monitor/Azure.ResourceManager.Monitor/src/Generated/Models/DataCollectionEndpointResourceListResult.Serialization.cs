@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionEndpointData> array = new List<DataCollectionEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionEndpointData.DeserializeDataCollectionEndpointData(item));
+                        array.Add(DataCollectionEndpointData.DeserializeDataCollectionEndpointData(item, options));
                     }
                     value = array;
                     continue;

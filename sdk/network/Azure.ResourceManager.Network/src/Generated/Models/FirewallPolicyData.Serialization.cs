@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            threatIntelWhitelist = FirewallPolicyThreatIntelWhitelist.DeserializeFirewallPolicyThreatIntelWhitelist(property0.Value);
+                            threatIntelWhitelist = FirewallPolicyThreatIntelWhitelist.DeserializeFirewallPolicyThreatIntelWhitelist(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("insights"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            insights = FirewallPolicyInsights.DeserializeFirewallPolicyInsights(property0.Value);
+                            insights = FirewallPolicyInsights.DeserializeFirewallPolicyInsights(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("snat"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            snat = FirewallPolicySnat.DeserializeFirewallPolicySnat(property0.Value);
+                            snat = FirewallPolicySnat.DeserializeFirewallPolicySnat(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sql"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sql = FirewallPolicySQL.DeserializeFirewallPolicySQL(property0.Value);
+                            sql = FirewallPolicySQL.DeserializeFirewallPolicySQL(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = DnsSettings.DeserializeDnsSettings(property0.Value);
+                            dnsSettings = DnsSettings.DeserializeDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("explicitProxy"u8))
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(property0.Value);
+                            explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("intrusionDetection"u8))
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            intrusionDetection = FirewallPolicyIntrusionDetection.DeserializeFirewallPolicyIntrusionDetection(property0.Value);
+                            intrusionDetection = FirewallPolicyIntrusionDetection.DeserializeFirewallPolicyIntrusionDetection(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("transportSecurity"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            transportSecurity = FirewallPolicyTransportSecurity.DeserializeFirewallPolicyTransportSecurity(property0.Value);
+                            transportSecurity = FirewallPolicyTransportSecurity.DeserializeFirewallPolicyTransportSecurity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = FirewallPolicySku.DeserializeFirewallPolicySku(property0.Value);
+                            sku = FirewallPolicySku.DeserializeFirewallPolicySku(property0.Value, options);
                             continue;
                         }
                     }

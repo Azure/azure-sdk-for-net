@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
+                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))

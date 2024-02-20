@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value);
+                    interval = DateTimeInterval.DeserializeDateTimeInterval(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("$top"u8))

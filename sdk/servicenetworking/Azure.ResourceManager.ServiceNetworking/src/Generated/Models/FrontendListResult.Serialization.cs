@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     List<FrontendData> array = new List<FrontendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendData.DeserializeFrontendData(item));
+                        array.Add(FrontendData.DeserializeFrontendData(item, options));
                     }
                     value = array;
                     continue;

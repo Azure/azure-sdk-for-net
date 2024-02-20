@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
+                    imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("galleryImageReference"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
+                    galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceUri"u8))

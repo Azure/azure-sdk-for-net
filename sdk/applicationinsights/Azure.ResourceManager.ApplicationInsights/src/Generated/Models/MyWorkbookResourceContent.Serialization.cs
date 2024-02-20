@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    identity = MyWorkbookManagedIdentity.DeserializeMyWorkbookManagedIdentity(property.Value);
+                    identity = MyWorkbookManagedIdentity.DeserializeMyWorkbookManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

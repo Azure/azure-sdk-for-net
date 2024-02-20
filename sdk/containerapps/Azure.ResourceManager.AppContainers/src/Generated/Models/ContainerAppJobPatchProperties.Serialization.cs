@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value);
+                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("template"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value);
+                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundIpAddresses"u8))

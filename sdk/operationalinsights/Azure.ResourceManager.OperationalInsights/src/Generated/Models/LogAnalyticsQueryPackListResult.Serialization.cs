@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<LogAnalyticsQueryPackData> array = new List<LogAnalyticsQueryPackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(item));
+                        array.Add(LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(item, options));
                     }
                     value = array;
                     continue;

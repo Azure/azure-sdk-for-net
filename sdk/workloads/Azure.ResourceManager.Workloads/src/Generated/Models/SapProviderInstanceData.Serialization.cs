@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
+                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            providerSettings = ProviderSpecificProperties.DeserializeProviderSpecificProperties(property0.Value);
+                            providerSettings = ProviderSpecificProperties.DeserializeProviderSpecificProperties(property0.Value, options);
                             continue;
                         }
                     }

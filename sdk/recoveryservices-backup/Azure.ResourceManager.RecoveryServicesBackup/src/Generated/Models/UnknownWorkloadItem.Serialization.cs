@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadItem(document.RootElement, options);
+            return DeserializeWorkloadItem(document.RootElement, options);
         }
 
         internal static UnknownWorkloadItem DeserializeUnknownWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkloadItem(document.RootElement, options);
+                        return DeserializeWorkloadItem(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{options.Format}' format.");

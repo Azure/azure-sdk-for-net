@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<NetworkInterfacesUpdate> array = new List<NetworkInterfacesUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfacesUpdate.DeserializeNetworkInterfacesUpdate(item));
+                        array.Add(NetworkInterfacesUpdate.DeserializeNetworkInterfacesUpdate(item, options));
                     }
                     networkInterfaces = array;
                     continue;

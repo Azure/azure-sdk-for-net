@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadItemResource> array = new List<WorkloadItemResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadItemResource.DeserializeWorkloadItemResource(item));
+                        array.Add(WorkloadItemResource.DeserializeWorkloadItemResource(item, options));
                     }
                     value = array;
                     continue;

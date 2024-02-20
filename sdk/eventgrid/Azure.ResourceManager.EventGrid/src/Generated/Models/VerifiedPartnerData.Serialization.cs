@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerTopicDetails = PartnerDetails.DeserializePartnerDetails(property0.Value);
+                            partnerTopicDetails = PartnerDetails.DeserializePartnerDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnerDestinationDetails"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerDestinationDetails = PartnerDetails.DeserializePartnerDetails(property0.Value);
+                            partnerDestinationDetails = PartnerDetails.DeserializePartnerDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

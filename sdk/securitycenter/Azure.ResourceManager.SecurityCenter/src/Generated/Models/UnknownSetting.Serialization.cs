@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSetting(document.RootElement, options);
+            return DeserializeSecuritySettingData(document.RootElement, options);
         }
 
         internal static UnknownSetting DeserializeUnknownSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSetting(document.RootElement, options);
+                        return DeserializeSecuritySettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{options.Format}' format.");

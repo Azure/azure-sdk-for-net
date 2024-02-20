@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                     }
                     globalPlacementRules = array;
                     continue;

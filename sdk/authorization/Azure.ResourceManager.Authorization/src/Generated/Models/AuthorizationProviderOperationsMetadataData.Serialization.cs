@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderResourceType> array = new List<AuthorizationProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item));
+                        array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item, options));
                     }
                     resourceTypes = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item));
+                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item, options));
                     }
                     operations = array;
                     continue;

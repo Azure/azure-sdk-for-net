@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<DeliveryRule> array = new List<DeliveryRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryRule.DeserializeDeliveryRule(item));
+                        array.Add(DeliveryRule.DeserializeDeliveryRule(item, options));
                     }
                     rules = array;
                     continue;

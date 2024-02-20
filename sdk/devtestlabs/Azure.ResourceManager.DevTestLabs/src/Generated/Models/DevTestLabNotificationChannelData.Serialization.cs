@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabNotificationChannelEvent> array = new List<DevTestLabNotificationChannelEvent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabNotificationChannelEvent.DeserializeDevTestLabNotificationChannelEvent(item));
+                                array.Add(DevTestLabNotificationChannelEvent.DeserializeDevTestLabNotificationChannelEvent(item, options));
                             }
                             events = array;
                             continue;

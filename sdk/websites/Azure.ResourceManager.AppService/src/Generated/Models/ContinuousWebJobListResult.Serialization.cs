@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ContinuousWebJobData> array = new List<ContinuousWebJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContinuousWebJobData.DeserializeContinuousWebJobData(item));
+                        array.Add(ContinuousWebJobData.DeserializeContinuousWebJobData(item, options));
                     }
                     value = array;
                     continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPolicyModelCustomProperties(document.RootElement, options);
+            return DeserializePolicyModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownPolicyModelCustomProperties DeserializeUnknownPolicyModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPolicyModelCustomProperties(document.RootElement, options);
+                        return DeserializePolicyModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support '{options.Format}' format.");

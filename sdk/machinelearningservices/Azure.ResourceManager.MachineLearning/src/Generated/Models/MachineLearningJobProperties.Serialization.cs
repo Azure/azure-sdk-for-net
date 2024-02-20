@@ -228,15 +228,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
-                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
-                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element);
-                    case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element);
-                    case "Spark": return SparkJob.DeserializeSparkJob(element);
-                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
+                    case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
+                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
+                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element, options);
+                    case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
+                    case "Spark": return SparkJob.DeserializeSparkJob(element, options);
+                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
                 }
             }
-            return UnknownJobBase.DeserializeUnknownJobBase(element);
+            return UnknownJobBase.DeserializeUnknownJobBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobProperties>.Write(ModelReaderWriterOptions options)

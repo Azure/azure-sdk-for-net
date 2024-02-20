@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = FunctionDefinition.DeserializeFunctionDefinition(property.Value);
+                    function = FunctionDefinition.DeserializeFunctionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

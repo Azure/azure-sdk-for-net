@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    properties = AttestationServicePatchSpecificParams.DeserializeAttestationServicePatchSpecificParams(property.Value);
+                    properties = AttestationServicePatchSpecificParams.DeserializeAttestationServicePatchSpecificParams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

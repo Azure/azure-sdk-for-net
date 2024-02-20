@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAutomationRuleCondition(document.RootElement, options);
+            return DeserializeSecurityInsightsAutomationRuleCondition(document.RootElement, options);
         }
 
         internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAutomationRuleCondition(document.RootElement, options);
+                        return DeserializeSecurityInsightsAutomationRuleCondition(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAutomationRuleCondition)} does not support '{options.Format}' format.");

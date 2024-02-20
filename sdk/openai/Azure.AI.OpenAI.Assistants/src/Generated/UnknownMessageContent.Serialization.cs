@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMessageContent(document.RootElement, options);
+            return DeserializeMessageContent(document.RootElement, options);
         }
 
         internal static UnknownMessageContent DeserializeUnknownMessageContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMessageContent(document.RootElement, options);
+                        return DeserializeMessageContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MessageContent)} does not support '{options.Format}' format.");

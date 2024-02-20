@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<UpdateDiskContent> array = new List<UpdateDiskContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateDiskContent.DeserializeUpdateDiskContent(item));
+                        array.Add(UpdateDiskContent.DeserializeUpdateDiskContent(item, options));
                     }
                     vmDisks = array;
                     continue;

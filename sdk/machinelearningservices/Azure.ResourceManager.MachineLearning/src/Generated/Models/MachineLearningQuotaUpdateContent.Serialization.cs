@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningQuotaProperties> array = new List<MachineLearningQuotaProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item));
+                        array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item, options));
                     }
                     value = array;
                     continue;

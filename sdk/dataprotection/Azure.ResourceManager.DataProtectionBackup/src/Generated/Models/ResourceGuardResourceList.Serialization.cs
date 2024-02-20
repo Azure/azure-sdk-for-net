@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardData> array = new List<ResourceGuardData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardData.DeserializeResourceGuardData(item));
+                        array.Add(ResourceGuardData.DeserializeResourceGuardData(item, options));
                     }
                     value = array;
                     continue;

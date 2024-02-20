@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("submit_tool_outputs"u8))
                 {
-                    submitToolOutputs = InternalSubmitToolOutputsDetails.DeserializeInternalSubmitToolOutputsDetails(property.Value);
+                    submitToolOutputs = InternalSubmitToolOutputsDetails.DeserializeInternalSubmitToolOutputsDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

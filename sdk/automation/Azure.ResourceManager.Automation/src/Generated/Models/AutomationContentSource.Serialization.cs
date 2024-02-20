@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

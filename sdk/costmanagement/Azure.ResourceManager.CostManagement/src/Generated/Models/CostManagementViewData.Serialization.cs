@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CostManagement
                             List<ViewKpiProperties> array = new List<ViewKpiProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ViewKpiProperties.DeserializeViewKpiProperties(item));
+                                array.Add(ViewKpiProperties.DeserializeViewKpiProperties(item, options));
                             }
                             kpis = array;
                             continue;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.CostManagement
                             List<ViewPivotProperties> array = new List<ViewPivotProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ViewPivotProperties.DeserializeViewPivotProperties(item));
+                                array.Add(ViewPivotProperties.DeserializeViewPivotProperties(item, options));
                             }
                             pivots = array;
                             continue;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.CostManagement
                                     {
                                         continue;
                                     }
-                                    timePeriod = ReportConfigTimePeriod.DeserializeReportConfigTimePeriod(property1.Value);
+                                    timePeriod = ReportConfigTimePeriod.DeserializeReportConfigTimePeriod(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("dataSet"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.CostManagement
                                     {
                                         continue;
                                     }
-                                    dataSet = ReportConfigDataset.DeserializeReportConfigDataset(property1.Value);
+                                    dataSet = ReportConfigDataset.DeserializeReportConfigDataset(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("includeMonetaryCommitment"u8))

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            subnet = WorkloadNetworkSegmentSubnet.DeserializeWorkloadNetworkSegmentSubnet(property0.Value);
+                            subnet = WorkloadNetworkSegmentSubnet.DeserializeWorkloadNetworkSegmentSubnet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("portVif"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Avs
                             List<WorkloadNetworkSegmentPortVif> array = new List<WorkloadNetworkSegmentPortVif>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item));
+                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item, options));
                             }
                             portVif = array;
                             continue;

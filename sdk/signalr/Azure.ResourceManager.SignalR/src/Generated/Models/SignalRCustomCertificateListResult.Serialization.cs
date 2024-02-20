@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRCustomCertificateData> array = new List<SignalRCustomCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(item));
+                        array.Add(SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(item, options));
                     }
                     value = array;
                     continue;

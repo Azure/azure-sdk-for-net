@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecretStoreBasedAuthCredentials": return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element);
+                    case "SecretStoreBasedAuthCredentials": return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element, options);
                 }
             }
-            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element);
+            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupAuthCredentials>.Write(ModelReaderWriterOptions options)

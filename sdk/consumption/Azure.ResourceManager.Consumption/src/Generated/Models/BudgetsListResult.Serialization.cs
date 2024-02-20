@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionBudgetData> array = new List<ConsumptionBudgetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionBudgetData.DeserializeConsumptionBudgetData(item));
+                        array.Add(ConsumptionBudgetData.DeserializeConsumptionBudgetData(item, options));
                     }
                     value = array;
                     continue;

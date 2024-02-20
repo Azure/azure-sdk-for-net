@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<AvailableCluster> array = new List<AvailableCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCluster.DeserializeAvailableCluster(item));
+                        array.Add(AvailableCluster.DeserializeAvailableCluster(item, options));
                     }
                     value = array;
                     continue;

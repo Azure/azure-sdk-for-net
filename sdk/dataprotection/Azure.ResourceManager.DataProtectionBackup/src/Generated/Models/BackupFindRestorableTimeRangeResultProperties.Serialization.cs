@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<RestorableTimeRange> array = new List<RestorableTimeRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item));
+                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item, options));
                     }
                     restorableTimeRanges = array;
                     continue;

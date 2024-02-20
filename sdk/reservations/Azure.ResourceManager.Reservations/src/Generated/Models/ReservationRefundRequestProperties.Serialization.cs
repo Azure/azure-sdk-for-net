@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value);
+                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("returnReason"u8))

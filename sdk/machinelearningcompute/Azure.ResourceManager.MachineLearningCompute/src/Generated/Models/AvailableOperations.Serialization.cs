@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ResourceOperation> array = new List<ResourceOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item));
+                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
                     }
                     value = array;
                     continue;

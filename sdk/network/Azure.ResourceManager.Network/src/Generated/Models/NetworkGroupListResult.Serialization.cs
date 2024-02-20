@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkGroupData> array = new List<NetworkGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkGroupData.DeserializeNetworkGroupData(item));
+                        array.Add(NetworkGroupData.DeserializeNetworkGroupData(item, options));
                     }
                     value = array;
                     continue;

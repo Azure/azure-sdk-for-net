@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2DiskDetails> array = new List<InMageAzureV2DiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item));
+                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item, options));
                     }
                     disksToInclude = array;
                     continue;

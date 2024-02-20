@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value);
+                            timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value);
+                            filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentSpend"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value);
+                            currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notifications"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Consumption
                             Dictionary<string, BudgetAssociatedNotification> dictionary = new Dictionary<string, BudgetAssociatedNotification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value));
+                                dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value, options));
                             }
                             notifications = dictionary;
                             continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value);
+                            forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value, options);
                             continue;
                         }
                     }

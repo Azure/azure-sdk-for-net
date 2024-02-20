@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementExportData> array = new List<CostManagementExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item));
+                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item, options));
                     }
                     value = array;
                     continue;

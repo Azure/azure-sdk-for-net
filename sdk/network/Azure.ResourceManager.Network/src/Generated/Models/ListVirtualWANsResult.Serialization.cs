@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualWanData> array = new List<VirtualWanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWanData.DeserializeVirtualWanData(item));
+                        array.Add(VirtualWanData.DeserializeVirtualWanData(item, options));
                     }
                     value = array;
                     continue;

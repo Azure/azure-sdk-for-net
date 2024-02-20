@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSupportedSku> array = new List<SapSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item));
+                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item, options));
                     }
                     supportedSkus = array;
                     continue;

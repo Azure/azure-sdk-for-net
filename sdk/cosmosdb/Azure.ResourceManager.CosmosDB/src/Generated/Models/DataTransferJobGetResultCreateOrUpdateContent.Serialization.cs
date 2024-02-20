@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataTransferJobProperties.DeserializeDataTransferJobProperties(property.Value);
+                    properties = DataTransferJobProperties.DeserializeDataTransferJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

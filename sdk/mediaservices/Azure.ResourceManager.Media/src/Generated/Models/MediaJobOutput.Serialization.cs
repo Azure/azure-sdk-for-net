@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
+                    case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element, options);
                 }
             }
-            return UnknownJobOutput.DeserializeUnknownJobOutput(element);
+            return UnknownJobOutput.DeserializeUnknownJobOutput(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(document.RootElement, options);
+            return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
         }
 
         internal static UnknownFunctionRetrieveDefaultDefinitionParameters DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(document.RootElement, options);
+                        return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");

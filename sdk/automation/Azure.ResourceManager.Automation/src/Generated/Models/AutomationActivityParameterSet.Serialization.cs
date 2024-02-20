@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterDefinition> array = new List<AutomationActivityParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
+                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item, options));
                     }
                     parameters = array;
                     continue;

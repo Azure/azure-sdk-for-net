@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                     List<AzureGroundingEnhancementLineSpan> array = new List<AzureGroundingEnhancementLineSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureGroundingEnhancementLineSpan.DeserializeAzureGroundingEnhancementLineSpan(item));
+                        array.Add(AzureGroundingEnhancementLineSpan.DeserializeAzureGroundingEnhancementLineSpan(item, options));
                     }
                     spans = array;
                     continue;

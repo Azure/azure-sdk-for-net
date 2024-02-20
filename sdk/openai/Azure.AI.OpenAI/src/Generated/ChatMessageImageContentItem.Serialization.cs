@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("image_url"u8))
                 {
-                    imageUrl = ChatMessageImageUrl.DeserializeChatMessageImageUrl(property.Value);
+                    imageUrl = ChatMessageImageUrl.DeserializeChatMessageImageUrl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

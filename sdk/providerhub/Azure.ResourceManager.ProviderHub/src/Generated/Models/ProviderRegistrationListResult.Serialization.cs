@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ProviderRegistrationData> array = new List<ProviderRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderRegistrationData.DeserializeProviderRegistrationData(item));
+                        array.Add(ProviderRegistrationData.DeserializeProviderRegistrationData(item, options));
                     }
                     value = array;
                     continue;

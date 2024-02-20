@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
-                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
+                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element, options);
+                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element, options);
                 }
             }
-            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element);
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element, options);
         }
 
         BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             List<OperationalInsightsTag> array = new List<OperationalInsightsTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsTag.DeserializeOperationalInsightsTag(item));
+                                array.Add(OperationalInsightsTag.DeserializeOperationalInsightsTag(item, options));
                             }
                             tags = array;
                             continue;

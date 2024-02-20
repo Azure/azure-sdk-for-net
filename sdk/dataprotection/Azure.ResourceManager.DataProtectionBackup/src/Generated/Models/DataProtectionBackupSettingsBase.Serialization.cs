@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupParams": return DataProtectionBackupSettings.DeserializeDataProtectionBackupSettings(element);
+                    case "AzureBackupParams": return DataProtectionBackupSettings.DeserializeDataProtectionBackupSettings(element, options);
                 }
             }
-            return UnknownBackupParameters.DeserializeUnknownBackupParameters(element);
+            return UnknownBackupParameters.DeserializeUnknownBackupParameters(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupSettingsBase>.Write(ModelReaderWriterOptions options)

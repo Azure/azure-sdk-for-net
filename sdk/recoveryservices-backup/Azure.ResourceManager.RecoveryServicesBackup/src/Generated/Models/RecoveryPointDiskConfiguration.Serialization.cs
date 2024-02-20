@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
                     includedDiskList = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
                     excludedDiskList = array;
                     continue;

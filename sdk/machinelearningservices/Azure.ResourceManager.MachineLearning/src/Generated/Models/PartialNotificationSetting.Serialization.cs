@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningWebhook> dictionary = new Dictionary<string, MachineLearningWebhook>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value, options));
                     }
                     webhooks = dictionary;
                     continue;

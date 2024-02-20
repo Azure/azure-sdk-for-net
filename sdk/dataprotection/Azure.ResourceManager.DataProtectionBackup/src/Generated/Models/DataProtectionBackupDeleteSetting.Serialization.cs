@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element);
+                    case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element, options);
                 }
             }
-            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element);
+            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDeleteSetting>.Write(ModelReaderWriterOptions options)

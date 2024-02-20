@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementApprovalStage> array = new List<RoleManagementApprovalStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item));
+                        array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item, options));
                     }
                     approvalStages = array;
                     continue;

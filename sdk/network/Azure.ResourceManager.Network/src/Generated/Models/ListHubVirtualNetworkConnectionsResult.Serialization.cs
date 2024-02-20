@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HubVirtualNetworkConnectionData> array = new List<HubVirtualNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item));
+                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item, options));
                     }
                     value = array;
                     continue;

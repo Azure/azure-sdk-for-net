@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            folder = ChangeDataCaptureFolder.DeserializeChangeDataCaptureFolder(property0.Value);
+                            folder = ChangeDataCaptureFolder.DeserializeChangeDataCaptureFolder(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory
                             List<MapperSourceConnectionsInfo> array = new List<MapperSourceConnectionsInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperSourceConnectionsInfo.DeserializeMapperSourceConnectionsInfo(item));
+                                array.Add(MapperSourceConnectionsInfo.DeserializeMapperSourceConnectionsInfo(item, options));
                             }
                             sourceConnectionsInfo = array;
                             continue;
@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.DataFactory
                             List<MapperTargetConnectionsInfo> array = new List<MapperTargetConnectionsInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperTargetConnectionsInfo.DeserializeMapperTargetConnectionsInfo(item));
+                                array.Add(MapperTargetConnectionsInfo.DeserializeMapperTargetConnectionsInfo(item, options));
                             }
                             targetConnectionsInfo = array;
                             continue;
                         }
                         if (property0.NameEquals("policy"u8))
                         {
-                            policy = MapperPolicy.DeserializeMapperPolicy(property0.Value);
+                            policy = MapperPolicy.DeserializeMapperPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowVNetOverride"u8))

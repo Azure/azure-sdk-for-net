@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RoleAssignmentResourceFormatData> array = new List<RoleAssignmentResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(item));
+                        array.Add(RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

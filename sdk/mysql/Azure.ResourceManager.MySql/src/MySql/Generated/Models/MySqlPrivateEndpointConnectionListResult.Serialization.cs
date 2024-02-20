@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPrivateEndpointConnectionData> array = new List<MySqlPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(item));
+                        array.Add(MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

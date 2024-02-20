@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxValidationInputContent> array = new List<DataBoxValidationInputContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item));
+                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item, options));
                     }
                     individualRequestDetails = array;
                     continue;

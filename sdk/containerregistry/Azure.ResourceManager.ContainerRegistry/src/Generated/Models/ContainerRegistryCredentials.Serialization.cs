@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value);
+                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customRegistries"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Dictionary<string, CustomRegistryCredentials> dictionary = new Dictionary<string, CustomRegistryCredentials>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value));
+                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value, options));
                     }
                     customRegistries = dictionary;
                     continue;

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    properties = LogicApiOperationProperties.DeserializeLogicApiOperationProperties(property.Value);
+                    properties = LogicApiOperationProperties.DeserializeLogicApiOperationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

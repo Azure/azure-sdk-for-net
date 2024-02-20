@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerMonitorConfigCustomHeaderInfo> array = new List<TrafficManagerMonitorConfigCustomHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerMonitorConfigCustomHeaderInfo.DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(item));
+                        array.Add(TrafficManagerMonitorConfigCustomHeaderInfo.DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(item, options));
                     }
                     customHeaders = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<ExpectedStatusCodeRangeInfo> array = new List<ExpectedStatusCodeRangeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpectedStatusCodeRangeInfo.DeserializeExpectedStatusCodeRangeInfo(item));
+                        array.Add(ExpectedStatusCodeRangeInfo.DeserializeExpectedStatusCodeRangeInfo(item, options));
                     }
                     expectedStatusCodeRanges = array;
                     continue;

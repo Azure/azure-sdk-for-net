@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item, options));
                             }
                             fields = array;
                             continue;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<StrongId> array = new List<StrongId>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StrongId.DeserializeStrongId(item));
+                                array.Add(StrongId.DeserializeStrongId(item, options));
                             }
                             strongIds = array;
                             continue;

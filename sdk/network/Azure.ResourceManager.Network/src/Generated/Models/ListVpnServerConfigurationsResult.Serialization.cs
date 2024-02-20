@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnServerConfigurationData> array = new List<VpnServerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnServerConfigurationData.DeserializeVpnServerConfigurationData(item));
+                        array.Add(VpnServerConfigurationData.DeserializeVpnServerConfigurationData(item, options));
                     }
                     value = array;
                     continue;

@@ -221,7 +221,7 @@ namespace Azure.AI.OpenAI
                     List<ChatRequestMessage> array = new List<ChatRequestMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item));
+                        array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item, options));
                     }
                     messages = array;
                     continue;
@@ -235,7 +235,7 @@ namespace Azure.AI.OpenAI
                     List<FunctionDefinition> array = new List<FunctionDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionDefinition.DeserializeFunctionDefinition(item));
+                        array.Add(FunctionDefinition.DeserializeFunctionDefinition(item, options));
                     }
                     functions = array;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionDefinition.DeserializeFunctionDefinition(property.Value);
+                    functionCall = FunctionDefinition.DeserializeFunctionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("max_tokens"u8))
@@ -350,7 +350,7 @@ namespace Azure.AI.OpenAI
                     List<AzureChatExtensionConfiguration> array = new List<AzureChatExtensionConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item));
+                        array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item, options));
                     }
                     dataSources = array;
                     continue;
@@ -361,7 +361,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    enhancements = AzureChatEnhancementConfiguration.DeserializeAzureChatEnhancementConfiguration(property.Value);
+                    enhancements = AzureChatEnhancementConfiguration.DeserializeAzureChatEnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("seed"u8))
@@ -379,7 +379,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value);
+                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tools"u8))
@@ -391,7 +391,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolDefinition> array = new List<ChatCompletionsToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item));
+                        array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item, options));
                     }
                     tools = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorRouteData> array = new List<FrontDoorRouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorRouteData.DeserializeFrontDoorRouteData(item));
+                        array.Add(FrontDoorRouteData.DeserializeFrontDoorRouteData(item, options));
                     }
                     value = array;
                     continue;

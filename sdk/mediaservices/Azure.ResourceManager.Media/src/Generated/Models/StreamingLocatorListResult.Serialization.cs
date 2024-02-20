@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingLocatorData> array = new List<StreamingLocatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingLocatorData.DeserializeStreamingLocatorData(item));
+                        array.Add(StreamingLocatorData.DeserializeStreamingLocatorData(item, options));
                     }
                     value = array;
                     continue;

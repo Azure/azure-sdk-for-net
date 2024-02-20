@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    info = MoveErrorInfo.DeserializeMoveErrorInfo(property.Value);
+                    info = MoveErrorInfo.DeserializeMoveErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

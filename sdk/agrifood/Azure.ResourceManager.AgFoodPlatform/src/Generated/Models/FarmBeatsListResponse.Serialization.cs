@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<FarmBeatData> array = new List<FarmBeatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FarmBeatData.DeserializeFarmBeatData(item));
+                        array.Add(FarmBeatData.DeserializeFarmBeatData(item, options));
                     }
                     value = array;
                     continue;

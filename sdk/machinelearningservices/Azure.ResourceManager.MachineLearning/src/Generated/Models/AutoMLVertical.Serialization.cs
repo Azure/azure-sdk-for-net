@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element);
-                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element);
-                    case "ImageClassification": return ImageClassification.DeserializeImageClassification(element);
-                    case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);
-                    case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element);
-                    case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element);
-                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element);
-                    case "TextClassification": return TextClassification.DeserializeTextClassification(element);
-                    case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element);
-                    case "TextNER": return TextNer.DeserializeTextNer(element);
+                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element, options);
+                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
+                    case "ImageClassification": return ImageClassification.DeserializeImageClassification(element, options);
+                    case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element, options);
+                    case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element, options);
+                    case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element, options);
+                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
+                    case "TextClassification": return TextClassification.DeserializeTextClassification(element, options);
+                    case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element, options);
+                    case "TextNER": return TextNer.DeserializeTextNer(element, options);
                 }
             }
-            return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element);
+            return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element, options);
         }
 
         BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)

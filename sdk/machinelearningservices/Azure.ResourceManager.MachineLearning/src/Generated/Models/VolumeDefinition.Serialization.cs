@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         bind = null;
                         continue;
                     }
-                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value);
+                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         volume = null;
                         continue;
                     }
-                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value);
+                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tmpfs"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         tmpfs = null;
                         continue;
                     }
-                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value);
+                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

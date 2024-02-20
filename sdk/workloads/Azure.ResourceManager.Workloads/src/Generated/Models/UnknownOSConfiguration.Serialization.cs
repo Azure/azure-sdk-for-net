@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOSConfiguration(document.RootElement, options);
+            return DeserializeSapOSConfiguration(document.RootElement, options);
         }
 
         internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOSConfiguration(document.RootElement, options);
+                        return DeserializeSapOSConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SapOSConfiguration)} does not support '{options.Format}' format.");

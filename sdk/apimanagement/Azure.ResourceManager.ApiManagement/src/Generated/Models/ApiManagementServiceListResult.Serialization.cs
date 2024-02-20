@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementServiceData> array = new List<ApiManagementServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementServiceData.DeserializeApiManagementServiceData(item));
+                        array.Add(ApiManagementServiceData.DeserializeApiManagementServiceData(item, options));
                     }
                     value = array;
                     continue;

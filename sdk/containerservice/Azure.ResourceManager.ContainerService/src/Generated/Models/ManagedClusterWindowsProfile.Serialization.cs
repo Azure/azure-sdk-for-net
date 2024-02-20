@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value);
+                    gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

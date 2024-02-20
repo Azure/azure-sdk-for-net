@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            windowsServerFailoverClusterDomainCredentials = WindowsServerFailoverClusterDomainCredentials.DeserializeWindowsServerFailoverClusterDomainCredentials(property0.Value);
+                            windowsServerFailoverClusterDomainCredentials = WindowsServerFailoverClusterDomainCredentials.DeserializeWindowsServerFailoverClusterDomainCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("wsfcStaticIp"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            autoPatchingSettings = SqlVmAutoPatchingSettings.DeserializeSqlVmAutoPatchingSettings(property0.Value);
+                            autoPatchingSettings = SqlVmAutoPatchingSettings.DeserializeSqlVmAutoPatchingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoBackupSettings"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            autoBackupSettings = SqlVmAutoBackupSettings.DeserializeSqlVmAutoBackupSettings(property0.Value);
+                            autoBackupSettings = SqlVmAutoBackupSettings.DeserializeSqlVmAutoBackupSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultCredentialSettings"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            keyVaultCredentialSettings = SqlVmKeyVaultCredentialSettings.DeserializeSqlVmKeyVaultCredentialSettings(property0.Value);
+                            keyVaultCredentialSettings = SqlVmKeyVaultCredentialSettings.DeserializeSqlVmKeyVaultCredentialSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serverConfigurationsManagementSettings"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            serverConfigurationsManagementSettings = SqlServerConfigurationsManagementSettings.DeserializeSqlServerConfigurationsManagementSettings(property0.Value);
+                            serverConfigurationsManagementSettings = SqlServerConfigurationsManagementSettings.DeserializeSqlServerConfigurationsManagementSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageConfigurationSettings"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            storageConfigurationSettings = SqlVmStorageConfigurationSettings.DeserializeSqlVmStorageConfigurationSettings(property0.Value);
+                            storageConfigurationSettings = SqlVmStorageConfigurationSettings.DeserializeSqlVmStorageConfigurationSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("assessmentSettings"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            assessmentSettings = SqlVmAssessmentSettings.DeserializeSqlVmAssessmentSettings(property0.Value);
+                            assessmentSettings = SqlVmAssessmentSettings.DeserializeSqlVmAssessmentSettings(property0.Value, options);
                             continue;
                         }
                     }

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv6Routes = array;
                     continue;

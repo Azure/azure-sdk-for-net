@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareBackupRequest": return FileShareBackupContent.DeserializeFileShareBackupContent(element);
-                    case "AzureWorkloadBackupRequest": return WorkloadBackupContent.DeserializeWorkloadBackupContent(element);
-                    case "IaasVMBackupRequest": return IaasVmBackupContent.DeserializeIaasVmBackupContent(element);
+                    case "AzureFileShareBackupRequest": return FileShareBackupContent.DeserializeFileShareBackupContent(element, options);
+                    case "AzureWorkloadBackupRequest": return WorkloadBackupContent.DeserializeWorkloadBackupContent(element, options);
+                    case "IaasVMBackupRequest": return IaasVmBackupContent.DeserializeIaasVmBackupContent(element, options);
                 }
             }
-            return UnknownBackupRequest.DeserializeUnknownBackupRequest(element);
+            return UnknownBackupRequest.DeserializeUnknownBackupRequest(element, options);
         }
 
         BinaryData IPersistableModel<BackupContent>.Write(ModelReaderWriterOptions options)

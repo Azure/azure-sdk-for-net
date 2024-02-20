@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopyLogDetails(document.RootElement, options);
+            return DeserializeCopyLogDetails(document.RootElement, options);
         }
 
         internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCopyLogDetails(document.RootElement, options);
+                        return DeserializeCopyLogDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CopyLogDetails)} does not support '{options.Format}' format.");

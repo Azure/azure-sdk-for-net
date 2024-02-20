@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value);
+                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

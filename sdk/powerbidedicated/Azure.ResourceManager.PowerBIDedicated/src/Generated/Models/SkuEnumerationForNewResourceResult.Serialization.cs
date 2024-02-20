@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<CapacitySku> array = new List<CapacitySku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacitySku.DeserializeCapacitySku(item));
+                        array.Add(CapacitySku.DeserializeCapacitySku(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPolicySetResult> array = new List<DevTestLabPolicySetResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPolicySetResult.DeserializeDevTestLabPolicySetResult(item));
+                        array.Add(DevTestLabPolicySetResult.DeserializeDevTestLabPolicySetResult(item, options));
                     }
                     results = array;
                     continue;

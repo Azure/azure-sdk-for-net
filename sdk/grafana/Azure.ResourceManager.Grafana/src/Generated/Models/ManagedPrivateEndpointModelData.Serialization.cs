@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Grafana
                             {
                                 continue;
                             }
-                            connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property0.Value);
+                            connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceUrl"u8))

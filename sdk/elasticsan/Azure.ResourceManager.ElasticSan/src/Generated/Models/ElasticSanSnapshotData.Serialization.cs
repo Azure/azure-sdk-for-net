@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("creationData"u8))
                         {
-                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value);
+                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

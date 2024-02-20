@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<UnencryptedCredentials> array = new List<UnencryptedCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item));
+                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item, options));
                     }
                     value = array;
                     continue;

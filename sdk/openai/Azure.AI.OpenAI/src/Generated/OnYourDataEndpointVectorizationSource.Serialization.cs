@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("authentication"u8))
                 {
-                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
+                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

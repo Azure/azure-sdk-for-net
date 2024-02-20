@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    virtualMachine = VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(property.Value);
+                    virtualMachine = VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namingPatternType"u8))

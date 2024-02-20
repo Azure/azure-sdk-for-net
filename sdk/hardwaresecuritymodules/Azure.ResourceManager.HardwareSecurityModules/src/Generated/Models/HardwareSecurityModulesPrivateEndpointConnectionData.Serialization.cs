@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = HardwareSecurityModulesPrivateLinkServiceConnectionState.DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = HardwareSecurityModulesPrivateLinkServiceConnectionState.DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

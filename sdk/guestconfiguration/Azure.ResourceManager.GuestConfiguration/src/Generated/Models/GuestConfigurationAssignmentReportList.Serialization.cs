@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationAssignmentReport> array = new List<GuestConfigurationAssignmentReport>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(item));
+                        array.Add(GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(item, options));
                     }
                     value = array;
                     continue;

@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            defaultDataLakeStorage = SynapseDataLakeStorageAccountDetails.DeserializeSynapseDataLakeStorageAccountDetails(property0.Value);
+                            defaultDataLakeStorage = SynapseDataLakeStorageAccountDetails.DeserializeSynapseDataLakeStorageAccountDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sqlAdministratorLoginPassword"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
+                            virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectivityEndpoints"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Synapse
                             List<SynapsePrivateEndpointConnectionData> array = new List<SynapsePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item));
+                                array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value);
+                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value);
+                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceRepositoryConfiguration"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value);
+                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("purviewConfiguration"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adlaResourceId"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            cspWorkspaceAdminProperties = CspWorkspaceAdminProperties.DeserializeCspWorkspaceAdminProperties(property0.Value);
+                            cspWorkspaceAdminProperties = CspWorkspaceAdminProperties.DeserializeCspWorkspaceAdminProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("settings"u8))

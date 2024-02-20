@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<CommunicationServiceResourceData> array = new List<CommunicationServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item));
+                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item, options));
                     }
                     value = array;
                     continue;

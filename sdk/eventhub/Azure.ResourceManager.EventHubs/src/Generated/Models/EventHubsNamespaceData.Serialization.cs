@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
+                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value);
+                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsPrivateEndpointConnectionData> array = new List<EventHubsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item));
+                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SharedAccessAuthorizationRuleProperties.DeserializeSharedAccessAuthorizationRuleProperties(property.Value);
+                    properties = SharedAccessAuthorizationRuleProperties.DeserializeSharedAccessAuthorizationRuleProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

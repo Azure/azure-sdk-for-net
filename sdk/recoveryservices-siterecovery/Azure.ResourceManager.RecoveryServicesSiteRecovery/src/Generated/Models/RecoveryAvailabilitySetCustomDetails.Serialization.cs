@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingRecoveryAvailabilitySet.DeserializeExistingRecoveryAvailabilitySet(element);
+                    case "Existing": return ExistingRecoveryAvailabilitySet.DeserializeExistingRecoveryAvailabilitySet(element, options);
                 }
             }
-            return UnknownRecoveryAvailabilitySetCustomDetails.DeserializeUnknownRecoveryAvailabilitySetCustomDetails(element);
+            return UnknownRecoveryAvailabilitySetCustomDetails.DeserializeUnknownRecoveryAvailabilitySetCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryAvailabilitySetCustomDetails>.Write(ModelReaderWriterOptions options)

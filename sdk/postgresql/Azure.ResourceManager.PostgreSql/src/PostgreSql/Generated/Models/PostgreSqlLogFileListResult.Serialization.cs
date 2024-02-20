@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlLogFile> array = new List<PostgreSqlLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item));
+                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item, options));
                     }
                     value = array;
                     continue;

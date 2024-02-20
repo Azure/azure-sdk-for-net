@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("title"u8))

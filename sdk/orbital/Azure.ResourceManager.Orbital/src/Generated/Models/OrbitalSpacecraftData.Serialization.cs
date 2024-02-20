@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Orbital
                             List<OrbitalSpacecraftLink> array = new List<OrbitalSpacecraftLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OrbitalSpacecraftLink.DeserializeOrbitalSpacecraftLink(item));
+                                array.Add(OrbitalSpacecraftLink.DeserializeOrbitalSpacecraftLink(item, options));
                             }
                             links = array;
                             continue;

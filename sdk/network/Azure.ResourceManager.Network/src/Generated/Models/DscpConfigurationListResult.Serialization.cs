@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<DscpConfigurationData> array = new List<DscpConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscpConfigurationData.DeserializeDscpConfigurationData(item));
+                        array.Add(DscpConfigurationData.DeserializeDscpConfigurationData(item, options));
                     }
                     value = array;
                     continue;

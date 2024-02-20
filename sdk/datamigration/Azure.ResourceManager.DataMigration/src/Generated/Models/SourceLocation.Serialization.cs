@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fileShare = SqlFileShare.DeserializeSqlFileShare(property.Value);
+                    fileShare = SqlFileShare.DeserializeSqlFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlob"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    azureBlob = AzureBlob.DeserializeAzureBlob(property.Value);
+                    azureBlob = AzureBlob.DeserializeAzureBlob(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fileStorageType"u8))

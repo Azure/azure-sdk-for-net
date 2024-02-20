@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                     }
                     profilePropertyReferences = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                     }
                     relatedProfilePropertyReferences = array;
                     continue;

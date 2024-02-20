@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabCustomImageData> array = new List<DevTestLabCustomImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(item));
+                        array.Add(DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(item, options));
                     }
                     value = array;
                     continue;

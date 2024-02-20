@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChaosTargetFilter(document.RootElement, options);
+            return DeserializeChaosTargetFilter(document.RootElement, options);
         }
 
         internal static UnknownChaosTargetFilter DeserializeUnknownChaosTargetFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChaosTargetFilter(document.RootElement, options);
+                        return DeserializeChaosTargetFilter(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ChaosTargetFilter)} does not support '{options.Format}' format.");

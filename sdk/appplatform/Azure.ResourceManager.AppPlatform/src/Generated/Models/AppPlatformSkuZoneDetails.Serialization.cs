@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuCapabilities> array = new List<AppPlatformSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuCapabilities.DeserializeAppPlatformSkuCapabilities(item));
+                        array.Add(AppPlatformSkuCapabilities.DeserializeAppPlatformSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;

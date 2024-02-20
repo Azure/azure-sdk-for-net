@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value);
+                            deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentDedicatedNodes"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value);
+                            scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoScaleRun"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value);
+                            autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("interNodeCommunication"u8))
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value);
+                            networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("taskSlotsPerNode"u8))
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value);
+                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userAccounts"u8))
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchUserAccount> array = new List<BatchUserAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchUserAccount.DeserializeBatchUserAccount(item));
+                                array.Add(BatchUserAccount.DeserializeBatchUserAccount(item, options));
                             }
                             userAccounts = array;
                             continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchAccountPoolMetadataItem> array = new List<BatchAccountPoolMetadataItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item));
+                                array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item, options));
                             }
                             metadata = array;
                             continue;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value);
+                            startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("certificates"u8))
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchCertificateReference> array = new List<BatchCertificateReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item));
+                                array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
                             }
                             certificates = array;
                             continue;
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item));
+                                array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                             }
                             applicationPackages = array;
                             continue;
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value);
+                            resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mountConfiguration"u8))
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchMountConfiguration> array = new List<BatchMountConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item));
+                                array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item, options));
                             }
                             mountConfiguration = array;
                             continue;

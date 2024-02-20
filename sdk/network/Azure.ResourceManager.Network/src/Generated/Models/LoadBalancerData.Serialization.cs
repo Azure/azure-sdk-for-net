@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = LoadBalancerSku.DeserializeLoadBalancerSku(property.Value);
+                    sku = LoadBalancerSku.DeserializeLoadBalancerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
                             List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                             List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item, options));
                             }
                             backendAddressPools = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancingRuleData> array = new List<LoadBalancingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item));
+                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item, options));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
                             List<ProbeData> array = new List<ProbeData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProbeData.DeserializeProbeData(item));
+                                array.Add(ProbeData.DeserializeProbeData(item, options));
                             }
                             probes = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
                             List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
+                                array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item, options));
                             }
                             inboundNatRules = array;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancerInboundNatPool> array = new List<LoadBalancerInboundNatPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerInboundNatPool.DeserializeLoadBalancerInboundNatPool(item));
+                                array.Add(LoadBalancerInboundNatPool.DeserializeLoadBalancerInboundNatPool(item, options));
                             }
                             inboundNatPools = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             List<OutboundRuleData> array = new List<OutboundRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
+                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item, options));
                             }
                             outboundRules = array;
                             continue;

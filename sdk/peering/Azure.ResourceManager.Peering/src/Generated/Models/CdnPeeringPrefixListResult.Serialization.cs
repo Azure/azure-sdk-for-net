@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<CdnPeeringPrefix> array = new List<CdnPeeringPrefix>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnPeeringPrefix.DeserializeCdnPeeringPrefix(item));
+                        array.Add(CdnPeeringPrefix.DeserializeCdnPeeringPrefix(item, options));
                     }
                     value = array;
                     continue;

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portRange = MobileNetworkPortRange.DeserializeMobileNetworkPortRange(property.Value);
+                    portRange = MobileNetworkPortRange.DeserializeMobileNetworkPortRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("portReuseHoldTime"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portReuseHoldTime = MobileNetworkPortReuseHoldTimes.DeserializeMobileNetworkPortReuseHoldTimes(property.Value);
+                    portReuseHoldTime = MobileNetworkPortReuseHoldTimes.DeserializeMobileNetworkPortReuseHoldTimes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pinholeLimits"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value);
+                    pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value);
+                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("elasticCloudDeployment"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value);
+                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

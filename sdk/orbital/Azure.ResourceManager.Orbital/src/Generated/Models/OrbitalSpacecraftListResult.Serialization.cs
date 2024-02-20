@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalSpacecraftData> array = new List<OrbitalSpacecraftData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(item));
+                        array.Add(OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(item, options));
                     }
                     value = array;
                     continue;

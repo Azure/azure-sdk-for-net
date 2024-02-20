@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsClusterData> array = new List<EventHubsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsClusterData.DeserializeEventHubsClusterData(item));
+                        array.Add(EventHubsClusterData.DeserializeEventHubsClusterData(item, options));
                     }
                     value = array;
                     continue;

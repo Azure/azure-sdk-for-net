@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);
+                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerClientAuthentication(document.RootElement, options);
+            return DeserializePartnerClientAuthentication(document.RootElement, options);
         }
 
         internal static UnknownPartnerClientAuthentication DeserializeUnknownPartnerClientAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPartnerClientAuthentication(document.RootElement, options);
+                        return DeserializePartnerClientAuthentication(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PartnerClientAuthentication)} does not support '{options.Format}' format.");

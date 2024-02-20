@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataReplicationRecoveryPointProperties.DeserializeDataReplicationRecoveryPointProperties(property.Value);
+                    properties = DataReplicationRecoveryPointProperties.DeserializeDataReplicationRecoveryPointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

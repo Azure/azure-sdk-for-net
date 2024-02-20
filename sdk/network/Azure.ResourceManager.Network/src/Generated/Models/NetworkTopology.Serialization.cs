@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TopologyResourceInfo> array = new List<TopologyResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyResourceInfo.DeserializeTopologyResourceInfo(item));
+                        array.Add(TopologyResourceInfo.DeserializeTopologyResourceInfo(item, options));
                     }
                     resources = array;
                     continue;

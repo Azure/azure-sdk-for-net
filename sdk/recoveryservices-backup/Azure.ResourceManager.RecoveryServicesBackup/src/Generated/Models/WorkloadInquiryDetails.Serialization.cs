@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    inquiryValidation = InquiryValidation.DeserializeInquiryValidation(property.Value);
+                    inquiryValidation = InquiryValidation.DeserializeInquiryValidation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

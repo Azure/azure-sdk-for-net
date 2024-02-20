@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    name = VaultUsageNameInfo.DeserializeVaultUsageNameInfo(property.Value);
+                    name = VaultUsageNameInfo.DeserializeVaultUsageNameInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

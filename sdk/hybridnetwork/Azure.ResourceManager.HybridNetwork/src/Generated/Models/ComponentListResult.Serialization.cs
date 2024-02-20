@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ComponentData> array = new List<ComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentData.DeserializeComponentData(item));
+                        array.Add(ComponentData.DeserializeComponentData(item, options));
                     }
                     value = array;
                     continue;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, DataCollectionConfiguration> dictionary = new Dictionary<string, DataCollectionConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value, options));
                     }
                     collections = dictionary;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestLogging = null;
                         continue;
                     }
-                    requestLogging = RequestLogging.DeserializeRequestLogging(property.Value);
+                    requestLogging = RequestLogging.DeserializeRequestLogging(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollingRate"u8))

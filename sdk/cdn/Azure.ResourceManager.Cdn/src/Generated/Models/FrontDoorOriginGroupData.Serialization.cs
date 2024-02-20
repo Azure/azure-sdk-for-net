@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value);
+                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))

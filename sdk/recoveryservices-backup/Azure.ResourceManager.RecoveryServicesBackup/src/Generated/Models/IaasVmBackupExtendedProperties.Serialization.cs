@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value);
+                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxVmApplicationName"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = EncryptionCustomerManagedKeyEncryption.DeserializeEncryptionCustomerManagedKeyEncryption(property.Value);
+                    customerManagedKeyEncryption = EncryptionCustomerManagedKeyEncryption.DeserializeEncryptionCustomerManagedKeyEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

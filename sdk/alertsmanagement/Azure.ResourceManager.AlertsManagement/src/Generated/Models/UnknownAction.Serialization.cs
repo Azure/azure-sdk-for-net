@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAction(document.RootElement, options);
+            return DeserializeAlertProcessingRuleAction(document.RootElement, options);
         }
 
         internal static UnknownAction DeserializeUnknownAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAction(document.RootElement, options);
+                        return DeserializeAlertProcessingRuleAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AlertProcessingRuleAction)} does not support '{options.Format}' format.");

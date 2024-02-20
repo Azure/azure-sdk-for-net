@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H264Layer> array = new List<H264Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H264Layer.DeserializeH264Layer(item));
+                        array.Add(H264Layer.DeserializeH264Layer(item, options));
                     }
                     layers = array;
                     continue;

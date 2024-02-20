@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<RestoreFileSpec> array = new List<RestoreFileSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item, options));
                     }
                     restoreFileSpec = array;
                     continue;

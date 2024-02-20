@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
+                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item, options));
                     }
                     items = array;
                     continue;

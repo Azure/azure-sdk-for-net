@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlMigrationData> array = new List<PostgreSqlMigrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item));
+                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item, options));
                     }
                     value = array;
                     continue;

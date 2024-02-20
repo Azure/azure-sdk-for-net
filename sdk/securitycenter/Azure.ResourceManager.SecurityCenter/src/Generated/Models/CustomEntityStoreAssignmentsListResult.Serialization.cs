@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CustomEntityStoreAssignmentData> array = new List<CustomEntityStoreAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(item));
+                        array.Add(CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(item, options));
                     }
                     value = array;
                     continue;

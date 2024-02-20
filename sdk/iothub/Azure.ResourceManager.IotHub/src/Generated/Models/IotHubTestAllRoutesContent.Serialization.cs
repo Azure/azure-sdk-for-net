@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    message = RoutingMessage.DeserializeRoutingMessage(property.Value);
+                    message = RoutingMessage.DeserializeRoutingMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twin"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value);
+                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

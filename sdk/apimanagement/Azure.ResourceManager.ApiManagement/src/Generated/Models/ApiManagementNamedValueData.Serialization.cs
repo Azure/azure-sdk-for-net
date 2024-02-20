@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            keyVault = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(property0.Value);
+                            keyVault = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReverseReplicationProviderSpecificContent.DeserializeReverseReplicationProviderSpecificContent(property.Value);
+                    providerSpecificDetails = ReverseReplicationProviderSpecificContent.DeserializeReverseReplicationProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

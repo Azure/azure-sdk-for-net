@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value);
+                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

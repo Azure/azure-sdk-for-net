@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RequiredToolCall> array = new List<RequiredToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequiredToolCall.DeserializeRequiredToolCall(item));
+                        array.Add(RequiredToolCall.DeserializeRequiredToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;

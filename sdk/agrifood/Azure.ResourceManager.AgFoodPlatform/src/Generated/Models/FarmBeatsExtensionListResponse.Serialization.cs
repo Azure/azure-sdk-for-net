@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<FarmBeatsExtensionData> array = new List<FarmBeatsExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(item));
+                        array.Add(FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     List<VoiceServicesCommunicationsGatewayData> array = new List<VoiceServicesCommunicationsGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item));
+                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item, options));
                     }
                     value = array;
                     continue;

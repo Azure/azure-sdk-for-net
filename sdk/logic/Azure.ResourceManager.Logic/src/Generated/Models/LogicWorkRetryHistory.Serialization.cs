@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value);
+                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

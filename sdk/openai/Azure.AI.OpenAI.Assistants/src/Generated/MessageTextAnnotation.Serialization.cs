@@ -77,11 +77,11 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "file_citation": return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element);
-                    case "file_path": return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element);
+                    case "file_citation": return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
+                    case "file_path": return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
                 }
             }
-            return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element);
+            return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);
         }
 
         BinaryData IPersistableModel<MessageTextAnnotation>.Write(ModelReaderWriterOptions options)

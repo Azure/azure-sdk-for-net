@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SenderUsernameResourceData> array = new List<SenderUsernameResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item));
+                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item, options));
                     }
                     value = array;
                     continue;

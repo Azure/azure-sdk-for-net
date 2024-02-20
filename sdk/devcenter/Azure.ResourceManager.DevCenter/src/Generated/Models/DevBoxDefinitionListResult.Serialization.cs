@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevBoxDefinitionData> array = new List<DevBoxDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevBoxDefinitionData.DeserializeDevBoxDefinitionData(item));
+                        array.Add(DevBoxDefinitionData.DeserializeDevBoxDefinitionData(item, options));
                     }
                     value = array;
                     continue;

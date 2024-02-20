@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<MonitoredResourceContent> array = new List<MonitoredResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item));
+                        array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item, options));
                     }
                     value = array;
                     continue;

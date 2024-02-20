@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabUserData> array = new List<LabUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabUserData.DeserializeLabUserData(item));
+                        array.Add(LabUserData.DeserializeLabUserData(item, options));
                     }
                     value = array;
                     continue;

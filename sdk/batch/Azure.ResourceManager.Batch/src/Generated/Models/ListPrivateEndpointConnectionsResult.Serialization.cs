@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchPrivateEndpointConnectionData> array = new List<BatchPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item));
+                        array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

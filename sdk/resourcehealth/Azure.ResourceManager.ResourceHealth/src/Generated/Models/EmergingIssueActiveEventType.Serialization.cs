@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpact> array = new List<EmergingIssueImpact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item));
+                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item, options));
                     }
                     impacts = array;
                     continue;

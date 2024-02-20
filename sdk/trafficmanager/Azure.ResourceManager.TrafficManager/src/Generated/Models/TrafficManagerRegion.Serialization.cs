@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerRegion> array = new List<TrafficManagerRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTrafficManagerRegion(item));
+                        array.Add(DeserializeTrafficManagerRegion(item, options));
                     }
                     regions = array;
                     continue;

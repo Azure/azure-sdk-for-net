@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     List<HealthBotData> array = new List<HealthBotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthBotData.DeserializeHealthBotData(item));
+                        array.Add(HealthBotData.DeserializeHealthBotData(item, options));
                     }
                     value = array;
                     continue;

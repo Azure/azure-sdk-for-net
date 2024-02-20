@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceProvisioningServiceProperties.DeserializeDeviceProvisioningServiceProperties(property.Value);
+                    properties = DeviceProvisioningServiceProperties.DeserializeDeviceProvisioningServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DeviceProvisioningServicesSkuInfo.DeserializeDeviceProvisioningServicesSkuInfo(property.Value);
+                    sku = DeviceProvisioningServicesSkuInfo.DeserializeDeviceProvisioningServicesSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

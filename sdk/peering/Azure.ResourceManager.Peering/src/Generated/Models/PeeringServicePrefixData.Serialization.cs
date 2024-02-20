@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Peering
                             List<PeeringServicePrefixEvent> array = new List<PeeringServicePrefixEvent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeeringServicePrefixEvent.DeserializePeeringServicePrefixEvent(item));
+                                array.Add(PeeringServicePrefixEvent.DeserializePeeringServicePrefixEvent(item, options));
                             }
                             events = array;
                             continue;

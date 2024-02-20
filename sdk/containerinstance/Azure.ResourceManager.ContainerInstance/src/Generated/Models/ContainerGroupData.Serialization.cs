@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
+                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
                             }
                             containers = array;
                             continue;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item));
+                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
                             }
                             imageRegistryCredentials = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value);
+                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osType"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerVolume> array = new List<ContainerVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolume.DeserializeContainerVolume(item));
+                                array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
                             }
                             volumes = array;
                             continue;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value);
+                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value);
+                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnetIds"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupSubnetId> array = new List<ContainerGroupSubnetId>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item));
+                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item, options));
                             }
                             subnetIds = array;
                             continue;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value);
+                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value);
+                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("initContainers"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item));
+                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item, options));
                             }
                             initContainers = array;
                             continue;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item));
+                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item, options));
                             }
                             extensions = array;
                             continue;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value);
+                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))

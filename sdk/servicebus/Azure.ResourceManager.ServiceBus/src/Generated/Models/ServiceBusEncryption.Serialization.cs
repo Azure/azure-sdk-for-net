@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusKeyVaultProperties> array = new List<ServiceBusKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item));
+                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;

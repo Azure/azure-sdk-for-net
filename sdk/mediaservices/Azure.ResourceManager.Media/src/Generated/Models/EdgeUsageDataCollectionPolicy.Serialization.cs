@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);
+                    eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

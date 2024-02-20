@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("receiveAgreement"u8))
                 {
-                    receiveAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value);
+                    receiveAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sendAgreement"u8))
                 {
-                    sendAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value);
+                    sendAgreement = EdifactOneWayAgreement.DeserializeEdifactOneWayAgreement(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

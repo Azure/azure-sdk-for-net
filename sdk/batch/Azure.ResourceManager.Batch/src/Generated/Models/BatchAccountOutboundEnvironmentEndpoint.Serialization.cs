@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountEndpointDependency> array = new List<BatchAccountEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountEndpointDependency.DeserializeBatchAccountEndpointDependency(item));
+                        array.Add(BatchAccountEndpointDependency.DeserializeBatchAccountEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

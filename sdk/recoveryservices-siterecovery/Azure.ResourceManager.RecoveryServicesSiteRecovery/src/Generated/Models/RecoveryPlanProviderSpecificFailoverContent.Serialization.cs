@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return RecoveryPlanA2AFailoverContent.DeserializeRecoveryPlanA2AFailoverContent(element);
-                    case "HyperVReplicaAzure": return RecoveryPlanHyperVReplicaAzureFailoverContent.DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(element);
-                    case "HyperVReplicaAzureFailback": return RecoveryPlanHyperVReplicaAzureFailbackContent.DeserializeRecoveryPlanHyperVReplicaAzureFailbackContent(element);
-                    case "InMage": return RecoveryPlanInMageFailoverContent.DeserializeRecoveryPlanInMageFailoverContent(element);
-                    case "InMageAzureV2": return RecoveryPlanInMageAzureV2FailoverContent.DeserializeRecoveryPlanInMageAzureV2FailoverContent(element);
-                    case "InMageRcm": return RecoveryPlanInMageRcmFailoverContent.DeserializeRecoveryPlanInMageRcmFailoverContent(element);
-                    case "InMageRcmFailback": return RecoveryPlanInMageRcmFailbackFailoverContent.DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(element);
+                    case "A2A": return RecoveryPlanA2AFailoverContent.DeserializeRecoveryPlanA2AFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return RecoveryPlanHyperVReplicaAzureFailoverContent.DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(element, options);
+                    case "HyperVReplicaAzureFailback": return RecoveryPlanHyperVReplicaAzureFailbackContent.DeserializeRecoveryPlanHyperVReplicaAzureFailbackContent(element, options);
+                    case "InMage": return RecoveryPlanInMageFailoverContent.DeserializeRecoveryPlanInMageFailoverContent(element, options);
+                    case "InMageAzureV2": return RecoveryPlanInMageAzureV2FailoverContent.DeserializeRecoveryPlanInMageAzureV2FailoverContent(element, options);
+                    case "InMageRcm": return RecoveryPlanInMageRcmFailoverContent.DeserializeRecoveryPlanInMageRcmFailoverContent(element, options);
+                    case "InMageRcmFailback": return RecoveryPlanInMageRcmFailbackFailoverContent.DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(element, options);
                 }
             }
-            return UnknownRecoveryPlanProviderSpecificFailoverContent.DeserializeUnknownRecoveryPlanProviderSpecificFailoverContent(element);
+            return UnknownRecoveryPlanProviderSpecificFailoverContent.DeserializeUnknownRecoveryPlanProviderSpecificFailoverContent(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryPlanProviderSpecificFailoverContent>.Write(ModelReaderWriterOptions options)

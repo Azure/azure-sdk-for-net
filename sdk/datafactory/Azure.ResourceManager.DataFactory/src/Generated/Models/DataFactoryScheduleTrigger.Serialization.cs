@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("recurrence"u8))
                         {
-                            recurrence = ScheduleTriggerRecurrence.DeserializeScheduleTriggerRecurrence(property0.Value);
+                            recurrence = ScheduleTriggerRecurrence.DeserializeScheduleTriggerRecurrence(property0.Value, options);
                             continue;
                         }
                     }

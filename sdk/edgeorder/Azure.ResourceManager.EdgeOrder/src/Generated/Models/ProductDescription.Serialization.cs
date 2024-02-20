@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductLink> array = new List<ProductLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductLink.DeserializeProductLink(item));
+                        array.Add(ProductLink.DeserializeProductLink(item, options));
                     }
                     links = array;
                     continue;

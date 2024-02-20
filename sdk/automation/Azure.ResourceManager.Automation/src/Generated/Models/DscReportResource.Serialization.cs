@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item));
+                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item, options));
                     }
                     dependsOn = array;
                     continue;

@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayPathRule> array = new List<ApplicationGatewayPathRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item));
+                                array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item, options));
                             }
                             pathRules = array;
                             continue;

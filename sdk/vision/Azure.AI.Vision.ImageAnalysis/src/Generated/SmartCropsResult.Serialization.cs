@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<CropRegion> array = new List<CropRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CropRegion.DeserializeCropRegion(item));
+                        array.Add(CropRegion.DeserializeCropRegion(item, options));
                     }
                     values = array;
                     continue;

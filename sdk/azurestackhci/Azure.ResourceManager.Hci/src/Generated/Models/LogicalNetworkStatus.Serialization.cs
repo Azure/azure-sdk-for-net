@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = LogicalNetworkStatusProvisioningStatus.DeserializeLogicalNetworkStatusProvisioningStatus(property.Value);
+                    provisioningStatus = LogicalNetworkStatusProvisioningStatus.DeserializeLogicalNetworkStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

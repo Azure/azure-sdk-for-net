@@ -169,7 +169,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
+                    alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -190,7 +190,7 @@ namespace Azure.AI.AnomalyDetector
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;
@@ -201,7 +201,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    diagnosticsInfo = DiagnosticsInfo.DeserializeDiagnosticsInfo(property.Value);
+                    diagnosticsInfo = DiagnosticsInfo.DeserializeDiagnosticsInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

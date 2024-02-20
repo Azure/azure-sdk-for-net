@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = NatGatewaySku.DeserializeNatGatewaySku(property.Value);
+                    sku = NatGatewaySku.DeserializeNatGatewaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return OpenDeploymentResourceReference.DeserializeOpenDeploymentResourceReference(element);
-                    case "Secret": return SecretDeploymentResourceReference.DeserializeSecretDeploymentResourceReference(element);
+                    case "Open": return OpenDeploymentResourceReference.DeserializeOpenDeploymentResourceReference(element, options);
+                    case "Secret": return SecretDeploymentResourceReference.DeserializeSecretDeploymentResourceReference(element, options);
                 }
             }
-            return UnknownDeploymentResourceIdReference.DeserializeUnknownDeploymentResourceIdReference(element);
+            return UnknownDeploymentResourceIdReference.DeserializeUnknownDeploymentResourceIdReference(element, options);
         }
 
         BinaryData IPersistableModel<DeploymentResourceIdReference>.Write(ModelReaderWriterOptions options)

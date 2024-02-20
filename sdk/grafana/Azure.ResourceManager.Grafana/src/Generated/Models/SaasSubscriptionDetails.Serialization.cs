@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    term = SubscriptionTerm.DeserializeSubscriptionTerm(property.Value);
+                    term = SubscriptionTerm.DeserializeSubscriptionTerm(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<SignalRServiceUsage> array = new List<SignalRServiceUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRServiceUsage.DeserializeSignalRServiceUsage(item));
+                        array.Add(SignalRServiceUsage.DeserializeSignalRServiceUsage(item, options));
                     }
                     value = array;
                     continue;

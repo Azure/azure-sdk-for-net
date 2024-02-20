@@ -71,14 +71,14 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "directMap": return DirectMapRouterRule.DeserializeDirectMapRouterRule(element);
-                    case "expression": return ExpressionRouterRule.DeserializeExpressionRouterRule(element);
-                    case "function": return FunctionRouterRule.DeserializeFunctionRouterRule(element);
-                    case "static": return StaticRouterRule.DeserializeStaticRouterRule(element);
-                    case "webhook": return WebhookRouterRule.DeserializeWebhookRouterRule(element);
+                    case "directMap": return DirectMapRouterRule.DeserializeDirectMapRouterRule(element, options);
+                    case "expression": return ExpressionRouterRule.DeserializeExpressionRouterRule(element, options);
+                    case "function": return FunctionRouterRule.DeserializeFunctionRouterRule(element, options);
+                    case "static": return StaticRouterRule.DeserializeStaticRouterRule(element, options);
+                    case "webhook": return WebhookRouterRule.DeserializeWebhookRouterRule(element, options);
                 }
             }
-            return UnknownRouterRule.DeserializeUnknownRouterRule(element);
+            return UnknownRouterRule.DeserializeUnknownRouterRule(element, options);
         }
 
         BinaryData IPersistableModel<RouterRule>.Write(ModelReaderWriterOptions options)

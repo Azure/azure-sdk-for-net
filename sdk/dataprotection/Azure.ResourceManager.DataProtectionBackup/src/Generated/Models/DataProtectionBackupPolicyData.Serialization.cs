@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupPolicyPropertiesBase.DeserializeDataProtectionBackupPolicyPropertiesBase(property.Value);
+                    properties = DataProtectionBackupPolicyPropertiesBase.DeserializeDataProtectionBackupPolicyPropertiesBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

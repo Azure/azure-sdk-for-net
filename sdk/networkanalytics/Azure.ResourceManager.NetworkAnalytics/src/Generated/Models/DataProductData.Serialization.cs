@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            customerEncryptionKey = EncryptionKeyDetails.DeserializeEncryptionKeyDetails(property0.Value);
+                            customerEncryptionKey = EncryptionKeyDetails.DeserializeEncryptionKeyDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkacls"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            networkacls = DataProductNetworkAcls.DeserializeDataProductNetworkAcls(property0.Value);
+                            networkacls = DataProductNetworkAcls.DeserializeDataProductNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availableMinorVersions"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            consumptionEndpoints = ConsumptionEndpointsProperties.DeserializeConsumptionEndpointsProperties(property0.Value);
+                            consumptionEndpoints = ConsumptionEndpointsProperties.DeserializeConsumptionEndpointsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultUrl"u8))

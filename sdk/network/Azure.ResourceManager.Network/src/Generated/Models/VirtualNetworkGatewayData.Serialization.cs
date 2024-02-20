@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value);
+                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item));
+                                array.Add(VirtualNetworkGatewayIPConfiguration.DeserializeVirtualNetworkGatewayIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value);
+                            sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConfiguration"u8))
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value);
+                            vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayPolicyGroup> array = new List<VirtualNetworkGatewayPolicyGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item));
+                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item, options));
                             }
                             virtualNetworkGatewayPolicyGroups = array;
                             continue;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRoutes"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkGatewayNatRuleData> array = new List<VirtualNetworkGatewayNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(item));
+                                array.Add(VirtualNetworkGatewayNatRuleData.DeserializeVirtualNetworkGatewayNatRuleData(item, options));
                             }
                             natRules = array;
                             continue;

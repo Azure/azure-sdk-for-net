@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupRecoveryPointProperties.DeserializeDataProtectionBackupRecoveryPointProperties(property.Value);
+                    properties = DataProtectionBackupRecoveryPointProperties.DeserializeDataProtectionBackupRecoveryPointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

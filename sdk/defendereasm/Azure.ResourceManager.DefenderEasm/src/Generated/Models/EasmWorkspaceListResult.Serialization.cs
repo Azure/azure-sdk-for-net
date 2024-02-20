@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmWorkspaceData> array = new List<EasmWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item));
+                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

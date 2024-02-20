@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterData> array = new List<ProvisionedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterData.DeserializeProvisionedClusterData(item));
+                        array.Add(ProvisionedClusterData.DeserializeProvisionedClusterData(item, options));
                     }
                     value = array;
                     continue;

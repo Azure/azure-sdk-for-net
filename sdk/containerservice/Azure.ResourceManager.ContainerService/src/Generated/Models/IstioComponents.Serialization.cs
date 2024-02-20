@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<IstioIngressGateway> array = new List<IstioIngressGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IstioIngressGateway.DeserializeIstioIngressGateway(item));
+                        array.Add(IstioIngressGateway.DeserializeIstioIngressGateway(item, options));
                     }
                     ingressGateways = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<IstioEgressGateway> array = new List<IstioEgressGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IstioEgressGateway.DeserializeIstioEgressGateway(item));
+                        array.Add(IstioEgressGateway.DeserializeIstioEgressGateway(item, options));
                     }
                     egressGateways = array;
                     continue;

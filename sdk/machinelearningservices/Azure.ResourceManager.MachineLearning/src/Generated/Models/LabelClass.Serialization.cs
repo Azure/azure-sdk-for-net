@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value, options));
                     }
                     subclasses = dictionary;
                     continue;

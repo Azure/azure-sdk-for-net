@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallPublicIPAddress> array = new List<AzureFirewallPublicIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item));
+                        array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item, options));
                     }
                     addresses = array;
                     continue;

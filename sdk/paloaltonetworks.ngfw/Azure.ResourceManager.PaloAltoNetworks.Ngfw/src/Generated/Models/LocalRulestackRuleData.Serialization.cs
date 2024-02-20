@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value);
+                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("negateSource"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value);
+                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("negateDestination"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value);
+                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             List<RulestackTagInfo> array = new List<RulestackTagInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item));
+                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item, options));
                             }
                             tags = array;
                             continue;

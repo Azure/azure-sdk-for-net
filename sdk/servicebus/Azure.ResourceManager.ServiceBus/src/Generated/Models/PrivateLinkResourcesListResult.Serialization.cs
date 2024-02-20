@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusPrivateLinkResource> array = new List<ServiceBusPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item));
+                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

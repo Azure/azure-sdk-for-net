@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = FailoverProcessServerProperties.DeserializeFailoverProcessServerProperties(property.Value);
+                    properties = FailoverProcessServerProperties.DeserializeFailoverProcessServerProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

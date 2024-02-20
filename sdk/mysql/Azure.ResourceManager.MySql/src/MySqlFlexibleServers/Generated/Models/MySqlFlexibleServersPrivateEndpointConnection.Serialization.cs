@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MySqlFlexibleServersPrivateLinkServiceConnectionState.DeserializeMySqlFlexibleServersPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MySqlFlexibleServersPrivateLinkServiceConnectionState.DeserializeMySqlFlexibleServersPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

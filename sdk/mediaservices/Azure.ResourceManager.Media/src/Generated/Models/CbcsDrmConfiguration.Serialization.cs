@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fairPlay = StreamingPolicyFairPlayConfiguration.DeserializeStreamingPolicyFairPlayConfiguration(property.Value);
+                    fairPlay = StreamingPolicyFairPlayConfiguration.DeserializeStreamingPolicyFairPlayConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("playReady"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
+                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("widevine"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value);
+                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

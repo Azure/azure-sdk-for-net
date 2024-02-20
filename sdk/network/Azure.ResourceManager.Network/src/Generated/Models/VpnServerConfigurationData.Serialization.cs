@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigVpnClientRootCertificate> array = new List<VpnServerConfigVpnClientRootCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigVpnClientRootCertificate.DeserializeVpnServerConfigVpnClientRootCertificate(item));
+                                array.Add(VpnServerConfigVpnClientRootCertificate.DeserializeVpnServerConfigVpnClientRootCertificate(item, options));
                             }
                             vpnClientRootCertificates = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigVpnClientRevokedCertificate> array = new List<VpnServerConfigVpnClientRevokedCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigVpnClientRevokedCertificate.DeserializeVpnServerConfigVpnClientRevokedCertificate(item));
+                                array.Add(VpnServerConfigVpnClientRevokedCertificate.DeserializeVpnServerConfigVpnClientRevokedCertificate(item, options));
                             }
                             vpnClientRevokedCertificates = array;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigRadiusServerRootCertificate> array = new List<VpnServerConfigRadiusServerRootCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigRadiusServerRootCertificate.DeserializeVpnServerConfigRadiusServerRootCertificate(item));
+                                array.Add(VpnServerConfigRadiusServerRootCertificate.DeserializeVpnServerConfigRadiusServerRootCertificate(item, options));
                             }
                             radiusServerRootCertificates = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigRadiusClientRootCertificate> array = new List<VpnServerConfigRadiusClientRootCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigRadiusClientRootCertificate.DeserializeVpnServerConfigRadiusClientRootCertificate(item));
+                                array.Add(VpnServerConfigRadiusClientRootCertificate.DeserializeVpnServerConfigRadiusClientRootCertificate(item, options));
                             }
                             radiusClientRootCertificates = array;
                             continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Network
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             vpnClientIPsecPolicies = array;
                             continue;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network
                             List<RadiusServer> array = new List<RadiusServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RadiusServer.DeserializeRadiusServer(item));
+                                array.Add(RadiusServer.DeserializeRadiusServer(item, options));
                             }
                             radiusServers = array;
                             continue;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            aadAuthenticationParameters = AadAuthenticationParameters.DeserializeAadAuthenticationParameters(property0.Value);
+                            aadAuthenticationParameters = AadAuthenticationParameters.DeserializeAadAuthenticationParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Network
                             List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
+                                array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item, options));
                             }
                             p2sVpnGateways = array;
                             continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigurationPolicyGroupData> array = new List<VpnServerConfigurationPolicyGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item));
+                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item, options));
                             }
                             configurationPolicyGroups = array;
                             continue;

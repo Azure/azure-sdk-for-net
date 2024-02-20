@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policy = PolicyReference.DeserializePolicyReference(property.Value);
+                    policy = PolicyReference.DeserializePolicyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

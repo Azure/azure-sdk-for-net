@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsPrivateCloudDatastoreData> array = new List<AvsPrivateCloudDatastoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(item));
+                        array.Add(AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(item, options));
                     }
                     value = array;
                     continue;

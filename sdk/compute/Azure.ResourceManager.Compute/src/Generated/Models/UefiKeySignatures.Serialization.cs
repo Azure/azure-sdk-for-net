@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    pk = UefiKey.DeserializeUefiKey(property.Value);
+                    pk = UefiKey.DeserializeUefiKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kek"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     kek = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     db = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     dbx = array;
                     continue;

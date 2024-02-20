@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value);
+                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

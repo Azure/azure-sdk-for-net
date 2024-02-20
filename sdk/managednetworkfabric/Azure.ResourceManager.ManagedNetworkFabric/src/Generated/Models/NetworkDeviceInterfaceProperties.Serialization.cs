@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<SupportedConnectorProperties> array = new List<SupportedConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item, options));
                     }
                     supportedConnectorTypes = array;
                     continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTestMigrateProviderSpecificContent(document.RootElement, options);
+            return DeserializeTestMigrateProviderSpecificContent(document.RootElement, options);
         }
 
         internal static UnknownTestMigrateProviderSpecificContent DeserializeUnknownTestMigrateProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTestMigrateProviderSpecificContent(document.RootElement, options);
+                        return DeserializeTestMigrateProviderSpecificContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(TestMigrateProviderSpecificContent)} does not support '{options.Format}' format.");

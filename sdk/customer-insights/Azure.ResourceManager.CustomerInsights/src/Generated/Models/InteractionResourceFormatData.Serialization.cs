@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item, options));
                             }
                             fields = array;
                             continue;
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<Participant> array = new List<Participant>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Participant.DeserializeParticipant(item));
+                                array.Add(Participant.DeserializeParticipant(item, options));
                             }
                             participantProfiles = array;
                             continue;
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                                array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item, options));
                             }
                             dataSourcePrecedenceRules = array;
                             continue;

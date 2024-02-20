@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<AuthorizedGroundStation> array = new List<AuthorizedGroundStation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item));
+                        array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item, options));
                     }
                     authorizations = array;
                     continue;

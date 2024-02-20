@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityStatusContract> array = new List<ConnectivityStatusContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item));
+                        array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item, options));
                     }
                     connectivityStatus = array;
                     continue;

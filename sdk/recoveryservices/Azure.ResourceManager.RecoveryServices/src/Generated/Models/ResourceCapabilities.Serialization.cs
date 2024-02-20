@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = CapabilitiesProperties.DeserializeCapabilitiesProperties(property.Value);
+                    properties = CapabilitiesProperties.DeserializeCapabilitiesProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

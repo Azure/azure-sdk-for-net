@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PrivateLinkServiceData> array = new List<PrivateLinkServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceData.DeserializePrivateLinkServiceData(item));
+                        array.Add(PrivateLinkServiceData.DeserializePrivateLinkServiceData(item, options));
                     }
                     value = array;
                     continue;

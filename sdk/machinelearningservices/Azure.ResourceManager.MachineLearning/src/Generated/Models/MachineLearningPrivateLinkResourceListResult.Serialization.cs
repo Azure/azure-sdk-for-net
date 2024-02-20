@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPrivateLinkResource> array = new List<MachineLearningPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(item));
+                        array.Add(MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

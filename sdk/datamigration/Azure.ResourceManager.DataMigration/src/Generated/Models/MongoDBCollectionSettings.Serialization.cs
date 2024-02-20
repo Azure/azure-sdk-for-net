@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value);
+                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetRUs"u8))

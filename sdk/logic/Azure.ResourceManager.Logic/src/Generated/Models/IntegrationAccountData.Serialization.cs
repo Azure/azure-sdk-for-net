@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    sku = IntegrationAccountSku.DeserializeIntegrationAccountSku(property.Value);
+                    sku = IntegrationAccountSku.DeserializeIntegrationAccountSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

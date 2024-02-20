@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallApplicationRuleCollectionData> array = new List<AzureFirewallApplicationRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item));
+                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item, options));
                             }
                             applicationRuleCollections = array;
                             continue;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallNatRuleCollectionData> array = new List<AzureFirewallNatRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item));
+                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item, options));
                             }
                             natRuleCollections = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallNetworkRuleCollectionData> array = new List<AzureFirewallNetworkRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item));
+                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item, options));
                             }
                             networkRuleCollections = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallIPConfiguration> array = new List<AzureFirewallIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(item));
+                                array.Add(AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value);
+                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hubIPAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value);
+                            hubIPAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipGroups"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallIPGroups> array = new List<AzureFirewallIPGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item));
+                                array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item, options));
                             }
                             ipGroups = array;
                             continue;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value);
+                            sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalProperties"u8))

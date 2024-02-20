@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateSqlServerSqlMITaskOutput(document.RootElement, options);
+            return DeserializeMigrateSqlServerSqlMITaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateSqlServerSqlMITaskOutput DeserializeUnknownMigrateSqlServerSqlMITaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateSqlServerSqlMITaskOutput(document.RootElement, options);
+                        return DeserializeMigrateSqlServerSqlMITaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");

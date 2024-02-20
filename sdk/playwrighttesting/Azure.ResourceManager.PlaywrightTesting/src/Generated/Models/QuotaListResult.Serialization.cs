@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     List<PlaywrightTestingQuotaData> array = new List<PlaywrightTestingQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(item));
+                        array.Add(PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(item, options));
                     }
                     value = array;
                     continue;

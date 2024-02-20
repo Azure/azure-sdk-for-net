@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value);
+                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value);
+                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("includeActualCost"u8))

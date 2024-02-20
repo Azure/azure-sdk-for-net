@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchSupportedSku> array = new List<BatchSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchSupportedSku.DeserializeBatchSupportedSku(item));
+                        array.Add(BatchSupportedSku.DeserializeBatchSupportedSku(item, options));
                     }
                     value = array;
                     continue;

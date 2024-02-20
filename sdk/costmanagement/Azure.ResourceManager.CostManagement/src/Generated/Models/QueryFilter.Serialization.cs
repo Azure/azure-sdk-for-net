@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

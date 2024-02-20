@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    properties = SpringBootServerProperties.DeserializeSpringBootServerProperties(property.Value);
+                    properties = SpringBootServerProperties.DeserializeSpringBootServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

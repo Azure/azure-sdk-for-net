@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value);
+                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("SSLCheck"u8))

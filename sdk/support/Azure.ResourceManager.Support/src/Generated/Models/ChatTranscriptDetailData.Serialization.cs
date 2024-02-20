@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Support
                             List<ChatTranscriptMessageProperties> array = new List<ChatTranscriptMessageProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChatTranscriptMessageProperties.DeserializeChatTranscriptMessageProperties(item));
+                                array.Add(ChatTranscriptMessageProperties.DeserializeChatTranscriptMessageProperties(item, options));
                             }
                             messages = array;
                             continue;

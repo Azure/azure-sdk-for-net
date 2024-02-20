@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DedicatedHostData> array = new List<DedicatedHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostData.DeserializeDedicatedHostData(item));
+                        array.Add(DedicatedHostData.DeserializeDedicatedHostData(item, options));
                     }
                     value = array;
                     continue;

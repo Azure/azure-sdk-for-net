@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InMageRcm": return InMageRcmApplianceSpecificDetails.DeserializeInMageRcmApplianceSpecificDetails(element);
+                    case "InMageRcm": return InMageRcmApplianceSpecificDetails.DeserializeInMageRcmApplianceSpecificDetails(element, options);
                 }
             }
-            return UnknownApplianceSpecificDetails.DeserializeUnknownApplianceSpecificDetails(element);
+            return UnknownApplianceSpecificDetails.DeserializeUnknownApplianceSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryApplianceSpecificDetails>.Write(ModelReaderWriterOptions options)

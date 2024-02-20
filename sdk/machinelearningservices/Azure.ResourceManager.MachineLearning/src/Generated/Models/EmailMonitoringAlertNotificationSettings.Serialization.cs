@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         emailNotificationSetting = null;
                         continue;
                     }
-                    emailNotificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    emailNotificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alertNotificationType"u8))

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PartitionMetric> array = new List<PartitionMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartitionMetric.DeserializePartitionMetric(item));
+                        array.Add(PartitionMetric.DeserializePartitionMetric(item, options));
                     }
                     value = array;
                     continue;

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         resourceSettings = null;
                         continue;
                     }
-                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
+                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceResourceSettings"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         sourceResourceSettings = null;
                         continue;
                     }
-                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
+                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveStatus"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value);
+                    moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependency> array = new List<MoverResourceDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item));
+                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependencyOverride> array = new List<MoverResourceDependencyOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item));
+                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item, options));
                     }
                     dependsOnOverrides = array;
                     continue;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value);
+                    errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

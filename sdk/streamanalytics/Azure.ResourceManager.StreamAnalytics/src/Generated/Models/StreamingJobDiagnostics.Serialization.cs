@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobDiagnosticCondition> array = new List<StreamingJobDiagnosticCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item));
+                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item, options));
                     }
                     conditions = array;
                     continue;

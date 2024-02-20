@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                     {
                         continue;
                     }
-                    properties = AzureDevOpsProjectProperties.DeserializeAzureDevOpsProjectProperties(property.Value);
+                    properties = AzureDevOpsProjectProperties.DeserializeAzureDevOpsProjectProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

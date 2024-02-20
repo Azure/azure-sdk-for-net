@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBMetricAvailability> array = new List<CosmosDBMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBMetricAvailability.DeserializeCosmosDBMetricAvailability(item));
+                        array.Add(CosmosDBMetricAvailability.DeserializeCosmosDBMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

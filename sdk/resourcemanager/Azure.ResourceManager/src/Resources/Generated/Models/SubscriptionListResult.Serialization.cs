@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubscriptionData> array = new List<SubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionData.DeserializeSubscriptionData(item));
+                        array.Add(SubscriptionData.DeserializeSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStoreReadSettings(document.RootElement, options);
+            return DeserializeStoreReadSettings(document.RootElement, options);
         }
 
         internal static UnknownStoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStoreReadSettings(document.RootElement, options);
+                        return DeserializeStoreReadSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StoreReadSettings)} does not support '{options.Format}' format.");

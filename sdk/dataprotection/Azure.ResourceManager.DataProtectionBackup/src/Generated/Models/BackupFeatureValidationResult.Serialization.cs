@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupSupportedFeature> array = new List<BackupSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item));
+                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item, options));
                     }
                     features = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountSchemaData> array = new List<IntegrationAccountSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountSchemaData.DeserializeIntegrationAccountSchemaData(item));
+                        array.Add(IntegrationAccountSchemaData.DeserializeIntegrationAccountSchemaData(item, options));
                     }
                     value = array;
                     continue;

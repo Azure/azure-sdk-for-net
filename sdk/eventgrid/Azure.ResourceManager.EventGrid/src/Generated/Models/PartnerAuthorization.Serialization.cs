@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridPartnerContent> array = new List<EventGridPartnerContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item));
+                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item, options));
                     }
                     authorizedPartnersList = array;
                     continue;

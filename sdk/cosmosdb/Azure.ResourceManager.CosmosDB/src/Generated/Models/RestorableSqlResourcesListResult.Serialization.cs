@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableSqlResourceData> array = new List<RestorableSqlResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableSqlResourceData.DeserializeRestorableSqlResourceData(item));
+                        array.Add(RestorableSqlResourceData.DeserializeRestorableSqlResourceData(item, options));
                     }
                     value = array;
                     continue;

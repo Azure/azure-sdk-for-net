@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedCosmosDBSqlTriggerResourceInfo.DeserializeExtendedCosmosDBSqlTriggerResourceInfo(property0.Value);
+                            resource = ExtendedCosmosDBSqlTriggerResourceInfo.DeserializeExtendedCosmosDBSqlTriggerResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

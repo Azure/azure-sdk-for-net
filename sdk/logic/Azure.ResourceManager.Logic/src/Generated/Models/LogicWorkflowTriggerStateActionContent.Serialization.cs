@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = LogicWorkflowTriggerReference.DeserializeLogicWorkflowTriggerReference(property.Value);
+                    source = LogicWorkflowTriggerReference.DeserializeLogicWorkflowTriggerReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

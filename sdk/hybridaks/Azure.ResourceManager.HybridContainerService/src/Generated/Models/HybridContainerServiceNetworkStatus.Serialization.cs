@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    operationStatus = VirtualNetworkPropertiesStatusOperationStatus.DeserializeVirtualNetworkPropertiesStatusOperationStatus(property.Value);
+                    operationStatus = VirtualNetworkPropertiesStatusOperationStatus.DeserializeVirtualNetworkPropertiesStatusOperationStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<PlacementPolicyData> array = new List<PlacementPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlacementPolicyData.DeserializePlacementPolicyData(item));
+                        array.Add(PlacementPolicyData.DeserializePlacementPolicyData(item, options));
                     }
                     value = array;
                     continue;

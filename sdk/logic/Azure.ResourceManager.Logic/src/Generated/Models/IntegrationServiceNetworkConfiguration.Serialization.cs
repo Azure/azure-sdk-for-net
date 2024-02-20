@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
+                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnets"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicResourceReference> array = new List<LogicResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item));
+                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item, options));
                     }
                     subnets = array;
                     continue;

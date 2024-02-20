@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchPrivateLinkResourceData> array = new List<BatchPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(item));
+                        array.Add(BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            mappingProperties = ConnectorMappingProperties.DeserializeConnectorMappingProperties(property0.Value);
+                            mappingProperties = ConnectorMappingProperties.DeserializeConnectorMappingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nextRunTime"u8))

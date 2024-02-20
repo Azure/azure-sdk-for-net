@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SuppressionAlertsScopeElement> array = new List<SuppressionAlertsScopeElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item));
+                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item, options));
                     }
                     allOf = array;
                     continue;

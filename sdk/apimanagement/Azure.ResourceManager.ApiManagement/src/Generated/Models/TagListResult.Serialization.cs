@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<TagContractData> array = new List<TagContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagContractData.DeserializeTagContractData(item));
+                        array.Add(TagContractData.DeserializeTagContractData(item, options));
                     }
                     value = array;
                     continue;

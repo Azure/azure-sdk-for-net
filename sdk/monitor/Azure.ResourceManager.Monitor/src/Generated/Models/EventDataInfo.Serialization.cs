@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value);
+                    authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("claims"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("httpRequest"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("level"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subStatus"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))

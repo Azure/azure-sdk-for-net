@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value);
+                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value);
+                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value);
+                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value, options);
                             continue;
                         }
                     }

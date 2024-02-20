@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item));
+                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item, options));
                     }
                     states = array;
                     continue;

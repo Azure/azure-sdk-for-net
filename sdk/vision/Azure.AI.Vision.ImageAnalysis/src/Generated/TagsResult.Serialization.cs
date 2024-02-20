@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTag> array = new List<DetectedTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTag.DeserializeDetectedTag(item));
+                        array.Add(DetectedTag.DeserializeDetectedTag(item, options));
                     }
                     values = array;
                     continue;

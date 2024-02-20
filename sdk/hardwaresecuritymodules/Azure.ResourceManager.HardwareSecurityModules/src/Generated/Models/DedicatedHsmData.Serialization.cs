@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value);
+                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkProfile"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("stampId"u8))

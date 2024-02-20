@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateStage> array = new List<ContainerServiceFleetUpdateStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item));
+                        array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item, options));
                     }
                     stages = array;
                     continue;

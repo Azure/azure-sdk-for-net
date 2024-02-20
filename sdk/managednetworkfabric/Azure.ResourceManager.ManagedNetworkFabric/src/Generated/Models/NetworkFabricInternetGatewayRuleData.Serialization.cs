@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("ruleProperties"u8))
                         {
-                            ruleProperties = InternetGatewayRules.DeserializeInternetGatewayRules(property0.Value);
+                            ruleProperties = InternetGatewayRules.DeserializeInternetGatewayRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

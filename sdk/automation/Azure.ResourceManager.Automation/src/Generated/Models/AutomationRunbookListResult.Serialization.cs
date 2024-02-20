@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationRunbookData> array = new List<AutomationRunbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationRunbookData.DeserializeAutomationRunbookData(item));
+                        array.Add(AutomationRunbookData.DeserializeAutomationRunbookData(item, options));
                     }
                     value = array;
                     continue;

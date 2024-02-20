@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfigsProfile> array = new List<ClusterServiceConfigsProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item));
+                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item, options));
                     }
                     serviceConfigsProfiles = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value);
+                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoscaleProfile"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
+                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value);
+                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsProfile"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value);
+                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("prometheusProfile"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value);
+                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scriptActionProfiles"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScriptActionProfile> array = new List<ScriptActionProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item));
+                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item, options));
                     }
                     scriptActionProfiles = array;
                     continue;

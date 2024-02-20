@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(property.Value);
+                    extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mabContainerHealthDetails"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabContainerHealthDetails> array = new List<MabContainerHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item));
+                        array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item, options));
                     }
                     mabContainerHealthDetails = array;
                     continue;

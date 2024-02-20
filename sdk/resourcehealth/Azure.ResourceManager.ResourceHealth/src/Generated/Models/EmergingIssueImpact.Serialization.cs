@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpactedRegion> array = new List<EmergingIssueImpactedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item));
+                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item, options));
                     }
                     regions = array;
                     continue;

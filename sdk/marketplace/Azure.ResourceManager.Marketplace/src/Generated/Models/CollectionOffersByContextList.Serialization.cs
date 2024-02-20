@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<CollectionOffersByContext> array = new List<CollectionOffersByContext>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item));
+                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item, options));
                     }
                     value = array;
                     continue;

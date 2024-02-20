@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value);
+                    alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

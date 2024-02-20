@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLinkedIntegrationRuntimeType(document.RootElement, options);
+            return DeserializeSynapseLinkedIntegrationRuntimeType(document.RootElement, options);
         }
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownLinkedIntegrationRuntimeType(document.RootElement, options);
+                        return DeserializeSynapseLinkedIntegrationRuntimeType(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");

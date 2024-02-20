@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ValidateCreateOrderLimit": return CreateOrderLimitForSubscriptionValidationResult.DeserializeCreateOrderLimitForSubscriptionValidationResult(element);
-                    case "ValidateDataTransferDetails": return DataTransferDetailsValidationResult.DeserializeDataTransferDetailsValidationResult(element);
-                    case "ValidatePreferences": return PreferencesValidationResult.DeserializePreferencesValidationResult(element);
-                    case "ValidateSkuAvailability": return SkuAvailabilityValidationResult.DeserializeSkuAvailabilityValidationResult(element);
-                    case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationResult.DeserializeSubscriptionIsAllowedToCreateJobValidationResult(element);
-                    case "ValidateAddress": return AddressValidationResult.DeserializeAddressValidationResult(element);
+                    case "ValidateCreateOrderLimit": return CreateOrderLimitForSubscriptionValidationResult.DeserializeCreateOrderLimitForSubscriptionValidationResult(element, options);
+                    case "ValidateDataTransferDetails": return DataTransferDetailsValidationResult.DeserializeDataTransferDetailsValidationResult(element, options);
+                    case "ValidatePreferences": return PreferencesValidationResult.DeserializePreferencesValidationResult(element, options);
+                    case "ValidateSkuAvailability": return SkuAvailabilityValidationResult.DeserializeSkuAvailabilityValidationResult(element, options);
+                    case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationResult.DeserializeSubscriptionIsAllowedToCreateJobValidationResult(element, options);
+                    case "ValidateAddress": return AddressValidationResult.DeserializeAddressValidationResult(element, options);
                 }
             }
-            return UnknownValidationInputResponse.DeserializeUnknownValidationInputResponse(element);
+            return UnknownValidationInputResponse.DeserializeUnknownValidationInputResponse(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)

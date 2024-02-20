@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         defaults = null;
                         continue;
                     }
-                    defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value);
+                    defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
+                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

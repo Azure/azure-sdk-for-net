@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterLocationData> array = new List<SecurityCenterLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterLocationData.DeserializeSecurityCenterLocationData(item));
+                        array.Add(SecurityCenterLocationData.DeserializeSecurityCenterLocationData(item, options));
                     }
                     value = array;
                     continue;

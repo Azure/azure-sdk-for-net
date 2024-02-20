@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<PrivateLinkScopedResourceContent> array = new List<PrivateLinkScopedResourceContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item));
+                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;

@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element);
+                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element, options);
                 }
             }
-            return UnknownTimeSeriesDatabaseConnectionProperties.DeserializeUnknownTimeSeriesDatabaseConnectionProperties(element);
+            return UnknownTimeSeriesDatabaseConnectionProperties.DeserializeUnknownTimeSeriesDatabaseConnectionProperties(element, options);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionProperties>.Write(ModelReaderWriterOptions options)

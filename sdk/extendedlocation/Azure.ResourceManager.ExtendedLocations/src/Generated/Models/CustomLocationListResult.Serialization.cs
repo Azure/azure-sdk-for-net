@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     List<CustomLocationData> array = new List<CustomLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomLocationData.DeserializeCustomLocationData(item));
+                        array.Add(CustomLocationData.DeserializeCustomLocationData(item, options));
                     }
                     value = array;
                     continue;

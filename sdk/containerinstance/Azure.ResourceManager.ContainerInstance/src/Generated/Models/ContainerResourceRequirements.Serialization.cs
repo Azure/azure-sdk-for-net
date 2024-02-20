@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (property.NameEquals("requests"u8))
                 {
-                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value);
+                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value);
+                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

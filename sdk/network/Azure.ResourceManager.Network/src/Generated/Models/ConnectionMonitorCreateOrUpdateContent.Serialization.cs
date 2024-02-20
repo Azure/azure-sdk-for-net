@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value);
+                            source = ConnectionMonitorSource.DeserializeConnectionMonitorSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destination"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value);
+                            destination = ConnectionMonitorDestination.DeserializeConnectionMonitorDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoStart"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
+                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item, options));
                             }
                             endpoints = array;
                             continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
+                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item, options));
                             }
                             testConfigurations = array;
                             continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
+                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item, options));
                             }
                             testGroups = array;
                             continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
+                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item, options));
                             }
                             outputs = array;
                             continue;

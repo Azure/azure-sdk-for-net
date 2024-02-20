@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ThresholdCustomAlertRule> array = new List<ThresholdCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item));
+                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item, options));
                             }
                             thresholdRules = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<TimeWindowCustomAlertRule> array = new List<TimeWindowCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item));
+                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item, options));
                             }
                             timeWindowRules = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AllowlistCustomAlertRule> array = new List<AllowlistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item));
+                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item, options));
                             }
                             allowlistRules = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<DenylistCustomAlertRule> array = new List<DenylistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item));
+                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item, options));
                             }
                             denylistRules = array;
                             continue;

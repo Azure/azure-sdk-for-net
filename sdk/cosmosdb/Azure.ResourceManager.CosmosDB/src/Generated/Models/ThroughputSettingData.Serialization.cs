@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedThroughputSettingsResourceInfo.DeserializeExtendedThroughputSettingsResourceInfo(property0.Value);
+                            resource = ExtendedThroughputSettingsResourceInfo.DeserializeExtendedThroughputSettingsResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

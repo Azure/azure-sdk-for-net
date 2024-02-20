@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HealthErrorSummary> array = new List<HealthErrorSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item));
+                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item, options));
                     }
                     issues = array;
                     continue;

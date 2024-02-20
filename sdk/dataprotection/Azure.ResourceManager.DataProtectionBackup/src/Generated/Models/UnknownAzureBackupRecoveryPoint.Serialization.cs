@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureBackupRecoveryPoint(document.RootElement, options);
+            return DeserializeDataProtectionBackupRecoveryPointProperties(document.RootElement, options);
         }
 
         internal static UnknownAzureBackupRecoveryPoint DeserializeUnknownAzureBackupRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAzureBackupRecoveryPoint(document.RootElement, options);
+                        return DeserializeDataProtectionBackupRecoveryPointProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support '{options.Format}' format.");

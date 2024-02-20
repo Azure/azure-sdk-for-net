@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item, options));
                     }
                     initContainers = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item, options));
                     }
                     volumes = array;
                     continue;

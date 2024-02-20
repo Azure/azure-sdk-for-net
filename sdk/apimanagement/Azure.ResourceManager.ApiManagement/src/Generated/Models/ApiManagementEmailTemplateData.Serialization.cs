@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<EmailTemplateParametersContractProperties> array = new List<EmailTemplateParametersContractProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item));
+                                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item, options));
                             }
                             parameters = array;
                             continue;

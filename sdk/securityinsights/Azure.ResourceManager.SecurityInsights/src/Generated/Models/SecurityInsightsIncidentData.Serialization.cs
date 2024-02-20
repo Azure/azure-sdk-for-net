@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value);
+                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("classification"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                                array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item, options));
                             }
                             labels = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value);
+                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("relatedAnalyticRuleIds"u8))

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
+                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value);
+                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unitOfMeasure"u8))

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value);
+                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("durationHours"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceDateSpan> array = new List<ContainerServiceDateSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item));
+                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item, options));
                     }
                     notAllowedDates = array;
                     continue;

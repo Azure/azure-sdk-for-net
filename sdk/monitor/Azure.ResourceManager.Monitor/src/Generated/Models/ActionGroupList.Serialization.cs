@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActionGroupData> array = new List<ActionGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActionGroupData.DeserializeActionGroupData(item));
+                        array.Add(ActionGroupData.DeserializeActionGroupData(item, options));
                     }
                     value = array;
                     continue;

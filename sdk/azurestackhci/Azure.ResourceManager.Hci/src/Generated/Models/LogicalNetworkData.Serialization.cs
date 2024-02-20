@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value);
+                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnets"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
                             List<Subnet> array = new List<Subnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Subnet.DeserializeSubnet(item));
+                                array.Add(Subnet.DeserializeSubnet(item, options));
                             }
                             subnets = array;
                             continue;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value);
+                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value, options);
                             continue;
                         }
                     }

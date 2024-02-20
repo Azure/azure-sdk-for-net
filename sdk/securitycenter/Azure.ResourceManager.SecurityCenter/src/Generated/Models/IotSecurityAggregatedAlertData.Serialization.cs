@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityAggregatedAlertTopDevice> array = new List<IotSecurityAggregatedAlertTopDevice>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item));
+                                array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item, options));
                             }
                             topDevicesList = array;
                             continue;

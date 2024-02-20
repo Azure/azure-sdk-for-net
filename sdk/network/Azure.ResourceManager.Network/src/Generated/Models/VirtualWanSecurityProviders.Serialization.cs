@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualWanSecurityProvider> array = new List<VirtualWanSecurityProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWanSecurityProvider.DeserializeVirtualWanSecurityProvider(item));
+                        array.Add(VirtualWanSecurityProvider.DeserializeVirtualWanSecurityProvider(item, options));
                     }
                     supportedProviders = array;
                     continue;

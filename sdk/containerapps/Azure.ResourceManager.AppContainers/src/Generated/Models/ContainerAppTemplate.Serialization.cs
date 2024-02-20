@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item, options));
                     }
                     initContainers = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value);
+                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumes"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppServiceBind> array = new List<ContainerAppServiceBind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item));
+                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item, options));
                     }
                     serviceBinds = array;
                     continue;

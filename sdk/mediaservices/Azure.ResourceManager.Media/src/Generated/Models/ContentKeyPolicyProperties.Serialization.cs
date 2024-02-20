@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item, options));
                     }
                     options0 = array;
                     continue;

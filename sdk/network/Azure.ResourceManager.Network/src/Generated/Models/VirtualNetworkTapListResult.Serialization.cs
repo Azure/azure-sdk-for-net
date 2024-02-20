@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkTapData> array = new List<VirtualNetworkTapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkTapData.DeserializeVirtualNetworkTapData(item));
+                        array.Add(VirtualNetworkTapData.DeserializeVirtualNetworkTapData(item, options));
                     }
                     value = array;
                     continue;

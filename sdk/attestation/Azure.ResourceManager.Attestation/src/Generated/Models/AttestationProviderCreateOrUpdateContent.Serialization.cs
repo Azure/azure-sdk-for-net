@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value);
+                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

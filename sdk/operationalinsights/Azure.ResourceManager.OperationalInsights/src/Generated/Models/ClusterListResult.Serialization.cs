@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsClusterData> array = new List<OperationalInsightsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(item));
+                        array.Add(OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(item, options));
                     }
                     value = array;
                     continue;

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = SiteRecoveryAddDisksProviderSpecificContent.DeserializeSiteRecoveryAddDisksProviderSpecificContent(property.Value);
+                    providerSpecificDetails = SiteRecoveryAddDisksProviderSpecificContent.DeserializeSiteRecoveryAddDisksProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<InboundSecurityRules> array = new List<InboundSecurityRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundSecurityRules.DeserializeInboundSecurityRules(item));
+                                array.Add(InboundSecurityRules.DeserializeInboundSecurityRules(item, options));
                             }
                             rules = array;
                             continue;

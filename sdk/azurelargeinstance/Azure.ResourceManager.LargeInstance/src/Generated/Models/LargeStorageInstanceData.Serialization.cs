@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProperties = LargeInstanceStorageProperties.DeserializeLargeInstanceStorageProperties(property0.Value);
+                            storageProperties = LargeInstanceStorageProperties.DeserializeLargeInstanceStorageProperties(property0.Value, options);
                             continue;
                         }
                     }

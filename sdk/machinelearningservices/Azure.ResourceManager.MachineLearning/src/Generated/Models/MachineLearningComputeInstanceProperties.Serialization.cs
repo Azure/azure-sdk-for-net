@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value);
+                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationSharingPolicy"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autologgerSettings = null;
                         continue;
                     }
-                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value);
+                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshSettings"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sshSettings = null;
                         continue;
                     }
-                    sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value);
+                    sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customServices"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<CustomService> array = new List<CustomService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomService.DeserializeCustomService(item));
+                        array.Add(CustomService.DeserializeCustomService(item, options));
                     }
                     customServices = array;
                     continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    osImageMetadata = ImageMetadata.DeserializeImageMetadata(property.Value);
+                    osImageMetadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectivityEndpoints"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    connectivityEndpoints = MachineLearningComputeInstanceConnectivityEndpoints.DeserializeMachineLearningComputeInstanceConnectivityEndpoints(property.Value);
+                    connectivityEndpoints = MachineLearningComputeInstanceConnectivityEndpoints.DeserializeMachineLearningComputeInstanceConnectivityEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applications"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceApplication> array = new List<MachineLearningComputeInstanceApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceApplication.DeserializeMachineLearningComputeInstanceApplication(item));
+                        array.Add(MachineLearningComputeInstanceApplication.DeserializeMachineLearningComputeInstanceApplication(item, options));
                     }
                     applications = array;
                     continue;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    createdBy = MachineLearningComputeInstanceCreatedBy.DeserializeMachineLearningComputeInstanceCreatedBy(property.Value);
+                    createdBy = MachineLearningComputeInstanceCreatedBy.DeserializeMachineLearningComputeInstanceCreatedBy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     errors = array;
                     continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         personalComputeInstanceSettings = null;
                         continue;
                     }
-                    personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value);
+                    personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("setupScripts"u8))
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         setupScripts = null;
                         continue;
                     }
-                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
+                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastOperation"u8))
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         lastOperation = null;
                         continue;
                     }
-                    lastOperation = MachineLearningComputeInstanceLastOperation.DeserializeMachineLearningComputeInstanceLastOperation(property.Value);
+                    lastOperation = MachineLearningComputeInstanceLastOperation.DeserializeMachineLearningComputeInstanceLastOperation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedules"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedules = null;
                         continue;
                     }
-                    schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value);
+                    schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("idleTimeBeforeShutdown"u8))
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceContainer> array = new List<MachineLearningComputeInstanceContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceContainer.DeserializeMachineLearningComputeInstanceContainer(item));
+                        array.Add(MachineLearningComputeInstanceContainer.DeserializeMachineLearningComputeInstanceContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceDataDisk> array = new List<MachineLearningComputeInstanceDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceDataDisk.DeserializeMachineLearningComputeInstanceDataDisk(item));
+                        array.Add(MachineLearningComputeInstanceDataDisk.DeserializeMachineLearningComputeInstanceDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceDataMount> array = new List<MachineLearningComputeInstanceDataMount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceDataMount.DeserializeMachineLearningComputeInstanceDataMount(item));
+                        array.Add(MachineLearningComputeInstanceDataMount.DeserializeMachineLearningComputeInstanceDataMount(item, options));
                     }
                     dataMounts = array;
                     continue;
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value);
+                    versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

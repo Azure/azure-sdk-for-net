@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    position = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    position = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("opacity"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

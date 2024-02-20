@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value);
+                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

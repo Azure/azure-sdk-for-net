@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value);
+                    imageRepository = ImageRepositoryCredential.DeserializeImageRepositoryCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

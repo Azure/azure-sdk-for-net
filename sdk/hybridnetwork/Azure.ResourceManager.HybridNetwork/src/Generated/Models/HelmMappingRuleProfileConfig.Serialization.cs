@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value);
+                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeOptions"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value);
+                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

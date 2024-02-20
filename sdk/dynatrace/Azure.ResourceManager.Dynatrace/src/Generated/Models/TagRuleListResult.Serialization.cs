@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceTagRuleData> array = new List<DynatraceTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item));
+                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
+                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vCPUs"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
+                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

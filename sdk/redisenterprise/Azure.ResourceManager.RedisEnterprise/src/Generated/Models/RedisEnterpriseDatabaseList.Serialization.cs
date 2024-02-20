@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseDatabaseData> array = new List<RedisEnterpriseDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(item));
+                        array.Add(RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(item, options));
                     }
                     value = array;
                     continue;

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuCapability> array = new List<StorageCacheSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item));
+                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuLocationInfo> array = new List<StorageCacheSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item));
+                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheRestriction> array = new List<StorageCacheRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item));
+                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item, options));
                     }
                     restrictions = array;
                     continue;

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobBackupDatasourceParameters": return BlobBackupDataSourceSettings.DeserializeBlobBackupDataSourceSettings(element);
-                    case "KubernetesClusterBackupDatasourceParameters": return KubernetesClusterBackupDataSourceSettings.DeserializeKubernetesClusterBackupDataSourceSettings(element);
+                    case "BlobBackupDatasourceParameters": return BlobBackupDataSourceSettings.DeserializeBlobBackupDataSourceSettings(element, options);
+                    case "KubernetesClusterBackupDatasourceParameters": return KubernetesClusterBackupDataSourceSettings.DeserializeKubernetesClusterBackupDataSourceSettings(element, options);
                 }
             }
-            return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element);
+            return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element, options);
         }
 
         BinaryData IPersistableModel<BackupDataSourceSettings>.Write(ModelReaderWriterOptions options)

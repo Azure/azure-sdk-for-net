@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
+                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

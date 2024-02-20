@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentAction> array = new List<ChaosExperimentAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentAction.DeserializeChaosExperimentAction(item));
+                        array.Add(ChaosExperimentAction.DeserializeChaosExperimentAction(item, options));
                     }
                     actions = array;
                     continue;

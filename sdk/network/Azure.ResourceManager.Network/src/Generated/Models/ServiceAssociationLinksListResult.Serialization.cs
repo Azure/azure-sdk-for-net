@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item, options));
                     }
                     value = array;
                     continue;

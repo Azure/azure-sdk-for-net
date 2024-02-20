@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value);
+                    capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCapability> array = new List<AvailableLabServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item));
+                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCost> array = new List<AvailableLabServicesSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item));
+                        array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item, options));
                     }
                     costs = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuRestrictions> array = new List<AvailableLabServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item));
+                        array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

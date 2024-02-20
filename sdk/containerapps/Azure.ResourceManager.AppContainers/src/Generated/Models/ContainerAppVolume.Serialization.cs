@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item, options));
                     }
                     secrets = array;
                     continue;

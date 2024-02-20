@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value);
+                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastStateChangeTimeUtc"u8))

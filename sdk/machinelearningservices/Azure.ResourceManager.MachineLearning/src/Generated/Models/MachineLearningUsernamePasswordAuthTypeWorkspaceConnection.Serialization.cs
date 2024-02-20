@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = MachineLearningWorkspaceConnectionUsernamePassword.DeserializeMachineLearningWorkspaceConnectionUsernamePassword(property.Value);
+                    credentials = MachineLearningWorkspaceConnectionUsernamePassword.DeserializeMachineLearningWorkspaceConnectionUsernamePassword(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value);
+                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subscriptionKeyParameterNames"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value);
+                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("type"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value);
+                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("license"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value);
+                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sourceApiId"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            apiVersionSet = ApiVersionSetContractDetails.DeserializeApiVersionSetContractDetails(property0.Value);
+                            apiVersionSet = ApiVersionSetContractDetails.DeserializeApiVersionSetContractDetails(property0.Value, options);
                             continue;
                         }
                     }

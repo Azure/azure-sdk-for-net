@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiReleaseData> array = new List<ApiReleaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiReleaseData.DeserializeApiReleaseData(item));
+                        array.Add(ApiReleaseData.DeserializeApiReleaseData(item, options));
                     }
                     value = array;
                     continue;

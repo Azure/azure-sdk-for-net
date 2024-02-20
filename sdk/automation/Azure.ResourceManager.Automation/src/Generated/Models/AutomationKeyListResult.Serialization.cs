@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationKey> array = new List<AutomationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        array.Add(AutomationKey.DeserializeAutomationKey(item, options));
                     }
                     keys = array;
                     continue;

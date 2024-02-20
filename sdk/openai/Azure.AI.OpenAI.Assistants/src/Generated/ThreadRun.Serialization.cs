@@ -230,7 +230,7 @@ namespace Azure.AI.OpenAI.Assistants
                         requiredAction = null;
                         continue;
                     }
-                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value);
+                    requiredAction = RequiredAction.DeserializeRequiredAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -240,7 +240,7 @@ namespace Azure.AI.OpenAI.Assistants
                         lastError = null;
                         continue;
                     }
-                    lastError = RunError.DeserializeRunError(property.Value);
+                    lastError = RunError.DeserializeRunError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -258,7 +258,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;

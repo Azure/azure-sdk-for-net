@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskImageData> array = new List<DiskImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskImageData.DeserializeDiskImageData(item));
+                        array.Add(DiskImageData.DeserializeDiskImageData(item, options));
                     }
                     value = array;
                     continue;

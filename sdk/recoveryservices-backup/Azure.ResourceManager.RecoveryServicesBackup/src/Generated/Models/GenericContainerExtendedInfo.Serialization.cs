@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
+                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoints"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<AvailableDataBoxEdgeSku> array = new List<AvailableDataBoxEdgeSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item));
+                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item, options));
                     }
                     value = array;
                     continue;

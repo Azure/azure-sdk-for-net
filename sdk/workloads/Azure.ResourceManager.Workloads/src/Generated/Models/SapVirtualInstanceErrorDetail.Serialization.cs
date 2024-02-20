@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapVirtualInstanceErrorDetail> array = new List<SapVirtualInstanceErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSapVirtualInstanceErrorDetail(item));
+                        array.Add(DeserializeSapVirtualInstanceErrorDetail(item, options));
                     }
                     details = array;
                     continue;

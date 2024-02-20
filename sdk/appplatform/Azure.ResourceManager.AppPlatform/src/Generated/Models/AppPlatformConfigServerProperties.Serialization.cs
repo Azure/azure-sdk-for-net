@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value);
+                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

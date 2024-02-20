@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+            return DeserializeSynapseSsisObjectMetadata(document.RootElement, options);
         }
 
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element, ModelReaderWriterOptions options = null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+                        return DeserializeSynapseSsisObjectMetadata(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SynapseSsisObjectMetadata)} does not support '{options.Format}' format.");

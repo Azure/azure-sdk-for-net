@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AdaptiveApplicationControlGroupData> array = new List<AdaptiveApplicationControlGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(item));
+                        array.Add(AdaptiveApplicationControlGroupData.DeserializeAdaptiveApplicationControlGroupData(item, options));
                     }
                     value = array;
                     continue;

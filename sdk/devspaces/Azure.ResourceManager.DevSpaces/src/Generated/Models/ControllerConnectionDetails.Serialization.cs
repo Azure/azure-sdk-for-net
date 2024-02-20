@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     {
                         continue;
                     }
-                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value);
+                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

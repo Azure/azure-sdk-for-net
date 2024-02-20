@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<DigitalTwinsEndpointResourceData> array = new List<DigitalTwinsEndpointResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(item));
+                        array.Add(DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaTable> array = new List<SyncFullSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaTable.DeserializeSyncFullSchemaTable(item));
+                        array.Add(SyncFullSchemaTable.DeserializeSyncFullSchemaTable(item, options));
                     }
                     tables = array;
                     continue;

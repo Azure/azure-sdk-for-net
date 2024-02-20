@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMinorVersion> array = new List<StackMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item));
+                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;

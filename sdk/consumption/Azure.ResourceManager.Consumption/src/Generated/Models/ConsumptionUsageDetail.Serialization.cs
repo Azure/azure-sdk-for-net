@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element);
-                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element);
+                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element, options);
+                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element, options);
                 }
             }
-            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element);
+            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element, options);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options)

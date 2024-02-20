@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value);
+                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitAuthorizationData> array = new List<ExpressRouteCircuitAuthorizationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(item));
+                                array.Add(ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(item, options));
                             }
                             authorizations = array;
                             continue;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
                             }
                             peerings = array;
                             continue;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value);
+                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRoutePort"u8))

@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cron": return CronTrigger.DeserializeCronTrigger(element);
-                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element);
+                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
+                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                 }
             }
-            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);
+            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)

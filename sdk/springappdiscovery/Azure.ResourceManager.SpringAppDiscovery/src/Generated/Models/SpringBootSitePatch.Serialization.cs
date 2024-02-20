@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     {
                         continue;
                     }
-                    properties = SpringBootSiteProperties.DeserializeSpringBootSiteProperties(property.Value);
+                    properties = SpringBootSiteProperties.DeserializeSpringBootSiteProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

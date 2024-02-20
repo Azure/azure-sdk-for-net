@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         baseEnvironmentSource = null;
                         continue;
                     }
-                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value);
+                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("inferencingServer"u8))
                 {
-                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value);
+                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inputs"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ModelPackageInput> array = new List<ModelPackageInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelConfiguration = null;
                         continue;
                     }
-                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value);
+                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicMonitorResourceData> array = new List<NewRelicMonitorResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(item));
+                        array.Add(NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(item, options));
                     }
                     value = array;
                     continue;

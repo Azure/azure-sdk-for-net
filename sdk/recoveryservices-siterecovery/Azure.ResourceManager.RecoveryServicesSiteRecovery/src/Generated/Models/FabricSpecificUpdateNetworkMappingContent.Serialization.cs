@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureToAzure": return A2AUpdateNetworkMappingContent.DeserializeA2AUpdateNetworkMappingContent(element);
-                    case "VmmToAzure": return VmmToAzureUpdateNetworkMappingContent.DeserializeVmmToAzureUpdateNetworkMappingContent(element);
-                    case "VmmToVmm": return VmmToVmmUpdateNetworkMappingContent.DeserializeVmmToVmmUpdateNetworkMappingContent(element);
+                    case "AzureToAzure": return A2AUpdateNetworkMappingContent.DeserializeA2AUpdateNetworkMappingContent(element, options);
+                    case "VmmToAzure": return VmmToAzureUpdateNetworkMappingContent.DeserializeVmmToAzureUpdateNetworkMappingContent(element, options);
+                    case "VmmToVmm": return VmmToVmmUpdateNetworkMappingContent.DeserializeVmmToVmmUpdateNetworkMappingContent(element, options);
                 }
             }
-            return UnknownFabricSpecificUpdateNetworkMappingContent.DeserializeUnknownFabricSpecificUpdateNetworkMappingContent(element);
+            return UnknownFabricSpecificUpdateNetworkMappingContent.DeserializeUnknownFabricSpecificUpdateNetworkMappingContent(element, options);
         }
 
         BinaryData IPersistableModel<FabricSpecificUpdateNetworkMappingContent>.Write(ModelReaderWriterOptions options)

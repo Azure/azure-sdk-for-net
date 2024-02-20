@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<DetectedChangeData> array = new List<DetectedChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
+                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item, options));
                     }
                     value = array;
                     continue;

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraNetworkProfile = ProvisionedClusterInfraNetworkProfile.DeserializeProvisionedClusterInfraNetworkProfile(property.Value);
+                    infraNetworkProfile = ProvisionedClusterInfraNetworkProfile.DeserializeProvisionedClusterInfraNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

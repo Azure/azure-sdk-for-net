@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, NfviDetails> dictionary = new Dictionary<string, NfviDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value));
+                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value, options));
                     }
                     nfvisFromSite = dictionary;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ResourceElementTemplate> array = new List<ResourceElementTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item));
+                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item, options));
                     }
                     resourceElementTemplates = array;
                     continue;

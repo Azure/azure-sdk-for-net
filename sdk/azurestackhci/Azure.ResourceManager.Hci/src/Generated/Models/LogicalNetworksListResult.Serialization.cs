@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<LogicalNetworkData> array = new List<LogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicalNetworkData.DeserializeLogicalNetworkData(item));
+                        array.Add(LogicalNetworkData.DeserializeLogicalNetworkData(item, options));
                     }
                     value = array;
                     continue;

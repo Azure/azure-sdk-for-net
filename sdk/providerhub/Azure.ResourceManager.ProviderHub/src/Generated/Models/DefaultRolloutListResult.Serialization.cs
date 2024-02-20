@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<DefaultRolloutData> array = new List<DefaultRolloutData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DefaultRolloutData.DeserializeDefaultRolloutData(item));
+                        array.Add(DefaultRolloutData.DeserializeDefaultRolloutData(item, options));
                     }
                     value = array;
                     continue;

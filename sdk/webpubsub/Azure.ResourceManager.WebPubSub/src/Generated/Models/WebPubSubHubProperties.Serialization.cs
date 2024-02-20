@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubEventHandler> array = new List<WebPubSubEventHandler>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item));
+                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item, options));
                     }
                     eventHandlers = array;
                     continue;

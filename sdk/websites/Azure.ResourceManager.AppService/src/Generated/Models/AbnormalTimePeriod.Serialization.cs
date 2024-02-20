@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
+                        array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item, options));
                     }
                     events = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item));
+                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
                     }
                     solutions = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<SbomComponent> array = new List<SbomComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SbomComponent.DeserializeSbomComponent(item));
+                        array.Add(SbomComponent.DeserializeSbomComponent(item, options));
                     }
                     value = array;
                     continue;

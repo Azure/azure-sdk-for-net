@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    keyVaultMetaInfo = UpdateKeyVaultMetaInfo.DeserializeUpdateKeyVaultMetaInfo(property.Value);
+                    keyVaultMetaInfo = UpdateKeyVaultMetaInfo.DeserializeUpdateKeyVaultMetaInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

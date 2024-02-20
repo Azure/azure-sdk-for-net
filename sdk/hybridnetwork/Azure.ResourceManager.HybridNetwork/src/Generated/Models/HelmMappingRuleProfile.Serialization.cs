@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    options0 = HelmMappingRuleProfileConfig.DeserializeHelmMappingRuleProfileConfig(property.Value);
+                    options0 = HelmMappingRuleProfileConfig.DeserializeHelmMappingRuleProfileConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     List<AssociationData> array = new List<AssociationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssociationData.DeserializeAssociationData(item));
+                        array.Add(AssociationData.DeserializeAssociationData(item, options));
                     }
                     value = array;
                     continue;

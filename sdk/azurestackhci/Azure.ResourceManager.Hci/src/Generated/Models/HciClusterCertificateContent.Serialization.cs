@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = HciClusterRawCertificate.DeserializeHciClusterRawCertificate(property.Value);
+                    properties = HciClusterRawCertificate.DeserializeHciClusterRawCertificate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityTopologyResource> array = new List<SecurityTopologyResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityTopologyResource.DeserializeSecurityTopologyResource(item));
+                        array.Add(SecurityTopologyResource.DeserializeSecurityTopologyResource(item, options));
                     }
                     value = array;
                     continue;

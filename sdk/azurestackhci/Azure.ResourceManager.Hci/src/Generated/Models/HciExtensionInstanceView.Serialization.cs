@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(property.Value);
+                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

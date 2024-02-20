@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotChannelSite> array = new List<BotChannelSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotChannelSite.DeserializeBotChannelSite(item));
+                        array.Add(BotChannelSite.DeserializeBotChannelSite(item, options));
                     }
                     sites = array;
                     continue;

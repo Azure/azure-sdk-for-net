@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoClusterData> array = new List<KustoClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoClusterData.DeserializeKustoClusterData(item));
+                        array.Add(KustoClusterData.DeserializeKustoClusterData(item, options));
                     }
                     value = array;
                     continue;

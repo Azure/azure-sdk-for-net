@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value);
+                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value);
+                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDate"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             List<OperationalInsightsClusterAssociatedWorkspace> array = new List<OperationalInsightsClusterAssociatedWorkspace>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsClusterAssociatedWorkspace.DeserializeOperationalInsightsClusterAssociatedWorkspace(item));
+                                array.Add(OperationalInsightsClusterAssociatedWorkspace.DeserializeOperationalInsightsClusterAssociatedWorkspace(item, options));
                             }
                             associatedWorkspaces = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            capacityReservationProperties = OperationalInsightsCapacityReservationProperties.DeserializeOperationalInsightsCapacityReservationProperties(property0.Value);
+                            capacityReservationProperties = OperationalInsightsCapacityReservationProperties.DeserializeOperationalInsightsCapacityReservationProperties(property0.Value, options);
                             continue;
                         }
                     }

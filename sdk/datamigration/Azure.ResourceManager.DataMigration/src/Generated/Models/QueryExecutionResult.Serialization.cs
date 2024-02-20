@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResult"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

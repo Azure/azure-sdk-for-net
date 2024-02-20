@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkDhcpData> array = new List<WorkloadNetworkDhcpData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(item));
+                        array.Add(WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(item, options));
                     }
                     value = array;
                     continue;

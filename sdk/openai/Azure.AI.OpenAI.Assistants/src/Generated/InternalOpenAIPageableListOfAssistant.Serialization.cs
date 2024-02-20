@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<Assistant> array = new List<Assistant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assistant.DeserializeAssistant(item));
+                        array.Add(Assistant.DeserializeAssistant(item, options));
                     }
                     data = array;
                     continue;

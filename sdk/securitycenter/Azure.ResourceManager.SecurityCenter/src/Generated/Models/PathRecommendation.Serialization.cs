@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("common"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserRecommendation> array = new List<UserRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        array.Add(UserRecommendation.DeserializeUserRecommendation(item, options));
                     }
                     usernames = array;
                     continue;

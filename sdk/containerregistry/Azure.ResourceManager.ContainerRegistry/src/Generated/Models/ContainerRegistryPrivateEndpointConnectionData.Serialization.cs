@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value);
+                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

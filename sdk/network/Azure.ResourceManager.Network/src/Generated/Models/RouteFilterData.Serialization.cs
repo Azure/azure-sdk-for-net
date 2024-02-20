@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
                             List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
+                                array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item, options));
                             }
                             rules = array;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
                             }
                             peerings = array;
                             continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
                             }
                             ipv6Peerings = array;
                             continue;

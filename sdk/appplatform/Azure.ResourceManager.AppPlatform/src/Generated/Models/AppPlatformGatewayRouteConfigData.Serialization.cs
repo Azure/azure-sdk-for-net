@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformGatewayRouteConfigProperties.DeserializeAppPlatformGatewayRouteConfigProperties(property.Value);
+                    properties = AppPlatformGatewayRouteConfigProperties.DeserializeAppPlatformGatewayRouteConfigProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExceptionAction(document.RootElement, options);
+            return DeserializeExceptionAction(document.RootElement, options);
         }
 
         internal static UnknownExceptionAction DeserializeUnknownExceptionAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -119,7 +119,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownExceptionAction(document.RootElement, options);
+                        return DeserializeExceptionAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ExceptionAction)} does not support '{options.Format}' format.");

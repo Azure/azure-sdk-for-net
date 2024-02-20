@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningEnvironmentVersionProperties.DeserializeMachineLearningEnvironmentVersionProperties(property.Value);
+                    properties = MachineLearningEnvironmentVersionProperties.DeserializeMachineLearningEnvironmentVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

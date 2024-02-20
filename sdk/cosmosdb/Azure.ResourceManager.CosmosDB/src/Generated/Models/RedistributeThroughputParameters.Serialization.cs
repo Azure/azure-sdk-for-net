@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = RedistributeThroughputPropertiesResource.DeserializeRedistributeThroughputPropertiesResource(property0.Value);
+                            resource = RedistributeThroughputPropertiesResource.DeserializeRedistributeThroughputPropertiesResource(property0.Value, options);
                             continue;
                         }
                     }

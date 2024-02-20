@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpDiagnosticInvocation> array = new List<SelfHelpDiagnosticInvocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item));
+                                array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item, options));
                             }
                             insights = array;
                             continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpDiagnosticInfo> array = new List<SelfHelpDiagnosticInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item));
+                                array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item, options));
                             }
                             diagnostics = array;
                             continue;

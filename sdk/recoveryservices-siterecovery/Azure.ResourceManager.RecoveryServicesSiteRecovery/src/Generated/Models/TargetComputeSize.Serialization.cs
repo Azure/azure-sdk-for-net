@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = TargetComputeSizeProperties.DeserializeTargetComputeSizeProperties(property.Value);
+                    properties = TargetComputeSizeProperties.DeserializeTargetComputeSizeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

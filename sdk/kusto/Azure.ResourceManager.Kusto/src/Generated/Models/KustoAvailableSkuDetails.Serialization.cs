@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    sku = KustoSku.DeserializeKustoSku(property.Value);
+                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    capacity = KustoCapacity.DeserializeKustoCapacity(property.Value);
+                    capacity = KustoCapacity.DeserializeKustoCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

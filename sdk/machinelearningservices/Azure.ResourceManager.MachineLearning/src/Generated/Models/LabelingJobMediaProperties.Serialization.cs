@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Image": return LabelingJobImageProperties.DeserializeLabelingJobImageProperties(element);
-                    case "Text": return LabelingJobTextProperties.DeserializeLabelingJobTextProperties(element);
+                    case "Image": return LabelingJobImageProperties.DeserializeLabelingJobImageProperties(element, options);
+                    case "Text": return LabelingJobTextProperties.DeserializeLabelingJobTextProperties(element, options);
                 }
             }
-            return UnknownLabelingJobMediaProperties.DeserializeUnknownLabelingJobMediaProperties(element);
+            return UnknownLabelingJobMediaProperties.DeserializeUnknownLabelingJobMediaProperties(element, options);
         }
 
         BinaryData IPersistableModel<LabelingJobMediaProperties>.Write(ModelReaderWriterOptions options)

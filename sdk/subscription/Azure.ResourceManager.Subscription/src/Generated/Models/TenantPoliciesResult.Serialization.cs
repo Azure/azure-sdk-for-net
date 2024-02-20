@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<TenantPolicyData> array = new List<TenantPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantPolicyData.DeserializeTenantPolicyData(item));
+                        array.Add(TenantPolicyData.DeserializeTenantPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value);
+                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))

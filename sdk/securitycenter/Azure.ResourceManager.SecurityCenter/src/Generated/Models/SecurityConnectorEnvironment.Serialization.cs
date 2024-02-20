@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AwsAccount": return AwsEnvironment.DeserializeAwsEnvironment(element);
-                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element);
-                    case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element);
-                    case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element);
-                    case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element);
+                    case "AwsAccount": return AwsEnvironment.DeserializeAwsEnvironment(element, options);
+                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
+                    case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
+                    case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
+                    case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element, options);
                 }
             }
-            return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element);
+            return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element, options);
         }
 
         BinaryData IPersistableModel<SecurityConnectorEnvironment>.Write(ModelReaderWriterOptions options)

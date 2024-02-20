@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudBmcKeySetData> array = new List<NetworkCloudBmcKeySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item));
+                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item, options));
                     }
                     value = array;
                     continue;

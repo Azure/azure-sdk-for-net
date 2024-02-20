@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value);
+                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

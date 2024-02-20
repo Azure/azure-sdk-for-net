@@ -71,11 +71,11 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "queueLength": return QueueLengthExceptionTrigger.DeserializeQueueLengthExceptionTrigger(element);
-                    case "waitTime": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
+                    case "queueLength": return QueueLengthExceptionTrigger.DeserializeQueueLengthExceptionTrigger(element, options);
+                    case "waitTime": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element, options);
                 }
             }
-            return UnknownExceptionTrigger.DeserializeUnknownExceptionTrigger(element);
+            return UnknownExceptionTrigger.DeserializeUnknownExceptionTrigger(element, options);
         }
 
         BinaryData IPersistableModel<ExceptionTrigger>.Write(ModelReaderWriterOptions options)

@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
+                    copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logLocationSettings"u8))
                 {
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

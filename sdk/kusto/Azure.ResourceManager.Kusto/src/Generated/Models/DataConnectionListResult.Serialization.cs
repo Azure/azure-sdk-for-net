@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDataConnectionData> array = new List<KustoDataConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item));
+                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item, options));
                     }
                     value = array;
                     continue;

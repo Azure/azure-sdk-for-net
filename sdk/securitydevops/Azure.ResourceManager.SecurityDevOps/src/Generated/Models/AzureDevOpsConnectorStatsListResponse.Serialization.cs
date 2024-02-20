@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsConnectorStats> array = new List<AzureDevOpsConnectorStats>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(item));
+                        array.Add(AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(item, options));
                     }
                     value = array;
                     continue;

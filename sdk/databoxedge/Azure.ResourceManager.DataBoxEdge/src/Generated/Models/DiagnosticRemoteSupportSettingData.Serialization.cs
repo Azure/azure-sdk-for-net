@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<EdgeRemoteSupportSettings> array = new List<EdgeRemoteSupportSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
+                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item, options));
                             }
                             remoteSupportSettingsList = array;
                             continue;

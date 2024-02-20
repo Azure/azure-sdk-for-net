@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownGranularCopyLogDetails(document.RootElement, options);
+            return DeserializeGranularCopyLogDetails(document.RootElement, options);
         }
 
         internal static UnknownGranularCopyLogDetails DeserializeUnknownGranularCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownGranularCopyLogDetails(document.RootElement, options);
+                        return DeserializeGranularCopyLogDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(GranularCopyLogDetails)} does not support '{options.Format}' format.");

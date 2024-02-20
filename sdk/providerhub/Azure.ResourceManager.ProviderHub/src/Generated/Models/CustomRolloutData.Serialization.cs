@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = CustomRolloutProperties.DeserializeCustomRolloutProperties(property.Value);
+                    properties = CustomRolloutProperties.DeserializeCustomRolloutProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

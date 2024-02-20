@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoNCrossValidations.DeserializeAutoNCrossValidations(element);
-                    case "Custom": return CustomNCrossValidations.DeserializeCustomNCrossValidations(element);
+                    case "Auto": return AutoNCrossValidations.DeserializeAutoNCrossValidations(element, options);
+                    case "Custom": return CustomNCrossValidations.DeserializeCustomNCrossValidations(element, options);
                 }
             }
-            return UnknownNCrossValidations.DeserializeUnknownNCrossValidations(element);
+            return UnknownNCrossValidations.DeserializeUnknownNCrossValidations(element, options);
         }
 
         BinaryData IPersistableModel<NCrossValidations>.Write(ModelReaderWriterOptions options)

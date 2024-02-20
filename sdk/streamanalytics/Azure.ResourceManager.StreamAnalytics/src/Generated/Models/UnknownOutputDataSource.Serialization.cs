@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOutputDataSource(document.RootElement, options);
+            return DeserializeStreamingJobOutputDataSource(document.RootElement, options);
         }
 
         internal static UnknownOutputDataSource DeserializeUnknownOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOutputDataSource(document.RootElement, options);
+                        return DeserializeStreamingJobOutputDataSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobOutputDataSource)} does not support '{options.Format}' format.");

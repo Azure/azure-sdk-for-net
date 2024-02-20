@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value);
+                            hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationDetails"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value);
+                            authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value, options);
                             continue;
                         }
                     }

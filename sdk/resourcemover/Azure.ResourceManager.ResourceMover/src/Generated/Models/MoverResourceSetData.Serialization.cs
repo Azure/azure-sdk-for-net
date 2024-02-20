@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceMover
                     {
                         continue;
                     }
-                    properties = MoverResourceSetProperties.DeserializeMoverResourceSetProperties(property.Value);
+                    properties = MoverResourceSetProperties.DeserializeMoverResourceSetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

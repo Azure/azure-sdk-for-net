@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Dns.Models
                     List<DnsRecordData> array = new List<DnsRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsRecordData.DeserializeDnsRecordData(item));
+                        array.Add(DnsRecordData.DeserializeDnsRecordData(item, options));
                     }
                     value = array;
                     continue;

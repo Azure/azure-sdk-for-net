@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteCircuitRoutesTable> array = new List<ExpressRouteCircuitRoutesTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteCircuitRoutesTable.DeserializeExpressRouteCircuitRoutesTable(item));
+                        array.Add(ExpressRouteCircuitRoutesTable.DeserializeExpressRouteCircuitRoutesTable(item, options));
                     }
                     value = array;
                     continue;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounter> array = new List<DataBoxEdgeMetricCounter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item));
+                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item, options));
                     }
                     counters = array;
                     continue;

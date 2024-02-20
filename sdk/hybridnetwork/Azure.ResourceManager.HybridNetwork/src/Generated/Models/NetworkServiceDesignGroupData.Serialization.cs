@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = NetworkServiceDesignGroupPropertiesFormat.DeserializeNetworkServiceDesignGroupPropertiesFormat(property.Value);
+                    properties = NetworkServiceDesignGroupPropertiesFormat.DeserializeNetworkServiceDesignGroupPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

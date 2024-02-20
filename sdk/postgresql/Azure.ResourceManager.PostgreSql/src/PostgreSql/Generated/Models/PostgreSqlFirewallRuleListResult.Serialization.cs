@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlFirewallRuleData> array = new List<PostgreSqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(item));
+                        array.Add(PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

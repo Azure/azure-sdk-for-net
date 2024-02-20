@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = PlacementPolicyProperties.DeserializePlacementPolicyProperties(property.Value);
+                    properties = PlacementPolicyProperties.DeserializePlacementPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

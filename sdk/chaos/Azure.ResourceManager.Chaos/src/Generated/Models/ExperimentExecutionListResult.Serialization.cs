@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentExecutionData> array = new List<ChaosExperimentExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(item));
+                        array.Add(ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(item, options));
                     }
                     value = array;
                     continue;

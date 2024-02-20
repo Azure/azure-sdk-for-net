@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    properties = DefaultRolloutProperties.DeserializeDefaultRolloutProperties(property.Value);
+                    properties = DefaultRolloutProperties.DeserializeDefaultRolloutProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

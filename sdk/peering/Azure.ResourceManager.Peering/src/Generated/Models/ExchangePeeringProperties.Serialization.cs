@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item));
+                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item, options));
                     }
                     connections = array;
                     continue;

@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
+                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item, options));
                             }
                             resourceIdentifiers = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
+                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item, options));
                             }
                             entities = array;
                             continue;
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value);
+                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value, options);
                             continue;
                         }
                     }

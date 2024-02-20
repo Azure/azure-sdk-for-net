@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value);
+                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value);
+                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value);
+                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureLargeInstanceId"u8))

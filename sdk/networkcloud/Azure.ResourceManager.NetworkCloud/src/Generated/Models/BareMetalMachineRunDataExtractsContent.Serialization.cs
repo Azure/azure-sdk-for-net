@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item));
+                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
                     }
                     commands = array;
                     continue;

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteCriterion> array = new List<RouteCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCriterion.DeserializeRouteCriterion(item));
+                        array.Add(RouteCriterion.DeserializeRouteCriterion(item, options));
                     }
                     matchCriteria = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapAction> array = new List<RouteMapAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapAction.DeserializeRouteMapAction(item));
+                        array.Add(RouteMapAction.DeserializeRouteMapAction(item, options));
                     }
                     actions = array;
                     continue;

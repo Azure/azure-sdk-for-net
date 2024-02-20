@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SqlVulnerabilityAssessmentScanResult> array = new List<SqlVulnerabilityAssessmentScanResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVulnerabilityAssessmentScanResult.DeserializeSqlVulnerabilityAssessmentScanResult(item));
+                        array.Add(SqlVulnerabilityAssessmentScanResult.DeserializeSqlVulnerabilityAssessmentScanResult(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceEnvironmentData> array = new List<IntegrationServiceEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(item));
+                        array.Add(IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(item, options));
                     }
                     value = array;
                     continue;

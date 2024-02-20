@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPrivateEndpointData> array = new List<DataFactoryPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(item));
+                        array.Add(DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(item, options));
                     }
                     value = array;
                     continue;

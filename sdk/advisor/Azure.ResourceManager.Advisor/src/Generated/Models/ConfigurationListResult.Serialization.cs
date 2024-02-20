@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<ConfigData> array = new List<ConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigData.DeserializeConfigData(item));
+                        array.Add(ConfigData.DeserializeConfigData(item, options));
                     }
                     value = array;
                     continue;

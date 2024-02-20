@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value);
+                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

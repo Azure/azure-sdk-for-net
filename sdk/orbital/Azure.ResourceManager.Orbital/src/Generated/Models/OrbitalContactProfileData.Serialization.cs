@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            networkConfiguration = ContactProfilesPropertiesNetworkConfiguration.DeserializeContactProfilesPropertiesNetworkConfiguration(property0.Value);
+                            networkConfiguration = ContactProfilesPropertiesNetworkConfiguration.DeserializeContactProfilesPropertiesNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Orbital
                             List<OrbitalContactProfileLink> array = new List<OrbitalContactProfileLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OrbitalContactProfileLink.DeserializeOrbitalContactProfileLink(item));
+                                array.Add(OrbitalContactProfileLink.DeserializeOrbitalContactProfileLink(item, options));
                             }
                             links = array;
                             continue;

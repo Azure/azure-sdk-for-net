@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFirewallPolicyRule(document.RootElement, options);
+            return DeserializeFirewallPolicyRule(document.RootElement, options);
         }
 
         internal static UnknownFirewallPolicyRule DeserializeUnknownFirewallPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFirewallPolicyRule(document.RootElement, options);
+                        return DeserializeFirewallPolicyRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support '{options.Format}' format.");

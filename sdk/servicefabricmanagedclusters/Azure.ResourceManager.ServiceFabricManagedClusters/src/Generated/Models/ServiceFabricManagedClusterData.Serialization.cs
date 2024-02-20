@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(property.Value);
+                    sku = ServiceFabricManagedClustersSku.DeserializeServiceFabricManagedClustersSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterLoadBalancingRule> array = new List<ManagedClusterLoadBalancingRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterLoadBalancingRule.DeserializeManagedClusterLoadBalancingRule(item));
+                                array.Add(ManagedClusterLoadBalancingRule.DeserializeManagedClusterLoadBalancingRule(item, options));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item, options));
                             }
                             networkSecurityRules = array;
                             continue;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterClientCertificate> array = new List<ManagedClusterClientCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterClientCertificate.DeserializeManagedClusterClientCertificate(item));
+                                array.Add(ManagedClusterClientCertificate.DeserializeManagedClusterClientCertificate(item, options));
                             }
                             clients = array;
                             continue;
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            azureActiveDirectory = ManagedClusterAzureActiveDirectory.DeserializeManagedClusterAzureActiveDirectory(property0.Value);
+                            azureActiveDirectory = ManagedClusterAzureActiveDirectory.DeserializeManagedClusterAzureActiveDirectory(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fabricSettings"u8))
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ClusterFabricSettingsSection> array = new List<ClusterFabricSettingsSection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterFabricSettingsSection.DeserializeClusterFabricSettingsSection(item));
+                                array.Add(ClusterFabricSettingsSection.DeserializeClusterFabricSettingsSection(item, options));
                             }
                             fabricSettings = array;
                             continue;
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
+                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableIpv6"u8))
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterIPTag> array = new List<ManagedClusterIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item));
+                                array.Add(ManagedClusterIPTag.DeserializeManagedClusterIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterSubnet> array = new List<ManagedClusterSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterSubnet.DeserializeManagedClusterSubnet(item));
+                                array.Add(ManagedClusterSubnet.DeserializeManagedClusterSubnet(item, options));
                             }
                             auxiliarySubnets = array;
                             continue;
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ManagedClusterServiceEndpoint> array = new List<ManagedClusterServiceEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterServiceEndpoint.DeserializeManagedClusterServiceEndpoint(item));
+                                array.Add(ManagedClusterServiceEndpoint.DeserializeManagedClusterServiceEndpoint(item, options));
                             }
                             serviceEndpoints = array;
                             continue;
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value);
+                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpGatewayTokenAuthConnectionPort"u8))

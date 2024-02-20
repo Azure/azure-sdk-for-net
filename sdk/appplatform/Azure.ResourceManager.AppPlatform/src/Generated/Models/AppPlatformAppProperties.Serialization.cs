@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value);
+                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("persistentDisk"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value);
+                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customPersistentDisks"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppCustomPersistentDisk> array = new List<AppCustomPersistentDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item, options));
                     }
                     customPersistentDisks = array;
                     continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppLoadedCertificate> array = new List<AppLoadedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item, options));
                     }
                     loadedCertificates = array;
                     continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value);
+                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ingressSettings"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value);
+                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

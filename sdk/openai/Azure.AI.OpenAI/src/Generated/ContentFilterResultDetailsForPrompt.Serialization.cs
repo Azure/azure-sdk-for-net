@@ -128,7 +128,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("violence"u8))
@@ -137,7 +137,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hate"u8))
@@ -146,7 +146,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("self_harm"u8))
@@ -155,7 +155,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profanity"u8))
@@ -164,7 +164,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("custom_blocklists"u8))
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI
                     List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item));
+                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
                     }
                     customBlocklists = array;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    jailbreak = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    jailbreak = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

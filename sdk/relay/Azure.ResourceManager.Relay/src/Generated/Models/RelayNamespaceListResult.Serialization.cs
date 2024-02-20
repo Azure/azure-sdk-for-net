@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayNamespaceData> array = new List<RelayNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayNamespaceData.DeserializeRelayNamespaceData(item));
+                        array.Add(RelayNamespaceData.DeserializeRelayNamespaceData(item, options));
                     }
                     value = array;
                     continue;

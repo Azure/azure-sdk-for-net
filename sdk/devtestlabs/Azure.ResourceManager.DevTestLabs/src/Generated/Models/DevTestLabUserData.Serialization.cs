@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value);
+                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value);
+                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))

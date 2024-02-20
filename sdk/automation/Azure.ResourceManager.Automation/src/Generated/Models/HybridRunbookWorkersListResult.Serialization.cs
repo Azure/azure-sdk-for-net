@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<HybridRunbookWorkerData> array = new List<HybridRunbookWorkerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(item));
+                        array.Add(HybridRunbookWorkerData.DeserializeHybridRunbookWorkerData(item, options));
                     }
                     value = array;
                     continue;

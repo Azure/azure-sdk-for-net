@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionBinding(document.RootElement, options);
+            return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
         }
 
         internal static UnknownFunctionBinding DeserializeUnknownFunctionBinding(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFunctionBinding(document.RootElement, options);
+                        return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");

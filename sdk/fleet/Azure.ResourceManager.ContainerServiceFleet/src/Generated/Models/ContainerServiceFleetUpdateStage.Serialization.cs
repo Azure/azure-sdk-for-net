@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateGroup> array = new List<ContainerServiceFleetUpdateGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateGroup.DeserializeContainerServiceFleetUpdateGroup(item));
+                        array.Add(ContainerServiceFleetUpdateGroup.DeserializeContainerServiceFleetUpdateGroup(item, options));
                     }
                     groups = array;
                     continue;

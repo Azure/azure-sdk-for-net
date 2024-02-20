@@ -228,7 +228,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentPage> array = new List<DocumentPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentPage.DeserializeDocumentPage(item));
+                        array.Add(DocumentPage.DeserializeDocumentPage(item, options));
                     }
                     pages = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentParagraph> array = new List<DocumentParagraph>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                        array.Add(DocumentParagraph.DeserializeDocumentParagraph(item, options));
                     }
                     paragraphs = array;
                     continue;
@@ -256,7 +256,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentTable> array = new List<DocumentTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTable.DeserializeDocumentTable(item));
+                        array.Add(DocumentTable.DeserializeDocumentTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFigure> array = new List<DocumentFigure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFigure.DeserializeDocumentFigure(item));
+                        array.Add(DocumentFigure.DeserializeDocumentFigure(item, options));
                     }
                     figures = array;
                     continue;
@@ -284,7 +284,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentList> array = new List<DocumentList>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentList.DeserializeDocumentList(item));
+                        array.Add(DocumentList.DeserializeDocumentList(item, options));
                     }
                     lists = array;
                     continue;
@@ -298,7 +298,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSection> array = new List<DocumentSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSection.DeserializeDocumentSection(item));
+                        array.Add(DocumentSection.DeserializeDocumentSection(item, options));
                     }
                     sections = array;
                     continue;
@@ -312,7 +312,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentKeyValuePair> array = new List<DocumentKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item));
+                        array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item, options));
                     }
                     keyValuePairs = array;
                     continue;
@@ -326,7 +326,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentStyle> array = new List<DocumentStyle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentStyle.DeserializeDocumentStyle(item));
+                        array.Add(DocumentStyle.DeserializeDocumentStyle(item, options));
                     }
                     styles = array;
                     continue;
@@ -340,7 +340,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLanguage> array = new List<DocumentLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item, options));
                     }
                     languages = array;
                     continue;
@@ -354,7 +354,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<AnalyzedDocument> array = new List<AnalyzedDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item));
+                        array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item, options));
                     }
                     documents = array;
                     continue;

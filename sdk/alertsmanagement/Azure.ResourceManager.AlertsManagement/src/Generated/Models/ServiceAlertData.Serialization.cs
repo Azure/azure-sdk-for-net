@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     {
                         continue;
                     }
-                    properties = ServiceAlertProperties.DeserializeServiceAlertProperties(property.Value);
+                    properties = ServiceAlertProperties.DeserializeServiceAlertProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

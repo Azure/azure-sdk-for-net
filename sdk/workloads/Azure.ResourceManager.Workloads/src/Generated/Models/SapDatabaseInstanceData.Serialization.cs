@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Workloads
                             List<DatabaseVmDetails> array = new List<DatabaseVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseVmDetails.DeserializeDatabaseVmDetails(item));
+                                array.Add(DatabaseVmDetails.DeserializeDatabaseVmDetails(item, options));
                             }
                             vmDetails = array;
                             continue;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }

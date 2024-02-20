@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisIotFhirDestinationData> array = new List<HealthcareApisIotFhirDestinationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(item));
+                        array.Add(HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(item, options));
                     }
                     value = array;
                     continue;

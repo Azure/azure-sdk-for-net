@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
+                            captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionDescription"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value);
+                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value, options);
                             continue;
                         }
                     }

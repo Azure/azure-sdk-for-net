@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppApplicationConfigurationsItem> array = new List<SpringBootAppApplicationConfigurationsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item));
+                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item, options));
                     }
                     applicationConfigurations = array;
                     continue;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppMiscsItem> array = new List<SpringBootAppMiscsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item));
+                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item, options));
                     }
                     miscs = array;
                     continue;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppInstancesItem> array = new List<SpringBootAppInstancesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item));
+                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item, options));
                     }
                     instances = array;
                     continue;
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;

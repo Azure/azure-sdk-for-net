@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayRouteConfigData> array = new List<AppPlatformGatewayRouteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(item));
+                        array.Add(AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(item, options));
                     }
                     value = array;
                     continue;

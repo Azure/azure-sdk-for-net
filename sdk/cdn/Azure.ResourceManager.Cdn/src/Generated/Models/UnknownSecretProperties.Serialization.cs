@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecretProperties(document.RootElement, options);
+            return DeserializeFrontDoorSecretProperties(document.RootElement, options);
         }
 
         internal static UnknownSecretProperties DeserializeUnknownSecretProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecretProperties(document.RootElement, options);
+                        return DeserializeFrontDoorSecretProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support '{options.Format}' format.");

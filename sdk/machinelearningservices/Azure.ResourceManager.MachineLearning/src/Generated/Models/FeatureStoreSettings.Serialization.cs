@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value);
+                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineStoreConnectionName"u8))

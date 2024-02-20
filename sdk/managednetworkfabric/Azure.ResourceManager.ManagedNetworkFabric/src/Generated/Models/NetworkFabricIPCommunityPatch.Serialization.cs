@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPCommunityRule> array = new List<IPCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item));
+                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item, options));
                             }
                             ipCommunityRules = array;
                             continue;

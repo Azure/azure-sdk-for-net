@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ParameterContract> array = new List<ParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                                array.Add(ParameterContract.DeserializeParameterContract(item, options));
                             }
                             templateParameters = array;
                             continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            request = RequestContract.DeserializeRequestContract(property0.Value);
+                            request = RequestContract.DeserializeRequestContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("responses"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ResponseContract> array = new List<ResponseContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                                array.Add(ResponseContract.DeserializeResponseContract(item, options));
                             }
                             responses = array;
                             continue;

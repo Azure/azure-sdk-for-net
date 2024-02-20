@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                             {
                                 continue;
                             }
-                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
                             continue;
                         }
                     }

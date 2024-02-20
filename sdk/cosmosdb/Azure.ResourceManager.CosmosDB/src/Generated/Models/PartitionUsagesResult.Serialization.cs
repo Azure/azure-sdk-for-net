@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PartitionUsage> array = new List<PartitionUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartitionUsage.DeserializePartitionUsage(item));
+                        array.Add(PartitionUsage.DeserializePartitionUsage(item, options));
                     }
                     value = array;
                     continue;

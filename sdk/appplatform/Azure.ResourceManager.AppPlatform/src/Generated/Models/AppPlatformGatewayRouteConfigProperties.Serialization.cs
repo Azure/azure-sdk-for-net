@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
+                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item, options));
                     }
                     routes = array;
                     continue;

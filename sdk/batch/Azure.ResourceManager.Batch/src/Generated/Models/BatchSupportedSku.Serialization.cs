@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchSkuCapability> array = new List<BatchSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item));
+                        array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

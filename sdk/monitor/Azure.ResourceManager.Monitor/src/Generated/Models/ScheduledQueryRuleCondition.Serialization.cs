@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorDimension> array = new List<MonitorDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorDimension.DeserializeMonitorDimension(item));
+                        array.Add(MonitorDimension.DeserializeMonitorDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(property.Value);
+                    failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricName"u8))

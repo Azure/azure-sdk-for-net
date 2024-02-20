@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value);
+                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("modules"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item));
+                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item, options));
                             }
                             modules = array;
                             continue;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value);
+                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
                             continue;
                         }
                     }

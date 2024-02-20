@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsClusterData> array = new List<StreamAnalyticsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(item));
+                        array.Add(StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(item, options));
                     }
                     value = array;
                     continue;

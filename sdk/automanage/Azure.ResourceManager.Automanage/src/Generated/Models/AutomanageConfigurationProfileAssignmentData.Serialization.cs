@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automanage
                     {
                         continue;
                     }
-                    properties = AutomanageConfigurationProfileAssignmentProperties.DeserializeAutomanageConfigurationProfileAssignmentProperties(property.Value);
+                    properties = AutomanageConfigurationProfileAssignmentProperties.DeserializeAutomanageConfigurationProfileAssignmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

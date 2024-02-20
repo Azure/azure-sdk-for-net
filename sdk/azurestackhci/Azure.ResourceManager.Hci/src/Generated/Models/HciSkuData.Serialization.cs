@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci
                             List<HciSkuMappings> array = new List<HciSkuMappings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item));
+                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item, options));
                             }
                             skuMappings = array;
                             continue;

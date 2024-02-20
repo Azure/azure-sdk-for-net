@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountData> array = new List<BatchAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountData.DeserializeBatchAccountData(item));
+                        array.Add(BatchAccountData.DeserializeBatchAccountData(item, options));
                     }
                     value = array;
                     continue;

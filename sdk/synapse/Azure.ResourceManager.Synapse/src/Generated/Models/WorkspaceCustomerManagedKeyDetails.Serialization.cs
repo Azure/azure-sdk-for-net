@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    key = SynapseWorkspaceKeyDetails.DeserializeSynapseWorkspaceKeyDetails(property.Value);
+                    key = SynapseWorkspaceKeyDetails.DeserializeSynapseWorkspaceKeyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    kekIdentity = KekIdentityProperties.DeserializeKekIdentityProperties(property.Value);
+                    kekIdentity = KekIdentityProperties.DeserializeKekIdentityProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

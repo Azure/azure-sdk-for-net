@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AdhocBasedTriggerContext": return AdhocBasedBackupTriggerContext.DeserializeAdhocBasedBackupTriggerContext(element);
-                    case "ScheduleBasedTriggerContext": return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element);
+                    case "AdhocBasedTriggerContext": return AdhocBasedBackupTriggerContext.DeserializeAdhocBasedBackupTriggerContext(element, options);
+                    case "ScheduleBasedTriggerContext": return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element, options);
                 }
             }
-            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element);
+            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupTriggerContext>.Write(ModelReaderWriterOptions options)

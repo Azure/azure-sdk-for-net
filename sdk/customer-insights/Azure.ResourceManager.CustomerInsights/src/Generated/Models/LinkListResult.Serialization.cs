@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<LinkResourceFormatData> array = new List<LinkResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkResourceFormatData.DeserializeLinkResourceFormatData(item));
+                        array.Add(LinkResourceFormatData.DeserializeLinkResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

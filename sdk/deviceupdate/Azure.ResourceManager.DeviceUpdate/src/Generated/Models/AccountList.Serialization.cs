@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateAccountData> array = new List<DeviceUpdateAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item));
+                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item, options));
                     }
                     value = array;
                     continue;

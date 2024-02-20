@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointRecallError> array = new List<ServerEndpointRecallError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item));
+                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item, options));
                     }
                     recallErrors = array;
                     continue;

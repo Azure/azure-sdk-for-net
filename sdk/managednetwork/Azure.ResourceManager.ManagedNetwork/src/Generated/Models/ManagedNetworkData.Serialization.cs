@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             {
                                 continue;
                             }
-                            scope = Scope.DeserializeScope(property0.Value);
+                            scope = Scope.DeserializeScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectivity"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             {
                                 continue;
                             }
-                            connectivity = ConnectivityCollection.DeserializeConnectivityCollection(property0.Value);
+                            connectivity = ConnectivityCollection.DeserializeConnectivityCollection(property0.Value, options);
                             continue;
                         }
                     }

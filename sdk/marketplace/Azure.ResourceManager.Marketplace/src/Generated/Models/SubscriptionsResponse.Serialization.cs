@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceSubscription> array = new List<MarketplaceSubscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item));
+                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item, options));
                     }
                     value = array;
                     continue;

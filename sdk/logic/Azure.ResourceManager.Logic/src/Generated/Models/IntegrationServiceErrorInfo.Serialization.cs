@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceErrorInfo> array = new List<IntegrationServiceErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeIntegrationServiceErrorInfo(item));
+                        array.Add(DeserializeIntegrationServiceErrorInfo(item, options));
                     }
                     details = array;
                     continue;

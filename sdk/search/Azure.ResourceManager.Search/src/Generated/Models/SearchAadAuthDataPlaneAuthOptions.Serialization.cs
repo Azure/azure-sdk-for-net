@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value);
+                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

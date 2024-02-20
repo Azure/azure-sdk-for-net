@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<MessageTextAnnotation> array = new List<MessageTextAnnotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTextAnnotation.DeserializeMessageTextAnnotation(item));
+                        array.Add(MessageTextAnnotation.DeserializeMessageTextAnnotation(item, options));
                     }
                     annotations = array;
                     continue;

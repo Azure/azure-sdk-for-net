@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CopyOnExpiryOption": return CopyOnExpirySetting.DeserializeCopyOnExpirySetting(element);
-                    case "CustomCopyOption": return CustomCopySetting.DeserializeCustomCopySetting(element);
-                    case "ImmediateCopyOption": return ImmediateCopySetting.DeserializeImmediateCopySetting(element);
+                    case "CopyOnExpiryOption": return CopyOnExpirySetting.DeserializeCopyOnExpirySetting(element, options);
+                    case "CustomCopyOption": return CustomCopySetting.DeserializeCustomCopySetting(element, options);
+                    case "ImmediateCopyOption": return ImmediateCopySetting.DeserializeImmediateCopySetting(element, options);
                 }
             }
-            return UnknownCopyOption.DeserializeUnknownCopyOption(element);
+            return UnknownCopyOption.DeserializeUnknownCopyOption(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupCopySetting>.Write(ModelReaderWriterOptions options)

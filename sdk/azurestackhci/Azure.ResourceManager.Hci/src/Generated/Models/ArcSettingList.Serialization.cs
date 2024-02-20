@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<ArcSettingData> array = new List<ArcSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArcSettingData.DeserializeArcSettingData(item));
+                        array.Add(ArcSettingData.DeserializeArcSettingData(item, options));
                     }
                     value = array;
                     continue;

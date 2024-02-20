@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<PartnerNamespaceChannelData> array = new List<PartnerNamespaceChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(item));
+                        array.Add(PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(item, options));
                     }
                     value = array;
                     continue;

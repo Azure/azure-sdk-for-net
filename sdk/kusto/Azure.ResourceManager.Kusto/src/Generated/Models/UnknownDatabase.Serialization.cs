@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatabase(document.RootElement, options);
+            return DeserializeKustoDatabaseData(document.RootElement, options);
         }
 
         internal static UnknownDatabase DeserializeUnknownDatabase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatabase(document.RootElement, options);
+                        return DeserializeKustoDatabaseData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KustoDatabaseData)} does not support '{options.Format}' format.");

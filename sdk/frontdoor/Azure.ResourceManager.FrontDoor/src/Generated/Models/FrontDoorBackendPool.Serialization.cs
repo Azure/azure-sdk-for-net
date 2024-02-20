@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<FrontDoorBackend> array = new List<FrontDoorBackend>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item));
+                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item, options));
                             }
                             backends = array;
                             continue;

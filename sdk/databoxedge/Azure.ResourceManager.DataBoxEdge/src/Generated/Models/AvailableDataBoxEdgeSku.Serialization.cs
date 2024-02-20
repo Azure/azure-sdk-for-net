@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeSkuLocationInfo> array = new List<DataBoxEdgeSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeSkuLocationInfo.DeserializeDataBoxEdgeSkuLocationInfo(item));
+                        array.Add(DataBoxEdgeSkuLocationInfo.DeserializeDataBoxEdgeSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeSkuCost> array = new List<DataBoxEdgeSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeSkuCost.DeserializeDataBoxEdgeSkuCost(item));
+                        array.Add(DataBoxEdgeSkuCost.DeserializeDataBoxEdgeSkuCost(item, options));
                     }
                     costs = array;
                     continue;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeSkuCapability> array = new List<DataBoxEdgeSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeSkuCapability.DeserializeDataBoxEdgeSkuCapability(item));
+                        array.Add(DataBoxEdgeSkuCapability.DeserializeDataBoxEdgeSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

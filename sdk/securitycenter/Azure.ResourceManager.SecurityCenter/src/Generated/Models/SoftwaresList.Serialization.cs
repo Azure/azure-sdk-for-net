@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SoftwareInventoryData> array = new List<SoftwareInventoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item));
+                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item, options));
                     }
                     value = array;
                     continue;

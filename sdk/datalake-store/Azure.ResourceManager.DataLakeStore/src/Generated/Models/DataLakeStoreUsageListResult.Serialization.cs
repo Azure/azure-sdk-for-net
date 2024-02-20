@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreUsage> array = new List<DataLakeStoreUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item));
+                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item, options));
                     }
                     value = array;
                     continue;

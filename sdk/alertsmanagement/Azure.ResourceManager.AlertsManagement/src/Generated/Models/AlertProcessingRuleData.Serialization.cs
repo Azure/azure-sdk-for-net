@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement
                     {
                         continue;
                     }
-                    properties = AlertProcessingRuleProperties.DeserializeAlertProcessingRuleProperties(property.Value);
+                    properties = AlertProcessingRuleProperties.DeserializeAlertProcessingRuleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

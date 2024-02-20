@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoSeasonality.DeserializeAutoSeasonality(element);
-                    case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element);
+                    case "Auto": return AutoSeasonality.DeserializeAutoSeasonality(element, options);
+                    case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element, options);
                 }
             }
-            return UnknownSeasonality.DeserializeUnknownSeasonality(element);
+            return UnknownSeasonality.DeserializeUnknownSeasonality(element, options);
         }
 
         BinaryData IPersistableModel<ForecastingSeasonality>.Write(ModelReaderWriterOptions options)

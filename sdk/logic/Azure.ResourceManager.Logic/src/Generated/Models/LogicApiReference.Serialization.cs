@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value);
+                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ATestFailoverContent.DeserializeA2ATestFailoverContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureTestFailoverContent.DeserializeHyperVReplicaAzureTestFailoverContent(element);
-                    case "InMage": return InMageTestFailoverContent.DeserializeInMageTestFailoverContent(element);
-                    case "InMageAzureV2": return InMageAzureV2TestFailoverContent.DeserializeInMageAzureV2TestFailoverContent(element);
-                    case "InMageRcm": return InMageRcmTestFailoverContent.DeserializeInMageRcmTestFailoverContent(element);
+                    case "A2A": return A2ATestFailoverContent.DeserializeA2ATestFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureTestFailoverContent.DeserializeHyperVReplicaAzureTestFailoverContent(element, options);
+                    case "InMage": return InMageTestFailoverContent.DeserializeInMageTestFailoverContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2TestFailoverContent.DeserializeInMageAzureV2TestFailoverContent(element, options);
+                    case "InMageRcm": return InMageRcmTestFailoverContent.DeserializeInMageRcmTestFailoverContent(element, options);
                 }
             }
-            return UnknownTestFailoverProviderSpecificContent.DeserializeUnknownTestFailoverProviderSpecificContent(element);
+            return UnknownTestFailoverProviderSpecificContent.DeserializeUnknownTestFailoverProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<TestFailoverProviderSpecificContent>.Write(ModelReaderWriterOptions options)

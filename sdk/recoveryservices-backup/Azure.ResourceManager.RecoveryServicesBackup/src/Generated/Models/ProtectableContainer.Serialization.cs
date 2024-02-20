@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
-                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element, options);
                 }
             }
-            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);
+            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element, options);
         }
 
         BinaryData IPersistableModel<ProtectableContainer>.Write(ModelReaderWriterOptions options)

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRSku> array = new List<SignalRSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRSku.DeserializeSignalRSku(item));
+                        array.Add(SignalRSku.DeserializeSignalRSku(item, options));
                     }
                     value = array;
                     continue;

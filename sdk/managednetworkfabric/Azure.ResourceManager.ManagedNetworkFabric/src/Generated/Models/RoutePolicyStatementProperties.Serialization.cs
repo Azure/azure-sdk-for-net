@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("condition"u8))
                 {
-                    condition = StatementConditionProperties.DeserializeStatementConditionProperties(property.Value);
+                    condition = StatementConditionProperties.DeserializeStatementConditionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = StatementActionProperties.DeserializeStatementActionProperties(property.Value);
+                    action = StatementActionProperties.DeserializeStatementActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("annotation"u8))

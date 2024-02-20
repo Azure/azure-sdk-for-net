@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncRegisteredServerData> array = new List<StorageSyncRegisteredServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(item));
+                        array.Add(StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(item, options));
                     }
                     value = array;
                     continue;

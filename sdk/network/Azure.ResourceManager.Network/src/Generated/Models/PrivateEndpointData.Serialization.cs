@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkInterfaces"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                             }
                             privateLinkServiceConnections = array;
                             continue;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                             }
                             manualPrivateLinkServiceConnections = array;
                             continue;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                             List<CustomDnsConfigProperties> array = new List<CustomDnsConfigProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item));
+                                array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item, options));
                             }
                             customDnsConfigs = array;
                             continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                             }
                             applicationSecurityGroups = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateEndpointIPConfiguration> array = new List<PrivateEndpointIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointIPConfiguration.DeserializePrivateEndpointIPConfiguration(item));
+                                array.Add(PrivateEndpointIPConfiguration.DeserializePrivateEndpointIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;

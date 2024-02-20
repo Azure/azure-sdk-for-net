@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element);
-                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element);
-                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element);
-                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element);
-                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element);
+                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element, options);
+                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element, options);
+                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element, options);
+                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element, options);
+                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element, options);
                 }
             }
-            return UnknownSerialization.DeserializeUnknownSerialization(element);
+            return UnknownSerialization.DeserializeUnknownSerialization(element, options);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsDataSerialization>.Write(ModelReaderWriterOptions options)

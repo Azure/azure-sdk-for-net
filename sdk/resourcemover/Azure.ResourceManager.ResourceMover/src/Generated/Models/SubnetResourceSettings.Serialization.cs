@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         networkSecurityGroup = null;
                         continue;
                     }
-                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);
+                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

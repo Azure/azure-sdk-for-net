@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<RemediationDeployment> array = new List<RemediationDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemediationDeployment.DeserializeRemediationDeployment(item));
+                        array.Add(RemediationDeployment.DeserializeRemediationDeployment(item, options));
                     }
                     value = array;
                     continue;

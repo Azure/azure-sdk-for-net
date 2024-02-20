@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     Dictionary<string, KubernetesPatchVersions> dictionary = new Dictionary<string, KubernetesPatchVersions>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value));
+                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;

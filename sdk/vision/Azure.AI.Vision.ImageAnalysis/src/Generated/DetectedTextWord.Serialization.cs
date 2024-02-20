@@ -93,7 +93,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<ImagePoint> array = new List<ImagePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImagePoint.DeserializeImagePoint(item));
+                        array.Add(ImagePoint.DeserializeImagePoint(item, options));
                     }
                     boundingPolygon = array;
                     continue;

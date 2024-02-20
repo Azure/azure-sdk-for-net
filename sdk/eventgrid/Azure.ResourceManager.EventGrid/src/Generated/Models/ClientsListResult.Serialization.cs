@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridNamespaceClientData> array = new List<EventGridNamespaceClientData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(item));
+                        array.Add(EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(item, options));
                     }
                     value = array;
                     continue;

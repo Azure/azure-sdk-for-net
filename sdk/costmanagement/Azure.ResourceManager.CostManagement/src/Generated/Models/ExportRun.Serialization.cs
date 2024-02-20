@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value);
+                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value);
+                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value, options);
                             continue;
                         }
                     }

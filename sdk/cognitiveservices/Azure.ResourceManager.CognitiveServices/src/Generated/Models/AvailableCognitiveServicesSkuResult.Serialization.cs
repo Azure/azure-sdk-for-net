@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<AvailableCognitiveServicesSku> array = new List<AvailableCognitiveServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item));
+                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item, options));
                     }
                     value = array;
                     continue;

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRecurrenceScheduleOccurrence> array = new List<LogicWorkflowRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item));
+                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;

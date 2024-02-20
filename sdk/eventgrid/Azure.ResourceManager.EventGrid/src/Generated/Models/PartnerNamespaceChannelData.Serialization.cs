@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value);
+                            partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnerDestinationInfo"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerDestinationInfo = PartnerDestinationInfo.DeserializePartnerDestinationInfo(property0.Value);
+                            partnerDestinationInfo = PartnerDestinationInfo.DeserializePartnerDestinationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("messageForActivation"u8))

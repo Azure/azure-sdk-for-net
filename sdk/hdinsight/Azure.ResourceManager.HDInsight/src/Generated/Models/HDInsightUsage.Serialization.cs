@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value);
+                    name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

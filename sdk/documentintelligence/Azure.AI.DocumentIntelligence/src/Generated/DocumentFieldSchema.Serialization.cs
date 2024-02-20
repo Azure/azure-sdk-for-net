@@ -123,7 +123,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    items = DeserializeDocumentFieldSchema(property.Value);
+                    items = DeserializeDocumentFieldSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentFieldSchema(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeDocumentFieldSchema(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;

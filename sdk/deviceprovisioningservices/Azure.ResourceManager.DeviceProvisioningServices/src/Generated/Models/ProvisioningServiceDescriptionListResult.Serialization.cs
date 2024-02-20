@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServiceData> array = new List<DeviceProvisioningServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(item));
+                        array.Add(DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(item, options));
                     }
                     value = array;
                     continue;

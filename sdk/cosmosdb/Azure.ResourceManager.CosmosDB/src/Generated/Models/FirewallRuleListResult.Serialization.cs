@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBFirewallRuleData> array = new List<CosmosDBFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(item));
+                        array.Add(CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

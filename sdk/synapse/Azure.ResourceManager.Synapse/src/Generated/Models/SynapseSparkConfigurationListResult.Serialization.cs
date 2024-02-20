@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSparkConfigurationData> array = new List<SynapseSparkConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(item));
+                        array.Add(SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(item, options));
                     }
                     value = array;
                     continue;

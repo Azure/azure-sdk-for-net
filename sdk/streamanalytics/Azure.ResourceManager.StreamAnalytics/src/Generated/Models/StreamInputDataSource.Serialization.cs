@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "GatewayMessageBus": return GatewayMessageBusStreamInputDataSource.DeserializeGatewayMessageBusStreamInputDataSource(element);
-                    case "Microsoft.Devices/IotHubs": return IoTHubStreamInputDataSource.DeserializeIoTHubStreamInputDataSource(element);
-                    case "Microsoft.EventGrid/EventSubscriptions": return EventGridStreamInputDataSource.DeserializeEventGridStreamInputDataSource(element);
-                    case "Microsoft.EventHub/EventHub": return EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(element);
-                    case "Microsoft.ServiceBus/EventHub": return EventHubStreamInputDataSource.DeserializeEventHubStreamInputDataSource(element);
-                    case "Microsoft.Storage/Blob": return BlobStreamInputDataSource.DeserializeBlobStreamInputDataSource(element);
-                    case "Raw": return RawStreamInputDataSource.DeserializeRawStreamInputDataSource(element);
+                    case "GatewayMessageBus": return GatewayMessageBusStreamInputDataSource.DeserializeGatewayMessageBusStreamInputDataSource(element, options);
+                    case "Microsoft.Devices/IotHubs": return IoTHubStreamInputDataSource.DeserializeIoTHubStreamInputDataSource(element, options);
+                    case "Microsoft.EventGrid/EventSubscriptions": return EventGridStreamInputDataSource.DeserializeEventGridStreamInputDataSource(element, options);
+                    case "Microsoft.EventHub/EventHub": return EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(element, options);
+                    case "Microsoft.ServiceBus/EventHub": return EventHubStreamInputDataSource.DeserializeEventHubStreamInputDataSource(element, options);
+                    case "Microsoft.Storage/Blob": return BlobStreamInputDataSource.DeserializeBlobStreamInputDataSource(element, options);
+                    case "Raw": return RawStreamInputDataSource.DeserializeRawStreamInputDataSource(element, options);
                 }
             }
-            return UnknownStreamInputDataSource.DeserializeUnknownStreamInputDataSource(element);
+            return UnknownStreamInputDataSource.DeserializeUnknownStreamInputDataSource(element, options);
         }
 
         BinaryData IPersistableModel<StreamInputDataSource>.Write(ModelReaderWriterOptions options)

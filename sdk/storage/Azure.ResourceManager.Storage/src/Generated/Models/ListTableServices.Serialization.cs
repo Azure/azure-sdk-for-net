@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<TableServiceData> array = new List<TableServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableServiceData.DeserializeTableServiceData(item));
+                        array.Add(TableServiceData.DeserializeTableServiceData(item, options));
                     }
                     value = array;
                     continue;

@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventHub": return SecurityAutomationActionEventHub.DeserializeSecurityAutomationActionEventHub(element);
-                    case "LogicApp": return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element);
-                    case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element);
+                    case "EventHub": return SecurityAutomationActionEventHub.DeserializeSecurityAutomationActionEventHub(element, options);
+                    case "LogicApp": return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element, options);
+                    case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element, options);
                 }
             }
-            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element);
+            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element, options);
         }
 
         BinaryData IPersistableModel<SecurityAutomationAction>.Write(ModelReaderWriterOptions options)

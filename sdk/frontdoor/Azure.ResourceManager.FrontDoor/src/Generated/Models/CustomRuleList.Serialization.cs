@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<WebApplicationCustomRule> array = new List<WebApplicationCustomRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationCustomRule.DeserializeWebApplicationCustomRule(item));
+                        array.Add(WebApplicationCustomRule.DeserializeWebApplicationCustomRule(item, options));
                     }
                     rules = array;
                     continue;

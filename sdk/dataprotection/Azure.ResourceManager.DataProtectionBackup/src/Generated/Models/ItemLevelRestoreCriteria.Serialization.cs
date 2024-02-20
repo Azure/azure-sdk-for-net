@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element);
-                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element);
-                    case "KubernetesClusterVaultTierRestoreCriteria": return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element);
-                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element);
-                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element);
-                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element);
+                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
+                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element, options);
+                    case "KubernetesClusterVaultTierRestoreCriteria": return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element, options);
+                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
+                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
+                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
                 }
             }
-            return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element);
+            return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element, options);
         }
 
         BinaryData IPersistableModel<ItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)

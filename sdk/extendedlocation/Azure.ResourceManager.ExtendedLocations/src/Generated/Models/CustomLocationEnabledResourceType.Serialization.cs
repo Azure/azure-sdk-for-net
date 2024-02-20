@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             List<CustomLocationEnabledResourceTypeMetadata> array = new List<CustomLocationEnabledResourceTypeMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CustomLocationEnabledResourceTypeMetadata.DeserializeCustomLocationEnabledResourceTypeMetadata(item));
+                                array.Add(CustomLocationEnabledResourceTypeMetadata.DeserializeCustomLocationEnabledResourceTypeMetadata(item, options));
                             }
                             typesMetadata = array;
                             continue;

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskRestorePointInstanceView> array = new List<DiskRestorePointInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskRestorePointInstanceView.DeserializeDiskRestorePointInstanceView(item));
+                        array.Add(DiskRestorePointInstanceView.DeserializeDiskRestorePointInstanceView(item, options));
                     }
                     diskRestorePoints = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;

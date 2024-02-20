@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciReplicationExtensionModelCustomProperties.DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(element);
-                    case "ReplicationExtensionModelCustomProperties": return GeneralReplicationExtensionModelCustomProperties.DeserializeGeneralReplicationExtensionModelCustomProperties(element);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHciReplicationExtensionModelCustomProperties.DeserializeVMwareToAzStackHciReplicationExtensionModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciReplicationExtensionModelCustomProperties.DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(element, options);
+                    case "ReplicationExtensionModelCustomProperties": return GeneralReplicationExtensionModelCustomProperties.DeserializeGeneralReplicationExtensionModelCustomProperties(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHciReplicationExtensionModelCustomProperties.DeserializeVMwareToAzStackHciReplicationExtensionModelCustomProperties(element, options);
                 }
             }
-            return UnknownReplicationExtensionModelCustomProperties.DeserializeUnknownReplicationExtensionModelCustomProperties(element);
+            return UnknownReplicationExtensionModelCustomProperties.DeserializeUnknownReplicationExtensionModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<ReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareInvitationData> array = new List<DataShareInvitationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareInvitationData.DeserializeDataShareInvitationData(item));
+                        array.Add(DataShareInvitationData.DeserializeDataShareInvitationData(item, options));
                     }
                     value = array;
                     continue;

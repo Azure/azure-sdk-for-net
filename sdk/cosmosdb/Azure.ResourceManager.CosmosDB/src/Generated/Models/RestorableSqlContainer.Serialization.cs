@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableSqlContainerResourceInfo.DeserializeExtendedRestorableSqlContainerResourceInfo(property0.Value);
+                            resource = ExtendedRestorableSqlContainerResourceInfo.DeserializeExtendedRestorableSqlContainerResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

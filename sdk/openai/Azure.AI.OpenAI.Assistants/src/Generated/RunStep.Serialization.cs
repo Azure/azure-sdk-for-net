@@ -199,7 +199,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("step_details"u8))
                 {
-                    stepDetails = RunStepDetails.DeserializeRunStepDetails(property.Value);
+                    stepDetails = RunStepDetails.DeserializeRunStepDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("last_error"u8))
@@ -209,7 +209,7 @@ namespace Azure.AI.OpenAI.Assistants
                         lastError = null;
                         continue;
                     }
-                    lastError = RunStepError.DeserializeRunStepError(property.Value);
+                    lastError = RunStepError.DeserializeRunStepError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("created_at"u8))

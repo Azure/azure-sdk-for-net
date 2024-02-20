@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StorageSync
                             List<StorageSyncPrivateEndpointConnectionData> array = new List<StorageSyncPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(item));
+                                array.Add(StorageSyncPrivateEndpointConnectionData.DeserializeStorageSyncPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            changeEnumerationStatus = CloudEndpointChangeEnumerationStatus.DeserializeCloudEndpointChangeEnumerationStatus(property0.Value);
+                            changeEnumerationStatus = CloudEndpointChangeEnumerationStatus.DeserializeCloudEndpointChangeEnumerationStatus(property0.Value, options);
                             continue;
                         }
                     }

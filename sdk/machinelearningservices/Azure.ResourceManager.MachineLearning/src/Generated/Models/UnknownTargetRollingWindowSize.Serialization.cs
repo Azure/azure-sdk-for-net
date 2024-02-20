@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTargetRollingWindowSize(document.RootElement, options);
+            return DeserializeTargetRollingWindowSize(document.RootElement, options);
         }
 
         internal static UnknownTargetRollingWindowSize DeserializeUnknownTargetRollingWindowSize(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTargetRollingWindowSize(document.RootElement, options);
+                        return DeserializeTargetRollingWindowSize(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(TargetRollingWindowSize)} does not support '{options.Format}' format.");

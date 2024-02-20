@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningWorkspaceData> array = new List<MachineLearningWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(item));
+                        array.Add(MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

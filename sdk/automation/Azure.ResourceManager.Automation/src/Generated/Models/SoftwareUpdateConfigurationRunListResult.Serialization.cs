@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SoftwareUpdateConfigurationRun> array = new List<SoftwareUpdateConfigurationRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item));
+                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item, options));
                     }
                     value = array;
                     continue;

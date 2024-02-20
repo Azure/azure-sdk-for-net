@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value);
+                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rateLimitRules"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value);
+                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value);
+                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value);
+                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpointLinks"u8))

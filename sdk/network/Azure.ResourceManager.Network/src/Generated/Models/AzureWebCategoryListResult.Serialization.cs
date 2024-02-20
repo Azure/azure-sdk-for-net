@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureWebCategoryData> array = new List<AzureWebCategoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureWebCategoryData.DeserializeAzureWebCategoryData(item));
+                        array.Add(AzureWebCategoryData.DeserializeAzureWebCategoryData(item, options));
                     }
                     value = array;
                     continue;

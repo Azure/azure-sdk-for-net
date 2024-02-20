@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
+                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item, options));
                     }
                     values = array;
                     continue;

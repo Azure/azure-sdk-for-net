@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabaseData> array = new List<KustoDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item));
+                        array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ScheduledQueryRuleData> array = new List<ScheduledQueryRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item));
+                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item, options));
                     }
                     value = array;
                     continue;

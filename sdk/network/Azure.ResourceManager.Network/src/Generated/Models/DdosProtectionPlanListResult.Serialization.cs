@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<DdosProtectionPlanData> array = new List<DdosProtectionPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item));
+                        array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item, options));
                     }
                     value = array;
                     continue;

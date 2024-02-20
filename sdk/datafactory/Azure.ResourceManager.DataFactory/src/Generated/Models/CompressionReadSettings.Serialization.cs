@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element);
-                    case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element);
-                    case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element);
+                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element, options);
+                    case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element, options);
+                    case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element, options);
                 }
             }
-            return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element);
+            return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element, options);
         }
 
         BinaryData IPersistableModel<CompressionReadSettings>.Write(ModelReaderWriterOptions options)

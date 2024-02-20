@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<ManagedPrivateEndpointModelData> array = new List<ManagedPrivateEndpointModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item));
+                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item, options));
                     }
                     value = array;
                     continue;

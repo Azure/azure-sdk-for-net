@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceTapConfigurationData> array = new List<NetworkInterfaceTapConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item));
+                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item, options));
                             }
                             networkInterfaceTapConfigurations = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value);
+                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destinationPort"u8))

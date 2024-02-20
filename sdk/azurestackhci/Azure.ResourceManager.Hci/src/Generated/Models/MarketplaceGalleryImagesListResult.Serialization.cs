@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<MarketplaceGalleryImageData> array = new List<MarketplaceGalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(item));
+                        array.Add(MarketplaceGalleryImageData.DeserializeMarketplaceGalleryImageData(item, options));
                     }
                     value = array;
                     continue;

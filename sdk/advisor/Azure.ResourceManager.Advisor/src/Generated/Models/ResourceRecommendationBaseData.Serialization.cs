@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            shortDescription = ShortDescription.DeserializeShortDescription(property0.Value);
+                            shortDescription = ShortDescription.DeserializeShortDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("suppressionIds"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value);
+                            resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

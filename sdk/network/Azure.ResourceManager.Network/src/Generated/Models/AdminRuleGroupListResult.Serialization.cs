@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AdminRuleGroupData> array = new List<AdminRuleGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdminRuleGroupData.DeserializeAdminRuleGroupData(item));
+                        array.Add(AdminRuleGroupData.DeserializeAdminRuleGroupData(item, options));
                     }
                     value = array;
                     continue;

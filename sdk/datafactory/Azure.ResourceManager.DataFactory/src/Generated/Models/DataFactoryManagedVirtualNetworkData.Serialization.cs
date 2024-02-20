@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryManagedVirtualNetworkProperties.DeserializeDataFactoryManagedVirtualNetworkProperties(property.Value);
+                    properties = DataFactoryManagedVirtualNetworkProperties.DeserializeDataFactoryManagedVirtualNetworkProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

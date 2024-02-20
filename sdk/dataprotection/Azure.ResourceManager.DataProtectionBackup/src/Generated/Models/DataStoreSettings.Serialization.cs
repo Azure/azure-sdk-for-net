@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureOperationalStoreParameters": return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element);
+                    case "AzureOperationalStoreParameters": return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element, options);
                 }
             }
-            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element);
+            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element, options);
         }
 
         BinaryData IPersistableModel<DataStoreSettings>.Write(ModelReaderWriterOptions options)

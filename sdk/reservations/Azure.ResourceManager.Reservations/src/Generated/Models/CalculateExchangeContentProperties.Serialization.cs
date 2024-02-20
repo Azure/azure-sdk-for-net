@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationPurchaseContent> array = new List<ReservationPurchaseContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanPurchase> array = new List<SavingsPlanPurchase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToReturn> array = new List<ReservationToReturn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item, options));
                     }
                     reservationsToExchange = array;
                     continue;

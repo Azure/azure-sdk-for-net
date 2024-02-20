@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Reservations
                             List<SubContent> array = new List<SubContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubContent.DeserializeSubContent(item));
+                                array.Add(SubContent.DeserializeSubContent(item, options));
                             }
                             value = array;
                             continue;

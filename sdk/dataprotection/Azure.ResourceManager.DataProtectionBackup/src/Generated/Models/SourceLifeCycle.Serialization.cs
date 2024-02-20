@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("deleteAfter"u8))
                 {
-                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value);
+                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStore"u8))
                 {
-                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDataStoreCopySettings"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<TargetCopySetting> array = new List<TargetCopySetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item));
+                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item, options));
                     }
                     targetDataStoreCopySettings = array;
                     continue;

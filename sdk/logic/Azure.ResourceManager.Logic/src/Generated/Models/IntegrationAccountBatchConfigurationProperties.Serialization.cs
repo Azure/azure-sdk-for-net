@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("releaseCriteria"u8))
                 {
-                    releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value);
+                    releaseCriteria = IntegrationAccountBatchReleaseCriteria.DeserializeIntegrationAccountBatchReleaseCriteria(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

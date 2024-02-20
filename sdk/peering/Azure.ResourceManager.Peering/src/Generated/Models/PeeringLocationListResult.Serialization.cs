@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringLocation> array = new List<PeeringLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringLocation.DeserializePeeringLocation(item));
+                        array.Add(PeeringLocation.DeserializePeeringLocation(item, options));
                     }
                     value = array;
                     continue;

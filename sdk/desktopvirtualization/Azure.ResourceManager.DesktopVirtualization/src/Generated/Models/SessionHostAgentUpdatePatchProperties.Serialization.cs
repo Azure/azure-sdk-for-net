@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<MaintenanceWindowPatchProperties> array = new List<MaintenanceWindowPatchProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item));
+                        array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item, options));
                     }
                     maintenanceWindows = array;
                     continue;

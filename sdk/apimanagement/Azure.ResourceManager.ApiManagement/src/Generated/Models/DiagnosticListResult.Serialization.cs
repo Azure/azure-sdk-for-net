@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DiagnosticContractData> array = new List<DiagnosticContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticContractData.DeserializeDiagnosticContractData(item));
+                        array.Add(DiagnosticContractData.DeserializeDiagnosticContractData(item, options));
                     }
                     value = array;
                     continue;

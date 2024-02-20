@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateEndpoint = null;
                                 continue;
                             }
-                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value);
+                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateLinkServiceConnectionState = null;
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value);
+                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocationReplicaCount"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

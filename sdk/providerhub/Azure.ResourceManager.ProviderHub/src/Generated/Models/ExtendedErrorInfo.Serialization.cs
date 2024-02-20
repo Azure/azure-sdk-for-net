@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ExtendedErrorInfo> array = new List<ExtendedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeExtendedErrorInfo(item));
+                        array.Add(DeserializeExtendedErrorInfo(item, options));
                     }
                     details = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<TypedErrorInfo> array = new List<TypedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item));
+                        array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item, options));
                     }
                     additionalInfo = array;
                     continue;

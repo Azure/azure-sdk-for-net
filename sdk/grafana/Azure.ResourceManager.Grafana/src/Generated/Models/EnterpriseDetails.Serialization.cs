@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    saasSubscriptionDetails = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(property.Value);
+                    saasSubscriptionDetails = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marketplaceTrialQuota"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    marketplaceTrialQuota = MarketplaceTrialQuota.DeserializeMarketplaceTrialQuota(property.Value);
+                    marketplaceTrialQuota = MarketplaceTrialQuota.DeserializeMarketplaceTrialQuota(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<RelationshipLinkFieldMapping> array = new List<RelationshipLinkFieldMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelationshipLinkFieldMapping.DeserializeRelationshipLinkFieldMapping(item));
+                                array.Add(RelationshipLinkFieldMapping.DeserializeRelationshipLinkFieldMapping(item, options));
                             }
                             mappings = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                             }
                             profilePropertyReferences = array;
                             continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                             }
                             relatedProfilePropertyReferences = array;
                             continue;

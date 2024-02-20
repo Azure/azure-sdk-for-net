@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = CosmosDBTablePropertiesResource.DeserializeCosmosDBTablePropertiesResource(property0.Value);
+                            resource = CosmosDBTablePropertiesResource.DeserializeCosmosDBTablePropertiesResource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = CosmosDBTablePropertiesOptions.DeserializeCosmosDBTablePropertiesOptions(property0.Value);
+                            options0 = CosmosDBTablePropertiesOptions.DeserializeCosmosDBTablePropertiesOptions(property0.Value, options);
                             continue;
                         }
                     }

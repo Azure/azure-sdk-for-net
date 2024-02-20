@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfig> array = new List<ClusterServiceConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfig.DeserializeClusterServiceConfig(item));
+                        array.Add(ClusterServiceConfig.DeserializeClusterServiceConfig(item, options));
                     }
                     configs = array;
                     continue;

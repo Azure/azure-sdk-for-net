@@ -118,7 +118,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
+                    span = DocumentSpan.DeserializeDocumentSpan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(MatchCondition.DeserializeMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByUserSession> array = new List<GroupByUserSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item, options));
                     }
                     groupByUserSession = array;
                     continue;

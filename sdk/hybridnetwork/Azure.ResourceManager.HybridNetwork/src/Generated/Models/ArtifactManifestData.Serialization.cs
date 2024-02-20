@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = ArtifactManifestPropertiesFormat.DeserializeArtifactManifestPropertiesFormat(property.Value);
+                    properties = ArtifactManifestPropertiesFormat.DeserializeArtifactManifestPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

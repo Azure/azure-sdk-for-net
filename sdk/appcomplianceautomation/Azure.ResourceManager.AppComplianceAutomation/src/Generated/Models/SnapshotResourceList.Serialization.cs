@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<SnapshotResourceData> array = new List<SnapshotResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotResourceData.DeserializeSnapshotResourceData(item));
+                        array.Add(SnapshotResourceData.DeserializeSnapshotResourceData(item, options));
                     }
                     value = array;
                     continue;

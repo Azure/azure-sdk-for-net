@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareCve> array = new List<FirmwareCve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCve.DeserializeFirmwareCve(item));
+                        array.Add(FirmwareCve.DeserializeFirmwareCve(item, options));
                     }
                     value = array;
                     continue;

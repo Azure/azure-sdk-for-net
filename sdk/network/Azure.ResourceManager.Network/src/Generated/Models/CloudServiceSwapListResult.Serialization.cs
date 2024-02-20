@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CloudServiceSwapData> array = new List<CloudServiceSwapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item));
+                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item, options));
                     }
                     value = array;
                     continue;

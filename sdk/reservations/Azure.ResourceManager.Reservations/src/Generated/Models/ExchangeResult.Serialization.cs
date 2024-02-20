@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value);
+                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    error = OperationResultError.DeserializeOperationResultError(property.Value);
+                    error = OperationResultError.DeserializeOperationResultError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

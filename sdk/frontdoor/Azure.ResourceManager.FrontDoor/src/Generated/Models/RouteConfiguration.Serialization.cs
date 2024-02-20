@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element);
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element, options);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element, options);
                 }
             }
-            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element);
+            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<RouteConfiguration>.Write(ModelReaderWriterOptions options)

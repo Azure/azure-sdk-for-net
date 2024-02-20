@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value);
+                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("routeTable"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = RouteTableData.DeserializeRouteTableData(property0.Value);
+                            routeTable = RouteTableData.DeserializeRouteTableData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceEndpointProperties> array = new List<ServiceEndpointProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item));
+                                array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item, options));
                             }
                             serviceEndpoints = array;
                             continue;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceEndpointPolicyData> array = new List<ServiceEndpointPolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item));
+                                array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item, options));
                             }
                             serviceEndpointPolicies = array;
                             continue;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateEndpointData> array = new List<PrivateEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointData.DeserializePrivateEndpointData(item));
+                                array.Add(PrivateEndpointData.DeserializePrivateEndpointData(item, options));
                             }
                             privateEndpoints = array;
                             continue;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkIPConfiguration> array = new List<NetworkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item));
+                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkIPConfigurationProfile> array = new List<NetworkIPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item));
+                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item, options));
                             }
                             ipConfigurationProfiles = array;
                             continue;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
                             List<ResourceNavigationLink> array = new List<ResourceNavigationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item));
+                                array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item, options));
                             }
                             resourceNavigationLinks = array;
                             continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                                array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item, options));
                             }
                             serviceAssociationLinks = array;
                             continue;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceDelegation> array = new List<ServiceDelegation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceDelegation.DeserializeServiceDelegation(item));
+                                array.Add(ServiceDelegation.DeserializeServiceDelegation(item, options));
                             }
                             delegations = array;
                             continue;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayIPConfiguration> array = new List<ApplicationGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item));
+                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item, options));
                             }
                             applicationGatewayIPConfigurations = array;
                             continue;

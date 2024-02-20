@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.FrontDoor
                                 customHttpsConfiguration = null;
                                 continue;
                             }
-                            customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value);
+                            customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value, options);
                             continue;
                         }
                     }

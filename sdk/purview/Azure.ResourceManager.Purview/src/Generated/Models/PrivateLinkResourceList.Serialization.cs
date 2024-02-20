@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewPrivateLinkResourceData> array = new List<PurviewPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item));
+                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

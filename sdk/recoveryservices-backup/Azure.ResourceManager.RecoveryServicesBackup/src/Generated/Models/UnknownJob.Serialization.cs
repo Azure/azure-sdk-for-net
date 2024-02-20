@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJob(document.RootElement, options);
+            return DeserializeBackupGenericJob(document.RootElement, options);
         }
 
         internal static UnknownJob DeserializeUnknownJob(JsonElement element, ModelReaderWriterOptions options = null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJob(document.RootElement, options);
+                        return DeserializeBackupGenericJob(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{options.Format}' format.");

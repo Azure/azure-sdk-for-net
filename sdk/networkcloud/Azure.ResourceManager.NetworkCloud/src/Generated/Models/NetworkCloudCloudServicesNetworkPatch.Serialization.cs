@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<EgressEndpoint> array = new List<EgressEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item, options));
                             }
                             additionalEgressEndpoints = array;
                             continue;

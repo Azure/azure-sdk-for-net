@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<MachineRunCommandData> array = new List<MachineRunCommandData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item));
+                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item, options));
                     }
                     value = array;
                     continue;

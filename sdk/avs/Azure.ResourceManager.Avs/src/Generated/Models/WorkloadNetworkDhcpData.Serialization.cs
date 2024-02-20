@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = WorkloadNetworkDhcpEntity.DeserializeWorkloadNetworkDhcpEntity(property.Value);
+                    properties = WorkloadNetworkDhcpEntity.DeserializeWorkloadNetworkDhcpEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

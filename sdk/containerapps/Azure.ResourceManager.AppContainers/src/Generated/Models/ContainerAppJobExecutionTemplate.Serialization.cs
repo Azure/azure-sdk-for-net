@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item, options));
                     }
                     initContainers = array;
                     continue;

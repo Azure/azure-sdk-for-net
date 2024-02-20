@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOneLakeArtifact(document.RootElement, options);
+            return DeserializeOneLakeArtifact(document.RootElement, options);
         }
 
         internal static UnknownOneLakeArtifact DeserializeUnknownOneLakeArtifact(JsonElement element, ModelReaderWriterOptions options = null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOneLakeArtifact(document.RootElement, options);
+                        return DeserializeOneLakeArtifact(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OneLakeArtifact)} does not support '{options.Format}' format.");

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    kekDetails = KekDetails.DeserializeKekDetails(property.Value);
+                    kekDetails = KekDetails.DeserializeKekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bekDetails"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    bekDetails = BekDetails.DeserializeBekDetails(property.Value);
+                    bekDetails = BekDetails.DeserializeBekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionMechanism"u8))

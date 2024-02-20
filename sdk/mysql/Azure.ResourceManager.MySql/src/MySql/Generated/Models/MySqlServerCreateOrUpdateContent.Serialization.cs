@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    sku = MySqlSku.DeserializeMySqlSku(property.Value);
+                    sku = MySqlSku.DeserializeMySqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MySqlServerPropertiesForCreate.DeserializeMySqlServerPropertiesForCreate(property.Value);
+                    properties = MySqlServerPropertiesForCreate.DeserializeMySqlServerPropertiesForCreate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

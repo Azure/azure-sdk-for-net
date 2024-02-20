@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<DeviceSecurityGroupData> array = new List<DeviceSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(item));
+                        array.Add(DeviceSecurityGroupData.DeserializeDeviceSecurityGroupData(item, options));
                     }
                     value = array;
                     continue;

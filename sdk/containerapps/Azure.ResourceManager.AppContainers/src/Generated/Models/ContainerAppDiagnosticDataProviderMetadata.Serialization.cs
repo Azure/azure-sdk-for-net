@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> array = new List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item));
+                        array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item, options));
                     }
                     propertyBag = array;
                     continue;

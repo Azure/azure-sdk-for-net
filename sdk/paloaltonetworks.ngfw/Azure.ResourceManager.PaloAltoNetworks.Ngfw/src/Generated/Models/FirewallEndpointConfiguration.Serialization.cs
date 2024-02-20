@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("address"u8))
                 {
-                    address = IPAddressInfo.DeserializeIPAddressInfo(property.Value);
+                    address = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

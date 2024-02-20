@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    sku = RelaySku.DeserializeRelaySku(property.Value);
+                    sku = RelaySku.DeserializeRelaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Relay.Models
                             List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

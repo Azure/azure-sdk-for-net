@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciClusterNode> array = new List<HciClusterNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterNode.DeserializeHciClusterNode(item));
+                        array.Add(HciClusterNode.DeserializeHciClusterNode(item, options));
                     }
                     nodes = array;
                     continue;

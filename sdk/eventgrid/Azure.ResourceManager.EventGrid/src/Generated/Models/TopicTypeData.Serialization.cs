@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<TopicTypeAdditionalEnforcedPermission> array = new List<TopicTypeAdditionalEnforcedPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item, options));
                             }
                             additionalEnforcedPermissions = array;
                             continue;

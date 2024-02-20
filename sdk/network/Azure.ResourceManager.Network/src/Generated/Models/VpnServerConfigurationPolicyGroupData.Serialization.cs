@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnServerConfigurationPolicyGroupMember> array = new List<VpnServerConfigurationPolicyGroupMember>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigurationPolicyGroupMember.DeserializeVpnServerConfigurationPolicyGroupMember(item));
+                                array.Add(VpnServerConfigurationPolicyGroupMember.DeserializeVpnServerConfigurationPolicyGroupMember(item, options));
                             }
                             policyMembers = array;
                             continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ScopeMapData> array = new List<ScopeMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeMapData.DeserializeScopeMapData(item));
+                        array.Add(ScopeMapData.DeserializeScopeMapData(item, options));
                     }
                     value = array;
                     continue;

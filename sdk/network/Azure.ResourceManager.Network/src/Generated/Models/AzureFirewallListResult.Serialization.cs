@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallData> array = new List<AzureFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallData.DeserializeAzureFirewallData(item));
+                        array.Add(AzureFirewallData.DeserializeAzureFirewallData(item, options));
                     }
                     value = array;
                     continue;

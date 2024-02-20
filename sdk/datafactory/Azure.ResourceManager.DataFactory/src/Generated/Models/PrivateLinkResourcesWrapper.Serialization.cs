@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPrivateLinkResource> array = new List<DataFactoryPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(item));
+                        array.Add(DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

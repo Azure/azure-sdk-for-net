@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBatchDeploymentConfiguration(document.RootElement, options);
+            return DeserializeBatchDeploymentConfiguration(document.RootElement, options);
         }
 
         internal static UnknownBatchDeploymentConfiguration DeserializeUnknownBatchDeploymentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBatchDeploymentConfiguration(document.RootElement, options);
+                        return DeserializeBatchDeploymentConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support '{options.Format}' format.");

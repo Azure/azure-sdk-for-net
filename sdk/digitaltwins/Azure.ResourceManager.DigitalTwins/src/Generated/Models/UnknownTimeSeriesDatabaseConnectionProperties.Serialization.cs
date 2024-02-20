@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+            return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+                        return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{options.Format}' format.");

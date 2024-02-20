@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.IotCentral
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value);
+                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.IotCentral
                             {
                                 continue;
                             }
-                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value);
+                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.IotCentral
                             List<IotCentralPrivateEndpointConnectionData> array = new List<IotCentralPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item));
+                                array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

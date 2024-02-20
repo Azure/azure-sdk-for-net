@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlQueryStatisticData> array = new List<MySqlQueryStatisticData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(item));
+                        array.Add(MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(item, options));
                     }
                     value = array;
                     continue;

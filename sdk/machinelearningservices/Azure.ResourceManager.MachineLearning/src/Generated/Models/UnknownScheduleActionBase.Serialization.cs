@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScheduleActionBase(document.RootElement, options);
+            return DeserializeMachineLearningScheduleAction(document.RootElement, options);
         }
 
         internal static UnknownScheduleActionBase DeserializeUnknownScheduleActionBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownScheduleActionBase(document.RootElement, options);
+                        return DeserializeMachineLearningScheduleAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support '{options.Format}' format.");

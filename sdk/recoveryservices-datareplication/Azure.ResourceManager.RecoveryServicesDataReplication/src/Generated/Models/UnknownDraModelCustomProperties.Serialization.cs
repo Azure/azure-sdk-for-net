@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDraModelCustomProperties(document.RootElement, options);
+            return DeserializeDraModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownDraModelCustomProperties DeserializeUnknownDraModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDraModelCustomProperties(document.RootElement, options);
+                        return DeserializeDraModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support '{options.Format}' format.");

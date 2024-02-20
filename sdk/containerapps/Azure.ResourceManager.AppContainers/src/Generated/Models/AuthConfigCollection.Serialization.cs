@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppAuthConfigData> array = new List<ContainerAppAuthConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item));
+                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item, options));
                     }
                     value = array;
                     continue;

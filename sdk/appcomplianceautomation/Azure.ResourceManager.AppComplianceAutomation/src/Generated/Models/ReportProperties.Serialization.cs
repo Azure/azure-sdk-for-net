@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item));
+                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
                     }
                     resources = array;
                     continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value);
+                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

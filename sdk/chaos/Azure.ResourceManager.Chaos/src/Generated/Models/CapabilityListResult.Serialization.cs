@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosCapabilityData> array = new List<ChaosCapabilityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosCapabilityData.DeserializeChaosCapabilityData(item));
+                        array.Add(ChaosCapabilityData.DeserializeChaosCapabilityData(item, options));
                     }
                     value = array;
                     continue;

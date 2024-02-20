@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
+                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item, options));
                     }
                     value = array;
                     continue;

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    properties = ManagedServiceProperties.DeserializeManagedServiceProperties(property.Value);
+                    properties = ManagedServiceProperties.DeserializeManagedServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

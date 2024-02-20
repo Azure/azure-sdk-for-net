@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<VmPlacementRequestResult> array = new List<VmPlacementRequestResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item));
+                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item, options));
                             }
                             vmPlacementResults = array;
                             continue;

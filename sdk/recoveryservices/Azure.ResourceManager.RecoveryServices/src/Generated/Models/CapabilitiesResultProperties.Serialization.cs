@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
+                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item, options));
                     }
                     dnsZones = array;
                     continue;

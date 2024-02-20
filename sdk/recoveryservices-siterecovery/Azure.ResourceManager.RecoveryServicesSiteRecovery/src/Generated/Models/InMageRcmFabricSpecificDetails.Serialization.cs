@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("processServers"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProcessServerDetails> array = new List<SiteRecoveryProcessServerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
+                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item, options));
                     }
                     processServers = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RcmProxyDetails> array = new List<RcmProxyDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item));
+                        array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item, options));
                     }
                     rcmProxies = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<PushInstallerDetails> array = new List<PushInstallerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item));
+                        array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item, options));
                     }
                     pushInstallers = array;
                     continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationAgentDetails> array = new List<ReplicationAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item));
+                        array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item, options));
                     }
                     replicationAgents = array;
                     continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReprotectAgentDetails> array = new List<ReprotectAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item));
+                        array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item, options));
                     }
                     reprotectAgents = array;
                     continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MarsAgentDetails> array = new List<MarsAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item));
+                        array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item, options));
                     }
                     marsAgents = array;
                     continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDraDetails> array = new List<SiteRecoveryDraDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
+                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item, options));
                     }
                     dras = array;
                     continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDetails> array = new List<SiteRecoveryAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
+                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item, options));
                     }
                     agentDetails = array;
                     continue;

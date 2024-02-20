@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PublicIPPrefixData> array = new List<PublicIPPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicIPPrefixData.DeserializePublicIPPrefixData(item));
+                        array.Add(PublicIPPrefixData.DeserializePublicIPPrefixData(item, options));
                     }
                     value = array;
                     continue;

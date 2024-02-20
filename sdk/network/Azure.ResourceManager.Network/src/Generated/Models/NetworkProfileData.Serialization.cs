@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
                             List<ContainerNetworkInterface> array = new List<ContainerNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterface.DeserializeContainerNetworkInterface(item));
+                                array.Add(ContainerNetworkInterface.DeserializeContainerNetworkInterface(item, options));
                             }
                             containerNetworkInterfaces = array;
                             continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network
                             List<ContainerNetworkInterfaceConfiguration> array = new List<ContainerNetworkInterfaceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(item));
+                                array.Add(ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(item, options));
                             }
                             containerNetworkInterfaceConfigurations = array;
                             continue;

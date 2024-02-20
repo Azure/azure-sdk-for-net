@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item, options));
                     }
                     privateLinkServiceConnections = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceProxy> array = new List<DeviceUpdatePrivateLinkServiceProxy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item, options));
                     }
                     privateLinkServiceProxies = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateEndpointConnectionDetails> array = new List<DeviceUpdatePrivateEndpointConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item));
+                        array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item, options));
                     }
                     connectionDetails = array;
                     continue;

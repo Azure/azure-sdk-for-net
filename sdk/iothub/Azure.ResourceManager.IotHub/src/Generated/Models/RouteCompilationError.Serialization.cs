@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    location = RouteErrorRange.DeserializeRouteErrorRange(property.Value);
+                    location = RouteErrorRange.DeserializeRouteErrorRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

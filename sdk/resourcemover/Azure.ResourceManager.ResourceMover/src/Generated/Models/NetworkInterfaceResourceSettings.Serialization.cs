@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<NicIPConfigurationResourceSettings> array = new List<NicIPConfigurationResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicIPConfigurationResourceSettings.DeserializeNicIPConfigurationResourceSettings(item));
+                        array.Add(NicIPConfigurationResourceSettings.DeserializeNicIPConfigurationResourceSettings(item, options));
                     }
                     ipConfigurations = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyData> array = new List<JitNetworkAccessPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(item));
+                        array.Add(JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(item, options));
                     }
                     value = array;
                     continue;

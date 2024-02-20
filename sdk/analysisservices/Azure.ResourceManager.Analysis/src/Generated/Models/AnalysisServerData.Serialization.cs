@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Analysis
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
+                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value);
+                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backupBlobContainerUri"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value);
+                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipV4FirewallSettings"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value);
+                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("querypoolConnectionMode"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value);
+                            sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value, options);
                             continue;
                         }
                     }

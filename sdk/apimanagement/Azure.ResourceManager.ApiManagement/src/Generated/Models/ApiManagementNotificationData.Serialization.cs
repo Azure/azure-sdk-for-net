@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            recipients = RecipientsContractProperties.DeserializeRecipientsContractProperties(property0.Value);
+                            recipients = RecipientsContractProperties.DeserializeRecipientsContractProperties(property0.Value, options);
                             continue;
                         }
                     }

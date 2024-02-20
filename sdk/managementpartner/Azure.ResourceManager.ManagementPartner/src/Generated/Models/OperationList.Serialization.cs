@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     List<OperationResponse> array = new List<OperationResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationResponse.DeserializeOperationResponse(item));
+                        array.Add(OperationResponse.DeserializeOperationResponse(item, options));
                     }
                     value = array;
                     continue;

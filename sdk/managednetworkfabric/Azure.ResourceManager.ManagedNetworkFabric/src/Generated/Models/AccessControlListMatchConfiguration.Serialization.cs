@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListMatchCondition> array = new List<AccessControlListMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListAction> array = new List<AccessControlListAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item, options));
                     }
                     actions = array;
                     continue;

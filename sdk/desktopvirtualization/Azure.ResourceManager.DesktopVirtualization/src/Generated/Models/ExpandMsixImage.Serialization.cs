@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageDependencies> array = new List<MsixPackageDependencies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item));
+                                array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item, options));
                             }
                             packageDependencies = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageApplications> array = new List<MsixPackageApplications>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item));
+                                array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item, options));
                             }
                             packageApplications = array;
                             continue;

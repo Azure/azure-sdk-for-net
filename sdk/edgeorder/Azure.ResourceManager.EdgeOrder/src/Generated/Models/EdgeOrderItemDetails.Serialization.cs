@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("productDetails"u8))
                 {
-                    productDetails = ProductDetails.DeserializeProductDetails(property.Value);
+                    productDetails = ProductDetails.DeserializeProductDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orderItemType"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value);
+                    currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orderItemStageHistory"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderStageDetails> array = new List<EdgeOrderStageDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item));
+                        array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item, options));
                     }
                     orderItemStageHistory = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value);
+                    preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardShippingDetails"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value);
+                    forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
+                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("notificationEmailList"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value);
+                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementRpDetailsList"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                        array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
                     }
                     managementRPDetailsList = array;
                     continue;

@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Resources
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element);
-                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
+                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element, options);
+                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element, options);
                 }
             }
-            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element);
+            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element, options);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options)

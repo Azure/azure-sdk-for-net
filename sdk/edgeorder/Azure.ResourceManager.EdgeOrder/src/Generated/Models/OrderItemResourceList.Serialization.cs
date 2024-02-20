@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderItemData> array = new List<EdgeOrderItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item));
+                        array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item, options));
                     }
                     value = array;
                     continue;

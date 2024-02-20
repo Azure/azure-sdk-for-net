@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     vaultErrors = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fabricsHealth"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containersHealth"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

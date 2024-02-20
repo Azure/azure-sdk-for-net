@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<TimeSeriesDatabaseConnectionData> array = new List<TimeSeriesDatabaseConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(item));
+                        array.Add(TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(item, options));
                     }
                     value = array;
                     continue;

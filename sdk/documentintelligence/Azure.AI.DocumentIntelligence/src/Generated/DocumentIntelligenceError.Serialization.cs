@@ -122,7 +122,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentIntelligenceError> array = new List<DocumentIntelligenceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentIntelligenceError(item));
+                        array.Add(DeserializeDocumentIntelligenceError(item, options));
                     }
                     details = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

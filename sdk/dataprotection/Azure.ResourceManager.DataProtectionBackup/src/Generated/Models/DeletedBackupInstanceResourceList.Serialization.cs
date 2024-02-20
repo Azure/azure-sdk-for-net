@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DeletedDataProtectionBackupInstanceData> array = new List<DeletedDataProtectionBackupInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(item));
+                        array.Add(DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(item, options));
                     }
                     value = array;
                     continue;

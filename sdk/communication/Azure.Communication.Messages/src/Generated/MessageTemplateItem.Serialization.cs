@@ -81,10 +81,10 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "whatsApp": return WhatsAppMessageTemplateItem.DeserializeWhatsAppMessageTemplateItem(element);
+                    case "whatsApp": return WhatsAppMessageTemplateItem.DeserializeWhatsAppMessageTemplateItem(element, options);
                 }
             }
-            return UnknownMessageTemplateItem.DeserializeUnknownMessageTemplateItem(element);
+            return UnknownMessageTemplateItem.DeserializeUnknownMessageTemplateItem(element, options);
         }
 
         BinaryData IPersistableModel<MessageTemplateItem>.Write(ModelReaderWriterOptions options)

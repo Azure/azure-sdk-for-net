@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRequiredAction(document.RootElement, options);
+            return DeserializeRequiredAction(document.RootElement, options);
         }
 
         internal static UnknownRequiredAction DeserializeUnknownRequiredAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRequiredAction(document.RootElement, options);
+                        return DeserializeRequiredAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RequiredAction)} does not support '{options.Format}' format.");

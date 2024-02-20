@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value);
+                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ocr"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value);
+                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

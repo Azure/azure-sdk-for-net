@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoSkuDescription> array = new List<KustoSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoSkuDescription.DeserializeKustoSkuDescription(item));
+                        array.Add(KustoSkuDescription.DeserializeKustoSkuDescription(item, options));
                     }
                     value = array;
                     continue;

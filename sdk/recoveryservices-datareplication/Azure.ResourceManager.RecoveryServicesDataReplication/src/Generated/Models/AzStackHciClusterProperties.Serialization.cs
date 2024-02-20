@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<StorageContainerProperties> array = new List<StorageContainerProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageContainerProperties.DeserializeStorageContainerProperties(item));
+                        array.Add(StorageContainerProperties.DeserializeStorageContainerProperties(item, options));
                     }
                     storageContainers = array;
                     continue;

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     configurationGroups = array;
                     continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item, options));
                             }
                             hubs = array;
                             continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityGroupItem> array = new List<ConnectivityGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item));
+                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item, options));
                             }
                             appliesToGroups = array;
                             continue;

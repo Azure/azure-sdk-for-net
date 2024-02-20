@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecoveryVirtualNetworkCustomDetails(document.RootElement, options);
+            return DeserializeRecoveryVirtualNetworkCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownRecoveryVirtualNetworkCustomDetails DeserializeUnknownRecoveryVirtualNetworkCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRecoveryVirtualNetworkCustomDetails(document.RootElement, options);
+                        return DeserializeRecoveryVirtualNetworkCustomDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RecoveryVirtualNetworkCustomDetails)} does not support '{options.Format}' format.");

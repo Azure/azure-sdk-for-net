@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<LinkableEnvironmentResult> array = new List<LinkableEnvironmentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item));
+                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item, options));
                     }
                     value = array;
                     continue;

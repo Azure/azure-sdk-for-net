@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageBlob": return StorageBlobDeadLetterDestination.DeserializeStorageBlobDeadLetterDestination(element);
+                    case "StorageBlob": return StorageBlobDeadLetterDestination.DeserializeStorageBlobDeadLetterDestination(element, options);
                 }
             }
-            return UnknownDeadLetterDestination.DeserializeUnknownDeadLetterDestination(element);
+            return UnknownDeadLetterDestination.DeserializeUnknownDeadLetterDestination(element, options);
         }
 
         BinaryData IPersistableModel<DeadLetterDestination>.Write(ModelReaderWriterOptions options)

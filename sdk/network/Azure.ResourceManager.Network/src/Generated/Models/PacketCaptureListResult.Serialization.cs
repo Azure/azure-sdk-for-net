@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PacketCaptureData> array = new List<PacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item));
+                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item, options));
                     }
                     value = array;
                     continue;

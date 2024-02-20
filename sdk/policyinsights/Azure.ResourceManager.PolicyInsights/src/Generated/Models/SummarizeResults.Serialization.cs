@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicySummary> array = new List<PolicySummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySummary.DeserializePolicySummary(item));
+                        array.Add(PolicySummary.DeserializePolicySummary(item, options));
                     }
                     value = array;
                     continue;

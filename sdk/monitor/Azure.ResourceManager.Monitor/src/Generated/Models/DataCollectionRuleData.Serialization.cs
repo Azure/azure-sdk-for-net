@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value);
+                            metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("streamDeclarations"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Monitor
                             Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value));
+                                dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value, options));
                             }
                             streamDeclarations = dictionary;
                             continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value);
+                            dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destinations"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value);
+                            destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataFlows"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Monitor
                             List<DataFlow> array = new List<DataFlow>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlow.DeserializeDataFlow(item));
+                                array.Add(DataFlow.DeserializeDataFlow(item, options));
                             }
                             dataFlows = array;
                             continue;

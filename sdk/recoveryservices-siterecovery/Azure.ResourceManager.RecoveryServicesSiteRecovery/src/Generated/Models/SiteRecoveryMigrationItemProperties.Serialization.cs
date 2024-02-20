@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value);
+                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("criticalJobHistory"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<CriticalJobHistoryDetails> array = new List<CriticalJobHistoryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item));
+                        array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item, options));
                     }
                     criticalJobHistory = array;
                     continue;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value);
+                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

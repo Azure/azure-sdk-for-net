@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAlertsSuppressionRuleData> array = new List<SecurityAlertsSuppressionRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(item));
+                        array.Add(SecurityAlertsSuppressionRuleData.DeserializeSecurityAlertsSuppressionRuleData(item, options));
                     }
                     value = array;
                     continue;

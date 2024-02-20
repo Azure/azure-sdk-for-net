@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(document.RootElement, options);
+            return DeserializeContentKeyPolicyPlayReadyContentKeyLocation(document.RootElement, options);
         }
 
         internal static UnknownContentKeyPolicyPlayReadyContentKeyLocation DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(document.RootElement, options);
+                        return DeserializeContentKeyPolicyPlayReadyContentKeyLocation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support '{options.Format}' format.");

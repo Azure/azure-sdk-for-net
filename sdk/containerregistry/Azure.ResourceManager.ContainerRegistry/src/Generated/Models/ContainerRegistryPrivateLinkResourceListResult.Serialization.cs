@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryPrivateLinkResourceData> array = new List<ContainerRegistryPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(item));
+                        array.Add(ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

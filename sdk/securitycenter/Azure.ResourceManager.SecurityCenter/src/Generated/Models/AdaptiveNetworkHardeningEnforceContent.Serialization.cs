@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                        array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item, options));
                     }
                     rules = array;
                     continue;

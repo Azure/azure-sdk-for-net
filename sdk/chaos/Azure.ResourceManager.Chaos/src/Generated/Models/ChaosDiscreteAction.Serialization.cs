@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosKeyValuePair> array = new List<ChaosKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item));
+                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item, options));
                     }
                     parameters = array;
                     continue;

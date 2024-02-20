@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Assessment> array = new List<Assessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assessment.DeserializeAssessment(item));
+                        array.Add(Assessment.DeserializeAssessment(item, options));
                     }
                     assessments = array;
                     continue;

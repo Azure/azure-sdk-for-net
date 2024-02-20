@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("action"u8))
                 {
-                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value);
+                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value);
+                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

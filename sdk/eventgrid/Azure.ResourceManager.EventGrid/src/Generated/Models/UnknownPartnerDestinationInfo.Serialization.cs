@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerDestinationInfo(document.RootElement, options);
+            return DeserializePartnerDestinationInfo(document.RootElement, options);
         }
 
         internal static UnknownPartnerDestinationInfo DeserializeUnknownPartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPartnerDestinationInfo(document.RootElement, options);
+                        return DeserializePartnerDestinationInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PartnerDestinationInfo)} does not support '{options.Format}' format.");

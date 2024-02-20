@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))

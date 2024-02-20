@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = SubAssessmentStatus.DeserializeSubAssessmentStatus(property0.Value);
+                            status = SubAssessmentStatus.DeserializeSubAssessmentStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remediation"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
+                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalData"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(property0.Value);
+                            additionalData = SecuritySubAssessmentAdditionalInfo.DeserializeSecuritySubAssessmentAdditionalInfo(property0.Value, options);
                             continue;
                         }
                     }

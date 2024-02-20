@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataStoreSettings> array = new List<DataStoreSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
+                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item, options));
                     }
                     dataStoreParametersList = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
+                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item, options));
                     }
                     backupDatasourceParametersList = array;
                     continue;

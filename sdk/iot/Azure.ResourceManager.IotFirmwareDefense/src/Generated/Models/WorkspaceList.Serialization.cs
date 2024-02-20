@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareWorkspaceData> array = new List<FirmwareWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(item));
+                        array.Add(FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

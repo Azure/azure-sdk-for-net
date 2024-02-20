@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationPrivateLinkResource> array = new List<AutomationPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(item));
+                        array.Add(AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

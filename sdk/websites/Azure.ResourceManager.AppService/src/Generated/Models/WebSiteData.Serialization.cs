@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService
                             List<HostNameSslState> array = new List<HostNameSslState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                array.Add(HostNameSslState.DeserializeHostNameSslState(item, options));
                             }
                             hostNameSslStates = array;
                             continue;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value);
+                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"u8))
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.AppService
                                 hostingEnvironmentProfile = null;
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientAffinityEnabled"u8))
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.AppService
                                 cloningInfo = null;
                                 continue;
                             }
-                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value);
+                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.AppService
                                 slotSwapStatus = null;
                                 continue;
                             }
-                            slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value);
+                            slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpsOnly"u8))

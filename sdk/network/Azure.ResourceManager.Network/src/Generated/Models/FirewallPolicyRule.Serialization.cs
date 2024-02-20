@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ApplicationRule": return ApplicationRule.DeserializeApplicationRule(element);
-                    case "NatRule": return NatRule.DeserializeNatRule(element);
-                    case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element);
+                    case "ApplicationRule": return ApplicationRule.DeserializeApplicationRule(element, options);
+                    case "NatRule": return NatRule.DeserializeNatRule(element, options);
+                    case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element, options);
                 }
             }
-            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element);
+            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element, options);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRule>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SecurityConnectorGitLabProjectProperties.DeserializeSecurityConnectorGitLabProjectProperties(property.Value);
+                    properties = SecurityConnectorGitLabProjectProperties.DeserializeSecurityConnectorGitLabProjectProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

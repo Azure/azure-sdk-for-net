@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    sku = MySqlSku.DeserializeMySqlSku(property.Value);
+                    sku = MySqlSku.DeserializeMySqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MySql.Models
                             {
                                 continue;
                             }
-                            storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property0.Value);
+                            storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("administratorLoginPassword"u8))

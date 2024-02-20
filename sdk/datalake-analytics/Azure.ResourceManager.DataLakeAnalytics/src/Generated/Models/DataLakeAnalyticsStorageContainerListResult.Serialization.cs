@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     List<DataLakeAnalyticsStorageContainerData> array = new List<DataLakeAnalyticsStorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(item));
+                        array.Add(DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(item, options));
                     }
                     value = array;
                     continue;

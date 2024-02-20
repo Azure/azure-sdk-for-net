@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementAuthorizationServerData> array = new List<ApiManagementAuthorizationServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(item));
+                        array.Add(ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(item, options));
                     }
                     value = array;
                     continue;

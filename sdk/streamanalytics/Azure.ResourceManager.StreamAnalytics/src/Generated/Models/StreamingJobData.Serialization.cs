@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            sku = StreamAnalyticsSku.DeserializeStreamAnalyticsSku(property0.Value);
+                            sku = StreamAnalyticsSku.DeserializeStreamAnalyticsSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jobId"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobInputData> array = new List<StreamingJobInputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
+                                array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item, options));
                             }
                             inputs = array;
                             continue;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            transformation = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(property0.Value);
+                            transformation = StreamingJobTransformationData.DeserializeStreamingJobTransformationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobOutputData> array = new List<StreamingJobOutputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item));
+                                array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item, options));
                             }
                             outputs = array;
                             continue;
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobFunctionData> array = new List<StreamingJobFunctionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionData.DeserializeStreamingJobFunctionData(item));
+                                array.Add(StreamingJobFunctionData.DeserializeStreamingJobFunctionData(item, options));
                             }
                             functions = array;
                             continue;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 jobStorageAccount = null;
                                 continue;
                             }
-                            jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value);
+                            jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contentStoragePolicy"u8))
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            externals = StreamingJobExternal.DeserializeStreamingJobExternal(property0.Value);
+                            externals = StreamingJobExternal.DeserializeStreamingJobExternal(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cluster"u8))
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 cluster = null;
                                 continue;
                             }
-                            cluster = ClusterInfo.DeserializeClusterInfo(property0.Value);
+                            cluster = ClusterInfo.DeserializeClusterInfo(property0.Value, options);
                             continue;
                         }
                     }

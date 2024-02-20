@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element);
-                    case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element);
+                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element, options);
+                    case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element, options);
                 }
             }
-            return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element);
+            return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element, options);
         }
 
         BinaryData IPersistableModel<GcpOrganizationalInfo>.Write(ModelReaderWriterOptions options)

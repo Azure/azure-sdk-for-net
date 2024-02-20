@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bundles": return SecurityAlertSimulatorBundlesRequestProperties.DeserializeSecurityAlertSimulatorBundlesRequestProperties(element);
+                    case "Bundles": return SecurityAlertSimulatorBundlesRequestProperties.DeserializeSecurityAlertSimulatorBundlesRequestProperties(element, options);
                 }
             }
-            return UnknownAlertSimulatorRequestProperties.DeserializeUnknownAlertSimulatorRequestProperties(element);
+            return UnknownAlertSimulatorRequestProperties.DeserializeUnknownAlertSimulatorRequestProperties(element, options);
         }
 
         BinaryData IPersistableModel<SecurityAlertSimulatorRequestProperties>.Write(ModelReaderWriterOptions options)

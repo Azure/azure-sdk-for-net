@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityPolicyProperties(document.RootElement, options);
+            return DeserializeSecurityPolicyProperties(document.RootElement, options);
         }
 
         internal static UnknownSecurityPolicyProperties DeserializeUnknownSecurityPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecurityPolicyProperties(document.RootElement, options);
+                        return DeserializeSecurityPolicyProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support '{options.Format}' format.");

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    schema = CassandraSchema.DeserializeCassandraSchema(property.Value);
+                    schema = CassandraSchema.DeserializeCassandraSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))

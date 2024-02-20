@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SelfHostedIntegrationRuntimeNode> array = new List<SelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item));
+                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<LinkedIntegrationRuntime> array = new List<LinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item));
+                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item, options));
                             }
                             links = array;
                             continue;

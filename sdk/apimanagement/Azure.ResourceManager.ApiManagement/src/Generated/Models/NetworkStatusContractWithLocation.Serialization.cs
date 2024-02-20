@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value);
+                    networkStatus = NetworkStatusContract.DeserializeNetworkStatusContract(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

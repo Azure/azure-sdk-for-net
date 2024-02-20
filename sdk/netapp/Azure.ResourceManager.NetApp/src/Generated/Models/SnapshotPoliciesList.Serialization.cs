@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<SnapshotPolicyData> array = new List<SnapshotPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotPolicyData.DeserializeSnapshotPolicyData(item));
+                        array.Add(SnapshotPolicyData.DeserializeSnapshotPolicyData(item, options));
                     }
                     value = array;
                     continue;

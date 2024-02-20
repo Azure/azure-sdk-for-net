@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            scope = KubernetesClusterExtensionScope.DeserializeKubernetesClusterExtensionScope(property0.Value);
+                            scope = KubernetesClusterExtensionScope.DeserializeKubernetesClusterExtensionScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationSettings"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesClusterExtensionStatus> array = new List<KubernetesClusterExtensionStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item));
+                                array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item, options));
                             }
                             statuses = array;
                             continue;

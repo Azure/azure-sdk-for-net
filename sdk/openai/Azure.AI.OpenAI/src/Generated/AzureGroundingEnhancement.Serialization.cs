@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI
                     List<AzureGroundingEnhancementLine> array = new List<AzureGroundingEnhancementLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureGroundingEnhancementLine.DeserializeAzureGroundingEnhancementLine(item));
+                        array.Add(AzureGroundingEnhancementLine.DeserializeAzureGroundingEnhancementLine(item, options));
                     }
                     lines = array;
                     continue;

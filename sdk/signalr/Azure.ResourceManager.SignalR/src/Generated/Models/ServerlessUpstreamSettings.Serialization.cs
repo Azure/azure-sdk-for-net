@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUpstreamTemplate> array = new List<SignalRUpstreamTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
+                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item, options));
                     }
                     templates = array;
                     continue;

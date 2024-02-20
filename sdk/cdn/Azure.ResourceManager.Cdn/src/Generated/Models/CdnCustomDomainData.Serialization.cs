@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
                                 customHttpsParameters = null;
                                 continue;
                             }
-                            customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value);
+                            customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("validationData"u8))

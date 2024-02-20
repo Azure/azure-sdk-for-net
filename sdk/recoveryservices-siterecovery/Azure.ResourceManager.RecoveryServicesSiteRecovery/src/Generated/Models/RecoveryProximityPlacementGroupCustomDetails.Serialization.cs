@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingRecoveryProximityPlacementGroup.DeserializeExistingRecoveryProximityPlacementGroup(element);
+                    case "Existing": return ExistingRecoveryProximityPlacementGroup.DeserializeExistingRecoveryProximityPlacementGroup(element, options);
                 }
             }
-            return UnknownRecoveryProximityPlacementGroupCustomDetails.DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(element);
+            return UnknownRecoveryProximityPlacementGroupCustomDetails.DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Write(ModelReaderWriterOptions options)

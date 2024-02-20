@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSearchCoreSummary> array = new List<OperationalInsightsSearchCoreSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item));
+                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item, options));
                     }
                     coreSummaries = array;
                     continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<SearchSort> array = new List<SearchSort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchSort.DeserializeSearchSort(item));
+                        array.Add(SearchSort.DeserializeSearchSort(item, options));
                     }
                     sort = array;
                     continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value);
+                    schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<AppSeenInfo> array = new List<AppSeenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSeenInfo.DeserializeAppSeenInfo(item));
+                        array.Add(AppSeenInfo.DeserializeAppSeenInfo(item, options));
                     }
                     appSeenList = array;
                     continue;

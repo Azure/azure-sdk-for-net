@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    lldpNeighbor = LldpNeighbor.DeserializeLldpNeighbor(property.Value);
+                    lldpNeighbor = LldpNeighbor.DeserializeLldpNeighbor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("macAddress"u8))

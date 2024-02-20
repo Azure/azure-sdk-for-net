@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupGoals": return BackupGoalFeatureSupportContent.DeserializeBackupGoalFeatureSupportContent(element);
-                    case "AzureVMResourceBackup": return VmResourceFeatureSupportContent.DeserializeVmResourceFeatureSupportContent(element);
+                    case "AzureBackupGoals": return BackupGoalFeatureSupportContent.DeserializeBackupGoalFeatureSupportContent(element, options);
+                    case "AzureVMResourceBackup": return VmResourceFeatureSupportContent.DeserializeVmResourceFeatureSupportContent(element, options);
                 }
             }
-            return UnknownFeatureSupportRequest.DeserializeUnknownFeatureSupportRequest(element);
+            return UnknownFeatureSupportRequest.DeserializeUnknownFeatureSupportRequest(element, options);
         }
 
         BinaryData IPersistableModel<FeatureSupportContent>.Write(ModelReaderWriterOptions options)

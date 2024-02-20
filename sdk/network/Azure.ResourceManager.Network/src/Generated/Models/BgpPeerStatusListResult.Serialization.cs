@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BgpPeerStatus> array = new List<BgpPeerStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item));
+                        array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item, options));
                     }
                     value = array;
                     continue;

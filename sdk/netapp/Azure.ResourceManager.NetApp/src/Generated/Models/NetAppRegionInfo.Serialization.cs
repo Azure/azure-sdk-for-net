@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item));
+                        array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item, options));
                     }
                     availabilityZoneMappings = array;
                     continue;

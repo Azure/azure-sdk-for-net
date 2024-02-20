@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<EncryptionSettingsElement> array = new List<EncryptionSettingsElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item));
+                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item, options));
                     }
                     encryptionSettings = array;
                     continue;

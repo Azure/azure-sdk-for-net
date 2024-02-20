@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
-                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
+                    case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element, options);
+                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element, options);
                 }
             }
             Optional<int> channels = default;

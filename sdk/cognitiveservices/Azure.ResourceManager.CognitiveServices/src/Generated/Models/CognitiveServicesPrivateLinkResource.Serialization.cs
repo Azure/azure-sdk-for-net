@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    properties = CognitiveServicesPrivateLinkResourceProperties.DeserializeCognitiveServicesPrivateLinkResourceProperties(property.Value);
+                    properties = CognitiveServicesPrivateLinkResourceProperties.DeserializeCognitiveServicesPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

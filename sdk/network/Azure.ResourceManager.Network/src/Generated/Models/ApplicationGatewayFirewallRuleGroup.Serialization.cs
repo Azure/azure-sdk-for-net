@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRule> array = new List<ApplicationGatewayFirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item));
+                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item, options));
                     }
                     rules = array;
                     continue;

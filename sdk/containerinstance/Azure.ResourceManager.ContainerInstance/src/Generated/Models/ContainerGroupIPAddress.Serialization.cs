@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerGroupPort> array = new List<ContainerGroupPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item));
+                        array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item, options));
                     }
                     ports = array;
                     continue;

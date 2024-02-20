@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p1Y = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    p1Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("p3Y"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p3Y = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    p3Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("p5Y"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    p5Y = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    p5Y = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

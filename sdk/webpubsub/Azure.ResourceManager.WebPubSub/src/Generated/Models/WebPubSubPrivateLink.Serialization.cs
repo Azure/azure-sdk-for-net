@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                             List<ShareablePrivateLinkType> array = new List<ShareablePrivateLinkType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
+                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item, options));
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;

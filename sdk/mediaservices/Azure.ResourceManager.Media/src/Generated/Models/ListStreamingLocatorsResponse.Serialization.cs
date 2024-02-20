@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetStreamingLocator> array = new List<MediaAssetStreamingLocator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item));
+                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item, options));
                     }
                     streamingLocators = array;
                     continue;

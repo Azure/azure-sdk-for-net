@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                        array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item, options));
                     }
                     value = array;
                     continue;

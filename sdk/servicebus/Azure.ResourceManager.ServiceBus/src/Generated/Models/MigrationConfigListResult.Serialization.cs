@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<MigrationConfigurationData> array = new List<MigrationConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationConfigurationData.DeserializeMigrationConfigurationData(item));
+                        array.Add(MigrationConfigurationData.DeserializeMigrationConfigurationData(item, options));
                     }
                     value = array;
                     continue;

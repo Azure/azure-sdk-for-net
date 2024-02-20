@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HDInsight
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
-                            privateLinkServiceConnectionState = HDInsightPrivateLinkServiceConnectionState.DeserializeHDInsightPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = HDInsightPrivateLinkServiceConnectionState.DeserializeHDInsightPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkIdentifier"u8))

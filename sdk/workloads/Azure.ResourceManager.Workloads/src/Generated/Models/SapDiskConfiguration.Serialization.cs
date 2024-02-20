@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    recommendedConfiguration = DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property.Value);
+                    recommendedConfiguration = DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedConfigurations"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SupportedConfigurationsDiskDetails> array = new List<SupportedConfigurationsDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConfigurationsDiskDetails.DeserializeSupportedConfigurationsDiskDetails(item));
+                        array.Add(SupportedConfigurationsDiskDetails.DeserializeSupportedConfigurationsDiskDetails(item, options));
                     }
                     supportedConfigurations = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformStorageData> array = new List<AppPlatformStorageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item));
+                        array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item, options));
                     }
                     value = array;
                     continue;

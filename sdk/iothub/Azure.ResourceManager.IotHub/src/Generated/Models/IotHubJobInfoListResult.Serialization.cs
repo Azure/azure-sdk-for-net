@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubJobInfo> array = new List<IotHubJobInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubJobInfo.DeserializeIotHubJobInfo(item));
+                        array.Add(IotHubJobInfo.DeserializeIotHubJobInfo(item, options));
                     }
                     value = array;
                     continue;

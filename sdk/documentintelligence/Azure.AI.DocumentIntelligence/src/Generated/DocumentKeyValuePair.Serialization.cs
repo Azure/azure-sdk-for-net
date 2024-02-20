@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    key = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
+                    value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

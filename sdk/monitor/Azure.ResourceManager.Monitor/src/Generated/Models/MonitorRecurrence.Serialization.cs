@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = RecurrentSchedule.DeserializeRecurrentSchedule(property.Value);
+                    schedule = RecurrentSchedule.DeserializeRecurrentSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

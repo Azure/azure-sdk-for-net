@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    queue = QueueInfo.DeserializeQueueInfo(property.Value);
+                    queue = QueueInfo.DeserializeQueueInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("push"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    push = PushInfo.DeserializePushInfo(property.Value);
+                    push = PushInfo.DeserializePushInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

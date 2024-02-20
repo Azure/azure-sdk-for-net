@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item));
+                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item, options));
                     }
                     suggestedRelationships = array;
                     continue;

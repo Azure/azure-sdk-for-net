@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value);
+                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value);
+                            repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalParameters"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
+                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value, options));
                             }
                             globalParameters = dictionary;
                             continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value);
+                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

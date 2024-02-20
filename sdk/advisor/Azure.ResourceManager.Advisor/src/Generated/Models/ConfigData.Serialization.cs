@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             List<DigestConfig> array = new List<DigestConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DigestConfig.DeserializeDigestConfig(item));
+                                array.Add(DigestConfig.DeserializeDigestConfig(item, options));
                             }
                             digests = array;
                             continue;

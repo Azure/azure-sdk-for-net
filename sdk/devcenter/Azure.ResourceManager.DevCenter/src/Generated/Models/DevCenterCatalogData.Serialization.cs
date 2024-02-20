@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adoGit"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

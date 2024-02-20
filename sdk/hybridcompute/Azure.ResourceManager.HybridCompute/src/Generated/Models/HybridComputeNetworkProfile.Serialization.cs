@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeNetworkInterface> array = new List<HybridComputeNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item));
+                        array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;

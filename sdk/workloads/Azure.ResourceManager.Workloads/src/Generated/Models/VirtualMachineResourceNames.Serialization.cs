@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<NetworkInterfaceResourceNames> array = new List<NetworkInterfaceResourceNames>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceResourceNames.DeserializeNetworkInterfaceResourceNames(item));
+                        array.Add(NetworkInterfaceResourceNames.DeserializeNetworkInterfaceResourceNames(item, options));
                     }
                     networkInterfaces = array;
                     continue;

@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ElasticsearchChatExtensionParameters.DeserializeElasticsearchChatExtensionParameters(property.Value);
+                    parameters = ElasticsearchChatExtensionParameters.DeserializeElasticsearchChatExtensionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

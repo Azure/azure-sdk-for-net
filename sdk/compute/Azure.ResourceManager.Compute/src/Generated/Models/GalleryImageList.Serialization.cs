@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryImageData> array = new List<GalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImageData.DeserializeGalleryImageData(item));
+                        array.Add(GalleryImageData.DeserializeGalleryImageData(item, options));
                     }
                     value = array;
                     continue;

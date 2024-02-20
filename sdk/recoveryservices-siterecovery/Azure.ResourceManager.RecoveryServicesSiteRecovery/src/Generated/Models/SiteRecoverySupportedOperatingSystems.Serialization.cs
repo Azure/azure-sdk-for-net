@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = SiteRecoverySupportedOSProperties.DeserializeSiteRecoverySupportedOSProperties(property.Value);
+                    properties = SiteRecoverySupportedOSProperties.DeserializeSiteRecoverySupportedOSProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

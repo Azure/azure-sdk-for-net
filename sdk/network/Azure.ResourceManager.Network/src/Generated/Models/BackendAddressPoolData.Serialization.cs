@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
                             List<GatewayLoadBalancerTunnelInterface> array = new List<GatewayLoadBalancerTunnelInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GatewayLoadBalancerTunnelInterface.DeserializeGatewayLoadBalancerTunnelInterface(item));
+                                array.Add(GatewayLoadBalancerTunnelInterface.DeserializeGatewayLoadBalancerTunnelInterface(item, options));
                             }
                             tunnelInterfaces = array;
                             continue;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancerBackendAddress> array = new List<LoadBalancerBackendAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerBackendAddress.DeserializeLoadBalancerBackendAddress(item));
+                                array.Add(LoadBalancerBackendAddress.DeserializeLoadBalancerBackendAddress(item, options));
                             }
                             loadBalancerBackendAddresses = array;
                             continue;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                             }
                             backendIPConfigurations = array;
                             continue;

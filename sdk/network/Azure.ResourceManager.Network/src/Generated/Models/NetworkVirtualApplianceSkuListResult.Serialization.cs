@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkVirtualApplianceSkuData> array = new List<NetworkVirtualApplianceSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(item));
+                        array.Add(NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(item, options));
                     }
                     value = array;
                     continue;

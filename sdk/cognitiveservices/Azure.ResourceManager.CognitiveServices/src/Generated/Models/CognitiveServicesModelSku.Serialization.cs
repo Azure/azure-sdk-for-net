@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value);
+                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountCallRateLimit> array = new List<ServiceAccountCallRateLimit>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item));
+                        array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item, options));
                     }
                     rateLimits = array;
                     continue;

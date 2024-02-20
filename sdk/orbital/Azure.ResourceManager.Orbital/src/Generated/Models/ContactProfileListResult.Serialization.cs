@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileData> array = new List<OrbitalContactProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileData.DeserializeOrbitalContactProfileData(item));
+                        array.Add(OrbitalContactProfileData.DeserializeOrbitalContactProfileData(item, options));
                     }
                     value = array;
                     continue;

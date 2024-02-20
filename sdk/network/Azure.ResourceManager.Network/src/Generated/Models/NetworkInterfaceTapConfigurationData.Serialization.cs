@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetworkTap = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(property0.Value);
+                            virtualNetworkTap = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

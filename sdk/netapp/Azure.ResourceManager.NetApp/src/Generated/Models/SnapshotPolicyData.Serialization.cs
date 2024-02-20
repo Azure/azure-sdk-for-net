@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value);
+                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dailySchedule"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value);
+                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("weeklySchedule"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value);
+                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("monthlySchedule"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value);
+                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))

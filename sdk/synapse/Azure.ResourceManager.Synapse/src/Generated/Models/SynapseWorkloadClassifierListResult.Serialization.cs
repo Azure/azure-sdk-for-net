@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseWorkloadClassifierData> array = new List<SynapseWorkloadClassifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(item));
+                        array.Add(SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(item, options));
                     }
                     value = array;
                     continue;

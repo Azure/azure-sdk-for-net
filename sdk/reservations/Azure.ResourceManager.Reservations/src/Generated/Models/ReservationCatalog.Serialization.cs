@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuProperty> array = new List<SkuProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuProperty.DeserializeSkuProperty(item));
+                        array.Add(SkuProperty.DeserializeSkuProperty(item, options));
                     }
                     skuProperties = array;
                     continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value);
+                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuRestriction> array = new List<SkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuRestriction.DeserializeSkuRestriction(item));
+                        array.Add(SkuRestriction.DeserializeSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuCapability> array = new List<SkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        array.Add(SkuCapability.DeserializeSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

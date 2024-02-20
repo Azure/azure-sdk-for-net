@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    destination = ServiceTagDestination.DeserializeServiceTagDestination(property.Value);
+                    destination = ServiceTagDestination.DeserializeServiceTagDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item, options));
                     }
                     inboundNatPools = array;
                     continue;

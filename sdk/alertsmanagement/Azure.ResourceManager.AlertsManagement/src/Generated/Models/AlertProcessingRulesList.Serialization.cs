@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleData> array = new List<AlertProcessingRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleData.DeserializeAlertProcessingRuleData(item));
+                        array.Add(AlertProcessingRuleData.DeserializeAlertProcessingRuleData(item, options));
                     }
                     value = array;
                     continue;

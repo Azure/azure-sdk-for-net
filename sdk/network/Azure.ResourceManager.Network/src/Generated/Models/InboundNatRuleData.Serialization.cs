@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))

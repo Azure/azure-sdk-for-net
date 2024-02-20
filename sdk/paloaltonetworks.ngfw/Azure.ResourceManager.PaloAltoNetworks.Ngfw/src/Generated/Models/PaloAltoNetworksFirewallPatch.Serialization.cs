@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    properties = FirewallUpdateProperties.DeserializeFirewallUpdateProperties(property.Value);
+                    properties = FirewallUpdateProperties.DeserializeFirewallUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

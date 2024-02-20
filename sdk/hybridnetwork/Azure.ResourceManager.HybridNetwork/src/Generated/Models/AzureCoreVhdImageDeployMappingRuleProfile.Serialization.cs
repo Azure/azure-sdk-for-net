@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdImageMappingRuleProfile = VhdImageMappingRuleProfile.DeserializeVhdImageMappingRuleProfile(property.Value);
+                    vhdImageMappingRuleProfile = VhdImageMappingRuleProfile.DeserializeVhdImageMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = BackupGenericProtectionIntent.DeserializeBackupGenericProtectionIntent(property.Value);
+                    properties = BackupGenericProtectionIntent.DeserializeBackupGenericProtectionIntent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

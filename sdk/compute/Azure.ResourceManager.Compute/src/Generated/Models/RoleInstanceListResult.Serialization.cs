@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleInstanceData> array = new List<CloudServiceRoleInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(item));
+                        array.Add(CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(item, options));
                     }
                     value = array;
                     continue;

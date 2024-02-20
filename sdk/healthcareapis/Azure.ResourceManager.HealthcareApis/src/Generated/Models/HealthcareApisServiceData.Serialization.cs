@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    properties = HealthcareApisServiceProperties.DeserializeHealthcareApisServiceProperties(property.Value);
+                    properties = HealthcareApisServiceProperties.DeserializeHealthcareApisServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

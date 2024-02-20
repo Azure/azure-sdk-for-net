@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityMLAnalyticsSettingData> array = new List<SecurityMLAnalyticsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(item));
+                        array.Add(SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(item, options));
                     }
                     value = array;
                     continue;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricNamespace> array = new List<MonitorMetricNamespace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricNamespace.DeserializeMonitorMetricNamespace(item));
+                        array.Add(MonitorMetricNamespace.DeserializeMonitorMetricNamespace(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiResourceFormatData> array = new List<KpiResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item));
+                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

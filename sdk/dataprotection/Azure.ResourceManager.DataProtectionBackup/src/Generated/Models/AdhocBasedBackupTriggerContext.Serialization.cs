@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("taggingCriteria"u8))
                 {
-                    taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value);
+                    taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

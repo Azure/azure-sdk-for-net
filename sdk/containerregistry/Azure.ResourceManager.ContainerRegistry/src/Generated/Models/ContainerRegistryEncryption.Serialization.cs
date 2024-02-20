@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = ContainerRegistryKeyVaultProperties.DeserializeContainerRegistryKeyVaultProperties(property.Value);
+                    keyVaultProperties = ContainerRegistryKeyVaultProperties.DeserializeContainerRegistryKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

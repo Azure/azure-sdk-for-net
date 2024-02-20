@@ -290,7 +290,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterChannel> array = new List<RouterChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterChannel.DeserializeRouterChannel(item));
+                        array.Add(RouterChannel.DeserializeRouterChannel(item, options));
                     }
                     channels = array;
                     continue;
@@ -304,7 +304,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterJobOffer> array = new List<RouterJobOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item));
+                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item, options));
                     }
                     offers = array;
                     continue;
@@ -318,7 +318,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerAssignment> array = new List<RouterWorkerAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item));
+                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item, options));
                     }
                     assignedJobs = array;
                     continue;

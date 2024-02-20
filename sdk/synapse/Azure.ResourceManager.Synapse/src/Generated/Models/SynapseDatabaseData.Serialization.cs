@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Synapse
             {
                 switch (discriminator.GetString())
                 {
-                    case "ReadOnlyFollowing": return SynapseReadOnlyFollowingDatabase.DeserializeSynapseReadOnlyFollowingDatabase(element);
-                    case "ReadWrite": return SynapseReadWriteDatabase.DeserializeSynapseReadWriteDatabase(element);
+                    case "ReadOnlyFollowing": return SynapseReadOnlyFollowingDatabase.DeserializeSynapseReadOnlyFollowingDatabase(element, options);
+                    case "ReadWrite": return SynapseReadWriteDatabase.DeserializeSynapseReadWriteDatabase(element, options);
                 }
             }
-            return UnknownDatabase.DeserializeUnknownDatabase(element);
+            return UnknownDatabase.DeserializeUnknownDatabase(element, options);
         }
 
         BinaryData IPersistableModel<SynapseDatabaseData>.Write(ModelReaderWriterOptions options)

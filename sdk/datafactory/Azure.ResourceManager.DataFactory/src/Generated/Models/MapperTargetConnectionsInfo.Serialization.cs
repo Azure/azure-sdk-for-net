@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperTable> array = new List<MapperTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperTable.DeserializeMapperTable(item));
+                        array.Add(MapperTable.DeserializeMapperTable(item, options));
                     }
                     targetEntities = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connection = MapperConnection.DeserializeMapperConnection(property.Value);
+                    connection = MapperConnection.DeserializeMapperConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataMapperMappings"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataMapperMapping> array = new List<DataMapperMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item));
+                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item, options));
                     }
                     dataMapperMappings = array;
                     continue;

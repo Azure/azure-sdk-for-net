@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDataVersionData> array = new List<MachineLearningDataVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(item));
+                        array.Add(MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(item, options));
                     }
                     value = array;
                     continue;

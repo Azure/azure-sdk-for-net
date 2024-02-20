@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseLanguageExtension> array = new List<SynapseLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseLanguageExtension.DeserializeSynapseLanguageExtension(item));
+                        array.Add(SynapseLanguageExtension.DeserializeSynapseLanguageExtension(item, options));
                     }
                     value = array;
                     continue;

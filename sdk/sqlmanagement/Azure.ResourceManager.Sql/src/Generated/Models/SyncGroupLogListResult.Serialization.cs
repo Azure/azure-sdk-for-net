@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupLogProperties> array = new List<SyncGroupLogProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupLogProperties.DeserializeSyncGroupLogProperties(item));
+                        array.Add(SyncGroupLogProperties.DeserializeSyncGroupLogProperties(item, options));
                     }
                     value = array;
                     continue;

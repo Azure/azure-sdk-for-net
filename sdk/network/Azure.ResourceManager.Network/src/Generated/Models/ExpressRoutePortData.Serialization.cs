@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteLinkData> array = new List<ExpressRouteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteLinkData.DeserializeExpressRouteLinkData(item));
+                                array.Add(ExpressRouteLinkData.DeserializeExpressRouteLinkData(item, options));
                             }
                             links = array;
                             continue;

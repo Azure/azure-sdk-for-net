@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value);
+                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetScope"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;

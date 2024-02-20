@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeVaultCertificate> array = new List<NodeTypeVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item));
+                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item, options));
                     }
                     vaultCertificates = array;
                     continue;

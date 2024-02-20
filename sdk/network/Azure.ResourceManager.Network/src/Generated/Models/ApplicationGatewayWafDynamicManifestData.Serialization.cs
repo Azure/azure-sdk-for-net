@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayFirewallManifestRuleSet> array = new List<ApplicationGatewayFirewallManifestRuleSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item));
+                                array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item, options));
                             }
                             availableRuleSets = array;
                             continue;

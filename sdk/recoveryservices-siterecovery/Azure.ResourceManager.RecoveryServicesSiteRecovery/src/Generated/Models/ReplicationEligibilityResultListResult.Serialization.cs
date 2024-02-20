@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationEligibilityResultData> array = new List<ReplicationEligibilityResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(item));
+                        array.Add(ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(item, options));
                     }
                     value = array;
                     continue;

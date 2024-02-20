@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);
+                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

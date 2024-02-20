@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataColumnDefinition> array = new List<DataColumnDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item));
+                        array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item, options));
                     }
                     columns = array;
                     continue;

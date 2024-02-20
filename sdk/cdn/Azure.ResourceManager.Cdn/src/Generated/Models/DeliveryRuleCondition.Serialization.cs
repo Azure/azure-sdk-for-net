@@ -70,28 +70,28 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ClientPort": return DeliveryRuleClientPortCondition.DeserializeDeliveryRuleClientPortCondition(element);
-                    case "Cookies": return DeliveryRuleCookiesCondition.DeserializeDeliveryRuleCookiesCondition(element);
-                    case "HostName": return DeliveryRuleHostNameCondition.DeserializeDeliveryRuleHostNameCondition(element);
-                    case "HttpVersion": return DeliveryRuleHttpVersionCondition.DeserializeDeliveryRuleHttpVersionCondition(element);
-                    case "IsDevice": return DeliveryRuleIsDeviceCondition.DeserializeDeliveryRuleIsDeviceCondition(element);
-                    case "PostArgs": return DeliveryRulePostArgsCondition.DeserializeDeliveryRulePostArgsCondition(element);
-                    case "QueryString": return DeliveryRuleQueryStringCondition.DeserializeDeliveryRuleQueryStringCondition(element);
-                    case "RemoteAddress": return DeliveryRuleRemoteAddressCondition.DeserializeDeliveryRuleRemoteAddressCondition(element);
-                    case "RequestBody": return DeliveryRuleRequestBodyCondition.DeserializeDeliveryRuleRequestBodyCondition(element);
-                    case "RequestHeader": return DeliveryRuleRequestHeaderCondition.DeserializeDeliveryRuleRequestHeaderCondition(element);
-                    case "RequestMethod": return DeliveryRuleRequestMethodCondition.DeserializeDeliveryRuleRequestMethodCondition(element);
-                    case "RequestScheme": return DeliveryRuleRequestSchemeCondition.DeserializeDeliveryRuleRequestSchemeCondition(element);
-                    case "RequestUri": return DeliveryRuleRequestUriCondition.DeserializeDeliveryRuleRequestUriCondition(element);
-                    case "ServerPort": return DeliveryRuleServerPortCondition.DeserializeDeliveryRuleServerPortCondition(element);
-                    case "SocketAddr": return DeliveryRuleSocketAddressCondition.DeserializeDeliveryRuleSocketAddressCondition(element);
-                    case "SslProtocol": return DeliveryRuleSslProtocolCondition.DeserializeDeliveryRuleSslProtocolCondition(element);
-                    case "UrlFileExtension": return DeliveryRuleUriFileExtensionCondition.DeserializeDeliveryRuleUriFileExtensionCondition(element);
-                    case "UrlFileName": return DeliveryRuleUriFileNameCondition.DeserializeDeliveryRuleUriFileNameCondition(element);
-                    case "UrlPath": return DeliveryRuleUriPathCondition.DeserializeDeliveryRuleUriPathCondition(element);
+                    case "ClientPort": return DeliveryRuleClientPortCondition.DeserializeDeliveryRuleClientPortCondition(element, options);
+                    case "Cookies": return DeliveryRuleCookiesCondition.DeserializeDeliveryRuleCookiesCondition(element, options);
+                    case "HostName": return DeliveryRuleHostNameCondition.DeserializeDeliveryRuleHostNameCondition(element, options);
+                    case "HttpVersion": return DeliveryRuleHttpVersionCondition.DeserializeDeliveryRuleHttpVersionCondition(element, options);
+                    case "IsDevice": return DeliveryRuleIsDeviceCondition.DeserializeDeliveryRuleIsDeviceCondition(element, options);
+                    case "PostArgs": return DeliveryRulePostArgsCondition.DeserializeDeliveryRulePostArgsCondition(element, options);
+                    case "QueryString": return DeliveryRuleQueryStringCondition.DeserializeDeliveryRuleQueryStringCondition(element, options);
+                    case "RemoteAddress": return DeliveryRuleRemoteAddressCondition.DeserializeDeliveryRuleRemoteAddressCondition(element, options);
+                    case "RequestBody": return DeliveryRuleRequestBodyCondition.DeserializeDeliveryRuleRequestBodyCondition(element, options);
+                    case "RequestHeader": return DeliveryRuleRequestHeaderCondition.DeserializeDeliveryRuleRequestHeaderCondition(element, options);
+                    case "RequestMethod": return DeliveryRuleRequestMethodCondition.DeserializeDeliveryRuleRequestMethodCondition(element, options);
+                    case "RequestScheme": return DeliveryRuleRequestSchemeCondition.DeserializeDeliveryRuleRequestSchemeCondition(element, options);
+                    case "RequestUri": return DeliveryRuleRequestUriCondition.DeserializeDeliveryRuleRequestUriCondition(element, options);
+                    case "ServerPort": return DeliveryRuleServerPortCondition.DeserializeDeliveryRuleServerPortCondition(element, options);
+                    case "SocketAddr": return DeliveryRuleSocketAddressCondition.DeserializeDeliveryRuleSocketAddressCondition(element, options);
+                    case "SslProtocol": return DeliveryRuleSslProtocolCondition.DeserializeDeliveryRuleSslProtocolCondition(element, options);
+                    case "UrlFileExtension": return DeliveryRuleUriFileExtensionCondition.DeserializeDeliveryRuleUriFileExtensionCondition(element, options);
+                    case "UrlFileName": return DeliveryRuleUriFileNameCondition.DeserializeDeliveryRuleUriFileNameCondition(element, options);
+                    case "UrlPath": return DeliveryRuleUriPathCondition.DeserializeDeliveryRuleUriPathCondition(element, options);
                 }
             }
-            return UnknownDeliveryRuleCondition.DeserializeUnknownDeliveryRuleCondition(element);
+            return UnknownDeliveryRuleCondition.DeserializeUnknownDeliveryRuleCondition(element, options);
         }
 
         BinaryData IPersistableModel<DeliveryRuleCondition>.Write(ModelReaderWriterOptions options)

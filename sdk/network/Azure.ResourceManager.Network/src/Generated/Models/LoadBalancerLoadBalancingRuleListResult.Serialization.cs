@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<LoadBalancingRuleData> array = new List<LoadBalancingRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item));
+                        array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item, options));
                     }
                     value = array;
                     continue;

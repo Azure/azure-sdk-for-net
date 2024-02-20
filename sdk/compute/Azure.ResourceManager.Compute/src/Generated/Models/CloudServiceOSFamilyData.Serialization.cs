@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                             List<OSVersionPropertiesBase> array = new List<OSVersionPropertiesBase>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OSVersionPropertiesBase.DeserializeOSVersionPropertiesBase(item));
+                                array.Add(OSVersionPropertiesBase.DeserializeOSVersionPropertiesBase(item, options));
                             }
                             versions = array;
                             continue;

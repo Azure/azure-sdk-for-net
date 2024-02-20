@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                     }
                     linkedResources = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    cors = CorsRules.DeserializeCorsRules(property.Value);
+                    cors = CorsRules.DeserializeCorsRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

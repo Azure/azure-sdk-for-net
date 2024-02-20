@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item));
+                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item, options));
                     }
                     value = array;
                     continue;

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rackSlot"u8))

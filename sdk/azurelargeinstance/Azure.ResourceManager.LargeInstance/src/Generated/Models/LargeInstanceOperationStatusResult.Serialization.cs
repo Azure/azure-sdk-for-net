@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceOperationStatusResult> array = new List<LargeInstanceOperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLargeInstanceOperationStatusResult(item));
+                        array.Add(DeserializeLargeInstanceOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;

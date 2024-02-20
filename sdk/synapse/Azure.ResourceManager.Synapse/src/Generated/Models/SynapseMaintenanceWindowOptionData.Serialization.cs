@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
                             List<SynapseMaintenanceWindowTimeRange> array = new List<SynapseMaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseMaintenanceWindowTimeRange.DeserializeSynapseMaintenanceWindowTimeRange(item));
+                                array.Add(SynapseMaintenanceWindowTimeRange.DeserializeSynapseMaintenanceWindowTimeRange(item, options));
                             }
                             maintenanceWindowCycles = array;
                             continue;

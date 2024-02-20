@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            serviceQosPolicy = MobileNetworkQosPolicy.DeserializeMobileNetworkQosPolicy(property0.Value);
+                            serviceQosPolicy = MobileNetworkQosPolicy.DeserializeMobileNetworkQosPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("pccRules"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<PccRuleConfiguration> array = new List<PccRuleConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PccRuleConfiguration.DeserializePccRuleConfiguration(item));
+                                array.Add(PccRuleConfiguration.DeserializePccRuleConfiguration(item, options));
                             }
                             pccRules = array;
                             continue;

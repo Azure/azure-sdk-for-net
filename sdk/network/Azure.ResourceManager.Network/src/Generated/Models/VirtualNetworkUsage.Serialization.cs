@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value);
+                    name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

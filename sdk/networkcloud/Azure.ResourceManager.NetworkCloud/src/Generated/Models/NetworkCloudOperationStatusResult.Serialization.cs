@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudOperationStatusResult> array = new List<NetworkCloudOperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeNetworkCloudOperationStatusResult(item));
+                        array.Add(DeserializeNetworkCloudOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;

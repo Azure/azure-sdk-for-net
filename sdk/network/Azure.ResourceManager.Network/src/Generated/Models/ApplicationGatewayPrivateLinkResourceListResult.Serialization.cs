@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayPrivateLinkResource> array = new List<ApplicationGatewayPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item));
+                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

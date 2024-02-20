@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Cdn
                             List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
+                                array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item, options));
                             }
                             customDomains = array;
                             continue;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
                                 cacheConfiguration = null;
                                 continue;
                             }
-                            cacheConfiguration = FrontDoorRouteCacheConfiguration.DeserializeFrontDoorRouteCacheConfiguration(property0.Value);
+                            cacheConfiguration = FrontDoorRouteCacheConfiguration.DeserializeFrontDoorRouteCacheConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forwardingProtocol"u8))

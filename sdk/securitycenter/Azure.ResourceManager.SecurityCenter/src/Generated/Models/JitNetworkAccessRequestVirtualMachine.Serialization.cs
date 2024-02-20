@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item));
+                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item, options));
                     }
                     ports = array;
                     continue;

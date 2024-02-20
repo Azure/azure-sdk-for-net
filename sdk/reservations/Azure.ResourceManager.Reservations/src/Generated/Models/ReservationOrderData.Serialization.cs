@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Reservations
                             {
                                 continue;
                             }
-                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value);
+                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reservations"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Reservations
                             List<ReservationDetailData> array = new List<ReservationDetailData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item, options));
                             }
                             reservations = array;
                             continue;

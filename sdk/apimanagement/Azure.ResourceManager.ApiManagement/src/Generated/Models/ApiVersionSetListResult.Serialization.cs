@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiVersionSetData> array = new List<ApiVersionSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiVersionSetData.DeserializeApiVersionSetData(item));
+                        array.Add(ApiVersionSetData.DeserializeApiVersionSetData(item, options));
                     }
                     value = array;
                     continue;

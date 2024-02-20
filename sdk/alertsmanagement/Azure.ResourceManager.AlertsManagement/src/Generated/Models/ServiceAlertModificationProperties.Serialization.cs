@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertModificationItemInfo> array = new List<ServiceAlertModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
+                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item, options));
                     }
                     modifications = array;
                     continue;

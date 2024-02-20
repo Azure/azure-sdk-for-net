@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ExportDeliveryDestination.DeserializeExportDeliveryDestination(property.Value);
+                    destination = ExportDeliveryDestination.DeserializeExportDeliveryDestination(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

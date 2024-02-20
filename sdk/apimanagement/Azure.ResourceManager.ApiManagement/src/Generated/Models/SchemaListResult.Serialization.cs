@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiSchemaData> array = new List<ApiSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiSchemaData.DeserializeApiSchemaData(item));
+                        array.Add(ApiSchemaData.DeserializeApiSchemaData(item, options));
                     }
                     value = array;
                     continue;

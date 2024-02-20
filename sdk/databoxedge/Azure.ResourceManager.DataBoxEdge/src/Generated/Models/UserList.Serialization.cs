@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeUserData> array = new List<DataBoxEdgeUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(item));
+                        array.Add(DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(item, options));
                     }
                     value = array;
                     continue;

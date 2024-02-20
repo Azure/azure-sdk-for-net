@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    plan = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
+                    plan = LogicResourceReference.DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

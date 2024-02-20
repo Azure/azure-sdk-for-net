@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RegionContract> array = new List<RegionContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionContract.DeserializeRegionContract(item));
+                        array.Add(RegionContract.DeserializeRegionContract(item, options));
                     }
                     value = array;
                     continue;

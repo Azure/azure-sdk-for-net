@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value);
+                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

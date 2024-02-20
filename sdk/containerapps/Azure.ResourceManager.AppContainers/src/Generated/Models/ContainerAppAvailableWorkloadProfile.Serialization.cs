@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppAvailableWorkloadProfileProperties.DeserializeContainerAppAvailableWorkloadProfileProperties(property.Value);
+                    properties = ContainerAppAvailableWorkloadProfileProperties.DeserializeContainerAppAvailableWorkloadProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

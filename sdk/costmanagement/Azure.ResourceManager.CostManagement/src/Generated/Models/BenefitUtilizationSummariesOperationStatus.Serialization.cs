@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value);
+                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value);
+                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                             List<RoutingPolicy> array = new List<RoutingPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingPolicy.DeserializeRoutingPolicy(item));
+                                array.Add(RoutingPolicy.DeserializeRoutingPolicy(item, options));
                             }
                             routingPolicies = array;
                             continue;

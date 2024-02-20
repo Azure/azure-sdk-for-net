@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element);
+                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element, options);
                 }
             }
-            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element);
+            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyConfiguration>.Write(ModelReaderWriterOptions options)

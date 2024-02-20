@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPreset(document.RootElement, options);
+            return DeserializeMediaTransformPreset(document.RootElement, options);
         }
 
         internal static UnknownPreset DeserializeUnknownPreset(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPreset(document.RootElement, options);
+                        return DeserializeMediaTransformPreset(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");

@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareNetworkInterface> array = new List<VMwareNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                                array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareVirtualDisk> array = new List<VMwareVirtualDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                                array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item, options));
                             }
                             disks = array;
                             continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item, options));
                             }
                             statuses = array;
                             continue;

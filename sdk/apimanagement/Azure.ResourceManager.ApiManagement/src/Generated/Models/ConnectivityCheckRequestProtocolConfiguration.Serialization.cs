@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectivityCheckRequestHttpConfiguration.DeserializeConnectivityCheckRequestHttpConfiguration(property.Value);
+                    httpConfiguration = ConnectivityCheckRequestHttpConfiguration.DeserializeConnectivityCheckRequestHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

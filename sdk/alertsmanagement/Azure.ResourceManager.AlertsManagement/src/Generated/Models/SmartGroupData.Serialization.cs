@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resources = array;
                             continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resourceTypes = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resourceGroups = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             monitorServices = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             monitorConditions = array;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             alertStates = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             alertSeverities = array;
                             continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScalingMechanism(document.RootElement, options);
+            return DeserializeManagedServiceScalingMechanism(document.RootElement, options);
         }
 
         internal static UnknownScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownScalingMechanism(document.RootElement, options);
+                        return DeserializeManagedServiceScalingMechanism(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceScalingMechanism)} does not support '{options.Format}' format.");

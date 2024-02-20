@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    properties = PrivateLinkConnectionApprovalRequest.DeserializePrivateLinkConnectionApprovalRequest(property.Value);
+                    properties = PrivateLinkConnectionApprovalRequest.DeserializePrivateLinkConnectionApprovalRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element);
+                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element, options);
                 }
             }
-            return UnknownWebhook.DeserializeUnknownWebhook(element);
+            return UnknownWebhook.DeserializeUnknownWebhook(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)

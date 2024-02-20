@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ProjectData> array = new List<ProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectData.DeserializeProjectData(item));
+                        array.Add(ProjectData.DeserializeProjectData(item, options));
                     }
                     value = array;
                     continue;

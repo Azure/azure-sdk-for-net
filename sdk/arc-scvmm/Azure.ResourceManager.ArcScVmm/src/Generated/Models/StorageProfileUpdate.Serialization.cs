@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<VirtualDiskUpdate> array = new List<VirtualDiskUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item));
+                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item, options));
                     }
                     disks = array;
                     continue;

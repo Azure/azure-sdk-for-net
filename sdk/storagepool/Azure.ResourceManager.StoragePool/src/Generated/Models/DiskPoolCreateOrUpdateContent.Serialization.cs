@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

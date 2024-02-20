@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(property.Value);
+                    assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vm"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(property.Value);
+                    vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         details = null;
                         continue;
                     }
-                    details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(property.Value);
+                    details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmssResourceId"u8))

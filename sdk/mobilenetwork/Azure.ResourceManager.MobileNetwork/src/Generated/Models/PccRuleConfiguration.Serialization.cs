@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
+                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trafficControl"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkServiceDataFlowTemplate> array = new List<MobileNetworkServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
+                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item, options));
                     }
                     serviceDataFlowTemplates = array;
                     continue;

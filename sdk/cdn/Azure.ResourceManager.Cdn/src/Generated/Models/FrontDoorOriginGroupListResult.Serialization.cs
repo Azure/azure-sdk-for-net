@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorOriginGroupData> array = new List<FrontDoorOriginGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(item));
+                        array.Add(FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(item, options));
                     }
                     value = array;
                     continue;

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TroubleshootingDetails> array = new List<TroubleshootingDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshootingDetails.DeserializeTroubleshootingDetails(item));
+                        array.Add(TroubleshootingDetails.DeserializeTroubleshootingDetails(item, options));
                     }
                     results = array;
                     continue;

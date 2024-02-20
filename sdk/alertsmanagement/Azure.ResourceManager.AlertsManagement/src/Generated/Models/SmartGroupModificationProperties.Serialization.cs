@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupModificationItemInfo> array = new List<SmartGroupModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item));
+                        array.Add(SmartGroupModificationItemInfo.DeserializeSmartGroupModificationItemInfo(item, options));
                     }
                     modifications = array;
                     continue;

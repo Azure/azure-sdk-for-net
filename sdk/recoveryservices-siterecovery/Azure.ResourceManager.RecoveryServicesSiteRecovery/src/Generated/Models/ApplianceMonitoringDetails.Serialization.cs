@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    cpuDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    cpuDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ramDetails"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    ramDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    ramDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datastoreSnapshot"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<DataStoreUtilizationDetails> array = new List<DataStoreUtilizationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item));
+                        array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item, options));
                     }
                     datastoreSnapshot = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksReplicationDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    disksReplicationDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("esxiNfcBuffer"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    esxiNfcBuffer = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    esxiNfcBuffer = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkBandwidth"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

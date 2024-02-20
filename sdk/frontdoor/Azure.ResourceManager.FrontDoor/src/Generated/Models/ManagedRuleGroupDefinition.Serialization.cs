@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleDefinition> array = new List<ManagedRuleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item));
+                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item, options));
                     }
                     rules = array;
                     continue;

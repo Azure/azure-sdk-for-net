@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            hardwareProfile = VirtualMachineInstancePropertiesHardwareProfile.DeserializeVirtualMachineInstancePropertiesHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineInstancePropertiesHardwareProfile.DeserializeVirtualMachineInstancePropertiesHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            osProfile = VirtualMachineInstancePropertiesOSProfile.DeserializeVirtualMachineInstancePropertiesOSProfile(property0.Value);
+                            osProfile = VirtualMachineInstancePropertiesOSProfile.DeserializeVirtualMachineInstancePropertiesOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            securityProfile = VirtualMachineInstancePropertiesSecurityProfile.DeserializeVirtualMachineInstancePropertiesSecurityProfile(property0.Value);
+                            securityProfile = VirtualMachineInstancePropertiesSecurityProfile.DeserializeVirtualMachineInstancePropertiesSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            storageProfile = VirtualMachineInstancePropertiesStorageProfile.DeserializeVirtualMachineInstancePropertiesStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineInstancePropertiesStorageProfile.DeserializeVirtualMachineInstancePropertiesStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpProxyConfig"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value);
+                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
+                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = VirtualMachineInstanceStatus.DeserializeVirtualMachineInstanceStatus(property0.Value);
+                            status = VirtualMachineInstanceStatus.DeserializeVirtualMachineInstanceStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("guestAgentInstallStatus"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(property0.Value);
+                            guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmId"u8))

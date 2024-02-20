@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterData> array = new List<CassandraClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item));
+                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item, options));
                     }
                     value = array;
                     continue;

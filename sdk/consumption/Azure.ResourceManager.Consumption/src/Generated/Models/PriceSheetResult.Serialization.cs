@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<PriceSheetProperties> array = new List<PriceSheetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item));
+                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item, options));
                             }
                             pricesheets = array;
                             continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value);
+                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value, options);
                             continue;
                         }
                     }

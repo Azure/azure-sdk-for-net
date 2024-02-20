@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            input = MediaJobInputBasicProperties.DeserializeMediaJobInputBasicProperties(property0.Value);
+                            input = MediaJobInputBasicProperties.DeserializeMediaJobInputBasicProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModified"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaJobOutput> array = new List<MediaJobOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaJobOutput.DeserializeMediaJobOutput(item));
+                                array.Add(MediaJobOutput.DeserializeMediaJobOutput(item, options));
                             }
                             outputs = array;
                             continue;

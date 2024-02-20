@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("sourceRepository"u8))
                 {
-                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value);
+                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))

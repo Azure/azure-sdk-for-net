@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<SqlVmGroupData> array = new List<SqlVmGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVmGroupData.DeserializeSqlVmGroupData(item));
+                        array.Add(SqlVmGroupData.DeserializeSqlVmGroupData(item, options));
                     }
                     value = array;
                     continue;

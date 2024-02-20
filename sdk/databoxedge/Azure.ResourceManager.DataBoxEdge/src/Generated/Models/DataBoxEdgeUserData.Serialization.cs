@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            encryptedPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
+                            encryptedPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shareAccessRights"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<ShareAccessRight> array = new List<ShareAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareAccessRight.DeserializeShareAccessRight(item));
+                                array.Add(ShareAccessRight.DeserializeShareAccessRight(item, options));
                             }
                             shareAccessRights = array;
                             continue;

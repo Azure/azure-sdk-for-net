@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificCreationContent.DeserializeFabricSpecificCreationContent(property.Value);
+                    customDetails = FabricSpecificCreationContent.DeserializeFabricSpecificCreationContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

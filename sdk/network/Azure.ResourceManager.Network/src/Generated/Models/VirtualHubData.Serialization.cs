@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value);
+                            routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item));
+                                array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item, options));
                             }
                             virtualHubRouteTableV2s = array;
                             continue;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value);
+                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value, options);
                             continue;
                         }
                     }

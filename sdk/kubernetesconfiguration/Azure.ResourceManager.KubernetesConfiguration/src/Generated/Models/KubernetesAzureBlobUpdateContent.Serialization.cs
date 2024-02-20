@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         servicePrincipal = null;
                         continue;
                     }
-                    servicePrincipal = KubernetesServicePrincipalUpdateContent.DeserializeKubernetesServicePrincipalUpdateContent(property.Value);
+                    servicePrincipal = KubernetesServicePrincipalUpdateContent.DeserializeKubernetesServicePrincipalUpdateContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accountKey"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         managedIdentity = null;
                         continue;
                     }
-                    managedIdentity = KubernetesAzureBlobManagedIdentityUpdateContent.DeserializeKubernetesAzureBlobManagedIdentityUpdateContent(property.Value);
+                    managedIdentity = KubernetesAzureBlobManagedIdentityUpdateContent.DeserializeKubernetesAzureBlobManagedIdentityUpdateContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localAuthRef"u8))

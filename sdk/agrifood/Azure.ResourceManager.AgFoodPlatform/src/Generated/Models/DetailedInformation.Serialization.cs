@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value);
+                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiInputParameters"u8))

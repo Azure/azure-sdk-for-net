@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<ResourceLogCategory> array = new List<ResourceLogCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceLogCategory.DeserializeResourceLogCategory(item));
+                        array.Add(ResourceLogCategory.DeserializeResourceLogCategory(item, options));
                     }
                     categories = array;
                     continue;

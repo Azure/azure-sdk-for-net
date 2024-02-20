@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value);
+                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cost"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    cost = CommitmentCost.DeserializeCommitmentCost(property.Value);
+                    cost = CommitmentCost.DeserializeCommitmentCost(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

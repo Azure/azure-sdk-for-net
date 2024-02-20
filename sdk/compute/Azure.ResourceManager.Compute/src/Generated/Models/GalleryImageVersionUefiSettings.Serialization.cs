@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    additionalSignatures = UefiKeySignatures.DeserializeUefiKeySignatures(property.Value);
+                    additionalSignatures = UefiKeySignatures.DeserializeUefiKeySignatures(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

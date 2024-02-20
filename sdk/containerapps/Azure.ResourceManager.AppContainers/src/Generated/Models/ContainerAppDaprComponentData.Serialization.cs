@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                                array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                             }
                             secrets = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppDaprMetadata> array = new List<ContainerAppDaprMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item));
+                                array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item, options));
                             }
                             metadata = array;
                             continue;

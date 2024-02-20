@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowVersionData> array = new List<LogicWorkflowVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(item));
+                        array.Add(LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(item, options));
                     }
                     value = array;
                     continue;

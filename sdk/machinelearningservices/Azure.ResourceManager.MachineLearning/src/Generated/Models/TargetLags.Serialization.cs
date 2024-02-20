@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoTargetLags.DeserializeAutoTargetLags(element);
-                    case "Custom": return CustomTargetLags.DeserializeCustomTargetLags(element);
+                    case "Auto": return AutoTargetLags.DeserializeAutoTargetLags(element, options);
+                    case "Custom": return CustomTargetLags.DeserializeCustomTargetLags(element, options);
                 }
             }
-            return UnknownTargetLags.DeserializeUnknownTargetLags(element);
+            return UnknownTargetLags.DeserializeUnknownTargetLags(element, options);
         }
 
         BinaryData IPersistableModel<TargetLags>.Write(ModelReaderWriterOptions options)

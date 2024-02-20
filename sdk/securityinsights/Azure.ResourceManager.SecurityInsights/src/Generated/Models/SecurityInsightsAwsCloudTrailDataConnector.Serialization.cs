@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value);
+                            dataTypes = AwsCloudTrailDataConnectorDataTypes.DeserializeAwsCloudTrailDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }

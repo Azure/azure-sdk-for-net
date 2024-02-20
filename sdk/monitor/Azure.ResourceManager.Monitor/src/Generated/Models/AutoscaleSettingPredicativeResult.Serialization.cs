@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PredictiveValue> array = new List<PredictiveValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictiveValue.DeserializePredictiveValue(item));
+                        array.Add(PredictiveValue.DeserializePredictiveValue(item, options));
                     }
                     data = array;
                     continue;

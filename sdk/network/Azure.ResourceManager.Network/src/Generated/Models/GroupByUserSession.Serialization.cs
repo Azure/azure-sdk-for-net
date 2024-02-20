@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByVariable> array = new List<GroupByVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupByVariable.DeserializeGroupByVariable(item));
+                        array.Add(GroupByVariable.DeserializeGroupByVariable(item, options));
                     }
                     groupByVariables = array;
                     continue;

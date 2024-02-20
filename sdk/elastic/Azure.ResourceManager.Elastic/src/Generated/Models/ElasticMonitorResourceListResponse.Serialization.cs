@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<ElasticMonitorResourceData> array = new List<ElasticMonitorResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(item));
+                        array.Add(ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(item, options));
                     }
                     value = array;
                     continue;

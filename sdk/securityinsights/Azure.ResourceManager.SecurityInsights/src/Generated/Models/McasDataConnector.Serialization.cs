@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = McasDataConnectorDataTypes.DeserializeMcasDataConnectorDataTypes(property0.Value);
+                            dataTypes = McasDataConnectorDataTypes.DeserializeMcasDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }

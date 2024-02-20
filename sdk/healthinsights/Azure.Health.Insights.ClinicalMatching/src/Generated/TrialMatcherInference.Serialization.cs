@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherInferenceEvidence> array = new List<TrialMatcherInferenceEvidence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item));
+                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item, options));
                     }
                     evidence = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
+                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

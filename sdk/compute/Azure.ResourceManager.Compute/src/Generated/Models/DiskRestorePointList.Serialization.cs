@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskRestorePointData> array = new List<DiskRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskRestorePointData.DeserializeDiskRestorePointData(item));
+                        array.Add(DiskRestorePointData.DeserializeDiskRestorePointData(item, options));
                     }
                     value = array;
                     continue;

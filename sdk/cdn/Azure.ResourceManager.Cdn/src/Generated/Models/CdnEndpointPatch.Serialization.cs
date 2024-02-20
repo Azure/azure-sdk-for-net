@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                array.Add(GeoFilter.DeserializeGeoFilter(item, options));
                             }
                             geoFilters = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 defaultOriginGroup = null;
                                 continue;
                             }
-                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                             }
                             uriSigningKeys = array;
                             continue;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
                             continue;
                         }
                     }
