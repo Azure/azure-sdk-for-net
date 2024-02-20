@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub
                     {
                         continue;
                     }
-                    properties = ProviderRegistrationProperties.DeserializeProviderRegistrationProperties(property.Value);
+                    properties = ProviderRegistrationProperties.DeserializeProviderRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

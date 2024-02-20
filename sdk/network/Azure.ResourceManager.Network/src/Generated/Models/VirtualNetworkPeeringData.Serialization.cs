@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            remoteAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkAddressSpace"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            remoteVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteBgpCommunities"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
+                            remoteBgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("remoteVirtualNetworkEncryption"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVirtualNetworkEncryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
+                            remoteVirtualNetworkEncryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringState"u8))

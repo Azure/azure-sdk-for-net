@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value);
+                            linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value);
+                            bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

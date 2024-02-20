@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = PostgreSqlMigrationAdminCredentials.DeserializePostgreSqlMigrationAdminCredentials(property.Value);
+                    adminCredentials = PostgreSqlMigrationAdminCredentials.DeserializePostgreSqlMigrationAdminCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceServerUsername"u8))

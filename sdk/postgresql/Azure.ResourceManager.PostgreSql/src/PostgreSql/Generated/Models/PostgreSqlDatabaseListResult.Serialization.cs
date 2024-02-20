@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlDatabaseData> array = new List<PostgreSqlDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(item));
+                        array.Add(PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(item, options));
                     }
                     value = array;
                     continue;

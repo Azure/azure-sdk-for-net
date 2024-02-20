@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MetricSettings> array = new List<MetricSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetricSettings.DeserializeMetricSettings(item));
+                                array.Add(MetricSettings.DeserializeMetricSettings(item, options));
                             }
                             metrics = array;
                             continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
                             List<LogSettings> array = new List<LogSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogSettings.DeserializeLogSettings(item));
+                                array.Add(LogSettings.DeserializeLogSettings(item, options));
                             }
                             logs = array;
                             continue;

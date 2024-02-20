@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubvolumeInfoData> array = new List<NetAppSubvolumeInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item));
+                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item, options));
                     }
                     value = array;
                     continue;

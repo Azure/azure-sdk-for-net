@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("administratorCredentials"u8))
                         {
-                            administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value);
+                            administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capacity"u8))

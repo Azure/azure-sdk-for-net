@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<SkuDetails> array = new List<SkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetails.DeserializeSkuDetails(item));
+                        array.Add(SkuDetails.DeserializeSkuDetails(item, options));
                     }
                     value = array;
                     continue;

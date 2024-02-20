@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item, options));
                     }
                     channels = array;
                     continue;

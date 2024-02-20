@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     List<RemoteRenderingAccountData> array = new List<RemoteRenderingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item));
+                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item, options));
                     }
                     value = array;
                     continue;

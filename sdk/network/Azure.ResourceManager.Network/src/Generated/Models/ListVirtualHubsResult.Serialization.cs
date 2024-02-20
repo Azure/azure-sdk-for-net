@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubData> array = new List<VirtualHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubData.DeserializeVirtualHubData(item));
+                        array.Add(VirtualHubData.DeserializeVirtualHubData(item, options));
                     }
                     value = array;
                     continue;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item, options));
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item, options));
                     }
                     storageApplianceConfigurationData = array;
                     continue;

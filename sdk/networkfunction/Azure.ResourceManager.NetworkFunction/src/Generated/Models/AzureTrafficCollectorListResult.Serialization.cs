@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<AzureTrafficCollectorData> array = new List<AzureTrafficCollectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(item));
+                        array.Add(AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(item, options));
                     }
                     value = array;
                     continue;

@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = NetworkSku.DeserializeNetworkSku(property.Value);
+                    sku = NetworkSku.DeserializeNetworkSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                             List<BastionHostIPConfiguration> array = new List<BastionHostIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item));
+                                array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value);
+                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

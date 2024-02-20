@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     List<VirtualNetworkLinkData> array = new List<VirtualNetworkLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(item));
+                        array.Add(VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(item, options));
                     }
                     value = array;
                     continue;

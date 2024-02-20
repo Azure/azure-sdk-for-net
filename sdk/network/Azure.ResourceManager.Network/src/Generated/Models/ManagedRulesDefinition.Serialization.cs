@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item));
+                        array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item, options));
                     }
                     exclusions = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
+                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;
