@@ -29,8 +29,9 @@ namespace Azure.Provisioning
         /// Gets a value indicating whether the parameter is secure.
         /// </summary>
         public bool IsSecure { get; }
-        internal bool IsFromOutput { get; }
-        internal bool IsLiteral { get; }
+
+        internal bool IsFromOutput => Output != null;
+        internal bool IsLiteral => Output?.IsLiteral ?? false;
         internal string? Value { get; }
         internal IConstruct? Source { get; }
         internal Output? Output { get; }
@@ -43,14 +44,12 @@ namespace Azure.Provisioning
         {
             Name = output.Name;
             IsSecure = output.IsSecure;
-            IsFromOutput = true;
-            IsLiteral = output.IsLiteral;
             Value = output.Value;
             Source = output.Source;
             Output = output;
         }
 
-        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, string? value)
+        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, string? value, Output? output)
         {
             Name = name;
             Description = description;
@@ -58,6 +57,7 @@ namespace Azure.Provisioning
             IsSecure = isSecure;
             Source = source;
             Value = value;
+            Output = output;
         }
 
         /// <summary>
@@ -82,14 +82,21 @@ namespace Azure.Provisioning
             {
                 return Name;
             }
+
+            // If the parameter is from an output that is not in the current scope, use the parameter name.
+            if (!parentScope.GetOutputs().Contains(Output))
+            {
+                return Name;
+            }
+
             // If the parameter is an output from the current scope, use its Value.
-            if (ReferenceEquals(Output!.ModuleSource, parentScope))
+            if (ReferenceEquals(Output!.Resource.ModuleScope, parentScope))
             {
                 return Value!;
             }
 
             // Otherwise it is an output from a different scope, use the full reference.
-            return $"{Output!.ModuleSource!.Name}.outputs.{Name}";
+            return $"{Output!.Resource.ModuleScope!.Name}.outputs.{Name}";
         }
     }
 }

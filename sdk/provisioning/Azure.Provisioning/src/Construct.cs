@@ -279,13 +279,13 @@ namespace Azure.Provisioning
             foreach (var output in outputsToWrite)
             {
                 string value;
-                if (output.IsLiteral || ReferenceEquals(this, output.ModuleSource))
+                if (output.IsLiteral || ReferenceEquals(this, output.Resource.ModuleScope))
                 {
                     value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
                 }
                 else
                 {
-                    value = $"{output.ModuleSource!.Name}.outputs.{output.Name}";
+                    value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
                 }
                 string name = output.Name;
                 stream.WriteLine($"output {name} string = {value}");

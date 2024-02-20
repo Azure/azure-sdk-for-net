@@ -40,7 +40,7 @@ resource keyVaultAddAccessPolicy_NWCGclP20 'Microsoft.KeyVault/vaults/accessPoli
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: SERVICE_API_IDENTITY_PRINCIPAL_ID
+        objectId: webSite_W5EweSXEq.identity.principalId
         permissions: {
           secrets: [
             'get'

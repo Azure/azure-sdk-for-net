@@ -47,7 +47,6 @@ namespace Azure.Provisioning
                 // ToList to avoid modifying the collection while iterating
                 foreach (var output in construct.GetOutputs(false).ToList())
                 {
-                    output.ModuleSource = output.Resource.ModuleScope!;
                     output.Resource.ModuleScope!.AddOutput(output);
                 }
             }
@@ -102,7 +101,6 @@ namespace Azure.Provisioning
                 {
                     root = construct;
                     construct.IsRoot = true;
-                    parentScope = construct;
                 }
             }
 
@@ -111,6 +109,8 @@ namespace Azure.Provisioning
                 parentScope.AddResource(resource);
                 resource.ModuleScope = parentScope;
             }
+
+            parentScope ??= construct;
 
             if (parentScope != null)
             {
@@ -131,7 +131,8 @@ namespace Azure.Provisioning
                             parameterToCopy.DefaultValue,
                             parameterToCopy.IsSecure,
                             parentScope,
-                            parameterToCopy.Value);
+                            parameterToCopy.Value,
+                            parameterToCopy.Output);
                     }
                 }
             }

@@ -27,7 +27,6 @@ namespace Azure.Provisioning
         /// </summary>
         public bool IsSecure { get; }
         internal IConstruct Source { get; }
-        internal IConstruct? ModuleSource { get; set; }
 
         internal Resource Resource { get; }
 
