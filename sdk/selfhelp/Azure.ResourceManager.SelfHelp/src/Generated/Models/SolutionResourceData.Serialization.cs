@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SelfHelp
                     {
                         continue;
                     }
-                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value);
+                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

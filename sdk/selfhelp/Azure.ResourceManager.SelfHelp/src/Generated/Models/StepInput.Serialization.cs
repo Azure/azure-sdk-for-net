@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value);
+                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("responseOptions"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<ResponseConfig> array = new List<ResponseConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResponseConfig.DeserializeResponseConfig(item));
+                        array.Add(ResponseConfig.DeserializeResponseConfig(item, options));
                     }
                     responseOptions = array;
                     continue;

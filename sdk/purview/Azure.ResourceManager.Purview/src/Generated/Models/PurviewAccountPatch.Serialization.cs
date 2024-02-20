@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(property.Value);
+                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

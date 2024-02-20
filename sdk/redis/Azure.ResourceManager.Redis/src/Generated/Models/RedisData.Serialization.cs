@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
+                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = RedisSku.DeserializeRedisSku(property0.Value);
+                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnetId"u8))
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Redis
                                 accessKeys = null;
                                 continue;
                             }
-                            accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value);
+                            accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedServers"u8))
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Redis
                             List<RedisInstanceDetails> array = new List<RedisInstanceDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item));
+                                array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item, options));
                             }
                             instances = array;
                             continue;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Redis
                             List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                                array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

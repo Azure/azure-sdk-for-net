@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value);
+                    sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value);
+                    capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

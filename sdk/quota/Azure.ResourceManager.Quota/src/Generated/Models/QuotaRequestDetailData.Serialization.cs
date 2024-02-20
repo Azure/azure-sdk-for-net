@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value);
+                            error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("requestSubmitTime"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Quota
                             List<QuotaSubRequestDetail> array = new List<QuotaSubRequestDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
+                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item, options));
                             }
                             value = array;
                             continue;

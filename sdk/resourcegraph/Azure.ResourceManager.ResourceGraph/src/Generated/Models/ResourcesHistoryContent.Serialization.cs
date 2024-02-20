@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value);
+                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementGroups"u8))

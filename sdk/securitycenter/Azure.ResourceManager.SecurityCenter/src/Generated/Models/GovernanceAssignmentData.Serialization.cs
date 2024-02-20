@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            remediationEta = RemediationEta.DeserializeRemediationEta(property0.Value);
+                            remediationEta = RemediationEta.DeserializeRemediationEta(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isGracePeriod"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            governanceEmailNotification = GovernanceEmailNotification.DeserializeGovernanceEmailNotification(property0.Value);
+                            governanceEmailNotification = GovernanceEmailNotification.DeserializeGovernanceEmailNotification(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalData"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(property0.Value);
+                            additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(property0.Value, options);
                             continue;
                         }
                     }
