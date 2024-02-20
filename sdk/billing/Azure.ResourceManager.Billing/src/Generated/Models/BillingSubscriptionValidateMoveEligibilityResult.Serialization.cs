@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value);
+                    errorDetails = BillingSubscriptionValidateMoveEligibilityError.DeserializeBillingSubscriptionValidateMoveEligibilityError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

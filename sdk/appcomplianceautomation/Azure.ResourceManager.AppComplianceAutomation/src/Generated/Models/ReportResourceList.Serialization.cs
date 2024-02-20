@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ReportResourceData> array = new List<ReportResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportResourceData.DeserializeReportResourceData(item));
+                        array.Add(ReportResourceData.DeserializeReportResourceData(item, options));
                     }
                     value = array;
                     continue;

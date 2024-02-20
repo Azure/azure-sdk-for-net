@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsPrivateCloudAddonData> array = new List<AvsPrivateCloudAddonData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(item));
+                        array.Add(AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(item, options));
                     }
                     value = array;
                     continue;

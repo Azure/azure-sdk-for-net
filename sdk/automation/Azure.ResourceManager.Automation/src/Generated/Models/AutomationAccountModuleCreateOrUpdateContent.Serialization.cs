@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("contentLink"u8))
                         {
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                     }

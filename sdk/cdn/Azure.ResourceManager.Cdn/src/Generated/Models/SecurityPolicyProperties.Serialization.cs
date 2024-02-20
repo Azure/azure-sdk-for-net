@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element);
+                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element, options);
                 }
             }
-            return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element);
+            return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element, options);
         }
 
         BinaryData IPersistableModel<SecurityPolicyProperties>.Write(ModelReaderWriterOptions options)

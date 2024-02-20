@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<MetricsResponseSeriesItem> array = new List<MetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item));
+                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;

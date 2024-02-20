@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    userAssignedIdentities = MyWorkbookUserAssignedIdentities.DeserializeMyWorkbookUserAssignedIdentities(property.Value);
+                    userAssignedIdentities = MyWorkbookUserAssignedIdentities.DeserializeMyWorkbookUserAssignedIdentities(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformAppProperties.DeserializeAppPlatformAppProperties(property.Value);
+                    properties = AppPlatformAppProperties.DeserializeAppPlatformAppProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

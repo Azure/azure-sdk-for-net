@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = OSProfileUpdateLinuxConfiguration.DeserializeOSProfileUpdateLinuxConfiguration(property.Value);
+                    linuxConfiguration = OSProfileUpdateLinuxConfiguration.DeserializeOSProfileUpdateLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsConfiguration"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = OSProfileUpdateWindowsConfiguration.DeserializeOSProfileUpdateWindowsConfiguration(property.Value);
+                    windowsConfiguration = OSProfileUpdateWindowsConfiguration.DeserializeOSProfileUpdateWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

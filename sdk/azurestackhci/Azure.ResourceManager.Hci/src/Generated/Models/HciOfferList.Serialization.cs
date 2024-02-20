@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<OfferData> array = new List<OfferData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item));
+                        array.Add(OfferData.DeserializeOfferData(item, options));
                     }
                     value = array;
                     continue;

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportError> array = new List<DscReportError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportError.DeserializeDscReportError(item));
+                        array.Add(DscReportError.DeserializeDscReportError(item, options));
                     }
                     errors = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResource> array = new List<DscReportResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResource.DeserializeDscReportResource(item));
+                        array.Add(DscReportResource.DeserializeDscReportResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value);
+                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hostName"u8))

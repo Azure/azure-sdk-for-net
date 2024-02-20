@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Automanage
                             List<ConfigurationProfileAssignmentReportResourceDetails> array = new List<ConfigurationProfileAssignmentReportResourceDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConfigurationProfileAssignmentReportResourceDetails.DeserializeConfigurationProfileAssignmentReportResourceDetails(item));
+                                array.Add(ConfigurationProfileAssignmentReportResourceDetails.DeserializeConfigurationProfileAssignmentReportResourceDetails(item, options));
                             }
                             resources = array;
                             continue;

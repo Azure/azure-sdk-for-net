@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AzureQueryProperties> array = new List<AzureQueryProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureQueryProperties.DeserializeAzureQueryProperties(item));
+                        array.Add(AzureQueryProperties.DeserializeAzureQueryProperties(item, options));
                     }
                     azureQueries = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<NonAzureQueryProperties> array = new List<NonAzureQueryProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NonAzureQueryProperties.DeserializeNonAzureQueryProperties(item));
+                        array.Add(NonAzureQueryProperties.DeserializeNonAzureQueryProperties(item, options));
                     }
                     nonAzureQueries = array;
                     continue;

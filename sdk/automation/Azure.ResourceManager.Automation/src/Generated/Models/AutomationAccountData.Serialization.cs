@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value);
+                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Automation
                             List<AutomationPrivateEndpointConnectionData> array = new List<AutomationPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(item));
+                                array.Add(AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

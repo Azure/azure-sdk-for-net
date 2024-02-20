@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value);
+                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentSettings"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value);
+                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformDeploymentInstance> array = new List<AppPlatformDeploymentInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item));
+                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item, options));
                     }
                     instances = array;
                     continue;

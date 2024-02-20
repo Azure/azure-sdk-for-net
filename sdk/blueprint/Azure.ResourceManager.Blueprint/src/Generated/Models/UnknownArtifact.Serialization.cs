@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifact(document.RootElement, options);
+            return DeserializeArtifactData(document.RootElement, options);
         }
 
         internal static UnknownArtifact DeserializeUnknownArtifact(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArtifact(document.RootElement, options);
+                        return DeserializeArtifactData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArtifactData)} does not support '{options.Format}' format.");

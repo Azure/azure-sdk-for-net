@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value);
+                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

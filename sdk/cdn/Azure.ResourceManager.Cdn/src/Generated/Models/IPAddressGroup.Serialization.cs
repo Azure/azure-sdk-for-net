@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CidrIPAddress> array = new List<CidrIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
+                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item, options));
                     }
                     ipv4Addresses = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CidrIPAddress> array = new List<CidrIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
+                        array.Add(CidrIPAddress.DeserializeCidrIPAddress(item, options));
                     }
                     ipv6Addresses = array;
                     continue;

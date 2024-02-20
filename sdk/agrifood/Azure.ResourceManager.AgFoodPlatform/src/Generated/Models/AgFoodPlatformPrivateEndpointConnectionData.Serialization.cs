@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AgFoodPlatformPrivateLinkServiceConnectionState.DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AgFoodPlatformPrivateLinkServiceConnectionState.DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

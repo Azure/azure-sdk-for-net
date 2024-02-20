@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Blueprint
                             List<AssignmentDeploymentJob> array = new List<AssignmentDeploymentJob>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssignmentDeploymentJob.DeserializeAssignmentDeploymentJob(item));
+                                array.Add(AssignmentDeploymentJob.DeserializeAssignmentDeploymentJob(item, options));
                             }
                             deployments = array;
                             continue;

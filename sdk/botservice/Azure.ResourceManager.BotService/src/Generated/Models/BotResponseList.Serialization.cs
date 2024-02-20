@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotData> array = new List<BotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotData.DeserializeBotData(item));
+                        array.Add(BotData.DeserializeBotData(item, options));
                     }
                     value = array;
                     continue;

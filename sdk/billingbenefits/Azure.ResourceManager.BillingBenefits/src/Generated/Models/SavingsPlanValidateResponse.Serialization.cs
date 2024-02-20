@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanValidateResult> array = new List<SavingsPlanValidateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item));
+                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item, options));
                     }
                     benefits = array;
                     continue;

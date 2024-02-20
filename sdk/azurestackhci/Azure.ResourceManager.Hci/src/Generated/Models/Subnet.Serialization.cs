@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            routeTable = RouteTable.DeserializeRouteTable(property0.Value);
+                            routeTable = RouteTable.DeserializeRouteTable(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipPools"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                             List<IPPool> array = new List<IPPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPool.DeserializeIPPool(item));
+                                array.Add(IPPool.DeserializeIPPool(item, options));
                             }
                             ipPools = array;
                             continue;

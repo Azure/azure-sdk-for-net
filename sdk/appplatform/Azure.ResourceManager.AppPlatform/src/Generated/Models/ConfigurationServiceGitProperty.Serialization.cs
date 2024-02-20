@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitRepository> array = new List<AppPlatformConfigurationServiceGitRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item));
+                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item, options));
                     }
                     repositories = array;
                     continue;
