@@ -13,8 +13,8 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'TEST'
-    key: 'value'
+    'azd-env-name': 'TEST'
+    'key': 'value'
   }
 }
 
@@ -232,8 +232,8 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
   parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
-    SCM_DO_BUILD_DURING_DEPLOYMENT: 'False'
-    ENABLE_ORYX_BUILD: 'True'
+    'SCM_DO_BUILD_DURING_DEPLOYMENT': 'False'
+    'ENABLE_ORYX_BUILD': 'True'
   }
 }
 

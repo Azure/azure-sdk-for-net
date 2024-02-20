@@ -22,7 +22,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   tags: {
-    key: 'value'
+    'key': 'value'
   }
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'
