@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorCustomDomainData> array = new List<FrontDoorCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(item));
+                        array.Add(FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(item, options));
                     }
                     value = array;
                     continue;

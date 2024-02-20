@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.BotService
                     {
                         continue;
                     }
-                    properties = BotConnectionSettingProperties.DeserializeBotConnectionSettingProperties(property.Value);
+                    properties = BotConnectionSettingProperties.DeserializeBotConnectionSettingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.BotService
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value);
+                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

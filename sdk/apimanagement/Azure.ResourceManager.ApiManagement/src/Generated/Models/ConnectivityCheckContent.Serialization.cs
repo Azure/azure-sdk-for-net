@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value);
+                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value);
+                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value);
+                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

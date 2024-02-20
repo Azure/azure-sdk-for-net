@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformCustomDomainProperties.DeserializeAppPlatformCustomDomainProperties(property.Value);
+                    properties = AppPlatformCustomDomainProperties.DeserializeAppPlatformCustomDomainProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

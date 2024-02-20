@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value);
+                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value, options);
                             continue;
                         }
                     }

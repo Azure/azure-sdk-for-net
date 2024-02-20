@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value);
+                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

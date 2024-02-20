@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value);
+                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linux"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value);
+                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value);
+                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

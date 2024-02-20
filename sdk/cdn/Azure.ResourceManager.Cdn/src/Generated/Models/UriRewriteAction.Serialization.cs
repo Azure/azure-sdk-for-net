@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = UriRewriteActionProperties.DeserializeUriRewriteActionProperties(property.Value);
+                    parameters = UriRewriteActionProperties.DeserializeUriRewriteActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

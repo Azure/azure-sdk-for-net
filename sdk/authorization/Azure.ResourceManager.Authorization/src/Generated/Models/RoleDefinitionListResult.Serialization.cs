@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationRoleDefinitionData> array = new List<AuthorizationRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(item));
+                        array.Add(AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(item, options));
                     }
                     value = array;
                     continue;

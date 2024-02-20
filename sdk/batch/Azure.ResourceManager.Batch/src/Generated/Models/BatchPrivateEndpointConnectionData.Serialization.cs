@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = BatchPrivateLinkServiceConnectionState.DeserializeBatchPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = BatchPrivateLinkServiceConnectionState.DeserializeBatchPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

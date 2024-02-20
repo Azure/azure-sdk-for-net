@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item, options));
                     }
                     containerRegistries = array;
                     continue;

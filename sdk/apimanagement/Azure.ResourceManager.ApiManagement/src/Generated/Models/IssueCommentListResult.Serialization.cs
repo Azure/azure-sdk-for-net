@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiIssueCommentData> array = new List<ApiIssueCommentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiIssueCommentData.DeserializeApiIssueCommentData(item));
+                        array.Add(ApiIssueCommentData.DeserializeApiIssueCommentData(item, options));
                     }
                     value = array;
                     continue;
