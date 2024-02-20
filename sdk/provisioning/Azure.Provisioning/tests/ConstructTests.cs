@@ -110,7 +110,7 @@ namespace Azure.Provisioning.Tests
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AssignParameter(r => r.Location, new Parameter("location"));
 
-            var expected = recursive ? 2 : 1;
+            var expected = recursive ? 3 : 2;
             var parameters = infra.GetParameters(recursive);
 
             Assert.AreEqual(expected, parameters.Count());
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.Tests
             rg2.AddOutput(r => r.Location, "location");
 
             // front end website has an output
-            var expected = recursive ? 3 : 1;
+            var expected = recursive ? 4 : 2;
             var outputs = infra.GetOutputs(recursive);
 
             Assert.AreEqual(expected, outputs.Count());

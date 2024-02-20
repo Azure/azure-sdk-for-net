@@ -24,9 +24,9 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        /// <param name="resourceGroup"></param>
-        public KeyVault(IConstruct scope, string name = "kv", string version = "2023-02-01", AzureLocation? location = default, ResourceGroup? resourceGroup = default)
-            : base(scope, resourceGroup, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultData(
+        /// <param name="parent"></param>
+        public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
+            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -43,8 +43,10 @@ namespace Azure.Provisioning.KeyVaults
                                 IdentityAccessSecretPermission.List
                             }
                         })
-                    } : default)))
+                    } : default,
+                    enableRbacAuthorization: true)))
         {
+            AddOutput(kv => kv.Properties.VaultUri, "vaultUri");
         }
 
         /// <summary>

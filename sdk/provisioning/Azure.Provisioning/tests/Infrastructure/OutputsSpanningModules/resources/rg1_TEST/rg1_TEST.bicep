@@ -55,6 +55,7 @@ resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
       name: 'standard'
       family: 'A'
     }
+    enableRbacAuthorization: true
   }
 }
 
@@ -79,3 +80,4 @@ resource keyVaultAddAccessPolicy_lQ2z7dHpX 'Microsoft.KeyVault/vaults/accessPoli
 
 output STORAGE_PRINCIPAL_ID string = webSite_dOTaZfna6.identity.principalId
 output LOCATION string = webSite_dOTaZfna6.location
+output vaultUri string = keyVault_BRsYQF4qT.properties.vaultUri

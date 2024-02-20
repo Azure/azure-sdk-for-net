@@ -49,4 +49,5 @@ module rg3_TEST './resources/rg3_TEST/rg3_TEST.bicep' = {
 
 output STORAGE_PRINCIPAL_ID string = rg1_TEST.outputs.STORAGE_PRINCIPAL_ID
 output LOCATION string = rg1_TEST.outputs.LOCATION
+output vaultUri string = rg1_TEST.outputs.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = rg3_TEST.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID

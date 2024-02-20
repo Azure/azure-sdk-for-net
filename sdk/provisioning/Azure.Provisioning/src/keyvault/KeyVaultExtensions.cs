@@ -20,7 +20,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <returns></returns>
         public static KeyVault AddKeyVault(this IConstruct construct, ResourceGroup? resourceGroup = null, string name = "kv")
         {
-            return new KeyVault(construct, name, resourceGroup: resourceGroup);
+            return new KeyVault(construct, name: name, parent: resourceGroup);
         }
 
         /// <summary>

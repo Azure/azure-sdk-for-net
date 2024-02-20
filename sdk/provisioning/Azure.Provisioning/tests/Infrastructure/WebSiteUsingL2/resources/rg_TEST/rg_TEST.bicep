@@ -27,6 +27,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
       name: 'standard'
       family: 'A'
     }
+    enableRbacAuthorization: true
   }
 }
 
@@ -246,3 +247,4 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
 }
 
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
+output vaultUri string = keyVault_CRoMbemLF.properties.vaultUri
