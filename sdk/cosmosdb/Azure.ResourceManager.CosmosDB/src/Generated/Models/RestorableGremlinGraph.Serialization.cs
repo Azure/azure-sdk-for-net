@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableGremlinGraphResourceInfo.DeserializeExtendedRestorableGremlinGraphResourceInfo(property0.Value);
+                            resource = ExtendedRestorableGremlinGraphResourceInfo.DeserializeExtendedRestorableGremlinGraphResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

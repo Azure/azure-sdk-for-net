@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareClusterData> array = new List<VMwareClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareClusterData.DeserializeVMwareClusterData(item));
+                        array.Add(VMwareClusterData.DeserializeVMwareClusterData(item, options));
                     }
                     value = array;
                     continue;

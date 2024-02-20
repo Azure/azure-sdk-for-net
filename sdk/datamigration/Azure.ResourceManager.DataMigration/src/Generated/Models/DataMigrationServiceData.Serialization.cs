@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    sku = ServiceSku.DeserializeServiceSku(property.Value);
+                    sku = ServiceSku.DeserializeServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

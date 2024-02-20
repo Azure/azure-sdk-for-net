@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item, options));
                     }
                     participantPropertyReferences = array;
                     continue;

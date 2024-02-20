@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value);
+                    configuration = ReportConfigDatasetConfiguration.DeserializeReportConfigDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ReportConfigAggregation> dictionary = new Dictionary<string, ReportConfigAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ReportConfigAggregation.DeserializeReportConfigAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigGrouping> array = new List<ReportConfigGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item));
+                        array.Add(ReportConfigGrouping.DeserializeReportConfigGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigSorting> array = new List<ReportConfigSorting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item));
+                        array.Add(ReportConfigSorting.DeserializeReportConfigSorting(item, options));
                     }
                     sorting = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value);
+                    filter = ReportConfigFilter.DeserializeReportConfigFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

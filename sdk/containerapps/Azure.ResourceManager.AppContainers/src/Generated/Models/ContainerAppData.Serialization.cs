@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value);
+                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"u8))

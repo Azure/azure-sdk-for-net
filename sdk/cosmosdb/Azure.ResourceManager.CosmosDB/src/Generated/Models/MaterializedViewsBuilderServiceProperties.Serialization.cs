@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MaterializedViewsBuilderRegionalService> array = new List<MaterializedViewsBuilderRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item));
+                        array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item, options));
                     }
                     locations = array;
                     continue;

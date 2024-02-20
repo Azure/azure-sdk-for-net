@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PipelineActivity.DeserializePipelineActivity(item));
+                                array.Add(PipelineActivity.DeserializePipelineActivity(item, options));
                             }
                             activities = array;
                             continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, PipelineVariableSpecification> dictionary = new Dictionary<string, PipelineVariableSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, PipelineVariableSpecification.DeserializePipelineVariableSpecification(property1.Value));
+                                dictionary.Add(property1.Name, PipelineVariableSpecification.DeserializePipelineVariableSpecification(property1.Value, options));
                             }
                             variables = dictionary;
                             continue;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            folder = PipelineFolder.DeserializePipelineFolder(property0.Value);
+                            folder = PipelineFolder.DeserializePipelineFolder(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policy"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            policy = DataFactoryPipelinePolicy.DeserializeDataFactoryPipelinePolicy(property0.Value);
+                            policy = DataFactoryPipelinePolicy.DeserializeDataFactoryPipelinePolicy(property0.Value, options);
                             continue;
                         }
                     }

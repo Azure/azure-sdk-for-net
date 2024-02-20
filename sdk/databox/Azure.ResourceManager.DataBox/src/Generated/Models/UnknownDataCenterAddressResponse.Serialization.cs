@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
         }
 
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options = null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+                        return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");

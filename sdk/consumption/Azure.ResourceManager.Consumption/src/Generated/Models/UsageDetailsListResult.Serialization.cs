@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionUsageDetail> array = new List<ConsumptionUsageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionUsageDetail.DeserializeConsumptionUsageDetail(item));
+                        array.Add(ConsumptionUsageDetail.DeserializeConsumptionUsageDetail(item, options));
                     }
                     value = array;
                     continue;

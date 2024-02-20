@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableMongoDBCollection> array = new List<RestorableMongoDBCollection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(item));
+                        array.Add(RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(item, options));
                     }
                     value = array;
                     continue;

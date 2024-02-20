@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

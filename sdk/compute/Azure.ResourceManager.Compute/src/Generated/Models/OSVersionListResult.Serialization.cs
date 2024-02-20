@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceOSVersionData> array = new List<CloudServiceOSVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(item));
+                        array.Add(CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(item, options));
                     }
                     value = array;
                     continue;

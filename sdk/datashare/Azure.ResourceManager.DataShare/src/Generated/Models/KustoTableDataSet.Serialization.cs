@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"u8))
                         {
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item));
+                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item, options));
                     }
                     value = array;
                     continue;

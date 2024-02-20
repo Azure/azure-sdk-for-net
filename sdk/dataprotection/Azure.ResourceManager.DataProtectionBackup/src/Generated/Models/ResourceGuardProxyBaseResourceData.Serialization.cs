@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = ResourceGuardProxyBase.DeserializeResourceGuardProxyBase(property.Value);
+                    properties = ResourceGuardProxyBase.DeserializeResourceGuardProxyBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

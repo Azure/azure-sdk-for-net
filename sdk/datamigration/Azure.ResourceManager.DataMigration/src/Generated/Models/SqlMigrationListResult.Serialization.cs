@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlMigrationServiceData> array = new List<SqlMigrationServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMigrationServiceData.DeserializeSqlMigrationServiceData(item));
+                        array.Add(SqlMigrationServiceData.DeserializeSqlMigrationServiceData(item, options));
                     }
                     value = array;
                     continue;
