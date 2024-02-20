@@ -174,7 +174,7 @@ internal class StructuredMessageDecodingStream : Stream
         SMRegion.SegmentHeader => _segmentHeaderLength,
         SMRegion.SegmentFooter => _segmentFooterLength,
         SMRegion.SegmentContent => _currentSegmentContentLength,
-        _ => throw new Exception() // TODO
+        _ => 0,
     };
 
     /// <summary>
@@ -227,7 +227,7 @@ internal class StructuredMessageDecodingStream : Stream
                     SMRegion.StreamFooter => ProcessStreamFooter(buffer.Slice(bufferConsumed)),
                     SMRegion.SegmentHeader => ProcessSegmentHeader(buffer.Slice(bufferConsumed)),
                     SMRegion.SegmentFooter => ProcessSegmentFooter(buffer.Slice(bufferConsumed)),
-                    _ => throw new Exception(), // TODO
+                    _ => 0,
                 };
                 gaps.Add((bufferConsumed, processed));
                 bufferConsumed += processed;
@@ -273,7 +273,7 @@ internal class StructuredMessageDecodingStream : Stream
         }
         if (_currentRegion == SMRegion.SegmentContent)
         {
-            throw new InvalidOperationException(); // TODO
+            return 0;
         }
         int appended = 0;
         if (_metadataBufferLength < CurrentRegionLength && append.Length > 0)
@@ -359,7 +359,7 @@ internal class StructuredMessageDecodingStream : Stream
         _currentSegmentContentRemaining = _currentSegmentContentLength;
         if (newSegNum != _currentSegmentNum + 1)
         {
-            throw new InvalidDataException(); // TODO message
+            throw new InvalidDataException("Unexpected segment number in structured message.");
         }
         _currentSegmentNum = newSegNum;
         _currentRegion = SMRegion.SegmentContent;
@@ -376,9 +376,10 @@ internal class StructuredMessageDecodingStream : Stream
             {
                 _segmentCrc.GetCurrentHash(calculated);
                 _segmentCrc = StorageCrc64HashAlgorithm.Create();
-                if (!calculated.SequenceEqual(span.Slice(0, StructuredMessage.Crc64Length)))
+                ReadOnlySpan<byte> expected = span.Slice(0, StructuredMessage.Crc64Length);
+                if (!calculated.SequenceEqual(expected))
                 {
-                    throw new InvalidDataException(); //TODO crc mismatch
+                    throw Errors.ChecksumMismatch(calculated, expected);
                 }
             }
         }
