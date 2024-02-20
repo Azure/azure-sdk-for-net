@@ -71,6 +71,33 @@ namespace Azure.Provisioning.Tests
             infra.Build(GetOutputPath());
         }
 
+        [TearDown]
+        public void ValidateBicep()
+        {
+            var path = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.bicep");
+            var args = Path.Combine(
+                TestEnvironment.RepositoryRoot,
+                "eng",
+                "scripts",
+                $"Validate-Bicep.ps1 {path}");
+            var processInfo = new ProcessStartInfo("pwsh.exe", args)
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            };
+            var process = Process.Start(processInfo);
+            while (!process!.HasExited && !process!.StandardError.EndOfStream)
+            {
+                var error = process.StandardError.ReadLine();
+                TestContext.Progress.WriteLine(error);
+                if (error!.StartsWith("ERROR"))
+                {
+                    Assert.Fail(error);
+                }
+            }
+        }
+
         [Test]
         public void ResourceGroupOnly()
         {

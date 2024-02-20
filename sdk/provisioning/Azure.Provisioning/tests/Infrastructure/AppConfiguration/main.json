@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.25.53.49325",
+      "templateHash": "11953254314113942870"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2023-07-01",
+      "name": "rg-TEST",
+      "location": "westus",
+      "tags": {
+        "azd-env-name": "TEST"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "rg_TEST",
+      "resourceGroup": "rg-TEST",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.25.53.49325",
+              "templateHash": "3205742012849145826"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.AppConfiguration/configurationStores",
+              "apiVersion": "2023-03-01",
+              "name": "store-TEST",
+              "location": "westus",
+              "sku": {
+                "name": "free"
+              },
+              "properties": {}
+            }
+          ],
+          "outputs": {
+            "appConfigurationStore_sgecYnln3_endpoint": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.AppConfiguration/configurationStores', 'store-TEST'), '2023-03-01').endpoint]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', 'rg-TEST')]"
+      ]
+    }
+  ],
+  "outputs": {
+    "appConfigurationStore_sgecYnln3_endpoint": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, 'rg-TEST'), 'Microsoft.Resources/deployments', 'rg_TEST'), '2022-09-01').outputs.appConfigurationStore_sgecYnln3_endpoint.value]"
+    }
+  }
+}
