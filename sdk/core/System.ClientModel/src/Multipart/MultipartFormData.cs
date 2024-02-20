@@ -190,18 +190,4 @@ namespace System.ClientModel.Primitives
         }
         string IPersistableModel<MultipartFormData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MPFD";
     }
-    /*
-    /// <summary>
-    /// A form data item in multipart/form-data format.
-    /// </summary>
-#pragma warning disable SA1402 // File may only contain a single type
-    public class FormDataItem
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        public string Name { get; set; }
-        public string FileName { get; set; }
-        public string ContentType { get; set; }
-        public BinaryData Content { get; set; }
-    }
-    */
 }

@@ -399,7 +399,7 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                length = 0;
+                length = default;
                 return false;
             }
 
