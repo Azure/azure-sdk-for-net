@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            suppressionAlertsScope = SuppressionAlertsScope.DeserializeSuppressionAlertsScope(property0.Value);
+                            suppressionAlertsScope = SuppressionAlertsScope.DeserializeSuppressionAlertsScope(property0.Value, options);
                             continue;
                         }
                     }

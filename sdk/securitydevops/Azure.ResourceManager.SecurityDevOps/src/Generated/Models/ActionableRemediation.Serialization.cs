@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);
+                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

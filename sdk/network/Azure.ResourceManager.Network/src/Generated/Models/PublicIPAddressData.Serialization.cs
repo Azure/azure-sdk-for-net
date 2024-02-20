@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value);
+                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipConfiguration = NetworkIPConfiguration.DeserializeNetworkIPConfiguration(property0.Value);
+                            ipConfiguration = NetworkIPConfiguration.DeserializeNetworkIPConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = PublicIPAddressDnsSettings.DeserializePublicIPAddressDnsSettings(property0.Value);
+                            dnsSettings = PublicIPAddressDnsSettings.DeserializePublicIPAddressDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ddosSettings"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ddosSettings = DdosSettings.DeserializeDdosSettings(property0.Value);
+                            ddosSettings = DdosSettings.DeserializeDdosSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipTags"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Network
                             List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPTag.DeserializeIPTag(item));
+                                array.Add(IPTag.DeserializeIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            servicePublicIPAddress = DeserializePublicIPAddressData(property0.Value);
+                            servicePublicIPAddress = DeserializePublicIPAddressData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value);
+                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("migrationPhase"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            linkedPublicIPAddress = DeserializePublicIPAddressData(property0.Value);
+                            linkedPublicIPAddress = DeserializePublicIPAddressData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deleteOption"u8))

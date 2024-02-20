@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("schedule"u8))
                         {
-                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value);
+                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runbook"u8))
                         {
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))

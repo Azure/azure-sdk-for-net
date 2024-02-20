@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobData> array = new List<MediaJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobData.DeserializeMediaJobData(item));
+                        array.Add(MediaJobData.DeserializeMediaJobData(item, options));
                     }
                     value = array;
                     continue;

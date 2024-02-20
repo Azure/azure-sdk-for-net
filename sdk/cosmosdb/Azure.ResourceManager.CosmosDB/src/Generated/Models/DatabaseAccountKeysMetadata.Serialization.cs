@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    primaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secondaryMasterKey"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    secondaryMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryReadonlyMasterKey"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    primaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secondaryReadonlyMasterKey"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
+                    secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

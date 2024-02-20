@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MongoDBFinishCommandInput.DeserializeMongoDBFinishCommandInput(property.Value);
+                    input = MongoDBFinishCommandInput.DeserializeMongoDBFinishCommandInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commandType"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;

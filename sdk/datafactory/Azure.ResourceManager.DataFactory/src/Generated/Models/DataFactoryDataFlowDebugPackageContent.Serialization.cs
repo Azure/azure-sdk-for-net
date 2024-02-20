@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataFlow = DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(property.Value);
+                    dataFlow = DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataFlows"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDataFlowDebugInfo> array = new List<DataFactoryDataFlowDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item));
+                        array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item, options));
                     }
                     dataFlows = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDatasetDebugInfo> array = new List<DataFactoryDatasetDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item));
+                        array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item, options));
                     }
                     datasets = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceDebugInfo> array = new List<DataFactoryLinkedServiceDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item));
+                        array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item, options));
                     }
                     linkedServices = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
+                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("debugSettings"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value);
+                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

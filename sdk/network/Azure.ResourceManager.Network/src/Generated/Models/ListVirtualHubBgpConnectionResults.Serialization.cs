@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BgpConnectionData> array = new List<BgpConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpConnectionData.DeserializeBgpConnectionData(item));
+                        array.Add(BgpConnectionData.DeserializeBgpConnectionData(item, options));
                     }
                     value = array;
                     continue;

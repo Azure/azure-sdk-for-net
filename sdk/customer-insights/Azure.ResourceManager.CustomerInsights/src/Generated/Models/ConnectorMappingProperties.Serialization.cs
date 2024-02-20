@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (property.NameEquals("errorManagement"u8))
                 {
-                    errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value);
+                    errorManagement = ConnectorMappingErrorManagement.DeserializeConnectorMappingErrorManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("format"u8))
                 {
-                    format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value);
+                    format = ConnectorMappingFormat.DeserializeConnectorMappingFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availability"u8))
                 {
-                    availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value);
+                    availability = ConnectorMappingAvailability.DeserializeConnectorMappingAvailability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("structure"u8))
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ConnectorMappingStructure> array = new List<ConnectorMappingStructure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item));
+                        array.Add(ConnectorMappingStructure.DeserializeConnectorMappingStructure(item, options));
                     }
                     structure = array;
                     continue;
                 }
                 if (property.NameEquals("completeOperation"u8))
                 {
-                    completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value);
+                    completeOperation = ConnectorMappingCompleteOperation.DeserializeConnectorMappingCompleteOperation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

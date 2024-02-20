@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value);
+                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

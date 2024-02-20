@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUnplannedFailoverContent.DeserializeA2AUnplannedFailoverContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureUnplannedFailoverContent.DeserializeHyperVReplicaAzureUnplannedFailoverContent(element);
-                    case "InMage": return InMageUnplannedFailoverContent.DeserializeInMageUnplannedFailoverContent(element);
-                    case "InMageAzureV2": return InMageAzureV2UnplannedFailoverContent.DeserializeInMageAzureV2UnplannedFailoverContent(element);
-                    case "InMageRcm": return InMageRcmUnplannedFailoverContent.DeserializeInMageRcmUnplannedFailoverContent(element);
+                    case "A2A": return A2AUnplannedFailoverContent.DeserializeA2AUnplannedFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureUnplannedFailoverContent.DeserializeHyperVReplicaAzureUnplannedFailoverContent(element, options);
+                    case "InMage": return InMageUnplannedFailoverContent.DeserializeInMageUnplannedFailoverContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2UnplannedFailoverContent.DeserializeInMageAzureV2UnplannedFailoverContent(element, options);
+                    case "InMageRcm": return InMageRcmUnplannedFailoverContent.DeserializeInMageRcmUnplannedFailoverContent(element, options);
                 }
             }
-            return UnknownUnplannedFailoverProviderSpecificContent.DeserializeUnknownUnplannedFailoverProviderSpecificContent(element);
+            return UnknownUnplannedFailoverProviderSpecificContent.DeserializeUnknownUnplannedFailoverProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<UnplannedFailoverProviderSpecificContent>.Write(ModelReaderWriterOptions options)

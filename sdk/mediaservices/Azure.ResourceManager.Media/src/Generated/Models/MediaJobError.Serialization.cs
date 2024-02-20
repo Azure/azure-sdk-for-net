@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item, options));
                     }
                     details = array;
                     continue;

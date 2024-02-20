@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value);
+                    table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value);
+                    renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

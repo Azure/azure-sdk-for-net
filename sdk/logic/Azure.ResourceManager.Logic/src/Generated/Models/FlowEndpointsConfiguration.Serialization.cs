@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connector"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
+                    connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

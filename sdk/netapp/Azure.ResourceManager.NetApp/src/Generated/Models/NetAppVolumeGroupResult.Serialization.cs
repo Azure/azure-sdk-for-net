@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value);
+                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value, options);
                             continue;
                         }
                     }

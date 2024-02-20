@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanOrderPaymentDetail> array = new List<SavingsPlanOrderPaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item));
+                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item, options));
                     }
                     transactions = array;
                     continue;

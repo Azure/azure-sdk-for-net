@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(property.Value);
+                    properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

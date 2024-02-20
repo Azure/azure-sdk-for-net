@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTimerTrigger> array = new List<ContainerRegistryTimerTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTimerTrigger.DeserializeContainerRegistryTimerTrigger(item));
+                        array.Add(ContainerRegistryTimerTrigger.DeserializeContainerRegistryTimerTrigger(item, options));
                     }
                     timerTriggers = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistrySourceTrigger> array = new List<ContainerRegistrySourceTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistrySourceTrigger.DeserializeContainerRegistrySourceTrigger(item));
+                        array.Add(ContainerRegistrySourceTrigger.DeserializeContainerRegistrySourceTrigger(item, options));
                     }
                     sourceTriggers = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value);
+                    baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptExecutionData> array = new List<ScriptExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item));
+                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item, options));
                     }
                     value = array;
                     continue;

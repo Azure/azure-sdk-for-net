@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
+                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

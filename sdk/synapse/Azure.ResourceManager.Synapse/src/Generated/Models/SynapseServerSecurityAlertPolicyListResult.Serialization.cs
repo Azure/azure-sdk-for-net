@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseServerSecurityAlertPolicyData> array = new List<SynapseServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(item));
+                        array.Add(SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(item, options));
                     }
                     value = array;
                     continue;

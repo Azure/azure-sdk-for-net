@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBDatabaseProgress> dictionary = new Dictionary<string, MongoDBDatabaseProgress>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(property0.Value, options));
                     }
                     databases = dictionary;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;

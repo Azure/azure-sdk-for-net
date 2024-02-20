@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MonitorPrivateLinkServiceConnectionState.DeserializeMonitorPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MonitorPrivateLinkServiceConnectionState.DeserializeMonitorPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

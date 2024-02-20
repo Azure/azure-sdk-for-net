@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AvsSku.DeserializeAvsSku(property.Value);
+                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

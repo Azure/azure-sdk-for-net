@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ExpressRouteAuthorizationData> array = new List<ExpressRouteAuthorizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(item));
+                        array.Add(ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(item, options));
                     }
                     value = array;
                     continue;

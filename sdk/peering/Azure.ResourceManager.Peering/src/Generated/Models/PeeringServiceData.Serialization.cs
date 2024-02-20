@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Peering
                     {
                         continue;
                     }
-                    sku = PeeringServiceSku.DeserializePeeringServiceSku(property.Value);
+                    sku = PeeringServiceSku.DeserializePeeringServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(property0.Value);
+                            logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(property0.Value, options);
                             continue;
                         }
                     }

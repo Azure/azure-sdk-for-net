@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<UserContractData> array = new List<UserContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserContractData.DeserializeUserContractData(item));
+                        array.Add(UserContractData.DeserializeUserContractData(item, options));
                     }
                     value = array;
                     continue;

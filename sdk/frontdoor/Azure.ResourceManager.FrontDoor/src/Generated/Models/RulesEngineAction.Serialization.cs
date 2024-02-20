@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     requestHeaderActions = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     responseHeaderActions = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         routeConfigurationOverride = null;
                         continue;
                     }
-                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value);
+                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<FhirServiceData> array = new List<FhirServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirServiceData.DeserializeFhirServiceData(item));
+                        array.Add(FhirServiceData.DeserializeFhirServiceData(item, options));
                     }
                     value = array;
                     continue;

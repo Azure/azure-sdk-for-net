@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionRule> array = new List<ExceptionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        array.Add(ExceptionRule.DeserializeExceptionRule(item, options));
                     }
                     exceptionRules = array;
                     continue;

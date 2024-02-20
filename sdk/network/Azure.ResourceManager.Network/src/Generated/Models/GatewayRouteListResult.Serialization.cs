@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GatewayRoute> array = new List<GatewayRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayRoute.DeserializeGatewayRoute(item));
+                        array.Add(GatewayRoute.DeserializeGatewayRoute(item, options));
                     }
                     value = array;
                     continue;

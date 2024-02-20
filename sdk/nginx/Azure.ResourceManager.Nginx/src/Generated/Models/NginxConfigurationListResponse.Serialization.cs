@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationData> array = new List<NginxConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationData.DeserializeNginxConfigurationData(item));
+                        array.Add(NginxConfigurationData.DeserializeNginxConfigurationData(item, options));
                     }
                     value = array;
                     continue;

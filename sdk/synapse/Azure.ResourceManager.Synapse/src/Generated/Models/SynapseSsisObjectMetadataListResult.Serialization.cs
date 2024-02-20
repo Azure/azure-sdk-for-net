@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisObjectMetadata> array = new List<SynapseSsisObjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item));
+                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item, options));
                     }
                     value = array;
                     continue;

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardOperationDetail> array = new List<ResourceGuardOperationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item));
+                        array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item, options));
                     }
                     resourceGuardOperationDetails = array;
                     continue;

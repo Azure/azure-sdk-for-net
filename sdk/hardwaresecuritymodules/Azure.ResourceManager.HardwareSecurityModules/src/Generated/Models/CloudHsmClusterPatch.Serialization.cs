@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value);
+                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                             {
                                 continue;
                             }
-                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value);
+                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value, options);
                             continue;
                         }
                     }

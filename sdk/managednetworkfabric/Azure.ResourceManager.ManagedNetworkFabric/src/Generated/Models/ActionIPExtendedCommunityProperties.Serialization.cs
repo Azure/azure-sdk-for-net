@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

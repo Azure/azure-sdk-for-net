@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value);
+                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

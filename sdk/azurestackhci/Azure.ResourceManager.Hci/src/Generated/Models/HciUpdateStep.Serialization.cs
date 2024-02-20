@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciUpdateStep> array = new List<HciUpdateStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeHciUpdateStep(item));
+                        array.Add(DeserializeHciUpdateStep(item, options));
                     }
                     steps = array;
                     continue;

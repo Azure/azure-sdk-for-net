@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             List<HybridContainerServiceVmSkuProperties> array = new List<HybridContainerServiceVmSkuProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridContainerServiceVmSkuProperties.DeserializeHybridContainerServiceVmSkuProperties(item));
+                                array.Add(HybridContainerServiceVmSkuProperties.DeserializeHybridContainerServiceVmSkuProperties(item, options));
                             }
                             values = array;
                             continue;

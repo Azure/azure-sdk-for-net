@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<NetworkInterface> array = new List<NetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterface.DeserializeNetworkInterface(item));
+                        array.Add(NetworkInterface.DeserializeNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;

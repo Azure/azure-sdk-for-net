@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRuleGroup> array = new List<ExclusionManagedRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRuleGroup.DeserializeExclusionManagedRuleGroup(item));
+                        array.Add(ExclusionManagedRuleGroup.DeserializeExclusionManagedRuleGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;

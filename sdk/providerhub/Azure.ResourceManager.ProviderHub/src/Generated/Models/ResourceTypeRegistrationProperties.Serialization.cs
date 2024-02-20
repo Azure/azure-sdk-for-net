@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeEndpoint> array = new List<ResourceTypeEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeEndpoint.DeserializeResourceTypeEndpoint(item));
+                        array.Add(ResourceTypeEndpoint.DeserializeResourceTypeEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    extensionOptions = ResourceTypeExtensionOptions.DeserializeResourceTypeExtensionOptions(property.Value);
+                    extensionOptions = ResourceTypeExtensionOptions.DeserializeResourceTypeExtensionOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marketplaceType"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<SwaggerSpecification> array = new List<SwaggerSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SwaggerSpecification.DeserializeSwaggerSpecification(item));
+                        array.Add(SwaggerSpecification.DeserializeSwaggerSpecification(item, options));
                     }
                     swaggerSpecifications = array;
                     continue;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<AuthorizationActionMapping> array = new List<AuthorizationActionMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationActionMapping.DeserializeAuthorizationActionMapping(item));
+                        array.Add(AuthorizationActionMapping.DeserializeAuthorizationActionMapping(item, options));
                     }
                     authorizationActionMappings = array;
                     continue;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LinkedAccessCheck> array = new List<LinkedAccessCheck>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedAccessCheck.DeserializeLinkedAccessCheck(item));
+                        array.Add(LinkedAccessCheck.DeserializeLinkedAccessCheck(item, options));
                     }
                     linkedAccessChecks = array;
                     continue;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LoggingRule> array = new List<LoggingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoggingRule.DeserializeLoggingRule(item));
+                        array.Add(LoggingRule.DeserializeLoggingRule(item, options));
                     }
                     loggingRules = array;
                     continue;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ThrottlingRule> array = new List<ThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThrottlingRule.DeserializeThrottlingRule(item));
+                        array.Add(ThrottlingRule.DeserializeThrottlingRule(item, options));
                     }
                     throttlingRules = array;
                     continue;
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAsyncOperation"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(property.Value);
+                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPureProxy"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    identityManagement = IdentityManagementProperties.DeserializeIdentityManagementProperties(property.Value);
+                    identityManagement = IdentityManagementProperties.DeserializeIdentityManagementProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("checkNameAvailabilitySpecifications"u8))
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    checkNameAvailabilitySpecifications = CheckNameAvailabilitySpecifications.DeserializeCheckNameAvailabilitySpecifications(property.Value);
+                    checkNameAvailabilitySpecifications = CheckNameAvailabilitySpecifications.DeserializeCheckNameAvailabilitySpecifications(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disallowedActionVerbs"u8))
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item));
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
                     }
                     serviceTreeInfos = array;
                     continue;
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value);
+                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionStateRules"u8))
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ProviderSubscriptionStateRule> array = new List<ProviderSubscriptionStateRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderSubscriptionStateRule.DeserializeProviderSubscriptionStateRule(item));
+                        array.Add(ProviderSubscriptionStateRule.DeserializeProviderSubscriptionStateRule(item, options));
                     }
                     subscriptionStateRules = array;
                     continue;
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value);
+                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocations"u8))
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ProviderHubExtendedLocationOptions> array = new List<ProviderHubExtendedLocationOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderHubExtendedLocationOptions.DeserializeProviderHubExtendedLocationOptions(item));
+                        array.Add(ProviderHubExtendedLocationOptions.DeserializeProviderHubExtendedLocationOptions(item, options));
                     }
                     extendedLocations = array;
                     continue;
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceMovePolicy = ResourceMovePolicy.DeserializeResourceMovePolicy(property.Value);
+                    resourceMovePolicy = ResourceMovePolicy.DeserializeResourceMovePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceDeletionPolicy"u8))

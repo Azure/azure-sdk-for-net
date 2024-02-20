@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudL3NetworkData> array = new List<NetworkCloudL3NetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(item));
+                        array.Add(NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubRepoData> array = new List<GitHubRepoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubRepoData.DeserializeGitHubRepoData(item));
+                        array.Add(GitHubRepoData.DeserializeGitHubRepoData(item, options));
                     }
                     value = array;
                     continue;

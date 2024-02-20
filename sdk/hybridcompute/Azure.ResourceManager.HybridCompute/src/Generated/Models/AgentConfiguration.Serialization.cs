@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsAllowList = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsBlockList = array;
                     continue;

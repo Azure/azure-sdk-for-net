@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            input = LiveEventInput.DeserializeLiveEventInput(property0.Value);
+                            input = LiveEventInput.DeserializeLiveEventInput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preview"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            preview = LiveEventPreview.DeserializeLiveEventPreview(property0.Value);
+                            preview = LiveEventPreview.DeserializeLiveEventPreview(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encoding"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encoding = LiveEventEncoding.DeserializeLiveEventEncoding(property0.Value);
+                            encoding = LiveEventEncoding.DeserializeLiveEventEncoding(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("transcriptions"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Media
                             List<LiveEventTranscription> array = new List<LiveEventTranscription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item));
+                                array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item, options));
                             }
                             transcriptions = array;
                             continue;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value);
+                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("useStaticHostname"u8))

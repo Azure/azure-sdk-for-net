@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = AzureOperatorNexusArmTemplateArtifactProfile.DeserializeAzureOperatorNexusArmTemplateArtifactProfile(property.Value);
+                    artifactProfile = AzureOperatorNexusArmTemplateArtifactProfile.DeserializeAzureOperatorNexusArmTemplateArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deployParametersMappingRuleProfile"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureOperatorNexusArmTemplateDeployMappingRuleProfile.DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(property.Value);
+                    deployParametersMappingRuleProfile = AzureOperatorNexusArmTemplateDeployMappingRuleProfile.DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

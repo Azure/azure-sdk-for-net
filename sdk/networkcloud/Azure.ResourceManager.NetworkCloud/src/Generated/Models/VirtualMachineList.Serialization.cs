@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudVirtualMachineData> array = new List<NetworkCloudVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(item));
+                        array.Add(NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;

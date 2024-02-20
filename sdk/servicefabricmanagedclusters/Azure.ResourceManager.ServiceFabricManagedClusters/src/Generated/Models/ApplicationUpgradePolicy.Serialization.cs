@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value);
+                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forceRestart"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value);
+                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCloseDelayDuration"u8))

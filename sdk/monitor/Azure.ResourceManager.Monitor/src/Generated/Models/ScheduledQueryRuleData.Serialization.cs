@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value);
+                            criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("muteActionsDuration"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value);
+                            actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isWorkspaceAlertsStorageConfigured"u8))

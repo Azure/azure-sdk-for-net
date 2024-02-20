@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    resourceDetails = CheckRestrictionsResourceDetails.DeserializeCheckRestrictionsResourceDetails(property.Value);
+                    resourceDetails = CheckRestrictionsResourceDetails.DeserializeCheckRestrictionsResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pendingFields"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PendingField> array = new List<PendingField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PendingField.DeserializePendingField(item));
+                        array.Add(PendingField.DeserializePendingField(item, options));
                     }
                     pendingFields = array;
                     continue;

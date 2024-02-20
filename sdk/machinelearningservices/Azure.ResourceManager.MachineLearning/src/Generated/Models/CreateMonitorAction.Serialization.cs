@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("monitorDefinition"u8))
                 {
-                    monitorDefinition = MonitorDefinition.DeserializeMonitorDefinition(property.Value);
+                    monitorDefinition = MonitorDefinition.DeserializeMonitorDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))

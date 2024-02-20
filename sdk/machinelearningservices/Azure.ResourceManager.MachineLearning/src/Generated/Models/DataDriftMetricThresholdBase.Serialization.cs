@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Categorical": return CategoricalDataDriftMetricThreshold.DeserializeCategoricalDataDriftMetricThreshold(element);
-                    case "Numerical": return NumericalDataDriftMetricThreshold.DeserializeNumericalDataDriftMetricThreshold(element);
+                    case "Categorical": return CategoricalDataDriftMetricThreshold.DeserializeCategoricalDataDriftMetricThreshold(element, options);
+                    case "Numerical": return NumericalDataDriftMetricThreshold.DeserializeNumericalDataDriftMetricThreshold(element, options);
                 }
             }
-            return UnknownDataDriftMetricThresholdBase.DeserializeUnknownDataDriftMetricThresholdBase(element);
+            return UnknownDataDriftMetricThresholdBase.DeserializeUnknownDataDriftMetricThresholdBase(element, options);
         }
 
         BinaryData IPersistableModel<DataDriftMetricThresholdBase>.Write(ModelReaderWriterOptions options)

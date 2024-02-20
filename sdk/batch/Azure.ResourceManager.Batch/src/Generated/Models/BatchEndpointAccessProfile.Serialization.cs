@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchIPRule> array = new List<BatchIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchIPRule.DeserializeBatchIPRule(item));
+                        array.Add(BatchIPRule.DeserializeBatchIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

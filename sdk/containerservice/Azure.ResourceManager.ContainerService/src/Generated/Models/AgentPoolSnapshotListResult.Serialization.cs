@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolSnapshotData> array = new List<AgentPoolSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
+                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item, options));
                     }
                     value = array;
                     continue;

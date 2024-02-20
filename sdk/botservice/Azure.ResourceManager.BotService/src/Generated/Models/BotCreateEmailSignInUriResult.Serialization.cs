@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = CreateEmailSignInUrlResponseProperties.DeserializeCreateEmailSignInUrlResponseProperties(property.Value);
+                    properties = CreateEmailSignInUrlResponseProperties.DeserializeCreateEmailSignInUrlResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

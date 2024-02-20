@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaTableColumn> array = new List<SyncFullSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item));
+                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item, options));
                     }
                     columns = array;
                     continue;

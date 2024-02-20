@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("active"u8))

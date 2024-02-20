@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    properties = ConnectedEnvironmentStorageProperties.DeserializeConnectedEnvironmentStorageProperties(property.Value);
+                    properties = ConnectedEnvironmentStorageProperties.DeserializeConnectedEnvironmentStorageProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

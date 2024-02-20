@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AApplyRecoveryPointContent.DeserializeA2AApplyRecoveryPointContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationApplyRecoveryPointContent.DeserializeA2ACrossClusterMigrationApplyRecoveryPointContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureApplyRecoveryPointContent.DeserializeHyperVReplicaAzureApplyRecoveryPointContent(element);
-                    case "InMageAzureV2": return InMageAzureV2ApplyRecoveryPointContent.DeserializeInMageAzureV2ApplyRecoveryPointContent(element);
-                    case "InMageRcm": return InMageRcmApplyRecoveryPointContent.DeserializeInMageRcmApplyRecoveryPointContent(element);
+                    case "A2A": return A2AApplyRecoveryPointContent.DeserializeA2AApplyRecoveryPointContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationApplyRecoveryPointContent.DeserializeA2ACrossClusterMigrationApplyRecoveryPointContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureApplyRecoveryPointContent.DeserializeHyperVReplicaAzureApplyRecoveryPointContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2ApplyRecoveryPointContent.DeserializeInMageAzureV2ApplyRecoveryPointContent(element, options);
+                    case "InMageRcm": return InMageRcmApplyRecoveryPointContent.DeserializeInMageRcmApplyRecoveryPointContent(element, options);
                 }
             }
-            return UnknownApplyRecoveryPointProviderSpecificContent.DeserializeUnknownApplyRecoveryPointProviderSpecificContent(element);
+            return UnknownApplyRecoveryPointProviderSpecificContent.DeserializeUnknownApplyRecoveryPointProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>.Write(ModelReaderWriterOptions options)

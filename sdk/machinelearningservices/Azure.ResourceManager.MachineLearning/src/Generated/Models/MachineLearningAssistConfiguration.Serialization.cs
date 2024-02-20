@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Disabled": return MLAssistConfigurationDisabled.DeserializeMLAssistConfigurationDisabled(element);
-                    case "Enabled": return MachineLearningAssistEnabledConfiguration.DeserializeMachineLearningAssistEnabledConfiguration(element);
+                    case "Disabled": return MLAssistConfigurationDisabled.DeserializeMLAssistConfigurationDisabled(element, options);
+                    case "Enabled": return MachineLearningAssistEnabledConfiguration.DeserializeMachineLearningAssistEnabledConfiguration(element, options);
                 }
             }
-            return UnknownMLAssistConfiguration.DeserializeUnknownMLAssistConfiguration(element);
+            return UnknownMLAssistConfiguration.DeserializeUnknownMLAssistConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningAssistConfiguration>.Write(ModelReaderWriterOptions options)

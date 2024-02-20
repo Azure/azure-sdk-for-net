@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkResourceProperties.DeserializeShareablePrivateLinkResourceProperties(property.Value);
+                    properties = ShareablePrivateLinkResourceProperties.DeserializeShareablePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

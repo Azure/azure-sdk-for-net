@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountCertificateData> array = new List<IntegrationAccountCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item));
+                        array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item, options));
                     }
                     value = array;
                     continue;

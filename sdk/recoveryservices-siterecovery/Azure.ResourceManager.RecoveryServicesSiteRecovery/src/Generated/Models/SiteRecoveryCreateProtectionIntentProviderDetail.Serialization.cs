@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ACreateProtectionIntentContent.DeserializeA2ACreateProtectionIntentContent(element);
+                    case "A2A": return A2ACreateProtectionIntentContent.DeserializeA2ACreateProtectionIntentContent(element, options);
                 }
             }
-            return UnknownCreateProtectionIntentProviderSpecificDetails.DeserializeUnknownCreateProtectionIntentProviderSpecificDetails(element);
+            return UnknownCreateProtectionIntentProviderSpecificDetails.DeserializeUnknownCreateProtectionIntentProviderSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionIntentProviderDetail>.Write(ModelReaderWriterOptions options)

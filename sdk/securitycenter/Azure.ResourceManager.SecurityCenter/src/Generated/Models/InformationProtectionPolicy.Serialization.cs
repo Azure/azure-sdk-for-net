@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SensitivityLabel> dictionary = new Dictionary<string, SensitivityLabel>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value));
+                                dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value, options));
                             }
                             labels = dictionary;
                             continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SecurityInformationTypeInfo> dictionary = new Dictionary<string, SecurityInformationTypeInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value));
+                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value, options));
                             }
                             informationTypes = dictionary;
                             continue;

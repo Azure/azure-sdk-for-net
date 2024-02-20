@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionChargeSummary> array = new List<ConsumptionChargeSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
+                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item, options));
                     }
                     value = array;
                     continue;

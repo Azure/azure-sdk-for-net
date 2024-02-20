@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            grantSqlControlToManagedIdentity = SynapseGrantSqlControlToManagedIdentity.DeserializeSynapseGrantSqlControlToManagedIdentity(property0.Value);
+                            grantSqlControlToManagedIdentity = SynapseGrantSqlControlToManagedIdentity.DeserializeSynapseGrantSqlControlToManagedIdentity(property0.Value, options);
                             continue;
                         }
                     }

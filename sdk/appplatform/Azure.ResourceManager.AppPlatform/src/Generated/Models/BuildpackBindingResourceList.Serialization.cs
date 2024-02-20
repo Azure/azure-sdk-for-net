@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformBuildpackBindingData> array = new List<AppPlatformBuildpackBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(item));
+                        array.Add(AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(item, options));
                     }
                     value = array;
                     continue;

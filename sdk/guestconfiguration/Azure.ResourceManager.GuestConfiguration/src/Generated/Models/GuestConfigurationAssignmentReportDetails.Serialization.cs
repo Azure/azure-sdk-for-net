@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceInfo> array = new List<AssignmentReportResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
+                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item, options));
                     }
                     resources = array;
                     continue;

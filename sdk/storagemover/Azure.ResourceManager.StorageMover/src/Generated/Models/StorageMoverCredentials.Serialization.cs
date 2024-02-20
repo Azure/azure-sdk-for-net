@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVaultSmb": return AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(element);
+                    case "AzureKeyVaultSmb": return AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(element, options);
                 }
             }
-            return UnknownCredentials.DeserializeUnknownCredentials(element);
+            return UnknownCredentials.DeserializeUnknownCredentials(element, options);
         }
 
         BinaryData IPersistableModel<StorageMoverCredentials>.Write(ModelReaderWriterOptions options)

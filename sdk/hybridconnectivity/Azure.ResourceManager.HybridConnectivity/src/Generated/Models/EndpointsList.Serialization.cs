@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     List<EndpointResourceData> array = new List<EndpointResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointResourceData.DeserializeEndpointResourceData(item));
+                        array.Add(EndpointResourceData.DeserializeEndpointResourceData(item, options));
                     }
                     value = array;
                     continue;

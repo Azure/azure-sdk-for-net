@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlRoleData> array = new List<CosmosDBForPostgreSqlRoleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(item));
+                        array.Add(CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(item, options));
                     }
                     value = array;
                     continue;

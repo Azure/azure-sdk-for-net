@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationClassicAdministrator> array = new List<AuthorizationClassicAdministrator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item));
+                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item, options));
                     }
                     value = array;
                     continue;

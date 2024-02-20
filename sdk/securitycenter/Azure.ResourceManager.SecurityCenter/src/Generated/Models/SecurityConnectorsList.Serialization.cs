@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityConnectorData> array = new List<SecurityConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityConnectorData.DeserializeSecurityConnectorData(item));
+                        array.Add(SecurityConnectorData.DeserializeSecurityConnectorData(item, options));
                     }
                     value = array;
                     continue;

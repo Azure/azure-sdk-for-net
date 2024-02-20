@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

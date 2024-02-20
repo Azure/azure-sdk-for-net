@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Media
                     {
                         continue;
                     }
-                    sku = StreamingEndpointCurrentSku.DeserializeStreamingEndpointCurrentSku(property.Value);
+                    sku = StreamingEndpointCurrentSku.DeserializeStreamingEndpointCurrentSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Media
                                 accessControl = null;
                                 continue;
                             }
-                            accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value);
+                            accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maxCacheAge"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Media
                                 crossSiteAccessPolicies = null;
                                 continue;
                             }
-                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value);
+                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("freeTrialEndTime"u8))

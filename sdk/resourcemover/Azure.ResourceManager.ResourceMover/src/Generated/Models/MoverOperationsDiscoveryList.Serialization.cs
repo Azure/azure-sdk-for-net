@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationsDiscovery> array = new List<MoverOperationsDiscovery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(item));
+                        array.Add(MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(item, options));
                     }
                     value = array;
                     continue;

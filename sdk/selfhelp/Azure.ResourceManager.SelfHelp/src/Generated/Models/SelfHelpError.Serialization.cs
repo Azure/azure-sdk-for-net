@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpError> array = new List<SelfHelpError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSelfHelpError(item));
+                        array.Add(DeserializeSelfHelpError(item, options));
                     }
                     details = array;
                     continue;

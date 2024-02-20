@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value);
+                    upsertSettings = SqlUpsertSettings.DeserializeSqlUpsertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

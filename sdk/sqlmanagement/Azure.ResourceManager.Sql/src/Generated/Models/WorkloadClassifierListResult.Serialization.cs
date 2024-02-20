@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<WorkloadClassifierData> array = new List<WorkloadClassifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadClassifierData.DeserializeWorkloadClassifierData(item));
+                        array.Add(WorkloadClassifierData.DeserializeWorkloadClassifierData(item, options));
                     }
                     value = array;
                     continue;

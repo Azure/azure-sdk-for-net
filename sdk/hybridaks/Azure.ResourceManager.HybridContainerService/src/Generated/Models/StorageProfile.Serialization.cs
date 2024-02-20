@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value);
+                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsCsiDriver"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value);
+                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

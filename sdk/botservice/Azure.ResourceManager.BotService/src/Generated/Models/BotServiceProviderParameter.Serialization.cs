@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value);
+                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

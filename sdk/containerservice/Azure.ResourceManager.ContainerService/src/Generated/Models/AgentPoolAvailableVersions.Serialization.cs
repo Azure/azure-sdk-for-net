@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                             List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
+                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item, options));
                             }
                             agentPoolVersions = array;
                             continue;

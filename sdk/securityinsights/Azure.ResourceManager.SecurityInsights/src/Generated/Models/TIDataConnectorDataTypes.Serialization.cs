@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value);
+                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

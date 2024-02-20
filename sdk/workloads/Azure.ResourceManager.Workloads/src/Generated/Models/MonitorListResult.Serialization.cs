@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapMonitorData> array = new List<SapMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapMonitorData.DeserializeSapMonitorData(item));
+                        array.Add(SapMonitorData.DeserializeSapMonitorData(item, options));
                     }
                     value = array;
                     continue;

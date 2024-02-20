@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             {
                                 continue;
                             }
-                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value);
+                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"u8))

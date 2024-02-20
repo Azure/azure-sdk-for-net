@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentData> array = new List<ApplicationInsightsComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(item));
+                        array.Add(ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(item, options));
                     }
                     value = array;
                     continue;

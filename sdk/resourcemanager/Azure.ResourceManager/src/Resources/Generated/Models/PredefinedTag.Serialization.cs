@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("values"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PredefinedTagValue> array = new List<PredefinedTagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item));
+                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item, options));
                     }
                     values = array;
                     continue;

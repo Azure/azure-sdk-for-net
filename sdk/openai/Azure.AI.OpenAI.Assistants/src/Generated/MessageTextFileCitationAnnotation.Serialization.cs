@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file_citation"u8))
                 {
-                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value);
+                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

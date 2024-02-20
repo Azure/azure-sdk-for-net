@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationRefundResponseProperties.DeserializeReservationRefundResponseProperties(property.Value);
+                    properties = ReservationRefundResponseProperties.DeserializeReservationRefundResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

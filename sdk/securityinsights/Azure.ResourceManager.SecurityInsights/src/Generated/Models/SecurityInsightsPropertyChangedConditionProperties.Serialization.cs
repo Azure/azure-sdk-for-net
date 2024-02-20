@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionProperties = AutomationRulePropertyValuesChangedCondition.DeserializeAutomationRulePropertyValuesChangedCondition(property.Value);
+                    conditionProperties = AutomationRulePropertyValuesChangedCondition.DeserializeAutomationRulePropertyValuesChangedCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conditionType"u8))

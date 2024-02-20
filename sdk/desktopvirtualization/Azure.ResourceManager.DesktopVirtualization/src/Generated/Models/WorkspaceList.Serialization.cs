@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<VirtualWorkspaceData> array = new List<VirtualWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item));
+                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

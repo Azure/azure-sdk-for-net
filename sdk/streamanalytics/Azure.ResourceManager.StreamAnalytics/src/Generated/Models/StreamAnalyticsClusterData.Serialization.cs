@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    sku = StreamAnalyticsClusterSku.DeserializeStreamAnalyticsClusterSku(property.Value);
+                    sku = StreamAnalyticsClusterSku.DeserializeStreamAnalyticsClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamAnalyticsClusterProperties.DeserializeStreamAnalyticsClusterProperties(property.Value);
+                    properties = StreamAnalyticsClusterProperties.DeserializeStreamAnalyticsClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryFilter> array = new List<RunQueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
+                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item, options));
                     }
                     filters = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
+                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item, options));
                     }
                     orderBy = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlRecommendationActionData> array = new List<MySqlRecommendationActionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(item));
+                        array.Add(MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(item, options));
                     }
                     value = array;
                     continue;

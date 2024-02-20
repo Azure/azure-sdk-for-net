@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsPrivateCloudClusterVirtualMachineData> array = new List<AvsPrivateCloudClusterVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(item));
+                        array.Add(AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;

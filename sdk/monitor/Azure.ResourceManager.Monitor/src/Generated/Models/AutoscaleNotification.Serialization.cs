@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    email = EmailNotification.DeserializeEmailNotification(property.Value);
+                    email = EmailNotification.DeserializeEmailNotification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("webhooks"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WebhookNotification> array = new List<WebhookNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebhookNotification.DeserializeWebhookNotification(item));
+                        array.Add(WebhookNotification.DeserializeWebhookNotification(item, options));
                     }
                     webhooks = array;
                     continue;

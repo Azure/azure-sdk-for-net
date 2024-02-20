@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<NotificationRegistrationData> array = new List<NotificationRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationRegistrationData.DeserializeNotificationRegistrationData(item));
+                        array.Add(NotificationRegistrationData.DeserializeNotificationRegistrationData(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ProxyArtifactListOverview> array = new List<ProxyArtifactListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item));
+                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item, options));
                     }
                     value = array;
                     continue;

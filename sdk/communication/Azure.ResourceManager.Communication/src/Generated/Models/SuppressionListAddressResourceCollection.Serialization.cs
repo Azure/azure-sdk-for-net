@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SuppressionListAddressResourceData> array = new List<SuppressionListAddressResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(item));
+                        array.Add(SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(item, options));
                     }
                     value = array;
                     continue;

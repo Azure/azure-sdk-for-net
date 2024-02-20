@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
+                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

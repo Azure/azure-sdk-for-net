@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                             {
                                 continue;
                             }
-                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value);
+                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))

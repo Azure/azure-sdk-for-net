@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpSettings = DistcpSettings.DeserializeDistcpSettings(property.Value);
+                    distcpSettings = DistcpSettings.DeserializeDistcpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deleteFilesAfterCompletion"u8))

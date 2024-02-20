@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<WinRMListener> array = new List<WinRMListener>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WinRMListener.DeserializeWinRMListener(item));
+                        array.Add(WinRMListener.DeserializeWinRMListener(item, options));
                     }
                     listeners = array;
                     continue;

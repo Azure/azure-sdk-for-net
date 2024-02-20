@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitPropertyValidationResult = AppPlatformConfigurationServiceGitValidateResult.DeserializeAppPlatformConfigurationServiceGitValidateResult(property.Value);
+                    gitPropertyValidationResult = AppPlatformConfigurationServiceGitValidateResult.DeserializeAppPlatformConfigurationServiceGitValidateResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

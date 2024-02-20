@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<AvailableServiceSku> array = new List<AvailableServiceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item));
+                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item, options));
                     }
                     value = array;
                     continue;

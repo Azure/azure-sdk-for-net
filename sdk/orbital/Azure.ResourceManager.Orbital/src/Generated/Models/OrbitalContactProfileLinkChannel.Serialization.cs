@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
                 if (property.NameEquals("endPoint"u8))
                 {
-                    endPoint = OrbitalContactEndpoint.DeserializeOrbitalContactEndpoint(property.Value);
+                    endPoint = OrbitalContactEndpoint.DeserializeOrbitalContactEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modulationConfiguration"u8))

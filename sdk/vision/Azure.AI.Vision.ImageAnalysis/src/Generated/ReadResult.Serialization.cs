@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTextBlock> array = new List<DetectedTextBlock>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTextBlock.DeserializeDetectedTextBlock(item));
+                        array.Add(DetectedTextBlock.DeserializeDetectedTextBlock(item, options));
                     }
                     blocks = array;
                     continue;

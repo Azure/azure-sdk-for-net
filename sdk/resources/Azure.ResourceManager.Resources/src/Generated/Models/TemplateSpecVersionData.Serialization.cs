@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Resources
                             List<LinkedTemplateArtifact> array = new List<LinkedTemplateArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item));
+                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item, options));
                             }
                             linkedTemplates = array;
                             continue;

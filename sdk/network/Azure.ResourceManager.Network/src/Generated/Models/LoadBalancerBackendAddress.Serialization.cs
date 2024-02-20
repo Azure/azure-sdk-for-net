@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NatRulePortMapping> array = new List<NatRulePortMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item));
+                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item, options));
                             }
                             inboundNatRulesPortMapping = array;
                             continue;

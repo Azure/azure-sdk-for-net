@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("offPeakLoadBalancingAlgorithm"u8))

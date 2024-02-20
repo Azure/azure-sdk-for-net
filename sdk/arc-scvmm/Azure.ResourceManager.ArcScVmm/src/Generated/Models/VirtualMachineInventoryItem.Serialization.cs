@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value);
+                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inventoryType"u8))

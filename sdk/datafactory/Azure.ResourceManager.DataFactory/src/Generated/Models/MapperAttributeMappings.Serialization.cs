@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeMapping> array = new List<MapperAttributeMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item));
+                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item, options));
                     }
                     attributeMappings = array;
                     continue;

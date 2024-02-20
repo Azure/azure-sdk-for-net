@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            error = JobRunError.DeserializeJobRunError(property0.Value);
+                            error = JobRunError.DeserializeJobRunError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

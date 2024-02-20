@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value);
+                            logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricRules"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value);
+                            metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

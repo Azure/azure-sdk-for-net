@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ConfidentialLedgerData> array = new List<ConfidentialLedgerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfidentialLedgerData.DeserializeConfidentialLedgerData(item));
+                        array.Add(ConfidentialLedgerData.DeserializeConfidentialLedgerData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterCatalogData> array = new List<DevCenterCatalogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterCatalogData.DeserializeDevCenterCatalogData(item));
+                        array.Add(DevCenterCatalogData.DeserializeDevCenterCatalogData(item, options));
                     }
                     value = array;
                     continue;

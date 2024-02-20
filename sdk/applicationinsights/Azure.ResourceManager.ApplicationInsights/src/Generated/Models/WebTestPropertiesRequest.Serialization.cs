@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<HeaderField> array = new List<HeaderField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderField.DeserializeHeaderField(item));
+                        array.Add(HeaderField.DeserializeHeaderField(item, options));
                     }
                     headers = array;
                     continue;

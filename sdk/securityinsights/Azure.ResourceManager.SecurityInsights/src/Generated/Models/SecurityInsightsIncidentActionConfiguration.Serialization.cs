@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value);
+                    owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                        array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item, options));
                     }
                     labels = array;
                     continue;

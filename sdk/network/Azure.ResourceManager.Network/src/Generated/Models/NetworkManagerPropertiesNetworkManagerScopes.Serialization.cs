@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CrossTenantScopes> array = new List<CrossTenantScopes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item));
+                        array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item, options));
                     }
                     crossTenantScopes = array;
                     continue;

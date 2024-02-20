@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ProcessModuleInfoData> array = new List<ProcessModuleInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                        array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item, options));
                     }
                     value = array;
                     continue;

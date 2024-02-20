@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value);
+                    schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

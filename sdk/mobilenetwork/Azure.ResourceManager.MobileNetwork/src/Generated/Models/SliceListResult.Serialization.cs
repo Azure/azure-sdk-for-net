@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSliceData> array = new List<MobileNetworkSliceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSliceData.DeserializeMobileNetworkSliceData(item));
+                        array.Add(MobileNetworkSliceData.DeserializeMobileNetworkSliceData(item, options));
                     }
                     value = array;
                     continue;

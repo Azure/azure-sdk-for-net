@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value);
+                            gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value);
+                            bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value);
+                            azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
+                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value, options));
                             }
                             kustomizations = dictionary;
                             continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesObjectStatus> array = new List<KubernetesObjectStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
+                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item, options));
                             }
                             statuses = array;
                             continue;

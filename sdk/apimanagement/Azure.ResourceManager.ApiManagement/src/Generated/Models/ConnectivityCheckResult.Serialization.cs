@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
+                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item, options));
                     }
                     hops = array;
                     continue;

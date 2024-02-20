@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value);
+                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item));
+                        array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item, options));
                     }
                     dataDiskImages = array;
                     continue;

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    driverShare = FileShare.DeserializeFileShare(property.Value);
+                    driverShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

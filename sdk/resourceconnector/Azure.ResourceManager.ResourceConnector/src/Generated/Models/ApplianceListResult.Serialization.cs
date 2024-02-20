@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item));
+                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item, options));
                     }
                     value = array;
                     continue;

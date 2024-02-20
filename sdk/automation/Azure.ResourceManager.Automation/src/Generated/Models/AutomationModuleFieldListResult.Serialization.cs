@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationModuleField> array = new List<AutomationModuleField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationModuleField.DeserializeAutomationModuleField(item));
+                        array.Add(AutomationModuleField.DeserializeAutomationModuleField(item, options));
                     }
                     value = array;
                     continue;

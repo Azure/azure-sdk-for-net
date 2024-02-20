@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value);
+                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDiskRestorePoint"u8))

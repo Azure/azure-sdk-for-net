@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
+                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
+                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

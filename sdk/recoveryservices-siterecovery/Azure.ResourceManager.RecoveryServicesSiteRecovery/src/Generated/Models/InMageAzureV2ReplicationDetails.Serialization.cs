@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2ProtectedDiskDetails> array = new List<InMageAzureV2ProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2ProtectedDiskDetails.DeserializeInMageAzureV2ProtectedDiskDetails(item));
+                        array.Add(InMageAzureV2ProtectedDiskDetails.DeserializeInMageAzureV2ProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryVmDiskDetails> array = new List<SiteRecoveryVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item));
+                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item, options));
                     }
                     azureVmDiskDetails = array;
                     continue;
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2ManagedDiskDetails> array = new List<InMageAzureV2ManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2ManagedDiskDetails.DeserializeInMageAzureV2ManagedDiskDetails(item));
+                        array.Add(InMageAzureV2ManagedDiskDetails.DeserializeInMageAzureV2ManagedDiskDetails(item, options));
                     }
                     protectedManagedDisks = array;
                     continue;
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2SwitchProviderBlockingErrorDetails> array = new List<InMageAzureV2SwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2SwitchProviderBlockingErrorDetails.DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(item));
+                        array.Add(InMageAzureV2SwitchProviderBlockingErrorDetails.DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(item, options));
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    switchProviderDetails = InMageAzureV2SwitchProviderDetails.DeserializeInMageAzureV2SwitchProviderDetails(property.Value);
+                    switchProviderDetails = InMageAzureV2SwitchProviderDetails.DeserializeInMageAzureV2SwitchProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedOSVersions"u8))
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<OSUpgradeSupportedVersions> array = new List<OSUpgradeSupportedVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item));
+                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item, options));
                     }
                     allAvailableOSUpgradeConfigurations = array;
                     continue;

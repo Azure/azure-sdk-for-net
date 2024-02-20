@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleAssignmentScheduleData> array = new List<RoleAssignmentScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(item));
+                        array.Add(RoleAssignmentScheduleData.DeserializeRoleAssignmentScheduleData(item, options));
                     }
                     value = array;
                     continue;

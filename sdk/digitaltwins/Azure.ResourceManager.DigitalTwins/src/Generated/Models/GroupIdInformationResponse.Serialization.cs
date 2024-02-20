@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<DigitalTwinsPrivateLinkResourceData> array = new List<DigitalTwinsPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(item));
+                        array.Add(DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
+                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item, options));
                     }
                     queueSelectors = array;
                     continue;

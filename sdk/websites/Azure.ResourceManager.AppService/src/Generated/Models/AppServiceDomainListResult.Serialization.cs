@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceDomainData> array = new List<AppServiceDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceDomainData.DeserializeAppServiceDomainData(item));
+                        array.Add(AppServiceDomainData.DeserializeAppServiceDomainData(item, options));
                     }
                     value = array;
                     continue;

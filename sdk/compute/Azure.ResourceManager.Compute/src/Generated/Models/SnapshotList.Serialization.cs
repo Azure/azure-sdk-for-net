@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SnapshotData> array = new List<SnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotData.DeserializeSnapshotData(item));
+                        array.Add(SnapshotData.DeserializeSnapshotData(item, options));
                     }
                     value = array;
                     continue;

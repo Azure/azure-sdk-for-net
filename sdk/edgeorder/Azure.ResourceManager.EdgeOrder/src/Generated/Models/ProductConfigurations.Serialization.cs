@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductConfiguration> array = new List<ProductConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductConfiguration.DeserializeProductConfiguration(item));
+                        array.Add(ProductConfiguration.DeserializeProductConfiguration(item, options));
                     }
                     value = array;
                     continue;

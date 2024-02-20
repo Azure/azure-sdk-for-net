@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    groupingConfiguration = SecurityInsightsGroupingConfiguration.DeserializeSecurityInsightsGroupingConfiguration(property.Value);
+                    groupingConfiguration = SecurityInsightsGroupingConfiguration.DeserializeSecurityInsightsGroupingConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

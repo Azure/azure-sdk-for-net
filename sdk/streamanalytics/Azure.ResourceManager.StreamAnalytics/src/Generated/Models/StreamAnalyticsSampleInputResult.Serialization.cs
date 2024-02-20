@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item));
+                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item, options));
                             }
                             details = array;
                             continue;

@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element);
-                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element);
+                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element, options);
+                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element, options);
                 }
             }
-            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element);
+            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PostgreSql
                     {
                         continue;
                     }
-                    properties = PostgreSqlPrivateLinkResourceProperties.DeserializePostgreSqlPrivateLinkResourceProperties(property.Value);
+                    properties = PostgreSqlPrivateLinkResourceProperties.DeserializePostgreSqlPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

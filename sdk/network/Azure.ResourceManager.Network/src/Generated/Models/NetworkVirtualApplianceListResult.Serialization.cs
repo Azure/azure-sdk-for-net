@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkVirtualApplianceData> array = new List<NetworkVirtualApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(item));
+                        array.Add(NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(item, options));
                     }
                     value = array;
                     continue;

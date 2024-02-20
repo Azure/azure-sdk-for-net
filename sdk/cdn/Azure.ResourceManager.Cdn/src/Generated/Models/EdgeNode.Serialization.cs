@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<IPAddressGroup> array = new List<IPAddressGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
+                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item, options));
                             }
                             ipAddressGroups = array;
                             continue;

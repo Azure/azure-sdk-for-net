@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    image = ImageSetting.DeserializeImageSetting(property.Value);
+                    image = ImageSetting.DeserializeImageSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, EnvironmentVariable> dictionary = new Dictionary<string, EnvironmentVariable>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value));
+                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value, options));
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         docker = null;
                         continue;
                     }
-                    docker = DockerSetting.DeserializeDockerSetting(property.Value);
+                    docker = DockerSetting.DeserializeDockerSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ContainerEndpoint> array = new List<ContainerEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
+                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<VolumeDefinition> array = new List<VolumeDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item));
+                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item, options));
                     }
                     volumes = array;
                     continue;

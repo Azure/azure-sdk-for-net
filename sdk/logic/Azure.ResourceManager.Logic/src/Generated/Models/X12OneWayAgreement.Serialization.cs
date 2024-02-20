@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("senderBusinessIdentity"u8))
                 {
-                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
+                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("receiverBusinessIdentity"u8))
                 {
-                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
+                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolSettings"u8))
                 {
-                    protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value);
+                    protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

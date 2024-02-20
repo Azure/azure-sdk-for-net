@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryCompilationError> array = new List<StreamAnalyticsQueryCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item));
+                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item, options));
                     }
                     errors = array;
                     continue;

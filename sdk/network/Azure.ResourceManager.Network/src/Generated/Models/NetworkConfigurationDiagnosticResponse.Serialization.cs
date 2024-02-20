@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticResult> array = new List<NetworkConfigurationDiagnosticResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticResult.DeserializeNetworkConfigurationDiagnosticResult(item));
+                        array.Add(NetworkConfigurationDiagnosticResult.DeserializeNetworkConfigurationDiagnosticResult(item, options));
                     }
                     results = array;
                     continue;

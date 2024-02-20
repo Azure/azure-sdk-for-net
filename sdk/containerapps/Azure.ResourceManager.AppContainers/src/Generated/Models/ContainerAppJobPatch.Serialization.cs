@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value);
+                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AveragePartitionLoadTrigger": return AveragePartitionLoadScalingTrigger.DeserializeAveragePartitionLoadScalingTrigger(element);
-                    case "AverageServiceLoadTrigger": return AverageServiceLoadScalingTrigger.DeserializeAverageServiceLoadScalingTrigger(element);
+                    case "AveragePartitionLoadTrigger": return AveragePartitionLoadScalingTrigger.DeserializeAveragePartitionLoadScalingTrigger(element, options);
+                    case "AverageServiceLoadTrigger": return AverageServiceLoadScalingTrigger.DeserializeAverageServiceLoadScalingTrigger(element, options);
                 }
             }
-            return UnknownScalingTrigger.DeserializeUnknownScalingTrigger(element);
+            return UnknownScalingTrigger.DeserializeUnknownScalingTrigger(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceScalingTrigger>.Write(ModelReaderWriterOptions options)

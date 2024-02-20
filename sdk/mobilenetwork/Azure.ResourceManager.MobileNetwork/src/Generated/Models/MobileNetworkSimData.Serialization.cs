@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<SimStaticIPProperties> array = new List<SimStaticIPProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item, options));
                             }
                             staticIPConfiguration = array;
                             continue;

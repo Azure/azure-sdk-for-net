@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value);
+                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
+                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item, options));
                             }
                             volumes = array;
                             continue;

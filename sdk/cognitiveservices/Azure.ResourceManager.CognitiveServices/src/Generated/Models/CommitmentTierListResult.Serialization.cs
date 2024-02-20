@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentTier> array = new List<CommitmentTier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentTier.DeserializeCommitmentTier(item));
+                        array.Add(CommitmentTier.DeserializeCommitmentTier(item, options));
                     }
                     value = array;
                     continue;

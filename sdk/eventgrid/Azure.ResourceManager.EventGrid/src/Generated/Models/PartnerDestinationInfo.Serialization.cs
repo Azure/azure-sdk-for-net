@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "WebHook": return WebhookPartnerDestinationInfo.DeserializeWebhookPartnerDestinationInfo(element);
+                    case "WebHook": return WebhookPartnerDestinationInfo.DeserializeWebhookPartnerDestinationInfo(element, options);
                 }
             }
-            return UnknownPartnerDestinationInfo.DeserializeUnknownPartnerDestinationInfo(element);
+            return UnknownPartnerDestinationInfo.DeserializeUnknownPartnerDestinationInfo(element, options);
         }
 
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

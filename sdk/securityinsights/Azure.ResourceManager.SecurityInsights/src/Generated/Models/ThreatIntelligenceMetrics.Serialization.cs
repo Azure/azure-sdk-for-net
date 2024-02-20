@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = ThreatIntelligenceMetric.DeserializeThreatIntelligenceMetric(property.Value);
+                    properties = ThreatIntelligenceMetric.DeserializeThreatIntelligenceMetric(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

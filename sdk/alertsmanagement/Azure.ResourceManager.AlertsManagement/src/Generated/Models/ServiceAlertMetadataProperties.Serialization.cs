@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element);
+                    case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element, options);
                 }
             }
-            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element);
+            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element, options);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadataProperties>.Write(ModelReaderWriterOptions options)

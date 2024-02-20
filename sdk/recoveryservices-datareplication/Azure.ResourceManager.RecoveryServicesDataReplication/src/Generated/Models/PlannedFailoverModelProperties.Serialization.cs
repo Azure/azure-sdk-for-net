@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = PlannedFailoverModelCustomProperties.DeserializePlannedFailoverModelCustomProperties(property.Value);
+                    customProperties = PlannedFailoverModelCustomProperties.DeserializePlannedFailoverModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

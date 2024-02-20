@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticData> array = new List<ContainerAppDiagnosticData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(item));
+                        array.Add(ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(item, options));
                     }
                     value = array;
                     continue;

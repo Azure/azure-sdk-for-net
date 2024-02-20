@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubData> array = new List<WebPubSubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubData.DeserializeWebPubSubData(item));
+                        array.Add(WebPubSubData.DeserializeWebPubSubData(item, options));
                     }
                     value = array;
                     continue;

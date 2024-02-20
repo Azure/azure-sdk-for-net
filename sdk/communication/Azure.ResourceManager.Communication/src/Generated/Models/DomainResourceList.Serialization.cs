@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<CommunicationDomainResourceData> array = new List<CommunicationDomainResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item));
+                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item, options));
                     }
                     value = array;
                     continue;

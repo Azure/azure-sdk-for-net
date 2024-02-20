@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
+                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ConsumerSourceDataSet> array = new List<ConsumerSourceDataSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumerSourceDataSet.DeserializeConsumerSourceDataSet(item));
+                        array.Add(ConsumerSourceDataSet.DeserializeConsumerSourceDataSet(item, options));
                     }
                     value = array;
                     continue;

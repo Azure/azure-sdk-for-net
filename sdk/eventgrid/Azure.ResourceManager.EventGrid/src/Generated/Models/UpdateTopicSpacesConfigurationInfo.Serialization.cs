@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value);
+                    routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clientAuthentication"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value);
+                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumSessionExpiryInHours"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value);
+                    routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

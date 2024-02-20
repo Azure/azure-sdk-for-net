@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsAuthorizationRuleData> array = new List<EventHubsAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(item));
+                        array.Add(EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;

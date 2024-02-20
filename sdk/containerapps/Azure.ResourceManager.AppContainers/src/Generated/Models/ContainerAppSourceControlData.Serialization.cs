@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value);
+                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value, options);
                             continue;
                         }
                     }

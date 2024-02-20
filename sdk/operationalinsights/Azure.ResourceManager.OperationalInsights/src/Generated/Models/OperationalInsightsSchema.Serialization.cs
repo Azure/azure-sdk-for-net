@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item));
+                        array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item, options));
                     }
                     standardColumns = array;
                     continue;

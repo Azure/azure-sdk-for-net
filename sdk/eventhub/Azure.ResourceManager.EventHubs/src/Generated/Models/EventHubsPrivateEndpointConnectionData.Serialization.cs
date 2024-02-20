@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = EventHubsPrivateLinkServiceConnectionState.DeserializeEventHubsPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = EventHubsPrivateLinkServiceConnectionState.DeserializeEventHubsPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

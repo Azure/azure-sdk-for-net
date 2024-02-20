@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAccountData> array = new List<AutomationAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAccountData.DeserializeAutomationAccountData(item));
+                        array.Add(AutomationAccountData.DeserializeAutomationAccountData(item, options));
                     }
                     value = array;
                     continue;

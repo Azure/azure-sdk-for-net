@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlVirtualNetworkRuleData> array = new List<MySqlVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(item));
+                        array.Add(MySqlVirtualNetworkRuleData.DeserializeMySqlVirtualNetworkRuleData(item, options));
                     }
                     value = array;
                     continue;

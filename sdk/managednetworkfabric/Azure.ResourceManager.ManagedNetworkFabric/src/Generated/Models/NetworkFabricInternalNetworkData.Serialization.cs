@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv4Subnets = array;
                             continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv6Subnets = array;
                             continue;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressAclId"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value);
+                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value);
+                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))

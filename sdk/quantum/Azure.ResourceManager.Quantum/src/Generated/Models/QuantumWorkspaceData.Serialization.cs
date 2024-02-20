@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Quantum
                             List<Provider> array = new List<Provider>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Provider.DeserializeProvider(item));
+                                array.Add(Provider.DeserializeProvider(item, options));
                             }
                             providers = array;
                             continue;

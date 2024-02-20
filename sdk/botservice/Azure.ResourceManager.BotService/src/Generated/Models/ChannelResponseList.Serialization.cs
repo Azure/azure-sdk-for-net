@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotChannelData> array = new List<BotChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotChannelData.DeserializeBotChannelData(item));
+                        array.Add(BotChannelData.DeserializeBotChannelData(item, options));
                     }
                     value = array;
                     continue;

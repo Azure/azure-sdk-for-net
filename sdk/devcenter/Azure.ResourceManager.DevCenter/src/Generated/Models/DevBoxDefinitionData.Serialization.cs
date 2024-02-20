@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value);
+                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value);
+                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("activeImageReference"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                     }

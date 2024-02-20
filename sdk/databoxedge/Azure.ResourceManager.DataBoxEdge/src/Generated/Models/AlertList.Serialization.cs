@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeAlertData> array = new List<DataBoxEdgeAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeAlertData.DeserializeDataBoxEdgeAlertData(item));
+                        array.Add(DataBoxEdgeAlertData.DeserializeDataBoxEdgeAlertData(item, options));
                     }
                     value = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = DevOpsOrgProperties.DeserializeDevOpsOrgProperties(property.Value);
+                    properties = DevOpsOrgProperties.DeserializeDevOpsOrgProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

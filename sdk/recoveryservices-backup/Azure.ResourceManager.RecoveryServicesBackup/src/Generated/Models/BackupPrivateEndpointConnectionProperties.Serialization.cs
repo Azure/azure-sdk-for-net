@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = RecoveryServicesBackupPrivateLinkServiceConnectionState.DeserializeRecoveryServicesBackupPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = RecoveryServicesBackupPrivateLinkServiceConnectionState.DeserializeRecoveryServicesBackupPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TumblingWindowTriggerDependencyReference": return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element);
+                    case "TumblingWindowTriggerDependencyReference": return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element, options);
                 }
             }
             DataFactoryTriggerReference referenceTrigger = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value);
+                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNetworkSecurityPerimeter> array = new List<EventHubsNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item));
+                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;

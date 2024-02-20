@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value);
+                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

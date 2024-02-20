@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item));
+                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item, options));
                             }
                             timeInWeek = array;
                             continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item));
+                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item, options));
                             }
                             notAllowedTime = array;
                             continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value);
+                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                     }

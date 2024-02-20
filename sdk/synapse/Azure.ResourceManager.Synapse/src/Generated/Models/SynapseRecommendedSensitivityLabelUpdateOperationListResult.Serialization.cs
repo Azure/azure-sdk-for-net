@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseRecommendedSensitivityLabelUpdate> array = new List<SynapseRecommendedSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseRecommendedSensitivityLabelUpdate.DeserializeSynapseRecommendedSensitivityLabelUpdate(item));
+                        array.Add(SynapseRecommendedSensitivityLabelUpdate.DeserializeSynapseRecommendedSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;

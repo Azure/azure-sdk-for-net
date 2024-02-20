@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value);
+                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectDetails"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value);
+                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scanInterval"u8))

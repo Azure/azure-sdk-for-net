@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value);
+                    name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

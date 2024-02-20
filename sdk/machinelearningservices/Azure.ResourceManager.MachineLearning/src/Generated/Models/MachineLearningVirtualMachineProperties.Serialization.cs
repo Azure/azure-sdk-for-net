@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         administratorAccount = null;
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isNotebookInstanceCompute"u8))

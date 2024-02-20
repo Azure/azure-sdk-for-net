@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value);
+                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

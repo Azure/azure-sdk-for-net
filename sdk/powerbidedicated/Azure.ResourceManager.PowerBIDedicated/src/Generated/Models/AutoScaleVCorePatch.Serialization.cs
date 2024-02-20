@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value);
+                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

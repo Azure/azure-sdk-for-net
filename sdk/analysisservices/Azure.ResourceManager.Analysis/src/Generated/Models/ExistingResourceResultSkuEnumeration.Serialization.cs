@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisExistingSku> array = new List<AnalysisExistingSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item));
+                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item, options));
                     }
                     value = array;
                     continue;

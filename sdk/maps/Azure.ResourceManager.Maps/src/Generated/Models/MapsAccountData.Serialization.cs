@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Maps
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = MapsSku.DeserializeMapsSku(property.Value);
+                    sku = MapsSku.DeserializeMapsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         continue;
                     }
-                    properties = MapsAccountProperties.DeserializeMapsAccountProperties(property.Value);
+                    properties = MapsAccountProperties.DeserializeMapsAccountProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

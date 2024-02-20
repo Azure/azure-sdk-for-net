@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeNodeMonitoringData> array = new List<IntegrationRuntimeNodeMonitoringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeNodeMonitoringData.DeserializeIntegrationRuntimeNodeMonitoringData(item));
+                        array.Add(IntegrationRuntimeNodeMonitoringData.DeserializeIntegrationRuntimeNodeMonitoringData(item, options));
                     }
                     nodes = array;
                     continue;

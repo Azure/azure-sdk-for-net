@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
+                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationMode"u8))

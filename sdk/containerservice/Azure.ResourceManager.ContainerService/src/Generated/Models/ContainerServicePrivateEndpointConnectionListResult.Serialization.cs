@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateEndpointConnectionData> array = new List<ContainerServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(item));
+                        array.Add(ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

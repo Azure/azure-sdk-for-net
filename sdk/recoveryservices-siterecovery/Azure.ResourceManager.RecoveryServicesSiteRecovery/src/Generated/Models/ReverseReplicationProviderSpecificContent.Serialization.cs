@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AReprotectContent.DeserializeA2AReprotectContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureReprotectContent.DeserializeHyperVReplicaAzureReprotectContent(element);
-                    case "InMage": return InMageReprotectContent.DeserializeInMageReprotectContent(element);
-                    case "InMageAzureV2": return InMageAzureV2ReprotectContent.DeserializeInMageAzureV2ReprotectContent(element);
-                    case "InMageRcm": return InMageRcmReprotectContent.DeserializeInMageRcmReprotectContent(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackReprotectContent.DeserializeInMageRcmFailbackReprotectContent(element);
+                    case "A2A": return A2AReprotectContent.DeserializeA2AReprotectContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureReprotectContent.DeserializeHyperVReplicaAzureReprotectContent(element, options);
+                    case "InMage": return InMageReprotectContent.DeserializeInMageReprotectContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2ReprotectContent.DeserializeInMageAzureV2ReprotectContent(element, options);
+                    case "InMageRcm": return InMageRcmReprotectContent.DeserializeInMageRcmReprotectContent(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackReprotectContent.DeserializeInMageRcmFailbackReprotectContent(element, options);
                 }
             }
-            return UnknownReverseReplicationProviderSpecificContent.DeserializeUnknownReverseReplicationProviderSpecificContent(element);
+            return UnknownReverseReplicationProviderSpecificContent.DeserializeUnknownReverseReplicationProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<ReverseReplicationProviderSpecificContent>.Write(ModelReaderWriterOptions options)

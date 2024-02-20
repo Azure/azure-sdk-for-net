@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value);
+                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value, options);
                             continue;
                         }
                     }

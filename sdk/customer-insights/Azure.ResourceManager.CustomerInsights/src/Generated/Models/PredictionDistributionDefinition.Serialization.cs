@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<PredictionDistributionDefinitionDistributionsItem> array = new List<PredictionDistributionDefinitionDistributionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item));
+                        array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item, options));
                     }
                     distributions = array;
                     continue;

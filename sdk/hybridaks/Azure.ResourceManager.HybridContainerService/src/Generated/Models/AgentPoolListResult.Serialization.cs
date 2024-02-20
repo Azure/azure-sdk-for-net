@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceAgentPoolData> array = new List<HybridContainerServiceAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(item));
+                        array.Add(HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(item, options));
                     }
                     value = array;
                     continue;

@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = ElasticSanSku.DeserializeElasticSanSku(property0.Value);
+                            sku = ElasticSanSku.DeserializeElasticSanSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ElasticSan
                             List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item));
+                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

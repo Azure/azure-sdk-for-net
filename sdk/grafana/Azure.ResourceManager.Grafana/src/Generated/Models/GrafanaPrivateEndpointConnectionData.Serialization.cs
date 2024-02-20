@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Grafana
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = GrafanaPrivateLinkServiceConnectionState.DeserializeGrafanaPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = GrafanaPrivateLinkServiceConnectionState.DeserializeGrafanaPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))

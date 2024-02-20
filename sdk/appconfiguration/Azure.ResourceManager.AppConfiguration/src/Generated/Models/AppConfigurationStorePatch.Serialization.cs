@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value);
+                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value);
+                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))

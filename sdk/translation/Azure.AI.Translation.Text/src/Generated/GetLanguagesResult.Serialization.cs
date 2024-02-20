@@ -114,7 +114,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value, options));
                     }
                     translation = dictionary0;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value, options));
                     }
                     transliteration = dictionary0;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value, options));
                     }
                     dictionary = dictionary0;
                     continue;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value);
+                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = PhysicalPartitionThroughputInfoResultPropertiesResource.DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(property0.Value);
+                            resource = PhysicalPartitionThroughputInfoResultPropertiesResource.DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(property0.Value, options);
                             continue;
                         }
                     }

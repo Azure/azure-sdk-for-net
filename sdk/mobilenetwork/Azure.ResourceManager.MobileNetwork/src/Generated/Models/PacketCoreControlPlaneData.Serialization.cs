@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value);
+                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            installation = MobileNetworkInstallation.DeserializeMobileNetworkInstallation(property0.Value);
+                            installation = MobileNetworkInstallation.DeserializeMobileNetworkInstallation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sites"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("platform"u8))
                         {
-                            platform = MobileNetworkPlatformConfiguration.DeserializeMobileNetworkPlatformConfiguration(property0.Value);
+                            platform = MobileNetworkPlatformConfiguration.DeserializeMobileNetworkPlatformConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("coreNetworkTechnology"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("controlPlaneAccessInterface"u8))
                         {
-                            controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
+                            controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("controlPlaneAccessVirtualIpv4Addresses"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("localDiagnosticsAccess"u8))
                         {
-                            localDiagnosticsAccess = MobileNetworkLocalDiagnosticsAccessConfiguration.DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(property0.Value);
+                            localDiagnosticsAccess = MobileNetworkLocalDiagnosticsAccessConfiguration.DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsUpload"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            diagnosticsUpload = DiagnosticsUploadConfiguration.DeserializeDiagnosticsUploadConfiguration(property0.Value);
+                            diagnosticsUpload = DiagnosticsUploadConfiguration.DeserializeDiagnosticsUploadConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventHub"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            eventHub = MobileNetworkEventHubConfiguration.DeserializeMobileNetworkEventHubConfiguration(property0.Value);
+                            eventHub = MobileNetworkEventHubConfiguration.DeserializeMobileNetworkEventHubConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("signaling"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            signaling = SignalingConfiguration.DeserializeSignalingConfiguration(property0.Value);
+                            signaling = SignalingConfiguration.DeserializeSignalingConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("interopSettings"u8))

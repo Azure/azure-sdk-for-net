@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<SharedAccessSignatureAuthorizationRule> array = new List<SharedAccessSignatureAuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item));
+                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item, options));
                     }
                     value = array;
                     continue;

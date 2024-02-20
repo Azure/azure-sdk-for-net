@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value);
+                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

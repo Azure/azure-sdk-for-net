@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Docker": return ContainerRegistryDockerBuildStep.DeserializeContainerRegistryDockerBuildStep(element);
-                    case "EncodedTask": return ContainerRegistryEncodedTaskStep.DeserializeContainerRegistryEncodedTaskStep(element);
-                    case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element);
+                    case "Docker": return ContainerRegistryDockerBuildStep.DeserializeContainerRegistryDockerBuildStep(element, options);
+                    case "EncodedTask": return ContainerRegistryEncodedTaskStep.DeserializeContainerRegistryEncodedTaskStep(element, options);
+                    case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element, options);
                 }
             }
-            return UnknownTaskStepProperties.DeserializeUnknownTaskStepProperties(element);
+            return UnknownTaskStepProperties.DeserializeUnknownTaskStepProperties(element, options);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)

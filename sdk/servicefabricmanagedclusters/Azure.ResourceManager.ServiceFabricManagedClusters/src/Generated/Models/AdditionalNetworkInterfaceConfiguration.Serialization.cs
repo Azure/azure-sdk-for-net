@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPConfiguration> array = new List<ServiceFabricManagedClusterIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item));
+                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;

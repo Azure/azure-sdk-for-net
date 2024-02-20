@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value);
+                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = ResourceQueryRequestOptions.DeserializeResourceQueryRequestOptions(property.Value);
+                    options0 = ResourceQueryRequestOptions.DeserializeResourceQueryRequestOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("facets"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetRequest> array = new List<FacetRequest>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetRequest.DeserializeFacetRequest(item));
+                        array.Add(FacetRequest.DeserializeFacetRequest(item, options));
                     }
                     facets = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentAgreement> array = new List<ConfluentAgreement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item));
+                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item, options));
                     }
                     value = array;
                     continue;

@@ -125,7 +125,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     header = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     body = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsComponent> array = new List<WhatsAppMessageTemplateBindingsComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item));
+                        array.Add(WhatsAppMessageTemplateBindingsComponent.DeserializeWhatsAppMessageTemplateBindingsComponent(item, options));
                     }
                     footer = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.Communication.Messages.Models.Channels
                     List<WhatsAppMessageTemplateBindingsButton> array = new List<WhatsAppMessageTemplateBindingsButton>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item));
+                        array.Add(WhatsAppMessageTemplateBindingsButton.DeserializeWhatsAppMessageTemplateBindingsButton(item, options));
                     }
                     buttons = array;
                     continue;

@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                                array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item, options));
                             }
                             groupByMetadata = array;
                             continue;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                                array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item, options));
                             }
                             participantProfilesMetadata = array;
                             continue;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            thresHolds = KpiThresholds.DeserializeKpiThresholds(property0.Value);
+                            thresHolds = KpiThresholds.DeserializeKpiThresholds(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aliases"u8))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<KpiAlias> array = new List<KpiAlias>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KpiAlias.DeserializeKpiAlias(item));
+                                array.Add(KpiAlias.DeserializeKpiAlias(item, options));
                             }
                             aliases = array;
                             continue;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<KpiExtract> array = new List<KpiExtract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KpiExtract.DeserializeKpiExtract(item));
+                                array.Add(KpiExtract.DeserializeKpiExtract(item, options));
                             }
                             extracts = array;
                             continue;

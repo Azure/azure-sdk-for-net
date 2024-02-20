@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
+                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))

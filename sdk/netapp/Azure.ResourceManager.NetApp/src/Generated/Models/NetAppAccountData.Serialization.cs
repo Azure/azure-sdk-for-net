@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
+                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                             }
                             activeDirectories = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableShowmount"u8))

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> array = new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(item));
+                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(item, options));
                     }
                     selectedTables = array;
                     continue;

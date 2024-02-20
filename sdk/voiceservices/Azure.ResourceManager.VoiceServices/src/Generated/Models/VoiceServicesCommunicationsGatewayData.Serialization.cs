@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.VoiceServices
                             List<VoiceServicesServiceRegionProperties> array = new List<VoiceServicesServiceRegionProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VoiceServicesServiceRegionProperties.DeserializeVoiceServicesServiceRegionProperties(item));
+                                array.Add(VoiceServicesServiceRegionProperties.DeserializeVoiceServicesServiceRegionProperties(item, options));
                             }
                             serviceLocations = array;
                             continue;

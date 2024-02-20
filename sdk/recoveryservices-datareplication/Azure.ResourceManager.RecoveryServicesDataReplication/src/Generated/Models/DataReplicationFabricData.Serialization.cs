@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value);
+                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = SignalRPrivateLinkServiceConnectionState.DeserializeSignalRPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = SignalRPrivateLinkServiceConnectionState.DeserializeSignalRPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

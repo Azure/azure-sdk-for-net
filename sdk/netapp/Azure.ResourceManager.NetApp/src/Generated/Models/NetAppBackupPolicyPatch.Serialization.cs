@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             List<NetAppVolumeBackupDetail> array = new List<NetAppVolumeBackupDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item));
+                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item, options));
                             }
                             volumeBackups = array;
                             continue;

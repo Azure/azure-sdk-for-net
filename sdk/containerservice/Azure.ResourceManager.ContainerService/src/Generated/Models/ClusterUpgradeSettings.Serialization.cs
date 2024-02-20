@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(property.Value);
+                    overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

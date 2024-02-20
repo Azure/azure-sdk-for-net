@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ElasticSan
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
-                            privateLinkServiceConnectionState = ElasticSanPrivateLinkServiceConnectionState.DeserializeElasticSanPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ElasticSanPrivateLinkServiceConnectionState.DeserializeElasticSanPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))

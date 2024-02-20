@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    smtp = Smtp.DeserializeSmtp(property.Value);
+                    smtp = Smtp.DeserializeSmtp(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

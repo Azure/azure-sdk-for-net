@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Subscription.Models
                             {
                                 continue;
                             }
-                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value);
+                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }

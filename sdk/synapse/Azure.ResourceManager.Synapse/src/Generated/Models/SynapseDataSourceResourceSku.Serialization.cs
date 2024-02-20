@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    capacity = SynapseDataSourceCapacity.DeserializeSynapseDataSourceCapacity(property.Value);
+                    capacity = SynapseDataSourceCapacity.DeserializeSynapseDataSourceCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

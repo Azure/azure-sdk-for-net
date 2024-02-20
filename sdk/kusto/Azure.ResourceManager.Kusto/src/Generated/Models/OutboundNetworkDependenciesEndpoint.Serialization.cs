@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             List<EndpointDependency> array = new List<EndpointDependency>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                                array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
                             }
                             endpoints = array;
                             continue;

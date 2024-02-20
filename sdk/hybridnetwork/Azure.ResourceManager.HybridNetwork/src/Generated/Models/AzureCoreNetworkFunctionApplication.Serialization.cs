@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmTemplate": return AzureCoreNetworkFunctionArmTemplateApplication.DeserializeAzureCoreNetworkFunctionArmTemplateApplication(element);
-                    case "VhdImageFile": return AzureCoreNetworkFunctionVhdApplication.DeserializeAzureCoreNetworkFunctionVhdApplication(element);
+                    case "ArmTemplate": return AzureCoreNetworkFunctionArmTemplateApplication.DeserializeAzureCoreNetworkFunctionArmTemplateApplication(element, options);
+                    case "VhdImageFile": return AzureCoreNetworkFunctionVhdApplication.DeserializeAzureCoreNetworkFunctionVhdApplication(element, options);
                 }
             }
-            return UnknownAzureCoreNetworkFunctionApplication.DeserializeUnknownAzureCoreNetworkFunctionApplication(element);
+            return UnknownAzureCoreNetworkFunctionApplication.DeserializeUnknownAzureCoreNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value);
+                    identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

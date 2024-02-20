@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<FieldRestriction> array = new List<FieldRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FieldRestriction.DeserializeFieldRestriction(item));
+                        array.Add(FieldRestriction.DeserializeFieldRestriction(item, options));
                     }
                     restrictions = array;
                     continue;

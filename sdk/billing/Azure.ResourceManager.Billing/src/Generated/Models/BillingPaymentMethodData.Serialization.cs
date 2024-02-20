@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing
                             List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                                array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item, options));
                             }
                             logos = array;
                             continue;

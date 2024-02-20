@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);
+                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("languageFramework"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value);
+                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

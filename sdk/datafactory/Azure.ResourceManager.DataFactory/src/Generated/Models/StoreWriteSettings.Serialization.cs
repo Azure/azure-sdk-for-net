@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlobFSWriteSettings": return AzureBlobFSWriteSettings.DeserializeAzureBlobFSWriteSettings(element);
-                    case "AzureBlobStorageWriteSettings": return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element);
-                    case "AzureDataLakeStoreWriteSettings": return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element);
-                    case "AzureFileStorageWriteSettings": return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element);
-                    case "FileServerWriteSettings": return FileServerWriteSettings.DeserializeFileServerWriteSettings(element);
-                    case "LakeHouseWriteSettings": return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element);
-                    case "SftpWriteSettings": return SftpWriteSettings.DeserializeSftpWriteSettings(element);
+                    case "AzureBlobFSWriteSettings": return AzureBlobFSWriteSettings.DeserializeAzureBlobFSWriteSettings(element, options);
+                    case "AzureBlobStorageWriteSettings": return AzureBlobStorageWriteSettings.DeserializeAzureBlobStorageWriteSettings(element, options);
+                    case "AzureDataLakeStoreWriteSettings": return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element, options);
+                    case "AzureFileStorageWriteSettings": return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element, options);
+                    case "FileServerWriteSettings": return FileServerWriteSettings.DeserializeFileServerWriteSettings(element, options);
+                    case "LakeHouseWriteSettings": return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element, options);
+                    case "SftpWriteSettings": return SftpWriteSettings.DeserializeSftpWriteSettings(element, options);
                 }
             }
-            return UnknownStoreWriteSettings.DeserializeUnknownStoreWriteSettings(element);
+            return UnknownStoreWriteSettings.DeserializeUnknownStoreWriteSettings(element, options);
         }
 
         BinaryData IPersistableModel<StoreWriteSettings>.Write(ModelReaderWriterOptions options)

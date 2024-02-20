@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBClientEncryptionIncludedPath> array = new List<CosmosDBClientEncryptionIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBClientEncryptionIncludedPath.DeserializeCosmosDBClientEncryptionIncludedPath(item));
+                        array.Add(CosmosDBClientEncryptionIncludedPath.DeserializeCosmosDBClientEncryptionIncludedPath(item, options));
                     }
                     includedPaths = array;
                     continue;

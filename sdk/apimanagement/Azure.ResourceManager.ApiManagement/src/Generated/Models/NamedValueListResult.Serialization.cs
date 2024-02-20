@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementNamedValueData> array = new List<ApiManagementNamedValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(item));
+                        array.Add(ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(item, options));
                     }
                     value = array;
                     continue;

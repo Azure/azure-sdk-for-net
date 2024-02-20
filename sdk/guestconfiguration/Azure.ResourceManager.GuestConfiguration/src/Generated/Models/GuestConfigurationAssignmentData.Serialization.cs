@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     {
                         continue;
                     }
-                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(property.Value);
+                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Migrate.SqlServer.AzureDbSqlMi.Complete": return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element);
-                    case "Migrate.Sync.Complete.Database": return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element);
-                    case "cancel": return MongoDBCancelCommand.DeserializeMongoDBCancelCommand(element);
-                    case "finish": return MongoDBFinishCommand.DeserializeMongoDBFinishCommand(element);
-                    case "restart": return MongoDBRestartCommand.DeserializeMongoDBRestartCommand(element);
+                    case "Migrate.SqlServer.AzureDbSqlMi.Complete": return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element, options);
+                    case "Migrate.Sync.Complete.Database": return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element, options);
+                    case "cancel": return MongoDBCancelCommand.DeserializeMongoDBCancelCommand(element, options);
+                    case "finish": return MongoDBFinishCommand.DeserializeMongoDBFinishCommand(element, options);
+                    case "restart": return MongoDBRestartCommand.DeserializeMongoDBRestartCommand(element, options);
                 }
             }
-            return UnknownCommandProperties.DeserializeUnknownCommandProperties(element);
+            return UnknownCommandProperties.DeserializeUnknownCommandProperties(element, options);
         }
 
         BinaryData IPersistableModel<CommandProperties>.Write(ModelReaderWriterOptions options)

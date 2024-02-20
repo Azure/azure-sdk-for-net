@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value);
+                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

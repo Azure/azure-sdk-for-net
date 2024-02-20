@@ -71,14 +71,14 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCognitiveSearch": return AzureCognitiveSearchChatExtensionConfiguration.DeserializeAzureCognitiveSearchChatExtensionConfiguration(element);
-                    case "AzureMLIndex": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element);
-                    case "AzureCosmosDB": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element);
-                    case "Elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element);
-                    case "Pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element);
+                    case "AzureCognitiveSearch": return AzureCognitiveSearchChatExtensionConfiguration.DeserializeAzureCognitiveSearchChatExtensionConfiguration(element, options);
+                    case "AzureMLIndex": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element, options);
+                    case "AzureCosmosDB": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element, options);
+                    case "Elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element, options);
+                    case "Pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element, options);
                 }
             }
-            return UnknownAzureChatExtensionConfiguration.DeserializeUnknownAzureChatExtensionConfiguration(element);
+            return UnknownAzureChatExtensionConfiguration.DeserializeUnknownAzureChatExtensionConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionConfiguration>.Write(ModelReaderWriterOptions options)

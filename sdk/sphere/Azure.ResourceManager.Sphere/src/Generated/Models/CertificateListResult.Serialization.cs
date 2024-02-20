@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereCertificateData> array = new List<SphereCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereCertificateData.DeserializeSphereCertificateData(item));
+                        array.Add(SphereCertificateData.DeserializeSphereCertificateData(item, options));
                     }
                     value = array;
                     continue;

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmManagedDiskUpdateDetails> array = new List<A2AVmManagedDiskUpdateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskUpdateDetails.DeserializeA2AVmManagedDiskUpdateDetails(item));
+                        array.Add(A2AVmManagedDiskUpdateDetails.DeserializeA2AVmManagedDiskUpdateDetails(item, options));
                     }
                     managedDiskUpdateDetails = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tfoAzureVMName"u8))

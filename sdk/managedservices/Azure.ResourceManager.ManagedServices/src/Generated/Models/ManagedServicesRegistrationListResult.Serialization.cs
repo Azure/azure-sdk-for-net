@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesRegistrationData> array = new List<ManagedServicesRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(item));
+                        array.Add(ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(item, options));
                     }
                     value = array;
                     continue;

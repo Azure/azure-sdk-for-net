@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthAvailabilityStatus> array = new List<ResourceHealthAvailabilityStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(item));
+                        array.Add(ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(item, options));
                     }
                     value = array;
                     continue;

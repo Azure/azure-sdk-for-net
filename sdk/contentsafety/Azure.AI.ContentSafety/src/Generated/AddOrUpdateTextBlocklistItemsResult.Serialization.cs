@@ -82,7 +82,7 @@ namespace Azure.AI.ContentSafety
                     List<TextBlocklistItem> array = new List<TextBlocklistItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistItem.DeserializeTextBlocklistItem(item));
+                        array.Add(TextBlocklistItem.DeserializeTextBlocklistItem(item, options));
                     }
                     blocklistItems = array;
                     continue;

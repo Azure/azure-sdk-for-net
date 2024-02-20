@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementLoggerData> array = new List<ApiManagementLoggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementLoggerData.DeserializeApiManagementLoggerData(item));
+                        array.Add(ApiManagementLoggerData.DeserializeApiManagementLoggerData(item, options));
                     }
                     value = array;
                     continue;

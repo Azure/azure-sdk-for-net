@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusAuthorizationRuleData> array = new List<ServiceBusAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(item));
+                        array.Add(ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
+                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value);
+                            links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value);
+                            metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnersData"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value);
+                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = SecurityAssessmentStatusResult.DeserializeSecurityAssessmentStatusResult(property0.Value);
+                            status = SecurityAssessmentStatusResult.DeserializeSecurityAssessmentStatusResult(property0.Value, options);
                             continue;
                         }
                     }

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            logRules = NewRelicObservabilityLogRules.DeserializeNewRelicObservabilityLogRules(property0.Value);
+                            logRules = NewRelicObservabilityLogRules.DeserializeNewRelicObservabilityLogRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricRules"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            metricRules = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(property0.Value);
+                            metricRules = NewRelicObservabilityMetricRules.DeserializeNewRelicObservabilityMetricRules(property0.Value, options);
                             continue;
                         }
                     }

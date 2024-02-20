@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value);
+                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value);
+                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delegatedSubnetId"u8))

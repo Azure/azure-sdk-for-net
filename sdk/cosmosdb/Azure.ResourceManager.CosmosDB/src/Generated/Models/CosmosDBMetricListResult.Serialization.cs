@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBBaseMetric> array = new List<CosmosDBBaseMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(item));
+                        array.Add(CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(item, options));
                     }
                     value = array;
                     continue;

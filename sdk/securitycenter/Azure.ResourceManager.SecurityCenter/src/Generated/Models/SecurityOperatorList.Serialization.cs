@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityOperatorData> array = new List<SecurityOperatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityOperatorData.DeserializeSecurityOperatorData(item));
+                        array.Add(SecurityOperatorData.DeserializeSecurityOperatorData(item, options));
                     }
                     value = array;
                     continue;

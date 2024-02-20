@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = RenewCertificateContentProperties.DeserializeRenewCertificateContentProperties(property.Value);
+                    properties = RenewCertificateContentProperties.DeserializeRenewCertificateContentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

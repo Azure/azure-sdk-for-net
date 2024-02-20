@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubEffectiveRoute> array = new List<VirtualHubEffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item));
+                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item, options));
                     }
                     value = array;
                     continue;

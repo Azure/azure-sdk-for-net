@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<FieldRestrictions> array = new List<FieldRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FieldRestrictions.DeserializeFieldRestrictions(item));
+                        array.Add(Models.FieldRestrictions.DeserializeFieldRestrictions(item, options));
                     }
                     fieldRestrictions = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value);
+                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

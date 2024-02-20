@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPasswordDetail> array = new List<MachineLearningPasswordDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item));
+                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item, options));
                     }
                     passwords = array;
                     continue;

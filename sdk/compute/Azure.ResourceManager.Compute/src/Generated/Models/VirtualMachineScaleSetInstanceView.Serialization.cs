@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value);
+                    virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetVmExtensionsSummary> array = new List<VirtualMachineScaleSetVmExtensionsSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetVmExtensionsSummary.DeserializeVirtualMachineScaleSetVmExtensionsSummary(item));
+                        array.Add(VirtualMachineScaleSetVmExtensionsSummary.DeserializeVirtualMachineScaleSetVmExtensionsSummary(item, options));
                     }
                     extensions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<OrchestrationServiceSummary> array = new List<OrchestrationServiceSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item));
+                        array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item, options));
                     }
                     orchestrationServices = array;
                     continue;

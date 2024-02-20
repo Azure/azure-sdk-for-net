@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value);
+                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

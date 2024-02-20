@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item, options));
                     }
                     subnets = array;
                     continue;

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRule> array = new List<ExclusionManagedRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRule.DeserializeExclusionManagedRule(item));
+                        array.Add(ExclusionManagedRule.DeserializeExclusionManagedRule(item, options));
                     }
                     rules = array;
                     continue;

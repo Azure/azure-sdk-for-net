@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value);
+                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reportSystemData"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceResult> array = new List<ComplianceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceResult.DeserializeComplianceResult(item));
+                        array.Add(ComplianceResult.DeserializeComplianceResult(item, options));
                     }
                     complianceResults = array;
                     continue;

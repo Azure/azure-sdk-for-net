@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceNewPurchasesDetail> array = new List<ConsumptionBalanceNewPurchasesDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item));
+                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item, options));
                             }
                             newPurchasesDetails = array;
                             continue;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceAdjustmentDetail> array = new List<ConsumptionBalanceAdjustmentDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item));
+                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item, options));
                             }
                             adjustmentDetails = array;
                             continue;

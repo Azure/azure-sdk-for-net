@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscNodeCount> array = new List<DscNodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscNodeCount.DeserializeDscNodeCount(item));
+                        array.Add(DscNodeCount.DeserializeDscNodeCount(item, options));
                     }
                     value = array;
                     continue;

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeNodeMonitoringResult> array = new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
+                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item, options));
                     }
                     nodes = array;
                     continue;

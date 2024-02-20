@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value);
+                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterLocation"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value);
+                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeDeploymentThreshold"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value);
+                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeRackDefinitions"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudRackDefinition> array = new List<NetworkCloudRackDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item, options));
                             }
                             computeRackDefinitions = array;
                             continue;

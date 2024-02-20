@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item, options));
                     }
                     metadata = array;
                     continue;

@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsApplicationGroupPolicy> array = new List<EventHubsApplicationGroupPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item));
+                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item, options));
                             }
                             policies = array;
                             continue;

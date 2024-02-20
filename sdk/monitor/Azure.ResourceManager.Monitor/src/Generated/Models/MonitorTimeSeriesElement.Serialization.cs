@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetadataValue> array = new List<MonitorMetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item, options));
                     }
                     metadatavalues = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricValue> array = new List<MonitorMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item, options));
                     }
                     data = array;
                     continue;

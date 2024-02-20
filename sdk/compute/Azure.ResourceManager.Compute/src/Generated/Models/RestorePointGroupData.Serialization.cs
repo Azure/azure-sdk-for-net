@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            source = RestorePointGroupSource.DeserializeRestorePointGroupSource(property0.Value);
+                            source = RestorePointGroupSource.DeserializeRestorePointGroupSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                             List<RestorePointData> array = new List<RestorePointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RestorePointData.DeserializeRestorePointData(item));
+                                array.Add(RestorePointData.DeserializeRestorePointData(item, options));
                             }
                             restorePoints = array;
                             continue;

@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmErrorInfo> array = new List<IaasVmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item));
+                        array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = IaasVmBackupJobExtendedInfo.DeserializeIaasVmBackupJobExtendedInfo(property.Value);
+                    extendedInfo = IaasVmBackupJobExtendedInfo.DeserializeIaasVmBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

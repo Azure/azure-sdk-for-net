@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value);
+                    identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
+                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchAccountResourceId"u8))

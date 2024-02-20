@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H265Layer> array = new List<H265Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H265Layer.DeserializeH265Layer(item));
+                        array.Add(H265Layer.DeserializeH265Layer(item, options));
                     }
                     layers = array;
                     continue;

@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuLocationInfo> array = new List<ResourceTypeSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuLocationInfo.DeserializeResourceTypeSkuLocationInfo(item));
+                        array.Add(ResourceTypeSkuLocationInfo.DeserializeResourceTypeSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(property.Value);
+                    capacity = ResourceTypeSkuCapacity.DeserializeResourceTypeSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("costs"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuCost> array = new List<ResourceTypeSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuCost.DeserializeResourceTypeSkuCost(item));
+                        array.Add(ResourceTypeSkuCost.DeserializeResourceTypeSkuCost(item, options));
                     }
                     costs = array;
                     continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceSkuCapability> array = new List<ResourceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item));
+                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

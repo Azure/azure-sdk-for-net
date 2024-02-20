@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
+                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"u8))

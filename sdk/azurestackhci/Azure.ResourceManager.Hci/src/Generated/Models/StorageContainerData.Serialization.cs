@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = StorageContainerStatus.DeserializeStorageContainerStatus(property0.Value);
+                            status = StorageContainerStatus.DeserializeStorageContainerStatus(property0.Value, options);
                             continue;
                         }
                     }

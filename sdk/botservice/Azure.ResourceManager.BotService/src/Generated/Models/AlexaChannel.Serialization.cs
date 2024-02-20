@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = AlexaChannelProperties.DeserializeAlexaChannelProperties(property.Value);
+                    properties = AlexaChannelProperties.DeserializeAlexaChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

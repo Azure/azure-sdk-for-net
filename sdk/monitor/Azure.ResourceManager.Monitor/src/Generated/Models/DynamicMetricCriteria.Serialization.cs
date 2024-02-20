@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("failingPeriods"u8))
                 {
-                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value);
+                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ignoreDataBefore"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;

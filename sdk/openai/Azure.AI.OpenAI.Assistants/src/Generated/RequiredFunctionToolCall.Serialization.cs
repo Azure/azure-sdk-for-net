@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value);
+                    function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

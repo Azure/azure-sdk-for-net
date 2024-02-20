@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptPackageData> array = new List<ScriptPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptPackageData.DeserializeScriptPackageData(item));
+                        array.Add(ScriptPackageData.DeserializeScriptPackageData(item, options));
                     }
                     value = array;
                     continue;

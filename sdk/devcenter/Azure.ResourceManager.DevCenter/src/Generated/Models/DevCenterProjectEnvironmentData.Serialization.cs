@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value);
+                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRoleAssignments"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
                             Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value, options));
                             }
                             userRoleAssignments = dictionary;
                             continue;

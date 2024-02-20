@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AudioTrackDescriptor": return AudioTrackDescriptor.DeserializeAudioTrackDescriptor(element);
-                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
-                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element);
-                    case "#Microsoft.Media.VideoTrackDescriptor": return VideoTrackDescriptor.DeserializeVideoTrackDescriptor(element);
+                    case "#Microsoft.Media.AudioTrackDescriptor": return AudioTrackDescriptor.DeserializeAudioTrackDescriptor(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element, options);
+                    case "#Microsoft.Media.VideoTrackDescriptor": return VideoTrackDescriptor.DeserializeVideoTrackDescriptor(element, options);
                 }
             }
-            return UnknownTrackDescriptor.DeserializeUnknownTrackDescriptor(element);
+            return UnknownTrackDescriptor.DeserializeUnknownTrackDescriptor(element, options);
         }
 
         BinaryData IPersistableModel<TrackDescriptor>.Write(ModelReaderWriterOptions options)

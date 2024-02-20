@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = VaultHealthProperties.DeserializeVaultHealthProperties(property.Value);
+                    properties = VaultHealthProperties.DeserializeVaultHealthProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

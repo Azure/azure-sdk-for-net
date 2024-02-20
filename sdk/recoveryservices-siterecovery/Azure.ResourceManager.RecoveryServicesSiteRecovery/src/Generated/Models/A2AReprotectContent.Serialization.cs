@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item));
+                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;

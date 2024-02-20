@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<LatencyMetric> array = new List<LatencyMetric>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LatencyMetric.DeserializeLatencyMetric(item));
+                                array.Add(LatencyMetric.DeserializeLatencyMetric(item, options));
                             }
                             latencyMetrics = array;
                             continue;

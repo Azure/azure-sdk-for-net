@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosTargetReference> array = new List<ChaosTargetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
+                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item, options));
                     }
                     targets = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value);
+                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

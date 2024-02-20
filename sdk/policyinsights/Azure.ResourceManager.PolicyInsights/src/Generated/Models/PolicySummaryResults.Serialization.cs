@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item, options));
                     }
                     resourceDetails = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item, options));
                     }
                     policyDetails = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item, options));
                     }
                     policyGroupDetails = array;
                     continue;

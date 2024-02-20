@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkResourceData> array = new List<HDInsightPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(item));
+                        array.Add(HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

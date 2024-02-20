@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = MachineLearningAksComputeProperties.DeserializeMachineLearningAksComputeProperties(property.Value);
+                    properties = MachineLearningAksComputeProperties.DeserializeMachineLearningAksComputeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     provisioningErrors = array;
                     continue;

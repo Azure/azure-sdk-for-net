@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    properties = SynapsePrivateEndpointConnectionProperties.DeserializeSynapsePrivateEndpointConnectionProperties(property.Value);
+                    properties = SynapsePrivateEndpointConnectionProperties.DeserializeSynapsePrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

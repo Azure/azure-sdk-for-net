@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value);
+                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
+                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeletePolicy"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingStatus"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value);
+                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value, options);
                             continue;
                         }
                     }

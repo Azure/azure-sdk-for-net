@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkVirtualMachineData> array = new List<WorkloadNetworkVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(item));
+                        array.Add(WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;

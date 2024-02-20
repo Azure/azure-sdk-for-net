@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            filters = RemediationFilters.DeserializeRemediationFilters(property0.Value);
+                            filters = RemediationFilters.DeserializeRemediationFilters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deploymentStatus"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            deploymentStatus = RemediationDeploymentSummary.DeserializeRemediationDeploymentSummary(property0.Value);
+                            deploymentStatus = RemediationDeploymentSummary.DeserializeRemediationDeploymentSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("statusMessage"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             {
                                 continue;
                             }
-                            failureThreshold = RemediationPropertiesFailureThreshold.DeserializeRemediationPropertiesFailureThreshold(property0.Value);
+                            failureThreshold = RemediationPropertiesFailureThreshold.DeserializeRemediationPropertiesFailureThreshold(property0.Value, options);
                             continue;
                         }
                     }

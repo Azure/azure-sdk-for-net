@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    properties = DatadogAgreementProperties.DeserializeDatadogAgreementProperties(property.Value);
+                    properties = DatadogAgreementProperties.DeserializeDatadogAgreementProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

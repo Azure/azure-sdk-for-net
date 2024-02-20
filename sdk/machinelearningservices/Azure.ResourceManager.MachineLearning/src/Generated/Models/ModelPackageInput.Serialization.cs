@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("path"u8))
                 {
-                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value);
+                    path = PackageInputPathBase.DeserializePackageInputPathBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value);
+                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value);
+                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value);
+                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value);
+                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

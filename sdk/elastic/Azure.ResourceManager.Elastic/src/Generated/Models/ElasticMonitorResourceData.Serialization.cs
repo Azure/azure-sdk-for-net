@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    properties = MonitorProperties.DeserializeMonitorProperties(property.Value);
+                    properties = MonitorProperties.DeserializeMonitorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

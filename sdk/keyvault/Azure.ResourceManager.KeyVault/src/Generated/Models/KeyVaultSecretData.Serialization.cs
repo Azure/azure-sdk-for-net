@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SecretProperties.DeserializeSecretProperties(property.Value);
+                    properties = SecretProperties.DeserializeSecretProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

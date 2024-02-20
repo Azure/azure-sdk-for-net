@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<BillingBenefitsSavingsPlanOrderAliasData> array = new List<BillingBenefitsSavingsPlanOrderAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(item));
+                        array.Add(BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(item, options));
                     }
                     benefits = array;
                     continue;

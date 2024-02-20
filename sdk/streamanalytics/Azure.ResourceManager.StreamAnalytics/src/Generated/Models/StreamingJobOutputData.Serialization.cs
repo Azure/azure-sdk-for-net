@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value);
+                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeWindow"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value);
+                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value);
+                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("etag"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<LastOutputEventTimestamp> array = new List<LastOutputEventTimestamp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item));
+                                array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item, options));
                             }
                             lastOutputEventTimestamps = array;
                             continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value);
+                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value, options);
                             continue;
                         }
                     }

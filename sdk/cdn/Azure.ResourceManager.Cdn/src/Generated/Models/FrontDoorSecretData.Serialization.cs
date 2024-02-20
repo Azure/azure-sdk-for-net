@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(property0.Value);
+                            parameters = FrontDoorSecretProperties.DeserializeFrontDoorSecretProperties(property0.Value, options);
                             continue;
                         }
                     }

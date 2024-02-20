@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingRecoveryVirtualNetwork.DeserializeExistingRecoveryVirtualNetwork(element);
-                    case "New": return NewRecoveryVirtualNetwork.DeserializeNewRecoveryVirtualNetwork(element);
+                    case "Existing": return ExistingRecoveryVirtualNetwork.DeserializeExistingRecoveryVirtualNetwork(element, options);
+                    case "New": return NewRecoveryVirtualNetwork.DeserializeNewRecoveryVirtualNetwork(element, options);
                 }
             }
-            return UnknownRecoveryVirtualNetworkCustomDetails.DeserializeUnknownRecoveryVirtualNetworkCustomDetails(element);
+            return UnknownRecoveryVirtualNetworkCustomDetails.DeserializeUnknownRecoveryVirtualNetworkCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryVirtualNetworkCustomDetails>.Write(ModelReaderWriterOptions options)

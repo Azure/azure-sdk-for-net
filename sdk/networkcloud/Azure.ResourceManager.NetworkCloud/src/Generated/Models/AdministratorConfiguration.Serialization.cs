@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item, options));
                     }
                     sshPublicKeys = array;
                     continue;

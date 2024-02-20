@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BaseAdminRuleData> array = new List<BaseAdminRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BaseAdminRuleData.DeserializeBaseAdminRuleData(item));
+                        array.Add(BaseAdminRuleData.DeserializeBaseAdminRuleData(item, options));
                     }
                     value = array;
                     continue;

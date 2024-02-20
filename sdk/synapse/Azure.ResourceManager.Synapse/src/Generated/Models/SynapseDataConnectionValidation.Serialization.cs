@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    properties = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(property.Value);
+                    properties = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

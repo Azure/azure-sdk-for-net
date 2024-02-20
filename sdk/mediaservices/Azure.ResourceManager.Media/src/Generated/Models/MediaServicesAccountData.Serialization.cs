@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
+                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
+                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyDelivery"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
+                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

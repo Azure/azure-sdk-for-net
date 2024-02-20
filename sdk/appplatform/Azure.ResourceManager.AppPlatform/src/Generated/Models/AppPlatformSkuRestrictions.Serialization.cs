@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    restrictionInfo = AppPlatformSkuRestrictionInfo.DeserializeAppPlatformSkuRestrictionInfo(property.Value);
+                    restrictionInfo = AppPlatformSkuRestrictionInfo.DeserializeAppPlatformSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

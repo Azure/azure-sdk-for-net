@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseMigration> array = new List<DatabaseMigration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseMigration.DeserializeDatabaseMigration(item));
+                        array.Add(DatabaseMigration.DeserializeDatabaseMigration(item, options));
                     }
                     value = array;
                     continue;

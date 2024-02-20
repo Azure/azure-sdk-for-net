@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value);
+                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsMountConfiguration"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value);
+                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cifsMountConfiguration"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value);
+                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureFileShareConfiguration"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value);
+                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

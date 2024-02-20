@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = ComputeUsageName.DeserializeComputeUsageName(property.Value);
+                    name = ComputeUsageName.DeserializeComputeUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("hierarchyInformation"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
+                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filterableProperty"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<FilterableProperty> array = new List<FilterableProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item));
+                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item, options));
                     }
                     filterableProperty = array;
                     continue;

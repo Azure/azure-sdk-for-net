@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<QuotaCounterContract> array = new List<QuotaCounterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaCounterContract.DeserializeQuotaCounterContract(item));
+                        array.Add(QuotaCounterContract.DeserializeQuotaCounterContract(item, options));
                     }
                     value = array;
                     continue;

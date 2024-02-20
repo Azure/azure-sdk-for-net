@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Blueprint
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupValue> dictionary = new Dictionary<string, ResourceGroupValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value);
+                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locks"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value);
+                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

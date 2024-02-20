@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapsePrivateLinkHubData> array = new List<SynapsePrivateLinkHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(item));
+                        array.Add(SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(item, options));
                     }
                     value = array;
                     continue;

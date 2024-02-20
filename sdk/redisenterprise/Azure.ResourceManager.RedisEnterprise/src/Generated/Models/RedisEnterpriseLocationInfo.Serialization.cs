@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseCapability> array = new List<RedisEnterpriseCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseCapability.DeserializeRedisEnterpriseCapability(item));
+                        array.Add(RedisEnterpriseCapability.DeserializeRedisEnterpriseCapability(item, options));
                     }
                     capabilities = array;
                     continue;

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningUsageName.DeserializeMachineLearningUsageName(property.Value);
+                    name = MachineLearningUsageName.DeserializeMachineLearningUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

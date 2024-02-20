@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                        array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

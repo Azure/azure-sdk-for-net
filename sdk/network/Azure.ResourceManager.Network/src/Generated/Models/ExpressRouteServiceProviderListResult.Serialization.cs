@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteServiceProvider> array = new List<ExpressRouteServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(item));
+                        array.Add(ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(item, options));
                     }
                     value = array;
                     continue;

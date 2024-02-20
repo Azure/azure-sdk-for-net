@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         properties = null;
                         continue;
                     }
-                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value);
+                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

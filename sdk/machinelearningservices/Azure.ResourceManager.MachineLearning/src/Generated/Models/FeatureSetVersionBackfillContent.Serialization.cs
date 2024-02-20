@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureWindow = null;
                         continue;
                     }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value);
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value);
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))

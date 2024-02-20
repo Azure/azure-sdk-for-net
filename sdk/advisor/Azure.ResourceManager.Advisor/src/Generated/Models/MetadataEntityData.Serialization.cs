@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Advisor
                             List<MetadataSupportedValueDetail> array = new List<MetadataSupportedValueDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item, options));
                             }
                             supportedValues = array;
                             continue;

@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return ClassificationModelPerformanceMetricThreshold.DeserializeClassificationModelPerformanceMetricThreshold(element);
-                    case "Regression": return RegressionModelPerformanceMetricThreshold.DeserializeRegressionModelPerformanceMetricThreshold(element);
+                    case "Classification": return ClassificationModelPerformanceMetricThreshold.DeserializeClassificationModelPerformanceMetricThreshold(element, options);
+                    case "Regression": return RegressionModelPerformanceMetricThreshold.DeserializeRegressionModelPerformanceMetricThreshold(element, options);
                 }
             }
-            return UnknownModelPerformanceMetricThresholdBase.DeserializeUnknownModelPerformanceMetricThresholdBase(element);
+            return UnknownModelPerformanceMetricThresholdBase.DeserializeUnknownModelPerformanceMetricThresholdBase(element, options);
         }
 
         BinaryData IPersistableModel<ModelPerformanceMetricThresholdBase>.Write(ModelReaderWriterOptions options)

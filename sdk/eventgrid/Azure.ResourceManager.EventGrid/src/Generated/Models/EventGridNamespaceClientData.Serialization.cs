@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            clientCertificateAuthentication = ClientCertificateAuthentication.DeserializeClientCertificateAuthentication(property0.Value);
+                            clientCertificateAuthentication = ClientCertificateAuthentication.DeserializeClientCertificateAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))

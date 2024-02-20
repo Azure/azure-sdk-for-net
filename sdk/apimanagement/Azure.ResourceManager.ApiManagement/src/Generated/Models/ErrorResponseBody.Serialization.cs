@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ErrorFieldContract> array = new List<ErrorFieldContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item));
+                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item, options));
                     }
                     details = array;
                     continue;

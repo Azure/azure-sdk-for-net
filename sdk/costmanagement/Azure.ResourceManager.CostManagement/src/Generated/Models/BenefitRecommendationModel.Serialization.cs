@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = BenefitRecommendationProperties.DeserializeBenefitRecommendationProperties(property.Value);
+                    properties = BenefitRecommendationProperties.DeserializeBenefitRecommendationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

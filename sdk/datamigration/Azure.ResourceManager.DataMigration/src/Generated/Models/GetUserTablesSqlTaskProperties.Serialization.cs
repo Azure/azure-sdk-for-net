@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(property.Value);
+                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<GetUserTablesSqlTaskOutput> array = new List<GetUserTablesSqlTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item));
+                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;

@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            mappings = PredictionMappings.DeserializePredictionMappings(property0.Value);
+                            mappings = PredictionMappings.DeserializePredictionMappings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scoreLabel"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PredictionGradesItem> array = new List<PredictionGradesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item));
+                                array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item, options));
                             }
                             grades = array;
                             continue;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            systemGeneratedEntities = PredictionSystemGeneratedEntities.DeserializePredictionSystemGeneratedEntities(property0.Value);
+                            systemGeneratedEntities = PredictionSystemGeneratedEntities.DeserializePredictionSystemGeneratedEntities(property0.Value, options);
                             continue;
                         }
                     }

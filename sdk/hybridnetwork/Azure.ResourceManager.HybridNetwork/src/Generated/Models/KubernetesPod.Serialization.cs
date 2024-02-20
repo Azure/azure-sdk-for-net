@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<PodEvent> array = new List<PodEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PodEvent.DeserializePodEvent(item));
+                        array.Add(PodEvent.DeserializePodEvent(item, options));
                     }
                     events = array;
                     continue;

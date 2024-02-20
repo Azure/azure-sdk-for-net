@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value);
+                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridPrivateEndpointConnectionData> array = new List<EventGridPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item));
+                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("minimumTlsVersionAllowed"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            inputSchemaMapping = EventGridInputSchemaMapping.DeserializeEventGridInputSchemaMapping(property0.Value);
+                            inputSchemaMapping = EventGridInputSchemaMapping.DeserializeEventGridInputSchemaMapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricResourceId"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;

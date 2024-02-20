@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = SqlProtectedItemExtendedInfo.DeserializeSqlProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = SqlProtectedItemExtendedInfo.DeserializeSqlProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

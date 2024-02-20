@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ServiceEmergingIssueData> array = new List<ServiceEmergingIssueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item));
+                        array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item, options));
                     }
                     value = array;
                     continue;

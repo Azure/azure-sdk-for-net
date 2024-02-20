@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = InventoryItemProperties.DeserializeInventoryItemProperties(property.Value);
+                    properties = InventoryItemProperties.DeserializeInventoryItemProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

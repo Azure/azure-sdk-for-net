@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = EnableProtectionProviderSpecificContent.DeserializeEnableProtectionProviderSpecificContent(property.Value);
+                    providerSpecificDetails = EnableProtectionProviderSpecificContent.DeserializeEnableProtectionProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

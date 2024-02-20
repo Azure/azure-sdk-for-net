@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoForecastHorizon.DeserializeAutoForecastHorizon(element);
-                    case "Custom": return CustomForecastHorizon.DeserializeCustomForecastHorizon(element);
+                    case "Auto": return AutoForecastHorizon.DeserializeAutoForecastHorizon(element, options);
+                    case "Custom": return CustomForecastHorizon.DeserializeCustomForecastHorizon(element, options);
                 }
             }
-            return UnknownForecastHorizon.DeserializeUnknownForecastHorizon(element);
+            return UnknownForecastHorizon.DeserializeUnknownForecastHorizon(element, options);
         }
 
         BinaryData IPersistableModel<ForecastHorizon>.Write(ModelReaderWriterOptions options)

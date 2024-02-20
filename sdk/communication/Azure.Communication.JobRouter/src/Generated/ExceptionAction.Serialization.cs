@@ -76,12 +76,12 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "cancel": return CancelExceptionAction.DeserializeCancelExceptionAction(element);
-                    case "manualReclassify": return ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(element);
-                    case "reclassify": return ReclassifyExceptionAction.DeserializeReclassifyExceptionAction(element);
+                    case "cancel": return CancelExceptionAction.DeserializeCancelExceptionAction(element, options);
+                    case "manualReclassify": return ManualReclassifyExceptionAction.DeserializeManualReclassifyExceptionAction(element, options);
+                    case "reclassify": return ReclassifyExceptionAction.DeserializeReclassifyExceptionAction(element, options);
                 }
             }
-            return UnknownExceptionAction.DeserializeUnknownExceptionAction(element);
+            return UnknownExceptionAction.DeserializeUnknownExceptionAction(element, options);
         }
 
         BinaryData IPersistableModel<ExceptionAction>.Write(ModelReaderWriterOptions options)

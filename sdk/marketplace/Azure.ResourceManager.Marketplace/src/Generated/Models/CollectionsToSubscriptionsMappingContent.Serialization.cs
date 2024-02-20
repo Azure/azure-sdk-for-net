@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    properties = CollectionsToSubscriptionsMappingProperties.DeserializeCollectionsToSubscriptionsMappingProperties(property.Value);
+                    properties = CollectionsToSubscriptionsMappingProperties.DeserializeCollectionsToSubscriptionsMappingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

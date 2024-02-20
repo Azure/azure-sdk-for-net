@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationCredentialData> array = new List<AutomationCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationCredentialData.DeserializeAutomationCredentialData(item));
+                        array.Add(AutomationCredentialData.DeserializeAutomationCredentialData(item, options));
                     }
                     value = array;
                     continue;

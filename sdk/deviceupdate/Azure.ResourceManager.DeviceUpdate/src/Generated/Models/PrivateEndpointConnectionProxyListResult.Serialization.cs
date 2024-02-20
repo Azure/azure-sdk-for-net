@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateEndpointConnectionProxyData> array = new List<DeviceUpdatePrivateEndpointConnectionProxyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(item));
+                        array.Add(DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item));
+                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item, options));
                     }
                     value = array;
                     continue;

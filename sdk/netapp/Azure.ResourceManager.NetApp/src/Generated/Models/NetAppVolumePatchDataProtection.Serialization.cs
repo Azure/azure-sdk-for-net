@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
+                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

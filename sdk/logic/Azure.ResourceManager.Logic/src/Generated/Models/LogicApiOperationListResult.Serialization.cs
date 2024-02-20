@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicApiOperationInfo> array = new List<LogicApiOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item));
+                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item, options));
                     }
                     value = array;
                     continue;

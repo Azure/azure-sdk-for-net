@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory
                     Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property0.Value));
+                        dictionary.Add(property0.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;

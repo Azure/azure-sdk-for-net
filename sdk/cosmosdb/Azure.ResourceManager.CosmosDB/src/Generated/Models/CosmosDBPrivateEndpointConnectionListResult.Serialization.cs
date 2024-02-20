@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPrivateEndpointConnectionData> array = new List<CosmosDBPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(item));
+                        array.Add(CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

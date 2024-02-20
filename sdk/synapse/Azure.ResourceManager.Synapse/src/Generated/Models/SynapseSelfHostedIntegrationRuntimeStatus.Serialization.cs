@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseSelfHostedIntegrationRuntimeNode> array = new List<SynapseSelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item));
+                                array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseLinkedIntegrationRuntime> array = new List<SynapseLinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item));
+                                array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item, options));
                             }
                             links = array;
                             continue;

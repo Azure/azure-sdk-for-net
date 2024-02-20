@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item));
+                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item, options));
                     }
                     firewallRules = array;
                     continue;

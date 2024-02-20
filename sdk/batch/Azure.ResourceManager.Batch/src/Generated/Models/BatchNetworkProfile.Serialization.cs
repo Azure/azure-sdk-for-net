@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    accountAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value);
+                    accountAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeManagementAccess"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeManagementAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value);
+                    nodeManagementAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

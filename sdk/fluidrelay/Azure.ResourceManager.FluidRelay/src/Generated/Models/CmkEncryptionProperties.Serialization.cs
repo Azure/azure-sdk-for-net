@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
+                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))

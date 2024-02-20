@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<VirtualMachineResourceNames> array = new List<VirtualMachineResourceNames>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item));
+                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value);
+                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

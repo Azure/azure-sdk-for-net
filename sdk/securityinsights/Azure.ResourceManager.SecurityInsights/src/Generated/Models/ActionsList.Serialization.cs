@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsAlertRuleActionData> array = new List<SecurityInsightsAlertRuleActionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(item));
+                        array.Add(SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(item, options));
                     }
                     value = array;
                     continue;

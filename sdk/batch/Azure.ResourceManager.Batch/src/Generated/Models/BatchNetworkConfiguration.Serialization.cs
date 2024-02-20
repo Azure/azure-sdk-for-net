@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value);
+                    endpointConfiguration = PoolEndpointConfiguration.DeserializePoolEndpointConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicIPAddressConfiguration"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value);
+                    publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAcceleratedNetworking"u8))

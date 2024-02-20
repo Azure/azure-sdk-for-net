@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkProfileData> array = new List<NetworkProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkProfileData.DeserializeNetworkProfileData(item));
+                        array.Add(NetworkProfileData.DeserializeNetworkProfileData(item, options));
                     }
                     value = array;
                     continue;

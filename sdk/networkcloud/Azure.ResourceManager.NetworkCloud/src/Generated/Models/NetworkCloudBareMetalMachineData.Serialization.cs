@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("bmcCredentials"u8))
                         {
-                            bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value);
+                            bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bmcMacAddress"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareInventory = HardwareInventory.DeserializeHardwareInventory(property0.Value);
+                            hardwareInventory = HardwareInventory.DeserializeHardwareInventory(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hardwareValidationStatus"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareValidationStatus = HardwareValidationStatus.DeserializeHardwareValidationStatus(property0.Value);
+                            hardwareValidationStatus = HardwareValidationStatus.DeserializeHardwareValidationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hybridAksClustersAssociatedIds"u8))

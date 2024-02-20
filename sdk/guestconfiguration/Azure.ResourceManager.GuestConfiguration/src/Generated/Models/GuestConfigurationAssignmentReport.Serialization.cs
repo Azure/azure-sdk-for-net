@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    properties = GuestConfigurationAssignmentReportProperties.DeserializeGuestConfigurationAssignmentReportProperties(property.Value);
+                    properties = GuestConfigurationAssignmentReportProperties.DeserializeGuestConfigurationAssignmentReportProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

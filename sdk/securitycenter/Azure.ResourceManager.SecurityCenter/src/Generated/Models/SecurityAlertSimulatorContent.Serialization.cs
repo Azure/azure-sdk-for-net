@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = SecurityAlertSimulatorRequestProperties.DeserializeSecurityAlertSimulatorRequestProperties(property.Value);
+                    properties = SecurityAlertSimulatorRequestProperties.DeserializeSecurityAlertSimulatorRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

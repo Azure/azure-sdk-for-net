@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ScopeAssignmentData> array = new List<ScopeAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeAssignmentData.DeserializeScopeAssignmentData(item));
+                        array.Add(ScopeAssignmentData.DeserializeScopeAssignmentData(item, options));
                     }
                     value = array;
                     continue;

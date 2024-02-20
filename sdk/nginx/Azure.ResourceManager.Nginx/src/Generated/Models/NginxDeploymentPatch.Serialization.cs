@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value);
+                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value);
+                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

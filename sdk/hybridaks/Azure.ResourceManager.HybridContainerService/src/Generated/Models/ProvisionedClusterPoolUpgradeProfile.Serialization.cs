@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterPoolUpgradeProfileProperties> array = new List<ProvisionedClusterPoolUpgradeProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterPoolUpgradeProfileProperties.DeserializeProvisionedClusterPoolUpgradeProfileProperties(item));
+                        array.Add(ProvisionedClusterPoolUpgradeProfileProperties.DeserializeProvisionedClusterPoolUpgradeProfileProperties(item, options));
                     }
                     upgrades = array;
                     continue;

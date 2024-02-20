@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                        array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item, options));
                     }
                     errors = array;
                     continue;

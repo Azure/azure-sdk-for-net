@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SubProtectionPolicy> array = new List<SubProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item));
+                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item, options));
                     }
                     subProtectionPolicy = array;
                     continue;

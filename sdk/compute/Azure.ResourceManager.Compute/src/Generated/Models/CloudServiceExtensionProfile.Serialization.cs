@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceExtension> array = new List<CloudServiceExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item));
+                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item, options));
                     }
                     extensions = array;
                     continue;

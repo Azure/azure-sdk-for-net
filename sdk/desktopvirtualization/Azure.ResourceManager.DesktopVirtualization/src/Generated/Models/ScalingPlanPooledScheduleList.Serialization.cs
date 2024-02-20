@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<ScalingPlanPooledScheduleData> array = new List<ScalingPlanPooledScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(item));
+                        array.Add(ScalingPlanPooledScheduleData.DeserializeScalingPlanPooledScheduleData(item, options));
                     }
                     value = array;
                     continue;

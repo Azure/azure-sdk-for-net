@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiIssueAttachmentData> array = new List<ApiIssueAttachmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(item));
+                        array.Add(ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -71,10 +71,10 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "submit_tool_outputs": return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element);
+                    case "submit_tool_outputs": return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element, options);
                 }
             }
-            return UnknownRequiredAction.DeserializeUnknownRequiredAction(element);
+            return UnknownRequiredAction.DeserializeUnknownRequiredAction(element, options);
         }
 
         BinaryData IPersistableModel<RequiredAction>.Write(ModelReaderWriterOptions options)

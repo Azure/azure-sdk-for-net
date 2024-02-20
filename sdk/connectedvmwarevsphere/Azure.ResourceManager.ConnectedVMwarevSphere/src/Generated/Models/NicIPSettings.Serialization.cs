@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<NicIPAddressSettings> array = new List<NicIPAddressSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item));
+                        array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item, options));
                     }
                     ipAddressInfo = array;
                     continue;

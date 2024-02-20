@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<SlimPolicyMetadata> array = new List<SlimPolicyMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item));
+                        array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptCmdletData> array = new List<ScriptCmdletData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptCmdletData.DeserializeScriptCmdletData(item));
+                        array.Add(ScriptCmdletData.DeserializeScriptCmdletData(item, options));
                     }
                     value = array;
                     continue;

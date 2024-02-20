@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value);
+                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))

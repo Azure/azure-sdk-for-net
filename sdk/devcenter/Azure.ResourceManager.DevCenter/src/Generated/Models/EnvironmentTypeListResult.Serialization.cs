@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterEnvironmentTypeData> array = new List<DevCenterEnvironmentTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterEnvironmentTypeData.DeserializeDevCenterEnvironmentTypeData(item));
+                        array.Add(DevCenterEnvironmentTypeData.DeserializeDevCenterEnvironmentTypeData(item, options));
                     }
                     value = array;
                     continue;

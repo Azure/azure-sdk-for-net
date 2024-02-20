@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = StreamAnalyticsPrivateLinkConnectionState.DeserializeStreamAnalyticsPrivateLinkConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = StreamAnalyticsPrivateLinkConnectionState.DeserializeStreamAnalyticsPrivateLinkConnectionState(property0.Value, options);
                             continue;
                         }
                     }

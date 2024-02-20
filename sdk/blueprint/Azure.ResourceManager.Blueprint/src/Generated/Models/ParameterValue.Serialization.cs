@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value);
+                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

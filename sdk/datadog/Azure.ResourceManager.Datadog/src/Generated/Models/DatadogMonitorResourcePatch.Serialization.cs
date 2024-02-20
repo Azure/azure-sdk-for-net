@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value);
+                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

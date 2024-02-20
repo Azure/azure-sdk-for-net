@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkData> array = new List<VirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item));
+                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

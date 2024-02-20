@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dataFlow"u8))
                         {
-                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
+                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staging"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value);
+                            staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationRuntime"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            integrationRuntime = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("compute"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value);
+                            compute = ExecuteDataFlowActivityComputeType.DeserializeExecuteDataFlowActivityComputeType(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("traceLevel"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, PowerQuerySink> dictionary = new Dictionary<string, PowerQuerySink>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, PowerQuerySink.DeserializePowerQuerySink(property1.Value));
+                                dictionary.Add(property1.Name, PowerQuerySink.DeserializePowerQuerySink(property1.Value, options));
                             }
                             sinks = dictionary;
                             continue;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySinkMapping> array = new List<PowerQuerySinkMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySinkMapping.DeserializePowerQuerySinkMapping(item));
+                                array.Add(PowerQuerySinkMapping.DeserializePowerQuerySinkMapping(item, options));
                             }
                             queries = array;
                             continue;

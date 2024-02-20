@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<DirectPeeringFacility> array = new List<DirectPeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item));
+                        array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item, options));
                     }
                     peeringFacilities = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringBandwidthOffer> array = new List<PeeringBandwidthOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item));
+                        array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item, options));
                     }
                     bandwidthOffers = array;
                     continue;

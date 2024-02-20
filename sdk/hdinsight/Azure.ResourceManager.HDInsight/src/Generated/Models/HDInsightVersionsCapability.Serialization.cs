@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item, options));
                     }
                     available = array;
                     continue;

@@ -101,7 +101,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherInference> array = new List<TrialMatcherInference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherInference.DeserializeTrialMatcherInference(item));
+                        array.Add(TrialMatcherInference.DeserializeTrialMatcherInference(item, options));
                     }
                     inferences = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ExtendedClinicalCodedElement> array = new List<ExtendedClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedClinicalCodedElement.DeserializeExtendedClinicalCodedElement(item));
+                        array.Add(ExtendedClinicalCodedElement.DeserializeExtendedClinicalCodedElement(item, options));
                     }
                     neededClinicalInfo = array;
                     continue;

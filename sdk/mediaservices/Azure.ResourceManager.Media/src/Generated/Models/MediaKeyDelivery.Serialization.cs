@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);
+                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item, options));
                     }
                     impactedRegions = array;
                     continue;

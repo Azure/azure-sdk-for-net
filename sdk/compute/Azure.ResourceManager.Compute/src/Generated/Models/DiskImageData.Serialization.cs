@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            storageProfile = ImageStorageProfile.DeserializeImageStorageProfile(property0.Value);
+                            storageProfile = ImageStorageProfile.DeserializeImageStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

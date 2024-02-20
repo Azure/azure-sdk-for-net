@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<BudgetFilterProperties> array = new List<BudgetFilterProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item));
+                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item, options));
                     }
                     and = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

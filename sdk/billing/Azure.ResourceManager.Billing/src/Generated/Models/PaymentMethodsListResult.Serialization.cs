@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingPaymentMethodData> array = new List<BillingPaymentMethodData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingPaymentMethodData.DeserializeBillingPaymentMethodData(item));
+                        array.Add(BillingPaymentMethodData.DeserializeBillingPaymentMethodData(item, options));
                     }
                     value = array;
                     continue;

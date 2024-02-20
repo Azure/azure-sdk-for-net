@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    error = ManagedClusterPodIdentityProvisioningError.DeserializeManagedClusterPodIdentityProvisioningError(property.Value);
+                    error = ManagedClusterPodIdentityProvisioningError.DeserializeManagedClusterPodIdentityProvisioningError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCore": return AzureCoreNetworkFunctionTemplate.DeserializeAzureCoreNetworkFunctionTemplate(element);
-                    case "AzureOperatorNexus": return AzureOperatorNexusNetworkFunctionTemplate.DeserializeAzureOperatorNexusNetworkFunctionTemplate(element);
+                    case "AzureCore": return AzureCoreNetworkFunctionTemplate.DeserializeAzureCoreNetworkFunctionTemplate(element, options);
+                    case "AzureOperatorNexus": return AzureOperatorNexusNetworkFunctionTemplate.DeserializeAzureOperatorNexusNetworkFunctionTemplate(element, options);
                 }
             }
-            return UnknownVirtualNetworkFunctionTemplate.DeserializeUnknownVirtualNetworkFunctionTemplate(element);
+            return UnknownVirtualNetworkFunctionTemplate.DeserializeUnknownVirtualNetworkFunctionTemplate(element, options);
         }
 
         BinaryData IPersistableModel<VirtualNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)

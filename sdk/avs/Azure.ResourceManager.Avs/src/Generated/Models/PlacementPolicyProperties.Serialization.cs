@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element);
-                    case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element);
+                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
+                    case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
                 }
             }
-            return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element);
+            return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element, options);
         }
 
         BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options)

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labVmsStartup"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                     }

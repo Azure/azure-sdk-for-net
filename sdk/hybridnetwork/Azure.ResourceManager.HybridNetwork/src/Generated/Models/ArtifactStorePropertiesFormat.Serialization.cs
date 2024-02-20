@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value);
+                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))

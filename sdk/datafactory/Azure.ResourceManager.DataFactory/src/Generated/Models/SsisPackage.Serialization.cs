@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisParameterInfo> array = new List<SsisParameterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item));
+                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item, options));
                     }
                     parameters = array;
                     continue;

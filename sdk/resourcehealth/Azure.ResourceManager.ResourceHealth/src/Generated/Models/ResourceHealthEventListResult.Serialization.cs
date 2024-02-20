@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventData> array = new List<ResourceHealthEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item));
+                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item, options));
                     }
                     value = array;
                     continue;

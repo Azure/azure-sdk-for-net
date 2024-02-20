@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value);
+                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

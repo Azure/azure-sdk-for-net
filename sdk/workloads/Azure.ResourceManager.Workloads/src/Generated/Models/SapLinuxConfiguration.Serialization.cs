@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value);
+                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshKeyPair"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value);
+                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

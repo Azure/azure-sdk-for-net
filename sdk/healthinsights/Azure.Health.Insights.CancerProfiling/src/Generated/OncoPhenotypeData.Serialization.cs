@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        array.Add(PatientRecord.DeserializePatientRecord(item, options));
                     }
                     patients = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value);
+                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

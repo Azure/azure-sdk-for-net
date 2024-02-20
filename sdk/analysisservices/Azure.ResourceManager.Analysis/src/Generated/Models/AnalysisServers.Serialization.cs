@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisServerData> array = new List<AnalysisServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item));
+                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item, options));
                     }
                     value = array;
                     continue;

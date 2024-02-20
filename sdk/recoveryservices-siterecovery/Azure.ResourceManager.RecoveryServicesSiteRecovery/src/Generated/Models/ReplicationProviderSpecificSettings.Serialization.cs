@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AReplicationDetails.DeserializeA2AReplicationDetails(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationReplicationDetails.DeserializeA2ACrossClusterMigrationReplicationDetails(element);
-                    case "HyperVReplica2012": return HyperVReplicaReplicationDetails.DeserializeHyperVReplicaReplicationDetails(element);
-                    case "HyperVReplica2012R2": return HyperVReplicaBlueReplicationDetails.DeserializeHyperVReplicaBlueReplicationDetails(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureReplicationDetails.DeserializeHyperVReplicaAzureReplicationDetails(element);
-                    case "HyperVReplicaBaseReplicationDetails": return HyperVReplicaBaseReplicationDetails.DeserializeHyperVReplicaBaseReplicationDetails(element);
-                    case "InMage": return InMageReplicationDetails.DeserializeInMageReplicationDetails(element);
-                    case "InMageAzureV2": return InMageAzureV2ReplicationDetails.DeserializeInMageAzureV2ReplicationDetails(element);
-                    case "InMageRcm": return InMageRcmReplicationDetails.DeserializeInMageRcmReplicationDetails(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackReplicationDetails.DeserializeInMageRcmFailbackReplicationDetails(element);
+                    case "A2A": return A2AReplicationDetails.DeserializeA2AReplicationDetails(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationReplicationDetails.DeserializeA2ACrossClusterMigrationReplicationDetails(element, options);
+                    case "HyperVReplica2012": return HyperVReplicaReplicationDetails.DeserializeHyperVReplicaReplicationDetails(element, options);
+                    case "HyperVReplica2012R2": return HyperVReplicaBlueReplicationDetails.DeserializeHyperVReplicaBlueReplicationDetails(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureReplicationDetails.DeserializeHyperVReplicaAzureReplicationDetails(element, options);
+                    case "HyperVReplicaBaseReplicationDetails": return HyperVReplicaBaseReplicationDetails.DeserializeHyperVReplicaBaseReplicationDetails(element, options);
+                    case "InMage": return InMageReplicationDetails.DeserializeInMageReplicationDetails(element, options);
+                    case "InMageAzureV2": return InMageAzureV2ReplicationDetails.DeserializeInMageAzureV2ReplicationDetails(element, options);
+                    case "InMageRcm": return InMageRcmReplicationDetails.DeserializeInMageRcmReplicationDetails(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackReplicationDetails.DeserializeInMageRcmFailbackReplicationDetails(element, options);
                 }
             }
-            return UnknownReplicationProviderSpecificSettings.DeserializeUnknownReplicationProviderSpecificSettings(element);
+            return UnknownReplicationProviderSpecificSettings.DeserializeUnknownReplicationProviderSpecificSettings(element, options);
         }
 
         BinaryData IPersistableModel<ReplicationProviderSpecificSettings>.Write(ModelReaderWriterOptions options)

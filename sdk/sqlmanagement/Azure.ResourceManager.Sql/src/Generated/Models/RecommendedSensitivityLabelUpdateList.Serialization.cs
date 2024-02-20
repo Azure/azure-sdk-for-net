@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecommendedSensitivityLabelUpdate> array = new List<RecommendedSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;

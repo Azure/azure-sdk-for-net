@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value);
+                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

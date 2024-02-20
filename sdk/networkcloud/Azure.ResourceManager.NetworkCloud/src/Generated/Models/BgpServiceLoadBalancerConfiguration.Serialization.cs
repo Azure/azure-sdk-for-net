@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BgpAdvertisement> array = new List<BgpAdvertisement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpAdvertisement.DeserializeBgpAdvertisement(item));
+                        array.Add(BgpAdvertisement.DeserializeBgpAdvertisement(item, options));
                     }
                     bgpAdvertisements = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<ServiceLoadBalancerBgpPeer> array = new List<ServiceLoadBalancerBgpPeer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceLoadBalancerBgpPeer.DeserializeServiceLoadBalancerBgpPeer(item));
+                        array.Add(ServiceLoadBalancerBgpPeer.DeserializeServiceLoadBalancerBgpPeer(item, options));
                     }
                     bgpPeers = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<IPAddressPool> array = new List<IPAddressPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressPool.DeserializeIPAddressPool(item));
+                        array.Add(IPAddressPool.DeserializeIPAddressPool(item, options));
                     }
                     ipAddressPools = array;
                     continue;

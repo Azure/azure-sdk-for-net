@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
-                            privateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))

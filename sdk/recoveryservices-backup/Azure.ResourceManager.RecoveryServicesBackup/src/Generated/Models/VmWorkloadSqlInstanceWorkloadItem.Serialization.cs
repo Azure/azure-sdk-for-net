@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item));
+                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;

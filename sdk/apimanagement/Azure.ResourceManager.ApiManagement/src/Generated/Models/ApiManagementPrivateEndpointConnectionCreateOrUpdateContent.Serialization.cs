@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value);
+                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

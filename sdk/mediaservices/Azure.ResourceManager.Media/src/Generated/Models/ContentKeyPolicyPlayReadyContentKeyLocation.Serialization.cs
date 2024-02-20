@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader(element);
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(element);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(element, options);
                 }
             }
-            return UnknownContentKeyPolicyPlayReadyContentKeyLocation.DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(element);
+            return UnknownContentKeyPolicyPlayReadyContentKeyLocation.DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyContentKeyLocation>.Write(ModelReaderWriterOptions options)

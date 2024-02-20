@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafRankingsResponseDataItem> array = new List<WafRankingsResponseDataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafRankingsResponseDataItem.DeserializeWafRankingsResponseDataItem(item));
+                        array.Add(WafRankingsResponseDataItem.DeserializeWafRankingsResponseDataItem(item, options));
                     }
                     data = array;
                     continue;

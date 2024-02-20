@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
+                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiMetadataProperties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value);
+                    apiMetadataProperties = AppPlatformGatewayApiMetadataProperties.DeserializeAppPlatformGatewayApiMetadataProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("corsProperties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value);
+                    corsProperties = AppPlatformGatewayCorsProperties.DeserializeAppPlatformGatewayCorsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformGatewayResourceRequirements.DeserializeAppPlatformGatewayResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayInstance> array = new List<AppPlatformGatewayInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item));
+                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    operatorProperties = AppPlatformGatewayOperatorProperties.DeserializeAppPlatformGatewayOperatorProperties(property.Value);
+                    operatorProperties = AppPlatformGatewayOperatorProperties.DeserializeAppPlatformGatewayOperatorProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

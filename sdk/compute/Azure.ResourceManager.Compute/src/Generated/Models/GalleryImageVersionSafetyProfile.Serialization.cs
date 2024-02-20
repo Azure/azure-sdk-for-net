@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item));
+                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;

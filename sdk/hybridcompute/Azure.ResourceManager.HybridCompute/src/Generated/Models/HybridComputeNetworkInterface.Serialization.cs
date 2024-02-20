@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeIPAddress> array = new List<HybridComputeIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item));
+                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item, options));
                     }
                     ipAddresses = array;
                     continue;

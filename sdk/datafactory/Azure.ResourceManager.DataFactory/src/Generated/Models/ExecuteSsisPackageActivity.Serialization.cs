@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("packageLocation"u8))
                         {
-                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value);
+                            packageLocation = SsisPackageLocation.DeserializeSsisPackageLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runtime"u8))
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value);
+                            executionCredential = SsisExecutionCredential.DeserializeSsisExecutionCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectVia"u8))
                         {
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("projectParameters"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value, options));
                             }
                             projectParameters = dictionary;
                             continue;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value, options));
                             }
                             packageParameters = dictionary;
                             continue;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value, options));
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value, options));
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             Dictionary<string, SsisPropertyOverride> dictionary = new Dictionary<string, SsisPropertyOverride>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value, options));
                             }
                             propertyOverrides = dictionary;
                             continue;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value);
+                            logLocation = SsisLogLocation.DeserializeSsisLogLocation(property0.Value, options);
                             continue;
                         }
                     }

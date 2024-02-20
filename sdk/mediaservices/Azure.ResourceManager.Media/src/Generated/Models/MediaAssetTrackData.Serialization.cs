@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            track = MediaAssetTrackBase.DeserializeMediaAssetTrackBase(property0.Value);
+                            track = MediaAssetTrackBase.DeserializeMediaAssetTrackBase(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

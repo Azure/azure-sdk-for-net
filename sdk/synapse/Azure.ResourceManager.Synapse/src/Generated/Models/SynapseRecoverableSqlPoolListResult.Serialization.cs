@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseRecoverableSqlPoolData> array = new List<SynapseRecoverableSqlPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseRecoverableSqlPoolData.DeserializeSynapseRecoverableSqlPoolData(item));
+                        array.Add(SynapseRecoverableSqlPoolData.DeserializeSynapseRecoverableSqlPoolData(item, options));
                     }
                     value = array;
                     continue;

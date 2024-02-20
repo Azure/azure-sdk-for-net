@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value);
+                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))

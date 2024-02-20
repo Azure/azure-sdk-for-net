@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    properties = QuotaUsagesProperties.DeserializeQuotaUsagesProperties(property.Value);
+                    properties = QuotaUsagesProperties.DeserializeQuotaUsagesProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationStatusError> array = new List<MoverOperationStatusError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMoverOperationStatusError(item));
+                        array.Add(DeserializeMoverOperationStatusError(item, options));
                     }
                     details = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationErrorAdditionalInfo> array = new List<MoverOperationErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item));
+                        array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item, options));
                     }
                     additionalInfo = array;
                     continue;

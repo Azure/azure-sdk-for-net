@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkPacketCaptureData> array = new List<MobileNetworkPacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(item));
+                        array.Add(MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(item, options));
                     }
                     value = array;
                     continue;

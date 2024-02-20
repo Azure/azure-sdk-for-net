@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item));
+                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item, options));
                     }
                     locations = array;
                     continue;

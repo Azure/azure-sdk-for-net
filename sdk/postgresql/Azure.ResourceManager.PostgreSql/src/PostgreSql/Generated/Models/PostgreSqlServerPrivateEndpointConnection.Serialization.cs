@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value);
+                    properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

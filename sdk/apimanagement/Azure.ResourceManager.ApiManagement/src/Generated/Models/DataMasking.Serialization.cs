@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     queryParams = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     headers = array;
                     continue;

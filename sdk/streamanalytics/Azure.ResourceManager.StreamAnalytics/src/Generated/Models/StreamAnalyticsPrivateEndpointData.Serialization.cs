@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamAnalyticsPrivateEndpointProperties.DeserializeStreamAnalyticsPrivateEndpointProperties(property.Value);
+                    properties = StreamAnalyticsPrivateEndpointProperties.DeserializeStreamAnalyticsPrivateEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

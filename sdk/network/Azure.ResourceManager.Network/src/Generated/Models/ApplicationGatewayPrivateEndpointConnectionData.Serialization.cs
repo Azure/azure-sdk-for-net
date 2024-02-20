@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value);
+                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

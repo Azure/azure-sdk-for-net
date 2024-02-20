@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceVirtualNetworkData> array = new List<HybridContainerServiceVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(item));
+                        array.Add(HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

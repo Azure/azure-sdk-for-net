@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveNetworkSecurityGroup> array = new List<EffectiveNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveNetworkSecurityGroup.DeserializeEffectiveNetworkSecurityGroup(item));
+                        array.Add(EffectiveNetworkSecurityGroup.DeserializeEffectiveNetworkSecurityGroup(item, options));
                     }
                     value = array;
                     continue;

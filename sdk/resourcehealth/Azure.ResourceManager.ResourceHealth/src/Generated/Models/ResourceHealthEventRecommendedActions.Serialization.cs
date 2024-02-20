@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventRecommendedActionsItem> array = new List<ResourceHealthEventRecommendedActionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventRecommendedActionsItem.DeserializeResourceHealthEventRecommendedActionsItem(item));
+                        array.Add(ResourceHealthEventRecommendedActionsItem.DeserializeResourceHealthEventRecommendedActionsItem(item, options));
                     }
                     actions = array;
                     continue;

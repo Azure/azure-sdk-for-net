@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value);
+                    customPersistentDiskProperties = AppCustomPersistentDiskProperties.DeserializeAppCustomPersistentDiskProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageId"u8))

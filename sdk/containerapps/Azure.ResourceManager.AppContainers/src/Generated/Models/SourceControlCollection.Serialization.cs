@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppSourceControlData> array = new List<ContainerAppSourceControlData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(item));
+                        array.Add(ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(item, options));
                     }
                     value = array;
                     continue;

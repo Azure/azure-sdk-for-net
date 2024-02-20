@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element);
-                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element);
+                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
+                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element, options);
                 }
             }
-            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element);
+            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element, options);
         }
 
         BinaryData IPersistableModel<MultiMetricCriteria>.Write(ModelReaderWriterOptions options)

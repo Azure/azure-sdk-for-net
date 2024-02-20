@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("certificateCommonNames"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
+                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientCertificateCommonNames"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item));
+                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item, options));
                             }
                             clientCertificateCommonNames = array;
                             continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item));
+                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item, options));
                             }
                             clientCertificateThumbprints = array;
                             continue;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item));
+                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item, options));
                             }
                             fabricSettings = array;
                             continue;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item));
+                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item, options));
                             }
                             nodeTypes = array;
                             continue;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeDescription"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
+                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
+                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeMode"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNotification> array = new List<ClusterNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNotification.DeserializeClusterNotification(item));
+                                array.Add(ClusterNotification.DeserializeClusterNotification(item, options));
                             }
                             notifications = array;
                             continue;

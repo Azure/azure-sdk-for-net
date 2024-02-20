@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ResourceGuardProxyData> array = new List<ResourceGuardProxyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProxyData.DeserializeResourceGuardProxyData(item));
+                        array.Add(ResourceGuardProxyData.DeserializeResourceGuardProxyData(item, options));
                     }
                     value = array;
                     continue;

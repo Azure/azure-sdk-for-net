@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    start = ClipTime.DeserializeClipTime(property.Value);
+                    start = ClipTime.DeserializeClipTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    end = ClipTime.DeserializeClipTime(property.Value);
+                    end = ClipTime.DeserializeClipTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("label"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputDefinition> array = new List<MediaJobInputDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item));
+                        array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item, options));
                     }
                     inputDefinitions = array;
                     continue;

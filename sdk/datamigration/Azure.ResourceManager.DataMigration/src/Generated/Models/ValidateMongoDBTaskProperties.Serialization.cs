@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MongoDBMigrationSettings.DeserializeMongoDBMigrationSettings(property.Value);
+                    input = MongoDBMigrationSettings.DeserializeMongoDBMigrationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBMigrationProgress> array = new List<MongoDBMigrationProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(item));
+                        array.Add(MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(item, options));
                     }
                     output = array;
                     continue;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;

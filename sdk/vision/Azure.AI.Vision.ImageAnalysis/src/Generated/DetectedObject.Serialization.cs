@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
+                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTag> array = new List<DetectedTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTag.DeserializeDetectedTag(item));
+                        array.Add(DetectedTag.DeserializeDetectedTag(item, options));
                     }
                     tags = array;
                     continue;

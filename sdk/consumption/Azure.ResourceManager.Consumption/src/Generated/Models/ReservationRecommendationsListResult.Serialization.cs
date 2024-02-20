@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionReservationRecommendation> array = new List<ConsumptionReservationRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item));
+                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item, options));
                     }
                     value = array;
                     continue;

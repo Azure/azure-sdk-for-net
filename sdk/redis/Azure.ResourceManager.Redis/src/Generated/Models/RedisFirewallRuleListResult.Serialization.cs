@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisFirewallRuleData> array = new List<RedisFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item));
+                        array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

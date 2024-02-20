@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                             List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                                array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item, options));
                             }
                             galleries = array;
                             continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                                     List<WorkbookTemplateLocalizedGallery> array = new List<WorkbookTemplateLocalizedGallery>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item));
+                                        array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item, options));
                                     }
                                     dictionary.Add(property1.Name, array);
                                 }

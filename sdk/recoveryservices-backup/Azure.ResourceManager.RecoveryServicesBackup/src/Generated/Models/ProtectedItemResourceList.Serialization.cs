@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupProtectedItemData> array = new List<BackupProtectedItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupProtectedItemData.DeserializeBackupProtectedItemData(item));
+                        array.Add(BackupProtectedItemData.DeserializeBackupProtectedItemData(item, options));
                     }
                     value = array;
                     continue;

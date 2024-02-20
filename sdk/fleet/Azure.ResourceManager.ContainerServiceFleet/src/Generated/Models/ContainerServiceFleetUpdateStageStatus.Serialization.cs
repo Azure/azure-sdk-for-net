@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateGroupStatus> array = new List<ContainerServiceFleetUpdateGroupStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item));
+                        array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item, options));
                     }
                     groups = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    afterStageWaitStatus = ContainerServiceFleetWaitStatus.DeserializeContainerServiceFleetWaitStatus(property.Value);
+                    afterStageWaitStatus = ContainerServiceFleetWaitStatus.DeserializeContainerServiceFleetWaitStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesPrivateLinkResourceData> array = new List<RecoveryServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(item));
+                        array.Add(RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

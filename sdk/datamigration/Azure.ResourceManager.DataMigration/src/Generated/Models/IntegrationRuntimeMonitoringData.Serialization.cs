@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<NodeMonitoringData> array = new List<NodeMonitoringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeMonitoringData.DeserializeNodeMonitoringData(item));
+                        array.Add(NodeMonitoringData.DeserializeNodeMonitoringData(item, options));
                     }
                     nodes = array;
                     continue;

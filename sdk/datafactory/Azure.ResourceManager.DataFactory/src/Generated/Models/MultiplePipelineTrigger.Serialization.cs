@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element);
-                    case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element);
-                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
-                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element);
+                    case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
+                    case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
+                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
+                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
                 }
             }
             Optional<IList<TriggerPipelineReference>> pipelines = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
                     continue;

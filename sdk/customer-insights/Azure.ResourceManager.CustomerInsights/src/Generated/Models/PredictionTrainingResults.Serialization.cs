@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     {
                         continue;
                     }
-                    predictionDistribution = PredictionDistributionDefinition.DeserializePredictionDistributionDefinition(property.Value);
+                    predictionDistribution = PredictionDistributionDefinition.DeserializePredictionDistributionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("canonicalProfiles"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<CanonicalProfileDefinition> array = new List<CanonicalProfileDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CanonicalProfileDefinition.DeserializeCanonicalProfileDefinition(item));
+                        array.Add(CanonicalProfileDefinition.DeserializeCanonicalProfileDefinition(item, options));
                     }
                     canonicalProfiles = array;
                     continue;

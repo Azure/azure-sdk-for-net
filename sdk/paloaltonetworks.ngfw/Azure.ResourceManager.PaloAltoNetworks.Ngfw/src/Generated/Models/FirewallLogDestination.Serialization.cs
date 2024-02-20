@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    storageConfigurations = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value);
+                    storageConfigurations = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventHubConfigurations"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    eventHubConfigurations = EventHubConfiguration.DeserializeEventHubConfiguration(property.Value);
+                    eventHubConfigurations = EventHubConfiguration.DeserializeEventHubConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitorConfigurations"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value);
+                    monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

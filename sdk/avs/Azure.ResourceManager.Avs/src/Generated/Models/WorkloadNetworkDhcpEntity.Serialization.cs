@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RELAY": return WorkloadNetworkDhcpRelay.DeserializeWorkloadNetworkDhcpRelay(element);
-                    case "SERVER": return WorkloadNetworkDhcpServer.DeserializeWorkloadNetworkDhcpServer(element);
+                    case "RELAY": return WorkloadNetworkDhcpRelay.DeserializeWorkloadNetworkDhcpRelay(element, options);
+                    case "SERVER": return WorkloadNetworkDhcpServer.DeserializeWorkloadNetworkDhcpServer(element, options);
                 }
             }
-            return UnknownWorkloadNetworkDhcpEntity.DeserializeUnknownWorkloadNetworkDhcpEntity(element);
+            return UnknownWorkloadNetworkDhcpEntity.DeserializeUnknownWorkloadNetworkDhcpEntity(element, options);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpEntity>.Write(ModelReaderWriterOptions options)

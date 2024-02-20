@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisVariable> array = new List<SynapseSsisVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisVariable.DeserializeSynapseSsisVariable(item));
+                        array.Add(SynapseSsisVariable.DeserializeSynapseSsisVariable(item, options));
                     }
                     variables = array;
                     continue;

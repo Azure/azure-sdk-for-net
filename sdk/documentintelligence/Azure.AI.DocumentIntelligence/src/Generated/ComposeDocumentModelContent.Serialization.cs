@@ -113,7 +113,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item));
+                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item, options));
                     }
                     componentModels = array;
                     continue;

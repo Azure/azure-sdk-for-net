@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AdaptiveNetworkHardeningData> array = new List<AdaptiveNetworkHardeningData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(item));
+                        array.Add(AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(item, options));
                     }
                     value = array;
                     continue;

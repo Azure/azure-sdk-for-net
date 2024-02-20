@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellNotifications> array = new List<StopSellNotifications>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item));
+                        array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item, options));
                     }
                     stopSellNotifications = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item, options));
                     }
                     newNotifications = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<RequestApprovalsDetails> array = new List<RequestApprovalsDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item));
+                        array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item, options));
                     }
                     approvalRequests = array;
                     continue;

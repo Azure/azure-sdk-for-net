@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item, options));
                             }
                             staticAcls = array;
                             continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item, options));
                             }
                             luns = array;
                             continue;

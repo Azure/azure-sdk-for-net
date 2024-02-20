@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<HubData> array = new List<HubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubData.DeserializeHubData(item));
+                        array.Add(HubData.DeserializeHubData(item, options));
                     }
                     value = array;
                     continue;

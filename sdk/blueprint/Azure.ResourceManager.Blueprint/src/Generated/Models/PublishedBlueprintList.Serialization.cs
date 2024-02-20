@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<PublishedBlueprintData> array = new List<PublishedBlueprintData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublishedBlueprintData.DeserializePublishedBlueprintData(item));
+                        array.Add(PublishedBlueprintData.DeserializePublishedBlueprintData(item, options));
                     }
                     value = array;
                     continue;

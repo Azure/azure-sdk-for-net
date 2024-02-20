@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SecurityConnectorGitHubOwnerProperties.DeserializeSecurityConnectorGitHubOwnerProperties(property.Value);
+                    properties = SecurityConnectorGitHubOwnerProperties.DeserializeSecurityConnectorGitHubOwnerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value);
+                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentOptions"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property0.Value);
+                            agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkConfiguration"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property0.Value);
+                            attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                             }
                             labels = array;
                             continue;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                             }
                             taints = array;
                             continue;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
+                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmSkuName"u8))

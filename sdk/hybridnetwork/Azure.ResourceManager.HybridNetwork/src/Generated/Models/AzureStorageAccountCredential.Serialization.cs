@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureStorageAccountContainerCredential> array = new List<AzureStorageAccountContainerCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item, options));
                     }
                     containerCredentials = array;
                     continue;

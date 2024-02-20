@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(property.Value);
+                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

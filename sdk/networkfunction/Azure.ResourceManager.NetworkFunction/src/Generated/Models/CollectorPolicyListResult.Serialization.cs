@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<CollectorPolicyData> array = new List<CollectorPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
+                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item, options));
                     }
                     value = array;
                     continue;

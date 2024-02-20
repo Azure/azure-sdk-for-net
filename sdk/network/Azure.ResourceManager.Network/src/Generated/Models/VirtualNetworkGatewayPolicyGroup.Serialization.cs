@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<VirtualNetworkGatewayPolicyGroupMember> array = new List<VirtualNetworkGatewayPolicyGroupMember>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkGatewayPolicyGroupMember.DeserializeVirtualNetworkGatewayPolicyGroupMember(item));
+                                array.Add(VirtualNetworkGatewayPolicyGroupMember.DeserializeVirtualNetworkGatewayPolicyGroupMember(item, options));
                             }
                             policyMembers = array;
                             continue;

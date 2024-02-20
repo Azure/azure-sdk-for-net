@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppWorkloadProfileStateProperties.DeserializeContainerAppWorkloadProfileStateProperties(property.Value);
+                    properties = ContainerAppWorkloadProfileStateProperties.DeserializeContainerAppWorkloadProfileStateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

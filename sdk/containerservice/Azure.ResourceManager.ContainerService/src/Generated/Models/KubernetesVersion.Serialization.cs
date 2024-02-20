@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value);
+                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     Dictionary<string, KubernetesPatchVersion> dictionary = new Dictionary<string, KubernetesPatchVersion>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value));
+                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;

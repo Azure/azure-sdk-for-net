@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 switch (discriminator.GetString())
                 {
-                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element);
-                    case "DataExportSettings": return DataExportSettings.DeserializeDataExportSettings(element);
+                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element, options);
+                    case "DataExportSettings": return DataExportSettings.DeserializeDataExportSettings(element, options);
                 }
             }
-            return UnknownSetting.DeserializeUnknownSetting(element);
+            return UnknownSetting.DeserializeUnknownSetting(element, options);
         }
 
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsLinkedStorageAccountsData> array = new List<OperationalInsightsLinkedStorageAccountsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(item));
+                        array.Add(OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(item, options));
                     }
                     value = array;
                     continue;

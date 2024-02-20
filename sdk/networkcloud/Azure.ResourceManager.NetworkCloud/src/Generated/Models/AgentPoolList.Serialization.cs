@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudAgentPoolData> array = new List<NetworkCloudAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(item));
+                        array.Add(NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(item, options));
                     }
                     value = array;
                     continue;

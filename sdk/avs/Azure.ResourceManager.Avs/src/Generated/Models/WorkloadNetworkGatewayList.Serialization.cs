@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkGatewayData> array = new List<WorkloadNetworkGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(item));
+                        array.Add(WorkloadNetworkGatewayData.DeserializeWorkloadNetworkGatewayData(item, options));
                     }
                     value = array;
                     continue;

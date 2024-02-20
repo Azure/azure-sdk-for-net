@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                     {
                         continue;
                     }
-                    properties = AzureDevOpsConnectorProperties.DeserializeAzureDevOpsConnectorProperties(property.Value);
+                    properties = AzureDevOpsConnectorProperties.DeserializeAzureDevOpsConnectorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = CalculatePriceResultProperties.DeserializeCalculatePriceResultProperties(property.Value);
+                    properties = CalculatePriceResultProperties.DeserializeCalculatePriceResultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

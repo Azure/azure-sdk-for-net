@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<GatewayApiData> array = new List<GatewayApiData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayApiData.DeserializeGatewayApiData(item));
+                        array.Add(GatewayApiData.DeserializeGatewayApiData(item, options));
                     }
                     value = array;
                     continue;

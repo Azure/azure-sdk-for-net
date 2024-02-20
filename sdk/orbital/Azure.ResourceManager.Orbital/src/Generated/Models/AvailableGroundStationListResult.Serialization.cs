@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<AvailableGroundStationData> array = new List<AvailableGroundStationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableGroundStationData.DeserializeAvailableGroundStationData(item));
+                        array.Add(AvailableGroundStationData.DeserializeAvailableGroundStationData(item, options));
                     }
                     value = array;
                     continue;

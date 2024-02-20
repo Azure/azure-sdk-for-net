@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element);
-                    case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element);
+                    case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element, options);
+                    case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element, options);
                 }
             }
-            return UnknownAutomationRuleAction.DeserializeUnknownAutomationRuleAction(element);
+            return UnknownAutomationRuleAction.DeserializeUnknownAutomationRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAutomationRuleAction>.Write(ModelReaderWriterOptions options)

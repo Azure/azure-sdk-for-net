@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<PartnerConfigurationData> array = new List<PartnerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartnerConfigurationData.DeserializePartnerConfigurationData(item));
+                        array.Add(PartnerConfigurationData.DeserializePartnerConfigurationData(item, options));
                     }
                     value = array;
                     continue;

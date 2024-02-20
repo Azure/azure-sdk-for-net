@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value);
+                    name = AutomationUsageCounterName.DeserializeAutomationUsageCounterName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

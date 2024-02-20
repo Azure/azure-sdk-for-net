@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value, options));
                     }
                     vmUsedMemory = dictionary;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item, options));
                     }
                     numaNodesData = array;
                     continue;

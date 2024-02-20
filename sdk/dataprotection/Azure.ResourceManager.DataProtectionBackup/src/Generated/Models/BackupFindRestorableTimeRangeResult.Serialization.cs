@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    properties = BackupFindRestorableTimeRangeResultProperties.DeserializeBackupFindRestorableTimeRangeResultProperties(property.Value);
+                    properties = BackupFindRestorableTimeRangeResultProperties.DeserializeBackupFindRestorableTimeRangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

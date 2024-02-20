@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;

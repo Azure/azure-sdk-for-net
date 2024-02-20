@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewUsage> array = new List<PurviewUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewUsage.DeserializePurviewUsage(item));
+                        array.Add(PurviewUsage.DeserializePurviewUsage(item, options));
                     }
                     value = array;
                     continue;

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
                             List<PartnerRegionInfo> array = new List<PartnerRegionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item));
+                                array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item, options));
                             }
                             partnerRegions = array;
                             continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedInstancePairInfo> array = new List<ManagedInstancePairInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item));
+                                array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item, options));
                             }
                             managedInstancePairs = array;
                             continue;

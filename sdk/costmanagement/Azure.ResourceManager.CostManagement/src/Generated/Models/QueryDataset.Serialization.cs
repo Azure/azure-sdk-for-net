@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value);
+                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, QueryAggregation> dictionary = new Dictionary<string, QueryAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryGrouping> array = new List<QueryGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                        array.Add(QueryGrouping.DeserializeQueryGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = QueryFilter.DeserializeQueryFilter(property.Value);
+                    filter = QueryFilter.DeserializeQueryFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = KustoPrivateLinkServiceConnectionStateProperty.DeserializeKustoPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = KustoPrivateLinkServiceConnectionStateProperty.DeserializeKustoPrivateLinkServiceConnectionStateProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupId"u8))

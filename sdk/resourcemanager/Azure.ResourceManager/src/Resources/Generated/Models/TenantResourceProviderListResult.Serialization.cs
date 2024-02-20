@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TenantResourceProvider> array = new List<TenantResourceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantResourceProvider.DeserializeTenantResourceProvider(item));
+                        array.Add(TenantResourceProvider.DeserializeTenantResourceProvider(item, options));
                     }
                     value = array;
                     continue;

@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = KustoSku.DeserializeKustoSku(property.Value);
+                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Kusto
                             List<KustoClusterTrustedExternalTenant> array = new List<KustoClusterTrustedExternalTenant>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item));
+                                array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item, options));
                             }
                             trustedExternalTenants = array;
                             continue;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value);
+                            optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableDiskEncryption"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = KustoClusterVirtualNetworkConfiguration.DeserializeKustoClusterVirtualNetworkConfiguration(property0.Value);
+                            virtualNetworkConfiguration = KustoClusterVirtualNetworkConfiguration.DeserializeKustoClusterVirtualNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultProperties"u8))
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value);
+                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enablePurge"u8))
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value);
+                            languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableDoubleEncryption"u8))
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Kusto
                             List<AcceptedAudience> array = new List<AcceptedAudience>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AcceptedAudience.DeserializeAcceptedAudience(item));
+                                array.Add(AcceptedAudience.DeserializeAcceptedAudience(item, options));
                             }
                             acceptedAudiences = array;
                             continue;
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Kusto
                             List<KustoPrivateEndpointConnectionData> array = new List<KustoPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item));
+                                array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value);
+                            migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SparkJobPythonEntry": return SparkJobPythonEntry.DeserializeSparkJobPythonEntry(element);
-                    case "SparkJobScalaEntry": return SparkJobScalaEntry.DeserializeSparkJobScalaEntry(element);
+                    case "SparkJobPythonEntry": return SparkJobPythonEntry.DeserializeSparkJobPythonEntry(element, options);
+                    case "SparkJobScalaEntry": return SparkJobScalaEntry.DeserializeSparkJobScalaEntry(element, options);
                 }
             }
-            return UnknownSparkJobEntry.DeserializeUnknownSparkJobEntry(element);
+            return UnknownSparkJobEntry.DeserializeUnknownSparkJobEntry(element, options);
         }
 
         BinaryData IPersistableModel<SparkJobEntry>.Write(ModelReaderWriterOptions options)

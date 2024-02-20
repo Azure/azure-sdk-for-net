@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
+                    entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

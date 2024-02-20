@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityMLAnalyticsSettingsDataSource> array = new List<SecurityMLAnalyticsSettingsDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item));
+                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            action = AzureFirewallRCAction.DeserializeAzureFirewallRCAction(property0.Value);
+                            action = AzureFirewallRCAction.DeserializeAzureFirewallRCAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rules"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallApplicationRule> array = new List<AzureFirewallApplicationRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallApplicationRule.DeserializeAzureFirewallApplicationRule(item));
+                                array.Add(AzureFirewallApplicationRule.DeserializeAzureFirewallApplicationRule(item, options));
                             }
                             rules = array;
                             continue;

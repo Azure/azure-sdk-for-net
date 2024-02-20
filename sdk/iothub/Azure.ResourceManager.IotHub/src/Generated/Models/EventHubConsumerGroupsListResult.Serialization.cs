@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<EventHubConsumerGroupInfoData> array = new List<EventHubConsumerGroupInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(item));
+                        array.Add(EventHubConsumerGroupInfoData.DeserializeEventHubConsumerGroupInfoData(item, options));
                     }
                     value = array;
                     continue;

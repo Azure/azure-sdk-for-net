@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
+                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;

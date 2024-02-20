@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeerAsnData> array = new List<PeerAsnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeerAsnData.DeserializePeerAsnData(item));
+                        array.Add(PeerAsnData.DeserializePeerAsnData(item, options));
                     }
                     value = array;
                     continue;

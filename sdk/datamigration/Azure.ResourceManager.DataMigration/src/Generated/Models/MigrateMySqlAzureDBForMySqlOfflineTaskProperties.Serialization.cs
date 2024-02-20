@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateMySqlAzureDBForMySqlOfflineTaskInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskInput(property.Value);
+                    input = MigrateMySqlAzureDBForMySqlOfflineTaskInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> array = new List<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(item));
+                        array.Add(MigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;

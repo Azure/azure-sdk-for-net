@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationSafetyQualityMetricThreshold> array = new List<GenerationSafetyQualityMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item));
+                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;

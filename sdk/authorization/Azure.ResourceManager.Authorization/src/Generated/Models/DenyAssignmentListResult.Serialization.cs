@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<DenyAssignmentData> array = new List<DenyAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DenyAssignmentData.DeserializeDenyAssignmentData(item));
+                        array.Add(DenyAssignmentData.DeserializeDenyAssignmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeReportConfigFilter(item));
+                        array.Add(DeserializeReportConfigFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeReportConfigFilter(item));
+                        array.Add(DeserializeReportConfigFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value);
+                    dimensions = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value);
+                    tags = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

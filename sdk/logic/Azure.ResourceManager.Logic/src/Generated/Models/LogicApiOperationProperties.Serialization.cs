@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    annotation = LogicApiOperationAnnotation.DeserializeLogicApiOperationAnnotation(property.Value);
+                    annotation = LogicApiOperationAnnotation.DeserializeLogicApiOperationAnnotation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("api"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    api = LogicApiReference.DeserializeLogicApiReference(property.Value);
+                    api = LogicApiReference.DeserializeLogicApiReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inputsDefinition"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    inputsDefinition = SwaggerSchema.DeserializeSwaggerSchema(property.Value);
+                    inputsDefinition = SwaggerSchema.DeserializeSwaggerSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("responsesDefinition"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerSchema> dictionary = new Dictionary<string, SwaggerSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerSchema.DeserializeSwaggerSchema(property0.Value));
+                        dictionary.Add(property0.Name, SwaggerSchema.DeserializeSwaggerSchema(property0.Value, options));
                     }
                     responsesDefinition = dictionary;
                     continue;

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))

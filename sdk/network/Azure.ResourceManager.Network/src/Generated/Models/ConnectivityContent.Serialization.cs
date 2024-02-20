@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value);
+                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value);
+                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value);
+                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))

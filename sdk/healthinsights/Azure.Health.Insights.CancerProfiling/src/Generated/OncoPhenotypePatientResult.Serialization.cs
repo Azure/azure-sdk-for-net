@@ -90,7 +90,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<OncoPhenotypeInference> array = new List<OncoPhenotypeInference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OncoPhenotypeInference.DeserializeOncoPhenotypeInference(item));
+                        array.Add(OncoPhenotypeInference.DeserializeOncoPhenotypeInference(item, options));
                     }
                     inferences = array;
                     continue;

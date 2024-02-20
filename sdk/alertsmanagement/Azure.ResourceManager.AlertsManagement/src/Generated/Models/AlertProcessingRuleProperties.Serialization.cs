@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleCondition> array = new List<AlertProcessingRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item));
+                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value);
+                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
+                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item, options));
                     }
                     actions = array;
                     continue;

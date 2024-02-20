@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Marketplace
                                     List<NotificationRecipient> array = new List<NotificationRecipient>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
+                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item, options));
                                     }
                                     recipients = array;
                                     continue;

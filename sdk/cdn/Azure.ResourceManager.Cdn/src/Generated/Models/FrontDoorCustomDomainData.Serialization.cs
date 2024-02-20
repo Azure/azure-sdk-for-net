@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value);
+                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Cdn
                                 preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value);
+                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value, options);
                             continue;
                         }
                     }

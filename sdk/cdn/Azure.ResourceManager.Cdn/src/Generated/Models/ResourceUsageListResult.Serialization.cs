@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnUsage> array = new List<CdnUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnUsage.DeserializeCdnUsage(item));
+                        array.Add(CdnUsage.DeserializeCdnUsage(item, options));
                     }
                     value = array;
                     continue;

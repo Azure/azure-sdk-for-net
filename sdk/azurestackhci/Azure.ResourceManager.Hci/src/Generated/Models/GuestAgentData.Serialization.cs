@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            credentials = GuestCredential.DeserializeGuestCredential(property0.Value);
+                            credentials = GuestCredential.DeserializeGuestCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningAction"u8))

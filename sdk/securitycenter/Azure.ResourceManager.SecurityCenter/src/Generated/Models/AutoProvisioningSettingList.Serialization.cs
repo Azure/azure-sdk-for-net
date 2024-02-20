@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AutoProvisioningSettingData> array = new List<AutoProvisioningSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item));
+                        array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchApplicationData> array = new List<BatchApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchApplicationData.DeserializeBatchApplicationData(item));
+                        array.Add(BatchApplicationData.DeserializeBatchApplicationData(item, options));
                     }
                     value = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     {
                         continue;
                     }
-                    properties = TimeSeriesDatabaseConnectionProperties.DeserializeTimeSeriesDatabaseConnectionProperties(property.Value);
+                    properties = TimeSeriesDatabaseConnectionProperties.DeserializeTimeSeriesDatabaseConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

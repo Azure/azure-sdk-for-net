@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            policySettings = PolicySettings.DeserializePolicySettings(property0.Value);
+                            policySettings = PolicySettings.DeserializePolicySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
                             List<WebApplicationFirewallCustomRule> array = new List<WebApplicationFirewallCustomRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebApplicationFirewallCustomRule.DeserializeWebApplicationFirewallCustomRule(item));
+                                array.Add(WebApplicationFirewallCustomRule.DeserializeWebApplicationFirewallCustomRule(item, options));
                             }
                             customRules = array;
                             continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item));
+                                array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item, options));
                             }
                             applicationGateways = array;
                             continue;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            managedRules = ManagedRulesDefinition.DeserializeManagedRulesDefinition(property0.Value);
+                            managedRules = ManagedRulesDefinition.DeserializeManagedRulesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpListeners"u8))

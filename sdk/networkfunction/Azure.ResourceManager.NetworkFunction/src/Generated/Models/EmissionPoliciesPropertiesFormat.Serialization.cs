@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<EmissionPolicyDestination> array = new List<EmissionPolicyDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item));
+                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item, options));
                     }
                     emissionDestinations = array;
                     continue;

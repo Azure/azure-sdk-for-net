@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesAccountData> array = new List<CognitiveServicesAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(item));
+                        array.Add(CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(item, options));
                     }
                     value = array;
                     continue;

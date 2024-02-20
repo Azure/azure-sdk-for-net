@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value);
+                    nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

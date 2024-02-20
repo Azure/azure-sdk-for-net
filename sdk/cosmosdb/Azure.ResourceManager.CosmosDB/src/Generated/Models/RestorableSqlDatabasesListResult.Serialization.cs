@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableSqlDatabase> array = new List<RestorableSqlDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableSqlDatabase.DeserializeRestorableSqlDatabase(item));
+                        array.Add(RestorableSqlDatabase.DeserializeRestorableSqlDatabase(item, options));
                     }
                     value = array;
                     continue;

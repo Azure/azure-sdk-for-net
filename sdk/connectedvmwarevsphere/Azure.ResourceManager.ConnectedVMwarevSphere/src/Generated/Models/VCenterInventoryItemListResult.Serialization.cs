@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VCenterInventoryItemData> array = new List<VCenterInventoryItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VCenterInventoryItemData.DeserializeVCenterInventoryItemData(item));
+                        array.Add(VCenterInventoryItemData.DeserializeVCenterInventoryItemData(item, options));
                     }
                     value = array;
                     continue;

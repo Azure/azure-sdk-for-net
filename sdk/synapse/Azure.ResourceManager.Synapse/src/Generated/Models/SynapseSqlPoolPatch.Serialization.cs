@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseSku.DeserializeSynapseSku(property.Value);
+                    sku = SynapseSku.DeserializeSynapseSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<SessionHostHealthCheckReport> array = new List<SessionHostHealthCheckReport>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SessionHostHealthCheckReport.DeserializeSessionHostHealthCheckReport(item));
+                                array.Add(SessionHostHealthCheckReport.DeserializeSessionHostHealthCheckReport(item, options));
                             }
                             sessionHostHealthCheckResults = array;
                             continue;

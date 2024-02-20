@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value);
+                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

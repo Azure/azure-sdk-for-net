@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            ownerSource = GovernanceRuleOwnerSource.DeserializeGovernanceRuleOwnerSource(property0.Value);
+                            ownerSource = GovernanceRuleOwnerSource.DeserializeGovernanceRuleOwnerSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("governanceEmailNotification"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value);
+                            governanceEmailNotification = GovernanceRuleEmailNotification.DeserializeGovernanceRuleEmailNotification(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value);
+                            metadata = GovernanceRuleMetadata.DeserializeGovernanceRuleMetadata(property0.Value, options);
                             continue;
                         }
                     }

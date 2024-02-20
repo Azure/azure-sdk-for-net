@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRegistryInstance> array = new List<AppPlatformServiceRegistryInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item));
+                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item, options));
                     }
                     instances = array;
                     continue;

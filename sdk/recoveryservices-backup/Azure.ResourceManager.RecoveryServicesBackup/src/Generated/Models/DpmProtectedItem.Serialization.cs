@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmProtectedItemExtendedInfo.DeserializeDpmProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = DpmProtectedItemExtendedInfo.DeserializeDpmProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

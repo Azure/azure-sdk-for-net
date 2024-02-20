@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        array.Add(DatasetReference.DeserializeDatasetReference(item, options));
                     }
                     datasets = array;
                     continue;

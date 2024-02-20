@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             Dictionary<string, ClusterServiceConfigValueEntity> dictionary = new Dictionary<string, ClusterServiceConfigValueEntity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ClusterServiceConfigValueEntity.DeserializeClusterServiceConfigValueEntity(property1.Value));
+                                dictionary.Add(property1.Name, ClusterServiceConfigValueEntity.DeserializeClusterServiceConfigValueEntity(property1.Value, options));
                             }
                             defaultKeys = dictionary;
                             continue;

@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value);
+                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
                             continue;
                         }
                     }

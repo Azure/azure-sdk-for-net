@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCreatorData> array = new List<MapsCreatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item));
+                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item, options));
                     }
                     value = array;
                     continue;

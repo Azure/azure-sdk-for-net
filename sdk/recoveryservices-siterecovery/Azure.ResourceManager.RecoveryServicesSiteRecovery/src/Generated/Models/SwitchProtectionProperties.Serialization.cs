@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SwitchProtectionProviderSpecificContent.DeserializeSwitchProtectionProviderSpecificContent(property.Value);
+                    providerSpecificDetails = SwitchProtectionProviderSpecificContent.DeserializeSwitchProtectionProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

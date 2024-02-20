@@ -198,7 +198,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ContactDetails> array = new List<ContactDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactDetails.DeserializeContactDetails(item));
+                        array.Add(ContactDetails.DeserializeContactDetails(item, options));
                     }
                     contacts = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialResearchFacility> array = new List<ClinicalTrialResearchFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item));
+                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item, options));
                     }
                     facilities = array;
                     continue;

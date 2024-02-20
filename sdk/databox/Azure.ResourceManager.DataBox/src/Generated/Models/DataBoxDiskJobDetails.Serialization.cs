@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskCopyProgress> array = new List<DataBoxDiskCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskCopyProgress.DeserializeDataBoxDiskCopyProgress(item));
+                        array.Add(DataBoxDiskCopyProgress.DeserializeDataBoxDiskCopyProgress(item, options));
                     }
                     copyProgress = array;
                     continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskGranularCopyProgress> array = new List<DataBoxDiskGranularCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskGranularCopyProgress.DeserializeDataBoxDiskGranularCopyProgress(item));
+                        array.Add(DataBoxDiskGranularCopyProgress.DeserializeDataBoxDiskGranularCopyProgress(item, options));
                     }
                     granularCopyProgress = array;
                     continue;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskGranularCopyLogDetails> array = new List<DataBoxDiskGranularCopyLogDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(item));
+                        array.Add(DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(item, options));
                     }
                     granularCopyLogDetails = array;
                     continue;
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxJobStage> array = new List<DataBoxJobStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
+                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item, options));
                     }
                     jobStages = array;
                     continue;
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
-                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
+                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryPackage"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
+                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("returnPackage"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
+                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataImportDetails"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataImportDetails> array = new List<DataImportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item, options));
                     }
                     dataImportDetails = array;
                     continue;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataExportDetails> array = new List<DataExportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item, options));
                     }
                     dataExportDetails = array;
                     continue;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
+                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
+                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("copyLogDetails"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<CopyLogDetails> array = new List<CopyLogDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item));
+                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item, options));
                     }
                     copyLogDetails = array;
                     continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value);
+                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value);
+                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value);
+                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddress"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
+                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))

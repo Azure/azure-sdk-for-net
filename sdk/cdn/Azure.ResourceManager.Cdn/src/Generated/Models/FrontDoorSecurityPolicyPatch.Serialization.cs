@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value);
+                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value, options);
                             continue;
                         }
                     }

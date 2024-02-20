@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value);
+                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vpnClientRootCertificates"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnClientRootCertificate> array = new List<VpnClientRootCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item));
+                        array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item, options));
                     }
                     vpnClientRootCertificates = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnClientRevokedCertificate> array = new List<VpnClientRevokedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item));
+                        array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item, options));
                     }
                     vpnClientRevokedCertificates = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
                     vpnClientIPsecPolicies = array;
                     continue;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RadiusServer> array = new List<RadiusServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RadiusServer.DeserializeRadiusServer(item));
+                        array.Add(RadiusServer.DeserializeRadiusServer(item, options));
                     }
                     radiusServers = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VngClientConnectionConfiguration> array = new List<VngClientConnectionConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item));
+                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item, options));
                     }
                     vngClientConnectionConfigurations = array;
                     continue;

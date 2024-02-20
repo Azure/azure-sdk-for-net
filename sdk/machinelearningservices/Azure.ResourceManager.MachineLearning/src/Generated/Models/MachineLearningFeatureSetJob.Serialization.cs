@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureWindow = null;
                         continue;
                     }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value);
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobId"u8))

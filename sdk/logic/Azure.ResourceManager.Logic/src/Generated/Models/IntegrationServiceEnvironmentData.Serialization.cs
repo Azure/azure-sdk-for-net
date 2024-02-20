@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    properties = IntegrationServiceEnvironmentProperties.DeserializeIntegrationServiceEnvironmentProperties(property.Value);
+                    properties = IntegrationServiceEnvironmentProperties.DeserializeIntegrationServiceEnvironmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    sku = IntegrationServiceEnvironmentSku.DeserializeIntegrationServiceEnvironmentSku(property.Value);
+                    sku = IntegrationServiceEnvironmentSku.DeserializeIntegrationServiceEnvironmentSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

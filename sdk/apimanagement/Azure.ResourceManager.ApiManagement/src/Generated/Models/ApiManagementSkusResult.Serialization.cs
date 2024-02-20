@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSku> array = new List<ApiManagementSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSku.DeserializeApiManagementSku(item));
+                        array.Add(ApiManagementSku.DeserializeApiManagementSku(item, options));
                     }
                     value = array;
                     continue;

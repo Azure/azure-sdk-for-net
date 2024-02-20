@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualApplianceSiteData> array = new List<VirtualApplianceSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(item));
+                        array.Add(VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(item, options));
                     }
                     value = array;
                     continue;

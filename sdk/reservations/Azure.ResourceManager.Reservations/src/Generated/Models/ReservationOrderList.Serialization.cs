@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationOrderData> array = new List<ReservationOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationOrderData.DeserializeReservationOrderData(item));
+                        array.Add(ReservationOrderData.DeserializeReservationOrderData(item, options));
                     }
                     value = array;
                     continue;

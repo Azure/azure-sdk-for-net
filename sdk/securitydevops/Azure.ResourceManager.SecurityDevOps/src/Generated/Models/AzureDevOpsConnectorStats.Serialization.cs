@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    properties = AzureDevOpsConnectorStatsProperties.DeserializeAzureDevOpsConnectorStatsProperties(property.Value);
+                    properties = AzureDevOpsConnectorStatsProperties.DeserializeAzureDevOpsConnectorStatsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -71,14 +71,14 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element);
-                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element);
-                    case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element);
-                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element);
-                    case "function": return ChatRequestFunctionMessage.DeserializeChatRequestFunctionMessage(element);
+                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
+                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);
+                    case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element, options);
+                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
+                    case "function": return ChatRequestFunctionMessage.DeserializeChatRequestFunctionMessage(element, options);
                 }
             }
-            return UnknownChatRequestMessage.DeserializeUnknownChatRequestMessage(element);
+            return UnknownChatRequestMessage.DeserializeUnknownChatRequestMessage(element, options);
         }
 
         BinaryData IPersistableModel<ChatRequestMessage>.Write(ModelReaderWriterOptions options)

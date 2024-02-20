@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridDomainData> array = new List<EventGridDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridDomainData.DeserializeEventGridDomainData(item));
+                        array.Add(EventGridDomainData.DeserializeEventGridDomainData(item, options));
                     }
                     value = array;
                     continue;

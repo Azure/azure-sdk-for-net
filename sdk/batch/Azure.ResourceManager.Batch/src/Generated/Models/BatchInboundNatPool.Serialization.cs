@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item, options));
                     }
                     networkSecurityGroupRules = array;
                     continue;

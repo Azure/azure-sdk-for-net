@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseBigDataPoolInfoData> array = new List<SynapseBigDataPoolInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(item));
+                        array.Add(SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(item, options));
                     }
                     value = array;
                     continue;

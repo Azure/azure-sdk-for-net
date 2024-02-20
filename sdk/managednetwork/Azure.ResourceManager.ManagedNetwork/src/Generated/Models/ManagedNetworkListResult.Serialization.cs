@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkData> array = new List<ManagedNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkData.DeserializeManagedNetworkData(item));
+                        array.Add(ManagedNetworkData.DeserializeManagedNetworkData(item, options));
                     }
                     value = array;
                     continue;

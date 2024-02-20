@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringOption"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value);
+                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionAProperties"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionAProperties = ExternalNetworkPatchOptionAProperties.DeserializeExternalNetworkPatchOptionAProperties(property0.Value);
+                            optionAProperties = ExternalNetworkPatchOptionAProperties.DeserializeExternalNetworkPatchOptionAProperties(property0.Value, options);
                             continue;
                         }
                     }

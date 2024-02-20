@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    recentlyResolved = ResourceHealthAvailabilityStateRecentlyResolved.DeserializeResourceHealthAvailabilityStateRecentlyResolved(property.Value);
+                    recentlyResolved = ResourceHealthAvailabilityStateRecentlyResolved.DeserializeResourceHealthAvailabilityStateRecentlyResolved(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recommendedActions"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthRecommendedAction> array = new List<ResourceHealthRecommendedAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthRecommendedAction.DeserializeResourceHealthRecommendedAction(item));
+                        array.Add(ResourceHealthRecommendedAction.DeserializeResourceHealthRecommendedAction(item, options));
                     }
                     recommendedActions = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ServiceImpactingEvent> array = new List<ServiceImpactingEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceImpactingEvent.DeserializeServiceImpactingEvent(item));
+                        array.Add(ServiceImpactingEvent.DeserializeServiceImpactingEvent(item, options));
                     }
                     serviceImpactingEvents = array;
                     continue;

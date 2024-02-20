@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value);
+                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value, options);
                             continue;
                         }
                     }

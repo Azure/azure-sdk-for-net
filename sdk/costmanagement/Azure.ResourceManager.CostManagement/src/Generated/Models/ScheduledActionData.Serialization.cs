@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            fileDestination = FileDestination.DeserializeFileDestination(property0.Value);
+                            fileDestination = FileDestination.DeserializeFileDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notification"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            notification = NotificationProperties.DeserializeNotificationProperties(property0.Value);
+                            notification = NotificationProperties.DeserializeNotificationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notificationEmail"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ScheduleProperties.DeserializeScheduleProperties(property0.Value);
+                            schedule = ScheduleProperties.DeserializeScheduleProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))

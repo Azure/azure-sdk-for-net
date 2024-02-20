@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

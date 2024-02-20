@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resources = MachineLearningInstanceTypeSchemaResources.DeserializeMachineLearningInstanceTypeSchemaResources(property.Value);
+                    resources = MachineLearningInstanceTypeSchemaResources.DeserializeMachineLearningInstanceTypeSchemaResources(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapApplicationServerInstanceData> array = new List<SapApplicationServerInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(item));
+                        array.Add(SapApplicationServerInstanceData.DeserializeSapApplicationServerInstanceData(item, options));
                     }
                     value = array;
                     continue;

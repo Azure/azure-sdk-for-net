@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             {
                                 continue;
                             }
-                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value);
+                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value, options);
                             continue;
                         }
                     }

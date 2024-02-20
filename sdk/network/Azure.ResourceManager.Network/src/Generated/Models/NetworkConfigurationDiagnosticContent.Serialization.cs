@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticProfile> array = new List<NetworkConfigurationDiagnosticProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item, options));
                     }
                     profiles = array;
                     continue;

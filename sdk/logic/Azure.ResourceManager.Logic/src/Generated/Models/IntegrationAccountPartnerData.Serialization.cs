@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"u8))
                         {
-                            content = IntegrationAccountPartnerContent.DeserializeIntegrationAccountPartnerContent(property0.Value);
+                            content = IntegrationAccountPartnerContent.DeserializeIntegrationAccountPartnerContent(property0.Value, options);
                             continue;
                         }
                     }

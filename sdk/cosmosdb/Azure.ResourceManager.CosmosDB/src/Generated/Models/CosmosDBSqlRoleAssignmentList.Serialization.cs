@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlRoleAssignmentData> array = new List<CosmosDBSqlRoleAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(item));
+                        array.Add(CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value);
+                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transparentHugePageEnabled"u8))

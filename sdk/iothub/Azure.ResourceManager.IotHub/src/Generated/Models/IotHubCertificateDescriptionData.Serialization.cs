@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.IotHub
                     {
                         continue;
                     }
-                    properties = IotHubCertificateProperties.DeserializeIotHubCertificateProperties(property.Value);
+                    properties = IotHubCertificateProperties.DeserializeIotHubCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

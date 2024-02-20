@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusRuleData> array = new List<ServiceBusRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusRuleData.DeserializeServiceBusRuleData(item));
+                        array.Add(ServiceBusRuleData.DeserializeServiceBusRuleData(item, options));
                     }
                     value = array;
                     continue;

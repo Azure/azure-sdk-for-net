@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsSentinelOnboardingStateData> array = new List<SecurityInsightsSentinelOnboardingStateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsSentinelOnboardingStateData.DeserializeSecurityInsightsSentinelOnboardingStateData(item));
+                        array.Add(SecurityInsightsSentinelOnboardingStateData.DeserializeSecurityInsightsSentinelOnboardingStateData(item, options));
                     }
                     value = array;
                     continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<ResourceRecommendationBaseData> array = new List<ResourceRecommendationBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(item));
+                        array.Add(ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(item, options));
                     }
                     value = array;
                     continue;

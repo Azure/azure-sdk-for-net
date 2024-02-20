@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeTriggerData> array = new List<DataBoxEdgeTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(item));
+                        array.Add(DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(item, options));
                     }
                     value = array;
                     continue;

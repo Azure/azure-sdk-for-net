@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupData> array = new List<SmartGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupData.DeserializeSmartGroupData(item));
+                        array.Add(SmartGroupData.DeserializeSmartGroupData(item, options));
                     }
                     value = array;
                     continue;

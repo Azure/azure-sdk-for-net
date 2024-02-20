@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToCold = DateAfterModification.DeserializeDateAfterModification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToHot = DateAfterModification.DeserializeDateAfterModification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    delete = DateAfterModification.DeserializeDateAfterModification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAutoTierToHotFromCool"u8))

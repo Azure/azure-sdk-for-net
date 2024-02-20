@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("storage"u8))
                 {
-                    storage = FlinkStorageProfile.DeserializeFlinkStorageProfile(property.Value);
+                    storage = FlinkStorageProfile.DeserializeFlinkStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("numReplicas"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("jobManager"u8))
                 {
-                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    jobManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("historyServer"u8))
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    historyServer = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskManager"u8))
                 {
-                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value);
+                    taskManager = ComputeResourceRequirement.DeserializeComputeResourceRequirement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("catalogOptions"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value);
+                    catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

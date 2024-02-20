@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<PublisherData> array = new List<PublisherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublisherData.DeserializePublisherData(item));
+                        array.Add(PublisherData.DeserializePublisherData(item, options));
                     }
                     value = array;
                     continue;

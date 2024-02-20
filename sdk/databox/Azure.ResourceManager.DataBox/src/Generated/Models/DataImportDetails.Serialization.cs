@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
+                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))

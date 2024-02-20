@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
+                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("flowAnalyticsConfiguration"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property0.Value);
+                            flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

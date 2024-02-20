@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FailoverWorkflowDetails": return FailoverWorkflowModelCustomProperties.DeserializeFailoverWorkflowModelCustomProperties(element);
-                    case "TestFailoverCleanupWorkflowDetails": return TestFailoverCleanupWorkflowModelCustomProperties.DeserializeTestFailoverCleanupWorkflowModelCustomProperties(element);
-                    case "TestFailoverWorkflowDetails": return TestFailoverWorkflowModelCustomProperties.DeserializeTestFailoverWorkflowModelCustomProperties(element);
+                    case "FailoverWorkflowDetails": return FailoverWorkflowModelCustomProperties.DeserializeFailoverWorkflowModelCustomProperties(element, options);
+                    case "TestFailoverCleanupWorkflowDetails": return TestFailoverCleanupWorkflowModelCustomProperties.DeserializeTestFailoverCleanupWorkflowModelCustomProperties(element, options);
+                    case "TestFailoverWorkflowDetails": return TestFailoverWorkflowModelCustomProperties.DeserializeTestFailoverWorkflowModelCustomProperties(element, options);
                 }
             }
-            return UnknownWorkflowModelCustomProperties.DeserializeUnknownWorkflowModelCustomProperties(element);
+            return UnknownWorkflowModelCustomProperties.DeserializeUnknownWorkflowModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<WorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)

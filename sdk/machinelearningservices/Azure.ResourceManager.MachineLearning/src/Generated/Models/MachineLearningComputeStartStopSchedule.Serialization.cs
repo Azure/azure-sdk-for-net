@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value);
+                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cron"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value);
+                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value);
+                    schedule = MachineLearningScheduleBase.DeserializeMachineLearningScheduleBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value);
+                    queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

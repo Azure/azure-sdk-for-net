@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxRefundLimit"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyErrors"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationRefundPolicyError> array = new List<ReservationRefundPolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item));
+                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item, options));
                     }
                     policyErrors = array;
                     continue;

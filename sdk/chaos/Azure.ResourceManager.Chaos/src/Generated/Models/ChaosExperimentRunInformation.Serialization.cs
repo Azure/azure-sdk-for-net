@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunStepStatus> array = new List<ChaosExperimentRunStepStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item));
+                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item, options));
                     }
                     steps = array;
                     continue;

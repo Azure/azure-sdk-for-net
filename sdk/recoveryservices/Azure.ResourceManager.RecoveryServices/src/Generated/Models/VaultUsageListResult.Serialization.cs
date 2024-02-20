@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<VaultUsage> array = new List<VaultUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultUsage.DeserializeVaultUsage(item));
+                        array.Add(VaultUsage.DeserializeVaultUsage(item, options));
                     }
                     value = array;
                     continue;

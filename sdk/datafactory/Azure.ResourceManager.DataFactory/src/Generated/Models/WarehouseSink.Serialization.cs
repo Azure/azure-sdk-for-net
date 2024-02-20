@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value);
+                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tableOption"u8))

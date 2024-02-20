@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<RoutingPreferenceUnbilledPrefix> array = new List<RoutingPreferenceUnbilledPrefix>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(item));
+                        array.Add(RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(item, options));
                     }
                     value = array;
                     continue;

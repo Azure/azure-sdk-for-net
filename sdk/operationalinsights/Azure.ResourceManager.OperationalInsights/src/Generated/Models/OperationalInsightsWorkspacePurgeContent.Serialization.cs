@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsWorkspacePurgeFilter> array = new List<OperationalInsightsWorkspacePurgeFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsWorkspacePurgeFilter.DeserializeOperationalInsightsWorkspacePurgeFilter(item));
+                        array.Add(OperationalInsightsWorkspacePurgeFilter.DeserializeOperationalInsightsWorkspacePurgeFilter(item, options));
                     }
                     filters = array;
                     continue;

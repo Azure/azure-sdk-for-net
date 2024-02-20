@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
                     List<WorkerWeightedAllocation> array = new List<WorkerWeightedAllocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerWeightedAllocation.DeserializeWorkerWeightedAllocation(item));
+                        array.Add(WorkerWeightedAllocation.DeserializeWorkerWeightedAllocation(item, options));
                     }
                     allocations = array;
                     continue;

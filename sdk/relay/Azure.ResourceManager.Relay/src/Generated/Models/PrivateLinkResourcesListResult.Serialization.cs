@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayPrivateLinkResourceData> array = new List<RelayPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(item));
+                        array.Add(RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

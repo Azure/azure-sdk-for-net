@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<Annotation> array = new List<Annotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item));
+                        array.Add(Annotation.DeserializeAnnotation(item, options));
                     }
                     value = array;
                     continue;

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     dnsServers = array;
                     continue;

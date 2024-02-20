@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricCriteria> array = new List<MetricCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricCriteria.DeserializeMetricCriteria(item));
+                        array.Add(MetricCriteria.DeserializeMetricCriteria(item, options));
                     }
                     allOf = array;
                     continue;

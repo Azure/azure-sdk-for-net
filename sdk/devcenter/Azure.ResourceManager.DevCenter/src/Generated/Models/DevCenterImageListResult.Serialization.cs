@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterImageData> array = new List<DevCenterImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterImageData.DeserializeDevCenterImageData(item));
+                        array.Add(DevCenterImageData.DeserializeDevCenterImageData(item, options));
                     }
                     value = array;
                     continue;

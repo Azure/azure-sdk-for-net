@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value);
+                            sslPolicy = ApplicationGatewaySslPolicy.DeserializeApplicationGatewaySslPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientAuthConfiguration"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value);
+                            clientAuthConfiguration = ApplicationGatewayClientAuthConfiguration.DeserializeApplicationGatewayClientAuthConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

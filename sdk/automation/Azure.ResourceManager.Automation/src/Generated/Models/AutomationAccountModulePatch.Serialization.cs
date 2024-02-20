@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                     }

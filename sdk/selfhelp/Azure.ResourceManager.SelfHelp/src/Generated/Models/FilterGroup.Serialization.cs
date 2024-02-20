@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpFilter> array = new List<SelfHelpFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpFilter.DeserializeSelfHelpFilter(item));
+                        array.Add(SelfHelpFilter.DeserializeSelfHelpFilter(item, options));
                     }
                     filter = array;
                     continue;

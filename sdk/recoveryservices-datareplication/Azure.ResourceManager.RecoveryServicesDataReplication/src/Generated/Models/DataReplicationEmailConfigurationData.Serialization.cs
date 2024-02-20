@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataReplicationEmailConfigurationProperties.DeserializeDataReplicationEmailConfigurationProperties(property.Value);
+                    properties = DataReplicationEmailConfigurationProperties.DeserializeDataReplicationEmailConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

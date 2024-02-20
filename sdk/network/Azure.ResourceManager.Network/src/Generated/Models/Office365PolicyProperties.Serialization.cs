@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value);
+                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

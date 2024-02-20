@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceSingleSignOnData> array = new List<DynatraceSingleSignOnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(item));
+                        array.Add(DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<VerifiedPartnerData> array = new List<VerifiedPartnerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VerifiedPartnerData.DeserializeVerifiedPartnerData(item));
+                        array.Add(VerifiedPartnerData.DeserializeVerifiedPartnerData(item, options));
                     }
                     value = array;
                     continue;

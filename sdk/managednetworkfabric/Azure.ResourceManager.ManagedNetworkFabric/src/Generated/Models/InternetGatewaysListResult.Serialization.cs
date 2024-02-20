@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricInternetGatewayData> array = new List<NetworkFabricInternetGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(item));
+                        array.Add(NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(item, options));
                     }
                     value = array;
                     continue;

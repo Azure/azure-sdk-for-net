@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataConfiguration = null;
                         continue;
                     }
-                    dataConfiguration = LabelingDataConfiguration.DeserializeLabelingDataConfiguration(property.Value);
+                    dataConfiguration = LabelingDataConfiguration.DeserializeLabelingDataConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobInstructions"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         jobInstructions = null;
                         continue;
                     }
-                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value);
+                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labelCategories"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelCategory> dictionary = new Dictionary<string, LabelCategory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value));
+                        dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value, options));
                     }
                     labelCategories = dictionary;
                     continue;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         labelingJobMediaProperties = null;
                         continue;
                     }
-                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value);
+                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mlAssistConfiguration"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    mlAssistConfiguration = MachineLearningAssistConfiguration.DeserializeMachineLearningAssistConfiguration(property.Value);
+                    mlAssistConfiguration = MachineLearningAssistConfiguration.DeserializeMachineLearningAssistConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressMetrics"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         progressMetrics = null;
                         continue;
                     }
-                    progressMetrics = ProgressMetrics.DeserializeProgressMetrics(property.Value);
+                    progressMetrics = ProgressMetrics.DeserializeProgressMetrics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectId"u8))
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<JobStatusMessage> array = new List<JobStatusMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item));
+                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item, options));
                     }
                     statusMessages = array;
                     continue;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value);
+                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isArchived"u8))
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretsConfiguration"u8))
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value, options));
                     }
                     secretsConfiguration = dictionary;
                     continue;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value, options));
                     }
                     services = dictionary;
                     continue;

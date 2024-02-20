@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryTriggerData> array = new List<DataFactoryTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryTriggerData.DeserializeDataFactoryTriggerData(item));
+                        array.Add(DataFactoryTriggerData.DeserializeDataFactoryTriggerData(item, options));
                     }
                     value = array;
                     continue;

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("sessionAmbr"u8))
                 {
-                    sessionAmbr = Ambr.DeserializeAmbr(property.Value);
+                    sessionAmbr = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("5qi"u8))

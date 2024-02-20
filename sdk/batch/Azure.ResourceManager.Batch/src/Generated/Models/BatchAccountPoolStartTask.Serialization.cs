@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item));
+                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item));
+                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value);
+                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxTaskRetryCount"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

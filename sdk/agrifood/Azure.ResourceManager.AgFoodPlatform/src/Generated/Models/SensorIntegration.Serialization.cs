@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

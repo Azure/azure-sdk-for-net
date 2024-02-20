@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value);
+                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

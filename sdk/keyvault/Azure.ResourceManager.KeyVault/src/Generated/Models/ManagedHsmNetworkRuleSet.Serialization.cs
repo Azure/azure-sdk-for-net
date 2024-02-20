@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmIPRule> array = new List<ManagedHsmIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item));
+                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmVirtualNetworkRule> array = new List<ManagedHsmVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item));
+                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;

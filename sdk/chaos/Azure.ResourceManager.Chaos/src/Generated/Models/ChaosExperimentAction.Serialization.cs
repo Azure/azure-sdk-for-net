@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "continuous": return ChaosContinuousAction.DeserializeChaosContinuousAction(element);
-                    case "delay": return ChaosDelayAction.DeserializeChaosDelayAction(element);
-                    case "discrete": return ChaosDiscreteAction.DeserializeChaosDiscreteAction(element);
+                    case "continuous": return ChaosContinuousAction.DeserializeChaosContinuousAction(element, options);
+                    case "delay": return ChaosDelayAction.DeserializeChaosDelayAction(element, options);
+                    case "discrete": return ChaosDiscreteAction.DeserializeChaosDiscreteAction(element, options);
                 }
             }
-            return UnknownChaosExperimentAction.DeserializeUnknownChaosExperimentAction(element);
+            return UnknownChaosExperimentAction.DeserializeUnknownChaosExperimentAction(element, options);
         }
 
         BinaryData IPersistableModel<ChaosExperimentAction>.Write(ModelReaderWriterOptions options)

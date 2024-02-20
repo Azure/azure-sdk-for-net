@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpStep> array = new List<SelfHelpStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpStep.DeserializeSelfHelpStep(item));
+                                array.Add(SelfHelpStep.DeserializeSelfHelpStep(item, options));
                             }
                             steps = array;
                             continue;

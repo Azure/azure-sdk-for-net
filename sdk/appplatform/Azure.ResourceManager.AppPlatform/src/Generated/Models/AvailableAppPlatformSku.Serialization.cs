@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value);
+                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuLocationInfo> array = new List<AppPlatformSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuLocationInfo.DeserializeAppPlatformSkuLocationInfo(item));
+                        array.Add(AppPlatformSkuLocationInfo.DeserializeAppPlatformSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuRestrictions> array = new List<AppPlatformSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuRestrictions.DeserializeAppPlatformSkuRestrictions(item));
+                        array.Add(AppPlatformSkuRestrictions.DeserializeAppPlatformSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

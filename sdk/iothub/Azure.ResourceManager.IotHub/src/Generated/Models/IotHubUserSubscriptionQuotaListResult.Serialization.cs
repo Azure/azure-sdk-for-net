@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubUserSubscriptionQuota> array = new List<IotHubUserSubscriptionQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(item));
+                        array.Add(IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(item, options));
                     }
                     value = array;
                     continue;

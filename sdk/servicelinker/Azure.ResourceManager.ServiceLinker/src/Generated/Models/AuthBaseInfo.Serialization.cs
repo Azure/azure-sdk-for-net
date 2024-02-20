@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element);
-                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element);
-                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element);
-                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element);
-                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
+                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element, options);
+                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element, options);
+                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element, options);
+                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element, options);
+                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element, options);
                 }
             }
-            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)

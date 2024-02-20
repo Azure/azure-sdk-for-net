@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("preset"u8))
                 {
-                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

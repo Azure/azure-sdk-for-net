@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

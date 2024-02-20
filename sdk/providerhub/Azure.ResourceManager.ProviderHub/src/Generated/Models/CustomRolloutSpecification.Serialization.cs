@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 if (property.NameEquals("canary"u8))
                 {
-                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value);
+                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;

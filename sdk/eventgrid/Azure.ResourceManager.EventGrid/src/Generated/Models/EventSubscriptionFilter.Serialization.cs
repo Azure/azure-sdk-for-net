@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<AdvancedFilter> array = new List<AdvancedFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item));
+                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item, options));
                     }
                     advancedFilters = array;
                     continue;

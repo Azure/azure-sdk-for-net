@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AudioTrack": return AudioTrack.DeserializeAudioTrack(element);
-                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element);
-                    case "#Microsoft.Media.VideoTrack": return VideoTrack.DeserializeVideoTrack(element);
+                    case "#Microsoft.Media.AudioTrack": return AudioTrack.DeserializeAudioTrack(element, options);
+                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element, options);
+                    case "#Microsoft.Media.VideoTrack": return VideoTrack.DeserializeVideoTrack(element, options);
                 }
             }
-            return UnknownTrackBase.DeserializeUnknownTrackBase(element);
+            return UnknownTrackBase.DeserializeUnknownTrackBase(element, options);
         }
 
         BinaryData IPersistableModel<MediaAssetTrackBase>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    properties = ArtifactChangeStateProperties.DeserializeArtifactChangeStateProperties(property.Value);
+                    properties = ArtifactChangeStateProperties.DeserializeArtifactChangeStateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

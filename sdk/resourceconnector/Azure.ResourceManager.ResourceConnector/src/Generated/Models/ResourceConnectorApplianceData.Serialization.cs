@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ResourceConnector
                             {
                                 continue;
                             }
-                            infrastructureConfig = AppliancePropertiesInfrastructureConfig.DeserializeAppliancePropertiesInfrastructureConfig(property0.Value);
+                            infrastructureConfig = AppliancePropertiesInfrastructureConfig.DeserializeAppliancePropertiesInfrastructureConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

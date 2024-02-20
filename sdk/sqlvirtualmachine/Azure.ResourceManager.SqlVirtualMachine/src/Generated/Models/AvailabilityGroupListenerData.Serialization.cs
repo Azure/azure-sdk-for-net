@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<AvailabilityGroupListenerLoadBalancerConfiguration> array = new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item));
+                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item, options));
                             }
                             loadBalancerConfigurations = array;
                             continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<MultiSubnetIPConfiguration> array = new List<MultiSubnetIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item));
+                                array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item, options));
                             }
                             multiSubnetIPConfigurations = array;
                             continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value);
+                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value, options);
                             continue;
                         }
                     }

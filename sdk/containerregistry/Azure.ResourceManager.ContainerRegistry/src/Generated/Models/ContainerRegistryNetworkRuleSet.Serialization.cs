@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryIPRule> array = new List<ContainerRegistryIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item));
+                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

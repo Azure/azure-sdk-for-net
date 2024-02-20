@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Qumulo
                     {
                         if (property0.NameEquals("marketplaceDetails"u8))
                         {
-                            marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property0.Value);
+                            marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Qumulo
                         }
                         if (property0.NameEquals("userDetails"u8))
                         {
-                            userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property0.Value);
+                            userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("delegatedSubnetId"u8))

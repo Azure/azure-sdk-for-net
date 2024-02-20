@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value);
+                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

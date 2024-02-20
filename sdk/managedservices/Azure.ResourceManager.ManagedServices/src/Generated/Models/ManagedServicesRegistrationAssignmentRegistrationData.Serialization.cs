@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value);
+                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
+                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

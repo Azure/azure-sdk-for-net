@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item, options));
                     }
                     newPlansNotifications = array;
                     continue;

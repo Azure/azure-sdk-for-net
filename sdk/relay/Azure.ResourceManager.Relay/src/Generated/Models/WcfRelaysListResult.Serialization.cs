@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<WcfRelayData> array = new List<WcfRelayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WcfRelayData.DeserializeWcfRelayData(item));
+                        array.Add(WcfRelayData.DeserializeWcfRelayData(item, options));
                     }
                     value = array;
                     continue;

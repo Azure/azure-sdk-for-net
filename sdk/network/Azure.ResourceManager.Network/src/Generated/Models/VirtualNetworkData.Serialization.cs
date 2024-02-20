@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value);
+                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("flowTimeoutInMinutes"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item, options));
                             }
                             virtualNetworkPeerings = array;
                             continue;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
+                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
+                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAllocations"u8))
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                             }
                             flowLogs = array;
                             continue;

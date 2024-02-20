@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ManagedRuleOverrideSetting> array = new List<ManagedRuleOverrideSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleOverrideSetting.DeserializeManagedRuleOverrideSetting(item));
+                        array.Add(ManagedRuleOverrideSetting.DeserializeManagedRuleOverrideSetting(item, options));
                     }
                     rules = array;
                     continue;

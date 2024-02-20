@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedOutboundIPs = ManagedClusterLoadBalancerProfileManagedOutboundIPs.DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(property.Value);
+                    managedOutboundIPs = ManagedClusterLoadBalancerProfileManagedOutboundIPs.DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundIPPrefixes"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    outboundIPPrefixes = ManagedClusterLoadBalancerProfileOutboundIPPrefixes.DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(property.Value);
+                    outboundIPPrefixes = ManagedClusterLoadBalancerProfileOutboundIPPrefixes.DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundIPs"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    outboundIPs = ManagedClusterLoadBalancerProfileOutboundIPs.DeserializeManagedClusterLoadBalancerProfileOutboundIPs(property.Value);
+                    outboundIPs = ManagedClusterLoadBalancerProfileOutboundIPs.DeserializeManagedClusterLoadBalancerProfileOutboundIPs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIPs"u8))

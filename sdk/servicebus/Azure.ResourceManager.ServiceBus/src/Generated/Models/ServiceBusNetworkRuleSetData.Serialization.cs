@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
                             List<ServiceBusNetworkRuleSetVirtualNetworkRules> array = new List<ServiceBusNetworkRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusNetworkRuleSetVirtualNetworkRules.DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(item));
+                                array.Add(ServiceBusNetworkRuleSetVirtualNetworkRules.DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceBus
                             List<ServiceBusNetworkRuleSetIPRules> array = new List<ServiceBusNetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusNetworkRuleSetIPRules.DeserializeServiceBusNetworkRuleSetIPRules(item));
+                                array.Add(ServiceBusNetworkRuleSetIPRules.DeserializeServiceBusNetworkRuleSetIPRules(item, options));
                             }
                             ipRules = array;
                             continue;

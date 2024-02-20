@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ComputePrivateLinkServiceConnectionState.DeserializeComputePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ComputePrivateLinkServiceConnectionState.DeserializeComputePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

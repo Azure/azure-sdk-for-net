@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expirationTimeIfNotActivatedUtc"u8))

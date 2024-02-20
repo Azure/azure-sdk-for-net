@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesIPConfiguration> array = new List<EdgeKubernetesIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item));
+                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item, options));
                     }
                     ipConfiguration = array;
                     continue;

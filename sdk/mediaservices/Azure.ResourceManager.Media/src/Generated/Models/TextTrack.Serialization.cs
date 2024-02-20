@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

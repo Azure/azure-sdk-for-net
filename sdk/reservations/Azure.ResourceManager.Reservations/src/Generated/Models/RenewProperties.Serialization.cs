@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = RenewPropertiesPricingCurrencyTotal.DeserializeRenewPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = RenewPropertiesBillingCurrencyTotal.DeserializeRenewPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

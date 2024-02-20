@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value);
+                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableStreamingIngest"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value);
+                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))

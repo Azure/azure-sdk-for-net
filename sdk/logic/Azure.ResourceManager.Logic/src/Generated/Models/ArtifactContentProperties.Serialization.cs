@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridPrivateLinkResourceData> array = new List<EventGridPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(item));
+                        array.Add(EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

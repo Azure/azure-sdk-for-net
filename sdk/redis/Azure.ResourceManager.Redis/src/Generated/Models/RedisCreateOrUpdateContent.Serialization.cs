@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Redis.Models
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
+                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Redis.Models
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = RedisSku.DeserializeRedisSku(property0.Value);
+                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnetId"u8))

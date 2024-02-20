@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = GetUserTablesSqlSyncTaskInput.DeserializeGetUserTablesSqlSyncTaskInput(property.Value);
+                    input = GetUserTablesSqlSyncTaskInput.DeserializeGetUserTablesSqlSyncTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<GetUserTablesSqlSyncTaskOutput> array = new List<GetUserTablesSqlSyncTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GetUserTablesSqlSyncTaskOutput.DeserializeGetUserTablesSqlSyncTaskOutput(item));
+                        array.Add(GetUserTablesSqlSyncTaskOutput.DeserializeGetUserTablesSqlSyncTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;

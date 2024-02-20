@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element);
-                    case "ManagedIdentity": return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element);
+                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element, options);
+                    case "ManagedIdentity": return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element, options);
                 }
             }
-            return UnknownCredential.DeserializeUnknownCredential(element);
+            return UnknownCredential.DeserializeUnknownCredential(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryCredential>.Write(ModelReaderWriterOptions options)

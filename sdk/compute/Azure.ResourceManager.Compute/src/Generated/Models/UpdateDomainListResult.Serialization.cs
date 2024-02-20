@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UpdateDomainIdentifier> array = new List<UpdateDomainIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(item));
+                        array.Add(UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MdeOnboarding> array = new List<MdeOnboarding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
+                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item, options));
                     }
                     value = array;
                     continue;

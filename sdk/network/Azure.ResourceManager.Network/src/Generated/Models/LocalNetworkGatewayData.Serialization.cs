@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayIpAddress"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))

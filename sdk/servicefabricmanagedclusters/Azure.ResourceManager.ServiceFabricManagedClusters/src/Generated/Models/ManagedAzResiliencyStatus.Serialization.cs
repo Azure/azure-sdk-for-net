@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ResourceAzStatus> array = new List<ResourceAzStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item));
+                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item, options));
                     }
                     baseResourceStatus = array;
                     continue;

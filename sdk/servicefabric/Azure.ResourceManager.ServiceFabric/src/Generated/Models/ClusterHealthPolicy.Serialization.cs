@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationHealthPolicy> dictionary = new Dictionary<string, ApplicationHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value, options));
                     }
                     applicationHealthPolicies = dictionary;
                     continue;

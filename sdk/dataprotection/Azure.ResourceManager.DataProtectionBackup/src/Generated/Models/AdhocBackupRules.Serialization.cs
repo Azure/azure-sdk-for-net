@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("triggerOption"u8))
                 {
-                    triggerOption = AdhocBackupTriggerSetting.DeserializeAdhocBackupTriggerSetting(property.Value);
+                    triggerOption = AdhocBackupTriggerSetting.DeserializeAdhocBackupTriggerSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -336,12 +336,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("terminalServerConfiguration"u8))
                         {
-                            terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(property0.Value);
+                            terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
                         {
-                            managementNetworkConfiguration = ManagementNetworkConfigurationProperties.DeserializeManagementNetworkConfigurationProperties(property0.Value);
+                            managementNetworkConfiguration = ManagementNetworkConfigurationProperties.DeserializeManagementNetworkConfigurationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("racks"u8))

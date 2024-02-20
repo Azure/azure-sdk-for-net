@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item));
+                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item, options));
                     }
                     groups = array;
                     continue;

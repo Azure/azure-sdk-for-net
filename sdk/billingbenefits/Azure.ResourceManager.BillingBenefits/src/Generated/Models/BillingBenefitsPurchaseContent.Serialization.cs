@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
+                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);
+                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                     }

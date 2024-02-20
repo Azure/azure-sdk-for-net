@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ComplianceSegment> array = new List<ComplianceSegment>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComplianceSegment.DeserializeComplianceSegment(item));
+                                array.Add(ComplianceSegment.DeserializeComplianceSegment(item, options));
                             }
                             assessmentResult = array;
                             continue;

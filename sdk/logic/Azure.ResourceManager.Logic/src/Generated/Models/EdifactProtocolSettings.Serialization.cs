@@ -140,32 +140,32 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = EdifactValidationSettings.DeserializeEdifactValidationSettings(property.Value);
+                    validationSettings = EdifactValidationSettings.DeserializeEdifactValidationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("framingSettings"u8))
                 {
-                    framingSettings = EdifactFramingSettings.DeserializeEdifactFramingSettings(property.Value);
+                    framingSettings = EdifactFramingSettings.DeserializeEdifactFramingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = EdifactEnvelopeSettings.DeserializeEdifactEnvelopeSettings(property.Value);
+                    envelopeSettings = EdifactEnvelopeSettings.DeserializeEdifactEnvelopeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("acknowledgementSettings"u8))
                 {
-                    acknowledgementSettings = EdifactAcknowledgementSettings.DeserializeEdifactAcknowledgementSettings(property.Value);
+                    acknowledgementSettings = EdifactAcknowledgementSettings.DeserializeEdifactAcknowledgementSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("messageFilter"u8))
                 {
-                    messageFilter = EdifactMessageFilter.DeserializeEdifactMessageFilter(property.Value);
+                    messageFilter = EdifactMessageFilter.DeserializeEdifactMessageFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("processingSettings"u8))
                 {
-                    processingSettings = EdifactProcessingSettings.DeserializeEdifactProcessingSettings(property.Value);
+                    processingSettings = EdifactProcessingSettings.DeserializeEdifactProcessingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("envelopeOverrides"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<EdifactEnvelopeOverride> array = new List<EdifactEnvelopeOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdifactEnvelopeOverride.DeserializeEdifactEnvelopeOverride(item));
+                        array.Add(EdifactEnvelopeOverride.DeserializeEdifactEnvelopeOverride(item, options));
                     }
                     envelopeOverrides = array;
                     continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<EdifactMessageIdentifier> array = new List<EdifactMessageIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdifactMessageIdentifier.DeserializeEdifactMessageIdentifier(item));
+                        array.Add(EdifactMessageIdentifier.DeserializeEdifactMessageIdentifier(item, options));
                     }
                     messageFilterList = array;
                     continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<EdifactSchemaReference> array = new List<EdifactSchemaReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdifactSchemaReference.DeserializeEdifactSchemaReference(item));
+                        array.Add(EdifactSchemaReference.DeserializeEdifactSchemaReference(item, options));
                     }
                     schemaReferences = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<EdifactValidationOverride> array = new List<EdifactValidationOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdifactValidationOverride.DeserializeEdifactValidationOverride(item));
+                        array.Add(EdifactValidationOverride.DeserializeEdifactValidationOverride(item, options));
                     }
                     validationOverrides = array;
                     continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<EdifactDelimiterOverride> array = new List<EdifactDelimiterOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdifactDelimiterOverride.DeserializeEdifactDelimiterOverride(item));
+                        array.Add(EdifactDelimiterOverride.DeserializeEdifactDelimiterOverride(item, options));
                     }
                     edifactDelimiterOverrides = array;
                     continue;

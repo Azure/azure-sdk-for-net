@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

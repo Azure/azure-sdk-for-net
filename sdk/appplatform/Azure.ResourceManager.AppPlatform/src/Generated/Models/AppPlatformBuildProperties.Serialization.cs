@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

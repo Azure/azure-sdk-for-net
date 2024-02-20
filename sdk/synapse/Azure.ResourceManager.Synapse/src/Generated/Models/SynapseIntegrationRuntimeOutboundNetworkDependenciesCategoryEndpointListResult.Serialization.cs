@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> array = new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(item));
+                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(item, options));
                     }
                     value = array;
                     continue;

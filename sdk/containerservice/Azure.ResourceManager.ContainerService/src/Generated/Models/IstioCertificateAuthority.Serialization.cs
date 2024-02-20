@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value);
+                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

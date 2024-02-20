@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerBackupData> array = new List<MySqlFlexibleServerBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(item));
+                        array.Add(MySqlFlexibleServerBackupData.DeserializeMySqlFlexibleServerBackupData(item, options));
                     }
                     value = array;
                     continue;

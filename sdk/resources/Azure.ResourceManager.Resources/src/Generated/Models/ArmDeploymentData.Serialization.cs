@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value);
+                    properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

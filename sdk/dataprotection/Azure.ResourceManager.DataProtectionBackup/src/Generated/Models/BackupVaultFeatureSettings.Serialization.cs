@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value);
+                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("crossRegionRestoreSettings"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value);
+                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

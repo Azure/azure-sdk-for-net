@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item, options));
                     }
                     value = array;
                     continue;

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceSkuCapability> array = new List<ResourceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item));
+                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

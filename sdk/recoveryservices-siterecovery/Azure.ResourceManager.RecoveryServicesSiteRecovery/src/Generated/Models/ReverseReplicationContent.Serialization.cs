@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = ReverseReplicationProperties.DeserializeReverseReplicationProperties(property.Value);
+                    properties = ReverseReplicationProperties.DeserializeReverseReplicationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

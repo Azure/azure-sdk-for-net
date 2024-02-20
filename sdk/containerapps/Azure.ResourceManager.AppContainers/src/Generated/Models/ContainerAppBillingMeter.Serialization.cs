@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppBillingMeterProperties.DeserializeContainerAppBillingMeterProperties(property.Value);
+                    properties = ContainerAppBillingMeterProperties.DeserializeContainerAppBillingMeterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

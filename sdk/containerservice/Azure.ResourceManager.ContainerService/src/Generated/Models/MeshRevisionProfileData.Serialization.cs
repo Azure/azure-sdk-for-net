@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    properties = MeshRevisionProfileProperties.DeserializeMeshRevisionProfileProperties(property.Value);
+                    properties = MeshRevisionProfileProperties.DeserializeMeshRevisionProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogAgreementResourceProperties> array = new List<DatadogAgreementResourceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item));
+                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item, options));
                     }
                     value = array;
                     continue;

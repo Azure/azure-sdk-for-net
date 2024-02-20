@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             List<QueryColumn> array = new List<QueryColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QueryColumn.DeserializeQueryColumn(item));
+                                array.Add(QueryColumn.DeserializeQueryColumn(item, options));
                             }
                             columns = array;
                             continue;

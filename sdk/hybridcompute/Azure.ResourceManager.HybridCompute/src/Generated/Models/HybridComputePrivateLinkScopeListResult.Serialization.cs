@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputePrivateLinkScopeData> array = new List<HybridComputePrivateLinkScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(item));
+                        array.Add(HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(item, options));
                     }
                     value = array;
                     continue;

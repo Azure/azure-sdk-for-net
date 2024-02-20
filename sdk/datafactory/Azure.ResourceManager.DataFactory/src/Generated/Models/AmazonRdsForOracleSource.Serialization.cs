@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = AmazonRdsForOraclePartitionSettings.DeserializeAmazonRdsForOraclePartitionSettings(property.Value);
+                    partitionSettings = AmazonRdsForOraclePartitionSettings.DeserializeAmazonRdsForOraclePartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))

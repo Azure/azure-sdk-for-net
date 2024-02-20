@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;

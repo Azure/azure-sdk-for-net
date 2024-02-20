@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS": return MachineLearningAksComputeSecrets.DeserializeMachineLearningAksComputeSecrets(element);
-                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element);
-                    case "VirtualMachine": return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element);
+                    case "AKS": return MachineLearningAksComputeSecrets.DeserializeMachineLearningAksComputeSecrets(element, options);
+                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
+                    case "VirtualMachine": return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element, options);
                 }
             }
-            return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element);
+            return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeSecrets>.Write(ModelReaderWriterOptions options)

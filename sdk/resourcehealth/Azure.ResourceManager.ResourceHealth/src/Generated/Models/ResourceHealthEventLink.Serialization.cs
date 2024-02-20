@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value);
+                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionName"u8))

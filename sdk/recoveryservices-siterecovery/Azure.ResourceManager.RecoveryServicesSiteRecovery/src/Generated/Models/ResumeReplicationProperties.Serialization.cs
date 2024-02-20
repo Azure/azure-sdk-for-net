@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
-                    providerSpecificDetails = ResumeReplicationProviderSpecificContent.DeserializeResumeReplicationProviderSpecificContent(property.Value);
+                    providerSpecificDetails = ResumeReplicationProviderSpecificContent.DeserializeResumeReplicationProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

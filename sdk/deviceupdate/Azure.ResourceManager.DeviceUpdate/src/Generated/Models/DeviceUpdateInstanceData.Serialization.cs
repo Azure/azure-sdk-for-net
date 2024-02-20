@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdateIotHubSettings> array = new List<DeviceUpdateIotHubSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdateIotHubSettings.DeserializeDeviceUpdateIotHubSettings(item));
+                                array.Add(DeviceUpdateIotHubSettings.DeserializeDeviceUpdateIotHubSettings(item, options));
                             }
                             iotHubs = array;
                             continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            diagnosticStorageProperties = DiagnosticStorageProperties.DeserializeDiagnosticStorageProperties(property0.Value);
+                            diagnosticStorageProperties = DiagnosticStorageProperties.DeserializeDiagnosticStorageProperties(property0.Value, options);
                             continue;
                         }
                     }

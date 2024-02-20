@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value);
+                    storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineRunCommandData> array = new List<VirtualMachineRunCommandData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(item));
+                        array.Add(VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(item, options));
                     }
                     value = array;
                     continue;

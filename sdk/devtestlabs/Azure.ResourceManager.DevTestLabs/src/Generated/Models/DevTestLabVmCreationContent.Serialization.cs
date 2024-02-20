@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            bulkCreationParameters = BulkCreationParameters.DeserializeBulkCreationParameters(property0.Value);
+                            bulkCreationParameters = BulkCreationParameters.DeserializeBulkCreationParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notes"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
+                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item, options));
                             }
                             artifacts = array;
                             continue;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
+                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("planId"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value);
+                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expirationDate"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabDataDiskProperties> array = new List<DevTestLabDataDiskProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item));
+                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item, options));
                             }
                             dataDiskParameters = array;
                             continue;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabScheduleCreationParameter> array = new List<DevTestLabScheduleCreationParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item));
+                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item, options));
                             }
                             scheduleParameters = array;
                             continue;

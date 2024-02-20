@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDatabasePrincipalAssignmentData> array = new List<SynapseDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item));
+                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item, options));
                     }
                     value = array;
                     continue;

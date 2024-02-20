@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                     }
                     secrets = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    manualTriggerConfig = JobConfigurationManualTriggerConfig.DeserializeJobConfigurationManualTriggerConfig(property.Value);
+                    manualTriggerConfig = JobConfigurationManualTriggerConfig.DeserializeJobConfigurationManualTriggerConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduleTriggerConfig"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scheduleTriggerConfig = JobConfigurationScheduleTriggerConfig.DeserializeJobConfigurationScheduleTriggerConfig(property.Value);
+                    scheduleTriggerConfig = JobConfigurationScheduleTriggerConfig.DeserializeJobConfigurationScheduleTriggerConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTriggerConfig"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value);
+                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
+                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item, options));
                     }
                     registries = array;
                     continue;

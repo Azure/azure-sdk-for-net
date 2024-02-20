@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))

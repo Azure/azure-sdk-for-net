@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    actionConfiguration = SecurityInsightsIncidentActionConfiguration.DeserializeSecurityInsightsIncidentActionConfiguration(property.Value);
+                    actionConfiguration = SecurityInsightsIncidentActionConfiguration.DeserializeSecurityInsightsIncidentActionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("order"u8))

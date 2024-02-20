@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    properties = DeviceProvisioningServicesCertificateProperties.DeserializeDeviceProvisioningServicesCertificateProperties(property.Value);
+                    properties = DeviceProvisioningServicesCertificateProperties.DeserializeDeviceProvisioningServicesCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

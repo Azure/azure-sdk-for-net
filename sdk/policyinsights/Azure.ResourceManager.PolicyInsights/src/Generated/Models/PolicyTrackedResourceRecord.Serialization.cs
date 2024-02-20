@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastModifiedBy"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateUtc"u8))

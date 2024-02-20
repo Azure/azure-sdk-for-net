@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciRecoveryPointModelCustomProperties.DeserializeHyperVToAzStackHciRecoveryPointModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciRecoveryPointModelCustomProperties.DeserializeHyperVToAzStackHciRecoveryPointModelCustomProperties(element, options);
                 }
             }
-            return UnknownRecoveryPointModelCustomProperties.DeserializeUnknownRecoveryPointModelCustomProperties(element);
+            return UnknownRecoveryPointModelCustomProperties.DeserializeUnknownRecoveryPointModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryPointModelCustomProperties>.Write(ModelReaderWriterOptions options)

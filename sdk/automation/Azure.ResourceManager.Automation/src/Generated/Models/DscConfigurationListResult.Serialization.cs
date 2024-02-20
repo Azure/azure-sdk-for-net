@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscConfigurationData> array = new List<DscConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscConfigurationData.DeserializeDscConfigurationData(item));
+                        array.Add(DscConfigurationData.DeserializeDscConfigurationData(item, options));
                     }
                     value = array;
                     continue;

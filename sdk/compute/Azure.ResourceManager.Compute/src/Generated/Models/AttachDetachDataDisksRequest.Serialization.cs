@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToAttach> array = new List<DataDisksToAttach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item));
+                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item, options));
                     }
                     dataDisksToAttach = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToDetach> array = new List<DataDisksToDetach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item));
+                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item, options));
                     }
                     dataDisksToDetach = array;
                     continue;

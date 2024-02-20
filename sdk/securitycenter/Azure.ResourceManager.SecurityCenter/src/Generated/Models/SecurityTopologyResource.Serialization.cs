@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<TopologySingleResource> array = new List<TopologySingleResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item));
+                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item, options));
                             }
                             topologyResources = array;
                             continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputePrivateEndpointConnectionData> array = new List<ComputePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item));
+                        array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

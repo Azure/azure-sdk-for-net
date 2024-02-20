@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlServerKeyData> array = new List<PostgreSqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(item));
+                        array.Add(PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(item, options));
                     }
                     value = array;
                     continue;

@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("ueAmbr"u8))
                         {
-                            ueAmbr = Ambr.DeserializeAmbr(property0.Value);
+                            ueAmbr = Ambr.DeserializeAmbr(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultSlice"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item, options));
                             }
                             sliceConfigurations = array;
                             continue;

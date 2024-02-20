@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ResourceMover
                     {
                         continue;
                     }
-                    properties = MoverResourceProperties.DeserializeMoverResourceProperties(property.Value);
+                    properties = MoverResourceProperties.DeserializeMoverResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

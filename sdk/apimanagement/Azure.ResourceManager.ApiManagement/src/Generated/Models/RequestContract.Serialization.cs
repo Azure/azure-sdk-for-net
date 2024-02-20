@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     queryParameters = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     headers = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RepresentationContract> array = new List<RepresentationContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RepresentationContract.DeserializeRepresentationContract(item));
+                        array.Add(RepresentationContract.DeserializeRepresentationContract(item, options));
                     }
                     representations = array;
                     continue;

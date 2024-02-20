@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VmInstanceHybridIdentityMetadataData> array = new List<VmInstanceHybridIdentityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmInstanceHybridIdentityMetadataData.DeserializeVmInstanceHybridIdentityMetadataData(item));
+                        array.Add(VmInstanceHybridIdentityMetadataData.DeserializeVmInstanceHybridIdentityMetadataData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsSubscriptionQuota> array = new List<StreamAnalyticsSubscriptionQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item));
+                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item, options));
                     }
                     value = array;
                     continue;

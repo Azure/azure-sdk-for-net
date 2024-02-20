@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSshPublicKey> array = new List<SapSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item));
+                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;

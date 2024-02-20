@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value);
+                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("action"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value);
+                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AlertRuleAction> array = new List<AlertRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
+                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item, options));
                             }
                             actions = array;
                             continue;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GraphResourceGetResultData> array = new List<GraphResourceGetResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphResourceGetResultData.DeserializeGraphResourceGetResultData(item));
+                        array.Add(GraphResourceGetResultData.DeserializeGraphResourceGetResultData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<IPRange> array = new List<IPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRange.DeserializeIPRange(item));
+                        array.Add(IPRange.DeserializeIPRange(item, options));
                     }
                     allow = array;
                     continue;

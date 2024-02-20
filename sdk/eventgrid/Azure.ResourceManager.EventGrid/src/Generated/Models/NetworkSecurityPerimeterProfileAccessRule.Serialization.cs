@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<NetworkSecurityPerimeterInfo> array = new List<NetworkSecurityPerimeterInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item));
+                                array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item, options));
                             }
                             networkSecurityPerimeters = array;
                             continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupEngineData> array = new List<BackupEngineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupEngineData.DeserializeBackupEngineData(item));
+                        array.Add(BackupEngineData.DeserializeBackupEngineData(item, options));
                     }
                     value = array;
                     continue;

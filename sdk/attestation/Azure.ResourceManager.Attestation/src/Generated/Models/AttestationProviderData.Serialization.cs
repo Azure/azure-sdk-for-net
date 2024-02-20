@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Attestation
                             List<AttestationPrivateEndpointConnectionData> array = new List<AttestationPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item));
+                                array.Add(AttestationPrivateEndpointConnectionData.DeserializeAttestationPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

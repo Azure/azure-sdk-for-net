@@ -71,10 +71,10 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "function": return ChatCompletionsFunctionToolDefinition.DeserializeChatCompletionsFunctionToolDefinition(element);
+                    case "function": return ChatCompletionsFunctionToolDefinition.DeserializeChatCompletionsFunctionToolDefinition(element, options);
                 }
             }
-            return UnknownChatCompletionsToolDefinition.DeserializeUnknownChatCompletionsToolDefinition(element);
+            return UnknownChatCompletionsToolDefinition.DeserializeUnknownChatCompletionsToolDefinition(element, options);
         }
 
         BinaryData IPersistableModel<ChatCompletionsToolDefinition>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ClusterFabricSettingsParameterDescription> array = new List<ClusterFabricSettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item));
+                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item, options));
                     }
                     parameters = array;
                     continue;

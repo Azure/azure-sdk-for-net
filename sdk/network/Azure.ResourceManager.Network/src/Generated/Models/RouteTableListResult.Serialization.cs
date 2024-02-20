@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteTableData> array = new List<RouteTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteTableData.DeserializeRouteTableData(item));
+                        array.Add(RouteTableData.DeserializeRouteTableData(item, options));
                     }
                     value = array;
                     continue;

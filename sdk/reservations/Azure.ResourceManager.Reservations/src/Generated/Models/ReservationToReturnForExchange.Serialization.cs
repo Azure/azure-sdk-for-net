@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value);
+                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

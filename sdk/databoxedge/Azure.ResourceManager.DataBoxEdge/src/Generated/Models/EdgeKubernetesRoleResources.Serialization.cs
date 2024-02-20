@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value);
+                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
                 {
-                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value);
+                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("network"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value);
+                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

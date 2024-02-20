@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<Quota> array = new List<Quota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Quota.DeserializeQuota(item));
+                        array.Add(Quota.DeserializeQuota(item, options));
                     }
                     value = array;
                     continue;

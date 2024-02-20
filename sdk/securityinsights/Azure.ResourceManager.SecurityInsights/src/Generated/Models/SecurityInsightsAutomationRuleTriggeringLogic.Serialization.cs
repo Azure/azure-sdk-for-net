@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsAutomationRuleCondition> array = new List<SecurityInsightsAutomationRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsAutomationRuleCondition.DeserializeSecurityInsightsAutomationRuleCondition(item));
+                        array.Add(SecurityInsightsAutomationRuleCondition.DeserializeSecurityInsightsAutomationRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;

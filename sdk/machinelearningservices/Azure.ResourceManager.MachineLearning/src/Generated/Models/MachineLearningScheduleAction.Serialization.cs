@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element);
-                    case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element);
-                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element);
-                    case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element);
+                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element, options);
+                    case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element, options);
+                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element, options);
+                    case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element, options);
                 }
             }
-            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element);
+            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleAction>.Write(ModelReaderWriterOptions options)

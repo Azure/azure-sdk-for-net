@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeExtension> array = new List<ResourceTypeExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item));
+                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item, options));
                     }
                     extensions = array;
                     continue;

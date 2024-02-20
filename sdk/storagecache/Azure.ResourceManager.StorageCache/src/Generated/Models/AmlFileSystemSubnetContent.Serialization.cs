@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

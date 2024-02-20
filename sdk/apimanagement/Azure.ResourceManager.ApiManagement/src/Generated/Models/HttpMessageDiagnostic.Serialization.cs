@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(property.Value);
+                    body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataMasking"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    dataMasking = DataMasking.DeserializeDataMasking(property.Value);
+                    dataMasking = DataMasking.DeserializeDataMasking(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

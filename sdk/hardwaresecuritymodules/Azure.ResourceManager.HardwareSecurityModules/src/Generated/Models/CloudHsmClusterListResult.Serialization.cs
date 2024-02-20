@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<CloudHsmClusterData> array = new List<CloudHsmClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item));
+                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item, options));
                     }
                     value = array;
                     continue;

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesRegionSetting> array = new List<CognitiveServicesRegionSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item));
+                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item, options));
                     }
                     regions = array;
                     continue;

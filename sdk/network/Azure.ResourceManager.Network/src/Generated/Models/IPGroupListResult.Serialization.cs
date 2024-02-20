@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IPGroupData> array = new List<IPGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPGroupData.DeserializeIPGroupData(item));
+                        array.Add(IPGroupData.DeserializeIPGroupData(item, options));
                     }
                     value = array;
                     continue;

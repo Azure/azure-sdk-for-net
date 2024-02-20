@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Confluent
                         }
                         if (property0.NameEquals("offerDetail"u8))
                         {
-                            offerDetail = ConfluentOfferDetail.DeserializeConfluentOfferDetail(property0.Value);
+                            offerDetail = ConfluentOfferDetail.DeserializeConfluentOfferDetail(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userDetail"u8))
                         {
-                            userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value);
+                            userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value, options);
                             continue;
                         }
                     }

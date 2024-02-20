@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EndpointServiceResult> array = new List<EndpointServiceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointServiceResult.DeserializeEndpointServiceResult(item));
+                        array.Add(EndpointServiceResult.DeserializeEndpointServiceResult(item, options));
                     }
                     value = array;
                     continue;

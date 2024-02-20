@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value);
+                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))

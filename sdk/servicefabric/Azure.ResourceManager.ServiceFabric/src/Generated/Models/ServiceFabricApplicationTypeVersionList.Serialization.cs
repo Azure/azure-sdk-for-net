@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ServiceFabricApplicationTypeVersionData> array = new List<ServiceFabricApplicationTypeVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(item));
+                        array.Add(ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(item, options));
                     }
                     value = array;
                     continue;

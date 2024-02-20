@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetric> array = new List<SqlMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetric.DeserializeSqlMetric(item));
+                        array.Add(SqlMetric.DeserializeSqlMetric(item, options));
                     }
                     value = array;
                     continue;

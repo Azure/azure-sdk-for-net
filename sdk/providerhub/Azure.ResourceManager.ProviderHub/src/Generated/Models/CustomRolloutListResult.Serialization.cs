@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<CustomRolloutData> array = new List<CustomRolloutData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRolloutData.DeserializeCustomRolloutData(item));
+                        array.Add(CustomRolloutData.DeserializeCustomRolloutData(item, options));
                     }
                     value = array;
                     continue;

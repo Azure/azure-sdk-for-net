@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LogicalDatabaseTransparentDataEncryptionData> array = new List<LogicalDatabaseTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(item));
+                        array.Add(LogicalDatabaseTransparentDataEncryptionData.DeserializeLogicalDatabaseTransparentDataEncryptionData(item, options));
                     }
                     value = array;
                     continue;

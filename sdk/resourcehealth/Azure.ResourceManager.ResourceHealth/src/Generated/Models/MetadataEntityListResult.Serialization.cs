@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthMetadataEntityData> array = new List<ResourceHealthMetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item));
+                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item, options));
                     }
                     value = array;
                     continue;

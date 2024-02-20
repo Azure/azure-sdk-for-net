@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osDisk = VirtualMachineInstancePropertiesStorageProfileOSDisk.DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(property.Value);
+                    osDisk = VirtualMachineInstancePropertiesStorageProfileOSDisk.DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmConfigStoragePathId"u8))

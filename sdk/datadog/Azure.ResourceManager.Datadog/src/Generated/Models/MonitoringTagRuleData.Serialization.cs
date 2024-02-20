@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    properties = MonitoringTagRulesProperties.DeserializeMonitoringTagRulesProperties(property.Value);
+                    properties = MonitoringTagRulesProperties.DeserializeMonitoringTagRulesProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

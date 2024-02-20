@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     List<NotificationHubData> array = new List<NotificationHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubData.DeserializeNotificationHubData(item));
+                        array.Add(NotificationHubData.DeserializeNotificationHubData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;

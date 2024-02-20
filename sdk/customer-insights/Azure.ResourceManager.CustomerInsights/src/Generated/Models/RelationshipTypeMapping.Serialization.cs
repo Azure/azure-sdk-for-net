@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipTypeFieldMapping> array = new List<RelationshipTypeFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item));
+                        array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item, options));
                     }
                     fieldMappings = array;
                     continue;

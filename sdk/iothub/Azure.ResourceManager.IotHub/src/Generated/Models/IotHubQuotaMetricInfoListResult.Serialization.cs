@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubQuotaMetricInfo> array = new List<IotHubQuotaMetricInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item));
+                        array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item, options));
                     }
                     value = array;
                     continue;

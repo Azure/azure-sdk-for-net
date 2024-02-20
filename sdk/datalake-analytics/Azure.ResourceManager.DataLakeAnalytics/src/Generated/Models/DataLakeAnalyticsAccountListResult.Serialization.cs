@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     List<DataLakeAnalyticsAccountBasic> array = new List<DataLakeAnalyticsAccountBasic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(item));
+                        array.Add(DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(item, options));
                     }
                     value = array;
                     continue;

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);
+                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

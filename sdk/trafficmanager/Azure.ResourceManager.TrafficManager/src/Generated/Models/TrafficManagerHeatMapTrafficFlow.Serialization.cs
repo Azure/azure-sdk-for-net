@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerHeatMapQueryExperience> array = new List<TrafficManagerHeatMapQueryExperience>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerHeatMapQueryExperience.DeserializeTrafficManagerHeatMapQueryExperience(item));
+                        array.Add(TrafficManagerHeatMapQueryExperience.DeserializeTrafficManagerHeatMapQueryExperience(item, options));
                     }
                     queryExperiences = array;
                     continue;

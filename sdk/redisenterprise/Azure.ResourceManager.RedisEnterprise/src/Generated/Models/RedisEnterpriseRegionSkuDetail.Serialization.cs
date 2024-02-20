@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    locationInfo = RedisEnterpriseLocationInfo.DeserializeRedisEnterpriseLocationInfo(property.Value);
+                    locationInfo = RedisEnterpriseLocationInfo.DeserializeRedisEnterpriseLocationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skuDetails"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    skuDetails = SkuDetail.DeserializeSkuDetail(property.Value);
+                    skuDetails = SkuDetail.DeserializeSkuDetail(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

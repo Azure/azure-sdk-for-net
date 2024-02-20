@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = RemoveDisksContentProperties.DeserializeRemoveDisksContentProperties(property.Value);
+                    properties = RemoveDisksContentProperties.DeserializeRemoveDisksContentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

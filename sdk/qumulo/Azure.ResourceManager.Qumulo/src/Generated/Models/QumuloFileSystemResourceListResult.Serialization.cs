@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     List<QumuloFileSystemResourceData> array = new List<QumuloFileSystemResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(item));
+                        array.Add(QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(item, options));
                     }
                     value = array;
                     continue;

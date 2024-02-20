@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricRoutePolicyData> array = new List<NetworkFabricRoutePolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(item));
+                        array.Add(NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(item, options));
                     }
                     value = array;
                     continue;

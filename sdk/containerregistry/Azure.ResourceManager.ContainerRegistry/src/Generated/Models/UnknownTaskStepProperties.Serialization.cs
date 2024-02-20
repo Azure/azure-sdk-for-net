@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;

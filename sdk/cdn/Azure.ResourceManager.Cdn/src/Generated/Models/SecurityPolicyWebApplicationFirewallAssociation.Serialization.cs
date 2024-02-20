@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
+                        array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item, options));
                     }
                     domains = array;
                     continue;

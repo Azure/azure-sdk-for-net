@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllFeatures": return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element);
-                    case "FeatureSubset": return FeatureSubset.DeserializeFeatureSubset(element);
-                    case "TopNByAttribution": return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element);
+                    case "AllFeatures": return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element, options);
+                    case "FeatureSubset": return FeatureSubset.DeserializeFeatureSubset(element, options);
+                    case "TopNByAttribution": return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element, options);
                 }
             }
-            return UnknownMonitoringFeatureFilterBase.DeserializeUnknownMonitoringFeatureFilterBase(element);
+            return UnknownMonitoringFeatureFilterBase.DeserializeUnknownMonitoringFeatureFilterBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitoringFeatureFilterBase>.Write(ModelReaderWriterOptions options)

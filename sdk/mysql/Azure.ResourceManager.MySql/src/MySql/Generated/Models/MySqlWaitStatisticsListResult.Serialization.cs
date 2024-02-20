@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlWaitStatisticData> array = new List<MySqlWaitStatisticData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(item));
+                        array.Add(MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(item, options));
                     }
                     value = array;
                     continue;

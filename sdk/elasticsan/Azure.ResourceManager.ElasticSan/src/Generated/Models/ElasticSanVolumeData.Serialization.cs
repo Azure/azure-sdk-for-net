@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
+                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sizeGiB"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedBy"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

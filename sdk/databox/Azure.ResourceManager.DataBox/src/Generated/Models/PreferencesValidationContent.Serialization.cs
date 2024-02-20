@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
+                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deviceType"u8))

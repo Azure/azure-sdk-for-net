@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

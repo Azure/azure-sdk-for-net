@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Maintenance
                             {
                                 continue;
                             }
-                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value);
+                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value);
+                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

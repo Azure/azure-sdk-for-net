@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodes = null;
                         continue;
                     }
-                    nodes = JobNodes.DeserializeJobNodes(property.Value);
+                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("port"u8))

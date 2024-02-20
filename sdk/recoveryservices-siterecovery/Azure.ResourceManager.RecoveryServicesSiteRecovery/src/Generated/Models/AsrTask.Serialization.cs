@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value);
+                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupTaskCustomDetails"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value);
+                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item, options));
                     }
                     errors = array;
                     continue;

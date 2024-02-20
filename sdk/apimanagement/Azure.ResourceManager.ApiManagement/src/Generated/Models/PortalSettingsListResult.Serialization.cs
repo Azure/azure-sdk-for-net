@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item, options));
                     }
                     value = array;
                     continue;

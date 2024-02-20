@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value);
+                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("staticRoutes"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        array.Add(StaticRoute.DeserializeStaticRoute(item, options));
                     }
                     staticRoutes = array;
                     continue;

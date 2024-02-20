@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterfaceUpdate> array = new List<VMwareNetworkInterfaceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item));
+                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item, options));
                     }
                     networkInterfaces = array;
                     continue;

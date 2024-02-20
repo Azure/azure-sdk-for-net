@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuZoneDetails> array = new List<ApiManagementSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item));
+                        array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;

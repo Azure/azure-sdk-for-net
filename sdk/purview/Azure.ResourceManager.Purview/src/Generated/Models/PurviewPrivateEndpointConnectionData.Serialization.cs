@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationVaultData> array = new List<DataReplicationVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationVaultData.DeserializeDataReplicationVaultData(item));
+                        array.Add(DataReplicationVaultData.DeserializeDataReplicationVaultData(item, options));
                     }
                     value = array;
                     continue;

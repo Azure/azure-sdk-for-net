@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataCollector = null;
                         continue;
                     }
-                    dataCollector = DataCollector.DeserializeDataCollector(property.Value);
+                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("egressPublicNetworkAccess"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         livenessProbe = null;
                         continue;
                     }
-                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
+                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         readinessProbe = null;
                         continue;
                     }
-                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
+                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestSettings"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestSettings = null;
                         continue;
                     }
-                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value);
+                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scaleSettings = null;
                         continue;
                     }
-                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value);
+                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

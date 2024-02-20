@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
+                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

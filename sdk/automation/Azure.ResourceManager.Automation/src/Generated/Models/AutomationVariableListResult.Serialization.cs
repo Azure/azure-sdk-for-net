@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationVariableData> array = new List<AutomationVariableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationVariableData.DeserializeAutomationVariableData(item));
+                        array.Add(AutomationVariableData.DeserializeAutomationVariableData(item, options));
                     }
                     value = array;
                     continue;

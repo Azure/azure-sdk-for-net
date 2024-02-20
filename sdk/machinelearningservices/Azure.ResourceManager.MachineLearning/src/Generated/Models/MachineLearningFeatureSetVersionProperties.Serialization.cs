@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         materializationSettings = null;
                         continue;
                     }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value);
+                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         specification = null;
                         continue;
                     }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value);
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenData> array = new List<ContainerRegistryTokenData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(item));
+                        array.Add(ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(item, options));
                     }
                     value = array;
                     continue;

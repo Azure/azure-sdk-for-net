@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryManagedVirtualNetworkData> array = new List<DataFactoryManagedVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryManagedVirtualNetworkData.DeserializeDataFactoryManagedVirtualNetworkData(item));
+                        array.Add(DataFactoryManagedVirtualNetworkData.DeserializeDataFactoryManagedVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

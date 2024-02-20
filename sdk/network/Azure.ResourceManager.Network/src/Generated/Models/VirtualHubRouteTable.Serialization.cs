@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubRoute> array = new List<VirtualHubRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubRoute.DeserializeVirtualHubRoute(item));
+                        array.Add(VirtualHubRoute.DeserializeVirtualHubRoute(item, options));
                     }
                     routes = array;
                     continue;

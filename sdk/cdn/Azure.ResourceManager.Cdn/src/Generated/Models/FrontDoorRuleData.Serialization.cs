@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item, options));
                             }
                             conditions = array;
                             continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item, options));
                             }
                             actions = array;
                             continue;

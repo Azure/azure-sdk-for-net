@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerSkuCapability> array = new List<MySqlFlexibleServerSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerSkuCapability.DeserializeMySqlFlexibleServerSkuCapability(item));
+                        array.Add(MySqlFlexibleServerSkuCapability.DeserializeMySqlFlexibleServerSkuCapability(item, options));
                     }
                     supportedSkus = array;
                     continue;

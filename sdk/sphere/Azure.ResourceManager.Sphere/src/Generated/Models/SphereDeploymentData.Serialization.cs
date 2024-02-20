@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sphere
                             List<SphereImageData> array = new List<SphereImageData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SphereImageData.DeserializeSphereImageData(item));
+                                array.Add(SphereImageData.DeserializeSphereImageData(item, options));
                             }
                             deployedImages = array;
                             continue;

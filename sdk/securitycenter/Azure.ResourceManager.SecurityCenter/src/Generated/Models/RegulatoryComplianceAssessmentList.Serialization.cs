@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<RegulatoryComplianceAssessmentData> array = new List<RegulatoryComplianceAssessmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(item));
+                        array.Add(RegulatoryComplianceAssessmentData.DeserializeRegulatoryComplianceAssessmentData(item, options));
                     }
                     value = array;
                     continue;

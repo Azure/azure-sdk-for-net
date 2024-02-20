@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    environment = MachineLearningComputeInstanceEnvironmentInfo.DeserializeMachineLearningComputeInstanceEnvironmentInfo(property.Value);
+                    environment = MachineLearningComputeInstanceEnvironmentInfo.DeserializeMachineLearningComputeInstanceEnvironmentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("services"u8))

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value);
+                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            version = GalleryImageVersion.DeserializeGalleryImageVersion(property0.Value);
+                            version = GalleryImageVersion.DeserializeGalleryImageVersion(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = GalleryImageStatus.DeserializeGalleryImageStatus(property0.Value);
+                            status = GalleryImageStatus.DeserializeGalleryImageStatus(property0.Value, options);
                             continue;
                         }
                     }

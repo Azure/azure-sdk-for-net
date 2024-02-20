@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    properties = FileSystemResourceUpdateProperties.DeserializeFileSystemResourceUpdateProperties(property.Value);
+                    properties = FileSystemResourceUpdateProperties.DeserializeFileSystemResourceUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

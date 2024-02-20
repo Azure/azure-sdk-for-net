@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration(property.Value);
+                    configuration = DefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioningConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

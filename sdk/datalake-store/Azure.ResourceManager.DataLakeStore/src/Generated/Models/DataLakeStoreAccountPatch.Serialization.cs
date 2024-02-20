@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             {
                                 continue;
                             }
-                            encryptionConfig = UpdateEncryptionConfig.DeserializeUpdateEncryptionConfig(property0.Value);
+                            encryptionConfig = UpdateEncryptionConfig.DeserializeUpdateEncryptionConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firewallRules"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<FirewallRuleForDataLakeStoreAccountUpdateContent> array = new List<FirewallRuleForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeStoreAccountUpdateContent.DeserializeFirewallRuleForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(FirewallRuleForDataLakeStoreAccountUpdateContent.DeserializeFirewallRuleForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             firewallRules = array;
                             continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> array = new List<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent.DeserializeVirtualNetworkRuleForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent.DeserializeVirtualNetworkRuleForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<TrustedIdProviderForDataLakeStoreAccountUpdateContent> array = new List<TrustedIdProviderForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrustedIdProviderForDataLakeStoreAccountUpdateContent.DeserializeTrustedIdProviderForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(TrustedIdProviderForDataLakeStoreAccountUpdateContent.DeserializeTrustedIdProviderForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             trustedIdProviders = array;
                             continue;

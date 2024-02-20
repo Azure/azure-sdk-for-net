@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineGalleryApplication> array = new List<VirtualMachineGalleryApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item));
+                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item, options));
                     }
                     galleryApplications = array;
                     continue;

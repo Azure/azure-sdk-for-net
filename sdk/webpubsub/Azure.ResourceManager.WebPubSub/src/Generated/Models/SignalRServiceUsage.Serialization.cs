@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    name = SignalRServiceUsageName.DeserializeSignalRServiceUsageName(property.Value);
+                    name = SignalRServiceUsageName.DeserializeSignalRServiceUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

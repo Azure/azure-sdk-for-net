@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value);
+                    sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

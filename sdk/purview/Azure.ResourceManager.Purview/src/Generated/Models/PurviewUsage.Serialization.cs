@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value);
+                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value);
+                    defenderForServers = GcpDefenderForServersInfo.DeserializeGcpDefenderForServersInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("arcAutoProvisioning"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForServersGcpOfferingArcAutoProvisioning.DeserializeDefenderForServersGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vaAutoProvisioning"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
+                    vaAutoProvisioning = DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdeAutoProvisioning"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value);
+                    mdeAutoProvisioning = DefenderForServersGcpOfferingMdeAutoProvisioning.DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subPlan"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value);
+                    subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmScanners"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vmScanners = DefenderForServersGcpOfferingVmScanners.DeserializeDefenderForServersGcpOfferingVmScanners(property.Value);
+                    vmScanners = DefenderForServersGcpOfferingVmScanners.DeserializeDefenderForServersGcpOfferingVmScanners(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

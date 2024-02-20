@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = SiteRecoveryAlertProperties.DeserializeSiteRecoveryAlertProperties(property.Value);
+                    properties = SiteRecoveryAlertProperties.DeserializeSiteRecoveryAlertProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

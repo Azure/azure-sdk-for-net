@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InconsistentVmDetails> array = new List<InconsistentVmDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item));
+                        array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item, options));
                     }
                     vmDetails = array;
                     continue;

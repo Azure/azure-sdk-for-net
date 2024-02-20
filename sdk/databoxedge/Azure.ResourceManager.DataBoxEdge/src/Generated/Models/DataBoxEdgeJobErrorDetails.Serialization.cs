@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeJobErrorItem> array = new List<DataBoxEdgeJobErrorItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item));
+                        array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item, options));
                     }
                     errorDetails = array;
                     continue;

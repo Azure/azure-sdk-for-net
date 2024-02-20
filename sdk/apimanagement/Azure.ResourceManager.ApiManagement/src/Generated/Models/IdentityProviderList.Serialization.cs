@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementIdentityProviderData> array = new List<ApiManagementIdentityProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementIdentityProviderData.DeserializeApiManagementIdentityProviderData(item));
+                        array.Add(ApiManagementIdentityProviderData.DeserializeApiManagementIdentityProviderData(item, options));
                     }
                     value = array;
                     continue;

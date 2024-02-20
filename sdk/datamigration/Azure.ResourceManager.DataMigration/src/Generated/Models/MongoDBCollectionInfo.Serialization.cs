@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value);
+                    shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportsSharding"u8))

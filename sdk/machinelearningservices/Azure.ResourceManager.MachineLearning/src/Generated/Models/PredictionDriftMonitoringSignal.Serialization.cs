@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<PredictionDriftMetricThresholdBase> array = new List<PredictionDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item));
+                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))

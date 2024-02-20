@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value);
+                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlPerformanceTierServiceLevelObjectives> array = new List<PostgreSqlPerformanceTierServiceLevelObjectives>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlPerformanceTierServiceLevelObjectives.DeserializePostgreSqlPerformanceTierServiceLevelObjectives(item));
+                        array.Add(PostgreSqlPerformanceTierServiceLevelObjectives.DeserializePostgreSqlPerformanceTierServiceLevelObjectives(item, options));
                     }
                     serviceLevelObjectives = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ViewResourceFormatData> array = new List<ViewResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ViewResourceFormatData.DeserializeViewResourceFormatData(item));
+                        array.Add(ViewResourceFormatData.DeserializeViewResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    logRules = LogRules.DeserializeLogRules(property.Value);
+                    logRules = LogRules.DeserializeLogRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

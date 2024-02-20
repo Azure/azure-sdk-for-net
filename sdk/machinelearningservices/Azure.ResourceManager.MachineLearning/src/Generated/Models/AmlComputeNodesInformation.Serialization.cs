@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<AmlComputeNodeInformation> array = new List<AmlComputeNodeInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item));
+                        array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item, options));
                     }
                     nodes = array;
                     continue;

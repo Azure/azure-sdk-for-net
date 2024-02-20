@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<TokenBodyParameterContract> array = new List<TokenBodyParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item));
+                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item, options));
                             }
                             tokenBodyParameters = array;
                             continue;

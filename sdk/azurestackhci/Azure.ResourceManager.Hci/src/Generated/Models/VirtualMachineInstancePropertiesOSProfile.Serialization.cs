@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = VirtualMachineInstancePropertiesOSProfileLinuxConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(property.Value);
+                    linuxConfiguration = VirtualMachineInstancePropertiesOSProfileLinuxConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsConfiguration"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = VirtualMachineInstancePropertiesOSProfileWindowsConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(property.Value);
+                    windowsConfiguration = VirtualMachineInstancePropertiesOSProfileWindowsConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

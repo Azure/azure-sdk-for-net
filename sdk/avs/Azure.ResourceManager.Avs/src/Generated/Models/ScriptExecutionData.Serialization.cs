@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
                             }
                             parameters = array;
                             continue;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
                             }
                             hiddenParameters = array;
                             continue;

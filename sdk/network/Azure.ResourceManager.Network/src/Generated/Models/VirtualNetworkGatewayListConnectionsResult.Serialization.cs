@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkGatewayConnectionListEntity> array = new List<VirtualNetworkGatewayConnectionListEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkGatewayConnectionListEntity.DeserializeVirtualNetworkGatewayConnectionListEntity(item));
+                        array.Add(VirtualNetworkGatewayConnectionListEntity.DeserializeVirtualNetworkGatewayConnectionListEntity(item, options));
                     }
                     value = array;
                     continue;

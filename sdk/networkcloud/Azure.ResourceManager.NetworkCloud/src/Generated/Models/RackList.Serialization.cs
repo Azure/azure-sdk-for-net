@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudRackData> array = new List<NetworkCloudRackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudRackData.DeserializeNetworkCloudRackData(item));
+                        array.Add(NetworkCloudRackData.DeserializeNetworkCloudRackData(item, options));
                     }
                     value = array;
                     continue;

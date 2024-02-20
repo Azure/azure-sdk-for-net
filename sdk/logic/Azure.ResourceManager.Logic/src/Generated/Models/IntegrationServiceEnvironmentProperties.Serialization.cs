@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value);
+                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
+                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value);
+                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

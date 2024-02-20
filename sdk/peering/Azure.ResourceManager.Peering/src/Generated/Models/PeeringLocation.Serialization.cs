@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value);
+                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))

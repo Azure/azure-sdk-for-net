@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value);
+                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servicePrincipal"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

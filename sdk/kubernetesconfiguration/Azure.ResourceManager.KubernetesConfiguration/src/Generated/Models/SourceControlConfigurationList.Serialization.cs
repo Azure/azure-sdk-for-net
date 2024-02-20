@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesSourceControlConfigurationData> array = new List<KubernetesSourceControlConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(item));
+                        array.Add(KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(item, options));
                     }
                     value = array;
                     continue;

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallPacketCaptureFlags> array = new List<AzureFirewallPacketCaptureFlags>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item));
+                                array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item, options));
                             }
                             flags = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallPacketCaptureRule> array = new List<AzureFirewallPacketCaptureRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item));
+                                array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item, options));
                             }
                             filters = array;
                             continue;

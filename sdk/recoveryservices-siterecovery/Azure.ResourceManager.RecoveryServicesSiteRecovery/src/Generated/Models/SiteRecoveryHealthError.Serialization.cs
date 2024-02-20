@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryInnerHealthError> array = new List<SiteRecoveryInnerHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryInnerHealthError.DeserializeSiteRecoveryInnerHealthError(item));
+                        array.Add(SiteRecoveryInnerHealthError.DeserializeSiteRecoveryInnerHealthError(item, options));
                     }
                     innerHealthErrors = array;
                     continue;

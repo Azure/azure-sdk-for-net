@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityParameterSet> array = new List<AutomationActivityParameterSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item));
+                                array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item, options));
                             }
                             parameterSets = array;
                             continue;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityOutputType> array = new List<AutomationActivityOutputType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item));
+                                array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item, options));
                             }
                             outputTypes = array;
                             continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningRegistryData> array = new List<MachineLearningRegistryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningRegistryData.DeserializeMachineLearningRegistryData(item));
+                        array.Add(MachineLearningRegistryData.DeserializeMachineLearningRegistryData(item, options));
                     }
                     value = array;
                     continue;

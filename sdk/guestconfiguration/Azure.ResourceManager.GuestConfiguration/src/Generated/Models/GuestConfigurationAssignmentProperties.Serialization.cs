@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value);
+                    guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("complianceStatus"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);
+                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
+                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item, options));
                     }
                     vmssVmList = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellOffersPlansNotificationsResult> array = new List<StopSellOffersPlansNotificationsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item));
+                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item, options));
                     }
                     stopSellNotifications = array;
                     continue;

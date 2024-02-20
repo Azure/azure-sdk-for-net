@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<HyperVToAzStackHciDiskInput> array = new List<HyperVToAzStackHciDiskInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVToAzStackHciDiskInput.DeserializeHyperVToAzStackHciDiskInput(item));
+                        array.Add(HyperVToAzStackHciDiskInput.DeserializeHyperVToAzStackHciDiskInput(item, options));
                     }
                     disksToInclude = array;
                     continue;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<HyperVToAzStackHciNicInput> array = new List<HyperVToAzStackHciNicInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVToAzStackHciNicInput.DeserializeHyperVToAzStackHciNicInput(item));
+                        array.Add(HyperVToAzStackHciNicInput.DeserializeHyperVToAzStackHciNicInput(item, options));
                     }
                     nicsToInclude = array;
                     continue;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value);
+                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetMemoryInMegaBytes"u8))
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<HyperVToAzStackHciProtectedDiskProperties> array = new List<HyperVToAzStackHciProtectedDiskProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVToAzStackHciProtectedDiskProperties.DeserializeHyperVToAzStackHciProtectedDiskProperties(item));
+                        array.Add(HyperVToAzStackHciProtectedDiskProperties.DeserializeHyperVToAzStackHciProtectedDiskProperties(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<HyperVToAzStackHciProtectedNicProperties> array = new List<HyperVToAzStackHciProtectedNicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVToAzStackHciProtectedNicProperties.DeserializeHyperVToAzStackHciProtectedNicProperties(item));
+                        array.Add(HyperVToAzStackHciProtectedNicProperties.DeserializeHyperVToAzStackHciProtectedNicProperties(item, options));
                     }
                     protectedNics = array;
                     continue;

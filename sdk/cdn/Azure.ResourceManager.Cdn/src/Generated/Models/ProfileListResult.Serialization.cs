@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ProfileData> array = new List<ProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileData.DeserializeProfileData(item));
+                        array.Add(ProfileData.DeserializeProfileData(item, options));
                     }
                     value = array;
                     continue;

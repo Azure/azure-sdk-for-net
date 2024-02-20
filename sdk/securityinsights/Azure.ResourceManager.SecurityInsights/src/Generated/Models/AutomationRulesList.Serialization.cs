@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsAutomationRuleData> array = new List<SecurityInsightsAutomationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(item));
+                        array.Add(SecurityInsightsAutomationRuleData.DeserializeSecurityInsightsAutomationRuleData(item, options));
                     }
                     value = array;
                     continue;

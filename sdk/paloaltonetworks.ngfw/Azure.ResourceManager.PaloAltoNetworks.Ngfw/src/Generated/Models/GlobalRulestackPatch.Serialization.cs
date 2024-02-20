@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    properties = GlobalRulestackUpdateProperties.DeserializeGlobalRulestackUpdateProperties(property.Value);
+                    properties = GlobalRulestackUpdateProperties.DeserializeGlobalRulestackUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

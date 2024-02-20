@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = GalleryImageStatusProvisioningStatus.DeserializeGalleryImageStatusProvisioningStatus(property.Value);
+                    provisioningStatus = GalleryImageStatusProvisioningStatus.DeserializeGalleryImageStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    downloadStatus = GalleryImageStatusDownloadStatus.DeserializeGalleryImageStatusDownloadStatus(property.Value);
+                    downloadStatus = GalleryImageStatusDownloadStatus.DeserializeGalleryImageStatusDownloadStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))

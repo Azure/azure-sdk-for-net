@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusQueueEndpointProperties> array = new List<RoutingServiceBusQueueEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item));
+                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item, options));
                     }
                     serviceBusQueues = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusTopicEndpointProperties> array = new List<RoutingServiceBusTopicEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item));
+                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item, options));
                     }
                     serviceBusTopics = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingEventHubProperties> array = new List<RoutingEventHubProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item));
+                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item, options));
                     }
                     eventHubs = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingStorageContainerProperties> array = new List<RoutingStorageContainerProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item));
+                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item, options));
                     }
                     storageContainers = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingCosmosDBSqlApiProperties> array = new List<RoutingCosmosDBSqlApiProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item));
+                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item, options));
                     }
                     cosmosDBSqlContainers = array;
                     continue;

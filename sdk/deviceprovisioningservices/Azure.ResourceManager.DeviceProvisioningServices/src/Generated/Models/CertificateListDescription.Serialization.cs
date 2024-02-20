@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesCertificateData> array = new List<DeviceProvisioningServicesCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item));
+                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item, options));
                     }
                     value = array;
                     continue;

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceArtifactProfile> dictionary = new Dictionary<string, ApplianceArtifactProfile>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value));
+                        dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value, options));
                     }
                     artifactProfiles = dictionary;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceSshKey> dictionary = new Dictionary<string, ApplianceSshKey>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value));
+                        dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value, options));
                     }
                     sshKeys = dictionary;
                     continue;

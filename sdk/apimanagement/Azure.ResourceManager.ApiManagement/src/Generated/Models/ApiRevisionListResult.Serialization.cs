@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiRevisionContract> array = new List<ApiRevisionContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item));
+                        array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item, options));
                     }
                     value = array;
                     continue;

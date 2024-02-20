@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<BandwidthScheduleData> array = new List<BandwidthScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item));
+                        array.Add(BandwidthScheduleData.DeserializeBandwidthScheduleData(item, options));
                     }
                     value = array;
                     continue;

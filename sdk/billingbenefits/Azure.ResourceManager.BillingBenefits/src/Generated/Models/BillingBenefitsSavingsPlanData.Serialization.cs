@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
+                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commitment"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);
+                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value);
+                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            utilization = BillingBenefitsSavingsPlanUtilization.DeserializeBillingBenefitsSavingsPlanUtilization(property0.Value);
+                            utilization = BillingBenefitsSavingsPlanUtilization.DeserializeBillingBenefitsSavingsPlanUtilization(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("renewSource"u8))
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            renewProperties = RenewProperties.DeserializeRenewProperties(property0.Value);
+                            renewProperties = RenewProperties.DeserializeRenewProperties(property0.Value, options);
                             continue;
                         }
                     }

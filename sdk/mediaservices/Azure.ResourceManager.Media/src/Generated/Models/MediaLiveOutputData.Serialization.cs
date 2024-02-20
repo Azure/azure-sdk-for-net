@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            hls = Hls.DeserializeHls(property0.Value);
+                            hls = Hls.DeserializeHls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputSnapTime"u8))

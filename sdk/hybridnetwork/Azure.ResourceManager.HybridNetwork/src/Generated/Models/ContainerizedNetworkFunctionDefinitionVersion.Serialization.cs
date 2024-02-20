@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value);
+                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

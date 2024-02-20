@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = DirectLineSpeechChannelProperties.DeserializeDirectLineSpeechChannelProperties(property.Value);
+                    properties = DirectLineSpeechChannelProperties.DeserializeDirectLineSpeechChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

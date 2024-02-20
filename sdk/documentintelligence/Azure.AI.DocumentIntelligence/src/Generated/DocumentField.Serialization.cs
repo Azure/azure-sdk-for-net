@@ -284,7 +284,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentField> array = new List<DocumentField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentField(item));
+                        array.Add(DeserializeDocumentField(item, options));
                     }
                     valueArray = array;
                     continue;
@@ -298,7 +298,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value, options));
                     }
                     valueObject = dictionary;
                     continue;
@@ -309,7 +309,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
+                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueAddress"u8))
@@ -318,7 +318,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value);
+                    valueAddress = AddressValue.DeserializeAddressValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueBoolean"u8))
@@ -344,7 +344,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -358,7 +358,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningBatchDeploymentData> array = new List<MachineLearningBatchDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(item));
+                        array.Add(MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(item, options));
                     }
                     value = array;
                     continue;

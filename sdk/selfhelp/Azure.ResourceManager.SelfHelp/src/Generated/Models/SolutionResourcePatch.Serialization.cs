@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value);
+                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

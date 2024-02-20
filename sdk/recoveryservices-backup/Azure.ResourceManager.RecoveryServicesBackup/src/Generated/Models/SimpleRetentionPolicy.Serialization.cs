@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicyType"u8))

@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element);
+                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element, options);
                 }
             }
-            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element);
+            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

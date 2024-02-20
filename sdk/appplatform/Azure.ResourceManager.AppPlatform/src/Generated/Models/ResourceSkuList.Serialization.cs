@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AvailableAppPlatformSku> array = new List<AvailableAppPlatformSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(item));
+                        array.Add(AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(item, options));
                     }
                     value = array;
                     continue;

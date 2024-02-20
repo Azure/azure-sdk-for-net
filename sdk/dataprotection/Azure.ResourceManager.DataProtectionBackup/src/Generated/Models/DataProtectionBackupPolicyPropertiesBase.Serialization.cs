@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BackupPolicy": return RuleBasedBackupPolicy.DeserializeRuleBasedBackupPolicy(element);
+                    case "BackupPolicy": return RuleBasedBackupPolicy.DeserializeRuleBasedBackupPolicy(element, options);
                 }
             }
-            return UnknownBaseBackupPolicy.DeserializeUnknownBaseBackupPolicy(element);
+            return UnknownBaseBackupPolicy.DeserializeUnknownBaseBackupPolicy(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupPolicyPropertiesBase>.Write(ModelReaderWriterOptions options)

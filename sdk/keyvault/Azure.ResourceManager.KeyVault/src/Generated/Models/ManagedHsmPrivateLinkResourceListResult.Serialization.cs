@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateLinkResourceData> array = new List<ManagedHsmPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(item));
+                        array.Add(ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

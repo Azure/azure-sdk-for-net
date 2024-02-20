@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IntegrationRuntimeStatus.DeserializeIntegrationRuntimeStatus(property.Value);
+                    properties = IntegrationRuntimeStatus.DeserializeIntegrationRuntimeStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

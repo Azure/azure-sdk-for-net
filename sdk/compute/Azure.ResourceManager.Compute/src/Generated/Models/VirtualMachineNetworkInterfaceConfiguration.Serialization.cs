@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value);
+                            dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineNetworkInterfaceIPConfiguration> array = new List<VirtualMachineNetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineNetworkInterfaceIPConfiguration.DeserializeVirtualMachineNetworkInterfaceIPConfiguration(item));
+                                array.Add(VirtualMachineNetworkInterfaceIPConfiguration.DeserializeVirtualMachineNetworkInterfaceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;

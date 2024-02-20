@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
+                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekUrl"u8))

@@ -90,23 +90,23 @@ namespace Azure.ResourceManager.DataShare
             {
                 switch (discriminator.GetString())
                 {
-                    case "AdlsGen1File": return AdlsGen1FileDataSet.DeserializeAdlsGen1FileDataSet(element);
-                    case "AdlsGen1Folder": return AdlsGen1FolderDataSet.DeserializeAdlsGen1FolderDataSet(element);
-                    case "AdlsGen2File": return AdlsGen2FileDataSet.DeserializeAdlsGen2FileDataSet(element);
-                    case "AdlsGen2FileSystem": return AdlsGen2FileSystemDataSet.DeserializeAdlsGen2FileSystemDataSet(element);
-                    case "AdlsGen2Folder": return AdlsGen2FolderDataSet.DeserializeAdlsGen2FolderDataSet(element);
-                    case "Blob": return BlobDataSet.DeserializeBlobDataSet(element);
-                    case "BlobFolder": return BlobFolderDataSet.DeserializeBlobFolderDataSet(element);
-                    case "Container": return BlobContainerDataSet.DeserializeBlobContainerDataSet(element);
-                    case "KustoCluster": return KustoClusterDataSet.DeserializeKustoClusterDataSet(element);
-                    case "KustoDatabase": return KustoDatabaseDataSet.DeserializeKustoDatabaseDataSet(element);
-                    case "KustoTable": return KustoTableDataSet.DeserializeKustoTableDataSet(element);
-                    case "SqlDBTable": return SqlDBTableDataSet.DeserializeSqlDBTableDataSet(element);
-                    case "SqlDWTable": return SqlDWTableDataSet.DeserializeSqlDWTableDataSet(element);
-                    case "SynapseWorkspaceSqlPoolTable": return SynapseWorkspaceSqlPoolTableDataSet.DeserializeSynapseWorkspaceSqlPoolTableDataSet(element);
+                    case "AdlsGen1File": return AdlsGen1FileDataSet.DeserializeAdlsGen1FileDataSet(element, options);
+                    case "AdlsGen1Folder": return AdlsGen1FolderDataSet.DeserializeAdlsGen1FolderDataSet(element, options);
+                    case "AdlsGen2File": return AdlsGen2FileDataSet.DeserializeAdlsGen2FileDataSet(element, options);
+                    case "AdlsGen2FileSystem": return AdlsGen2FileSystemDataSet.DeserializeAdlsGen2FileSystemDataSet(element, options);
+                    case "AdlsGen2Folder": return AdlsGen2FolderDataSet.DeserializeAdlsGen2FolderDataSet(element, options);
+                    case "Blob": return BlobDataSet.DeserializeBlobDataSet(element, options);
+                    case "BlobFolder": return BlobFolderDataSet.DeserializeBlobFolderDataSet(element, options);
+                    case "Container": return BlobContainerDataSet.DeserializeBlobContainerDataSet(element, options);
+                    case "KustoCluster": return KustoClusterDataSet.DeserializeKustoClusterDataSet(element, options);
+                    case "KustoDatabase": return KustoDatabaseDataSet.DeserializeKustoDatabaseDataSet(element, options);
+                    case "KustoTable": return KustoTableDataSet.DeserializeKustoTableDataSet(element, options);
+                    case "SqlDBTable": return SqlDBTableDataSet.DeserializeSqlDBTableDataSet(element, options);
+                    case "SqlDWTable": return SqlDWTableDataSet.DeserializeSqlDWTableDataSet(element, options);
+                    case "SynapseWorkspaceSqlPoolTable": return SynapseWorkspaceSqlPoolTableDataSet.DeserializeSynapseWorkspaceSqlPoolTableDataSet(element, options);
                 }
             }
-            return UnknownDataSet.DeserializeUnknownDataSet(element);
+            return UnknownDataSet.DeserializeUnknownDataSet(element, options);
         }
 
         BinaryData IPersistableModel<ShareDataSetData>.Write(ModelReaderWriterOptions options)

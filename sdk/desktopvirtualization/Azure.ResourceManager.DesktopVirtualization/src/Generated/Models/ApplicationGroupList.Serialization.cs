@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<VirtualApplicationGroupData> array = new List<VirtualApplicationGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(item));
+                        array.Add(VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(item, options));
                     }
                     value = array;
                     continue;

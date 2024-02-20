@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupFileInfo> array = new List<SqlBackupFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item));
+                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item, options));
                     }
                     listOfBackupFiles = array;
                     continue;

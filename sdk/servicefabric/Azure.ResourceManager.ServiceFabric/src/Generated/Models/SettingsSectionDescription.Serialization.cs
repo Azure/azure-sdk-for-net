@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<SettingsParameterDescription> array = new List<SettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item));
+                        array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item, options));
                     }
                     parameters = array;
                     continue;

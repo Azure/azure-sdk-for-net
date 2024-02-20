@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value);
+                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Credential": return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element);
-                    case "SecureValue": return ScriptSecureStringExecutionParameterDetails.DeserializeScriptSecureStringExecutionParameterDetails(element);
-                    case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element);
+                    case "Credential": return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element, options);
+                    case "SecureValue": return ScriptSecureStringExecutionParameterDetails.DeserializeScriptSecureStringExecutionParameterDetails(element, options);
+                    case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element, options);
                 }
             }
-            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element);
+            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element, options);
         }
 
         BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

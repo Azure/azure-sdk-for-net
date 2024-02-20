@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MigrationRecoveryPointData> array = new List<MigrationRecoveryPointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(item));
+                        array.Add(MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(item, options));
                     }
                     value = array;
                     continue;

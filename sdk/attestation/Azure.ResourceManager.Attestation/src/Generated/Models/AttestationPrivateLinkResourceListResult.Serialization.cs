@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationPrivateLinkResource> array = new List<AttestationPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item));
+                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

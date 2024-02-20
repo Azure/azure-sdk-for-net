@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            cloudCapacity = CloudCapacity.DeserializeCloudCapacity(property0.Value);
+                            cloudCapacity = CloudCapacity.DeserializeCloudCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageQoSPolicies"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<StorageQoSPolicy> array = new List<StorageQoSPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item));
+                                array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item, options));
                             }
                             storageQoSPolicies = array;
                             continue;

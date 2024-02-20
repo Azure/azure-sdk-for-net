@@ -90,7 +90,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentListItem> array = new List<DocumentListItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentListItem.DeserializeDocumentListItem(item));
+                        array.Add(DocumentListItem.DeserializeDocumentListItem(item, options));
                     }
                     items = array;
                     continue;

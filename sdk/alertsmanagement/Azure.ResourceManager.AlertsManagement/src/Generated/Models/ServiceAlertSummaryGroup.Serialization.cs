@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertSummaryGroupItemInfo.DeserializeServiceAlertSummaryGroupItemInfo(item));
+                        array.Add(ServiceAlertSummaryGroupItemInfo.DeserializeServiceAlertSummaryGroupItemInfo(item, options));
                     }
                     values = array;
                     continue;

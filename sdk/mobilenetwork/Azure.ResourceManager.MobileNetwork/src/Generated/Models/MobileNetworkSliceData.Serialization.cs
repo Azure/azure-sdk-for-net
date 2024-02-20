@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("snssai"u8))
                         {
-                            snssai = Snssai.DeserializeSnssai(property0.Value);
+                            snssai = Snssai.DeserializeSnssai(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item, options));
                             }
                             statuses = array;
                             continue;

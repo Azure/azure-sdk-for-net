@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = TeradataPartitionSettings.DeserializeTeradataPartitionSettings(property.Value);
+                    partitionSettings = TeradataPartitionSettings.DeserializeTeradataPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

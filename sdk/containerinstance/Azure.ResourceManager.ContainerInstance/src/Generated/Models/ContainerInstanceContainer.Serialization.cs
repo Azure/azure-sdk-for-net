@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerPort> array = new List<ContainerPort>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerPort.DeserializeContainerPort(item));
+                                array.Add(ContainerPort.DeserializeContainerPort(item, options));
                             }
                             ports = array;
                             continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
+                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resources"u8))
                         {
-                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value);
+                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item, options));
                             }
                             volumeMounts = array;
                             continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
+                            livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readinessProbe"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
+                            readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityContext"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
                             continue;
                         }
                     }

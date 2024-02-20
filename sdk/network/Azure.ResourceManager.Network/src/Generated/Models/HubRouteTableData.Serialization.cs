@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
                             List<HubRoute> array = new List<HubRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HubRoute.DeserializeHubRoute(item));
+                                array.Add(HubRoute.DeserializeHubRoute(item, options));
                             }
                             routes = array;
                             continue;

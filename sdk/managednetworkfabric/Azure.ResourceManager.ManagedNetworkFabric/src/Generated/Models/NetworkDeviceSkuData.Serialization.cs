@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<SupportedVersionProperties> array = new List<SupportedVersionProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item));
+                                array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item, options));
                             }
                             supportedVersions = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<NetworkDeviceInterfaceProperties> array = new List<NetworkDeviceInterfaceProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item));
+                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item, options));
                             }
                             interfaces = array;
                             continue;

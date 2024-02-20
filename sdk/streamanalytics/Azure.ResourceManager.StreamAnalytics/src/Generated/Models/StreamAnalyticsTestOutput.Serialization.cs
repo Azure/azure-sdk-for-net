@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 if (property.NameEquals("output"u8))
                 {
-                    output = StreamingJobOutputData.DeserializeStreamingJobOutputData(property.Value);
+                    output = StreamingJobOutputData.DeserializeStreamingJobOutputData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

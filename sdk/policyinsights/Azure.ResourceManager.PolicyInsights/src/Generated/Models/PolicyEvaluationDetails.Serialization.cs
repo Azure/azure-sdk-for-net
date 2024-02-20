@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ExpressionEvaluationDetails> array = new List<ExpressionEvaluationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressionEvaluationDetails.DeserializeExpressionEvaluationDetails(item));
+                        array.Add(ExpressionEvaluationDetails.DeserializeExpressionEvaluationDetails(item, options));
                     }
                     evaluatedExpressions = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value);
+                    ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemData> array = new List<AmlFileSystemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item));
+                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item, options));
                     }
                     value = array;
                     continue;

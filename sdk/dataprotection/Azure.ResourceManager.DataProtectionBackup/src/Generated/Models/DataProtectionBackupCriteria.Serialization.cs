@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleBasedBackupCriteria": return ScheduleBasedBackupCriteria.DeserializeScheduleBasedBackupCriteria(element);
+                    case "ScheduleBasedBackupCriteria": return ScheduleBasedBackupCriteria.DeserializeScheduleBasedBackupCriteria(element, options);
                 }
             }
-            return UnknownBackupCriteria.DeserializeUnknownBackupCriteria(element);
+            return UnknownBackupCriteria.DeserializeUnknownBackupCriteria(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupCriteria>.Write(ModelReaderWriterOptions options)

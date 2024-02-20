@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<MachineLearningStudioInputColumn> array = new List<MachineLearningStudioInputColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item));
+                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item, options));
                     }
                     columnNames = array;
                     continue;

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
+                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

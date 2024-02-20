@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResource": return AzureResourceIdentifier.DeserializeAzureResourceIdentifier(element);
-                    case "LogAnalytics": return LogAnalyticsIdentifier.DeserializeLogAnalyticsIdentifier(element);
+                    case "AzureResource": return AzureResourceIdentifier.DeserializeAzureResourceIdentifier(element, options);
+                    case "LogAnalytics": return LogAnalyticsIdentifier.DeserializeLogAnalyticsIdentifier(element, options);
                 }
             }
-            return UnknownAlertResourceIdentifier.DeserializeUnknownAlertResourceIdentifier(element);
+            return UnknownAlertResourceIdentifier.DeserializeUnknownAlertResourceIdentifier(element, options);
         }
 
         BinaryData IPersistableModel<SecurityAlertResourceIdentifier>.Write(ModelReaderWriterOptions options)

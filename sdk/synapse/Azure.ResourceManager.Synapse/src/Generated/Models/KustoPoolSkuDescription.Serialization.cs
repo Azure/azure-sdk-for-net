@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<KustoPoolSkuLocationInfoItem> array = new List<KustoPoolSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPoolSkuLocationInfoItem.DeserializeKustoPoolSkuLocationInfoItem(item));
+                        array.Add(KustoPoolSkuLocationInfoItem.DeserializeKustoPoolSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;

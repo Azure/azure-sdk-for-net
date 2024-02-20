@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionAggregatedCostResult> array = new List<ConsumptionAggregatedCostResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeConsumptionAggregatedCostResult(item));
+                                array.Add(DeserializeConsumptionAggregatedCostResult(item, options));
                             }
                             children = array;
                             continue;

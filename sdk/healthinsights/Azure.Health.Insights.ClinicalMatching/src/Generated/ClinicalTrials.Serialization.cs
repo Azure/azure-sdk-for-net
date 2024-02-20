@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialDetails> array = new List<ClinicalTrialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item));
+                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item, options));
                     }
                     customTrials = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialRegistryFilter> array = new List<ClinicalTrialRegistryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item));
+                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item, options));
                     }
                     registryFilters = array;
                     continue;

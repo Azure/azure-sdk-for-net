@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreWriteSettings.DeserializeStoreWriteSettings(property.Value);
+                    storeSettings = StoreWriteSettings.DeserializeStoreWriteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

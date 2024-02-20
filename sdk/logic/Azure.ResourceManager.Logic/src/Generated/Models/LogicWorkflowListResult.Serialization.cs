@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowData> array = new List<LogicWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowData.DeserializeLogicWorkflowData(item));
+                        array.Add(LogicWorkflowData.DeserializeLogicWorkflowData(item, options));
                     }
                     value = array;
                     continue;

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ParameterDefinitionsValueMetadata.DeserializeParameterDefinitionsValueMetadata(property.Value);
+                    metadata = ParameterDefinitionsValueMetadata.DeserializeParameterDefinitionsValueMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

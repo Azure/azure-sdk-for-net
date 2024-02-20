@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value);
+                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

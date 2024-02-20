@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptParameter> array = new List<ScriptParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptParameter.DeserializeScriptParameter(item));
+                                array.Add(ScriptParameter.DeserializeScriptParameter(item, options));
                             }
                             parameters = array;
                             continue;

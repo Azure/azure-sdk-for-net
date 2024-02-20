@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorPrivateLinkScopeData> array = new List<MonitorPrivateLinkScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(item));
+                        array.Add(MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(item, options));
                     }
                     value = array;
                     continue;

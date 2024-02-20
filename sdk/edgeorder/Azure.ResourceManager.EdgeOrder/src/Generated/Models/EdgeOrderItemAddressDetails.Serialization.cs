@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 if (property.NameEquals("forwardAddress"u8))
                 {
-                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
+                    forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("returnAddress"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value);
+                    returnAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

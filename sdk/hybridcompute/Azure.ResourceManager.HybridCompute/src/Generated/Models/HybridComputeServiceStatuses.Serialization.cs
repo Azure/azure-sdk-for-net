@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
+                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("guestConfigurationService"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
+                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageConfigurationProfileAssignmentReportData> array = new List<AutomanageConfigurationProfileAssignmentReportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(item));
+                        array.Add(AutomanageConfigurationProfileAssignmentReportData.DeserializeAutomanageConfigurationProfileAssignmentReportData(item, options));
                     }
                     value = array;
                     continue;

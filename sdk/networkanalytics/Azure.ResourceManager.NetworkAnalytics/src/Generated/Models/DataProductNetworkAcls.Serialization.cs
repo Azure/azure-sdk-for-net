@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<NetworkAnalyticsVirtualNetworkRule> array = new List<NetworkAnalyticsVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAnalyticsVirtualNetworkRule.DeserializeNetworkAnalyticsVirtualNetworkRule(item));
+                        array.Add(NetworkAnalyticsVirtualNetworkRule.DeserializeNetworkAnalyticsVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRule = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<NetworkAnalyticsIPRules> array = new List<NetworkAnalyticsIPRules>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAnalyticsIPRules.DeserializeNetworkAnalyticsIPRules(item));
+                        array.Add(NetworkAnalyticsIPRules.DeserializeNetworkAnalyticsIPRules(item, options));
                     }
                     ipRules = array;
                     continue;

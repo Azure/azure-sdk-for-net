@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SAS": return SasCredentialDto.DeserializeSasCredentialDto(element);
+                    case "SAS": return SasCredentialDto.DeserializeSasCredentialDto(element, options);
                 }
             }
-            return UnknownPendingUploadCredentialDto.DeserializeUnknownPendingUploadCredentialDto(element);
+            return UnknownPendingUploadCredentialDto.DeserializeUnknownPendingUploadCredentialDto(element, options);
         }
 
         BinaryData IPersistableModel<PendingUploadCredentialDto>.Write(ModelReaderWriterOptions options)

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationEmailConfigurationData> array = new List<DataReplicationEmailConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(item));
+                        array.Add(DataReplicationEmailConfigurationData.DeserializeDataReplicationEmailConfigurationData(item, options));
                     }
                     value = array;
                     continue;

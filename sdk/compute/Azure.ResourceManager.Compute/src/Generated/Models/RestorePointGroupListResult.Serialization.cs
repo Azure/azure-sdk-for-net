@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RestorePointGroupData> array = new List<RestorePointGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item));
+                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item, options));
                     }
                     value = array;
                     continue;

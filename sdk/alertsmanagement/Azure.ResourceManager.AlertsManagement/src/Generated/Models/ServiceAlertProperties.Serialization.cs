@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value);
+                    essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))

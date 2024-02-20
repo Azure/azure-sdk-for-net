@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySupportedOSProperty> array = new List<SiteRecoverySupportedOSProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item));
+                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item, options));
                     }
                     supportedOSList = array;
                     continue;

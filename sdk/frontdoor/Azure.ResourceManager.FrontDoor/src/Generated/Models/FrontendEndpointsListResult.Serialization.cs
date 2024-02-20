@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item, options));
                     }
                     value = array;
                     continue;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentAPIKey> array = new List<ApplicationInsightsComponentAPIKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(item));
+                        array.Add(ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(item, options));
                     }
                     value = array;
                     continue;

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value);
+                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
+                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedAuthenticationModes"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value);
+                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }

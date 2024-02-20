@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyOpenRestriction": return ContentKeyPolicyOpenRestriction.DeserializeContentKeyPolicyOpenRestriction(element);
-                    case "#Microsoft.Media.ContentKeyPolicyTokenRestriction": return ContentKeyPolicyTokenRestriction.DeserializeContentKeyPolicyTokenRestriction(element);
-                    case "#Microsoft.Media.ContentKeyPolicyUnknownRestriction": return ContentKeyPolicyUnknownRestriction.DeserializeContentKeyPolicyUnknownRestriction(element);
+                    case "#Microsoft.Media.ContentKeyPolicyOpenRestriction": return ContentKeyPolicyOpenRestriction.DeserializeContentKeyPolicyOpenRestriction(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyTokenRestriction": return ContentKeyPolicyTokenRestriction.DeserializeContentKeyPolicyTokenRestriction(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyUnknownRestriction": return ContentKeyPolicyUnknownRestriction.DeserializeContentKeyPolicyUnknownRestriction(element, options);
                 }
             }
-            return UnknownContentKeyPolicyRestriction.DeserializeUnknownContentKeyPolicyRestriction(element);
+            return UnknownContentKeyPolicyRestriction.DeserializeUnknownContentKeyPolicyRestriction(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyRestriction>.Write(ModelReaderWriterOptions options)

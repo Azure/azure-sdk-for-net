@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetTrackData> array = new List<MediaAssetTrackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item));
+                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item, options));
                     }
                     value = array;
                     continue;

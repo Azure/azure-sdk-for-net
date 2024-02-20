@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         continue;
                     }
-                    error = DataBoxEdgeJobErrorDetails.DeserializeDataBoxEdgeJobErrorDetails(property.Value);
+                    error = DataBoxEdgeJobErrorDetails.DeserializeDataBoxEdgeJobErrorDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            downloadProgress = UpdateDownloadProgress.DeserializeUpdateDownloadProgress(property0.Value);
+                            downloadProgress = UpdateDownloadProgress.DeserializeUpdateDownloadProgress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("installProgress"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            installProgress = UpdateInstallProgress.DeserializeUpdateInstallProgress(property0.Value);
+                            installProgress = UpdateInstallProgress.DeserializeUpdateInstallProgress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("totalRefreshErrors"u8))

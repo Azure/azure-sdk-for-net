@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificDetails = FabricSpecificCreateNetworkMappingContent.DeserializeFabricSpecificCreateNetworkMappingContent(property.Value);
+                    fabricSpecificDetails = FabricSpecificCreateNetworkMappingContent.DeserializeFabricSpecificCreateNetworkMappingContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

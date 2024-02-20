@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value);
+                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningStudioOutputColumn> array = new List<MachineLearningStudioOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item));
+                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item, options));
                             }
                             outputs = array;
                             continue;

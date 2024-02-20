@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<ServiceTenant> array = new List<ServiceTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTenant.DeserializeServiceTenant(item));
+                        array.Add(ServiceTenant.DeserializeServiceTenant(item, options));
                     }
                     serviceTenants = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesFluxConfigurationData> array = new List<KubernetesFluxConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(item));
+                        array.Add(KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(item, options));
                     }
                     value = array;
                     continue;

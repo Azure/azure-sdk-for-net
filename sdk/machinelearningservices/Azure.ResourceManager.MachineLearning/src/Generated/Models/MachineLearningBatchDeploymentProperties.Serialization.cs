@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         deploymentConfiguration = null;
                         continue;
                     }
-                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value);
+                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errorThreshold"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         model = null;
                         continue;
                     }
-                    model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value);
+                    model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputAction"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value);
+                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retrySettings"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         retrySettings = null;
                         continue;
                     }
-                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value);
+                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabFileFolderProtectedItemExtendedInfo.DeserializeMabFileFolderProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = MabFileFolderProtectedItemExtendedInfo.DeserializeMabFileFolderProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

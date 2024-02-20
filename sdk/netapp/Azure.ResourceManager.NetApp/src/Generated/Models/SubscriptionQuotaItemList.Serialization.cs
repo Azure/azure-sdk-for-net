@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item));
+                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item, options));
                     }
                     value = array;
                     continue;

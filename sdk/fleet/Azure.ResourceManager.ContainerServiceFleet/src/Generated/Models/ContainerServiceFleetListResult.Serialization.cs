@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetData> array = new List<ContainerServiceFleetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetData.DeserializeContainerServiceFleetData(item));
+                        array.Add(ContainerServiceFleetData.DeserializeContainerServiceFleetData(item, options));
                     }
                     value = array;
                     continue;

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value);
+                    defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceTypeDeltaHealthPolicies"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ServiceTypeDeltaHealthPolicy> dictionary = new Dictionary<string, ServiceTypeDeltaHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property0.Value, options));
                     }
                     serviceTypeDeltaHealthPolicies = dictionary;
                     continue;

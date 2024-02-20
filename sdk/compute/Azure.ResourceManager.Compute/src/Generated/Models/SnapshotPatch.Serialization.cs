@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value);
+                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                     }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item));
+                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;

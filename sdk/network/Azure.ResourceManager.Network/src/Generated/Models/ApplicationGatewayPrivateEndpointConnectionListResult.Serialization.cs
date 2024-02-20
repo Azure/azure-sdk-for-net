@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayPrivateEndpointConnectionData> array = new List<ApplicationGatewayPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(item));
+                        array.Add(ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

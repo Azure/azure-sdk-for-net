@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value);
+                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vhd"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value);
+                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabDataDiskStorageTypeInfo> array = new List<DevTestLabDataDiskStorageTypeInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item));
+                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item, options));
                             }
                             dataDiskStorageInfo = array;
                             continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value);
+                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isPlanAuthorized"u8))

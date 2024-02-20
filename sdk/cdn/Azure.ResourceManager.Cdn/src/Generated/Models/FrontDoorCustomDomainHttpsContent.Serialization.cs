@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         secret = null;
                         continue;
                     }
-                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value);
+                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

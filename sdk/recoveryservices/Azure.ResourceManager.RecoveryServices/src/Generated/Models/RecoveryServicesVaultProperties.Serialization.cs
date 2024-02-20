@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value);
+                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesPrivateEndpointConnectionVaultProperties> array = new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item));
+                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value);
+                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveDetails"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value);
+                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveState"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value);
+                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restoreSettings"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value);
+                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("redundancySettings"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value);
+                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value);
+                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))

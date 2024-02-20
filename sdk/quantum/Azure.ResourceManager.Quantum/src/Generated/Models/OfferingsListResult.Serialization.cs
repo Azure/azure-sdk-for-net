@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<ProviderDescription> array = new List<ProviderDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderDescription.DeserializeProviderDescription(item));
+                        array.Add(ProviderDescription.DeserializeProviderDescription(item, options));
                     }
                     value = array;
                     continue;

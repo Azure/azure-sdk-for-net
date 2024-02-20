@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultData> array = new List<KeyVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultData.DeserializeKeyVaultData(item));
+                        array.Add(KeyVaultData.DeserializeKeyVaultData(item, options));
                     }
                     value = array;
                     continue;

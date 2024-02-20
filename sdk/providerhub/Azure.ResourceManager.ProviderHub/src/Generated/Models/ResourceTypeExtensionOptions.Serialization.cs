@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value);
+                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

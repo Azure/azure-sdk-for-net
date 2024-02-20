@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value);
+                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
                 {
-                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value);
+                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

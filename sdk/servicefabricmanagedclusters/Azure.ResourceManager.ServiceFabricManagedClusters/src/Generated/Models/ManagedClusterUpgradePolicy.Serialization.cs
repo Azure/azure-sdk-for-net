@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value);
+                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitoringPolicy"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value);
+                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))

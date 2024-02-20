@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            ingestionEndpointConfiguration = HealthcareApisIotConnectorEventHubIngestionConfiguration.DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(property0.Value);
+                            ingestionEndpointConfiguration = HealthcareApisIotConnectorEventHubIngestionConfiguration.DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deviceMapping"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            deviceMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value);
+                            deviceMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value, options);
                             continue;
                         }
                     }

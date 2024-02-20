@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = SecurityInsightsOfficeDataConnectorDataTypes.DeserializeSecurityInsightsOfficeDataConnectorDataTypes(property0.Value);
+                            dataTypes = SecurityInsightsOfficeDataConnectorDataTypes.DeserializeSecurityInsightsOfficeDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }

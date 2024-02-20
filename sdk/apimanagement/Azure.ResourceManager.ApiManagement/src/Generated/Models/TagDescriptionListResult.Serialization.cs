@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiTagDescriptionData> array = new List<ApiTagDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiTagDescriptionData.DeserializeApiTagDescriptionData(item));
+                        array.Add(ApiTagDescriptionData.DeserializeApiTagDescriptionData(item, options));
                     }
                     value = array;
                     continue;

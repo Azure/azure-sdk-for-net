@@ -71,12 +71,12 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element);
-                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element);
-                    case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element);
+                    case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
+                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element, options);
+                    case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
                 }
             }
-            return UnknownToolDefinition.DeserializeUnknownToolDefinition(element);
+            return UnknownToolDefinition.DeserializeUnknownToolDefinition(element, options);
         }
 
         BinaryData IPersistableModel<ToolDefinition>.Write(ModelReaderWriterOptions options)

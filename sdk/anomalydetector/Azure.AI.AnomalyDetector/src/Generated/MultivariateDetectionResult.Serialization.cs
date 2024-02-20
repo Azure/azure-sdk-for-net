@@ -90,7 +90,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("summary"u8))
                 {
-                    summary = MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(property.Value);
+                    summary = MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("results"u8))
@@ -98,7 +98,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyState> array = new List<AnomalyState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyState.DeserializeAnomalyState(item));
+                        array.Add(AnomalyState.DeserializeAnomalyState(item, options));
                     }
                     results = array;
                     continue;

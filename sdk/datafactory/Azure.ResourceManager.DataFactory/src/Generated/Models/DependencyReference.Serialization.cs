@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SelfDependencyTumblingWindowTriggerReference": return SelfDependencyTumblingWindowTriggerReference.DeserializeSelfDependencyTumblingWindowTriggerReference(element);
-                    case "TriggerDependencyReference": return TriggerDependencyReference.DeserializeTriggerDependencyReference(element);
-                    case "TumblingWindowTriggerDependencyReference": return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element);
+                    case "SelfDependencyTumblingWindowTriggerReference": return SelfDependencyTumblingWindowTriggerReference.DeserializeSelfDependencyTumblingWindowTriggerReference(element, options);
+                    case "TriggerDependencyReference": return TriggerDependencyReference.DeserializeTriggerDependencyReference(element, options);
+                    case "TumblingWindowTriggerDependencyReference": return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element, options);
                 }
             }
-            return UnknownDependencyReference.DeserializeUnknownDependencyReference(element);
+            return UnknownDependencyReference.DeserializeUnknownDependencyReference(element, options);
         }
 
         BinaryData IPersistableModel<DependencyReference>.Write(ModelReaderWriterOptions options)

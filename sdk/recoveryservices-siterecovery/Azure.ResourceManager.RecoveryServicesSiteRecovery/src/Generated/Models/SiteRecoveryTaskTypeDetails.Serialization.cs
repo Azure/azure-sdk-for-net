@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element);
-                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element);
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
-                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element);
-                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element);
-                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element);
-                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
-                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element);
+                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element, options);
+                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element, options);
+                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element, options);
+                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element, options);
+                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element, options);
+                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element, options);
+                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
+                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element, options);
                 }
             }
-            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element);
+            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryTaskTypeDetails>.Write(ModelReaderWriterOptions options)

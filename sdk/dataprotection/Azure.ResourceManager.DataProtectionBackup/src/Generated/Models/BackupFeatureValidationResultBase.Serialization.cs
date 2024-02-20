@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FeatureValidationResponse": return BackupFeatureValidationResult.DeserializeBackupFeatureValidationResult(element);
+                    case "FeatureValidationResponse": return BackupFeatureValidationResult.DeserializeBackupFeatureValidationResult(element, options);
                 }
             }
-            return UnknownFeatureValidationResponseBase.DeserializeUnknownFeatureValidationResponseBase(element);
+            return UnknownFeatureValidationResponseBase.DeserializeUnknownFeatureValidationResponseBase(element, options);
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationResultBase>.Write(ModelReaderWriterOptions options)

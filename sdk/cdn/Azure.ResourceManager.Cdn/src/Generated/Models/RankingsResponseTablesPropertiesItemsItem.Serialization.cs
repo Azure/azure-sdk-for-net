@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesPropertiesItemsMetricsItem> array = new List<RankingsResponseTablesPropertiesItemsMetricsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesPropertiesItemsMetricsItem.DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(item));
+                        array.Add(RankingsResponseTablesPropertiesItemsMetricsItem.DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(item, options));
                     }
                     metrics = array;
                     continue;

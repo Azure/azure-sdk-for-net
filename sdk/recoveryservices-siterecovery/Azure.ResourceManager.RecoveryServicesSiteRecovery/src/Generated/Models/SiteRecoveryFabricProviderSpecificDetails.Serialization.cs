@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AZoneDetails> array = new List<A2AZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AZoneDetails.DeserializeA2AZoneDetails(item));
+                        array.Add(A2AZoneDetails.DeserializeA2AZoneDetails(item, options));
                     }
                     zones = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AExtendedLocationDetails> array = new List<A2AExtendedLocationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AExtendedLocationDetails.DeserializeA2AExtendedLocationDetails(item));
+                        array.Add(A2AExtendedLocationDetails.DeserializeA2AExtendedLocationDetails(item, options));
                     }
                     extendedLocations = array;
                     continue;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AFabricSpecificLocationDetails> array = new List<A2AFabricSpecificLocationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AFabricSpecificLocationDetails.DeserializeA2AFabricSpecificLocationDetails(item));
+                        array.Add(A2AFabricSpecificLocationDetails.DeserializeA2AFabricSpecificLocationDetails(item, options));
                     }
                     locationDetails = array;
                     continue;

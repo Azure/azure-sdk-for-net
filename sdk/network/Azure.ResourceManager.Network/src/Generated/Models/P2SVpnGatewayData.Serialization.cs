@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
                             List<P2SConnectionConfiguration> array = new List<P2SConnectionConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(P2SConnectionConfiguration.DeserializeP2SConnectionConfiguration(item));
+                                array.Add(P2SConnectionConfiguration.DeserializeP2SConnectionConfiguration(item, options));
                             }
                             p2sConnectionConfigurations = array;
                             continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnClientConnectionHealth = VpnClientConnectionHealth.DeserializeVpnClientConnectionHealth(property0.Value);
+                            vpnClientConnectionHealth = VpnClientConnectionHealth.DeserializeVpnClientConnectionHealth(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customDnsServers"u8))

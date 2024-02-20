@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DpmErrorInfo> array = new List<DpmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item));
+                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value);
+                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

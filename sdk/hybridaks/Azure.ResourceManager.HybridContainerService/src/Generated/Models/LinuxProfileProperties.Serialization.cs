@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value);
+                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

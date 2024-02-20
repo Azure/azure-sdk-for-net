@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("condition"u8))
                 {
-                    condition = RouterRule.DeserializeRouterRule(property.Value);
+                    condition = RouterRule.DeserializeRouterRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queueSelectors"u8))
@@ -93,7 +93,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
+                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item, options));
                     }
                     queueSelectors = array;
                     continue;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppOpenIdConnectRegistration.DeserializeContainerAppOpenIdConnectRegistration(property.Value);
+                    registration = ContainerAppOpenIdConnectRegistration.DeserializeContainerAppOpenIdConnectRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = ContainerAppOpenIdConnectLogin.DeserializeContainerAppOpenIdConnectLogin(property.Value);
+                    login = ContainerAppOpenIdConnectLogin.DeserializeContainerAppOpenIdConnectLogin(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

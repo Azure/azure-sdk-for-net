@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(property.Value);
+                    authentication = Authentication.DeserializeAuthentication(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

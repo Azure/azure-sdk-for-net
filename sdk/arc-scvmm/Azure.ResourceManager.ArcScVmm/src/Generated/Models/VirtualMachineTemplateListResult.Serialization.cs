@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmVirtualMachineTemplateData> array = new List<ScVmmVirtualMachineTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(item));
+                        array.Add(ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(item, options));
                     }
                     value = array;
                     continue;

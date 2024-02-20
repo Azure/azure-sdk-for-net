@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
+                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value, options));
                     }
                     plansDetails = dictionary;
                     continue;

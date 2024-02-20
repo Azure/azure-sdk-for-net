@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value);
+                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

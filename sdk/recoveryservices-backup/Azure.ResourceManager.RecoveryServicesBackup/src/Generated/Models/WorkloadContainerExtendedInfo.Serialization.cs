@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value);
+                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodesList"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;

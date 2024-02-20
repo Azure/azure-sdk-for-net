@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FullBackupStoreDetails": return MySqlFlexibleServerFullBackupStoreDetails.DeserializeMySqlFlexibleServerFullBackupStoreDetails(element);
+                    case "FullBackupStoreDetails": return MySqlFlexibleServerFullBackupStoreDetails.DeserializeMySqlFlexibleServerFullBackupStoreDetails(element, options);
                 }
             }
-            return UnknownBackupStoreDetails.DeserializeUnknownBackupStoreDetails(element);
+            return UnknownBackupStoreDetails.DeserializeUnknownBackupStoreDetails(element, options);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupStoreDetails>.Write(ModelReaderWriterOptions options)

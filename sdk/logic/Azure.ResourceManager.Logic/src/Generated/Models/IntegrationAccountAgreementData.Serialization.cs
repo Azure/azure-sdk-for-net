@@ -251,17 +251,17 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("hostIdentity"u8))
                         {
-                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
+                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("guestIdentity"u8))
                         {
-                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
+                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("content"u8))
                         {
-                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value);
+                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value, options);
                             continue;
                         }
                     }

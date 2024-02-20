@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleApprover> array = new List<ManagedServicesEligibleApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item));
+                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item, options));
                     }
                     managedByTenantApprovers = array;
                     continue;

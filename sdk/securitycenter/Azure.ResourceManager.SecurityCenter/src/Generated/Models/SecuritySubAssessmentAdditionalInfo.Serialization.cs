@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContainerRegistryVulnerability": return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element);
-                    case "ServerVulnerabilityAssessment": return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element);
-                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element);
+                    case "ContainerRegistryVulnerability": return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element, options);
+                    case "ServerVulnerabilityAssessment": return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element, options);
+                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
                 }
             }
-            return UnknownAdditionalData.DeserializeUnknownAdditionalData(element);
+            return UnknownAdditionalData.DeserializeUnknownAdditionalData(element, options);
         }
 
         BinaryData IPersistableModel<SecuritySubAssessmentAdditionalInfo>.Write(ModelReaderWriterOptions options)

@@ -111,7 +111,7 @@ namespace Azure.Communication.Messages
                     List<MessageTemplateValue> array = new List<MessageTemplateValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item));
+                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item, options));
                     }
                     values = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value);
+                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

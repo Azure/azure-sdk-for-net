@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element);
-                    case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element);
+                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
+                    case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element, options);
                 }
             }
-            return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element);
+            return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element, options);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountBackupPolicy>.Write(ModelReaderWriterOptions options)

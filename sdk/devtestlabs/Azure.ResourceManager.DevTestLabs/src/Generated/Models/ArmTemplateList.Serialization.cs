@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabArmTemplateData> array = new List<DevTestLabArmTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(item));
+                        array.Add(DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(item, options));
                     }
                     value = array;
                     continue;

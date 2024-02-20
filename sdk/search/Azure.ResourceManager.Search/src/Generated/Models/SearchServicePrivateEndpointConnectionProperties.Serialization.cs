@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupId"u8))

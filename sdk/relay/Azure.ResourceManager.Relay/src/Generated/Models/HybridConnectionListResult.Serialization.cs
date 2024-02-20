@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayHybridConnectionData> array = new List<RelayHybridConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayHybridConnectionData.DeserializeRelayHybridConnectionData(item));
+                        array.Add(RelayHybridConnectionData.DeserializeRelayHybridConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value);
+                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))

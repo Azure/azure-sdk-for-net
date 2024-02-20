@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementDimension> array = new List<CostManagementDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementDimension.DeserializeCostManagementDimension(item));
+                        array.Add(CostManagementDimension.DeserializeCostManagementDimension(item, options));
                     }
                     value = array;
                     continue;

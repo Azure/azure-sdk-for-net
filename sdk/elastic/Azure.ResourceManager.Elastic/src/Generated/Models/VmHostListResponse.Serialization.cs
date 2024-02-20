@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<VmResources> array = new List<VmResources>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmResources.DeserializeVmResources(item));
+                        array.Add(VmResources.DeserializeVmResources(item, options));
                     }
                     value = array;
                     continue;

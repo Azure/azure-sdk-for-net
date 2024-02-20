@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlVirtualNetworkRuleData> array = new List<PostgreSqlVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(item));
+                        array.Add(PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(item, options));
                     }
                     value = array;
                     continue;

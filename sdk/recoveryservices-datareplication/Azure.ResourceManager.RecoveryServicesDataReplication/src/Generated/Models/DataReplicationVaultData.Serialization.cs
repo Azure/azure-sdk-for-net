@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     {
                         continue;
                     }
-                    properties = DataReplicationVaultProperties.DeserializeDataReplicationVaultProperties(property.Value);
+                    properties = DataReplicationVaultProperties.DeserializeDataReplicationVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

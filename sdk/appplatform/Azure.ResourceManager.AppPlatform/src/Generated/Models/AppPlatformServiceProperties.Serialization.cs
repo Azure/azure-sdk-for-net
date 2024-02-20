@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value);
+                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vnetAddons"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value);
+                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

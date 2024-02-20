@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPrivateEndpointConnectionData> array = new List<ApiManagementPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item));
+                        array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

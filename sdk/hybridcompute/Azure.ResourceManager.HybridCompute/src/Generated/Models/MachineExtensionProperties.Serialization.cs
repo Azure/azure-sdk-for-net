@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value);
+                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

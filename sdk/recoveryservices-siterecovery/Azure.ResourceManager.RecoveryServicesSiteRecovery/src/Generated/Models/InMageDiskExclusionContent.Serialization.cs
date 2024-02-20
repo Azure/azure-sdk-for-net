@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageVolumeExclusionOptions> array = new List<InMageVolumeExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item, options));
                     }
                     volumeOptions = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskSignatureExclusionOptions> array = new List<InMageDiskSignatureExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item, options));
                     }
                     diskSignatureOptions = array;
                     continue;

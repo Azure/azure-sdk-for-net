@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

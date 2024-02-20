@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKustoPoolData> array = new List<SynapseKustoPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item));
+                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item, options));
                     }
                     value = array;
                     continue;

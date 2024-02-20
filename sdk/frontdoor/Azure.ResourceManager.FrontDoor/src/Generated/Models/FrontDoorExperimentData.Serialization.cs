@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            endpointA = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
+                            endpointA = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpointB"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            endpointB = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value);
+                            endpointB = FrontDoorExperimentEndpointProperties.DeserializeFrontDoorExperimentEndpointProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))

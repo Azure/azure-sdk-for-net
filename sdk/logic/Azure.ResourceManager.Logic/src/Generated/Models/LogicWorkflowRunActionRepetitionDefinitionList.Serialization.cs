@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRunActionRepetitionDefinitionData> array = new List<LogicWorkflowRunActionRepetitionDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(item));
+                        array.Add(LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(item, options));
                     }
                     value = array;
                     continue;

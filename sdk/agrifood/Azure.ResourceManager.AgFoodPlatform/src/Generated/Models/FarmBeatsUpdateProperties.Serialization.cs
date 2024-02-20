@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value);
+                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))

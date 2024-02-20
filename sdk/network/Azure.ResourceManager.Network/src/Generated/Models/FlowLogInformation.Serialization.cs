@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value);
+                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
+                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value, options);
                             continue;
                         }
                     }

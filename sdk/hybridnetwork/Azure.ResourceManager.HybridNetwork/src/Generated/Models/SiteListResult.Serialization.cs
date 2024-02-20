@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<SiteData> array = new List<SiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item));
+                        array.Add(SiteData.DeserializeSiteData(item, options));
                     }
                     value = array;
                     continue;

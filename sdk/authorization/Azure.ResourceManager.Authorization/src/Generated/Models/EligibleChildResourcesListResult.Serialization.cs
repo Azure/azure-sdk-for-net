@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<EligibleChildResource> array = new List<EligibleChildResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EligibleChildResource.DeserializeEligibleChildResource(item));
+                        array.Add(EligibleChildResource.DeserializeEligibleChildResource(item, options));
                     }
                     value = array;
                     continue;

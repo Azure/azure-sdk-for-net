@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabDiskData> array = new List<DevTestLabDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabDiskData.DeserializeDevTestLabDiskData(item));
+                        array.Add(DevTestLabDiskData.DeserializeDevTestLabDiskData(item, options));
                     }
                     value = array;
                     continue;

@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatacenterAddressInstruction": return DataCenterAddressInstructionResult.DeserializeDataCenterAddressInstructionResult(element);
-                    case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element);
+                    case "DatacenterAddressInstruction": return DataCenterAddressInstructionResult.DeserializeDataCenterAddressInstructionResult(element, options);
+                    case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element, options);
                 }
             }
-            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element);
+            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element, options);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<LiveTraceCategory> array = new List<LiveTraceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveTraceCategory.DeserializeLiveTraceCategory(item));
+                        array.Add(LiveTraceCategory.DeserializeLiveTraceCategory(item, options));
                     }
                     categories = array;
                     continue;

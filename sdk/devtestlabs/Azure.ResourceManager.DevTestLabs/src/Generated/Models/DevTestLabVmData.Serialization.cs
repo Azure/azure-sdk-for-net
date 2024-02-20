@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
+                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item, options));
                             }
                             artifacts = array;
                             continue;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            artifactDeploymentStatus = DevTestLabArtifactDeploymentStatus.DeserializeDevTestLabArtifactDeploymentStatus(property0.Value);
+                            artifactDeploymentStatus = DevTestLabArtifactDeploymentStatus.DeserializeDevTestLabArtifactDeploymentStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("galleryImageReference"u8))
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
+                            galleryImageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("planId"u8))
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            computeVm = ComputeVmProperties.DeserializeComputeVmProperties(property0.Value);
+                            computeVm = ComputeVmProperties.DeserializeComputeVmProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkInterface"u8))
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value);
+                            networkInterface = DevTestLabNetworkInterface.DeserializeDevTestLabNetworkInterface(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicableSchedule"u8))
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value);
+                            applicableSchedule = DevTestLabApplicableSchedule.DeserializeDevTestLabApplicableSchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expirationDate"u8))
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabDataDiskProperties> array = new List<DevTestLabDataDiskProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item));
+                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item, options));
                             }
                             dataDiskParameters = array;
                             continue;
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabScheduleCreationParameter> array = new List<DevTestLabScheduleCreationParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item));
+                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item, options));
                             }
                             scheduleParameters = array;
                             continue;

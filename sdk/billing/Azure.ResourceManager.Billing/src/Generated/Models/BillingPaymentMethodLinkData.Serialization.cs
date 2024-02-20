@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            paymentMethod = PaymentMethodProjectionProperties.DeserializePaymentMethodProjectionProperties(property0.Value);
+                            paymentMethod = PaymentMethodProjectionProperties.DeserializePaymentMethodProjectionProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseEndpointsItem> array = new List<ResourcesResponseEndpointsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item));
+                        array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseCustomDomainsItem> array = new List<ResourcesResponseCustomDomainsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item));
+                        array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item, options));
                     }
                     customDomains = array;
                     continue;

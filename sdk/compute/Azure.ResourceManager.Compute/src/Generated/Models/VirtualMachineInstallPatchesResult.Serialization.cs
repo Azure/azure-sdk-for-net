@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<PatchInstallationDetail> array = new List<PatchInstallationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item));
+                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item, options));
                     }
                     patches = array;
                     continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

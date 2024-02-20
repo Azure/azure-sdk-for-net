@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(property.Value);
+                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

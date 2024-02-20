@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<ContextAndPlansDetails> array = new List<ContextAndPlansDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item));
+                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item, options));
                             }
                             plansContext = array;
                             continue;

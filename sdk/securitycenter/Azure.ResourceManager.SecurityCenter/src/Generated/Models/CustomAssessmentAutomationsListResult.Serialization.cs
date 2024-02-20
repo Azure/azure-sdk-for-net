@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CustomAssessmentAutomationData> array = new List<CustomAssessmentAutomationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(item));
+                        array.Add(CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(item, options));
                     }
                     value = array;
                     continue;

@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("code_interpreter"u8))
                 {
-                    codeInterpreter = InternalCodeInterpreterToolCallDetails.DeserializeInternalCodeInterpreterToolCallDetails(property.Value);
+                    codeInterpreter = InternalCodeInterpreterToolCallDetails.DeserializeInternalCodeInterpreterToolCallDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

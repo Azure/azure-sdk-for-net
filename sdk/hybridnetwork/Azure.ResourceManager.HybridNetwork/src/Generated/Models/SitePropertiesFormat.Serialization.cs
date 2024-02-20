@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NFVIs> array = new List<NFVIs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NFVIs.DeserializeNFVIs(item));
+                        array.Add(NFVIs.DeserializeNFVIs(item, options));
                     }
                     nfvis = array;
                     continue;

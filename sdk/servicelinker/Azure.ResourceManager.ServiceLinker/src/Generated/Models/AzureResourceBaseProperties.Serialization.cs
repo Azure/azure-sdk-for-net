@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element);
+                    case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element, options);
                 }
             }
-            return UnknownAzureResourcePropertiesBase.DeserializeUnknownAzureResourcePropertiesBase(element);
+            return UnknownAzureResourcePropertiesBase.DeserializeUnknownAzureResourcePropertiesBase(element, options);
         }
 
         BinaryData IPersistableModel<AzureResourceBaseProperties>.Write(ModelReaderWriterOptions options)

@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value);
+                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bgpProperties"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item, options));
                             }
                             vpnSiteLinks = array;
                             continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value);
+                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value, options);
                             continue;
                         }
                     }

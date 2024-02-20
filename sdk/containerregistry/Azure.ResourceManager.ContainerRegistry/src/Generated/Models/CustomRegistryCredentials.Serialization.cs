@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

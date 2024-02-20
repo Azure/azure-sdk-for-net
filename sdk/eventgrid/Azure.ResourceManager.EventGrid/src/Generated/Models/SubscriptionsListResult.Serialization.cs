@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<NamespaceTopicEventSubscriptionData> array = new List<NamespaceTopicEventSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(item));
+                        array.Add(NamespaceTopicEventSubscriptionData.DeserializeNamespaceTopicEventSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AlertRuleLeafCondition> array = new List<AlertRuleLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAlertRuleLeafCondition(item));
+                        array.Add(DeserializeAlertRuleLeafCondition(item, options));
                     }
                     anyOf = array;
                     continue;

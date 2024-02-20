@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisVariable> array = new List<SsisVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisVariable.DeserializeSsisVariable(item));
+                        array.Add(SsisVariable.DeserializeSsisVariable(item, options));
                     }
                     variables = array;
                     continue;

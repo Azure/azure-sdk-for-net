@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value);
+                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item));
+                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;

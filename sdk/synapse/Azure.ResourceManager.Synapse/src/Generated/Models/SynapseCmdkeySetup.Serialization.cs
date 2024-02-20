@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
                             continue;
                         }
                     }

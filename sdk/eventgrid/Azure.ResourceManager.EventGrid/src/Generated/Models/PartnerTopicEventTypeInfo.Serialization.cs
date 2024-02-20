@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     Dictionary<string, InlineEventProperties> dictionary = new Dictionary<string, InlineEventProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value));
+                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value, options));
                     }
                     inlineEventTypes = dictionary;
                     continue;

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element);
-                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element);
+                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element, options);
+                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element, options);
                 }
             }
-            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element);
+            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitorComputeIdentityBase>.Write(ModelReaderWriterOptions options)

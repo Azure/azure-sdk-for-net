@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    properties = Models.KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

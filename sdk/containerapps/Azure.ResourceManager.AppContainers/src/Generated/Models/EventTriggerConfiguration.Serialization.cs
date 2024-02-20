@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
+                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

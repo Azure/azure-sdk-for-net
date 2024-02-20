@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricL3IsolationDomainData> array = new List<NetworkFabricL3IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(item));
+                        array.Add(NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(item, options));
                     }
                     value = array;
                     continue;

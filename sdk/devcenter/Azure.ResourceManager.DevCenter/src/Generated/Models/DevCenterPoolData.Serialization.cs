@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value);
+                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthStatus"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthStatusDetail> array = new List<DevCenterHealthStatusDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthStatusDetail.DeserializeDevCenterHealthStatusDetail(item));
+                                array.Add(DevCenterHealthStatusDetail.DeserializeDevCenterHealthStatusDetail(item, options));
                             }
                             healthStatusDetails = array;
                             continue;

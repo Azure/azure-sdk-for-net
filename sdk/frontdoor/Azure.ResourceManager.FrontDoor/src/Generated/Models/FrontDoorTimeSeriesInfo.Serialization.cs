@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<FrontDoorTimeSeriesDataPoint> array = new List<FrontDoorTimeSeriesDataPoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorTimeSeriesDataPoint.DeserializeFrontDoorTimeSeriesDataPoint(item));
+                                array.Add(FrontDoorTimeSeriesDataPoint.DeserializeFrontDoorTimeSeriesDataPoint(item, options));
                             }
                             timeSeriesData = array;
                             continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterCredential> array = new List<ManagedClusterCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item));
+                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;

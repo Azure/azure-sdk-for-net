@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anonymous": return WebAnonymousAuthentication.DeserializeWebAnonymousAuthentication(element);
-                    case "Basic": return WebBasicAuthentication.DeserializeWebBasicAuthentication(element);
-                    case "ClientCertificate": return WebClientCertificateAuthentication.DeserializeWebClientCertificateAuthentication(element);
+                    case "Anonymous": return WebAnonymousAuthentication.DeserializeWebAnonymousAuthentication(element, options);
+                    case "Basic": return WebBasicAuthentication.DeserializeWebBasicAuthentication(element, options);
+                    case "ClientCertificate": return WebClientCertificateAuthentication.DeserializeWebClientCertificateAuthentication(element, options);
                 }
             }
-            return UnknownWebLinkedServiceTypeProperties.DeserializeUnknownWebLinkedServiceTypeProperties(element);
+            return UnknownWebLinkedServiceTypeProperties.DeserializeUnknownWebLinkedServiceTypeProperties(element, options);
         }
 
         BinaryData IPersistableModel<WebLinkedServiceTypeProperties>.Write(ModelReaderWriterOptions options)

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    properties = VirtualMachineUpdateProperties.DeserializeVirtualMachineUpdateProperties(property.Value);
+                    properties = VirtualMachineUpdateProperties.DeserializeVirtualMachineUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

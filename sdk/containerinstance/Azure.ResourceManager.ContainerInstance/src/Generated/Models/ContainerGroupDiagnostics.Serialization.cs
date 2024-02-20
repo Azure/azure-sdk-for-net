@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value);
+                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareSynchronizationSettingData> array = new List<DataShareSynchronizationSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(item));
+                        array.Add(DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(item, options));
                     }
                     value = array;
                     continue;

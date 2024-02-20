@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBDatabaseData> array = new List<MongoDBDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseData.DeserializeMongoDBDatabaseData(item));
+                        array.Add(MongoDBDatabaseData.DeserializeMongoDBDatabaseData(item, options));
                     }
                     value = array;
                     continue;

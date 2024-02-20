@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionReference> array = new List<PolicyDefinitionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
+                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item, options));
                             }
                             policyDefinitions = array;
                             continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionGroup> array = new List<PolicyDefinitionGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
+                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item, options));
                             }
                             policyDefinitionGroups = array;
                             continue;

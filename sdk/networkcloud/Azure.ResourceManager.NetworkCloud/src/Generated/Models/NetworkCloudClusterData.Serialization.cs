@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("aggregatorOrSingleRackDefinition"u8))
                         {
-                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value);
+                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("analyticsWorkspaceId"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableUpgradeVersion> array = new List<ClusterAvailableUpgradeVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item));
+                                array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item, options));
                             }
                             availableUpgradeVersions = array;
                             continue;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterCapacity = ClusterCapacity.DeserializeClusterCapacity(property0.Value);
+                            clusterCapacity = ClusterCapacity.DeserializeClusterCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterConnectionStatus"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterLocation"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value);
+                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value);
+                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeRackDefinitions"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkCloudRackDefinition> array = new List<NetworkCloudRackDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item, options));
                             }
                             computeRackDefinitions = array;
                             continue;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("manualActionCount"u8))

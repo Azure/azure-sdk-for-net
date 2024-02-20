@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value);
+                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

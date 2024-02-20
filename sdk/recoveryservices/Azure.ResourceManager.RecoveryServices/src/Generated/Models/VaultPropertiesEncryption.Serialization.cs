@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value);
+                    keyVaultProperties = CmkKeyVaultProperties.DeserializeCmkKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value);
+                    kekIdentity = CmkKekIdentity.DeserializeCmkKekIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("infrastructureEncryption"u8))

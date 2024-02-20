@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolData> array = new List<DiskPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolData.DeserializeDiskPoolData(item));
+                        array.Add(DiskPoolData.DeserializeDiskPoolData(item, options));
                     }
                     value = array;
                     continue;

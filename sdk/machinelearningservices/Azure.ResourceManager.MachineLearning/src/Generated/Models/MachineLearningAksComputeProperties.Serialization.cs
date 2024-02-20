@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeSystemService> array = new List<MachineLearningComputeSystemService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeSystemService.DeserializeMachineLearningComputeSystemService(item));
+                        array.Add(MachineLearningComputeSystemService.DeserializeMachineLearningComputeSystemService(item, options));
                     }
                     systemServices = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sslConfiguration = null;
                         continue;
                     }
-                    sslConfiguration = MachineLearningSslConfiguration.DeserializeMachineLearningSslConfiguration(property.Value);
+                    sslConfiguration = MachineLearningSslConfiguration.DeserializeMachineLearningSslConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aksNetworkingConfiguration"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         aksNetworkingConfiguration = null;
                         continue;
                     }
-                    aksNetworkingConfiguration = MachineLearningAksNetworkingConfiguration.DeserializeMachineLearningAksNetworkingConfiguration(property.Value);
+                    aksNetworkingConfiguration = MachineLearningAksNetworkingConfiguration.DeserializeMachineLearningAksNetworkingConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("loadBalancerType"u8))

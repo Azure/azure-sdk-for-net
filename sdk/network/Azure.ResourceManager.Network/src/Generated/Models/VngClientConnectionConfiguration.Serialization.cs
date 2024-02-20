@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))

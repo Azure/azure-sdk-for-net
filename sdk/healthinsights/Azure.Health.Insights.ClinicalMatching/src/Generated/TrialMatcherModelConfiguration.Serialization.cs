@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("clinicalTrials"u8))
                 {
-                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value);
+                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DenseCaption> array = new List<DenseCaption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DenseCaption.DeserializeDenseCaption(item));
+                        array.Add(DenseCaption.DeserializeDenseCaption(item, options));
                     }
                     values = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformCertificateData> array = new List<AppPlatformCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformCertificateData.DeserializeAppPlatformCertificateData(item));
+                        array.Add(AppPlatformCertificateData.DeserializeAppPlatformCertificateData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceLongTermRetentionPolicyData> array = new List<ManagedInstanceLongTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(item));
+                        array.Add(ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(item, options));
                     }
                     value = array;
                     continue;

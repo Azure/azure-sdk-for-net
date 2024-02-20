@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedServiceData> array = new List<ServiceFabricManagedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(item));
+                        array.Add(ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(item, options));
                     }
                     value = array;
                     continue;

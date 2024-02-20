@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("sshPublicKey"u8))
                 {
-                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value);
+                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmDiskContent> array = new List<InMageRcmDiskContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item));
+                        array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item, options));
                     }
                     disksToInclude = array;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value);
+                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))

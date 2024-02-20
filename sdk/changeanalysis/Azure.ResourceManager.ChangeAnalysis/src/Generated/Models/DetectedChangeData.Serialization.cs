@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     {
                         continue;
                     }
-                    properties = ChangeProperties.DeserializeChangeProperties(property.Value);
+                    properties = ChangeProperties.DeserializeChangeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabArtifactParameter> array = new List<DevTestLabArtifactParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabArtifactParameter.DeserializeDevTestLabArtifactParameter(item));
+                        array.Add(DevTestLabArtifactParameter.DeserializeDevTestLabArtifactParameter(item, options));
                     }
                     parameters = array;
                     continue;

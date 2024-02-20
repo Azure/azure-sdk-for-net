@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value);
+                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))

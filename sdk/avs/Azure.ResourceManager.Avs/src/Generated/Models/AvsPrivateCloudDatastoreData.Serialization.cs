@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value);
+                            diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

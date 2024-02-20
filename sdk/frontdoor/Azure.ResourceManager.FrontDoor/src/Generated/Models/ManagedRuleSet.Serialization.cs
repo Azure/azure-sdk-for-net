@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleGroupOverride> array = new List<ManagedRuleGroupOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item));
+                        array.Add(ManagedRuleGroupOverride.DeserializeManagedRuleGroupOverride(item, options));
                     }
                     ruleGroupOverrides = array;
                     continue;

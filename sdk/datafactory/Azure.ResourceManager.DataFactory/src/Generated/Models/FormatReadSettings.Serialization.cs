@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
-                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
-                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
-                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
-                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element);
+                    case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element, options);
+                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element, options);
+                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element, options);
+                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element, options);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
                 }
             }
-            return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element);
+            return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element, options);
         }
 
         BinaryData IPersistableModel<FormatReadSettings>.Write(ModelReaderWriterOptions options)

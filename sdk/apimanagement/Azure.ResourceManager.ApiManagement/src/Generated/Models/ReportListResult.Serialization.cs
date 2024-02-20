@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ReportRecordContract> array = new List<ReportRecordContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportRecordContract.DeserializeReportRecordContract(item));
+                        array.Add(ReportRecordContract.DeserializeReportRecordContract(item, options));
                     }
                     value = array;
                     continue;

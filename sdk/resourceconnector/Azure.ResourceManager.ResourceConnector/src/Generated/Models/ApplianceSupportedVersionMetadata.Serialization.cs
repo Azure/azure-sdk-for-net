@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value);
+                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

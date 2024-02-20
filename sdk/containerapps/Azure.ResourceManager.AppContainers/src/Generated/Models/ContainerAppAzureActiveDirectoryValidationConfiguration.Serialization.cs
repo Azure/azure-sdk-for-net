@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value);
+                    jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = ContainerAppDefaultAuthorizationPolicy.DeserializeContainerAppDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = ContainerAppDefaultAuthorizationPolicy.DeserializeContainerAppDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

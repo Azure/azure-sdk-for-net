@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.MachineLearning/WebService": return MachineLearningStudioFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningStudioFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionRetrieveDefaultDefinitionContent.DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionRetrieveDefaultDefinitionContent.DeserializeJavaScriptFunctionRetrieveDefaultDefinitionContent(element);
+                    case "Microsoft.MachineLearning/WebService": return MachineLearningStudioFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningStudioFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionRetrieveDefaultDefinitionContent.DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionRetrieveDefaultDefinitionContent.DeserializeJavaScriptFunctionRetrieveDefaultDefinitionContent(element, options);
                 }
             }
-            return UnknownFunctionRetrieveDefaultDefinitionParameters.DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(element);
+            return UnknownFunctionRetrieveDefaultDefinitionParameters.DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(element, options);
         }
 
         BinaryData IPersistableModel<FunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)

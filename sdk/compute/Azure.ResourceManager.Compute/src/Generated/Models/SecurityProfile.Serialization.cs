@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value);
+                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("proxyAgentSettings"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value);
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

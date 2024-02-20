@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IntegrationAccountAssemblyProperties.DeserializeIntegrationAccountAssemblyProperties(property.Value);
+                    properties = IntegrationAccountAssemblyProperties.DeserializeIntegrationAccountAssemblyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = ThroughputSettingsResourceInfo.DeserializeThroughputSettingsResourceInfo(property0.Value);
+                            resource = ThroughputSettingsResourceInfo.DeserializeThroughputSettingsResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

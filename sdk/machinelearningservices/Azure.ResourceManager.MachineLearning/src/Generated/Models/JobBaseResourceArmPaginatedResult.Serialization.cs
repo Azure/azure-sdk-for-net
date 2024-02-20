@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningJobData> array = new List<MachineLearningJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningJobData.DeserializeMachineLearningJobData(item));
+                        array.Add(MachineLearningJobData.DeserializeMachineLearningJobData(item, options));
                     }
                     value = array;
                     continue;

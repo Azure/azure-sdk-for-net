@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabasePrincipalAssignmentData> array = new List<KustoDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(item));
+                        array.Add(KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(item, options));
                     }
                     value = array;
                     continue;

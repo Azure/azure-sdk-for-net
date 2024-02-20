@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationCertificateData> array = new List<AutomationCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationCertificateData.DeserializeAutomationCertificateData(item));
+                        array.Add(AutomationCertificateData.DeserializeAutomationCertificateData(item, options));
                     }
                     value = array;
                     continue;

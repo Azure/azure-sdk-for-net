@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    integrationRuntime = DataFactoryIntegrationRuntimeDebugInfo.DeserializeDataFactoryIntegrationRuntimeDebugInfo(property.Value);
+                    integrationRuntime = DataFactoryIntegrationRuntimeDebugInfo.DeserializeDataFactoryIntegrationRuntimeDebugInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

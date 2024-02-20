@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<MemberUpdateStatus> array = new List<MemberUpdateStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item));
+                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item, options));
                     }
                     members = array;
                     continue;

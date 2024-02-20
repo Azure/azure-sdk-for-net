@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharedGalleryData> array = new List<SharedGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedGalleryData.DeserializeSharedGalleryData(item));
+                        array.Add(SharedGalleryData.DeserializeSharedGalleryData(item, options));
                     }
                     value = array;
                     continue;

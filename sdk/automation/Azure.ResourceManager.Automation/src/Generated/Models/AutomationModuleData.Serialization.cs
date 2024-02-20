@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            contentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationModuleErrorInfo.DeserializeAutomationModuleErrorInfo(property0.Value);
+                            error = AutomationModuleErrorInfo.DeserializeAutomationModuleErrorInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))

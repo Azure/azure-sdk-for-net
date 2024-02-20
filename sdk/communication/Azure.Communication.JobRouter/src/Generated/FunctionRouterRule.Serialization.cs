@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value);
+                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

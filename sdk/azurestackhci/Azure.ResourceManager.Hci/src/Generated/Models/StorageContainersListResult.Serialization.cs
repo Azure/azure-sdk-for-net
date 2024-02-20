@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<StorageContainerData> array = new List<StorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageContainerData.DeserializeStorageContainerData(item));
+                        array.Add(StorageContainerData.DeserializeStorageContainerData(item, options));
                     }
                     value = array;
                     continue;

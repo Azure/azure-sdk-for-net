@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                     }

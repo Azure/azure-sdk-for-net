@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Cdn
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                array.Add(GeoFilter.DeserializeGeoFilter(item, options));
                             }
                             geoFilters = array;
                             continue;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Cdn
                                 defaultOriginGroup = null;
                                 continue;
                             }
-                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Cdn
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                             }
                             uriSigningKeys = array;
                             continue;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Cdn
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Cdn
                                 webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeepCreatedOrigin> array = new List<DeepCreatedOrigin>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeepCreatedOrigin.DeserializeDeepCreatedOrigin(item));
+                                array.Add(DeepCreatedOrigin.DeserializeDeepCreatedOrigin(item, options));
                             }
                             origins = array;
                             continue;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeepCreatedOriginGroup> array = new List<DeepCreatedOriginGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeepCreatedOriginGroup.DeserializeDeepCreatedOriginGroup(item));
+                                array.Add(DeepCreatedOriginGroup.DeserializeDeepCreatedOriginGroup(item, options));
                             }
                             originGroups = array;
                             continue;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Cdn
                             List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item, options));
                             }
                             customDomains = array;
                             continue;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                         rawContent = null;
                         continue;
                     }
-                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value);
+                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphRunbookJson"u8))

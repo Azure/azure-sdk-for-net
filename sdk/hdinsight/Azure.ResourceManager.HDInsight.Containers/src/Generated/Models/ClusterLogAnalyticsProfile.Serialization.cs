@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value);
+                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricsEnabled"u8))

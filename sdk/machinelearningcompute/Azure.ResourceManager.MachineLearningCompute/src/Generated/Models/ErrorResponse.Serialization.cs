@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(ErrorDetail.DeserializeErrorDetail(item, options));
                     }
                     details = array;
                     continue;

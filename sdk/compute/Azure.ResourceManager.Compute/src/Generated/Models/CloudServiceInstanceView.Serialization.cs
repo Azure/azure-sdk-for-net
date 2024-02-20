@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value);
+                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sdkVersion"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;

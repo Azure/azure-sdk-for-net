@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element);
+                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
             Optional<string> sourceItemId = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;

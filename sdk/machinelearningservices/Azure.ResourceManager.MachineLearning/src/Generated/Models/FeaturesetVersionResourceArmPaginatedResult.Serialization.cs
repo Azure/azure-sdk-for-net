@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFeatureSetVersionData> array = new List<MachineLearningFeatureSetVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFeatureSetVersionData.DeserializeMachineLearningFeatureSetVersionData(item));
+                        array.Add(MachineLearningFeatureSetVersionData.DeserializeMachineLearningFeatureSetVersionData(item, options));
                     }
                     value = array;
                     continue;

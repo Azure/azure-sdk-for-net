@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item, options));
                     }
                     supportedVersions = array;
                     continue;

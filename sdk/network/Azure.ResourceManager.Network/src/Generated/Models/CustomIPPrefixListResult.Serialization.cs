@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CustomIPPrefixData> array = new List<CustomIPPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomIPPrefixData.DeserializeCustomIPPrefixData(item));
+                        array.Add(CustomIPPrefixData.DeserializeCustomIPPrefixData(item, options));
                     }
                     value = array;
                     continue;

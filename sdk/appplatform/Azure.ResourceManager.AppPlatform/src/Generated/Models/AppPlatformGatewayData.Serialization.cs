@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformGatewayProperties.DeserializeAppPlatformGatewayProperties(property.Value);
+                    properties = AppPlatformGatewayProperties.DeserializeAppPlatformGatewayProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
+                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

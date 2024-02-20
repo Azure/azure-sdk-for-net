@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PredefinedTag> array = new List<PredefinedTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredefinedTag.DeserializePredefinedTag(item));
+                        array.Add(PredefinedTag.DeserializePredefinedTag(item, options));
                     }
                     value = array;
                     continue;

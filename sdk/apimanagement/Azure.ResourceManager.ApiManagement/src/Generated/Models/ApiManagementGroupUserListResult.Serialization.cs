@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementGroupUserData> array = new List<ApiManagementGroupUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGroupUserData.DeserializeApiManagementGroupUserData(item));
+                        array.Add(ApiManagementGroupUserData.DeserializeApiManagementGroupUserData(item, options));
                     }
                     value = array;
                     continue;

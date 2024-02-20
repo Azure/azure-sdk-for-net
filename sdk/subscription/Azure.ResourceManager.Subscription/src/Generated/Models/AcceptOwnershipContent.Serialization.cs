@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     {
                         continue;
                     }
-                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value);
+                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

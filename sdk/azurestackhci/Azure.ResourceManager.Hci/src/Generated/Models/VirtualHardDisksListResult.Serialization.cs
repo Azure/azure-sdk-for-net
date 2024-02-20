@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<VirtualHardDiskData> array = new List<VirtualHardDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHardDiskData.DeserializeVirtualHardDiskData(item));
+                        array.Add(VirtualHardDiskData.DeserializeVirtualHardDiskData(item, options));
                     }
                     value = array;
                     continue;

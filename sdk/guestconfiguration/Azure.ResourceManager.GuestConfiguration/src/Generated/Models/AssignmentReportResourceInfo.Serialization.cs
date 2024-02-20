@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceComplianceReason> array = new List<AssignmentReportResourceComplianceReason>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item));
+                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item, options));
                     }
                     reasons = array;
                     continue;

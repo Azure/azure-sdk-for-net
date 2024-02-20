@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSensitivityLabelData> array = new List<SynapseSensitivityLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(item));
+                        array.Add(SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(item, options));
                     }
                     value = array;
                     continue;

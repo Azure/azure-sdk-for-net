@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value);
+                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridPrivateEndpointConnectionData> array = new List<EventGridPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item));
+                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            topicsConfiguration = TopicsConfiguration.DeserializeTopicsConfiguration(property0.Value);
+                            topicsConfiguration = TopicsConfiguration.DeserializeTopicsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("topicSpacesConfiguration"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            topicSpacesConfiguration = TopicSpacesConfiguration.DeserializeTopicSpacesConfiguration(property0.Value);
+                            topicSpacesConfiguration = TopicSpacesConfiguration.DeserializeTopicSpacesConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isZoneRedundant"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;

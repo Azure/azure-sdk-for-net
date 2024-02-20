@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementDeletedServiceData> array = new List<ApiManagementDeletedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(item));
+                        array.Add(ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(item, options));
                     }
                     value = array;
                     continue;

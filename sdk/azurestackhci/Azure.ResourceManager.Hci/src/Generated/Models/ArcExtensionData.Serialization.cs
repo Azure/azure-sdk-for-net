@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Hci
                             List<PerNodeExtensionState> array = new List<PerNodeExtensionState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeExtensionState.DeserializePerNodeExtensionState(item));
+                                array.Add(PerNodeExtensionState.DeserializePerNodeExtensionState(item, options));
                             }
                             perNodeExtensionDetails = array;
                             continue;

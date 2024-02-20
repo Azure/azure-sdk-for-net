@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element);
+                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element, options);
                 }
             }
-            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element);
+            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element, options);
         }
 
         BinaryData IPersistableModel<StaticRoutingEnrichment>.Write(ModelReaderWriterOptions options)

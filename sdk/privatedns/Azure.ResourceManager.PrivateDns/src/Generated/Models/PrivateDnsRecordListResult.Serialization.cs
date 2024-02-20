@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     List<PrivateDnsRecordData> array = new List<PrivateDnsRecordData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateDnsRecordData.DeserializePrivateDnsRecordData(item));
+                        array.Add(PrivateDnsRecordData.DeserializePrivateDnsRecordData(item, options));
                     }
                     value = array;
                     continue;

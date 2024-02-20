@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceParsedPatternTypeValue> array = new List<ThreatIntelligenceParsedPatternTypeValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item));
+                        array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item, options));
                     }
                     patternTypeValues = array;
                     continue;

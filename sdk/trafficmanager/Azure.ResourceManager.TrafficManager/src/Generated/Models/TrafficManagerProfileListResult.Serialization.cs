@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerProfileData> array = new List<TrafficManagerProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerProfileData.DeserializeTrafficManagerProfileData(item));
+                        array.Add(TrafficManagerProfileData.DeserializeTrafficManagerProfileData(item, options));
                     }
                     value = array;
                     continue;

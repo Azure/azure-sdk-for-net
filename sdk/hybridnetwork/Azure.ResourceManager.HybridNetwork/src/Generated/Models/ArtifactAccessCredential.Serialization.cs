@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureContainerRegistryScopedToken": return AzureContainerRegistryScopedTokenCredential.DeserializeAzureContainerRegistryScopedTokenCredential(element);
-                    case "AzureStorageAccountToken": return AzureStorageAccountCredential.DeserializeAzureStorageAccountCredential(element);
+                    case "AzureContainerRegistryScopedToken": return AzureContainerRegistryScopedTokenCredential.DeserializeAzureContainerRegistryScopedTokenCredential(element, options);
+                    case "AzureStorageAccountToken": return AzureStorageAccountCredential.DeserializeAzureStorageAccountCredential(element, options);
                 }
             }
-            return UnknownArtifactAccessCredential.DeserializeUnknownArtifactAccessCredential(element);
+            return UnknownArtifactAccessCredential.DeserializeUnknownArtifactAccessCredential(element, options);
         }
 
         BinaryData IPersistableModel<ArtifactAccessCredential>.Write(ModelReaderWriterOptions options)

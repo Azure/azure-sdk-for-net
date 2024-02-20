@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         continue;
                     }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

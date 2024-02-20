@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<UriSigningParamIdentifier> array = new List<UriSigningParamIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UriSigningParamIdentifier.DeserializeUriSigningParamIdentifier(item));
+                        array.Add(UriSigningParamIdentifier.DeserializeUriSigningParamIdentifier(item, options));
                     }
                     parameterNameOverride = array;
                     continue;

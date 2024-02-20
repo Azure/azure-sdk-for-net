@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerStorageEditionCapability> array = new List<MySqlFlexibleServerStorageEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item));
+                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item, options));
                     }
                     supportedStorageEditions = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<SkuCapabilityV2> array = new List<SkuCapabilityV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapabilityV2.DeserializeSkuCapabilityV2(item));
+                        array.Add(SkuCapabilityV2.DeserializeSkuCapabilityV2(item, options));
                     }
                     supportedSkus = array;
                     continue;

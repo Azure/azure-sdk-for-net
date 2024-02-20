@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             sources = array;
                             continue;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             destinations = array;
                             continue;

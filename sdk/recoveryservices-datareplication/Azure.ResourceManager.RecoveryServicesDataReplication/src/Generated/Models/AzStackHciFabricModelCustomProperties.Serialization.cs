@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("cluster"u8))
                 {
-                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value);
+                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))

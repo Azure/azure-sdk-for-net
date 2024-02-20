@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value);
+                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkRetryHistory> array = new List<LogicWorkRetryHistory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item));
+                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item, options));
                             }
                             retryHistory = array;
                             continue;

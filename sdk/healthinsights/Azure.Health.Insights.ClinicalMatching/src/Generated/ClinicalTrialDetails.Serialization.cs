@@ -103,12 +103,12 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    demographics = ClinicalTrialDemographics.DeserializeClinicalTrialDemographics(property.Value);
+                    demographics = ClinicalTrialDemographics.DeserializeClinicalTrialDemographics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
+                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

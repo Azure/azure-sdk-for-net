@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MipSensitivityLabel> array = new List<MipSensitivityLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item));
+                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserDefinedInformationType> array = new List<UserDefinedInformationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item));
+                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item, options));
                     }
                     customInfoTypes = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<BuiltInInfoType> array = new List<BuiltInInfoType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item));
+                        array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item, options));
                     }
                     builtInInfoTypes = array;
                     continue;

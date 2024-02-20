@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value);
+                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipToken"u8))

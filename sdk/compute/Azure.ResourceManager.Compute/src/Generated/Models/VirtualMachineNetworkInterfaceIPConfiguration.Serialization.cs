@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPAddressConfiguration = VirtualMachinePublicIPAddressConfiguration.DeserializeVirtualMachinePublicIPAddressConfiguration(property0.Value);
+                            publicIPAddressConfiguration = VirtualMachinePublicIPAddressConfiguration.DeserializeVirtualMachinePublicIPAddressConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"u8))

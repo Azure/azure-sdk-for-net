@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = HealthReportResourceDetails.DeserializeHealthReportResourceDetails(property0.Value);
+                            resourceDetails = HealthReportResourceDetails.DeserializeHealthReportResourceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("environmentDetails"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(property0.Value);
+                            environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthDataClassification"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            healthDataClassification = HealthDataClassification.DeserializeHealthDataClassification(property0.Value);
+                            healthDataClassification = HealthDataClassification.DeserializeHealthDataClassification(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = HealthReportStatus.DeserializeHealthReportStatus(property0.Value);
+                            status = HealthReportStatus.DeserializeHealthReportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("affectedDefendersPlans"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityHealthReportIssue> array = new List<SecurityHealthReportIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item));
+                                array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item, options));
                             }
                             issues = array;
                             continue;

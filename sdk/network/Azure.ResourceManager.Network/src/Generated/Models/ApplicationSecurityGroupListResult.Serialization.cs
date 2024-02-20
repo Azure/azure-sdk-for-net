@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                        array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                     }
                     value = array;
                     continue;

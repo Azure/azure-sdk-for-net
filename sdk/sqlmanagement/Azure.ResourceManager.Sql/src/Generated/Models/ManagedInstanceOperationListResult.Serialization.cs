@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceOperationData> array = new List<ManagedInstanceOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceOperationData.DeserializeManagedInstanceOperationData(item));
+                        array.Add(ManagedInstanceOperationData.DeserializeManagedInstanceOperationData(item, options));
                     }
                     value = array;
                     continue;

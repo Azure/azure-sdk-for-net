@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             List<DetailedInformation> array = new List<DetailedInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item));
+                                array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item, options));
                             }
                             detailedInformation = array;
                             continue;

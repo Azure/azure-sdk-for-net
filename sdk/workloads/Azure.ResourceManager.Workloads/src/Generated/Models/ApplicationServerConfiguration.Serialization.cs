@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

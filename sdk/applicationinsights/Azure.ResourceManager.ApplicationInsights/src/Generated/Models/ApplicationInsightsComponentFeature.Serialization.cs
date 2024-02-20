@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentFeatureCapability> array = new List<ApplicationInsightsComponentFeatureCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item));
+                        array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item, options));
                     }
                     capabilities = array;
                     continue;

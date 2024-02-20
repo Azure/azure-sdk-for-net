@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         productionData = null;
                         continue;
                     }
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingRate"u8))

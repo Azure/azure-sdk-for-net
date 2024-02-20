@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationProtectedItemData> array = new List<DataReplicationProtectedItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(item));
+                        array.Add(DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(item, options));
                     }
                     value = array;
                     continue;

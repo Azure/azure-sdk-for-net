@@ -158,7 +158,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<MessageContent> array = new List<MessageContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageContent.DeserializeMessageContent(item));
+                        array.Add(MessageContent.DeserializeMessageContent(item, options));
                     }
                     content = array;
                     continue;

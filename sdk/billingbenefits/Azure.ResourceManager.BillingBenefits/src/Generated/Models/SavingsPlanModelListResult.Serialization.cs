@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<BillingBenefitsSavingsPlanData> array = new List<BillingBenefitsSavingsPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(item));
+                        array.Add(BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanSummary> array = new List<SavingsPlanSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanSummary.DeserializeSavingsPlanSummary(item));
+                        array.Add(SavingsPlanSummary.DeserializeSavingsPlanSummary(item, options));
                     }
                     additionalProperties = array;
                     continue;

@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value);
+                            nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualApplianceNicProperties> array = new List<VirtualApplianceNicProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualApplianceNicProperties.DeserializeVirtualApplianceNicProperties(item));
+                                array.Add(VirtualApplianceNicProperties.DeserializeVirtualApplianceNicProperties(item, options));
                             }
                             virtualApplianceNics = array;
                             continue;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualApplianceAdditionalNicProperties> array = new List<VirtualApplianceAdditionalNicProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualApplianceAdditionalNicProperties.DeserializeVirtualApplianceAdditionalNicProperties(item));
+                                array.Add(VirtualApplianceAdditionalNicProperties.DeserializeVirtualApplianceAdditionalNicProperties(item, options));
                             }
                             additionalNics = array;
                             continue;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value);
+                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnerManagedResource"u8))
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value);
+                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value, options);
                             continue;
                         }
                     }

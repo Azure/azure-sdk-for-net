@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterScheduleData> array = new List<DevCenterScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterScheduleData.DeserializeDevCenterScheduleData(item));
+                        array.Add(DevCenterScheduleData.DeserializeDevCenterScheduleData(item, options));
                     }
                     value = array;
                     continue;

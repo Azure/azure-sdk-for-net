@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    catalogAdminPassword = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))

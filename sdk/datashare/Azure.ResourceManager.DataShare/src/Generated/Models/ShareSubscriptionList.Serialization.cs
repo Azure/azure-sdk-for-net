@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ShareSubscriptionData> array = new List<ShareSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareSubscriptionData.DeserializeShareSubscriptionData(item));
+                        array.Add(ShareSubscriptionData.DeserializeShareSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

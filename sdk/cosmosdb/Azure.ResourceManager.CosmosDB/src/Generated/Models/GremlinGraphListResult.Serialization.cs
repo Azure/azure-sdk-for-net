@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GremlinGraphData> array = new List<GremlinGraphData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinGraphData.DeserializeGremlinGraphData(item));
+                        array.Add(GremlinGraphData.DeserializeGremlinGraphData(item, options));
                     }
                     value = array;
                     continue;

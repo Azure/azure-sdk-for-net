@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyPhoneNumbers> array = new List<TelephonyPhoneNumbers>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item));
+                        array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item, options));
                     }
                     phoneNumbers = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyChannelResourceApiConfiguration> array = new List<TelephonyChannelResourceApiConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item));
+                        array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item, options));
                     }
                     apiConfigurations = array;
                     continue;

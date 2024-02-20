@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value);
+                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerErrorDetails"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value);
+                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errorLevel"u8))

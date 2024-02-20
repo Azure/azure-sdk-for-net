@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringReceivedRoute> array = new List<PeeringReceivedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringReceivedRoute.DeserializePeeringReceivedRoute(item));
+                        array.Add(PeeringReceivedRoute.DeserializePeeringReceivedRoute(item, options));
                     }
                     value = array;
                     continue;

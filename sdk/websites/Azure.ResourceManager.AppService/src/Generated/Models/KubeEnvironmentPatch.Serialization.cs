@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
+                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
+                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))

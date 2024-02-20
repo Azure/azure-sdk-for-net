@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anomaly": return AnomalySecurityMLAnalyticsSettings.DeserializeAnomalySecurityMLAnalyticsSettings(element);
+                    case "Anomaly": return AnomalySecurityMLAnalyticsSettings.DeserializeAnomalySecurityMLAnalyticsSettings(element, options);
                 }
             }
-            return UnknownSecurityMLAnalyticsSetting.DeserializeUnknownSecurityMLAnalyticsSetting(element);
+            return UnknownSecurityMLAnalyticsSetting.DeserializeUnknownSecurityMLAnalyticsSetting(element, options);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options)

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppHttpHeaderInfo> array = new List<ContainerAppHttpHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item));
+                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item, options));
                     }
                     httpHeaders = array;
                     continue;

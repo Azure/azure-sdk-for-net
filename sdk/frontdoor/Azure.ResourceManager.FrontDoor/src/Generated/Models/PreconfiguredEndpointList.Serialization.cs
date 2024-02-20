@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<PreconfiguredEndpoint> array = new List<PreconfiguredEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item, options));
                     }
                     value = array;
                     continue;

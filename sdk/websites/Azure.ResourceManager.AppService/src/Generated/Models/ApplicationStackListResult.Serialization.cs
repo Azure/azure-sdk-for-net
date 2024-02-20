@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStackResource> array = new List<ApplicationStackResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationStackResource.DeserializeApplicationStackResource(item));
+                        array.Add(ApplicationStackResource.DeserializeApplicationStackResource(item, options));
                     }
                     value = array;
                     continue;

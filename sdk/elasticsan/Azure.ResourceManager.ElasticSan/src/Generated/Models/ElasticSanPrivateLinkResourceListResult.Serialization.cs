@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanPrivateLinkResource> array = new List<ElasticSanPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item));
+                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

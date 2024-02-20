@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPipelineRunInfo> array = new List<DataFactoryPipelineRunInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item));
+                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item, options));
                     }
                     value = array;
                     continue;

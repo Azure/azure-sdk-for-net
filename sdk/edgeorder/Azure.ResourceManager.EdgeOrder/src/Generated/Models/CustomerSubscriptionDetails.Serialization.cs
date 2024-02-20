@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<CustomerSubscriptionRegisteredFeatures> array = new List<CustomerSubscriptionRegisteredFeatures>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item));
+                        array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item, options));
                     }
                     registeredFeatures = array;
                     continue;

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
+                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            planInformation = BillingPlanInformation.DeserializeBillingPlanInformation(property0.Value);
+                            planInformation = BillingPlanInformation.DeserializeBillingPlanInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("savingsPlans"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.BillingBenefits
                             {
                                 continue;
                             }
-                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value);
+                            extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value, options);
                             continue;
                         }
                     }

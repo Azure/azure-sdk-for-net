@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value);
+                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

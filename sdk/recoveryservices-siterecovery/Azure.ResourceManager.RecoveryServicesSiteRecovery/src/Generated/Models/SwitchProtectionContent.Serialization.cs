@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = SwitchProtectionProperties.DeserializeSwitchProtectionProperties(property.Value);
+                    properties = SwitchProtectionProperties.DeserializeSwitchProtectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

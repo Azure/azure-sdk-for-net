@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoClusterData> array = new List<MongoClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoClusterData.DeserializeMongoClusterData(item));
+                        array.Add(MongoClusterData.DeserializeMongoClusterData(item, options));
                     }
                     value = array;
                     continue;
