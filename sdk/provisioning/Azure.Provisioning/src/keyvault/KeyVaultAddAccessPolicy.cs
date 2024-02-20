@@ -32,7 +32,7 @@ namespace Azure.Provisioning.KeyVaults
                         })
                 }))
         {
-            ParameterOverrides.Add(Properties.AccessPolicies[0], new Dictionary<string, string> { { nameof(KeyVaultAccessPolicy.ObjectId), GetParamValue(principalIdParameter, scope) } });
+            ParameterOverrides.Add(Properties.AccessPolicies[0], new Dictionary<string, Parameter> { { nameof(KeyVaultAccessPolicy.ObjectId), principalIdParameter } });
         }
 
         private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)

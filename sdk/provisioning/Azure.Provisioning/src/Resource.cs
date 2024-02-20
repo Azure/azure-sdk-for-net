@@ -4,7 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
@@ -21,7 +23,7 @@ namespace Azure.Provisioning
     public abstract class Resource : IPersistableModel<Resource>
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        internal Dictionary<object, Dictionary<string, string>> ParameterOverrides { get; }
+        internal Dictionary<object, Dictionary<string, Parameter>> ParameterOverrides { get; }
 
         private IList<Resource> Dependencies { get; }
 
@@ -57,7 +59,9 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the parameters of the resource.
         /// </summary>
-        public IList<Parameter> Parameters { get; }
+        internal IList<Parameter> Parameters { get; }
+
+        internal IConstruct? ModuleScope { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Resource"/>.
@@ -76,11 +80,11 @@ namespace Azure.Provisioning
             var azureName = GetAzureName(scope, resourceName);
             Scope = scope;
             Parameters = new List<Parameter>();
-            Parent =  parent ?? FindParentInScope(scope);
+            Parent = parent ?? FindParentInScope(scope);
             Scope.AddResource(this);
             ResourceData = createProperties(azureName);
             Version = version;
-            ParameterOverrides = new Dictionary<object, Dictionary<string, string>>();
+            ParameterOverrides = new Dictionary<object, Dictionary<string, Parameter>>();
             Dependencies = new List<Resource>();
             ResourceType = resourceType;
             Id = Parent is null
@@ -145,12 +149,15 @@ namespace Azure.Provisioning
         {
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
-                overrides[propertyName] = parameter.Name;
+                overrides[propertyName] = parameter;
             }
             else
             {
-                ParameterOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, parameter.Name } });
+                ParameterOverrides.Add(instance, new Dictionary<string, Parameter> {  { propertyName, parameter } });
             }
+            Scope.AddParameter(parameter);
+            //TODO: We should not need this instead a parameter should have a reference to the resource it is associated with but belong to the construct only.
+            //https://github.com/Azure/azure-sdk-for-net/issues/42066
             Parameters.Add(parameter);
         }
 
@@ -167,7 +174,7 @@ namespace Azure.Provisioning
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
         private protected Output AddOutput(string name, object instance, string propertyName, string expression, bool isLiteral = false, bool isSecure = false)
         {
-            var result = new Output(name, $"{Name}.{expression}", Scope, isLiteral, isSecure);
+            var result = new Output(name, $"{Name}.{expression}", Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
         }
@@ -231,7 +238,12 @@ namespace Azure.Provisioning
             var bicepOptions = new BicepModelReaderWriterOptions();
             foreach (var parameter in ParameterOverrides)
             {
-                bicepOptions.ParameterOverrides.Add(parameter.Key, parameter.Value);
+                var dict = new Dictionary<string, string>();
+                foreach (var kvp in parameter.Value)
+                {
+                    dict.Add(kvp.Key, kvp.Value.GetParameterString(ModuleScope!));
+                }
+                bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
             }
             var data = ModelReaderWriter.Write(ResourceData, bicepOptions).ToMemory();
 
@@ -246,16 +258,18 @@ namespace Azure.Provisioning
 
         private bool NeedsScope()
         {
+            Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
+
             switch (Parent)
             {
                 case ResourceGroup _:
-                    return Scope.ConstructScope != ConstructScope.ResourceGroup;
+                    return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
                 case Subscription _:
-                    return Scope.ConstructScope != ConstructScope.Subscription;
+                    return ModuleScope!.ConstructScope != ConstructScope.Subscription;
                 case Tenant _:
-                    return Scope.ConstructScope != ConstructScope.Tenant;
+                    return ModuleScope!.ConstructScope != ConstructScope.Tenant;
                 default:
-                    return Scope.ConstructScope != ConstructScope.ResourceGroup;
+                    return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
             }
         }
 

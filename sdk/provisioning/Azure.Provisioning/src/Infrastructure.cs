@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Azure.Provisioning
 {
@@ -23,7 +20,7 @@ namespace Azure.Provisioning
         /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
         /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
         public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null)
-            : base(null, "default", constructScope, tenantId, subscriptionId, envName ?? Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'"))
+            : base(null, "default", constructScope, tenantId, subscriptionId, envName ?? Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'"), resourceGroup: null)
         {
         }
 
@@ -33,46 +30,9 @@ namespace Azure.Provisioning
         /// <param name="outputPath">Path to put the files.</param>
         public void Build(string? outputPath = null)
         {
-            outputPath ??= $".\\{GetType().Name}";
-            outputPath = Path.GetFullPath(outputPath);
+            var moduleInfrastructure = new ModuleInfrastructure(this);
 
-            WriteBicepFile(this, outputPath);
-
-            var queue = new Queue<IConstruct>();
-            queue.Enqueue(this);
-            WriteConstructsByLevel(queue, outputPath);
-        }
-
-        private void WriteConstructsByLevel(Queue<IConstruct> constructs, string outputPath)
-        {
-            while (constructs.Count > 0)
-            {
-                var construct = constructs.Dequeue();
-                foreach (var child in construct.GetConstructs(false))
-                {
-                    constructs.Enqueue(child);
-                }
-                WriteBicepFile(construct, outputPath);
-            }
-        }
-
-        private string GetFilePath(IConstruct construct, string outputPath)
-        {
-            string fileName = object.ReferenceEquals(construct, this) ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
-            Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
-            return fileName;
-        }
-
-        private void WriteBicepFile(IConstruct construct, string outputPath)
-        {
-            using var stream = new FileStream(GetFilePath(construct, outputPath), FileMode.Create);
-#if NET6_0_OR_GREATER
-            stream.Write(ModelReaderWriter.Write(construct, new ModelReaderWriterOptions("bicep")));
-#else
-            BinaryData data = ModelReaderWriter.Write(construct, new ModelReaderWriterOptions("bicep"));
-            var buffer = data.ToArray();
-            stream.Write(buffer, 0, buffer.Length);
-#endif
+            moduleInfrastructure.Write(outputPath);
         }
     }
 }

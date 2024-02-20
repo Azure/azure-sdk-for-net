@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ResourceManager
                 throw new InvalidOperationException("ResourceGroup already exists on the construct");
             }
 
-            return new ResourceGroup(construct, "rg");
+            return new ResourceGroup(construct, name: "rg");
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.Provisioning.ResourceManager
         /// <returns>The see <see cref="Subscription"/>.</returns>
         public static Subscription GetOrCreateSubscription(this IConstruct construct, Guid? subscriptionId = null)
         {
-            return construct.Subscription ?? construct.GetSingleResource<Subscription>() ?? new Subscription(construct, subscriptionId);
+            return construct.Subscription ?? (subscriptionId != null ? new Subscription(construct, subscriptionId) : construct.GetSingleResource<Subscription>())!;
         }
     }
 }

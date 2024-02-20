@@ -1,4 +1,4 @@
-targetScope = subscription
+targetScope = 'subscription'
 
 
 resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {

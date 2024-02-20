@@ -9,14 +9,9 @@ namespace Azure.Provisioning.Tests
 {
     public class TestFrontEndWebSite : Construct
     {
-        public TestFrontEndWebSite(IConstruct scope, KeyVault? keyVault = null, AppServicePlan? appServicePlan = null)
-            : base(scope, nameof(TestFrontEndWebSite))
+        public TestFrontEndWebSite(IConstruct scope, KeyVault? keyVault = null, AppServicePlan? appServicePlan = null, ResourceGroup? parent = null)
+            : base(scope, nameof(TestFrontEndWebSite), resourceGroup: parent ?? new ResourceGroup(scope, "rg"))
         {
-            if (ResourceGroup is null)
-            {
-                ResourceGroup = new ResourceGroup(scope, "rg");
-            }
-
             appServicePlan = UseExistingResource(appServicePlan, () => scope.AddAppServicePlan(ResourceGroup));
             keyVault = UseExistingResource(keyVault, () => scope.AddKeyVault(ResourceGroup));
 

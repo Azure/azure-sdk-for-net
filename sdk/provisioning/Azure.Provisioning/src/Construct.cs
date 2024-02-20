@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Azure.Provisioning.ResourceManager;
+using Microsoft.Extensions.Azure;
 
 namespace Azure.Provisioning
 {
@@ -48,8 +49,23 @@ namespace Azure.Provisioning
         /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
         /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
         /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
+        /// <param name="resourceGroup"></param>
         /// <exception cref="ArgumentException"><paramref name="constructScope"/> is <see cref="ConstructScope.ResourceGroup"/> and <paramref name="scope"/> is null.</exception>
-        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null)
+        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null, ResourceGroup? resourceGroup = null)
+            : this(scope, name, constructScope, tenantId, subscriptionId, envName, null, null, resourceGroup)
+        {
+        }
+
+        internal Construct(
+            IConstruct? scope,
+            string name,
+            ConstructScope constructScope,
+            Guid? tenantId = default,
+            Guid? subscriptionId = default,
+            string? envName = default,
+            Tenant? tenant = default,
+            Subscription? subscription = default,
+            ResourceGroup? resourceGroup = default)
         {
             if (scope is null && constructScope == ConstructScope.ResourceGroup)
             {
@@ -64,15 +80,15 @@ namespace Azure.Provisioning
             _constructs = new List<IConstruct>();
             _existingResources = new List<Resource>();
             Name = name;
-            Root = scope?.Root ?? new Tenant(this, tenantId);
+            Root = tenant ?? scope?.Root ?? new Tenant(this, tenantId);
             ConstructScope = constructScope;
             if (constructScope == ConstructScope.ResourceGroup)
             {
-                ResourceGroup = scope!.ResourceGroup ?? scope.GetOrAddResourceGroup();
+                ResourceGroup = resourceGroup ?? scope!.ResourceGroup ?? scope.GetOrAddResourceGroup();
             }
             if (constructScope == ConstructScope.Subscription)
             {
-                Subscription = scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId);
+                Subscription = subscription ?? (scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId));
             }
 
             _environmentName = envName;
@@ -103,7 +119,7 @@ namespace Azure.Provisioning
             IEnumerable<Resource> result = _resources;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetResources(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetResources(true)));
             }
             return result;
         }
@@ -114,7 +130,7 @@ namespace Azure.Provisioning
             IEnumerable<IConstruct> result = _constructs;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetConstructs(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetConstructs(true)));
             }
             return result;
         }
@@ -125,7 +141,7 @@ namespace Azure.Provisioning
             IEnumerable<Parameter> result = _parameters;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetParameters(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetParameters(true)));
             }
             return result;
         }
@@ -136,7 +152,7 @@ namespace Azure.Provisioning
             IEnumerable<Output> result = _outputs;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetOutputs(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetOutputs(true)));
             }
             return result;
         }
@@ -167,7 +183,7 @@ namespace Azure.Provisioning
 
         private string GetScopeName()
         {
-            return ResourceGroup?.Name ?? Subscription?.Name ?? "tenant()";
+            return ResourceGroup?.Name ?? (Subscription != null ? $"subscription('{Subscription.Name}')" : "tenant()");
         }
 
         private BinaryData SerializeModuleReference(ModelReaderWriterOptions options)
@@ -178,18 +194,21 @@ namespace Azure.Provisioning
             stream.WriteLine($"  scope: {GetScopeName()}");
 
             var parametersToWrite = new HashSet<Parameter>();
-            GetAllParametersRecursive(this, parametersToWrite, false);
-            if (parametersToWrite.Count() > 0)
+            var outputs = new HashSet<Output>(GetOutputs());
+            foreach (var p in GetParameters(false))
+            {
+                if (!ShouldExposeParameter(p, outputs))
+                {
+                    continue;
+                }
+                parametersToWrite.Add(p);
+            }
+            if (parametersToWrite.Count > 0)
             {
                 stream.WriteLine($"  params: {{");
                 foreach (var parameter in parametersToWrite)
                 {
-                    var value = parameter.IsFromOutput
-                        ? parameter.IsLiteral
-                            ? $"'{parameter.Value}'"
-                            : parameter.Value
-                        : parameter.Name;
-                    stream.WriteLine($"    {parameter.Name}: {value}");
+                    stream.WriteLine($"    {parameter.Name}: {parameter.GetParameterString(Scope!)}");
                 }
                 stream.WriteLine($"  }}");
             }
@@ -244,7 +263,7 @@ namespace Azure.Provisioning
         {
             if (ConstructScope != ConstructScope.ResourceGroup)
             {
-                stream.WriteLine($"targetScope = {ConstructScope.ToString().ToCamelCase()}{Environment.NewLine}");
+                stream.WriteLine($"targetScope = '{ConstructScope.ToString().ToCamelCase()}'{Environment.NewLine}");
             }
         }
 
@@ -260,13 +279,13 @@ namespace Azure.Provisioning
             foreach (var output in outputsToWrite)
             {
                 string value;
-                if (output.IsLiteral || output.Source.Equals(this))
+                if (output.IsLiteral || ReferenceEquals(this, output.ModuleSource))
                 {
                     value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
                 }
                 else
                 {
-                    value = $"{output.Source.Name}.outputs.{output.Name}";
+                    value = $"{output.ModuleSource!.Name}.outputs.{output.Name}";
                 }
                 string name = output.Name;
                 stream.WriteLine($"output {name} string = {value}");
@@ -291,8 +310,13 @@ namespace Azure.Provisioning
         {
             var parametersToWrite = new HashSet<Parameter>();
             GetAllParametersRecursive(this, parametersToWrite, false);
+            var outputs = new HashSet<Output>(GetOutputs());
             foreach (var parameter in parametersToWrite)
             {
+                if (!ShouldExposeParameter(parameter, outputs))
+                {
+                    continue;
+                }
                 string defaultValue = parameter.DefaultValue is null ? string.Empty : $" = '{parameter.DefaultValue}'";
 
                 if (parameter.IsSecure)
@@ -301,6 +325,12 @@ namespace Azure.Provisioning
                 stream.WriteLine($"@description('{parameter.Description}')");
                 stream.WriteLine($"param {parameter.Name} string{defaultValue}{Environment.NewLine}");
             }
+        }
+
+        private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)
+        {
+            // Don't expose the parameter if the output that was used to create the parameter is already in scope.
+            return parameter.Output == null || !outputs.Contains(parameter.Output);
         }
 
         private void GetAllParametersRecursive(IConstruct construct, HashSet<Parameter> visited, bool isChild)

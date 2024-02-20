@@ -45,8 +45,9 @@ namespace Azure.Provisioning.AppService
         /// <param name="runtimeVersion">The runtime version</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public WebSite(IConstruct scope, string resourceName, AppServicePlan appServicePlan, WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", AzureLocation? location = default)
-            : base(scope, null, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.WebSiteData(
+        /// <param name="parent">The resource group. </param>
+        public WebSite(IConstruct scope, string resourceName, AppServicePlan appServicePlan, WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = null)
+            : base(scope, parent, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.WebSiteData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,

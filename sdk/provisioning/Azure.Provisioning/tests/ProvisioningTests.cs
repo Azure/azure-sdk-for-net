@@ -6,6 +6,8 @@ using Azure.Provisioning.ResourceManager;
 using System;
 using System.IO;
 using System.Diagnostics;
+using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
@@ -126,6 +128,44 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddAppConfigurationStore();
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void MultipleSubscriptions()
+        {
+            // ensure deterministic subscription names and directories
+            var random = new TestRandom(RecordedTestMode.Playback, 1);
+            var infra = new TestSubscriptionInfrastructure();
+            var sub1 = new Subscription(infra, random.NewGuid());
+            var sub2 = new Subscription(infra, random.NewGuid());
+            _ = new ResourceGroup(infra, parent: sub1);
+            _ = new ResourceGroup(infra, parent: sub2);
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void OutputsSpanningModules()
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+            var rg2 = new ResourceGroup(infra, "rg2");
+            var rg3 = new ResourceGroup(infra, "rg3");
+            var appServicePlan = infra.AddAppServicePlan(parent: rg1);
+            WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
+
+            var output1 = frontEnd1.AddOutput(data => data.Identity.PrincipalId, "STORAGE_PRINCIPAL_ID");
+            var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
+
+            KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
+            keyVault.AssignParameter(data => data.Location, new Parameter(output2));
+
+            WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
+
+            frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
+            frontEnd2.AssignParameter(data => data.Location, new Parameter(output2));
+
+            _ = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());
         }
 

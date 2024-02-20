@@ -27,6 +27,9 @@ namespace Azure.Provisioning
         /// </summary>
         public bool IsSecure { get; }
         internal IConstruct Source { get; }
+        internal IConstruct? ModuleSource { get; set; }
+
+        internal Resource Resource { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Output"/>.
@@ -36,13 +39,15 @@ namespace Azure.Provisioning
         /// <param name="source">The output source.</param>
         /// <param name="isLiteral">Is the output a literal value.</param>
         /// <param name="isSecure">Is the output secure.</param>
-        public Output(string name, string value, IConstruct source, bool isLiteral = false, bool isSecure = false)
+        /// <param name="resource"></param>
+        internal Output(string name, string value, IConstruct source, Resource resource, bool isLiteral = false, bool isSecure = false)
         {
             Name = name;
             Value = value;
             IsLiteral = isLiteral;
             IsSecure = isSecure;
             Source = source;
+            Resource = resource;
         }
     }
 }

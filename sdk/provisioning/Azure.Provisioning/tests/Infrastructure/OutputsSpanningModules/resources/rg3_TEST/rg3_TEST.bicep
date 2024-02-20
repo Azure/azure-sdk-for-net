@@ -1,20 +1,12 @@
 
-resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' existing = {
-  name: 'appServicePlan_kjMZSF1FP'
-}
-
-resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-  name: 'keyVault_CRoMbemLF'
-}
-
-resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_Y34mQ7HgU 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -34,13 +26,13 @@ resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_9BG7vUQd2 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_W5EweSXEq
+resource applicationSettingsResource_1XX3wQExf 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_Y34mQ7HgU
   name: 'appsettings'
 }
 
-resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_W5EweSXEq
+resource webSiteConfigLogs_vhJa9LaNc 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_Y34mQ7HgU
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -64,4 +56,4 @@ resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_Y34mQ7HgU.identity.principalId
