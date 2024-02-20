@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     List<TrafficControllerData> array = new List<TrafficControllerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficControllerData.DeserializeTrafficControllerData(item));
+                        array.Add(TrafficControllerData.DeserializeTrafficControllerData(item, options));
                     }
                     value = array;
                     continue;

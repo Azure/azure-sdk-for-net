@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "indicator": return SecurityInsightsThreatIntelligenceIndicatorData.DeserializeSecurityInsightsThreatIntelligenceIndicatorData(element);
+                    case "indicator": return SecurityInsightsThreatIntelligenceIndicatorData.DeserializeSecurityInsightsThreatIntelligenceIndicatorData(element, options);
                 }
             }
-            return UnknownThreatIntelligenceInformation.DeserializeUnknownThreatIntelligenceInformation(element);
+            return UnknownThreatIntelligenceInformation.DeserializeUnknownThreatIntelligenceInformation(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options)

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRCustomDomainData> array = new List<SignalRCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRCustomDomainData.DeserializeSignalRCustomDomainData(item));
+                        array.Add(SignalRCustomDomainData.DeserializeSignalRCustomDomainData(item, options));
                     }
                     value = array;
                     continue;

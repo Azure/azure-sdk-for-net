@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<CurrentQuotaLimitBaseData> array = new List<CurrentQuotaLimitBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(item));
+                        array.Add(CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(item, options));
                     }
                     value = array;
                     continue;

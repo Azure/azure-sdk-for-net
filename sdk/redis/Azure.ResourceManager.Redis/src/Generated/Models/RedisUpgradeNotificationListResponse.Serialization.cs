@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item));
+                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item, options));
                     }
                     value = array;
                     continue;

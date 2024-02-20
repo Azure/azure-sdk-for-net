@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDay.DeserializeBackupDay(item));
+                        array.Add(BackupDay.DeserializeBackupDay(item, options));
                     }
                     daysOfTheMonth = array;
                     continue;

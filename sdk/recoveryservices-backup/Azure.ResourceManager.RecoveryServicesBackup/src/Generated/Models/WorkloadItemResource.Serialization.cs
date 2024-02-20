@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    properties = WorkloadItem.DeserializeWorkloadItem(property.Value);
+                    properties = WorkloadItem.DeserializeWorkloadItem(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

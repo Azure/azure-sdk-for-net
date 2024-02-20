@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element);
-                    case "AzureActiveDirectory": return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element);
-                    case "AzureAdvancedThreatProtection": return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element);
-                    case "AzureSecurityCenter": return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element);
-                    case "MicrosoftCloudAppSecurity": return McasDataConnector.DeserializeMcasDataConnector(element);
-                    case "MicrosoftDefenderAdvancedThreatProtection": return MdatpDataConnector.DeserializeMdatpDataConnector(element);
-                    case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element);
-                    case "ThreatIntelligence": return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element);
+                    case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element, options);
+                    case "AzureActiveDirectory": return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
+                    case "AzureAdvancedThreatProtection": return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element, options);
+                    case "AzureSecurityCenter": return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element, options);
+                    case "MicrosoftCloudAppSecurity": return McasDataConnector.DeserializeMcasDataConnector(element, options);
+                    case "MicrosoftDefenderAdvancedThreatProtection": return MdatpDataConnector.DeserializeMdatpDataConnector(element, options);
+                    case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element, options);
+                    case "ThreatIntelligence": return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element, options);
                 }
             }
-            return UnknownDataConnector.DeserializeUnknownDataConnector(element);
+            return UnknownDataConnector.DeserializeUnknownDataConnector(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsDataConnectorData>.Write(ModelReaderWriterOptions options)

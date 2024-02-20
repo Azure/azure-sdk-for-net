@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = SavingsPlanPurchase.DeserializeSavingsPlanPurchase(property.Value);
+                    properties = SavingsPlanPurchase.DeserializeSavingsPlanPurchase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

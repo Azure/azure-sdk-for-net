@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SensitivityLabelUpdate> array = new List<SensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item));
+                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;

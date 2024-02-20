@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUsage> array = new List<SignalRUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUsage.DeserializeSignalRUsage(item));
+                        array.Add(SignalRUsage.DeserializeSignalRUsage(item, options));
                     }
                     value = array;
                     continue;

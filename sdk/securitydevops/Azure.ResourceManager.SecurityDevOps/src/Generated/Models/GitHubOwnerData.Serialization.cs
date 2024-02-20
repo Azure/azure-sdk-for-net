@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                     {
                         continue;
                     }
-                    properties = GitHubOwnerProperties.DeserializeGitHubOwnerProperties(property.Value);
+                    properties = GitHubOwnerProperties.DeserializeGitHubOwnerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

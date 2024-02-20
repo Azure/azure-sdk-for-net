@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicContentDetails> array = new List<VmNicContentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicContentDetails.DeserializeVmNicContentDetails(item));
+                        array.Add(VmNicContentDetails.DeserializeVmNicContentDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = UpdateReplicationProtectedItemProviderContent.DeserializeUpdateReplicationProtectedItemProviderContent(property.Value);
+                    providerSpecificDetails = UpdateReplicationProtectedItemProviderContent.DeserializeUpdateReplicationProtectedItemProviderContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

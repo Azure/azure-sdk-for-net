@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddRemoveIncrementalNamedPartition": return NamedPartitionAddOrRemoveScalingMechanism.DeserializeNamedPartitionAddOrRemoveScalingMechanism(element);
-                    case "ScalePartitionInstanceCount": return PartitionInstanceCountScalingMechanism.DeserializePartitionInstanceCountScalingMechanism(element);
+                    case "AddRemoveIncrementalNamedPartition": return NamedPartitionAddOrRemoveScalingMechanism.DeserializeNamedPartitionAddOrRemoveScalingMechanism(element, options);
+                    case "ScalePartitionInstanceCount": return PartitionInstanceCountScalingMechanism.DeserializePartitionInstanceCountScalingMechanism(element, options);
                 }
             }
-            return UnknownScalingMechanism.DeserializeUnknownScalingMechanism(element);
+            return UnknownScalingMechanism.DeserializeUnknownScalingMechanism(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceScalingMechanism>.Write(ModelReaderWriterOptions options)

@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    sku = ServiceBusSku.DeserializeServiceBusSku(property.Value);
+                    sku = ServiceBusSku.DeserializeServiceBusSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                             {
                                 continue;
                             }
-                            encryption = ServiceBusEncryption.DeserializeServiceBusEncryption(property0.Value);
+                            encryption = ServiceBusEncryption.DeserializeServiceBusEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                             List<ServiceBusPrivateEndpointConnectionData> array = new List<ServiceBusPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(item));
+                                array.Add(ServiceBusPrivateEndpointConnectionData.DeserializeServiceBusPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

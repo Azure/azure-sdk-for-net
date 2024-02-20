@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MigrationItemResyncProperties.DeserializeMigrationItemResyncProperties(property.Value);
+                    properties = MigrationItemResyncProperties.DeserializeMigrationItemResyncProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

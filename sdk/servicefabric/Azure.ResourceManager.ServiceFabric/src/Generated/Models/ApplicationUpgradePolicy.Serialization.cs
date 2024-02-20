@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value);
+                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationHealthPolicy"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value);
+                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeMode"u8))

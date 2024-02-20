@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderPermission> array = new List<ProviderPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderPermission.DeserializeProviderPermission(item));
+                        array.Add(ProviderPermission.DeserializeProviderPermission(item, options));
                     }
                     value = array;
                     continue;

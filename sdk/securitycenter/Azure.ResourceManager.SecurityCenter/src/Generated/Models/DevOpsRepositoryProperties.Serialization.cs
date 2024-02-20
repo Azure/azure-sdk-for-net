@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
