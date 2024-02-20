@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            immutabilityPolicy = BlobContainerImmutabilityPolicy.DeserializeBlobContainerImmutabilityPolicy(property0.Value);
+                            immutabilityPolicy = BlobContainerImmutabilityPolicy.DeserializeBlobContainerImmutabilityPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("legalHold"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
+                            legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hasLegalHold"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value);
+                            immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableNfsV3RootSquash"u8))

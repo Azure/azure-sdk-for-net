@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = StorageSyncPrivateLinkServiceConnectionState.DeserializeStorageSyncPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = StorageSyncPrivateLinkServiceConnectionState.DeserializeStorageSyncPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

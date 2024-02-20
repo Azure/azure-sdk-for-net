@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WebPubSub
                             List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item));
+                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.WebPubSub
                             List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
+                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value);
+                            tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostNamePrefix"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
+                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
+                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
+                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

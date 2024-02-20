@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
+                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item, options));
                     }
                     value = array;
                     continue;

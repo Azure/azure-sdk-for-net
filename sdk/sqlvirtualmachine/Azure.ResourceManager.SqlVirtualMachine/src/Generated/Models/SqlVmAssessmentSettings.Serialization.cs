@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value);
+                    schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

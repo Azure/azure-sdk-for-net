@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKustoPoolPrivateLinkData> array = new List<SynapseKustoPoolPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(item));
+                        array.Add(SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(item, options));
                     }
                     value = array;
                     continue;

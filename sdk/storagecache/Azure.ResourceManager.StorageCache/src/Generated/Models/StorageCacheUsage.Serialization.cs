@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value);
+                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<RemotePrivateEndpointConnectionARMResourceData> array = new List<RemotePrivateEndpointConnectionARMResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(item));
+                        array.Add(RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(item, options));
                     }
                     value = array;
                     continue;

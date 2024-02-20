@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     landscape = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     sapApplication = array;
                     continue;

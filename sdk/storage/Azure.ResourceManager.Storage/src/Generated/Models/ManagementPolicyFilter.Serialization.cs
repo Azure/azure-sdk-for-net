@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
+                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item, options));
                     }
                     blobIndexMatch = array;
                     continue;

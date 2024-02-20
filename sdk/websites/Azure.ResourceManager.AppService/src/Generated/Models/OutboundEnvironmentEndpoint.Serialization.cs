@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEndpointDependency> array = new List<AppServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item));
+                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
