@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
@@ -16,6 +17,12 @@ public class ClientResultException : Exception, ISerializable
 
     private readonly PipelineResponse? _response;
     private int _status;
+
+    public static async Task<ClientResultException> CreateAsync(PipelineResponse response, Exception? innerException = default)
+    {
+        string message = await CreateMessageAsync(response).ConfigureAwait(false);
+        return new ClientResultException(message, response, innerException);
+    }
 
     /// <summary>
     /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -66,8 +73,21 @@ public class ClientResultException : Exception, ISerializable
     public PipelineResponse? GetRawResponse() => _response;
 
     private static string CreateMessage(PipelineResponse response)
+        => CreateMessageSyncOrAsync(response, async: false).EnsureCompleted();
+
+    private static async ValueTask<string> CreateMessageAsync(PipelineResponse response)
+        => await CreateMessageSyncOrAsync(response, async: true).ConfigureAwait(false);
+
+    private static async ValueTask<string> CreateMessageSyncOrAsync(PipelineResponse response, bool async)
     {
-        response.BufferContent();
+        if (async)
+        {
+            await response.BufferContentAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            response.BufferContent();
+        }
 
         StringBuilder messageBuilder = new();
 

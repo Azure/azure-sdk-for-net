@@ -23,7 +23,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (BinaryData item in client.GetTemplates("<channelId>", null, null))
+            foreach (BinaryData item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -39,7 +39,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null, null))
+            await foreach (BinaryData item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -55,7 +55,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (MessageTemplateItem item in client.GetTemplates("<channelId>"))
+            foreach (MessageTemplateItem item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>"))
+            await foreach (MessageTemplateItem item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -77,7 +77,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (BinaryData item in client.GetTemplates("<channelId>", 1234, null))
+            foreach (BinaryData item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -93,7 +93,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", 1234, null))
+            await foreach (BinaryData item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -109,7 +109,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (MessageTemplateItem item in client.GetTemplates("<channelId>", maxpagesize: 1234))
+            foreach (MessageTemplateItem item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxpagesize: 1234))
             {
             }
         }
@@ -120,7 +120,7 @@ namespace Azure.Communication.Messages.Samples
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>", maxpagesize: 1234))
+            await foreach (MessageTemplateItem item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxpagesize: 1234))
             {
             }
         }
