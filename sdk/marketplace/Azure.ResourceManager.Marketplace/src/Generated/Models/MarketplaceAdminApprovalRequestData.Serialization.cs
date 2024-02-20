@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Marketplace
                             List<PlanRequesterDetails> array = new List<PlanRequesterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlanRequesterDetails.DeserializePlanRequesterDetails(item));
+                                array.Add(PlanRequesterDetails.DeserializePlanRequesterDetails(item, options));
                             }
                             plans = array;
                             continue;

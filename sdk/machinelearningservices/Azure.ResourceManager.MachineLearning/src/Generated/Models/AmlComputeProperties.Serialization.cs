@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         virtualMachineImage = null;
                         continue;
                     }
-                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value);
+                    virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isolatedNetwork"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
+                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userAccountCredentials"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userAccountCredentials = null;
                         continue;
                     }
-                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value);
+                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnet"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value);
+                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remoteLoginPortPublicAccess"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     errors = array;
                     continue;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodeStateCounts = null;
                         continue;
                     }
-                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value);
+                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableNodePublicIp"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item, options));
                     }
                     value = array;
                     continue;

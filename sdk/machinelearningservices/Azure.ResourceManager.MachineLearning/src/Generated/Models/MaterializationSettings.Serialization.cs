@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notification = null;
                         continue;
                     }
-                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resource = null;
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value);
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value);
+                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))

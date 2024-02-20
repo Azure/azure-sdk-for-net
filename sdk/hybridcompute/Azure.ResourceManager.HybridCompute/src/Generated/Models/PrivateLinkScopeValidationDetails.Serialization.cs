@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item, options));
                     }
                     connectionDetails = array;
                     continue;

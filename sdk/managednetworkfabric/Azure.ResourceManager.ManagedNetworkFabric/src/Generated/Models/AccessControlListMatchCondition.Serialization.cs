@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value);
+                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

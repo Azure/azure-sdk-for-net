@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value);
+                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

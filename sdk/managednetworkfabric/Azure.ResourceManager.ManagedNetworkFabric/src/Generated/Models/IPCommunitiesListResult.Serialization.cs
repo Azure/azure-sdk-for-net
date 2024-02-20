@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricIPCommunityData> array = new List<NetworkFabricIPCommunityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item));
+                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item, options));
                     }
                     value = array;
                     continue;

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value);
+                            envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCenc"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value);
+                            commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCbcs"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value);
+                            commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("noEncryption"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            noEncryption = NoEncryption.DeserializeNoEncryption(property0.Value);
+                            noEncryption = NoEncryption.DeserializeNoEncryption(property0.Value, options);
                             continue;
                         }
                     }

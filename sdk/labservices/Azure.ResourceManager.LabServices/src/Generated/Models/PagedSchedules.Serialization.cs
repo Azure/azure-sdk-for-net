@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabServicesScheduleData> array = new List<LabServicesScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabServicesScheduleData.DeserializeLabServicesScheduleData(item));
+                        array.Add(LabServicesScheduleData.DeserializeLabServicesScheduleData(item, options));
                     }
                     value = array;
                     continue;

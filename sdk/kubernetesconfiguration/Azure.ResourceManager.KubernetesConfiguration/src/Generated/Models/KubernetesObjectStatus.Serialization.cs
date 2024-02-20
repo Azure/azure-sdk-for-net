@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         appliedBy = null;
                         continue;
                     }
-                    appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
+                    appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("statusConditions"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesObjectStatusCondition> array = new List<KubernetesObjectStatusCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item));
+                        array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item, options));
                     }
                     statusConditions = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmReleaseProperties = null;
                         continue;
                     }
-                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value);
+                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

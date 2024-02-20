@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoSkuLocationInfoItem> array = new List<KustoSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item));
+                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;

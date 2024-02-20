@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item, options));
                     }
                     resources = array;
                     continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value);
+                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value);
+                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value);
+                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("licenseProfile"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value);
+                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<MachineExtensionInstanceView> array = new List<MachineExtensionInstanceView>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item));
+                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item, options));
                             }
                             extensions = array;
                             continue;
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value);
+                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }

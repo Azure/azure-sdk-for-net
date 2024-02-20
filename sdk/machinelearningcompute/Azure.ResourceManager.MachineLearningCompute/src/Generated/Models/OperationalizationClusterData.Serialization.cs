@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             List<ErrorResponseWrapper> array = new List<ErrorResponseWrapper>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ErrorResponseWrapper.DeserializeErrorResponseWrapper(item));
+                                array.Add(ErrorResponseWrapper.DeserializeErrorResponseWrapper(item, options));
                             }
                             provisioningErrors = array;
                             continue;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             {
                                 continue;
                             }
-                            storageAccount = StorageAccountProperties.DeserializeStorageAccountProperties(property0.Value);
+                            storageAccount = StorageAccountProperties.DeserializeStorageAccountProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("containerRegistry"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             {
                                 continue;
                             }
-                            containerRegistry = ContainerRegistryProperties.DeserializeContainerRegistryProperties(property0.Value);
+                            containerRegistry = ContainerRegistryProperties.DeserializeContainerRegistryProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("containerService"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             {
                                 continue;
                             }
-                            containerService = AcsClusterProperties.DeserializeAcsClusterProperties(property0.Value);
+                            containerService = AcsClusterProperties.DeserializeAcsClusterProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("appInsights"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             {
                                 continue;
                             }
-                            appInsights = AppInsightsProperties.DeserializeAppInsightsProperties(property0.Value);
+                            appInsights = AppInsightsProperties.DeserializeAppInsightsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalServiceConfiguration"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             {
                                 continue;
                             }
-                            globalServiceConfiguration = GlobalServiceConfiguration.DeserializeGlobalServiceConfiguration(property0.Value);
+                            globalServiceConfiguration = GlobalServiceConfiguration.DeserializeGlobalServiceConfiguration(property0.Value, options);
                             continue;
                         }
                     }

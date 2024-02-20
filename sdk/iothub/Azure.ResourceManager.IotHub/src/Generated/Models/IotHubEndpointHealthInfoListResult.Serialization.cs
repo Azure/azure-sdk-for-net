@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubEndpointHealthInfo> array = new List<IotHubEndpointHealthInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item));
+                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item, options));
                     }
                     value = array;
                     continue;

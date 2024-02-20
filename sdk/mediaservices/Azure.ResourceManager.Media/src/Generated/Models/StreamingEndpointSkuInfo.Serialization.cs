@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value);
+                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value);
+                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

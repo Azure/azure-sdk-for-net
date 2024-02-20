@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoResourceSkuCapabilities> array = new List<KustoResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item));
+                        array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
