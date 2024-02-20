@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HttpServer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/> for deserialization. </summary>
+        internal HttpLinkedService()
+        {
+        }
+
         /// <summary> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The authentication type to be used to connect to the HTTP server. </summary>

@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "GoogleSheets";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/> for deserialization. </summary>
+        internal GoogleSheetsLinkedService()
+        {
+        }
+
         /// <summary> The api token for the GoogleSheets source. </summary>
         public DataFactorySecretBaseDefinition ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

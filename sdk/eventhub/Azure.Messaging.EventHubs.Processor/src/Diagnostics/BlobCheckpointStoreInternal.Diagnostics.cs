@@ -105,9 +105,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
-                                           int replicationSegment,
-                                           long offset,
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset,
                                            Exception exception) =>
             Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, exception.Message, sequenceNumber, replicationSegment, offset);
 
@@ -129,9 +129,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              long sequenceNumber,
-                                              int replicationSegment,
-                                              long offset) =>
+                                              string sequenceNumber,
+                                              string replicationSegment,
+                                              string offset) =>
             Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
@@ -152,9 +152,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           long sequenceNumber,
-                                           int replicationSegment,
-                                           long offset) =>
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset) =>
             Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>

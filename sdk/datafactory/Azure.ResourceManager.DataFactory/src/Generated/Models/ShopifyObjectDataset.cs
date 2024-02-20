@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "ShopifyObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ShopifyObjectDataset"/> for deserialization. </summary>
+        internal ShopifyObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

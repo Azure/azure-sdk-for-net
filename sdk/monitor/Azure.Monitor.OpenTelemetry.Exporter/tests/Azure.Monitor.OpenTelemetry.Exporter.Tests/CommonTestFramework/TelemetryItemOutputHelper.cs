@@ -82,6 +82,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 output.WriteLine($"\tTypeName: {exceptionDetails.TypeName}");
                 output.WriteLine($"\tMessage: {exceptionDetails.Message}");
             }
+
+            output.WriteLine($"Properties: {exceptionData.Properties.Count}");
+            foreach (var prop in exceptionData.Properties)
+            {
+                output.WriteLine($"\t{prop.Key}: {prop.Value}");
+            }
         }
 
         private void WriteMetricsData(MetricsData metricsData)

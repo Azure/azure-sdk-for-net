@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Asana";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/> for deserialization. </summary>
+        internal AsanaLinkedService()
+        {
+        }
+
         /// <summary> The api token for the Asana source. </summary>
         public DataFactorySecretBaseDefinition ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

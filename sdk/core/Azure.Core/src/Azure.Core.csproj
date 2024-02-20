@@ -49,6 +49,7 @@
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
+    <Compile Include="Shared\CallerShouldAuditAttribute.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
