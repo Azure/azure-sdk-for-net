@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevSpaces
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DevSpacesSku.DeserializeDevSpacesSku(property.Value);
+                    sku = DevSpacesSku.DeserializeDevSpacesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

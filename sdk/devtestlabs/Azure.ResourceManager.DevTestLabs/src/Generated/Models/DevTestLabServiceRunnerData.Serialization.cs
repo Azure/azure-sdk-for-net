@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(property.Value);
+                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    acceptedAgeRange = AcceptedAgeRange.DeserializeAcceptedAgeRange(property.Value);
+                    acceptedAgeRange = AcceptedAgeRange.DeserializeAcceptedAgeRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

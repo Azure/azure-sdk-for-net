@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabParametersValueFileInfo> array = new List<DevTestLabParametersValueFileInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabParametersValueFileInfo.DeserializeDevTestLabParametersValueFileInfo(item));
+                                array.Add(DevTestLabParametersValueFileInfo.DeserializeDevTestLabParametersValueFileInfo(item, options));
                             }
                             parametersValueFilesInfo = array;
                             continue;

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property0.Value);
+                            currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orderStageHistory"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             List<EdgeOrderStageDetails> array = new List<EdgeOrderStageDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item));
+                                array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item, options));
                             }
                             orderStageHistory = array;
                             continue;

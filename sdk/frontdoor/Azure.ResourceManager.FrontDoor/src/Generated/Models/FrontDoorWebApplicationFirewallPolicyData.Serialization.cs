@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    sku = FrontDoorSku.DeserializeFrontDoorSku(property.Value);
+                    sku = FrontDoorSku.DeserializeFrontDoorSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            policySettings = FrontDoorWebApplicationFirewallPolicySettings.DeserializeFrontDoorWebApplicationFirewallPolicySettings(property0.Value);
+                            policySettings = FrontDoorWebApplicationFirewallPolicySettings.DeserializeFrontDoorWebApplicationFirewallPolicySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value);
+                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value);
+                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frontendEndpointLinks"u8))

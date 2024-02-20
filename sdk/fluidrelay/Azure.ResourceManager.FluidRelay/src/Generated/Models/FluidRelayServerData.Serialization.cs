@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value);
+                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storagesku"u8))

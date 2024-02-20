@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            partnerAuthorization = PartnerAuthorization.DeserializePartnerAuthorization(property0.Value);
+                            partnerAuthorization = PartnerAuthorization.DeserializePartnerAuthorization(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
