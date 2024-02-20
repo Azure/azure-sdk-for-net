@@ -205,7 +205,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentWord> array = new List<DocumentWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWord.DeserializeDocumentWord(item));
+                        array.Add(DocumentWord.DeserializeDocumentWord(item, options));
                     }
                     words = array;
                     continue;
@@ -233,7 +233,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item));
+                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item, options));
                     }
                     selectionMarks = array;
                     continue;
@@ -247,7 +247,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLine> array = new List<DocumentLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLine.DeserializeDocumentLine(item));
+                        array.Add(DocumentLine.DeserializeDocumentLine(item, options));
                     }
                     lines = array;
                     continue;
@@ -261,7 +261,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentBarcode> array = new List<DocumentBarcode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item, options));
                     }
                     barcodes = array;
                     continue;
@@ -275,7 +275,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFormula> array = new List<DocumentFormula>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                        array.Add(DocumentFormula.DeserializeDocumentFormula(item, options));
                     }
                     formulas = array;
                     continue;

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value);
+                            stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property0.Value, options);
                             continue;
                         }
                     }

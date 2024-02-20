@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
+                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("existingLabDiskId"u8))

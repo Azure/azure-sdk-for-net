@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GraphServices
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = GraphServicesAccountResourceProperties.DeserializeGraphServicesAccountResourceProperties(property.Value);
+                    properties = GraphServicesAccountResourceProperties.DeserializeGraphServicesAccountResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

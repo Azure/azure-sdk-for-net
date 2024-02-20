@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    hive = FlinkHiveCatalogOption.DeserializeFlinkHiveCatalogOption(property.Value);
+                    hive = FlinkHiveCatalogOption.DeserializeFlinkHiveCatalogOption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

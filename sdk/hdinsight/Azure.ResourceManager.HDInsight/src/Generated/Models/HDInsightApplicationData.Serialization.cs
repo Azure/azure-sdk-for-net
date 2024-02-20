@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value);
+                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

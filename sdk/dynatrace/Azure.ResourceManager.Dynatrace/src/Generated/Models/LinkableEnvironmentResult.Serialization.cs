@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value);
+                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

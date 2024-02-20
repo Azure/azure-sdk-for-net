@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridNamespacePermissionBindingData> array = new List<EventGridNamespacePermissionBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(item));
+                        array.Add(EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(item, options));
                     }
                     value = array;
                     continue;

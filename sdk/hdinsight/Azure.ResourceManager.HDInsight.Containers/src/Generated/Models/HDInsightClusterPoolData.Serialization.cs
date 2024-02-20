@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value);
+                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value);
+                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksClusterProfile"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value);
+                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value);
+                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsProfile"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value);
+                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property.Value);
+                    shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
-                    contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property.Value);
+                    contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("addressValidationStatus"u8))

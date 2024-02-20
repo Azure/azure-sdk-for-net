@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(property.Value);
+                    linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

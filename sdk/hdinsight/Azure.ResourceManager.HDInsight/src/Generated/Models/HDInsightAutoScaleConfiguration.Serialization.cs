@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value);
+                    capacity = HDInsightAutoScaleCapacity.DeserializeHDInsightAutoScaleCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value);
+                    recurrence = HDInsightAutoScaleRecurrence.DeserializeHDInsightAutoScaleRecurrence(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

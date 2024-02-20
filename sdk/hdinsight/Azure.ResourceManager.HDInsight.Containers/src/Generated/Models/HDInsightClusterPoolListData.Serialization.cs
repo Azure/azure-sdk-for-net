@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HDInsightClusterPoolData> array = new List<HDInsightClusterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(item));
+                        array.Add(HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(item, options));
                     }
                     value = array;
                     continue;

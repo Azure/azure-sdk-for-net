@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DnsResolver
                             List<InboundEndpointIPConfiguration> array = new List<InboundEndpointIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundEndpointIPConfiguration.DeserializeInboundEndpointIPConfiguration(item));
+                                array.Add(InboundEndpointIPConfiguration.DeserializeInboundEndpointIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                        array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item, options));
                     }
                     value = array;
                     continue;

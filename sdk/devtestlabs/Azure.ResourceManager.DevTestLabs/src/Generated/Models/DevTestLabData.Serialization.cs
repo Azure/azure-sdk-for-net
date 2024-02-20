@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            announcement = DevTestLabAnnouncement.DeserializeDevTestLabAnnouncement(property0.Value);
+                            announcement = DevTestLabAnnouncement.DeserializeDevTestLabAnnouncement(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("support"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            support = DevTestLabSupport.DeserializeDevTestLabSupport(property0.Value);
+                            support = DevTestLabSupport.DeserializeDevTestLabSupport(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmCreationResourceGroup"u8))

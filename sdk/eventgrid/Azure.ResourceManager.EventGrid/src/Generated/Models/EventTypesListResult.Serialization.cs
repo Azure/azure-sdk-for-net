@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventTypeUnderTopic> array = new List<EventTypeUnderTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item));
+                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item, options));
                     }
                     value = array;
                     continue;

@@ -91,7 +91,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherPatientResult> array = new List<TrialMatcherPatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item));
+                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item, options));
                     }
                     patients = array;
                     continue;
