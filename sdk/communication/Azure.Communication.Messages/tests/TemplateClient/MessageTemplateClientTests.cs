@@ -44,11 +44,13 @@ namespace Azure.Communication.Messages.Tests
         {
             //arrange
             MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
+            var emptyChannelId = Guid.Empty;
 
+            // Act & Assert
             try
             {
                 //act
-                messageTemplateClient.GetTemplatesAsync("invalidChannelRegistrationId");
+                messageTemplateClient.GetTemplatesAsync(emptyChannelId);
             }
             catch (RequestFailedException requestFailedException)
             {
@@ -60,23 +62,11 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public void GetTemplates_NullOrEmptyChannelId_ShouldThrowArgumentNullException()
-        {
-            // Arrange
-            MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
-
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
-            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(string.Empty));
-            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(""));
-        }
-
-        [Test]
         public async Task GetTemplates_ValidParams_ShouldSucceed()
         {
             //arrange
             MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient(200, GetTemplatesApiResponsePayload);
-            var channelId = Guid.NewGuid().ToString();
+            var channelId = Guid.NewGuid();
 
             //act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelId);
@@ -98,27 +88,7 @@ namespace Azure.Communication.Messages.Tests
             MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
 
             //act & assert
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
-        }
-
-        [Test]
-        public Task GetTemplates_InvalidChannelRegistrationId_ThrowsBadRequestException()
-        {
-            //arrange
-            MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient(400);
-
-            try
-            {
-                //act
-                messageTemplateClient.GetTemplatesAsync("invalidChannelRegistrationId");
-            }
-            catch (RequestFailedException requestFailedException)
-            {
-                //assert
-                Assert.AreEqual(400, requestFailedException.Status);
-            }
-
-            return Task.CompletedTask;
+            Assert.Throws<FormatException>(() => messageTemplateClient.GetTemplatesAsync(new Guid(string.Empty)));
         }
 
         private static MessageTemplateClient CreateMockMessageTemplateClient(int responseCode = 200, string responseContent = null)

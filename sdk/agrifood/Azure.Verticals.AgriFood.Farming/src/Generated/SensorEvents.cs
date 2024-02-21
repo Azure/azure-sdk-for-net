@@ -78,8 +78,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorEventsAsync(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
         {
-            Argument.AssertNotNull(sensorId, nameof(sensorId));
-            Argument.AssertNotNull(sensorPartnerId, nameof(sensorPartnerId));
+            if (sensorId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorId));
+            }
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorEvents.GetSensorEvents");
             scope.Start();
@@ -124,8 +130,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual Response GetSensorEvents(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
         {
-            Argument.AssertNotNull(sensorId, nameof(sensorId));
-            Argument.AssertNotNull(sensorPartnerId, nameof(sensorPartnerId));
+            if (sensorId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorId));
+            }
+            if (sensorPartnerId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorPartnerId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorEvents.GetSensorEvents");
             scope.Start();

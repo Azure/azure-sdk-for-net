@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="capabilities"/> is null. </exception>
         public GenerateCapabilityImageContent(IEnumerable<SphereCapabilityType> capabilities)
         {
-            Argument.AssertNotNull(capabilities, nameof(capabilities));
+            if (capabilities == null)
+            {
+                throw new ArgumentNullException(nameof(capabilities));
+            }
 
             Capabilities = capabilities.ToList();
         }

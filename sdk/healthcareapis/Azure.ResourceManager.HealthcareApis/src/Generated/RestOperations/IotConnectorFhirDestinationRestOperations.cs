@@ -71,11 +71,46 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HealthcareApisIotFhirDestinationData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,11 +141,46 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HealthcareApisIotFhirDestinationData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             _pipeline.Send(message, cancellationToken);
@@ -170,12 +240,50 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -202,12 +310,50 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -257,11 +403,46 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,11 +468,46 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (iotConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(iotConnectorName));
+            }
+            if (iotConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
+            }
+            if (fhirDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(fhirDestinationName));
+            }
+            if (fhirDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirDestinationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             _pipeline.Send(message, cancellationToken);

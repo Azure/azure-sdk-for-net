@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitorWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitorWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> Get(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MonitorWorkspaceResource>> GetIfExistsAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         public virtual NullableResponse<MonitorWorkspaceResource> GetIfExists(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            if (azureMonitorWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
+            }
+            if (azureMonitorWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
+            }
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.GetIfExists");
             scope.Start();

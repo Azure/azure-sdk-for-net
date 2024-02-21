@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> GetAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual Response<DataProtectionBackupInstanceResource> Get(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataProtectionBackupInstanceResource>> GetIfExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual NullableResponse<DataProtectionBackupInstanceResource> GetIfExists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
+            if (backupInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceName));
+            }
+            if (backupInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
+            }
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();

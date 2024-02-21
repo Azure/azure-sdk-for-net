@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -27,11 +26,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(object url, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object aadResourceId)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(aadResourceId, nameof(aadResourceId));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (servicePrincipalId == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalId));
+            }
+            if (servicePrincipalKey == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalKey));
+            }
+            if (tenant == null)
+            {
+                throw new ArgumentNullException(nameof(tenant));
+            }
+            if (aadResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(aadResourceId));
+            }
 
             Url = url;
             ServicePrincipalId = servicePrincipalId;

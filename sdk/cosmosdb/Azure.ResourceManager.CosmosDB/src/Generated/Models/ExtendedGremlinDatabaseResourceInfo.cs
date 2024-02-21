@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public ExtendedGremlinDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedGremlinDatabaseResourceInfo"/>. </summary>

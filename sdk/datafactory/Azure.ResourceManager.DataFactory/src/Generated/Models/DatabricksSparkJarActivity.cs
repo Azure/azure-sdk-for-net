@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
         public DatabricksSparkJarActivity(string name, DataFactoryElement<string> mainClassName) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(mainClassName, nameof(mainClassName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (mainClassName == null)
+            {
+                throw new ArgumentNullException(nameof(mainClassName));
+            }
 
             MainClassName = mainClassName;
             Parameters = new ChangeTrackingList<BinaryData>();

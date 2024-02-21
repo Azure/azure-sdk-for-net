@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
         public ExportDeliveryInfo(ExportDeliveryDestination destination)
         {
-            Argument.AssertNotNull(destination, nameof(destination));
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
 
             Destination = destination;
         }

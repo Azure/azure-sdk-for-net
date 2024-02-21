@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="qualifier"/> or <paramref name="value"/> is null. </exception>
         public IntegrationAccountBusinessIdentity(string qualifier, string value)
         {
-            Argument.AssertNotNull(qualifier, nameof(qualifier));
-            Argument.AssertNotNull(value, nameof(value));
+            if (qualifier == null)
+            {
+                throw new ArgumentNullException(nameof(qualifier));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Qualifier = qualifier;
             Value = value;

@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual async Task<Response<HealthMonitorStateChangeResource>> GetAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.Get");
             scope.Start();
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual Response<HealthMonitorStateChangeResource> Get(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.Get");
             scope.Start();
@@ -242,7 +256,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.Exists");
             scope.Start();
@@ -286,7 +307,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual Response<bool> Exists(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.Exists");
             scope.Start();
@@ -330,7 +358,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthMonitorStateChangeResource>> GetIfExistsAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
             scope.Start();
@@ -376,7 +411,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
         public virtual NullableResponse<HealthMonitorStateChangeResource> GetIfExists(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+            if (timestampUnix == null)
+            {
+                throw new ArgumentNullException(nameof(timestampUnix));
+            }
+            if (timestampUnix.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(timestampUnix));
+            }
 
             using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
             scope.Start();

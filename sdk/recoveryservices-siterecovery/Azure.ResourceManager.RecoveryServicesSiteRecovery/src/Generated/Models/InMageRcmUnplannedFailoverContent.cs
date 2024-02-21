@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public InMageRcmUnplannedFailoverContent(string performShutdown)
         {
-            Argument.AssertNotNull(performShutdown, nameof(performShutdown));
+            if (performShutdown == null)
+            {
+                throw new ArgumentNullException(nameof(performShutdown));
+            }
 
             PerformShutdown = performShutdown;
             InstanceType = "InMageRcm";

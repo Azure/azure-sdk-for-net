@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -53,8 +52,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="contentFieldNames"/> or <paramref name="vectorFieldNames"/> is null. </exception>
         public AzureCosmosDBFieldMappingOptions(IEnumerable<string> contentFieldNames, IEnumerable<string> vectorFieldNames)
         {
-            Argument.AssertNotNull(contentFieldNames, nameof(contentFieldNames));
-            Argument.AssertNotNull(vectorFieldNames, nameof(vectorFieldNames));
+            if (contentFieldNames == null)
+            {
+                throw new ArgumentNullException(nameof(contentFieldNames));
+            }
+            if (vectorFieldNames == null)
+            {
+                throw new ArgumentNullException(nameof(vectorFieldNames));
+            }
 
             ContentFieldNames = contentFieldNames.ToList();
             VectorFieldNames = vectorFieldNames.ToList();

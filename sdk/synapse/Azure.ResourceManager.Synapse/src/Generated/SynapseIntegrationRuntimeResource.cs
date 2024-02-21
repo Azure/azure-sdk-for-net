@@ -316,7 +316,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SynapseIntegrationRuntimeResource>> UpdateAsync(SynapseIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.Update");
             scope.Start();
@@ -358,7 +361,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SynapseIntegrationRuntimeResource> Update(SynapseIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.Update");
             scope.Start();
@@ -867,7 +873,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response<SynapseIntegrationRuntimeNodeIPAddress>> GetIntegrationRuntimeNodeIPAddressAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodeIPAddressClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeNodeIPAddress");
             scope.Start();
@@ -906,7 +919,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response<SynapseIntegrationRuntimeNodeIPAddress> GetIntegrationRuntimeNodeIPAddress(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodeIPAddressClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeNodeIPAddress");
             scope.Start();
@@ -1073,7 +1093,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response<SynapseSelfHostedIntegrationRuntimeNode>> GetIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeNode");
             scope.Start();
@@ -1112,7 +1139,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response<SynapseSelfHostedIntegrationRuntimeNode> GetIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeNode");
             scope.Start();
@@ -1152,8 +1186,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SynapseSelfHostedIntegrationRuntimeNode>> UpdateIntegrationRuntimeNodeAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
@@ -1193,8 +1237,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<SynapseSelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNode(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
@@ -1233,7 +1287,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual async Task<Response> DeleteIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
@@ -1272,7 +1333,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public virtual Response DeleteIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            if (nodeName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeName));
+            }
+            if (nodeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
+            }
 
             using var scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
@@ -1446,7 +1514,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SynapseIntegrationRuntimeAuthKeys>> RegenerateIntegrationRuntimeAuthKeyAsync(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _integrationRuntimeAuthKeysClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.RegenerateIntegrationRuntimeAuthKey");
             scope.Start();
@@ -1484,7 +1555,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SynapseIntegrationRuntimeAuthKeys> RegenerateIntegrationRuntimeAuthKey(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _integrationRuntimeAuthKeysClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.RegenerateIntegrationRuntimeAuthKey");
             scope.Start();

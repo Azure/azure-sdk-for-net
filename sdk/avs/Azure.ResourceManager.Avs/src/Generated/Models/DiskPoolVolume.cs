@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> or <paramref name="lunName"/> is null. </exception>
         public DiskPoolVolume(ResourceIdentifier targetId, string lunName)
         {
-            Argument.AssertNotNull(targetId, nameof(targetId));
-            Argument.AssertNotNull(lunName, nameof(lunName));
+            if (targetId == null)
+            {
+                throw new ArgumentNullException(nameof(targetId));
+            }
+            if (lunName == null)
+            {
+                throw new ArgumentNullException(nameof(lunName));
+            }
 
             TargetId = targetId;
             LunName = lunName;

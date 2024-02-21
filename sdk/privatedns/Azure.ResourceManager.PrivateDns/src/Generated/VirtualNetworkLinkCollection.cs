@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualNetworkLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -135,8 +145,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualNetworkLinkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -182,7 +202,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkLinkResource>> GetAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<VirtualNetworkLinkResource> Get(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualNetworkLinkResource>> GetIfExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual NullableResponse<VirtualNetworkLinkResource> GetIfExists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            if (virtualNetworkLinkName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
+            }
+            if (virtualNetworkLinkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
+            }
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
             scope.Start();

@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DownloadResponse>> DownloadAsync(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DownloadResponse> Download(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();

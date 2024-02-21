@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -25,12 +26,16 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection = serviceCollection;
         }
 
-        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TClient> clientFactory)
         {
             return ((IAzureClientFactoryBuilderWithCredential)this).RegisterClientFactory<TClient, TOptions>((options, _) => clientFactory(options));
         }
 
-        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithConfiguration<IConfiguration>.RegisterClientFactory<TClient, TOptions>(IConfiguration configuration)
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithConfiguration<IConfiguration>.RegisterClientFactory<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            IConfiguration configuration)
         {
             var credentialsFromConfig = ClientFactory.CreateCredential(configuration);
             var clientBuilder =((IAzureClientFactoryBuilderWithCredential)this).RegisterClientFactory<TClient, TOptions>(
@@ -73,6 +78,8 @@ namespace Microsoft.Extensions.Azure
         /// </summary>
         /// <param name="configuration">The configuration instance.</param>
         /// <returns>This instance.</returns>
+        [RequiresUnreferencedCode("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
+        [RequiresDynamicCode("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public AzureClientFactoryBuilder ConfigureDefaults(IConfiguration configuration)
         {
             ConfigureDefaults(configuration.Bind);
@@ -87,7 +94,8 @@ namespace Microsoft.Extensions.Azure
             return this;
         }
 
-        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TokenCredential, TClient> clientFactory, bool requiresCredential)
         {
             return RegisterClientFactory<TClient, TOptions>((options, credential, _) => clientFactory(options, credential), requiresCredential);
         }
@@ -119,7 +127,9 @@ namespace Microsoft.Extensions.Azure
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The type of the client options.</typeparam>
         /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
-        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TOptions, TClient> factory) where TOptions : class
+        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TClient> factory)
+            where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((options, _, _) => factory(options), false);
         }
@@ -130,7 +140,9 @@ namespace Microsoft.Extensions.Azure
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The type of the client options.</typeparam>
         /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
-        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> factory) where TOptions : class
+        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TokenCredential, TClient> factory)
+            where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((options, credential, _) => factory(options, credential), true);
         }
@@ -142,7 +154,9 @@ namespace Microsoft.Extensions.Azure
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The type of the client options.</typeparam>
         /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
-        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TOptions, IServiceProvider, TClient> factory) where TOptions : class
+        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, IServiceProvider, TClient> factory)
+            where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((options, _, provider) => factory(options, provider), true);
         }
@@ -154,12 +168,17 @@ namespace Microsoft.Extensions.Azure
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <typeparam name="TOptions">The type of the client options.</typeparam>
         /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
-        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TOptions, TokenCredential, IServiceProvider, TClient> factory) where TOptions : class
+        public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TokenCredential, IServiceProvider, TClient> factory)
+            where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((options, credential, provider) => factory(options, credential, provider), true);
         }
 
-        private IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, IServiceProvider, TClient> clientFactory, bool requiresCredential) where TOptions : class
+        private IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>(
+            Func<TOptions, TokenCredential, IServiceProvider, TClient> clientFactory,
+            bool requiresCredential)
+            where TOptions : class
         {
             var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, requiresCredential, (provider, options, credential) => clientFactory((TOptions) options, credential, provider));
             _serviceCollection.AddSingleton(clientRegistration);

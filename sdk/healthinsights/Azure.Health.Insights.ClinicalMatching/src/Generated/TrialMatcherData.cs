@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
@@ -52,7 +51,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
         public TrialMatcherData(IEnumerable<PatientRecord> patients)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
+            if (patients == null)
+            {
+                throw new ArgumentNullException(nameof(patients));
+            }
 
             Patients = patients.ToList();
         }

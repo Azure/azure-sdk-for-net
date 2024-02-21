@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -68,12 +67,30 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePrefix"/>, <paramref name="sourceTerm"/>, <paramref name="sourceSuffix"/>, <paramref name="targetPrefix"/>, <paramref name="targetTerm"/> or <paramref name="targetSuffix"/> is null. </exception>
         internal DictionaryExample(string sourcePrefix, string sourceTerm, string sourceSuffix, string targetPrefix, string targetTerm, string targetSuffix)
         {
-            Argument.AssertNotNull(sourcePrefix, nameof(sourcePrefix));
-            Argument.AssertNotNull(sourceTerm, nameof(sourceTerm));
-            Argument.AssertNotNull(sourceSuffix, nameof(sourceSuffix));
-            Argument.AssertNotNull(targetPrefix, nameof(targetPrefix));
-            Argument.AssertNotNull(targetTerm, nameof(targetTerm));
-            Argument.AssertNotNull(targetSuffix, nameof(targetSuffix));
+            if (sourcePrefix == null)
+            {
+                throw new ArgumentNullException(nameof(sourcePrefix));
+            }
+            if (sourceTerm == null)
+            {
+                throw new ArgumentNullException(nameof(sourceTerm));
+            }
+            if (sourceSuffix == null)
+            {
+                throw new ArgumentNullException(nameof(sourceSuffix));
+            }
+            if (targetPrefix == null)
+            {
+                throw new ArgumentNullException(nameof(targetPrefix));
+            }
+            if (targetTerm == null)
+            {
+                throw new ArgumentNullException(nameof(targetTerm));
+            }
+            if (targetSuffix == null)
+            {
+                throw new ArgumentNullException(nameof(targetSuffix));
+            }
 
             SourcePrefix = sourcePrefix;
             SourceTerm = sourceTerm;

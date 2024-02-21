@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutoProvisioningSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingName, AutoProvisioningSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutoProvisioningSettingResource> CreateOrUpdate(WaitUntil waitUntil, string settingName, AutoProvisioningSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual async Task<Response<AutoProvisioningSettingResource>> GetAsync(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual Response<AutoProvisioningSettingResource> Get(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual Response<bool> Exists(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutoProvisioningSettingResource>> GetIfExistsAsync(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
         public virtual NullableResponse<AutoProvisioningSettingResource> GetIfExists(string settingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            if (settingName == null)
+            {
+                throw new ArgumentNullException(nameof(settingName));
+            }
+            if (settingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(settingName));
+            }
 
             using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
             scope.Start();

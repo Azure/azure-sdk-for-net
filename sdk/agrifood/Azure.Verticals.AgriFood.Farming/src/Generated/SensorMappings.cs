@@ -71,8 +71,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.CreateOrUpdate");
             scope.Start();
@@ -108,8 +118,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.CreateOrUpdate");
             scope.Start();
@@ -144,7 +164,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappingAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorMappingAsync(string sensorMappingId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.GetSensorMapping");
             scope.Start();
@@ -179,7 +206,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMapping(string,RequestContext)']/*" />
         public virtual Response GetSensorMapping(string sensorMappingId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.GetSensorMapping");
             scope.Start();
@@ -214,7 +248,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.Delete");
             scope.Start();
@@ -249,7 +290,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.Delete");
             scope.Start();

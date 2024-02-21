@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> Returns a <see cref="SpringBootSiteResource"/> object. </returns>
         public static SpringBootSiteResource GetSpringBootSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSpringAppDiscoveryArmClient(client).GetSpringBootSiteResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> Returns a <see cref="SpringBootServerResource"/> object. </returns>
         public static SpringBootServerResource GetSpringBootServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSpringAppDiscoveryArmClient(client).GetSpringBootServerResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> Returns a <see cref="SpringBootAppResource"/> object. </returns>
         public static SpringBootAppResource GetSpringBootAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSpringAppDiscoveryArmClient(client).GetSpringBootAppResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> Returns a <see cref="SpringBootSiteSummaryResource"/> object. </returns>
         public static SpringBootSiteSummaryResource GetSpringBootSiteSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSpringAppDiscoveryArmClient(client).GetSpringBootSiteSummaryResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> Returns a <see cref="SpringBootSiteErrorSummaryResource"/> object. </returns>
         public static SpringBootSiteErrorSummaryResource GetSpringBootSiteErrorSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSpringAppDiscoveryArmClient(client).GetSpringBootSiteErrorSummaryResource(id);
         }
@@ -141,7 +156,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> An object representing collection of SpringBootSiteResources and their operations over a SpringBootSiteResource. </returns>
         public static SpringBootSiteCollection GetSpringBootSites(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableSpringAppDiscoveryResourceGroupResource(resourceGroupResource).GetSpringBootSites();
         }
@@ -179,7 +197,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         [ForwardsClientCalls]
         public static async Task<Response<SpringBootSiteResource>> GetSpringBootSiteAsync(this ResourceGroupResource resourceGroupResource, string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableSpringAppDiscoveryResourceGroupResource(resourceGroupResource).GetSpringBootSiteAsync(springbootsitesName, cancellationToken).ConfigureAwait(false);
         }
@@ -217,7 +238,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         [ForwardsClientCalls]
         public static Response<SpringBootSiteResource> GetSpringBootSite(this ResourceGroupResource resourceGroupResource, string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableSpringAppDiscoveryResourceGroupResource(resourceGroupResource).GetSpringBootSite(springbootsitesName, cancellationToken);
         }
@@ -253,7 +277,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> An async collection of <see cref="SpringBootSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SpringBootSiteResource> GetSpringBootSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootSitesAsync(cancellationToken);
         }
@@ -289,7 +316,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> A collection of <see cref="SpringBootSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SpringBootSiteResource> GetSpringBootSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootSites(cancellationToken);
         }
@@ -327,7 +357,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> An async collection of <see cref="SpringBootServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SpringBootServerResource> GetSpringBootServersAsync(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootServersAsync(siteName, cancellationToken);
         }
@@ -365,7 +398,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> A collection of <see cref="SpringBootServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SpringBootServerResource> GetSpringBootServers(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootServers(siteName, cancellationToken);
         }
@@ -403,7 +439,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> An async collection of <see cref="SpringBootAppResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SpringBootAppResource> GetSpringBootAppsAsync(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootAppsAsync(siteName, cancellationToken);
         }
@@ -441,7 +480,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <returns> A collection of <see cref="SpringBootAppResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SpringBootAppResource> GetSpringBootApps(this SubscriptionResource subscriptionResource, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSpringAppDiscoverySubscriptionResource(subscriptionResource).GetSpringBootApps(siteName, cancellationToken);
         }

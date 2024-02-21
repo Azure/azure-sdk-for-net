@@ -55,8 +55,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public MessageTemplateClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -66,34 +72,26 @@ namespace Azure.Communication.Messages
             _apiVersion = options.Version;
         }
 
-        /// <summary> List all templates for given ACS channel. </summary>
+        /// <summary> List all templates for given Azure Communication Services channel. </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplatesAsync(string,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(string channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplatesAsync(Guid,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelId, nameof(channelId));
-
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MessageTemplateItem.DeserializeMessageTemplateItem(e), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
         }
 
-        /// <summary> List all templates for given ACS channel. </summary>
+        /// <summary> List all templates for given Azure Communication Services channel. </summary>
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplates(string,int?,CancellationToken)']/*" />
-        public virtual Pageable<MessageTemplateItem> GetTemplates(string channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplates(Guid,int?,CancellationToken)']/*" />
+        public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(channelId, nameof(channelId));
-
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
@@ -101,7 +99,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary>
-        /// [Protocol Method] List all templates for given ACS channel
+        /// [Protocol Method] List all templates for given Azure Communication Services channel
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -110,7 +108,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTemplatesAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTemplatesAsync(Guid,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -118,22 +116,18 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplatesAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTemplatesAsync(string channelId, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplatesAsync(Guid,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTemplatesAsync(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(channelId, nameof(channelId));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] List all templates for given ACS channel
+        /// [Protocol Method] List all templates for given Azure Communication Services channel
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -142,7 +136,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTemplates(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTemplates(Guid,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -150,21 +144,17 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="channelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplates(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTemplates(string channelId, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplates(Guid,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTemplates(Guid channelId, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(channelId, nameof(channelId));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
         }
 
-        internal HttpMessage CreateGetTemplatesRequest(string channelId, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTemplatesRequest(Guid channelId, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -184,7 +174,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetTemplatesNextPageRequest(string nextLink, string channelId, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTemplatesNextPageRequest(string nextLink, Guid channelId, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

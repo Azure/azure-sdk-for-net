@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual async Task<Response<ManagedDatabaseColumnResource>> GetAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual Response<ManagedDatabaseColumnResource> Get(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual Response<bool> Exists(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedDatabaseColumnResource>> GetIfExistsAsync(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
         public virtual NullableResponse<ManagedDatabaseColumnResource> GetIfExists(string columnName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
+            if (columnName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(columnName));
+            }
 
             using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseColumnCollection.GetIfExists");
             scope.Start();

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="contentFieldNames"/> is null. </exception>
         public PineconeFieldMappingOptions(IEnumerable<string> contentFieldNames)
         {
-            Argument.AssertNotNull(contentFieldNames, nameof(contentFieldNames));
+            if (contentFieldNames == null)
+            {
+                throw new ArgumentNullException(nameof(contentFieldNames));
+            }
 
             ContentFieldNames = contentFieldNames.ToList();
         }

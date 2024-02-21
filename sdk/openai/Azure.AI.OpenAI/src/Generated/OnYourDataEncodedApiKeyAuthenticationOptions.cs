@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="encodedApiKey"/> is null. </exception>
         public OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey)
         {
-            Argument.AssertNotNull(encodedApiKey, nameof(encodedApiKey));
+            if (encodedApiKey == null)
+            {
+                throw new ArgumentNullException(nameof(encodedApiKey));
+            }
 
             Type = OnYourDataAuthenticationType.EncodedApiKey;
             EncodedApiKey = encodedApiKey;

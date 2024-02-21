@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual async Task<Response<DscNodeConfigurationResource>> GetAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual Response<DscNodeConfigurationResource> Get(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.Get");
             scope.Start();
@@ -337,7 +371,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.Exists");
             scope.Start();
@@ -380,7 +421,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.Exists");
             scope.Start();
@@ -423,7 +471,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DscNodeConfigurationResource>> GetIfExistsAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.GetIfExists");
             scope.Start();
@@ -468,7 +523,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
         public virtual NullableResponse<DscNodeConfigurationResource> GetIfExists(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+            if (nodeConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(nodeConfigurationName));
+            }
+            if (nodeConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeConfigurationName));
+            }
 
             using var scope = _dscNodeConfigurationClientDiagnostics.CreateScope("DscNodeConfigurationCollection.GetIfExists");
             scope.Start();

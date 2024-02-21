@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryRunResource>> GetAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<ContainerRegistryRunResource> Get(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<bool> Exists(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryRunResource>> GetIfExistsAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual NullableResponse<ContainerRegistryRunResource> GetIfExists(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
             scope.Start();

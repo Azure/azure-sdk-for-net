@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -23,8 +22,14 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="columns"/> is null. </exception>
         internal LogsTable(string name, IEnumerable<LogsTableColumn> columns, JsonElement internalRows)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(columns, nameof(columns));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (columns == null)
+            {
+                throw new ArgumentNullException(nameof(columns));
+            }
 
             Name = name;
             Columns = columns.ToList();

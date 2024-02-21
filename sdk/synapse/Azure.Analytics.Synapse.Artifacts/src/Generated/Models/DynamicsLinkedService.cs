@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
         public DynamicsLinkedService(object deploymentType, object authenticationType)
         {
-            Argument.AssertNotNull(deploymentType, nameof(deploymentType));
-            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
+            if (deploymentType == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentType));
+            }
+            if (authenticationType == null)
+            {
+                throw new ArgumentNullException(nameof(authenticationType));
+            }
 
             DeploymentType = deploymentType;
             AuthenticationType = authenticationType;

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GlobalReachConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string globalReachConnectionName, GlobalReachConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GlobalReachConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string globalReachConnectionName, GlobalReachConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual async Task<Response<GlobalReachConnectionResource>> GetAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual Response<GlobalReachConnectionResource> Get(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<GlobalReachConnectionResource>> GetIfExistsAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
         public virtual NullableResponse<GlobalReachConnectionResource> GetIfExists(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(globalReachConnectionName, nameof(globalReachConnectionName));
+            if (globalReachConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(globalReachConnectionName));
+            }
+            if (globalReachConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(globalReachConnectionName));
+            }
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionCollection.GetIfExists");
             scope.Start();

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseAttachedDatabaseConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachedDatabaseConfigurationName, SynapseAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseAttachedDatabaseConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string attachedDatabaseConfigurationName, SynapseAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<Response<SynapseAttachedDatabaseConfigurationResource>> GetAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual Response<SynapseAttachedDatabaseConfigurationResource> Get(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseAttachedDatabaseConfigurationResource>> GetIfExistsAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual NullableResponse<SynapseAttachedDatabaseConfigurationResource> GetIfExists(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            if (attachedDatabaseConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
+            }
+            if (attachedDatabaseConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
+            }
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationCollection.GetIfExists");
             scope.Start();

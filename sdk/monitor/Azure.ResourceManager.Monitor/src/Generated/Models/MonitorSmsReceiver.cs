@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="countryCode"/> or <paramref name="phoneNumber"/> is null. </exception>
         public MonitorSmsReceiver(string name, string countryCode, string phoneNumber)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(countryCode, nameof(countryCode));
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
 
             Name = name;
             CountryCode = countryCode;

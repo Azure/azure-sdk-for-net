@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
         public GetUserTablesSqlTaskInput(SqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
         {
-            Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
-            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
+            if (connectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(connectionInfo));
+            }
+            if (selectedDatabases == null)
+            {
+                throw new ArgumentNullException(nameof(selectedDatabases));
+            }
 
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases.ToList();

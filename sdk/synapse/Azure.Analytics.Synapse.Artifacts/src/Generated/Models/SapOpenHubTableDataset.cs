@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
         public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, object openHubDestinationName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(openHubDestinationName, nameof(openHubDestinationName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (openHubDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(openHubDestinationName));
+            }
 
             OpenHubDestinationName = openHubDestinationName;
             Type = "SapOpenHubTable";

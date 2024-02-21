@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -23,10 +22,22 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="entities"/> or <paramref name="relations"/> is null. </exception>
         public HealthcareResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations) : base(id, warnings, entities, relations)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(entities, nameof(entities));
-            Argument.AssertNotNull(relations, nameof(relations));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (warnings == null)
+            {
+                throw new ArgumentNullException(nameof(warnings));
+            }
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            if (relations == null)
+            {
+                throw new ArgumentNullException(nameof(relations));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareResultDocumentsItem"/>. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public ContainerRegistryImportSourceCredentials(string password)
         {
-            Argument.AssertNotNull(password, nameof(password));
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Password = password;
         }

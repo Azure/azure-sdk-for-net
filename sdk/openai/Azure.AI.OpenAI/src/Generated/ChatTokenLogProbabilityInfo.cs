@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -54,7 +53,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal ChatTokenLogProbabilityInfo(string token, float logProbability, IEnumerable<int> utf8ByteValues)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
 
             Token = token;
             LogProbability = logProbability;

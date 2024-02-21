@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
         public SsmlSourceInternal(string ssmlText)
         {
-            Argument.AssertNotNull(ssmlText, nameof(ssmlText));
+            if (ssmlText == null)
+            {
+                throw new ArgumentNullException(nameof(ssmlText));
+            }
 
             SsmlText = ssmlText;
         }

@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public NetworkCloudVolumeData(AzureLocation location, ExtendedLocation extendedLocation, long sizeInMiB) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
 
             ExtendedLocation = extendedLocation;
             AttachedTo = new ChangeTrackingList<string>();

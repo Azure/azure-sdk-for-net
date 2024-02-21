@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         public OnYourDataAccessTokenAuthenticationOptions(string accessToken)
         {
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
 
             Type = OnYourDataAuthenticationType.AccessToken;
             AccessToken = accessToken;

@@ -558,7 +558,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeAnalyticsAccountResource>> UpdateAsync(WaitUntil waitUntil, DataLakeAnalyticsAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeAnalyticsAccountAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsAccountResource.Update");
             scope.Start();
@@ -604,7 +607,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DataLakeAnalyticsAccountResource> Update(WaitUntil waitUntil, DataLakeAnalyticsAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeAnalyticsAccountAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsAccountResource.Update");
             scope.Start();

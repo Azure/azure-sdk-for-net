@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public EventGridDomainRegenerateKeyContent(string keyName)
         {
-            Argument.AssertNotNull(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
 
             KeyName = keyName;
         }
