@@ -6,7 +6,6 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
@@ -46,8 +45,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     ConfigurationManager.TOKEN_V2_VERIFY :
                     ConfigurationManager.TOKEN_V1_VERIFY].ToString();
 
-            if (!configurationManager.TryGetService(
-                serviceId: tokenAuthorizationPartyId,
+            if (!configurationManager.TryGetServiceByAppId(
+                appId: tokenAuthorizationPartyId,
                 serviceInfo: out ServiceInfo serviceInfo))
             {
                 return (false, null);
@@ -66,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                             using (HttpClient httpClient = new HttpClient())
                             {
-                                string openidConfiguration = httpClient.GetStringAsync(new Uri(serviceInfo.OidcMetadataUrl, UriKind.Absolute)).Result;
+                                string openidConfiguration = httpClient.GetStringAsync(new Uri(serviceInfo.Authority, UriKind.Absolute)).Result;
 
                                 AuthenticationEventJsonElement openidConfigurationJson = new AuthenticationEventJsonElement(openidConfiguration);
                                 string jwksUri = openidConfigurationJson.GetPropertyValue("jwks_uri");
@@ -91,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     validationParameters: new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? configurationManager.TokenIssuerV2 : configurationManager.TokenIssuerV1,
+                        ValidIssuer = serviceInfo.GetOpenIDConfigurationUrlString(tokenSchemaVersion),
                         ValidAudiences = authenticationAppIds,
                         IssuerSigningKeys = _cacheKeys
                     },

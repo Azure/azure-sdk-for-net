@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         }
 
         /// <summary>Gets or sets the tenant identifier.</summary>
-        /// <value>The tenant identifier.</value>
+        /// <value>The tenant identifier only needed for workforce or AAD Tenant</value>
         public string TenantId { get; set; }
 
         /// <summary>Gets or sets the audience application identifier.</summary>
@@ -28,19 +28,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public string AudienceAppId { get; set; }
 
         /// <summary>
-        /// Well known OpenId configuration endpoint.
+        /// The authority is a URL that indicates the directory where the token came from
         /// </summary>
-        public string OidcMetadataUrl { get; set; }
-
-        /// <summary>
-        /// Token Issuer for v1 versions of tokens.
-        /// </summary>
-        public string TokenIssuerV1 { get; set; }
-
-        /// <summary>
-        /// Token Issuer for v2 versions of tokens.
-        /// </summary>
-        public string TokenIssuerV2 { get; set; }
+        public string AuthorityUrl { get; set; }
 
         internal bool IsParameterString { get; set; } = true;
     }
