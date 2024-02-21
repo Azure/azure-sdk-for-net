@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxCertificateResource"/> object. </returns>
         public static NginxCertificateResource GetNginxCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNginxArmClient(client).GetNginxCertificateResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxConfigurationResource"/> object. </returns>
         public static NginxConfigurationResource GetNginxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNginxArmClient(client).GetNginxConfigurationResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxDeploymentResource"/> object. </returns>
         public static NginxDeploymentResource GetNginxDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNginxArmClient(client).GetNginxDeploymentResource(id);
         }
@@ -112,10 +103,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
         public static NginxDeploymentCollection GetNginxDeployments(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeployments();
         }
@@ -153,10 +141,7 @@ namespace Azure.ResourceManager.Nginx
         [ForwardsClientCalls]
         public static async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
@@ -194,10 +179,7 @@ namespace Azure.ResourceManager.Nginx
         [ForwardsClientCalls]
         public static Response<NginxDeploymentResource> GetNginxDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeployment(deploymentName, cancellationToken);
         }
@@ -233,10 +215,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An async collection of <see cref="NginxDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNginxSubscriptionResource(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
         }
@@ -272,10 +251,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> A collection of <see cref="NginxDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NginxDeploymentResource> GetNginxDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNginxSubscriptionResource(subscriptionResource).GetNginxDeployments(cancellationToken);
         }

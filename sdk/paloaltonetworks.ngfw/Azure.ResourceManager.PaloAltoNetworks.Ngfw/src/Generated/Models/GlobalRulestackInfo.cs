@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureId"/> is null. </exception>
         internal GlobalRulestackInfo(string azureId)
         {
-            if (azureId == null)
-            {
-                throw new ArgumentNullException(nameof(azureId));
-            }
+            Argument.AssertNotNull(azureId, nameof(azureId));
 
             AzureId = azureId;
         }

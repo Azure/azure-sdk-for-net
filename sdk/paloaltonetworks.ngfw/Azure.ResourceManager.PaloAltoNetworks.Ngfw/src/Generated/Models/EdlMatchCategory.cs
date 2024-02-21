@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="urlCustom"/> or <paramref name="feeds"/> is null. </exception>
         public EdlMatchCategory(IEnumerable<string> urlCustom, IEnumerable<string> feeds)
         {
-            if (urlCustom == null)
-            {
-                throw new ArgumentNullException(nameof(urlCustom));
-            }
-            if (feeds == null)
-            {
-                throw new ArgumentNullException(nameof(feeds));
-            }
+            Argument.AssertNotNull(urlCustom, nameof(urlCustom));
+            Argument.AssertNotNull(feeds, nameof(feeds));
 
             UrlCustom = urlCustom.ToList();
             Feeds = feeds.ToList();

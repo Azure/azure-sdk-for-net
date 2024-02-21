@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressPools"/> is null. </exception>
         public BgpAdvertisement(IEnumerable<string> ipAddressPools)
         {
-            if (ipAddressPools == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddressPools));
-            }
+            Argument.AssertNotNull(ipAddressPools, nameof(ipAddressPools));
 
             Communities = new ChangeTrackingList<string>();
             IPAddressPools = ipAddressPools.ToList();

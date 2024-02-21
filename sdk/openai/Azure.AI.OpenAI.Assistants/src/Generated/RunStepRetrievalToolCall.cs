@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -22,14 +23,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="retrieval"/> is null. </exception>
         internal RunStepRetrievalToolCall(string id, IReadOnlyDictionary<string, string> retrieval) : base(id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (retrieval == null)
-            {
-                throw new ArgumentNullException(nameof(retrieval));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(retrieval, nameof(retrieval));
 
             Type = "retrieval";
             Retrieval = retrieval;

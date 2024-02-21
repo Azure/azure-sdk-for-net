@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -50,10 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         internal RunStepMessageCreationReference(string messageId)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
         }

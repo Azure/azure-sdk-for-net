@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
         public MixedRealityNameAvailabilityContent(string name, string resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             Name = name;
             ResourceType = resourceType;

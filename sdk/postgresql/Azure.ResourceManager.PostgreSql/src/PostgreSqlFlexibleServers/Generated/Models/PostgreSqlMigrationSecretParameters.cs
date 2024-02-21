@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> is null. </exception>
         public PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials)
         {
-            if (adminCredentials == null)
-            {
-                throw new ArgumentNullException(nameof(adminCredentials));
-            }
+            Argument.AssertNotNull(adminCredentials, nameof(adminCredentials));
 
             AdminCredentials = adminCredentials;
         }

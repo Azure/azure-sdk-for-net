@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountBlobUri"/> is null. </exception>
         public PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri)
         {
-            if (storageAccountBlobUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountBlobUri));
-            }
+            Argument.AssertNotNull(storageAccountBlobUri, nameof(storageAccountBlobUri));
 
             StorageAccountBlobUri = storageAccountBlobUri;
         }

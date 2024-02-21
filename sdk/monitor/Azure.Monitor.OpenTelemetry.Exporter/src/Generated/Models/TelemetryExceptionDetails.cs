@@ -19,10 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public TelemetryExceptionDetails(string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
             ParsedStack = new ChangeTrackingList<StackFrame>();

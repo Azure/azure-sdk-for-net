@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -56,14 +57,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
         internal Embeddings(IEnumerable<EmbeddingItem> data, EmbeddingsUsage usage)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-            if (usage == null)
-            {
-                throw new ArgumentNullException(nameof(usage));
-            }
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(usage, nameof(usage));
 
             Data = data.ToList();
             Usage = usage;

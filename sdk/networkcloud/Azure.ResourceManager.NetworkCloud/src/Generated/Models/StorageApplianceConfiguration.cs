@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> or <paramref name="serialNumber"/> is null. </exception>
         public StorageApplianceConfiguration(AdministrativeCredentials adminCredentials, long rackSlot, string serialNumber)
         {
-            if (adminCredentials == null)
-            {
-                throw new ArgumentNullException(nameof(adminCredentials));
-            }
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
+            Argument.AssertNotNull(adminCredentials, nameof(adminCredentials));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
             AdminCredentials = adminCredentials;
             RackSlot = rackSlot;

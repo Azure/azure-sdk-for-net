@@ -284,10 +284,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppSubvolumeInfoResource>> UpdateAsync(WaitUntil waitUntil, NetAppSubvolumeInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
             scope.Start();
@@ -333,10 +330,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetAppSubvolumeInfoResource> Update(WaitUntil waitUntil, NetAppSubvolumeInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
             scope.Start();
