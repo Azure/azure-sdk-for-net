@@ -29,12 +29,12 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteStartObject();
             if (Optional.IsDefined(SearchScore))
             {
-                writer.WritePropertyName("@search.score"u8);
+                writer.WritePropertyName("searchScore"u8);
                 writer.WriteNumberValue(SearchScore.Value);
             }
             if (Optional.IsDefined(SearchHighlights))
             {
-                writer.WritePropertyName("@search.highlights"u8);
+                writer.WritePropertyName("searchHighlights"u8);
                 writer.WriteObjectValue(SearchHighlights);
             }
             if (Optional.IsDefined(ObjectType))
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Purview.DataMap
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.score"u8))
+                if (property.NameEquals("searchScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.DataMap
                     searchScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("@search.highlights"u8))
+                if (property.NameEquals("searchHighlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

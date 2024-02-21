@@ -29,12 +29,12 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteStartObject();
             if (Optional.IsDefined(SearchCount))
             {
-                writer.WritePropertyName("@search.count"u8);
+                writer.WritePropertyName("searchCount"u8);
                 writer.WriteNumberValue(SearchCount.Value);
             }
             if (Optional.IsDefined(SearchCountApproximate))
             {
-                writer.WritePropertyName("@search.count.approximate"u8);
+                writer.WritePropertyName("searchCountApproximate"u8);
                 writer.WriteBooleanValue(SearchCountApproximate.Value);
             }
             if (Optional.IsDefined(ContinuationToken))
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
             if (Optional.IsDefined(SearchFacets))
             {
-                writer.WritePropertyName("@search.facets"u8);
+                writer.WritePropertyName("searchFacets"u8);
                 writer.WriteObjectValue(SearchFacets);
             }
             if (Optional.IsCollectionDefined(Value))
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.DataMap
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.count"u8))
+                if (property.NameEquals("searchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
                     searchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@search.count.approximate"u8))
+                if (property.NameEquals("searchCountApproximate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap
                     continuationToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@search.facets"u8))
+                if (property.NameEquals("searchFacets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
