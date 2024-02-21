@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public SmartsheetLinkedService(DataFactorySecretBaseDefinition apiToken)
         {
-            if (apiToken == null)
-            {
-                throw new ArgumentNullException(nameof(apiToken));
-            }
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
 
             ApiToken = apiToken;
             LinkedServiceType = "Smartsheet";

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,18 +22,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
         public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (pfx == null)
-            {
-                throw new ArgumentNullException(nameof(pfx));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(pfx, nameof(pfx));
+            Argument.AssertNotNull(password, nameof(password));
 
             Pfx = pfx;
             Password = password;

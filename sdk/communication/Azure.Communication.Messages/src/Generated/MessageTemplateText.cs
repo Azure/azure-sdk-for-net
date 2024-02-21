@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -19,14 +20,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="text"/> is null. </exception>
         public MessageTemplateText(string name, string text) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(text, nameof(text));
 
             Kind = "text";
             Text = text;

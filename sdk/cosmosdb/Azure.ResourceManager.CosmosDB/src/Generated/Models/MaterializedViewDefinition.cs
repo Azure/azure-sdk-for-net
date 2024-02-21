@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceCollectionId"/> or <paramref name="definition"/> is null. </exception>
         public MaterializedViewDefinition(string sourceCollectionId, string definition)
         {
-            if (sourceCollectionId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceCollectionId));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(sourceCollectionId, nameof(sourceCollectionId));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             SourceCollectionId = sourceCollectionId;
             Definition = definition;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public AzureFunctionLinkedService(DataFactoryElement<string> functionAppUri)
         {
-            if (functionAppUri == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppUri));
-            }
+            Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
 
             FunctionAppUri = functionAppUri;
             LinkedServiceType = "AzureFunction";

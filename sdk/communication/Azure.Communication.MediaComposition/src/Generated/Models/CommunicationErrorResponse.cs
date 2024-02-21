@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.MediaComposition.Models
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         public CommunicationErrorResponse(CommunicationError error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

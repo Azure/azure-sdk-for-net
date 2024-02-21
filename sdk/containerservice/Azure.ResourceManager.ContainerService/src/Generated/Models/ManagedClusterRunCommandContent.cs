@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public ManagedClusterRunCommandContent(string command)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
+            Argument.AssertNotNull(command, nameof(command));
 
             Command = command;
         }

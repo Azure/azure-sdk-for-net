@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -51,10 +52,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistItems"/> is null. </exception>
         public AddOrUpdateTextBlocklistItemsOptions(IEnumerable<TextBlocklistItem> blocklistItems)
         {
-            if (blocklistItems == null)
-            {
-                throw new ArgumentNullException(nameof(blocklistItems));
-            }
+            Argument.AssertNotNull(blocklistItems, nameof(blocklistItems));
 
             BlocklistItems = blocklistItems.ToList();
         }

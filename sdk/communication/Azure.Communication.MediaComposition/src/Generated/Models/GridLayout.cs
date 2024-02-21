@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -22,10 +23,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public GridLayout(int rows, int columns, IEnumerable<IList<string>> inputIds)
         {
-            if (inputIds == null)
-            {
-                throw new ArgumentNullException(nameof(inputIds));
-            }
+            Argument.AssertNotNull(inputIds, nameof(inputIds));
 
             Rows = rows;
             Columns = columns;

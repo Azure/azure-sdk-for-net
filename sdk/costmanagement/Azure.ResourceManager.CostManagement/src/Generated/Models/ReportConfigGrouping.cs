@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ReportConfigGrouping(QueryColumnType queryColumnType, string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             QueryColumnType = queryColumnType;
             Name = name;

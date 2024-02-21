@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -25,22 +26,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="phoneNumbers"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
         internal PhoneNumberSearchResult(string searchId, IEnumerable<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn)
         {
-            if (searchId == null)
-            {
-                throw new ArgumentNullException(nameof(searchId));
-            }
-            if (phoneNumbers == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumbers));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
-            if (cost == null)
-            {
-                throw new ArgumentNullException(nameof(cost));
-            }
+            Argument.AssertNotNull(searchId, nameof(searchId));
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
+            Argument.AssertNotNull(cost, nameof(cost));
 
             SearchId = searchId;
             PhoneNumbers = phoneNumbers.ToList();

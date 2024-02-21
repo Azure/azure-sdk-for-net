@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> is null. </exception>
         internal PhoneNumberLocality(string localizedName)
         {
-            if (localizedName == null)
-            {
-                throw new ArgumentNullException(nameof(localizedName));
-            }
+            Argument.AssertNotNull(localizedName, nameof(localizedName));
 
             LocalizedName = localizedName;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> is null. </exception>
         public ManagedClusterWindowsProfile(string adminUsername)
         {
-            if (adminUsername == null)
-            {
-                throw new ArgumentNullException(nameof(adminUsername));
-            }
+            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
 
             AdminUsername = adminUsername;
         }

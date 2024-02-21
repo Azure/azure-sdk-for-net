@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SuppressionListAddressResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addressId, SuppressionListAddressResourceData data, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SuppressionListAddressResource> CreateOrUpdate(WaitUntil waitUntil, string addressId, SuppressionListAddressResourceData data, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual async Task<Response<SuppressionListAddressResource>> GetAsync(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual Response<SuppressionListAddressResource> Get(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual Response<bool> Exists(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual async Task<NullableResponse<SuppressionListAddressResource>> GetIfExistsAsync(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="addressId"/> is null. </exception>
         public virtual NullableResponse<SuppressionListAddressResource> GetIfExists(string addressId, CancellationToken cancellationToken = default)
         {
-            if (addressId == null)
-            {
-                throw new ArgumentNullException(nameof(addressId));
-            }
-            if (addressId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressId));
-            }
+            Argument.AssertNotNullOrEmpty(addressId, nameof(addressId));
 
             using var scope = _suppressionListAddressResourceSuppressionListAddressesClientDiagnostics.CreateScope("SuppressionListAddressResourceCollection.GetIfExists");
             scope.Start();

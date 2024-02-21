@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public DataDisksToAttach(string diskId)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public ContainerRegistryIPRule(string ipAddressOrRange)
         {
-            if (ipAddressOrRange == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddressOrRange));
-            }
+            Argument.AssertNotNull(ipAddressOrRange, nameof(ipAddressOrRange));
 
             IPAddressOrRange = ipAddressOrRange;
         }

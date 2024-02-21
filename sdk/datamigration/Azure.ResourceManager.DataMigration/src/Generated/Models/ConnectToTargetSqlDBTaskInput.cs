@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetSqlDBTaskInput(SqlConnectionInfo targetConnectionInfo)
         {
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
             TargetConnectionInfo = targetConnectionInfo;
         }

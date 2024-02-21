@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <exception cref="ArgumentNullException"> <paramref name="emailAddress"/> is null. </exception>
         public ConfluentUserDetail(string emailAddress)
         {
-            if (emailAddress == null)
-            {
-                throw new ArgumentNullException(nameof(emailAddress));
-            }
+            Argument.AssertNotNull(emailAddress, nameof(emailAddress));
 
             EmailAddress = emailAddress;
         }

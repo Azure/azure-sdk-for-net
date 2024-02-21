@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public DataBoxHeavyJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
         {
-            if (contactDetails == null)
-            {
-                throw new ArgumentNullException(nameof(contactDetails));
-            }
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
             CopyProgress = new ChangeTrackingList<DataBoxCopyProgress>();
             JobDetailsType = DataBoxOrderType.DataBoxHeavy;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -51,10 +52,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="receipts"/> is null. </exception>
         internal SendMessageResult(IEnumerable<MessageReceipt> receipts)
         {
-            if (receipts == null)
-            {
-                throw new ArgumentNullException(nameof(receipts));
-            }
+            Argument.AssertNotNull(receipts, nameof(receipts));
 
             Receipts = receipts.ToList();
         }

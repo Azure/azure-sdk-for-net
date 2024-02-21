@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedService(DataFactoryElement<string> clusterUri)
         {
-            if (clusterUri == null)
-            {
-                throw new ArgumentNullException(nameof(clusterUri));
-            }
+            Argument.AssertNotNull(clusterUri, nameof(clusterUri));
 
             ClusterUri = clusterUri;
             LinkedServiceType = "HDInsight";
