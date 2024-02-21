@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SharePointOnlineList";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/> for deserialization. </summary>
+        internal SharePointOnlineListLinkedService()
+        {
+        }
+
         /// <summary> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SiteUri { get; set; }
         /// <summary> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </summary>

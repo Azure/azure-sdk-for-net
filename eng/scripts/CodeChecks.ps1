@@ -15,6 +15,10 @@ param (
     [switch] $SpellCheckPublicApiSurface
 )
 
+Write-Host "Service Directory $ServiceDirectory"
+Write-Host "Project Directory $ProjectDirectory"
+Write-Host "SDK Type $SDKType"
+
 $ErrorActionPreference = 'Stop'
 $Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1

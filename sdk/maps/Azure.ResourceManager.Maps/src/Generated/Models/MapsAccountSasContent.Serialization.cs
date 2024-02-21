@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountSasContent : IUtf8JsonSerializable
+    public partial class MapsAccountSasContent : IUtf8JsonSerializable, IJsonModel<MapsAccountSasContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountSasContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapsAccountSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("signingKey"u8);
             writer.WriteStringValue(SigningKey.ToString());
@@ -35,7 +46,131 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStringValue(Start);
             writer.WritePropertyName("expiry"u8);
             writer.WriteStringValue(Expiry);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MapsAccountSasContent IJsonModel<MapsAccountSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsAccountSasContent(document.RootElement, options);
+        }
+
+        internal static MapsAccountSasContent DeserializeMapsAccountSasContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MapsSigningKey signingKey = default;
+            string principalId = default;
+            Optional<IList<string>> regions = default;
+            int maxRatePerSecond = default;
+            string start = default;
+            string expiry = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("signingKey"u8))
+                {
+                    signingKey = new MapsSigningKey(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("principalId"u8))
+                {
+                    principalId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("regions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    regions = array;
+                    continue;
+                }
+                if (property.NameEquals("maxRatePerSecond"u8))
+                {
+                    maxRatePerSecond = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("start"u8))
+                {
+                    start = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expiry"u8))
+                {
+                    expiry = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapsAccountSasContent(signingKey, principalId, Optional.ToList(regions), maxRatePerSecond, start, expiry, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MapsAccountSasContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MapsAccountSasContent IPersistableModel<MapsAccountSasContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapsAccountSasContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapsAccountSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -12,11 +15,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerInboundNatPool : IUtf8JsonSerializable
+    public partial class LoadBalancerInboundNatPool : IUtf8JsonSerializable, IJsonModel<LoadBalancerInboundNatPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerInboundNatPool>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LoadBalancerInboundNatPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerInboundNatPool)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -26,6 +42,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -69,12 +90,46 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerInboundNatPool DeserializeLoadBalancerInboundNatPool(JsonElement element)
+        LoadBalancerInboundNatPool IJsonModel<LoadBalancerInboundNatPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerInboundNatPool)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerInboundNatPool(document.RootElement, options);
+        }
+
+        internal static LoadBalancerInboundNatPool DeserializeLoadBalancerInboundNatPool(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +147,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> enableFloatingIP = default;
             Optional<bool> enableTcpReset = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -219,8 +276,44 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerInboundNatPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoadBalancerInboundNatPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<LoadBalancerInboundNatPool>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerInboundNatPool)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerInboundNatPool IPersistableModel<LoadBalancerInboundNatPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadBalancerInboundNatPool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerInboundNatPool)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerInboundNatPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

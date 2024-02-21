@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSliceData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
@@ -40,11 +72,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="provisioningState"> The provisioning state of the network slice resource. </param>
         /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
         /// <param name="description"> An optional description for this network slice. </param>
-        internal MobileNetworkSliceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, Snssai snssai, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkSliceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, Snssai snssai, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Snssai = snssai;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceData"/> for deserialization. </summary>
+        internal MobileNetworkSliceData()
+        {
         }
 
         /// <summary> The provisioning state of the network slice resource. </summary>

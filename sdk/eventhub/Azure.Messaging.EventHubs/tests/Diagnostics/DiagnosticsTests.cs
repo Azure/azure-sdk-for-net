@@ -472,7 +472,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorCreatesScopeForEventProcessing()
+        public async Task EventProcessorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
+        public async Task EventProcessorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -635,7 +635,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true) => Mock.Of<TransportClient>();
         }
     }
 }

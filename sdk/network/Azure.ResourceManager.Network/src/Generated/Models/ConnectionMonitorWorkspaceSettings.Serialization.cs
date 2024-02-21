@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ConnectionMonitorWorkspaceSettings : IUtf8JsonSerializable
+    internal partial class ConnectionMonitorWorkspaceSettings : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorWorkspaceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorWorkspaceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectionMonitorWorkspaceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionMonitorWorkspaceSettings DeserializeConnectionMonitorWorkspaceSettings(JsonElement element)
+        ConnectionMonitorWorkspaceSettings IJsonModel<ConnectionMonitorWorkspaceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorWorkspaceSettings(document.RootElement, options);
+        }
+
+        internal static ConnectionMonitorWorkspaceSettings DeserializeConnectionMonitorWorkspaceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> workspaceResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceResourceId"u8))
@@ -41,8 +83,44 @@ namespace Azure.ResourceManager.Network.Models
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectionMonitorWorkspaceSettings(workspaceResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectionMonitorWorkspaceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConnectionMonitorWorkspaceSettings IPersistableModel<ConnectionMonitorWorkspaceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectionMonitorWorkspaceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectionMonitorWorkspaceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

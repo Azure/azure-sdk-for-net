@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveCertChain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -196,6 +220,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveCertChain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,6 +257,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveProofOfPossessionNonce</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +299,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_RetrieveProofOfPossessionNonce</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

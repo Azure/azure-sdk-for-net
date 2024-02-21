@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceLocation"> Gets or sets the resource location. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription. </param>
         /// <param name="resourceGroup"> Gets or sets the resource group. </param>
-        internal HyperVToAzStackHciReplicationExtensionModelCustomProperties(string instanceType, ResourceIdentifier hyperVFabricArmId, ResourceIdentifier hyperVSiteId, ResourceIdentifier azStackHciFabricArmId, ResourceIdentifier azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType)
+        internal HyperVToAzStackHciReplicationExtensionModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier hyperVFabricArmId, ResourceIdentifier hyperVSiteId, ResourceIdentifier azStackHciFabricArmId, ResourceIdentifier azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType, serializedAdditionalRawData)
         {
             HyperVFabricArmId = hyperVFabricArmId;
             HyperVSiteId = hyperVSiteId;
@@ -64,6 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             InstanceType = instanceType ?? "HyperVToAzStackHCI";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/> for deserialization. </summary>
+        internal HyperVToAzStackHciReplicationExtensionModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets the ARM Id of the source HyperV fabric. </summary>

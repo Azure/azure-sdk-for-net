@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridDomainPatch : IUtf8JsonSerializable
+    public partial class EventGridDomainPatch : IUtf8JsonSerializable, IJsonModel<EventGridDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -84,7 +96,218 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteObjectValue(EventTypeInfo);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EventGridDomainPatch IJsonModel<EventGridDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridDomainPatch(document.RootElement, options);
+        }
+
+        internal static EventGridDomainPatch DeserializeEventGridDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceSku> sku = default;
+            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<bool> autoCreateTopicWithFirstSubscription = default;
+            Optional<bool> autoDeleteTopicWithLastSubscription = default;
+            Optional<DataResidencyBoundary> dataResidencyBoundary = default;
+            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new EventGridPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("inboundIpRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                            }
+                            inboundIPRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("disableLocalAuth"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoCreateTopicWithFirstSubscription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoCreateTopicWithFirstSubscription = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoDeleteTopicWithLastSubscription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoDeleteTopicWithLastSubscription = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataResidencyBoundary"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataResidencyBoundary = new DataResidencyBoundary(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("eventTypeInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridDomainPatch(Optional.ToDictionary(tags), identity, sku.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(autoCreateTopicWithFirstSubscription), Optional.ToNullable(autoDeleteTopicWithLastSubscription), Optional.ToNullable(dataResidencyBoundary), eventTypeInfo.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EventGridDomainPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridDomainPatch IPersistableModel<EventGridDomainPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridDomainPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridDomainPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

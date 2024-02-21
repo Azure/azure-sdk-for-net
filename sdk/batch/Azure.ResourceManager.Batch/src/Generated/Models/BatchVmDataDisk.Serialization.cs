@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmDataDisk : IUtf8JsonSerializable
+    public partial class BatchVmDataDisk : IUtf8JsonSerializable, IJsonModel<BatchVmDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmDataDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchVmDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
@@ -29,11 +40,40 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchVmDataDisk DeserializeBatchVmDataDisk(JsonElement element)
+        BatchVmDataDisk IJsonModel<BatchVmDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchVmDataDisk(document.RootElement, options);
+        }
+
+        internal static BatchVmDataDisk DeserializeBatchVmDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchDiskCachingType> caching = default;
             int diskSizeGB = default;
             Optional<BatchStorageAccountType> storageAccountType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -72,8 +114,44 @@ namespace Azure.ResourceManager.Batch.Models
                     storageAccountType = property.Value.GetString().ToBatchStorageAccountType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchVmDataDisk(lun, Optional.ToNullable(caching), diskSizeGB, Optional.ToNullable(storageAccountType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchVmDataDisk(lun, Optional.ToNullable(caching), diskSizeGB, Optional.ToNullable(storageAccountType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchVmDataDisk>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BatchVmDataDisk IPersistableModel<BatchVmDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchVmDataDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchVmDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

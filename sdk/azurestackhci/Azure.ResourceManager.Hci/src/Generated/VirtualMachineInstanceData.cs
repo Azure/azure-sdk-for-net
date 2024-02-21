@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -19,6 +20,38 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class VirtualMachineInstanceData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceData"/>. </summary>
         public VirtualMachineInstanceData()
         {
@@ -43,7 +76,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="guestAgentInstallStatus"> Guest agent install status. </param>
         /// <param name="vmId"> Unique identifier for the vm resource. </param>
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
-        internal VirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArcVmExtendedLocation extendedLocation, ManagedServiceIdentity identity, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, ProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArcVmExtendedLocation extendedLocation, ManagedServiceIdentity identity, VirtualMachineInstancePropertiesHardwareProfile hardwareProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, VirtualMachineInstancePropertiesOSProfile osProfile, VirtualMachineInstancePropertiesSecurityProfile securityProfile, VirtualMachineInstancePropertiesStorageProfile storageProfile, HttpProxyConfiguration httpProxyConfig, ProvisioningStateEnum? provisioningState, VirtualMachineInstanceView instanceView, VirtualMachineInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -59,6 +93,7 @@ namespace Azure.ResourceManager.Hci
             GuestAgentInstallStatus = guestAgentInstallStatus;
             VmId = vmId;
             ResourceUid = resourceUid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extendedLocation of the resource. </summary>

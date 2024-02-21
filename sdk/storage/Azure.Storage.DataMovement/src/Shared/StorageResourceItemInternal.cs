@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         internal Task<HttpAuthorization> GetCopyAuthorizationHeaderInternalAsync(CancellationToken cancellationToken = default)
             => GetCopyAuthorizationHeaderAsync(cancellationToken);
 
-        internal Task<StorageResourceProperties> GetPropertiesInternalAsync(CancellationToken token = default)
+        internal Task<StorageResourceItemProperties> GetPropertiesInternalAsync(CancellationToken token = default)
             => GetPropertiesAsync(token);
 
         internal Task<StorageResourceReadStreamResult> ReadStreamInternalAsync(

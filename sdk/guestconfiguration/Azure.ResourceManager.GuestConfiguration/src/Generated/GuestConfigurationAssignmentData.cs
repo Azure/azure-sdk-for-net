@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.GuestConfiguration.Models;
 using Azure.ResourceManager.Models;
@@ -28,8 +30,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="location"> Region where the VM is located. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
-        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, systemData)
+        internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, systemData, serializedAdditionalRawData)
         {
             Properties = properties;
         }

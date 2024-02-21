@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
@@ -103,8 +102,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            HttpPipelinePolicy authentication = null,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -122,6 +126,33 @@ namespace Azure.Storage
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
             }
 
+            if (expectContinue != null)
+            {
+                switch (expectContinue.Mode)
+                {
+                    case ExpectContinueMode.ApplyOnThrottle:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        {
+                            ThrottleInterval = expectContinue.ThrottleInterval,
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
+                        break;
+                    case ExpectContinueMode.On:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                        {
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
+                        break;
+                    case ExpectContinueMode.Off:
+                        break;
+                }
+            }
+            else
+            {
+                // TODO get env config for whether to disable
+                pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { ThrottleInterval = TimeSpan.FromMinutes(1) });
+            }
+
             pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
             pipelineOptions.PerRetryPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
 
@@ -134,8 +165,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            object credentials,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
     }
 }

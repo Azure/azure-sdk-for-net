@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -21,7 +23,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The regional service name. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>
-        internal MaterializedViewsBuilderRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status) : base(name, location, status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaterializedViewsBuilderRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, location, status, serializedAdditionalRawData)
         {
         }
     }

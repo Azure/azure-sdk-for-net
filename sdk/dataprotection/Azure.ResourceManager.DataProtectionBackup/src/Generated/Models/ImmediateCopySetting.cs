@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Immediate copy Option. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ImmediateCopySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal ImmediateCopySetting(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImmediateCopySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "ImmediateCopyOption";
         }

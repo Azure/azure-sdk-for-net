@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;

@@ -34,6 +34,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetAtManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
@@ -56,6 +64,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,6 +103,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetAtManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicySetDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
@@ -109,6 +133,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicySetDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Ssis folder. </summary>
@@ -21,7 +24,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        internal SynapseSsisFolder(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description) : base(metadataType, id, name, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisFolder(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             MetadataType = metadataType;
         }

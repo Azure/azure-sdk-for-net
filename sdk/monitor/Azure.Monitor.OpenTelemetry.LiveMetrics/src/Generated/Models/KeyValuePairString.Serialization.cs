@@ -17,12 +17,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("Key"u8);
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("Value"u8);
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();

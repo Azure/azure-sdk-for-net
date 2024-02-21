@@ -44,6 +44,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("answeredBy"u8);
                 writer.WriteObjectValue(AnsweredBy);
             }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
             writer.WriteEndObject();
         }
     }

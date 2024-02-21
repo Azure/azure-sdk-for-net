@@ -70,20 +70,22 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-```C# Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-AzureKeyCredential credential = new AzureKeyCredential(key);
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings
+public static ReadOnlyMemory<float> GetEmbeddings(string input)
+{
+    Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+    AzureKeyCredential credential = new AzureKeyCredential(key);
 
-OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-string description = "Very popular hotel in town.";
-EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { description });
+    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
 
-Embeddings embeddings = await openAIClient.GetEmbeddingsAsync(embeddingsOptions);
-ReadOnlyMemory<float> descriptionVector = embeddings.Data[0].Embedding;
+    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
+    return embeddings.Data[0].Embedding;
+}
 ```
 
-In the sample code below, we are using hardcoded embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
+In the sample code below, we are using `GetEmbeddings` method mentioned above to get embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
 public static Hotel[] GetHotelDocuments()
@@ -98,20 +100,23 @@ public static Hotel[] GetHotelDocuments()
                 "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                 "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                 "the tourist attractions. We highly recommend this hotel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
+            DescriptionVector = GetEmbeddings(
+                "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                "the tourist attractions. We highly recommend this hotel."),
             Category = "Luxury",
-            CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
+            CategoryVector = GetEmbeddings("Luxury")
         },
         new Hotel()
         {
             HotelId = "2",
             HotelName = "Roach Motel",
             Description = "Cheapest hotel in town. Infact, a motel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
+            DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
+            CategoryVector = GetEmbeddings("Budget")
         },
-         // Add more hotel documents here...
+        // Add more hotel documents here...
     };
 }
 ```
@@ -126,7 +131,7 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 ## Query Vector Data
 
-When using `VectorizedQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
+When using `VectorizedQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using `GetEmbeddings` method mentioned above to get embeddings to query vector field.
 
 Let's query the index and make sure everything works as implemented. You can also refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-query) for more information on querying vector data.
 
@@ -135,7 +140,7 @@ Let's query the index and make sure everything works as implemented. You can als
 In this vector query, the `Queries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorizedQuery
-ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
@@ -162,7 +167,7 @@ Console.WriteLine($"Total number of search results:{count}");
 In addition to the vector query mentioned above, we can also apply a filter to narrow down the search results.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorizedQuery
-ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
@@ -192,7 +197,7 @@ A hybrid query combines full text search, semantic search (reranking), and vecto
 #### Simple Hybrid Search
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorizedQuery
-ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         "Top hotels in town",
@@ -220,8 +225,8 @@ Console.WriteLine($"Total number of search results:{count}");
 You can search containing multiple query vectors using the `SearchOptions.VectorSearch.Queries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorizedQuery
-ReadOnlyMemory<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
-ReadOnlyMemory<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
+ReadOnlyMemory<float> vectorizedDescriptionQuery = GetEmbeddings("Top hotels in town");
+ReadOnlyMemory<float> vectorizedCategoryQuery = GetEmbeddings("Luxury hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
@@ -250,7 +255,7 @@ Console.WriteLine($"Total number of search results:{count}");
 You can set the `SearchOptions.VectorSearch.Queries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorizedQuery
-ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+ReadOnlyMemory<float> vectorizedResult = GetEmbeddings("Top hotels in town");
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions

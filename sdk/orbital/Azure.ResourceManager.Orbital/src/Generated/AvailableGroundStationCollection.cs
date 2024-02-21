@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_ListByCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capability"> Ground Station Capability. </param>
@@ -161,6 +185,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_ListByCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capability"> Ground Station Capability. </param>
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +346,14 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

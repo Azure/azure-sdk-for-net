@@ -158,6 +158,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +195,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +234,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -246,6 +270,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -276,6 +308,14 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -303,6 +343,14 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,6 +380,10 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -360,6 +412,10 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
         /// </item>
         /// </list>
         /// <item>

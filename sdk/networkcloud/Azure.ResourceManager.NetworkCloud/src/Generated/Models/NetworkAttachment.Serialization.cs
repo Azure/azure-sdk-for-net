@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkAttachment : IUtf8JsonSerializable
+    public partial class NetworkAttachment : IUtf8JsonSerializable, IJsonModel<NetworkAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkId);
@@ -34,16 +45,50 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            {
+                writer.WritePropertyName("macAddress"u8);
+                writer.WriteStringValue(MacAddress);
+            }
             if (Optional.IsDefined(NetworkAttachmentName))
             {
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element)
+        NetworkAttachment IJsonModel<NetworkAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkAttachment(document.RootElement, options);
+        }
+
+        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +100,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> ipv6Address = default;
             Optional<string> macAddress = default;
             Optional<string> networkAttachmentName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedNetworkId"u8))
@@ -96,8 +143,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     networkAttachmentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkAttachment IPersistableModel<NetworkAttachment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkAttachment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

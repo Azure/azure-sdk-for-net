@@ -57,6 +57,8 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </remarks>
     ///
     /// <seealso cref="EventHubBufferedProducerClient" />
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubProducerClient : IAsyncDisposable
     {
@@ -428,11 +430,18 @@ namespace Azure.Messaging.EventHubs.Producer
                                        object credential,
                                        EventHubProducerClientOptions clientOptions = default)
         {
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
+
+            if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
+            {
+                fullyQualifiedNamespace = uri.Host;
+            }
+
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
             OwnsConnection = true;
             Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);

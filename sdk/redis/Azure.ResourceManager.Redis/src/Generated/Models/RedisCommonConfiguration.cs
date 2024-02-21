@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
         /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
         /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
+        /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, IDictionary<string, BinaryData> additionalProperties)
+        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, string isAadEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
             IsRdbBackupEnabled = isRdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.Redis.Models
             ZonalConfiguration = zonalConfiguration;
             AuthNotRequired = authNotRequired;
             StorageSubscriptionId = storageSubscriptionId;
+            IsAadEnabled = isAadEnabled;
             AdditionalProperties = additionalProperties;
         }
 
@@ -95,6 +97,8 @@ namespace Azure.ResourceManager.Redis.Models
         public string AuthNotRequired { get; set; }
         /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>
         public string StorageSubscriptionId { get; set; }
+        /// <summary> Specifies whether AAD based authentication has been enabled or disabled for the cache. </summary>
+        public string IsAadEnabled { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

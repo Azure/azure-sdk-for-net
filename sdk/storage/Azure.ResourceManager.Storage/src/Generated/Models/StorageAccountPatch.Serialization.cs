@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountPatch : IUtf8JsonSerializable
+    public partial class StorageAccountPatch : IUtf8JsonSerializable, IJsonModel<StorageAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -151,7 +162,354 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        StorageAccountPatch IJsonModel<StorageAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountPatch(document.RootElement, options);
+        }
+
+        internal static StorageAccountPatch DeserializeStorageAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<StorageSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<StorageKind> kind = default;
+            Optional<StorageCustomDomain> customDomain = default;
+            Optional<StorageAccountEncryption> encryption = default;
+            Optional<StorageAccountSasPolicy> sasPolicy = default;
+            Optional<StorageAccountKeyPolicy> keyPolicy = default;
+            Optional<StorageAccountAccessTier> accessTier = default;
+            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
+            Optional<bool> supportsHttpsTrafficOnly = default;
+            Optional<bool> isSftpEnabled = default;
+            Optional<bool> isLocalUserEnabled = default;
+            Optional<StorageAccountNetworkRuleSet> networkAcls = default;
+            Optional<LargeFileSharesState> largeFileSharesState = default;
+            Optional<StorageRoutingPreference> routingPreference = default;
+            Optional<bool> allowBlobPublicAccess = default;
+            Optional<StorageMinimumTlsVersion> minimumTlsVersion = default;
+            Optional<bool> allowSharedKeyAccess = default;
+            Optional<bool> allowCrossTenantReplication = default;
+            Optional<bool> defaultToOAuthAuthentication = default;
+            Optional<StoragePublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ImmutableStorageAccount> immutableStorageWithVersioning = default;
+            Optional<AllowedCopyScope> allowedCopyScope = default;
+            Optional<StorageDnsEndpointType> dnsEndpointType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = StorageSku.DeserializeStorageSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new StorageKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("customDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sasPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("keyPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("accessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accessTier = property0.Value.GetString().ToStorageAccountAccessTier();
+                            continue;
+                        }
+                        if (property0.NameEquals("azureFilesIdentityBasedAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("supportsHttpsTrafficOnly"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportsHttpsTrafficOnly = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isSftpEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isSftpEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isLocalUserEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLocalUserEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("largeFileSharesState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            largeFileSharesState = new LargeFileSharesState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("routingPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("allowBlobPublicAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowBlobPublicAccess = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("minimumTlsVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersion = new StorageMinimumTlsVersion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("allowSharedKeyAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowSharedKeyAccess = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowCrossTenantReplication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowCrossTenantReplication = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultToOAuthAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultToOAuthAuthentication = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new StoragePublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("immutableStorageWithVersioning"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("allowedCopyScope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowedCopyScope = new AllowedCopyScope(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsEndpointType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsEndpointType = new StorageDnsEndpointType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountPatch(sku.Value, Optional.ToDictionary(tags), identity, Optional.ToNullable(kind), customDomain.Value, encryption.Value, sasPolicy.Value, keyPolicy.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), networkAcls.Value, Optional.ToNullable(largeFileSharesState), routingPreference.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope), Optional.ToNullable(dnsEndpointType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<StorageAccountPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountPatch IPersistableModel<StorageAccountPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

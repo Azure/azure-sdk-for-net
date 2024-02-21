@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             OdataType = odataType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMetricAlertCriteria"/> for deserialization. </summary>
+        internal UnknownMetricAlertCriteria()
+        {
+        }
     }
 }

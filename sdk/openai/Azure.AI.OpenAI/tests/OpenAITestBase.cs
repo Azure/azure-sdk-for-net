@@ -131,10 +131,12 @@ namespace Azure.AI.OpenAI.Tests
                     if (!string.IsNullOrEmpty(pair.Value.AzureDeploymentName))
                     {
                         string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
-                        string recordedRawUri = Recording.GetVariable(variableName, null)
-                            ?? throw new TestRecordingMismatchException($"Missing expected recording variable name: {variableName}");
-                        pair.Value.AzureResourceUri = new Uri(recordedRawUri);
-                        pair.Value.AzureResourceKey = new AzureKeyCredential("placeholder");
+                        string variableValue = Recording.GetVariable(variableName, null);
+                        if (!string.IsNullOrEmpty(variableValue))
+                        {
+                            pair.Value.AzureResourceUri = new Uri(variableValue);
+                            pair.Value.AzureResourceKey = new AzureKeyCredential("placeholder");
+                        }
                     }
                 }
             }
@@ -214,19 +216,6 @@ namespace Azure.AI.OpenAI.Tests
                         }
 
                         s_deploymentComplete = true;
-                    }
-                }
-            }
-
-            if (Recording.Mode == RecordedTestMode.Record)
-            {
-                foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenario)
-                {
-                    Uri azureResourceUri = pair.Value.AzureResourceUri;
-                    if (azureResourceUri != null)
-                    {
-                        string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
-                        Recording.SetVariable(variableName, azureResourceUri.ToString());
                     }
                 }
             }
@@ -411,9 +400,9 @@ namespace Azure.AI.OpenAI.Tests
 
             [Scenario.VisionPreview] = new()
             {
-                AzureResourceName = string.Empty,
+                AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
                 AzureResourceLocation = AzureLocation.SwedenCentral,
-                AzureDeploymentName = string.Empty,
+                AzureDeploymentName = "gpt-4-vision-preview",
                 NonAzureModelName = "gpt-4-vision-preview",
             }
         };
@@ -500,9 +489,14 @@ namespace Azure.AI.OpenAI.Tests
             VisionPreview,
         }
 
-        protected static string GetDeploymentOrModelName(Service serviceTarget, Scenario defaultScenario)
+        protected string GetDeploymentOrModelName(Service serviceTarget, Scenario scenario)
         {
-            ModelDeploymentEntry entry = s_deploymentEntriesByScenario[defaultScenario];
+            ModelDeploymentEntry entry = s_deploymentEntriesByScenario[scenario];
+            if (serviceTarget == Service.Azure && Mode == RecordedTestMode.Record)
+            {
+                string variableName = GetAzureEndpointVariableNameForScenario(scenario);
+                Recording.SetVariable(variableName, entry.AzureResourceUri.AbsoluteUri);
+            }
             return (serviceTarget == Service.Azure) ? entry.AzureDeploymentName : entry.NonAzureModelName;
         }
 

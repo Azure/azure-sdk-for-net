@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Linux Java Container settings. </summary>
     public partial class LinuxJavaContainerSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinuxJavaContainerSettings"/>. </summary>
         internal LinuxJavaContainerSettings()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
         /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal LinuxJavaContainerSettings(string java11Runtime, string java8Runtime, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxJavaContainerSettings(string java11Runtime, string java8Runtime, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Java11Runtime = java11Runtime;
             Java8Runtime = java8Runtime;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Java 11 version (runtime only). </summary>

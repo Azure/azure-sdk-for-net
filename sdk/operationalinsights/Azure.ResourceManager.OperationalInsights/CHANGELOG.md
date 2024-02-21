@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Add `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
 
 ### Other Changes
 

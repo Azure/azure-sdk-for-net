@@ -13,19 +13,18 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridContainerService;
 using Azure.ResourceManager.HybridContainerService.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridContainerService.Samples
 {
     public partial class Sample_ProvisionedClusterResource
     {
-        // GetProvisionedCluster
+        // GetProvisionedClusterInstance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetProvisionedCluster()
+        public async Task Get_GetProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetProvisionedCluster.json
-            // this example is just showing the usage of "ProvisionedClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetProvisionedClusterInstance.json
+            // this example is just showing the usage of "provisionedClusterInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,10 +33,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // invoke the operation
@@ -50,13 +47,13 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteProvisionedCluster
+        // PutProvisionedClusterInstance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteProvisionedCluster()
+        public async Task CreateOrUpdate_PutProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/DeleteProvisionedCluster.json
-            // this example is just showing the usage of "ProvisionedClusters_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/PutProvisionedClusterInstance.json
+            // this example is just showing the usage of "provisionedClusterInstances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -65,48 +62,66 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // invoke the operation
-            await provisionedCluster.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // UpdateProvisionedCluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateProvisionedCluster()
-        {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/UpdateProvisionedCluster.json
-            // this example is just showing the usage of "ProvisionedClusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProvisionedClusterResource created on azure
-            // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
-
-            // invoke the operation
-            ProvisionedClusterPatch patch = new ProvisionedClusterPatch()
+            ProvisionedClusterData data = new ProvisionedClusterData()
             {
-                Tags =
+                Properties = new ProvisionedClusterProperties()
+                {
+                    SshPublicKeys =
 {
-["additionalProperties"] = "sample",
+new LinuxSshPublicKey()
+{
+KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCY.......",
+}
 },
+                    ControlPlane = new ProvisionedClusterControlPlaneProfile()
+                    {
+                        Count = 1,
+                        VmSize = "Standard_A4_v2",
+                    },
+                    KubernetesVersion = "v1.20.5",
+                    NetworkProfile = new ProvisionedClusterNetworkProfile()
+                    {
+                        NetworkPolicy = ProvisionedClusterNetworkPolicy.Calico,
+                        PodCidr = "10.244.0.0/16",
+                    },
+                    ClusterVmAccessAuthorizedIPRanges = "127.0.0.1,127.0.0.2",
+                    AgentPoolProfiles =
+{
+new HybridContainerServiceNamedAgentPoolProfile()
+{
+Count = 1,
+VmSize = "Standard_A4_v2",
+Name = "default-nodepool-1",
+OSType = HybridContainerServiceOSType.Linux,
+NodeLabels =
+{
+["env"] = "dev",
+["goal"] = "test",
+},
+NodeTaints =
+{
+"env=prod:NoSchedule","sku=gpu:NoSchedule"
+},
+}
+},
+                    InfraNetworkVnetSubnetIds =
+{
+new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourceGroups/test-arcappliance-resgrp/providers/Microsoft.AzureStackHCI/logicalNetworks/test-vnet-static")
+},
+                    LicenseAzureHybridBenefit = ProvisionedClusterAzureHybridBenefit.NotApplicable,
+                },
+                ExtendedLocation = new HybridContainerServiceExtendedLocation()
+                {
+                    ExtendedLocationType = HybridContainerServiceExtendedLocationType.CustomLocation,
+                    Name = "/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourcegroups/test-arcappliance-resgrp/providers/microsoft.extendedlocation/customlocations/testcustomlocation",
+                },
             };
-            ArmOperation<ProvisionedClusterResource> lro = await provisionedCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<ProvisionedClusterResource> lro = await provisionedCluster.CreateOrUpdateAsync(WaitUntil.Completed, data);
             ProvisionedClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -116,45 +131,13 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ListProvisionedClusterBySubscription
+        // DeleteProvisionedClusterInstance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetProvisionedClusters_ListProvisionedClusterBySubscription()
+        public async Task Delete_DeleteProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/ListProvisionedClusterBySubscription.json
-            // this example is just showing the usage of "ProvisionedClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ProvisionedClusterResource item in subscriptionResource.GetProvisionedClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ProvisionedClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // UpgradeClusterNodeImageVersion
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpgradeNodeImageVersionForEntireCluster_UpgradeClusterNodeImageVersion()
-        {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/ProvisionedClustersUpgradeNodeImageVersionForEntireCluster.json
-            // this example is just showing the usage of "ProvisionedClusters_UpgradeNodeImageVersionForEntireCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/DeleteProvisionedClusterInstance.json
+            // this example is just showing the usage of "provisionedClusterInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,16 +146,66 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterResource created on azure
             // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // invoke the operation
-            await provisionedCluster.UpgradeNodeImageVersionForEntireClusterAsync(WaitUntil.Completed);
+            await provisionedCluster.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
+        }
+
+        // ListClusterUserCredentials
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetUserKubeconfig_ListClusterUserCredentials()
+        {
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ProvisionedClusterInstanceListUserKubeconfig.json
+            // this example is just showing the usage of "provisionedClusterInstances_ListUserKubeconfig" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProvisionedClusterResource created on azure
+            // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
+            ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
+
+            // invoke the operation
+            ArmOperation<HybridContainerServiceCredentialListResult> lro = await provisionedCluster.GetUserKubeconfigAsync(WaitUntil.Completed);
+            HybridContainerServiceCredentialListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ListClusterAdminCredentials
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAdminKubeconfig_ListClusterAdminCredentials()
+        {
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ProvisionedClusterInstanceListAdminKubeconfig.json
+            // this example is just showing the usage of "provisionedClusterInstances_ListAdminKubeconfig" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProvisionedClusterResource created on azure
+            // for more information of creating ProvisionedClusterResource, please refer to the document of ProvisionedClusterResource
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterResourceId = ProvisionedClusterResource.CreateResourceIdentifier(connectedClusterResourceUri);
+            ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
+
+            // invoke the operation
+            ArmOperation<HybridContainerServiceCredentialListResult> lro = await provisionedCluster.GetAdminKubeconfigAsync(WaitUntil.Completed);
+            HybridContainerServiceCredentialListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

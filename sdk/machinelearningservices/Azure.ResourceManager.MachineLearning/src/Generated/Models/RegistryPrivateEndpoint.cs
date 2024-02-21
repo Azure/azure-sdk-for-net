@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -19,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpoint"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        internal RegistryPrivateEndpoint(ResourceIdentifier id, ResourceIdentifier subnetArmId) : base(id)
+        internal RegistryPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier subnetArmId) : base(id, serializedAdditionalRawData)
         {
             SubnetArmId = subnetArmId;
         }

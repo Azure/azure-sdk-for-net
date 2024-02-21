@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableWorkloadProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile(e), AvailableWorkloadProfilesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableWorkloadProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -106,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile(e), AvailableWorkloadProfilesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -119,6 +127,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBillingMeters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppBillingMeter.DeserializeContainerAppBillingMeter(e), BillingMetersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -142,6 +154,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingMeters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -150,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Pageable<ContainerAppBillingMeter> GetBillingMeters(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBillingMeters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppBillingMeter.DeserializeContainerAppBillingMeter(e), BillingMetersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -163,6 +179,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +239,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,6 +270,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +330,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -296,6 +360,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,6 +389,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

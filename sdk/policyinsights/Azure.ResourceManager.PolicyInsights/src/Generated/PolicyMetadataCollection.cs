@@ -66,6 +66,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -147,7 +171,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SlimPolicyMetadata.DeserializeSlimPolicyMetadata(e), _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,6 +185,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -170,7 +202,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SlimPolicyMetadata.DeserializeSlimPolicyMetadata(e), _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +258,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +343,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

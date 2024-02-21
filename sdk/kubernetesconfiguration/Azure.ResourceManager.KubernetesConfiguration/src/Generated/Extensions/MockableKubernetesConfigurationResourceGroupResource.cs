@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -84,6 +92,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +139,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -148,6 +172,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +219,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -212,6 +252,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

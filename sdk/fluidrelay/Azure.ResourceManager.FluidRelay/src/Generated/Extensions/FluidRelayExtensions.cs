@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -160,6 +176,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>

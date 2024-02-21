@@ -23,6 +23,11 @@ namespace Azure.Communication.CallAutomation
         public bool Loop { get; set; }
 
         /// <summary>
+        /// If set play can barge into other existing queued-up/currently-processing requests.
+        /// </summary>
+        public bool InterruptCallMediaOperation { get; set; }
+
+        /// <summary>
         /// The Operation Context.
         /// </summary>
         public string OperationContext { get; set; }

@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestBase.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobTestEnvironment.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\ClientBuilderExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\ClientExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\DisposingContainer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />

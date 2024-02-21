@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDbV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedService"/> for deserialization. </summary>
+        internal MongoDBV2LinkedService()
+        {
+        }
+
         /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>

@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ApplyUpdateName = applyUpdateName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetApplyUpdatesByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceGetApplyUpdatesByParentOptions()
+        {
+        }
+
         /// <summary> Resource provider name. </summary>
         public string ProviderName { get; }
         /// <summary> Resource parent type. </summary>

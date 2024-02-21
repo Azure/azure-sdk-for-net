@@ -853,7 +853,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new Trigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
+            return new UnknownTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerSubscriptionOperationStatus"/>. </summary>

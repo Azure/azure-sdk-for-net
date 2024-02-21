@@ -85,6 +85,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> Alert rule ID. </param>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
@@ -160,6 +184,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,6 +223,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AutomationRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAutomationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationRuleId"> Automation rule ID. </param>
@@ -213,6 +253,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAutomationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,6 +292,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Bookmarks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bookmarkId"> Bookmark ID. </param>
@@ -266,6 +322,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +361,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>DataConnectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectorId"> Connector ID. </param>
@@ -319,6 +391,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataConnectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsDataConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,6 +430,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
@@ -372,6 +460,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,6 +499,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>SentinelOnboardingStates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsSentinelOnboardingStateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
@@ -425,6 +529,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SentinelOnboardingStates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsSentinelOnboardingStateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,6 +568,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>SecurityMLAnalyticsSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityMLAnalyticsSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
@@ -478,6 +598,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityMLAnalyticsSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityMLAnalyticsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,6 +637,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
@@ -531,6 +667,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +706,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="watchlistAlias"> The watchlist alias. </param>
@@ -585,6 +737,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="watchlistAlias"> The watchlist alias. </param>
@@ -607,6 +767,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicator_QueryIndicators</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -634,6 +798,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicator_QueryIndicators</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
@@ -660,6 +828,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicatorMetrics_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -667,7 +839,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual AsyncPageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -681,6 +853,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicatorMetrics_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -688,7 +864,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Pageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
     }
 }

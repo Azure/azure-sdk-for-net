@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class FeaturesRule : IUtf8JsonSerializable
+    internal partial class FeaturesRule : IUtf8JsonSerializable, IJsonModel<FeaturesRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeaturesRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FeaturesRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FeaturesRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("requiredFeaturesPolicy"u8);
             writer.WriteStringValue(RequiredFeaturesPolicy.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FeaturesRule DeserializeFeaturesRule(JsonElement element)
+        FeaturesRule IJsonModel<FeaturesRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FeaturesRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFeaturesRule(document.RootElement, options);
+        }
+
+        internal static FeaturesRule DeserializeFeaturesRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FeaturesPolicy requiredFeaturesPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredFeaturesPolicy"u8))
@@ -34,8 +76,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeaturesPolicy = new FeaturesPolicy(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FeaturesRule(requiredFeaturesPolicy);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FeaturesRule(requiredFeaturesPolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FeaturesRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FeaturesRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FeaturesRule IPersistableModel<FeaturesRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFeaturesRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FeaturesRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FeaturesRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

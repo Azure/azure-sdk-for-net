@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The desired region for the name check. </param>
@@ -92,6 +100,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +146,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,6 +174,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Reflection;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.DocumentIntelligence.Tests
@@ -16,6 +18,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         // Files are exactly the same, so this doesn't affect test behavior.
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
+        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
         public string Endpoint => GetRecordedVariable("ENDPOINT");
 
         public string ApiKey => GetRecordedVariable("API_KEY", options => options.IsSecret());
@@ -27,6 +31,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public string BlobContainerSasUrl => GetRecordedVariable("SINGLEPAGE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
 
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        public static string CreatePath(string filename)
+        {
+            return Path.Combine(s_currentWorkingDirectory, AssetsFolderName, filename);
+        }
 
         public static Uri CreateUri(string filename)
         {

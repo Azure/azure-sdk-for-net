@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SparkJob";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/> for deserialization. </summary>
+        internal SynapseSparkJobDefinitionActivity()
+        {
+        }
+
         /// <summary> Synapse spark job reference. </summary>
         public SynapseSparkJobReference SparkJob { get; set; }
         /// <summary>

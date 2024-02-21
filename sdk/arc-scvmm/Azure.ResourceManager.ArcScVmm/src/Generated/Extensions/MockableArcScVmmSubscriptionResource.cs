@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,6 +133,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,6 +162,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +193,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +253,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,6 +282,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +313,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -270,6 +342,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +373,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,6 +402,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

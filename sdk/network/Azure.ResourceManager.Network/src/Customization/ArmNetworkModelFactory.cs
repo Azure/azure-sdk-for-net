@@ -78,7 +78,32 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BastionHostData BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, BastionHostSkuName? skuName, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos)
-            => BastionHostData(id, name, resourceType, location, tags, etag, skuName, ipConfigurations, dnsName, null, null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
+            => BastionHostData(id, name, resourceType, location, tags, null, etag, skuName, ipConfigurations, dnsName, null, null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
+
+        /// <summary> Initializes a new instance of <see cref="Network.BastionHostData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> The sku of this Bastion Host. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
+        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
+        /// <param name="virtualNetworkId"> Reference to an existing virtual network required for Developer Bastion Host only. </param>
+        /// <param name="networkAclsIPRules"></param>
+        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
+        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
+        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
+        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
+        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
+        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
+        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
+        /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BastionHostData BastionHostData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, BastionHostSkuName? skuName = null, IEnumerable<BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, ResourceIdentifier virtualNetworkId = null, IEnumerable<BastionHostIPRule> networkAclsIPRules = null, NetworkProvisioningState? provisioningState = null, int? scaleUnits = null, bool? disableCopyPaste = null, bool? enableFileCopy = null, bool? enableIPConnect = null, bool? enableShareableLink = null, bool? enableTunneling = null, bool? enableKerberos = null)
+            => BastionHostData(id, name, resourceType, location, tags, null, etag, skuName, ipConfigurations, dnsName, virtualNetworkId, networkAclsIPRules, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
 
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>

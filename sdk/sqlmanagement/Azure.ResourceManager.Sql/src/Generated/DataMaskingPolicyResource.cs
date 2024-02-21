@@ -107,6 +107,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,6 +147,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,6 +186,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMaskingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +233,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -247,6 +279,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
@@ -283,6 +319,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,6 +361,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -328,7 +372,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DataMaskingRule.DeserializeDataMaskingRule(e), _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -342,6 +386,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2014-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -349,7 +397,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DataMaskingRule.DeserializeDataMaskingRule(e), _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
     }
 }

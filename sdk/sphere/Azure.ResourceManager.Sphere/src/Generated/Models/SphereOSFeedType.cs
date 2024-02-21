@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// OS feed type values.
-    /// Serialized Name: OSFeedType
-    /// </summary>
+    /// <summary> OS feed type values. </summary>
     public readonly partial struct SphereOSFeedType : IEquatable<SphereOSFeedType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string RetailValue = "Retail";
         private const string RetailEvalValue = "RetailEval";
 
-        /// <summary>
-        /// Retail OS feed type.
-        /// Serialized Name: OSFeedType.Retail
-        /// </summary>
+        /// <summary> Retail OS feed type. </summary>
         public static SphereOSFeedType Retail { get; } = new SphereOSFeedType(RetailValue);
-        /// <summary>
-        /// Retail evaluation OS feed type.
-        /// Serialized Name: OSFeedType.RetailEval
-        /// </summary>
+        /// <summary> Retail evaluation OS feed type. </summary>
         public static SphereOSFeedType RetailEval { get; } = new SphereOSFeedType(RetailEvalValue);
         /// <summary> Determines if two <see cref="SphereOSFeedType"/> values are the same. </summary>
         public static bool operator ==(SphereOSFeedType left, SphereOSFeedType right) => left.Equals(right);

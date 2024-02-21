@@ -56,6 +56,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +86,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,6 +115,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,6 +18,38 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class SuppressionListResourceData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SuppressionListResourceData"/>. </summary>
         public SuppressionListResourceData()
         {
@@ -31,12 +64,14 @@ namespace Azure.ResourceManager.Communication
         /// <param name="lastUpdatedTimeStamp"> The date the resource was last updated. </param>
         /// <param name="createdTimeStamp"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        internal SuppressionListResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedTimeStamp, DateTimeOffset? createdTimeStamp, string dataLocation) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuppressionListResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedTimeStamp, DateTimeOffset? createdTimeStamp, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ListName = listName;
             LastUpdatedTimeStamp = lastUpdatedTimeStamp;
             CreatedTimeStamp = createdTimeStamp;
             DataLocation = dataLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The the name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </summary>

@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "DocumentDbCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDataset"/> for deserialization. </summary>
+        internal DocumentDBCollectionDataset()
+        {
+        }
+
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName { get; set; }
     }

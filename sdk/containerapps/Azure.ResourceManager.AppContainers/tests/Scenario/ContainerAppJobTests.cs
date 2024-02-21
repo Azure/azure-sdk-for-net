@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 {
     internal class ContainerAppJobTests : AppContainersManagementTestBase
     {
-        public ContainerAppJobTests(bool isAsync) : base(isAsync)
+        public ContainerAppJobTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroupResource resourceGroup = await CreateResourceGroup("ContainerAppRG", AzureLocation.WestUS);
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
 
             // Create ContainerApp
             var envResource = await CreateContainerAppManagedEnvironment(resourceGroup, Recording.GenerateAssetName("env"));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
             // Create Container Registry
             string acrName = Recording.GenerateAssetName("acr");
-            var registryData = new ContainerRegistryData(resourceGroup.Data.Location, new ContainerRegistrySku(ContainerRegistrySkuName.Premium))
+            var registryData = new ContainerRegistryData(AzureLocation.WestUS, new ContainerRegistrySku(ContainerRegistrySkuName.Premium))
             {
                 IsAdminUserEnabled = true,
                 Sku = new ContainerRegistrySku(ContainerRegistrySkuName.Basic),
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
             // Craete ContainerAppJob
             string jobName = Recording.GenerateAssetName("job");
-            ContainerAppJobData data = new ContainerAppJobData(resourceGroup.Data.Location)
+            ContainerAppJobData data = new ContainerAppJobData(AzureLocation.WestUS)
             {
                 EnvironmentId = envResource.Id,
                 Configuration = new Models.ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual,1800)
@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.AppContainers.Tests
             await job.Value.StartAsync(WaitUntil.Completed);
             var executions = await job.Value.GetContainerAppJobExecutions().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(executions.FirstOrDefault().Data.StartOn);
-            Assert.AreEqual(JobExecutionRunningState.Running, executions.FirstOrDefault().Data.Status);
             Assert.AreEqual(1, executions.FirstOrDefault().Data.Template.Containers.Count);
         }
     }

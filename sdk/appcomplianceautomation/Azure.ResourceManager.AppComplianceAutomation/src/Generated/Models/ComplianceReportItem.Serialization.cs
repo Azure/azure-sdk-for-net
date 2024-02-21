@@ -5,15 +5,126 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ComplianceReportItem
+    public partial class ComplianceReportItem : IUtf8JsonSerializable, IJsonModel<ComplianceReportItem>
     {
-        internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceReportItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComplianceReportItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CategoryName))
+            {
+                writer.WritePropertyName("categoryName"u8);
+                writer.WriteStringValue(CategoryName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ControlId))
+            {
+                writer.WritePropertyName("controlId"u8);
+                writer.WriteStringValue(ControlId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ControlName))
+            {
+                writer.WritePropertyName("controlName"u8);
+                writer.WriteStringValue(ControlName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ControlType))
+            {
+                writer.WritePropertyName("controlType"u8);
+                writer.WriteStringValue(ControlType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("policyId"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PolicyDisplayName))
+            {
+                writer.WritePropertyName("policyDisplayName"u8);
+                writer.WriteStringValue(PolicyDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PolicyDescription))
+            {
+                writer.WritePropertyName("policyDescription"u8);
+                writer.WriteStringValue(PolicyDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusChangeDate))
+            {
+                writer.WritePropertyName("statusChangeDate"u8);
+                writer.WriteStringValue(StatusChangeDate);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComplianceReportItem IJsonModel<ComplianceReportItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComplianceReportItem(document.RootElement, options);
+        }
+
+        internal static ComplianceReportItem DeserializeComplianceReportItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +142,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> resourceType = default;
             Optional<string> resourceId = default;
             Optional<string> statusChangeDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categoryName"u8))
@@ -106,8 +219,44 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     statusChangeDate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ComplianceReportItem IPersistableModel<ComplianceReportItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComplianceReportItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComplianceReportItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

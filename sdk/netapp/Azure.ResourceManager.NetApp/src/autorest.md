@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -101,7 +102,7 @@ rename-mapping:
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address  
+  MountTargetProperties.ipAddress: -|ip-address
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -222,7 +223,7 @@ rename-mapping:
   VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
   VolumeRelocationProperties.relocationRequested: IsRelocationRequested
   BreakFileLocksRequest.clientIp: -|ip-address
-  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent
   BackupRestoreFiles.destinationVolumeId: -|arm-id
   BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
   VolumeRelocationProperties: NetAppVolumeRelocationProperties

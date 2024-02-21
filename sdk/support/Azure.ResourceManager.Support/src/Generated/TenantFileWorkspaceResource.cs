@@ -106,6 +106,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FilesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FilesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,6 +247,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +289,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

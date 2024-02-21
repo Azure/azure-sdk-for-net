@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -83,6 +91,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -133,6 +149,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -163,6 +187,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -213,6 +245,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -243,6 +283,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -275,6 +323,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -303,6 +355,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -333,6 +389,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -362,6 +422,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

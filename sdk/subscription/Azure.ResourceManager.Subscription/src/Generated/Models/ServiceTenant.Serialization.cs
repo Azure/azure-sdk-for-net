@@ -6,21 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class ServiceTenant
+    public partial class ServiceTenant : IUtf8JsonSerializable, IJsonModel<ServiceTenant>
     {
-        internal static ServiceTenant DeserializeServiceTenant(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTenant>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceTenant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(TenantName))
+            {
+                writer.WritePropertyName("tenantName"u8);
+                writer.WriteStringValue(TenantName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceTenant IJsonModel<ServiceTenant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTenant(document.RootElement, options);
+        }
+
+        internal static ServiceTenant DeserializeServiceTenant(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Guid> tenantId = default;
             Optional<string> tenantName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -37,8 +94,44 @@ namespace Azure.ResourceManager.Subscription.Models
                     tenantName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceTenant(Optional.ToNullable(tenantId), tenantName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceTenant(Optional.ToNullable(tenantId), tenantName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceTenant>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceTenant IPersistableModel<ServiceTenant>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceTenant(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceTenant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

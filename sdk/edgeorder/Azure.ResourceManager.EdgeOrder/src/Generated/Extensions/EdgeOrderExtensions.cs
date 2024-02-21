@@ -120,6 +120,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +157,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -197,6 +213,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -227,6 +251,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -276,6 +308,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -306,6 +346,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -338,6 +386,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListOrderAtResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -367,6 +419,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListOrderAtResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -395,6 +451,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,6 +490,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -455,6 +527,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -487,6 +563,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -518,6 +598,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -547,6 +631,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -578,6 +666,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -606,6 +698,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -636,6 +732,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -665,6 +765,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -693,6 +797,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -724,6 +836,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// <item>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
@@ -16,21 +15,50 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A class representing the ProvisionedClusterUpgradeProfile data model.
-    /// The list of available upgrades for compute pools.
+    /// The list of available kubernetes version upgrades for the provisioned cluster.
     /// </summary>
     public partial class ProvisionedClusterUpgradeProfileData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
-        /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
-        /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
-        public ProvisionedClusterUpgradeProfileData(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IEnumerable<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles)
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
+        public ProvisionedClusterUpgradeProfileData(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile)
         {
             Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
-            Argument.AssertNotNull(agentPoolProfiles, nameof(agentPoolProfiles));
 
             ControlPlaneProfile = controlPlaneProfile;
-            AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
@@ -38,21 +66,24 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
-        /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ControlPlaneProfile = controlPlaneProfile;
-            AgentPoolProfiles = agentPoolProfiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> The list of available upgrade versions for the control plane. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/> for deserialization. </summary>
+        internal ProvisionedClusterUpgradeProfileData()
+        {
+        }
+
+        /// <summary> Provisioning state of the resource. </summary>
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
+        /// <summary> The list of available kubernetes version upgrades for the control plane. </summary>
         public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
-        /// <summary> The list of available upgrade versions for agent pools. </summary>
-        public IList<ProvisionedClusterPoolUpgradeProfile> AgentPoolProfiles { get; }
     }
 }

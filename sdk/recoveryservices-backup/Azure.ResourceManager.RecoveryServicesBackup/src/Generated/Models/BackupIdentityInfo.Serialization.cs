@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupIdentityInfo : IUtf8JsonSerializable
+    public partial class BackupIdentityInfo : IUtf8JsonSerializable, IJsonModel<BackupIdentityInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupIdentityInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupIdentityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSystemAssignedIdentity))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupIdentityInfo DeserializeBackupIdentityInfo(JsonElement element)
+        BackupIdentityInfo IJsonModel<BackupIdentityInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupIdentityInfo(document.RootElement, options);
+        }
+
+        internal static BackupIdentityInfo DeserializeBackupIdentityInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isSystemAssignedIdentity = default;
             Optional<ResourceIdentifier> managedIdentityResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSystemAssignedIdentity"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     managedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupIdentityInfo(Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupIdentityInfo(Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupIdentityInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BackupIdentityInfo IPersistableModel<BackupIdentityInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupIdentityInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupIdentityInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

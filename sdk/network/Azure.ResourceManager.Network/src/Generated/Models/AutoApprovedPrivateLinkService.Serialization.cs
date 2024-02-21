@@ -5,20 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AutoApprovedPrivateLinkService
+    public partial class AutoApprovedPrivateLinkService : IUtf8JsonSerializable, IJsonModel<AutoApprovedPrivateLinkService>
     {
-        internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoApprovedPrivateLinkService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoApprovedPrivateLinkService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateLinkService))
+            {
+                writer.WritePropertyName("privateLinkService"u8);
+                writer.WriteStringValue(PrivateLinkService);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutoApprovedPrivateLinkService IJsonModel<AutoApprovedPrivateLinkService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoApprovedPrivateLinkService(document.RootElement, options);
+        }
+
+        internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> privateLinkService = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkService"u8))
@@ -26,8 +79,44 @@ namespace Azure.ResourceManager.Network.Models
                     privateLinkService = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoApprovedPrivateLinkService(privateLinkService.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutoApprovedPrivateLinkService(privateLinkService.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutoApprovedPrivateLinkService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AutoApprovedPrivateLinkService IPersistableModel<AutoApprovedPrivateLinkService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoApprovedPrivateLinkService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoApprovedPrivateLinkService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

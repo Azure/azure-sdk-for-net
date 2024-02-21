@@ -19,25 +19,37 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
-        /// <param name="messages">
-        /// The collection of context messages associated with this chat completions request.
-        /// Typical usage begins with a chat message for the System role that provides instructions for
-        /// the behavior of the assistant, followed by alternating messages between the User and
-        /// Assistant roles.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public ChatCompletionsOptions(IEnumerable<ChatRequestMessage> messages)
-        {
-            Argument.AssertNotNull(messages, nameof(messages));
-
-            Messages = messages.ToList();
-            Functions = new ChangeTrackingList<FunctionDefinition>();
-            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
-            StopSequences = new ChangeTrackingList<string>();
-            InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
-            Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
-        }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
@@ -69,7 +81,7 @@ namespace Azure.AI.OpenAI
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
         /// </param>
-        /// <param name="internalStringKeyedTokenSelectionBiases">
+        /// <param name="tokenSelectionBiases">
         /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
         /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
         /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
@@ -118,7 +130,8 @@ namespace Azure.AI.OpenAI
         /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string deploymentName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources, AzureChatEnhancementConfiguration enhancements, long? seed, ChatCompletionsResponseFormat responseFormat, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
             Functions = functions;
@@ -126,7 +139,7 @@ namespace Azure.AI.OpenAI
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;
-            InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
+            TokenSelectionBiases = tokenSelectionBiases;
             User = user;
             ChoiceCount = choiceCount;
             StopSequences = stopSequences;
@@ -140,6 +153,7 @@ namespace Azure.AI.OpenAI
             ResponseFormat = responseFormat;
             Tools = tools;
             InternalSuppressedToolChoice = internalSuppressedToolChoice;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -151,6 +165,11 @@ namespace Azure.AI.OpenAI
         /// The available derived classes include <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestUserMessage"/>, <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestFunctionMessage"/>.
         /// </summary>
         public IList<ChatRequestMessage> Messages { get; }
+        /// <summary>
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </summary>
+        public string User { get; set; }
         /// <summary>
         /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
         /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the

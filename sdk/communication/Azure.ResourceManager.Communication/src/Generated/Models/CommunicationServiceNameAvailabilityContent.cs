@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
@@ -20,7 +22,8 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
-        internal CommunicationServiceNameAvailabilityContent(string name, ResourceType? resourceType) : base(name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, resourceType, serializedAdditionalRawData)
         {
         }
     }

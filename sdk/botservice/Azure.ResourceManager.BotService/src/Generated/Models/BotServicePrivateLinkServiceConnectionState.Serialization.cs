@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServicePrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class BotServicePrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<BotServicePrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServicePrivateLinkServiceConnectionState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BotServicePrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotServicePrivateLinkServiceConnectionState)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BotServicePrivateLinkServiceConnectionState DeserializeBotServicePrivateLinkServiceConnectionState(JsonElement element)
+        BotServicePrivateLinkServiceConnectionState IJsonModel<BotServicePrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotServicePrivateLinkServiceConnectionState)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotServicePrivateLinkServiceConnectionState(document.RootElement, options);
+        }
+
+        internal static BotServicePrivateLinkServiceConnectionState DeserializeBotServicePrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<BotServicePrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -63,8 +105,44 @@ namespace Azure.ResourceManager.BotService.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BotServicePrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BotServicePrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotServicePrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BotServicePrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BotServicePrivateLinkServiceConnectionState IPersistableModel<BotServicePrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBotServicePrivateLinkServiceConnectionState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotServicePrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotServicePrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

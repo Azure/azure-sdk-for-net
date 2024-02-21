@@ -65,6 +65,26 @@ string region = "<Text Translator Azure Region>";
 TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
 ```
 
+#### Create `TextTranslationClient` with Microsoft Entra ID
+
+Client API key authentication is used in most of the examples, but you can also authenticate with Microsoft Entra ID using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  Use this value for the `endpoint` variable for `Text Translator Custom Endpoint`.  Only custom subdomains are supported by the SDK.  Outside of the SDK, you can use Microsoft Entra authorization for Machine Translation endpoints, as detailed [here][mt_endpoints].
+
+You will also need to [register a new Microsoft Entra application][register_aad_app] and [grant access][aad_grant_access] to your Translator resource by assigning the `"Cognitive Services User"` role to your service principal.  Additional information about Microsoft Entra authentication is available [here][custom_details].
+
+Set the values of the `client ID`, `tenant ID`, and `client secret` of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.  The `DefaultAzureCredential` constructor uses these variables to create your credentials.
+
+```C# Snippet:CreateTextTranslationClientWithAad
+string endpoint = "<Text Translator Custom Endpoint>";
+DefaultAzureCredential credential = new DefaultAzureCredential();
+TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
+```
+
 ## Key concepts
 
 ### `TextTranslationClient`
@@ -449,10 +469,15 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
-
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_details]: https://learn.microsoft.com/azure/ai-services/translator/reference/v3-0-reference#authentication-with-microsoft-entra-id
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com

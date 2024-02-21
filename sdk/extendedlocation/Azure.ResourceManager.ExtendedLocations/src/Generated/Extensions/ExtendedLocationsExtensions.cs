@@ -81,6 +81,14 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <term>Operation Id</term>
         /// <description>CustomLocations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomLocationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +118,14 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomLocations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomLocationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +157,14 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <term>Operation Id</term>
         /// <description>CustomLocations_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomLocationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +192,14 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomLocations_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomLocationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

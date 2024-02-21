@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownBatchDeploymentConfiguration. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
-        internal UnknownBatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType) : base(deploymentConfigurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentConfigurationType, serializedAdditionalRawData)
         {
             DeploymentConfigurationType = deploymentConfigurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/> for deserialization. </summary>
+        internal UnknownBatchDeploymentConfiguration()
+        {
         }
     }
 }

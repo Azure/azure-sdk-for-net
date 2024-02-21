@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +90,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,6 +358,30 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         {
             PartnerTopicResource.ValidateResourceId(id);
             return new PartnerTopicResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            TopicNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new TopicNetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            DomainNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new DomainNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
 
         /// <summary>

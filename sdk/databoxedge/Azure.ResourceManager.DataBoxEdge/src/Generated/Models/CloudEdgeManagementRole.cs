@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
@@ -30,10 +32,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="localManagementStatus"> Local Edge Management Status. </param>
         /// <param name="edgeProfile"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             LocalManagementStatus = localManagementStatus;
             EdgeProfile = edgeProfile;

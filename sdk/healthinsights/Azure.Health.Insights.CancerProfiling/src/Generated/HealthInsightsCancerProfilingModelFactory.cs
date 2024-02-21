@@ -15,20 +15,29 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Model factory for models. </summary>
     public static partial class HealthInsightsCancerProfilingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResult"/>. </summary>
-        /// <param name="jobId"> A processing job identifier. </param>
-        /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
-        /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>
-        /// <param name="lastUpdateDateTime"> The date and time when the processing job was last updated. </param>
-        /// <param name="status"> The status of the processing job. </param>
-        /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
-        /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeResult"/> instance for mocking. </returns>
-        public static OncoPhenotypeResult OncoPhenotypeResult(Guid jobId = default, DateTimeOffset createdDateTime = default, DateTimeOffset expirationDateTime = default, DateTimeOffset lastUpdateDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = null, OncoPhenotypeResults results = null)
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.PatientRecord"/>. </summary>
+        /// <param name="id"> A given identifier for the patient. Has to be unique across all patients in a single request. </param>
+        /// <param name="info"> Patient structured information, including demographics and known structured clinical information. </param>
+        /// <param name="data"> Patient unstructured clinical data, given as documents. </param>
+        /// <returns> A new <see cref="CancerProfiling.PatientRecord"/> instance for mocking. </returns>
+        public static PatientRecord PatientRecord(string id = null, PatientInfo info = null, IEnumerable<PatientDocument> data = null)
         {
-            errors ??= new List<ResponseError>();
+            data ??= new List<PatientDocument>();
 
-            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, errors?.ToList(), results);
+            return new PatientRecord(id, info, data?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.PatientDocument"/>. </summary>
+        /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
+        /// <param name="clinicalType"> The type of the clinical document. </param>
+        /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
+        /// <param name="language"> A 2 letter ISO 639-1 representation of the language of the document. </param>
+        /// <param name="createdDateTime"> The date and time when the document was created. </param>
+        /// <param name="content"> The content of the patient document. </param>
+        /// <returns> A new <see cref="CancerProfiling.PatientDocument"/> instance for mocking. </returns>
+        public static PatientDocument PatientDocument(DocumentType type = default, ClinicalDocumentType? clinicalType = null, string id = null, string language = null, DateTimeOffset? createdDateTime = null, DocumentContent content = null)
+        {
+            return new PatientDocument(type, clinicalType, id, language, createdDateTime, content, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResults"/>. </summary>
@@ -39,7 +48,7 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             patients ??= new List<OncoPhenotypePatientResult>();
 
-            return new OncoPhenotypeResults(patients?.ToList(), modelVersion);
+            return new OncoPhenotypeResults(patients?.ToList(), modelVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypePatientResult"/>. </summary>
@@ -50,7 +59,7 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             inferences ??= new List<OncoPhenotypeInference>();
 
-            return new OncoPhenotypePatientResult(id, inferences?.ToList());
+            return new OncoPhenotypePatientResult(id, inferences?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeInference"/>. </summary>
@@ -65,7 +74,7 @@ namespace Azure.Health.Insights.CancerProfiling
         {
             evidence ??= new List<InferenceEvidence>();
 
-            return new OncoPhenotypeInference(type, value, description, confidenceScore, evidence?.ToList(), caseId);
+            return new OncoPhenotypeInference(type, value, description, confidenceScore, evidence?.ToList(), caseId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.InferenceEvidence"/>. </summary>
@@ -78,7 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <returns> A new <see cref="CancerProfiling.InferenceEvidence"/> instance for mocking. </returns>
         public static InferenceEvidence InferenceEvidence(ClinicalNoteEvidence patientDataEvidence = null, ClinicalCodedElement patientInfoEvidence = null, float? importance = null)
         {
-            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance);
+            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.ClinicalNoteEvidence"/>. </summary>
@@ -89,7 +98,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <returns> A new <see cref="CancerProfiling.ClinicalNoteEvidence"/> instance for mocking. </returns>
         public static ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = default, int length = default)
         {
-            return new ClinicalNoteEvidence(id, text, offset, length);
+            return new ClinicalNoteEvidence(id, text, offset, length, serializedAdditionalRawData: null);
         }
     }
 }

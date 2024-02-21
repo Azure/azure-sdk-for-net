@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +14,73 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class SynapseSparkConfigurationListResult
+    internal partial class SynapseSparkConfigurationListResult : IUtf8JsonSerializable, IJsonModel<SynapseSparkConfigurationListResult>
     {
-        internal static SynapseSparkConfigurationListResult DeserializeSynapseSparkConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSparkConfigurationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseSparkConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkConfigurationListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SynapseSparkConfigurationListResult IJsonModel<SynapseSparkConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkConfigurationListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSparkConfigurationListResult(document.RootElement, options);
+        }
+
+        internal static SynapseSparkConfigurationListResult DeserializeSynapseSparkConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SynapseSparkConfigurationData> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,8 +98,44 @@ namespace Azure.ResourceManager.Synapse.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseSparkConfigurationListResult(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseSparkConfigurationListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseSparkConfigurationListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseSparkConfigurationListResult IPersistableModel<SynapseSparkConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSparkConfigurationListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkConfigurationListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSparkConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 

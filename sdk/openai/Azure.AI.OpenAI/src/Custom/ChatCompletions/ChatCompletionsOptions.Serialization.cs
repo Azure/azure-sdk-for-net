@@ -69,17 +69,10 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
             writer.WritePropertyName("top_p"u8);
             writer.WriteNumberValue(NucleusSamplingFactor.Value);
         }
-        // CUSTOM: serialize <int, int> to <string, int>
         if (Optional.IsCollectionDefined(TokenSelectionBiases))
         {
             writer.WritePropertyName("logit_bias"u8);
-            writer.WriteStartObject();
-            foreach (var item in TokenSelectionBiases)
-            {
-                writer.WritePropertyName($"{item.Key}");
-                writer.WriteNumberValue(item.Value);
-            }
-            writer.WriteEndObject();
+            SerializeTokenSelectionBiases(writer);
         }
         if (Optional.IsDefined(User))
         {

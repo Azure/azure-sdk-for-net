@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StringNotEndsWithAdvancedFilter : IUtf8JsonSerializable
+    public partial class StringNotEndsWithAdvancedFilter : IUtf8JsonSerializable, IJsonModel<StringNotEndsWithAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StringNotEndsWithAdvancedFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StringNotEndsWithAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotEndsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StringNotEndsWithAdvancedFilter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
@@ -33,11 +43,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StringNotEndsWithAdvancedFilter DeserializeStringNotEndsWithAdvancedFilter(JsonElement element)
+        StringNotEndsWithAdvancedFilter IJsonModel<StringNotEndsWithAdvancedFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotEndsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StringNotEndsWithAdvancedFilter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStringNotEndsWithAdvancedFilter(document.RootElement, options);
+        }
+
+        internal static StringNotEndsWithAdvancedFilter DeserializeStringNotEndsWithAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +84,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<string>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -71,8 +112,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StringNotEndsWithAdvancedFilter(operatorType, key.Value, Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StringNotEndsWithAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData, Optional.ToList(values));
         }
+
+        BinaryData IPersistableModel<StringNotEndsWithAdvancedFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotEndsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StringNotEndsWithAdvancedFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StringNotEndsWithAdvancedFilter IPersistableModel<StringNotEndsWithAdvancedFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotEndsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStringNotEndsWithAdvancedFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StringNotEndsWithAdvancedFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StringNotEndsWithAdvancedFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

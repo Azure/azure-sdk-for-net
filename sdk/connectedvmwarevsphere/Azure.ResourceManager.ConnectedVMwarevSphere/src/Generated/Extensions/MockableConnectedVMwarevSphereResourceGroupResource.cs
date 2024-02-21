@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourcePools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareResourcePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Name of the cluster. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Hosts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostName"> Name of the host. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +261,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore. </param>
@@ -235,6 +291,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +330,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vcenterName"> Name of the vCenter. </param>
@@ -288,6 +360,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VCenters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVCenterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +399,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
@@ -341,6 +429,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVmTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +468,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -394,6 +498,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VMwareVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

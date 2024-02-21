@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task Embeddings(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.Embeddings);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.Embeddings);
             var embeddingsOptions = new EmbeddingsOptions()
             {
                 DeploymentName = deploymentOrModelName,

@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -11,6 +12,24 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     public abstract class BaseModel : IJsonModel<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
+
+        public static implicit operator BinaryContent(BaseModel baseModel)
+        {
+            if (baseModel == null)
+            {
+                return null;
+            }
+
+            return BinaryContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
+        }
+
+        public static explicit operator BaseModel(ClientResult result)
+        {
+            if (result is null) throw new ArgumentNullException(nameof(result));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
+        }
 
         protected internal BaseModel(Dictionary<string, BinaryData> rawData)
         {

@@ -72,6 +72,7 @@ if ($LASTEXITCODE -ne 0)
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
+    Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
     Exit 2
 }
 
@@ -111,6 +112,8 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     Set-Location -Path ..
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
+    Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
+
     exit $warnings.Count
 }
 
@@ -135,7 +138,9 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
+  Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
   exit 2
 }
 
+Write-Host "\nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotRegressionChecks.md"
 exit $warnings.Count

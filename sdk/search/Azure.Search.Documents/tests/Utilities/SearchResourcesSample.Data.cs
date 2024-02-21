@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         Fields =
                         {
                             new SearchableField("StreetAddress"),
-                            new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true, NormalizerName = LexicalNormalizerName.Lowercase },
                             new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("Country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },

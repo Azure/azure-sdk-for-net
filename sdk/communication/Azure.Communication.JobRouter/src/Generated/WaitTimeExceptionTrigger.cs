@@ -5,25 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : ExceptionTrigger
     {
         /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
-        /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(double thresholdSeconds)
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="threshold"> Threshold for wait time for this trigger. </param>
+        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan threshold) : base(kind, serializedAdditionalRawData)
         {
-            Kind = ExceptionTriggerKind.WaitTime;
-            _thresholdSeconds = thresholdSeconds;
+            Threshold = threshold;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/>. </summary>
-        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
-        internal WaitTimeExceptionTrigger(ExceptionTriggerKind kind, double thresholdSeconds) : base(kind)
+        /// <summary> Initializes a new instance of <see cref="WaitTimeExceptionTrigger"/> for deserialization. </summary>
+        internal WaitTimeExceptionTrigger()
         {
-            _thresholdSeconds = thresholdSeconds;
         }
     }
 }

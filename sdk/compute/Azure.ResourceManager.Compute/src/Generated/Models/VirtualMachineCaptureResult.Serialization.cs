@@ -6,27 +6,109 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable
+    public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable, IJsonModel<VirtualMachineCaptureResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineCaptureResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineCaptureResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Schema))
+            {
+                writer.WritePropertyName("$schema"u8);
+                writer.WriteStringValue(Schema);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
+            {
+                writer.WritePropertyName("contentVersion"u8);
+                writer.WriteStringValue(ContentVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Parameters);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            {
+                writer.WritePropertyName("resources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Resources)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element)
+        VirtualMachineCaptureResult IJsonModel<VirtualMachineCaptureResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineCaptureResult(document.RootElement, options);
+        }
+
+        internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +118,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BinaryData> parameters = default;
             Optional<IReadOnlyList<BinaryData>> resources = default;
             Optional<ResourceIdentifier> id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"u8))
@@ -87,8 +171,44 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineCaptureResult(id.Value, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineCaptureResult(id.Value, serializedAdditionalRawData, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
         }
+
+        BinaryData IPersistableModel<VirtualMachineCaptureResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineCaptureResult IPersistableModel<VirtualMachineCaptureResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineCaptureResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineCaptureResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

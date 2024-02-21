@@ -2,30 +2,37 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
+    [CodeGenSerialization(nameof(ExpiresAfter), SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
+    public partial class PassThroughWorkerSelectorAttachment
     {
         /// <summary> Describes how the value of the label is compared to the value passed through. </summary>
-        public LabelOperator LabelOperator { get; internal set; }
+        public LabelOperator LabelOperator { get; }
 
         /// <summary> Describes how long the attached worker selector is valid. </summary>
-        public TimeSpan? ExpiresAfter { get; internal set; }
-
         [CodeGenMember("ExpiresAfterSeconds")]
-        internal double? _expiresAfterSeconds
+        public TimeSpan? ExpiresAfter { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteExpiresAfter(Utf8JsonWriter writer)
         {
-            get
+            writer.WriteNumberValue(ExpiresAfter.Value.TotalSeconds);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadExpiresAfter(JsonProperty property, ref Optional<TimeSpan> expiresAfter)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return ExpiresAfter?.TotalSeconds is null or 0 ? null : ExpiresAfter?.TotalSeconds;
+                return;
             }
-            set
-            {
-                ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
-            }
+            var value = property.Value.GetDouble();
+            expiresAfter = TimeSpan.FromSeconds(value);
         }
 
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
@@ -34,26 +41,13 @@ namespace Azure.Communication.JobRouter
         /// <param name="expiresAfter"> Describes how long the attached worker selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-        }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("key"u8);
-            writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_expiresAfterSeconds))
-            {
-                writer.WritePropertyName("expiresAfterSeconds"u8);
-                writer.WriteNumberValue(_expiresAfterSeconds.Value);
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
+            Kind = WorkerSelectorAttachmentKind.PassThrough;
+            Key = key;
+            LabelOperator = labelOperator;
+            ExpiresAfter = expiresAfter;
         }
     }
 }

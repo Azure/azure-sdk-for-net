@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DefenderCspmGcpValue = "DefenderCspmGcp";
         private const string DefenderForDevOpsGithubValue = "DefenderForDevOpsGithub";
         private const string DefenderForDevOpsAzureDevOpsValue = "DefenderForDevOpsAzureDevOps";
+        private const string CspmMonitorGitLabValue = "CspmMonitorGitLab";
+        private const string DefenderForDevOpsGitLabValue = "DefenderForDevOpsGitLab";
 
         /// <summary> CspmMonitorAws. </summary>
         public static OfferingType CspmMonitorAws { get; } = new OfferingType(CspmMonitorAwsValue);
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OfferingType DefenderForDevOpsGithub { get; } = new OfferingType(DefenderForDevOpsGithubValue);
         /// <summary> DefenderForDevOpsAzureDevOps. </summary>
         public static OfferingType DefenderForDevOpsAzureDevOps { get; } = new OfferingType(DefenderForDevOpsAzureDevOpsValue);
+        /// <summary> CspmMonitorGitLab. </summary>
+        public static OfferingType CspmMonitorGitLab { get; } = new OfferingType(CspmMonitorGitLabValue);
+        /// <summary> DefenderForDevOpsGitLab. </summary>
+        public static OfferingType DefenderForDevOpsGitLab { get; } = new OfferingType(DefenderForDevOpsGitLabValue);
         /// <summary> Determines if two <see cref="OfferingType"/> values are the same. </summary>
         public static bool operator ==(OfferingType left, OfferingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OfferingType"/> values are not the same. </summary>

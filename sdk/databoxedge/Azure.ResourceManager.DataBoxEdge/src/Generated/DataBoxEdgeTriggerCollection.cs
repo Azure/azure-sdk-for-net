@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The trigger name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +252,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
@@ -243,6 +283,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The trigger name. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +444,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

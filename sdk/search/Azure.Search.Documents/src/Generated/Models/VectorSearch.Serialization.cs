@@ -36,6 +36,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Vectorizers))
+            {
+                writer.WritePropertyName("vectorizers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Vectorizers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -47,6 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<IList<VectorSearchProfile>> profiles = default;
             Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
+            Optional<IList<VectorSearchVectorizer>> vectorizers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -77,8 +88,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     algorithms = array;
                     continue;
                 }
+                if (property.NameEquals("vectorizers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchVectorizer> array = new List<VectorSearchVectorizer>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item));
+                    }
+                    vectorizers = array;
+                    continue;
+                }
             }
-            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms));
+            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers));
         }
     }
 }

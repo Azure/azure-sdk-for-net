@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Models
             registrationVirtualNetworks ??= new List<WritableSubResource>();
             resolutionVirtualNetworks ??= new List<WritableSubResource>();
 
-            return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList());
+            return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReferenceResult"/>. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dns.Models
         {
             dnsResourceReferences ??= new List<DnsResourceReference>();
 
-            return new DnsResourceReferenceResult(dnsResourceReferences?.ToList());
+            return new DnsResourceReferenceResult(dnsResourceReferences?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReference"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dns.Models
         {
             dnsResources ??= new List<WritableSubResource>();
 
-            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null);
+            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, serializedAdditionalRawData: null);
         }
     }
 }

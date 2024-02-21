@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
@@ -25,8 +26,9 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="TrackDescriptor"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioTrackDescriptor"/>, <see cref="SelectAudioTrackByAttribute"/>, <see cref="SelectAudioTrackById"/>, <see cref="SelectVideoTrackByAttribute"/>, <see cref="SelectVideoTrackById"/> and <see cref="VideoTrackDescriptor"/>.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filename"> Name of the file that this input definition applies to. </param>
-        internal MediaJobInputFile(string odataType, IList<TrackDescriptor> includedTracks, string filename) : base(odataType, includedTracks)
+        internal MediaJobInputFile(string odataType, IList<TrackDescriptor> includedTracks, IDictionary<string, BinaryData> serializedAdditionalRawData, string filename) : base(odataType, includedTracks, serializedAdditionalRawData)
         {
             Filename = filename;
             OdataType = odataType ?? "#Microsoft.Media.InputFile";

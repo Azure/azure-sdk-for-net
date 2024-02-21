@@ -81,6 +81,14 @@ namespace Azure.ResourceManager.Qumulo
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-12</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +118,14 @@ namespace Azure.ResourceManager.Qumulo
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-12</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +157,14 @@ namespace Azure.ResourceManager.Qumulo
         /// <term>Operation Id</term>
         /// <description>FileSystems_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-12</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +192,14 @@ namespace Azure.ResourceManager.Qumulo
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileSystems_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-12</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>

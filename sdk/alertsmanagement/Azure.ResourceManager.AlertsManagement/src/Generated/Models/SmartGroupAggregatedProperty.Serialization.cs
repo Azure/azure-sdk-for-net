@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class SmartGroupAggregatedProperty : IUtf8JsonSerializable
+    public partial class SmartGroupAggregatedProperty : IUtf8JsonSerializable, IJsonModel<SmartGroupAggregatedProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupAggregatedProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SmartGroupAggregatedProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SmartGroupAggregatedProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SmartGroupAggregatedProperty)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SmartGroupAggregatedProperty DeserializeSmartGroupAggregatedProperty(JsonElement element)
+        SmartGroupAggregatedProperty IJsonModel<SmartGroupAggregatedProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SmartGroupAggregatedProperty>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SmartGroupAggregatedProperty)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmartGroupAggregatedProperty(document.RootElement, options);
+        }
+
+        internal static SmartGroupAggregatedProperty DeserializeSmartGroupAggregatedProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<long> count = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SmartGroupAggregatedProperty(name.Value, Optional.ToNullable(count));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SmartGroupAggregatedProperty(name.Value, Optional.ToNullable(count), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SmartGroupAggregatedProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmartGroupAggregatedProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SmartGroupAggregatedProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SmartGroupAggregatedProperty IPersistableModel<SmartGroupAggregatedProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SmartGroupAggregatedProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSmartGroupAggregatedProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SmartGroupAggregatedProperty)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SmartGroupAggregatedProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

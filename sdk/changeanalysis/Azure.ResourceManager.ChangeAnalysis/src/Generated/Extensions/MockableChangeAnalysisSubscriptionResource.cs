@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesBySubscriptionRequest(Id.SubscriptionId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -80,6 +84,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -91,7 +99,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesBySubscriptionRequest(Id.SubscriptionId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisSubscriptionResource.GetChangesBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

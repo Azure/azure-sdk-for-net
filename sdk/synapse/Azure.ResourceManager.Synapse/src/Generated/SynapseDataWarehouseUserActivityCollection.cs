@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +144,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -159,6 +183,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -189,6 +221,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

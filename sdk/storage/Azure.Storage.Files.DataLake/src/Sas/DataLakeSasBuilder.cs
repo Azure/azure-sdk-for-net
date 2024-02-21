@@ -355,7 +355,7 @@ namespace Azure.Storage.Sas
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -421,7 +421,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));

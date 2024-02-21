@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudName"> Name of the Cloud. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +261,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> Name of the VirtualMachine. </param>
@@ -235,6 +291,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +330,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineTemplateName"> Name of the VirtualMachineTemplate. </param>
@@ -288,6 +360,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +399,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="availabilitySetName"> Name of the AvailabilitySet. </param>
@@ -341,6 +429,14 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

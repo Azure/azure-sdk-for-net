@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsAccessKeys
+    public partial class EventHubsAccessKeys : IUtf8JsonSerializable, IJsonModel<EventHubsAccessKeys>
     {
-        internal static EventHubsAccessKeys DeserializeEventHubsAccessKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsAccessKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubsAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
+            {
+                writer.WritePropertyName("primaryConnectionString"u8);
+                writer.WriteStringValue(PrimaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
+            {
+                writer.WritePropertyName("secondaryConnectionString"u8);
+                writer.WriteStringValue(SecondaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AliasPrimaryConnectionString))
+            {
+                writer.WritePropertyName("aliasPrimaryConnectionString"u8);
+                writer.WriteStringValue(AliasPrimaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AliasSecondaryConnectionString))
+            {
+                writer.WritePropertyName("aliasSecondaryConnectionString"u8);
+                writer.WriteStringValue(AliasSecondaryConnectionString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            {
+                writer.WritePropertyName("keyName"u8);
+                writer.WriteStringValue(KeyName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventHubsAccessKeys IJsonModel<EventHubsAccessKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsAccessKeys(document.RootElement, options);
+        }
+
+        internal static EventHubsAccessKeys DeserializeEventHubsAccessKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> keyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"u8))
@@ -62,8 +145,44 @@ namespace Azure.ResourceManager.EventHubs.Models
                     keyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubsAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubsAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubsAccessKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventHubsAccessKeys IPersistableModel<EventHubsAccessKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubsAccessKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubsAccessKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeComputeResourceInfo : IUtf8JsonSerializable
+    public partial class EdgeComputeResourceInfo : IUtf8JsonSerializable, IJsonModel<EdgeComputeResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeComputeResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeComputeResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeComputeResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeComputeResourceInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("processorCount"u8);
             writer.WriteNumberValue(ProcessorCount);
             writer.WritePropertyName("memoryInGB"u8);
             writer.WriteNumberValue(MemoryInGB);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeComputeResourceInfo DeserializeEdgeComputeResourceInfo(JsonElement element)
+        EdgeComputeResourceInfo IJsonModel<EdgeComputeResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeComputeResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeComputeResourceInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeComputeResourceInfo(document.RootElement, options);
+        }
+
+        internal static EdgeComputeResourceInfo DeserializeEdgeComputeResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int processorCount = default;
             long memoryInGB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("processorCount"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     memoryInGB = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeComputeResourceInfo(processorCount, memoryInGB);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeComputeResourceInfo(processorCount, memoryInGB, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeComputeResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeComputeResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeComputeResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdgeComputeResourceInfo IPersistableModel<EdgeComputeResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeComputeResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeComputeResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeComputeResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeComputeResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

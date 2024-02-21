@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -56,6 +57,17 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsTrue(nginxDeployment.HasData);
             Assert.NotNull(nginxDeployment.Data);
             Assert.IsTrue(nginxDeployment.Data.Name.Equals(nginxDeploymentName));
+            Assert.IsNotNull(nginxDeployment.Data.Identity);
+            Assert.IsNotNull(nginxDeployment.Data.SkuName);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ProvisioningState);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxVersion);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceConfiguration);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceSubnetId);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.IPAddress);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.EnableDiagnosticsSupport);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingCapacity);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.UserPreferredEmail);
         }
 
         [TestCase]
@@ -77,8 +89,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
-            string certificateVirtualPath = "/etc/cert/nginx.cert";
-            string keyVirtualPath = "/etc/cert/nginx.key";
+            string certificateVirtualPath = "/etc/nginx/nginx.cert";
+            string keyVirtualPath = "/etc/nginx/nginx.key";
             _ = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
             NginxCertificateResource nginxCertificate = await nginxDeployment.GetNginxCertificateAsync(nginxCertificateName);
 
@@ -124,7 +136,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
             NginxDeploymentResource response = await nginxDeployment.GetAsync();
 
-            ResourceDataHelper.AssertTrackedResource(nginxDeployment.Data, response.Data);
+            ResourceDataHelper.AssertTrackedResourceData(nginxDeployment.Data, response.Data);
         }
 
         [TestCase]
@@ -165,6 +177,22 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.AreEqual(nginxDeployment2.Data.Tags["Counter"], "1");
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.AddTagAsync(null, "1")).Value);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.AddTagAsync("Counter", null)).Value);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task RemoveTag()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+            NginxDeploymentResource nginxDeployment2 = await nginxDeployment.AddTagAsync("Counter", "1");
+
+            Assert.AreEqual(nginxDeployment2.Data.Tags["Counter"], "1");
+            await Delay(TimeSpan.FromMinutes(2).Milliseconds);
+            NginxDeploymentResource nginxDeployment3 = await nginxDeployment.RemoveTagAsync("Counter");
+
+            Assert.IsFalse(nginxDeployment3.Data.Tags.ContainsKey("Counter"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.RemoveTagAsync(null)).Value);
         }
     }
 }

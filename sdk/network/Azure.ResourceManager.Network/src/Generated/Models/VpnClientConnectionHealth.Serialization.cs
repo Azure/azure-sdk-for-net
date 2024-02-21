@@ -5,16 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientConnectionHealth
+    public partial class VpnClientConnectionHealth : IUtf8JsonSerializable, IJsonModel<VpnClientConnectionHealth>
     {
-        internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientConnectionHealth>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VpnClientConnectionHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TotalIngressBytesTransferred))
+            {
+                writer.WritePropertyName("totalIngressBytesTransferred"u8);
+                writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalEgressBytesTransferred))
+            {
+                writer.WritePropertyName("totalEgressBytesTransferred"u8);
+                writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
+            }
+            if (Optional.IsDefined(VpnClientConnectionsCount))
+            {
+                writer.WritePropertyName("vpnClientConnectionsCount"u8);
+                writer.WriteNumberValue(VpnClientConnectionsCount.Value);
+            }
+            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
+            {
+                writer.WritePropertyName("allocatedIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllocatedIPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VpnClientConnectionHealth IJsonModel<VpnClientConnectionHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnClientConnectionHealth(document.RootElement, options);
+        }
+
+        internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +93,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
             Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalIngressBytesTransferred"u8))
@@ -66,8 +138,44 @@ namespace Azure.ResourceManager.Network.Models
                     allocatedIPAddresses = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VpnClientConnectionHealth>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VpnClientConnectionHealth IPersistableModel<VpnClientConnectionHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnClientConnectionHealth(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnClientConnectionHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

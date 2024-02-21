@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksSparkPython";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
+        }
+
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PythonFile { get; set; }
         /// <summary>

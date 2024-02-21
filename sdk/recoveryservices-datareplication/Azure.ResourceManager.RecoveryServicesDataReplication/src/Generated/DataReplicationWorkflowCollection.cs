@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job (workflow) name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter string. </param>
@@ -162,6 +186,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter string. </param>
@@ -185,6 +217,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +261,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job (workflow) name. </param>
@@ -255,6 +303,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +348,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

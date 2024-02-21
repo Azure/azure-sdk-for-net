@@ -45,6 +45,7 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
                     case "vector": return VectorizedQuery.DeserializeVectorizedQuery(element);
                 }
             }

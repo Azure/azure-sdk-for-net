@@ -49,6 +49,7 @@ namespace Azure.Search.Documents.Tests
             ISearchFieldAttribute attribute = new SearchableFieldAttribute
             {
                 AnalyzerName = LexicalAnalyzerName.Values.EnLucene,
+                NormalizerName = LexicalNormalizerName.Values.Lowercase,
                 IsFilterable = true,
                 IsSortable = true,
             };
@@ -66,6 +67,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
             Assert.IsNull(field.IndexAnalyzerName);
             Assert.IsNull(field.SearchAnalyzerName);
+            Assert.AreEqual(LexicalNormalizerName.Lowercase.ToString(), field.NormalizerName?.ToString());
             Assert.IsEmpty(field.SynonymMapNames);
 
             // Make sure that if a SimpleFieldAttribute were also specified, it does not overwrite IsSearchable
@@ -88,6 +90,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(LexicalAnalyzerName.EnLucene.ToString(), field.AnalyzerName?.ToString());
             Assert.IsNull(field.IndexAnalyzerName);
             Assert.IsNull(field.SearchAnalyzerName);
+            Assert.AreEqual(LexicalNormalizerName.Lowercase.ToString(), field.NormalizerName?.ToString());
             Assert.IsEmpty(field.SynonymMapNames);
         }
     }

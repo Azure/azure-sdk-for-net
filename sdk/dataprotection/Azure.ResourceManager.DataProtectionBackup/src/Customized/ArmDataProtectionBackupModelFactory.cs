@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 featureSettings.CrossSubscriptionRestoreState = crossSubscriptionRestoreState;
             }
 
-            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, null, null);
+            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, null), null) : null, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings?.ToList(), isVaultProtectedByResourceGuard, featureSettings, null, null, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupVaultProperties"/>. </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns></returns>
         public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, string objectType = null)
         {
-            return new DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType);
+            return new DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType, null);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             errorDetails ??= new List<ResponseError>();
             supportedActions ??= new List<string>();
 
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName, dataSourceType, duration, endOn, errorDetails?.ToList(), extendedInfo, isUserTriggered, operation, operationCategory, policyId, policyName, isProgressEnabled, progressUri, null, restoreType, sourceResourceGroup, sourceSubscriptionId, startOn, status, subscriptionId, supportedActions?.ToList(), vaultName, eTag, sourceDataStoreName, destinationDataStoreName);
+            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName, dataSourceType, duration, endOn, errorDetails?.ToList(), extendedInfo, isUserTriggered, operation, operationCategory, policyId, policyName, isProgressEnabled, progressUri, null, restoreType, sourceResourceGroup, sourceSubscriptionId, startOn, status, subscriptionId, supportedActions?.ToList(), vaultName, eTag, sourceDataStoreName, destinationDataStoreName, null);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns></returns>
         public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, string objectType = null, BackupInstanceDeletionInfo deletionInfo = null)
         {
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType, deletionInfo);
+            return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType, null, deletionInfo);
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>

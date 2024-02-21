@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -85,6 +93,14 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +125,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,7 +137,7 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OperationResponse.DeserializeOperationResponse(e), OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,6 +151,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +163,7 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OperationResponse.DeserializeOperationResponse(e), OperationClientDiagnostics, Pipeline, "MockableManagementPartnerTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

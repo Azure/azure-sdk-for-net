@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task StartAndStopDevBoxSucceeds()
         {
             // At this point we should have a running dev box, let's stop it
-            Operation<BinaryData> devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
+            Operation devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
@@ -60,8 +60,8 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.hibernate,
                 TestEnvironment.context);
 
-            BinaryData devBoxData = await devBoxStopOperation.WaitForCompletionAsync();
-            JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
+            BinaryData devBoxData = devBoxStopOperation.GetRawResponse().Content;
+            JsonElement devBox = JsonDocument.Parse(devBoxData).RootElement;
 
             if (!devBox.TryGetProperty("status", out var devBoxStatusJson))
             {
@@ -72,15 +72,15 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.True(devBoxStatus.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
 
             // Start the dev box
-            Operation<BinaryData> devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
+            Operation devBoxStartOperation = await _devBoxesClient.StartDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 TestEnvironment.context);
 
-            devBoxData = await devBoxStartOperation.WaitForCompletionAsync();
-            devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
+            devBoxData = devBoxStartOperation.GetRawResponse().Content;
+            devBox = JsonDocument.Parse(devBoxData).RootElement;
 
             if (!devBox.TryGetProperty("status", out devBoxStatusJson))
             {

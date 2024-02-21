@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceAuthenticationConfiguration : IUtf8JsonSerializable
+    public partial class FhirServiceAuthenticationConfiguration : IUtf8JsonSerializable, IJsonModel<FhirServiceAuthenticationConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceAuthenticationConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FhirServiceAuthenticationConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Authority))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FhirServiceAuthenticationConfiguration DeserializeFhirServiceAuthenticationConfiguration(JsonElement element)
+        FhirServiceAuthenticationConfiguration IJsonModel<FhirServiceAuthenticationConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFhirServiceAuthenticationConfiguration(document.RootElement, options);
+        }
+
+        internal static FhirServiceAuthenticationConfiguration DeserializeFhirServiceAuthenticationConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<string> authority = default;
             Optional<string> audience = default;
             Optional<bool> smartProxyEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authority"u8))
@@ -63,8 +105,44 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     smartProxyEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FhirServiceAuthenticationConfiguration(authority.Value, audience.Value, Optional.ToNullable(smartProxyEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FhirServiceAuthenticationConfiguration(authority.Value, audience.Value, Optional.ToNullable(smartProxyEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FhirServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FhirServiceAuthenticationConfiguration IPersistableModel<FhirServiceAuthenticationConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFhirServiceAuthenticationConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FhirServiceAuthenticationConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

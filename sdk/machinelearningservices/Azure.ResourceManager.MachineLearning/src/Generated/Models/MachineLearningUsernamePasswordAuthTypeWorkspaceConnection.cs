@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,8 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="expiryOn"></param>
         /// <param name="metadata"> Any object. </param>
         /// <param name="target"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, MachineLearningWorkspaceConnectionUsernamePassword credentials) : base(authType, category, expiryOn, metadata, target)
+        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningWorkspaceConnectionUsernamePassword credentials) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

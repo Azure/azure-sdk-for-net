@@ -261,13 +261,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string clientIdentifier,
-                                                  long sequenceNumber,
-                                                  int replicationSegment,
-                                                  long offset)
+                                                  string sequenceNumber,
+                                                  string replicationSegment,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -290,13 +290,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                      string eventHubName,
                                                      string consumerGroup,
                                                      string clientIdentifier,
-                                                     long sequenceNumber,
-                                                     int replicationSegment,
-                                                     long offset)
+                                                     string sequenceNumber,
+                                                     string replicationSegment,
+                                                     string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -321,13 +321,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   string errorMessage,
-                                                  long sequenceNumber,
-                                                  int replicationSegment,
-                                                  long offset)
+                                                  string sequenceNumber,
+                                                  string replicationSegment,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -677,24 +677,24 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
-                                                                  string arg1,
-                                                                  string arg2,
-                                                                  string arg3,
-                                                                  string arg4,
-                                                                  string arg5,
-                                                                  TValue1 arg6,
-                                                                  TValue2 arg7,
-                                                                  TValue3 arg8)
-            where TValue1 : struct
-            where TValue2 : struct
-            where TValue3 : struct
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7,
+                                       string arg8)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
             fixed (char* arg3Ptr = arg3)
             fixed (char* arg4Ptr = arg4)
             fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            fixed (char* arg8Ptr = arg8)
             {
                 var eventPayload = stackalloc EventData[8];
 
@@ -713,14 +713,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
                 eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
 
-                eventPayload[6].Size = Unsafe.SizeOf<TValue1>();
-                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
-                eventPayload[7].Size = Unsafe.SizeOf<TValue2>();
-                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
 
-                eventPayload[8].Size = Unsafe.SizeOf<TValue3>();
-                eventPayload[8].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+                eventPayload[7].Size = (arg8.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)arg8Ptr;
 
                 WriteEventCore(eventId, 8, eventPayload);
             }
@@ -744,19 +744,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
-                                                                  string arg1,
-                                                                  string arg2,
-                                                                  string arg3,
-                                                                  string arg4,
-                                                                  string arg5,
-                                                                  string arg6,
-                                                                  TValue1 arg7,
-                                                                  TValue2 arg8,
-                                                                  TValue3 arg9)
-            where TValue1 : struct
-            where TValue2 : struct
-            where TValue3 : struct
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7,
+                                       string arg8,
+                                       string arg9)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
@@ -764,6 +761,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg4Ptr = arg4)
             fixed (char* arg5Ptr = arg5)
             fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            fixed (char* arg8Ptr = arg8)
+            fixed (char* arg9Ptr = arg9)
             {
                 var eventPayload = stackalloc EventData[9];
 
@@ -785,14 +785,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
                 eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
-                eventPayload[6].Size = Unsafe.SizeOf<TValue1>();
-                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
 
-                eventPayload[7].Size = Unsafe.SizeOf<TValue2>();
-                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+                eventPayload[7].Size = (arg8.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)arg8Ptr;
 
-                eventPayload[8].Size = Unsafe.SizeOf<TValue3>();
-                eventPayload[8].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg9);
+                eventPayload[8].Size = (arg9.Length + 1) * sizeof(char);
+                eventPayload[8].DataPointer = (IntPtr)arg9Ptr;
 
                 WriteEventCore(eventId, 9, eventPayload);
             }

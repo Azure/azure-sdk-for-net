@@ -126,7 +126,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request.ToRequestContent());
     JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;
@@ -163,7 +163,7 @@ Console.WriteLine("Detecting the anomaly status of the latest point in the serie
 
 try
 {
-    UnivariateLastDetectionResult result = client.DetectUnivariateLastPoint(request);
+    UnivariateLastDetectionResult result = client.GetUnivariateClient().DetectUnivariateLastPoint(request);
 
     if (result.IsAnomaly)
     {
@@ -192,7 +192,7 @@ catch (Exception ex)
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
+UnivariateChangePointDetectionResult result = client.GetUnivariateClient().DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

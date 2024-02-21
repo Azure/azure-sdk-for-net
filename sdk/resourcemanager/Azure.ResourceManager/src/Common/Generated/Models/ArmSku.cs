@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Models
             Capacity = capacity;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmSku"/> for deserialization. </summary>
+        internal ArmSku()
+        {
+        }
+
         /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
         public string Name { get; set; }
         /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>

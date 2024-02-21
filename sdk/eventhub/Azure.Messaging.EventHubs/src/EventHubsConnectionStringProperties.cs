@@ -29,6 +29,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The token that identifies the value of a shared access signature.</summary>
         private const string SharedAccessSignatureToken = "SharedAccessSignature";
 
+        /// <summary>The token that identifies the intent to use a local emulator for development.</summary>
+        private const string DevelopmentEmulatorToken = "UseDevelopmentEmulator";
+
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
         private const char TokenValueSeparator = '=';
 
@@ -84,6 +87,15 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public string SharedAccessSignature { get; internal set; }
+
+        /// <summary>
+        ///   Indicates whether or not the connection string indicates that the
+        ///   local development emulator is being used.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the emulator is being used; otherwise, <c>false</c>.</value>
+        ///
+        internal bool UseDevelopmentEmulator { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -176,6 +188,15 @@ namespace Azure.Messaging.EventHubs
                     .Append(TokenValuePairDelimiter);
             }
 
+            if (UseDevelopmentEmulator)
+            {
+                builder
+                    .Append(DevelopmentEmulatorToken)
+                    .Append(TokenValueSeparator)
+                    .Append("true")
+                    .Append(TokenValuePairDelimiter);
+            }
+
             return builder.ToString();
         }
 
@@ -222,6 +243,13 @@ namespace Azure.Messaging.EventHubs
                 || ((!hasSharedKey) && (!hasSharedSignature)))
             {
                 throw new ArgumentException(Resources.MissingConnectionInformation, connectionStringArgumentName);
+            }
+
+            // Ensure that the namespace reflects the local host when the development emulator is being used.
+
+            if ((UseDevelopmentEmulator) && (!Endpoint.IsLoopback))
+            {
+                throw new ArgumentException(Resources.InvalidEmulatorEndpoint, connectionStringArgumentName);
             }
         }
 
@@ -298,10 +326,29 @@ namespace Azure.Messaging.EventHubs
 
                     if (string.Compare(EndpointToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        var endpointBuilder = new UriBuilder(value)
+                        // If this is an absolute URI, then it may have a custom port specified, which we
+                        // want to preserve.  If no scheme was specified, the URI is considered relative and
+                        // the default port should be used.
+
+                        if (!Uri.TryCreate(value, UriKind.Absolute, out var endpointUri))
                         {
-                            Scheme = EventHubsEndpointScheme,
-                            Port = -1
+                            endpointUri = null;
+                        }
+
+                        var endpointBuilder = endpointUri switch
+                        {
+                            null => new UriBuilder(value)
+                            {
+                                Scheme = EventHubsEndpointScheme,
+                                Port = -1
+                            },
+
+                            _ => new UriBuilder()
+                            {
+                                Scheme = EventHubsEndpointScheme,
+                                Host = endpointUri.Host,
+                                Port = endpointUri.IsDefaultPort ? -1 : endpointUri.Port,
+                            }
                         };
 
                         if ((string.Compare(endpointBuilder.Scheme, EventHubsEndpointSchemeName, StringComparison.OrdinalIgnoreCase) != 0)
@@ -327,6 +374,16 @@ namespace Azure.Messaging.EventHubs
                     else if (string.Compare(SharedAccessSignatureToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         parsedValues.SharedAccessSignature = value;
+                    }
+                    else if (string.Compare(DevelopmentEmulatorToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        // Do not enforce a value for the development emulator token. If a valid boolean, use it.
+                        // Otherwise, leave the default value of false.
+
+                        if (bool.TryParse(value, out var useEmulator))
+                        {
+                            parsedValues.UseDevelopmentEmulator = useEmulator;
+                        }
                     }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))

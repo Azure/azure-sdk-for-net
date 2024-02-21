@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -127,10 +127,7 @@ public class ChatToolsTests : OpenAITestBase
             followupOptions.Messages.Add(originalMessage);
         }
         // And the tool call message just received back from the assistant
-        followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message.Content)
-        {
-            ToolCalls = { functionToolCall },
-        });
+        followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
 
         // And also the tool message that resolves the tool call
         followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -158,11 +155,11 @@ public class ChatToolsTests : OpenAITestBase
         var requestOptions = new ChatCompletionsOptions()
         {
             DeploymentName = deploymentOrModelName,
-            Tools = { s_futureTemperatureTool },
+            Tools = { s_getUserNumberForColorTool },
             Messages =
             {
                 new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage("What should I wear in Honolulu next Thursday?"),
+                new ChatRequestUserMessage("What's the sum of the numbers for red, green, and blue?"),
             },
             MaxTokens = 512,
             ChoiceCount = 3,
@@ -173,50 +170,130 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(response, Is.Not.Null);
 
         Dictionary<int, ChatRole> rolesByChoiceIndex = new();
-        Dictionary<int, string> toolCallIdsByChoiceIndex = new();
-        Dictionary<int, string> toolCallFunctionNamesByChoiceIndex = new();
-        Dictionary<int, StringBuilder> toolCallFunctionArgumentsByChoiceIndex = new();
+        Dictionary<int, StringBuilder> contentBuildersByChoiceIndex = new();
+        Dictionary<(int, int), string> toolCallIdsByChoiceAndCallIndices = new();
+        Dictionary<(int, int), string> toolCallFunctionNamesByChoiceAndCallIndices = new();
+        Dictionary<(int, int), StringBuilder> toolCallFunctionArgumentsByChoiceAndCallIndices = new();
 
         await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
+            if (chatUpdate.ChoiceIndex.HasValue)
+            {
+                if (!contentBuildersByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value))
+                {
+                    contentBuildersByChoiceIndex[chatUpdate.ChoiceIndex.Value] = new();
+                }
+                contentBuildersByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(chatUpdate.ContentUpdate);
+            }
             if (chatUpdate.Role.HasValue)
             {
                 Assert.That(rolesByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
+                Assert.That(chatUpdate.ChoiceIndex, Is.Not.Null);
                 rolesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = chatUpdate.Role.Value;
             }
             if (chatUpdate.ToolCallUpdate is not null)
             {
-                Assert.That(chatUpdate.ToolCallUpdate, Is.InstanceOf<ChatCompletionsFunctionToolCall>());
+                Assert.That(chatUpdate.ToolCallUpdate, Is.InstanceOf<StreamingToolCallUpdate>());
             }
-            if (chatUpdate.ToolCallUpdate is ChatCompletionsFunctionToolCall functionToolCall)
+            if (chatUpdate.ToolCallUpdate is StreamingFunctionToolCallUpdate functionToolCallUpdate)
             {
-                if (!string.IsNullOrEmpty(functionToolCall.Id))
+                Assert.That(chatUpdate.ChoiceIndex, Is.Not.Null);
+                int choiceIndex = chatUpdate.ChoiceIndex.Value;
+                int callIndex = functionToolCallUpdate.ToolCallIndex;
+                (int, int) mapKey = (choiceIndex, callIndex);
+                if (!string.IsNullOrEmpty(functionToolCallUpdate.Id))
                 {
-                    Assert.That(toolCallIdsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
-                    toolCallIdsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Id;
+                    Assert.That(toolCallIdsByChoiceAndCallIndices.ContainsKey(mapKey), Is.False);
+                    toolCallIdsByChoiceAndCallIndices[mapKey] = functionToolCallUpdate.Id;
                 }
-                if (functionToolCall.Name != null)
+                if (functionToolCallUpdate.Name != null)
                 {
-                    Assert.That(toolCallFunctionNamesByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
-                    toolCallFunctionNamesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Name;
+                    Assert.That(toolCallFunctionNamesByChoiceAndCallIndices.ContainsKey(mapKey), Is.False);
+                    toolCallFunctionNamesByChoiceAndCallIndices[mapKey] = functionToolCallUpdate.Name;
                 }
-                if (functionToolCall.Arguments != null)
+                if (functionToolCallUpdate.ArgumentsUpdate != null)
                 {
-                    if (!toolCallFunctionArgumentsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value))
+                    if (!toolCallFunctionArgumentsByChoiceAndCallIndices.ContainsKey(mapKey))
                     {
-                        toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = new();
+                        toolCallFunctionArgumentsByChoiceAndCallIndices[mapKey] = new();
                     }
-                    toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(functionToolCall.Arguments);
+                    toolCallFunctionArgumentsByChoiceAndCallIndices[mapKey]
+                        .Append(functionToolCallUpdate.ArgumentsUpdate);
                 }
             }
         }
 
-        for (int i = 0; i < requestOptions.ChoiceCount; i++)
+        Assert.That(
+            rolesByChoiceIndex.Count,
+            Is.EqualTo(1),
+            $"{nameof(requestOptions.ChoiceCount)} should be ignored when providing tools!");
+        Assert.That(toolCallIdsByChoiceAndCallIndices.Count, Is.EqualTo(3));
+        Assert.That(toolCallFunctionNamesByChoiceAndCallIndices.Count, Is.EqualTo(3));
+        Assert.That(toolCallFunctionArgumentsByChoiceAndCallIndices.Count, Is.EqualTo(3));
+
+        foreach (int roleChoiceIndex in rolesByChoiceIndex.Keys)
         {
-            Assert.That(rolesByChoiceIndex[i], Is.EqualTo(ChatRole.Assistant));
-            Assert.That(toolCallIdsByChoiceIndex[i], Is.Not.Null.Or.Empty);
-            Assert.That(toolCallFunctionNamesByChoiceIndex[i], Is.EqualTo(s_futureTemperatureTool.Function.Name));
-            Assert.That(toolCallFunctionArgumentsByChoiceIndex[i].Length, Is.GreaterThan(0));
+            Assert.That(rolesByChoiceIndex[roleChoiceIndex], Is.EqualTo(ChatRole.Assistant));
+            foreach (KeyValuePair<(int, int), string> pair in toolCallIdsByChoiceAndCallIndices)
+            {
+                (int choiceIndex, int callIndex) = pair.Key;
+                Assert.That(choiceIndex, Is.EqualTo(roleChoiceIndex));
+                string id = pair.Value;
+                Assert.That(choiceIndex >= 0 && choiceIndex < requestOptions.ChoiceCount, Is.True);
+                Assert.That(callIndex >= 0 && callIndex <= 3, Is.True);
+                Assert.That(id, Is.Not.Null.Or.Empty);
+                Assert.That(toolCallFunctionNamesByChoiceAndCallIndices[(choiceIndex, callIndex)],
+                    Is.EqualTo(s_getUserNumberForColorTool.Name));
+                string arguments = toolCallFunctionArgumentsByChoiceAndCallIndices[(choiceIndex, callIndex)].ToString();
+                using JsonDocument deserializedArguments = JsonDocument.Parse(arguments);
+            }
+        }
+
+        ChatRequestAssistantMessage assistantHistoryMessage = new(contentBuildersByChoiceIndex.First().Value.ToString());
+        foreach ((int, int) choiceAndCallKey in toolCallIdsByChoiceAndCallIndices.Keys)
+        {
+            assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
+                id: toolCallIdsByChoiceAndCallIndices[choiceAndCallKey],
+                name: toolCallFunctionNamesByChoiceAndCallIndices[choiceAndCallKey],
+                arguments: toolCallFunctionArgumentsByChoiceAndCallIndices[choiceAndCallKey].ToString()));
+        }
+        requestOptions.Messages.Add(assistantHistoryMessage);
+
+        foreach (string toolCallId in toolCallIdsByChoiceAndCallIndices.Values)
+        {
+            requestOptions.Messages.Add(new ChatRequestToolMessage(
+                "red is 1; green is 2; blue is 4; yellow is 8; chartreuse is 16",
+                toolCallId));
+        }
+
+        StreamingResponse<StreamingChatCompletionsUpdate> followupResponse
+            = await client.GetChatCompletionsStreamingAsync(requestOptions);
+        Assert.That(response, Is.Not.Null);
+
+        List<StringBuilder> followupContentBuilders = new();
+        await foreach (StreamingChatCompletionsUpdate followupUpdate in followupResponse)
+        {
+            if (followupUpdate.ChoiceIndex.HasValue)
+            {
+                Assert.That(followupUpdate.ChoiceIndex.Value, Is.GreaterThanOrEqualTo(0));
+                Assert.That(followupUpdate.ChoiceIndex.Value, Is.LessThan(requestOptions.ChoiceCount));
+                while (followupContentBuilders.Count <= followupUpdate.ChoiceIndex.Value)
+                {
+                    followupContentBuilders.Add(new());
+                }
+                followupContentBuilders[followupUpdate.ChoiceIndex.Value].Append(followupUpdate.ContentUpdate);
+
+                if (followupUpdate.Role.HasValue)
+                {
+                    Assert.That(followupUpdate.Role, Is.EqualTo(ChatRole.Assistant));
+                }
+            }
+        }
+
+        Assert.That(followupContentBuilders.Count, Is.EqualTo(requestOptions.ChoiceCount));
+        foreach (StringBuilder contentBuilder in followupContentBuilders)
+        {
+            Assert.That(contentBuilder.ToString().Contains("7"));
         }
     }
 
@@ -282,7 +359,7 @@ public class ChatToolsTests : OpenAITestBase
                 }
             }
         },
-            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
     };
 
     private static ChatCompletionsFunctionToolDefinition s_futureTemperatureTool = new(new()
@@ -291,4 +368,23 @@ public class ChatToolsTests : OpenAITestBase
         Description = s_futureTemperatureFunction.Description,
         Parameters = s_futureTemperatureFunction.Parameters,
     });
+
+    private static ChatCompletionsFunctionToolDefinition s_getUserNumberForColorTool = new()
+    {
+        Name = "getUserNumberForColor",
+        Description = "Gets a number from the user that's associated with a provided color.",
+        Parameters = BinaryData.FromObjectAsJson(new
+        {
+            Type = "object",
+            Properties = new
+            {
+                Color = new
+                {
+                    Type = "string",
+                    Enum = new dynamic[] { "red", "blue", "green", "yellow", "chartreuse" },
+                }
+            }
+        },
+        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+    };
 }

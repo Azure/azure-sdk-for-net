@@ -96,7 +96,25 @@ public partial class StreamingChatCompletionsUpdate
     /// </remarks>
     public string FunctionArgumentsUpdate { get; }
 
-    public ChatCompletionsToolCall ToolCallUpdate { get; }
+    /// <summary>
+    /// An incremental update payload for a tool call that is part of this response.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Corresponds to e.g. $.choices[0].delta.tool_calls[0].index in the REST API schema.
+    /// </para>
+    /// <para>
+    /// To differentiate between parallel streaming tool calls within a single streaming choice, use the value of the
+    /// <see cref="StreamingToolCallUpdate.ToolCallIndex"/> property.
+    /// </para>
+    /// <para>
+    /// Please note <see cref="StreamingToolCallUpdate"/> is the base class. According to the scenario, a derived class
+    /// of the base class might need to be assigned here, or this property needs to be casted to one of the possible
+    /// derived classes.
+    /// The available derived classes include: <see cref="StreamingFunctionToolCallUpdate"/>.
+    /// </para>
+    /// </remarks>
+    public StreamingToolCallUpdate ToolCallUpdate { get; }
 
     /// <summary>
     /// Gets an optional name associated with the role of the streamed Chat Completion, typically as previously
@@ -164,7 +182,7 @@ public partial class StreamingChatCompletionsUpdate
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
-        ChatCompletionsToolCall toolCallUpdate = null,
+        StreamingToolCallUpdate toolCallUpdate = null,
         AzureChatExtensionsMessageContext azureExtensionsContext = null)
     {
         Id = id;

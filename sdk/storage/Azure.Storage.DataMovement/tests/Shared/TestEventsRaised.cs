@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// Also if there's multiple failures then we will catch all of them.
     /// Which would mainly occur during <see cref="DataTransferErrorMode.ContinueOnFailure"/>
     /// </summary>
-    internal class TestEventsRaised : IDisposable
+    public class TestEventsRaised : IDisposable
     {
         private static readonly DataTransferStatus InProgressStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, false);
         private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, true, false);

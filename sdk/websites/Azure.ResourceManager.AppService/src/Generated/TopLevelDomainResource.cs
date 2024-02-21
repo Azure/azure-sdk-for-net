@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
@@ -178,7 +202,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,6 +216,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
@@ -204,7 +236,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
     }
 }

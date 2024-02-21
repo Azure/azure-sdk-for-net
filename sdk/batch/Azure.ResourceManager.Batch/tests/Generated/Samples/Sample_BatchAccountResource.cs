@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_BatchAccountUpdate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountUpdate.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountUpdate.json
             // this example is just showing the usage of "BatchAccount_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_BatchAccountDelete()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountDelete.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountDelete.json
             // this example is just showing the usage of "BatchAccount_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_BatchAccountGet()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountGet.json
             // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PrivateBatchAccountGet()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/PrivateBatchAccountGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/PrivateBatchAccountGet.json
             // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBatchAccounts_BatchAccountList()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountList.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountList.json
             // this example is just showing the usage of "BatchAccount_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SynchronizeAutoStorageKeys_BatchAccountSynchronizeAutoStorageKeys()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountSynchronizeAutoStorageKeys.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountSynchronizeAutoStorageKeys.json
             // this example is just showing the usage of "BatchAccount_SynchronizeAutoStorageKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKey_BatchAccountRegenerateKey()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountRegenerateKey.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountRegenerateKey.json
             // this example is just showing the usage of "BatchAccount_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_BatchAccountGetKeys()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountGetKeys.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountGetKeys.json
             // this example is just showing the usage of "BatchAccount_GetKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependencies()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-05-01/examples/BatchAccountListOutboundNetworkDependenciesEndpoints.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2023-11-01/examples/BatchAccountListOutboundNetworkDependenciesEndpoints.json
             // this example is just showing the usage of "BatchAccount_ListOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
