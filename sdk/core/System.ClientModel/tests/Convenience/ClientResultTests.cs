@@ -127,6 +127,18 @@ public class PipelineResponseTests
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
 
+    [Test]
+    public void CanImplicitlyCastClientResultOfT()
+    {
+        string value = "hello";
+        PipelineResponse response = new MockPipelineResponse(200);
+
+        ClientResult<string> resultAsClientResultOfT = ClientResult.FromValue(value, response);
+        string resultAsString = ClientResult.FromValue(value, response);
+
+        Assert.AreEqual(resultAsClientResultOfT.Value, resultAsString);
+    }
+
     #endregion
 
     #region MockClient Tests
