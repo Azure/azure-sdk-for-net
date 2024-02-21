@@ -8,30 +8,30 @@ using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests;
 
-public class AudioSpeechTests : OpenAITestBase
+public class SpeechGenerationTests : OpenAITestBase
 {
-    public AudioSpeechTests(bool isAsync)
-        : base(Scenario.AudioSpeech, isAsync) // , RecordedTestMode.Live)
+    public SpeechGenerationTests(bool isAsync)
+        : base(Scenario.SpeechGeneration, isAsync) // , RecordedTestMode.Live)
     {
     }
 
     [RecordedTest]
     [TestCase(Service.Azure)]
     [TestCase(Service.NonAzure)]
-    public async Task GetAudioSpeech(Service serviceTarget)
+    public async Task GenerateSpeechFromText(Service serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AudioSpeechOptions requestOptions = new()
+        SpeechGenerationOptions requestOptions = new()
         {
             DeploymentName = deploymentOrModelName,
             Input = "Hello World",
-            Voice = AudioSpeechVoice.Alloy,
-            ResponseFormat = AudioSpeechOutputFormat.Mp3,
+            Voice = SpeechVoice.Alloy,
+            ResponseFormat = SpeechGenerationResponseFormat.Mp3,
         };
 
-        Response<BinaryData> response = await client.GetAudioSpeechAsync(requestOptions);
+        Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(requestOptions);
 
         Assert.That(response?.Value, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<BinaryData>());

@@ -11,8 +11,8 @@ namespace Azure.AI.OpenAI;
 // CUSTOM CODE NOTE:
 // Suppress the parameterized constructor that only receives the audio text and the voice in favor of a custom
 // parameterized constructor that receives the deployment name as well.
-[CodeGenSuppress("AudioSpeechOptions", typeof(string), typeof(AudioSpeechVoice))]
-public partial class AudioSpeechOptions
+[CodeGenSuppress("SpeechGenerationOptions", typeof(string), typeof(SpeechVoice))]
+public partial class SpeechGenerationOptions
 {
     // CUSTOM CODE NOTE:
     // Add setter to these properties to allow for an "init" pattern when using the public
@@ -26,12 +26,12 @@ public partial class AudioSpeechOptions
     /// <summary>
     /// The voice to use for text-to-speech.
     /// </summary>
-    public AudioSpeechVoice Voice { get; set; }
+    public SpeechVoice Voice { get; set; }
 
     /// <summary>
     /// The audio output format for the spoken text. By default, the MP3 format will be used.
     /// </summary>
-    public AudioSpeechOutputFormat? ResponseFormat { get; set; }
+    public SpeechGenerationResponseFormat? ResponseFormat { get; set; }
 
     /// <summary>
     /// The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the
@@ -61,7 +61,7 @@ public partial class AudioSpeechOptions
     // Add a parameterized constructor that receives the deployment name as a parameter in addition
     // to the other required properties.
 
-    /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/>. </summary>
     /// <param name="deploymentName"> The deployment name to use for text-to-speech. </param>
     /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
     /// <param name="voice"> The voice to use for text-to-speech. </param>
@@ -71,7 +71,7 @@ public partial class AudioSpeechOptions
     /// <exception cref="ArgumentException">
     ///     <paramref name="deploymentName"/> is an empty string.
     /// </exception>
-    public AudioSpeechOptions(string deploymentName, string input, AudioSpeechVoice voice)
+    public SpeechGenerationOptions(string deploymentName, string input, SpeechVoice voice)
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
         Argument.AssertNotNull(input, nameof(input));
@@ -85,7 +85,7 @@ public partial class AudioSpeechOptions
     // CUSTOM CODE NOTE:
     // Add a public default constructor to allow for an "init" pattern using property setters.
 
-    /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
-    public AudioSpeechOptions()
+    /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/>. </summary>
+    public SpeechGenerationOptions()
     { }
 }

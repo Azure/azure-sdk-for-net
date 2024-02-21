@@ -14,14 +14,14 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AudioSpeechOptions : IUtf8JsonSerializable, IJsonModel<AudioSpeechOptions>
+    public partial class SpeechGenerationOptions : IUtf8JsonSerializable, IJsonModel<SpeechGenerationOptions>
     {
-        void IJsonModel<AudioSpeechOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SpeechGenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AudioSpeechOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioSpeechOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        AudioSpeechOptions IJsonModel<AudioSpeechOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SpeechGenerationOptions IJsonModel<SpeechGenerationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AudioSpeechOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioSpeechOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAudioSpeechOptions(document.RootElement, options);
+            return DeserializeSpeechGenerationOptions(document.RootElement, options);
         }
 
-        internal static AudioSpeechOptions DeserializeAudioSpeechOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SpeechGenerationOptions DeserializeSpeechGenerationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -78,8 +78,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string input = default;
-            AudioSpeechVoice voice = default;
-            Optional<AudioSpeechOutputFormat> responseFormat = default;
+            SpeechVoice voice = default;
+            Optional<SpeechGenerationResponseFormat> responseFormat = default;
             Optional<float> speed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("voice"u8))
                 {
-                    voice = new AudioSpeechVoice(property.Value.GetString());
+                    voice = new SpeechVoice(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("response_format"u8))
@@ -101,7 +101,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    responseFormat = new AudioSpeechOutputFormat(property.Value.GetString());
+                    responseFormat = new SpeechGenerationResponseFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("speed"u8))
@@ -119,46 +119,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioSpeechOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), serializedAdditionalRawData);
+            return new SpeechGenerationOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AudioSpeechOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SpeechGenerationOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AudioSpeechOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioSpeechOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        AudioSpeechOptions IPersistableModel<AudioSpeechOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SpeechGenerationOptions IPersistableModel<SpeechGenerationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AudioSpeechOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAudioSpeechOptions(document.RootElement, options);
+                        return DeserializeSpeechGenerationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioSpeechOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AudioSpeechOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SpeechGenerationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AudioSpeechOptions FromResponse(Response response)
+        internal static SpeechGenerationOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAudioSpeechOptions(document.RootElement);
+            return DeserializeSpeechGenerationOptions(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

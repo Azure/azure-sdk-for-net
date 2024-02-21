@@ -17,18 +17,19 @@ public partial class SpeechGeneration
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         OpenAIClient client = new(new Uri(endpoint), new DefaultAzureCredential());
+        const bool usingAzure = true;
 
         #region Snippet:SpeechGeneration
-        AudioSpeechOptions speechOptions = new()
+        SpeechGenerationOptions speechOptions = new()
         {
             Input = "Hello World",
-            DeploymentName = "my-tts-deployment", // tts-1 as model name for non-Azure OpenAI
-            Voice = AudioSpeechVoice.Alloy,
-            ResponseFormat = AudioSpeechOutputFormat.Mp3,
-            Speed = 0.8f
+            DeploymentName = usingAzure ? "my-azure-openai-tts-deployment" : "tts-1",
+            Voice = SpeechVoice.Alloy,
+            ResponseFormat = SpeechGenerationResponseFormat.Mp3,
+            Speed = 1.0f
         };
 
-        Response<BinaryData> response = await client.GetAudioSpeechAsync(speechOptions);
+        Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(speechOptions);
         File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
         #endregion
     }

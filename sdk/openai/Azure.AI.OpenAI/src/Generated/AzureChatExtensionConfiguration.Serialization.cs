@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
                     case "azure_ml_index": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element);
                     case "azure_cosmos_db": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element);
                     case "elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element);
-                    case "Pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element);
+                    case "pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element);
                 }
             }
             return UnknownAzureChatExtensionConfiguration.DeserializeUnknownAzureChatExtensionConfiguration(element);

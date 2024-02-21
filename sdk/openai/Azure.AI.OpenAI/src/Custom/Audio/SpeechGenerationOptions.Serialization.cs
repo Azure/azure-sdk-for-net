@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI;
 
 [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-public partial class AudioSpeechOptions : IUtf8JsonSerializable
+public partial class SpeechGenerationOptions : IUtf8JsonSerializable
 {
     // CUSTOM CODE NOTE:
     //   We manipulate the object model of this type relative to the wire format in several places; currently, this is

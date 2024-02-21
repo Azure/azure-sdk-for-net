@@ -9,7 +9,7 @@ Use the client library for Azure OpenAI to:
 * [Create chat completions using models like gpt-4 and gpt-35-turbo][msdocs_openai_chat_quickstart]
 * [Generate images with dall-e-3][msdocs_openai_dalle_quickstart]
 * [Transcribe or translate audio into text with whisper][msdocs_openai_whisper_quickstart]
-* [Generate text-to-speech audio from text using tts model][msdocs_openai_tts_quickstart]
+* [Generate speech audio from text using tts model][msdocs_openai_tts_quickstart]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 * [Create a legacy completion for text using models like text-davinci-002][msdocs_openai_completion]
 
@@ -696,16 +696,16 @@ Console.WriteLine(translation.Text);
 ### Generate Speech with Text-to-Speech (TTS) models
 
 ```C# Snippet:SpeechGeneration
-AudioSpeechOptions speechOptions = new()
+SpeechGenerationOptions speechOptions = new()
 {
     Input = "Hello World",
-    DeploymentName = "my-tts-deployment", // tts-1 as model name for non-Azure OpenAI
-    Voice = AudioSpeechVoice.Alloy,
-    ResponseFormat = AudioSpeechOutputFormat.Mp3,
-    Speed = 0.8f
+    DeploymentName = usingAzure ? "my-azure-openai-tts-deployment" : "tts-1",
+    Voice = SpeechVoice.Alloy,
+    ResponseFormat = SpeechGenerationResponseFormat.Mp3,
+    Speed = 1.0f
 };
 
-Response<BinaryData> response = await client.GetAudioSpeechAsync(speechOptions);
+Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(speechOptions);
 File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
 ```
 

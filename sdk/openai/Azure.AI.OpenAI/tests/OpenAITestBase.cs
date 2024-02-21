@@ -382,7 +382,7 @@ namespace Azure.AI.OpenAI.Tests
                     NonAzureModelName = "whisper-1",
                 },
 
-                [Scenario.AudioSpeech] = new()
+                [Scenario.SpeechGeneration] = new()
                 {
                     AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
                     AzureResourceLocation = AzureLocation.SwedenCentral,
@@ -500,7 +500,7 @@ namespace Azure.AI.OpenAI.Tests
             ChatCompletions,
             Embeddings,
             AudioTranscription,
-            AudioSpeech,
+            SpeechGeneration,
             ImageGenerations,
             LegacyImageGenerations,
             ChatTools,

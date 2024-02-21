@@ -14,10 +14,10 @@
 
 ### Features Added
 
-- Text to speech using OpenAI TTS models is now supported. See [OpenAI's API reference](https://platform.openai.com/docs/api-reference/audio/createSpeech) or the [Azure OpenAI quickstart](https://learn.microsoft.com/en-us/azure/ai-services/openai/text-to-speech-quickstart) for detailed overview and background information.
-- The new method `GetAudioSpeech` exposes this capability on `OpenAIClient`.
-- Text-to-speech converts text into lifelike spoken audio in a chosen voice, together with other optional configurations.
-- This method works for both Azure OpenAI and non-Azure `api.openai.com` client configurations
+- Text-to-speech using OpenAI TTS models is now supported. See [OpenAI's API reference](https://platform.openai.com/docs/api-reference/audio/createSpeech) or the [Azure OpenAI quickstart](https://learn.microsoft.com/en-us/azure/ai-services/openai/text-to-speech-quickstart) for detailed overview and background information.
+  - The new method `GenerateSpeechFromText` exposes this capability on `OpenAIClient`.
+  - Text-to-speech converts text into lifelike spoken audio in a chosen voice, together with other optional configurations.
+  - This method works for both Azure OpenAI and non-Azure `api.openai.com` client configurations
 
 ### Breaking Changes
 

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A representation of the request options that control the behavior of a text-to-speech operation. </summary>
-    public partial class AudioSpeechOptions
+    public partial class SpeechGenerationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.AI.OpenAI
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/>. </summary>
         /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
         /// <param name="voice"> The voice to use for text-to-speech. </param>
         /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
         /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioSpeechOptions(string input, AudioSpeechVoice voice, AudioSpeechOutputFormat? responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SpeechGenerationOptions(string input, SpeechVoice voice, SpeechGenerationResponseFormat? responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Input = input;
             Voice = voice;

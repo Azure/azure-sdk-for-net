@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
         private const string AzureMachineLearningIndexValue = "azure_ml_index";
         private const string AzureCosmosDBValue = "azure_cosmos_db";
         private const string ElasticsearchValue = "elasticsearch";
-        private const string PineconeValue = "Pinecone";
+        private const string PineconeValue = "pinecone";
 
         /// <summary> Represents the use of Azure Cognitive Search as an Azure OpenAI chat extension. </summary>
         public static AzureChatExtensionType AzureSearch { get; } = new AzureChatExtensionType(AzureSearchValue);
