@@ -598,7 +598,7 @@ namespace Azure.Communication.CallAutomation
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
                         MuteParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -630,7 +630,7 @@ namespace Azure.Communication.CallAutomation
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                     {
                         MuteParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);

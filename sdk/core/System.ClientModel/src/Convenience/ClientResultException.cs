@@ -82,11 +82,11 @@ public class ClientResultException : Exception, ISerializable
     {
         if (async)
         {
-            await response.ReadContentAsync().ConfigureAwait(false);
+            await response.BufferContentAsync().ConfigureAwait(false);
         }
         else
         {
-            response.ReadContent();
+            response.BufferContent();
         }
 
         StringBuilder messageBuilder = new();
