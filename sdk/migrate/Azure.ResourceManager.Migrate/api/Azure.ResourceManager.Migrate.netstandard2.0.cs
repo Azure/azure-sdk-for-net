@@ -2042,20 +2042,20 @@ namespace Azure.ResourceManager.Migrate.Models
         public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardS60 { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardS70 { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardS80 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde1 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde10 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde15 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde2 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde20 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde3 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde30 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde4 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde40 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde50 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde6 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde60 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde70 { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsde80 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE1 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE10 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE15 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE2 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE20 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE3 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE30 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE4 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE40 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE50 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE6 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE60 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE70 { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureDiskSize StandardSsdE80 { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureDiskSize Ultra { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureDiskSize Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migrate.Models.AzureDiskSize other) { throw null; }
@@ -4052,7 +4052,7 @@ namespace Azure.ResourceManager.Migrate.Models
         private readonly int _dummyPrimitive;
         public SqlMigrationGuidelineCategory(string value) { throw null; }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory AvailabilityGroupGuideline { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory FailoverCluterInstanceGuideLine { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory FailoverClusterInstanceGuideLine { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory General { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory other) { throw null; }

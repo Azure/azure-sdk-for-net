@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string PremiumP60Value = "Premium_P60";
         private const string PremiumP70Value = "Premium_P70";
         private const string PremiumP80Value = "Premium_P80";
-        private const string StandardSsde10Value = "StandardSSD_E10";
-        private const string StandardSsde15Value = "StandardSSD_E15";
-        private const string StandardSsde20Value = "StandardSSD_E20";
-        private const string StandardSsde30Value = "StandardSSD_E30";
-        private const string StandardSsde40Value = "StandardSSD_E40";
-        private const string StandardSsde50Value = "StandardSSD_E50";
-        private const string StandardSsde60Value = "StandardSSD_E60";
-        private const string StandardSsde70Value = "StandardSSD_E70";
-        private const string StandardSsde80Value = "StandardSSD_E80";
-        private const string StandardSsde4Value = "StandardSSD_E4";
-        private const string StandardSsde6Value = "StandardSSD_E6";
-        private const string StandardSsde1Value = "StandardSSD_E1";
-        private const string StandardSsde2Value = "StandardSSD_E2";
-        private const string StandardSsde3Value = "StandardSSD_E3";
+        private const string StandardSsdE10Value = "StandardSSD_E10";
+        private const string StandardSsdE15Value = "StandardSSD_E15";
+        private const string StandardSsdE20Value = "StandardSSD_E20";
+        private const string StandardSsdE30Value = "StandardSSD_E30";
+        private const string StandardSsdE40Value = "StandardSSD_E40";
+        private const string StandardSsdE50Value = "StandardSSD_E50";
+        private const string StandardSsdE60Value = "StandardSSD_E60";
+        private const string StandardSsdE70Value = "StandardSSD_E70";
+        private const string StandardSsdE80Value = "StandardSSD_E80";
+        private const string StandardSsdE4Value = "StandardSSD_E4";
+        private const string StandardSsdE6Value = "StandardSSD_E6";
+        private const string StandardSsdE1Value = "StandardSSD_E1";
+        private const string StandardSsdE2Value = "StandardSSD_E2";
+        private const string StandardSsdE3Value = "StandardSSD_E3";
         private const string PremiumP1Value = "Premium_P1";
         private const string PremiumP2Value = "Premium_P2";
         private const string PremiumP3Value = "Premium_P3";
@@ -112,33 +112,33 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Premium_P80. </summary>
         public static AzureDiskSize PremiumP80 { get; } = new AzureDiskSize(PremiumP80Value);
         /// <summary> StandardSSD_E10. </summary>
-        public static AzureDiskSize StandardSsde10 { get; } = new AzureDiskSize(StandardSsde10Value);
+        public static AzureDiskSize StandardSsdE10 { get; } = new AzureDiskSize(StandardSsdE10Value);
         /// <summary> StandardSSD_E15. </summary>
-        public static AzureDiskSize StandardSsde15 { get; } = new AzureDiskSize(StandardSsde15Value);
+        public static AzureDiskSize StandardSsdE15 { get; } = new AzureDiskSize(StandardSsdE15Value);
         /// <summary> StandardSSD_E20. </summary>
-        public static AzureDiskSize StandardSsde20 { get; } = new AzureDiskSize(StandardSsde20Value);
+        public static AzureDiskSize StandardSsdE20 { get; } = new AzureDiskSize(StandardSsdE20Value);
         /// <summary> StandardSSD_E30. </summary>
-        public static AzureDiskSize StandardSsde30 { get; } = new AzureDiskSize(StandardSsde30Value);
+        public static AzureDiskSize StandardSsdE30 { get; } = new AzureDiskSize(StandardSsdE30Value);
         /// <summary> StandardSSD_E40. </summary>
-        public static AzureDiskSize StandardSsde40 { get; } = new AzureDiskSize(StandardSsde40Value);
+        public static AzureDiskSize StandardSsdE40 { get; } = new AzureDiskSize(StandardSsdE40Value);
         /// <summary> StandardSSD_E50. </summary>
-        public static AzureDiskSize StandardSsde50 { get; } = new AzureDiskSize(StandardSsde50Value);
+        public static AzureDiskSize StandardSsdE50 { get; } = new AzureDiskSize(StandardSsdE50Value);
         /// <summary> StandardSSD_E60. </summary>
-        public static AzureDiskSize StandardSsde60 { get; } = new AzureDiskSize(StandardSsde60Value);
+        public static AzureDiskSize StandardSsdE60 { get; } = new AzureDiskSize(StandardSsdE60Value);
         /// <summary> StandardSSD_E70. </summary>
-        public static AzureDiskSize StandardSsde70 { get; } = new AzureDiskSize(StandardSsde70Value);
+        public static AzureDiskSize StandardSsdE70 { get; } = new AzureDiskSize(StandardSsdE70Value);
         /// <summary> StandardSSD_E80. </summary>
-        public static AzureDiskSize StandardSsde80 { get; } = new AzureDiskSize(StandardSsde80Value);
+        public static AzureDiskSize StandardSsdE80 { get; } = new AzureDiskSize(StandardSsdE80Value);
         /// <summary> StandardSSD_E4. </summary>
-        public static AzureDiskSize StandardSsde4 { get; } = new AzureDiskSize(StandardSsde4Value);
+        public static AzureDiskSize StandardSsdE4 { get; } = new AzureDiskSize(StandardSsdE4Value);
         /// <summary> StandardSSD_E6. </summary>
-        public static AzureDiskSize StandardSsde6 { get; } = new AzureDiskSize(StandardSsde6Value);
+        public static AzureDiskSize StandardSsdE6 { get; } = new AzureDiskSize(StandardSsdE6Value);
         /// <summary> StandardSSD_E1. </summary>
-        public static AzureDiskSize StandardSsde1 { get; } = new AzureDiskSize(StandardSsde1Value);
+        public static AzureDiskSize StandardSsdE1 { get; } = new AzureDiskSize(StandardSsdE1Value);
         /// <summary> StandardSSD_E2. </summary>
-        public static AzureDiskSize StandardSsde2 { get; } = new AzureDiskSize(StandardSsde2Value);
+        public static AzureDiskSize StandardSsdE2 { get; } = new AzureDiskSize(StandardSsdE2Value);
         /// <summary> StandardSSD_E3. </summary>
-        public static AzureDiskSize StandardSsde3 { get; } = new AzureDiskSize(StandardSsde3Value);
+        public static AzureDiskSize StandardSsdE3 { get; } = new AzureDiskSize(StandardSsdE3Value);
         /// <summary> Premium_P1. </summary>
         public static AzureDiskSize PremiumP1 { get; } = new AzureDiskSize(PremiumP1Value);
         /// <summary> Premium_P2. </summary>
