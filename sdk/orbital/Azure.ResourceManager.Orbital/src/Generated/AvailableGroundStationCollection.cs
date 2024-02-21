@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual async Task<Response<AvailableGroundStationResource>> GetAsync(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual Response<AvailableGroundStationResource> Get(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.Get");
             scope.Start();
@@ -246,14 +232,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.Exists");
             scope.Start();
@@ -296,14 +275,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual Response<bool> Exists(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.Exists");
             scope.Start();
@@ -346,14 +318,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual async Task<NullableResponse<AvailableGroundStationResource>> GetIfExistsAsync(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetIfExists");
             scope.Start();
@@ -398,14 +363,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="groundStationName"/> is null. </exception>
         public virtual NullableResponse<AvailableGroundStationResource> GetIfExists(string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var scope = _availableGroundStationClientDiagnostics.CreateScope("AvailableGroundStationCollection.GetIfExists");
             scope.Start();

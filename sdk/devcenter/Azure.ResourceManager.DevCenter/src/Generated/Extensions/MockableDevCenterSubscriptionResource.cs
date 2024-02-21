@@ -217,14 +217,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.GetDevCenterOperationStatus");
             scope.Start();
@@ -264,14 +257,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<DevCenterOperationStatus> GetDevCenterOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.GetDevCenterOperationStatus");
             scope.Start();
@@ -363,10 +349,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
             scope.Start();
@@ -404,10 +387,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability");
             scope.Start();

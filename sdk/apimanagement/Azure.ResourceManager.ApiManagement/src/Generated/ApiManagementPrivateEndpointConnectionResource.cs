@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPrivateEndpointConnectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, ApiManagementPrivateEndpointConnectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateEndpointConnectionResource.Update");
             scope.Start();

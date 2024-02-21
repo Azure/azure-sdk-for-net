@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApplicationGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApplicationGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string applicationGatewayName, ApplicationGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<Response<ApplicationGatewayResource>> GetAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual Response<ApplicationGatewayResource> Get(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<ApplicationGatewayResource>> GetIfExistsAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
         public virtual NullableResponse<ApplicationGatewayResource> GetIfExists(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            if (applicationGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGatewayName));
-            }
-            if (applicationGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
 
             using var scope = _applicationGatewayClientDiagnostics.CreateScope("ApplicationGatewayCollection.GetIfExists");
             scope.Start();

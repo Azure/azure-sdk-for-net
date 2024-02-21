@@ -266,10 +266,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDataMaskingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseDataMaskingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDataMaskingPolicyDataMaskingPoliciesClientDiagnostics.CreateScope("SynapseDataMaskingPolicyResource.CreateOrUpdate");
             scope.Start();
@@ -315,10 +312,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDataMaskingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, SynapseDataMaskingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDataMaskingPolicyDataMaskingPoliciesClientDiagnostics.CreateScope("SynapseDataMaskingPolicyResource.CreateOrUpdate");
             scope.Start();

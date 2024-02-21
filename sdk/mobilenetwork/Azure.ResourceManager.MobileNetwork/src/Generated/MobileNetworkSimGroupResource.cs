@@ -356,10 +356,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> UpdateAsync(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.Update");
             scope.Start();
@@ -401,10 +398,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> Update(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.Update");
             scope.Start();
@@ -447,10 +441,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simUploadList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkUploadSimAsync(WaitUntil waitUntil, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadSim");
             scope.Start();
@@ -496,10 +487,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simUploadList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkUploadSim(WaitUntil waitUntil, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadSim");
             scope.Start();
@@ -545,10 +533,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simDeleteList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkDeleteSimAsync(WaitUntil waitUntil, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkDeleteSim");
             scope.Start();
@@ -594,10 +579,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simDeleteList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkDeleteSim(WaitUntil waitUntil, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkDeleteSim");
             scope.Start();
@@ -643,10 +625,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="encryptedSimUploadList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkUploadEncryptedSimAsync(WaitUntil waitUntil, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadEncryptedSim");
             scope.Start();
@@ -692,10 +671,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="encryptedSimUploadList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkUploadEncryptedSim(WaitUntil waitUntil, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadEncryptedSim");
             scope.Start();
@@ -741,14 +717,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.AddTag");
             scope.Start();
@@ -809,14 +779,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.AddTag");
             scope.Start();
@@ -876,10 +840,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.SetTags");
             scope.Start();
@@ -936,10 +897,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.SetTags");
             scope.Start();
@@ -996,10 +954,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.RemoveTag");
             scope.Start();
@@ -1059,10 +1014,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.RemoveTag");
             scope.Start();

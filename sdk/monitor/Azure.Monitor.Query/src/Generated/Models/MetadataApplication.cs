@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceId"/>, <paramref name="name"/> or <paramref name="region"/> is null. </exception>
         internal MetadataApplication(string id, string resourceId, string name, string region)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(region, nameof(region));
 
             Id = id;
             ResourceId = resourceId;

@@ -43,10 +43,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreResource"/> object. </returns>
         public static PrivateStoreResource GetPrivateStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreResource(id);
         }
@@ -65,10 +62,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
         public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMarketplaceArmClient(client).GetMarketplaceApprovalRequestResource(id);
         }
@@ -87,10 +81,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
         public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMarketplaceArmClient(client).GetMarketplaceAdminApprovalRequestResource(id);
         }
@@ -109,10 +100,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
         public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreCollectionInfoResource(id);
         }
@@ -131,10 +119,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
         public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreOfferResource(id);
         }
@@ -151,10 +136,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
         public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStores();
         }
@@ -191,10 +173,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStoreAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
@@ -231,10 +210,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStore(privateStoreId, cancellationToken);
         }

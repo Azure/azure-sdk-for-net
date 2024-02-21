@@ -23,18 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/> or <paramref name="responseCode"/> is null. </exception>
         public RequestData(int version, string id, string duration, bool success, string responseCode) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (duration == null)
-            {
-                throw new ArgumentNullException(nameof(duration));
-            }
-            if (responseCode == null)
-            {
-                throw new ArgumentNullException(nameof(responseCode));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(duration, nameof(duration));
+            Argument.AssertNotNull(responseCode, nameof(responseCode));
 
             Id = id;
             Duration = duration;

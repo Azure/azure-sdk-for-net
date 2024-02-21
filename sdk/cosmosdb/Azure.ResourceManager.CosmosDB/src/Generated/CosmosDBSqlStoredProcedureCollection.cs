@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlStoredProcedureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlStoredProcedureResource> CreateOrUpdate(WaitUntil waitUntil, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlStoredProcedureResource>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual Response<CosmosDBSqlStoredProcedureResource> Get(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.Get");
             scope.Start();
@@ -361,14 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.Exists");
             scope.Start();
@@ -411,14 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual Response<bool> Exists(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.Exists");
             scope.Start();
@@ -461,14 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBSqlStoredProcedureResource>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.GetIfExists");
             scope.Start();
@@ -513,14 +458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBSqlStoredProcedureResource> GetIfExists(string storedProcedureName, CancellationToken cancellationToken = default)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
-            if (storedProcedureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storedProcedureName));
-            }
+            Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureCollection.GetIfExists");
             scope.Start();

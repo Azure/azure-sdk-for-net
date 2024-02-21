@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -20,10 +21,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             Status = status;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName) : base(functionName)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNull(functionName, nameof(functionName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>

@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCrossConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string crossConnectionName, ExpressRouteCrossConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCrossConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string crossConnectionName, ExpressRouteCrossConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteCrossConnectionResource>> GetAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual Response<ExpressRouteCrossConnectionResource> Get(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteCrossConnectionResource>> GetIfExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteCrossConnectionResource> GetIfExists(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            if (crossConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(crossConnectionName));
-            }
-            if (crossConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionCollection.GetIfExists");
             scope.Start();

@@ -59,10 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="pccRules"/> is null. </exception>
         public MobileNetworkServiceData(AzureLocation location, int servicePrecedence, IEnumerable<PccRuleConfiguration> pccRules) : base(location)
         {
-            if (pccRules == null)
-            {
-                throw new ArgumentNullException(nameof(pccRules));
-            }
+            Argument.AssertNotNull(pccRules, nameof(pccRules));
 
             ServicePrecedence = servicePrecedence;
             PccRules = pccRules.ToList();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<IDictionary<string, string>> series)
         {
-            if (series == null)
-            {
-                throw new ArgumentNullException(nameof(series));
-            }
+            Argument.AssertNotNull(series, nameof(series));
 
             StartTime = startTime;
             EndTime = endTime;

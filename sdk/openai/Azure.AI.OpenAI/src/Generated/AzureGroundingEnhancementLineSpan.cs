@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -57,14 +58,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="polygon"/> is null. </exception>
         internal AzureGroundingEnhancementLineSpan(string text, int offset, int length, IEnumerable<AzureGroundingEnhancementCoordinatePoint> polygon)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (polygon == null)
-            {
-                throw new ArgumentNullException(nameof(polygon));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(polygon, nameof(polygon));
 
             Text = text;
             Offset = offset;

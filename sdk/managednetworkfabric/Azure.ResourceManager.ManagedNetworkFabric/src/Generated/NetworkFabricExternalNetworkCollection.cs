@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricExternalNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string externalNetworkName, NetworkFabricExternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricExternalNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string externalNetworkName, NetworkFabricExternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricExternalNetworkResource>> GetAsync(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual Response<NetworkFabricExternalNetworkResource> Get(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricExternalNetworkResource>> GetIfExistsAsync(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricExternalNetworkResource> GetIfExists(string externalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (externalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(externalNetworkName));
-            }
-            if (externalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
 
             using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
             scope.Start();

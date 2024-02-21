@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             Data = data.ToList();
             MetadataIdentifier = ServiceAlertMetadataIdentifier.MonitorServiceList;

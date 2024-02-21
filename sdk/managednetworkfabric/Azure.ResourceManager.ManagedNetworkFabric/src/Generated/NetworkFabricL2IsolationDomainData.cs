@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         public NetworkFabricL2IsolationDomainData(AzureLocation location, ResourceIdentifier networkFabricId, int vlanId) : base(location)
         {
-            if (networkFabricId == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricId));
-            }
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             NetworkFabricId = networkFabricId;
             VlanId = vlanId;

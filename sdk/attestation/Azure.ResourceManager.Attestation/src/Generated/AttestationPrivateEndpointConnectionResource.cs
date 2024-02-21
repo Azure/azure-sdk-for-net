@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AttestationPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AttestationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AttestationPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AttestationPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AttestationPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _attestationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AttestationPrivateEndpointConnectionResource.Update");
             scope.Start();

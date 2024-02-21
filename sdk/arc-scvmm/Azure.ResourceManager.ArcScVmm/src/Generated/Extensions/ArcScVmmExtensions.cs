@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmServerResource"/> object. </returns>
         public static ScVmmServerResource GetScVmmServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmServerResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmCloudResource"/> object. </returns>
         public static ScVmmCloudResource GetScVmmCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmCloudResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource"/> object. </returns>
         public static ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmVirtualNetworkResource(id);
         }
@@ -114,10 +105,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualMachineResource"/> object. </returns>
         public static ScVmmVirtualMachineResource GetScVmmVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmVirtualMachineResource(id);
         }
@@ -136,10 +124,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource"/> object. </returns>
         public static ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmVirtualMachineTemplateResource(id);
         }
@@ -158,10 +143,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource"/> object. </returns>
         public static ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetScVmmAvailabilitySetResource(id);
         }
@@ -180,10 +162,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="InventoryItemResource"/> object. </returns>
         public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableArcScVmmArmClient(client).GetInventoryItemResource(id);
         }
@@ -200,10 +179,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmServerResources and their operations over a ScVmmServerResource. </returns>
         public static ScVmmServerCollection GetScVmmServers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServers();
         }
@@ -241,10 +217,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmServerResource>> GetScVmmServerAsync(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServerAsync(vmmServerName, cancellationToken).ConfigureAwait(false);
         }
@@ -282,10 +255,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmServerResource> GetScVmmServer(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServer(vmmServerName, cancellationToken);
         }
@@ -302,10 +272,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmCloudResources and their operations over a ScVmmCloudResource. </returns>
         public static ScVmmCloudCollection GetScVmmClouds(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmClouds();
         }
@@ -343,10 +310,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmCloudResource>> GetScVmmCloudAsync(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloudAsync(cloudName, cancellationToken).ConfigureAwait(false);
         }
@@ -384,10 +348,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmCloudResource> GetScVmmCloud(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloud(cloudName, cancellationToken);
         }
@@ -404,10 +365,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualNetworkResources and their operations over a ScVmmVirtualNetworkResource. </returns>
         public static ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworks();
         }
@@ -445,10 +403,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -486,10 +441,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetwork(virtualNetworkName, cancellationToken);
         }
@@ -506,10 +458,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualMachineResources and their operations over a ScVmmVirtualMachineResource. </returns>
         public static ScVmmVirtualMachineCollection GetScVmmVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachines();
         }
@@ -547,10 +496,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineResource>> GetScVmmVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
@@ -588,10 +534,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineResource> GetScVmmVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachine(virtualMachineName, cancellationToken);
         }
@@ -608,10 +551,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public static ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplates();
         }
@@ -649,10 +589,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplateAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
         }
@@ -690,10 +627,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplate(virtualMachineTemplateName, cancellationToken);
         }
@@ -710,10 +644,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An object representing collection of ScVmmAvailabilitySetResources and their operations over a ScVmmAvailabilitySetResource. </returns>
         public static ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySets();
         }
@@ -751,10 +682,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
@@ -792,10 +720,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySet(availabilitySetName, cancellationToken);
         }
@@ -831,10 +756,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServersAsync(cancellationToken);
         }
@@ -870,10 +792,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmServerResource> GetScVmmServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServers(cancellationToken);
         }
@@ -909,10 +828,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
         }
@@ -948,10 +864,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmCloudResource> GetScVmmClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmClouds(cancellationToken);
         }
@@ -987,10 +900,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
         }
@@ -1026,10 +936,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
         }
@@ -1065,10 +972,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
         }
@@ -1104,10 +1008,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
         }
@@ -1143,10 +1044,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
         }
@@ -1182,10 +1080,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
         }
@@ -1221,10 +1116,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
         }
@@ -1260,10 +1152,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
         }

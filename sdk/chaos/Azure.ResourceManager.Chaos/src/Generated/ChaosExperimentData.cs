@@ -63,14 +63,8 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="steps"/> or <paramref name="selectors"/> is null. </exception>
         public ChaosExperimentData(AzureLocation location, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors) : base(location)
         {
-            if (steps == null)
-            {
-                throw new ArgumentNullException(nameof(steps));
-            }
-            if (selectors == null)
-            {
-                throw new ArgumentNullException(nameof(selectors));
-            }
+            Argument.AssertNotNull(steps, nameof(steps));
+            Argument.AssertNotNull(selectors, nameof(selectors));
 
             Steps = steps.ToList();
             Selectors = selectors.ToList();

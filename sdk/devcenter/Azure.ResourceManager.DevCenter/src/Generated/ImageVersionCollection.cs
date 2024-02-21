@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<ImageVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<ImageVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<bool> Exists(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ImageVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual NullableResponse<ImageVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
         {
-            if (versionName == null)
-            {
-                throw new ArgumentNullException(nameof(versionName));
-            }
-            if (versionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
-            }
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
             scope.Start();

@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoDBRoleDefinitionResource>> UpdateAsync(WaitUntil waitUntil, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MongoDBRoleDefinitionResource> Update(WaitUntil waitUntil, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionResource.Update");
             scope.Start();

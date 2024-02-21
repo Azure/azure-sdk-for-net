@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appSeenList"/> is null. </exception>
         internal AppSeenInfoList(int count, IEnumerable<AppSeenInfo> appSeenList)
         {
-            if (appSeenList == null)
-            {
-                throw new ArgumentNullException(nameof(appSeenList));
-            }
+            Argument.AssertNotNull(appSeenList, nameof(appSeenList));
 
             Count = count;
             AppSeenList = appSeenList.ToList();

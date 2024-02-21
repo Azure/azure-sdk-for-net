@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual async Task<Response<VirtualDesktopResource>> GetAsync(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual Response<VirtualDesktopResource> Get(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Get");
             scope.Start();
@@ -250,14 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Exists");
             scope.Start();
@@ -300,14 +279,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual Response<bool> Exists(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.Exists");
             scope.Start();
@@ -350,14 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualDesktopResource>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
             scope.Start();
@@ -402,14 +367,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
         public virtual NullableResponse<VirtualDesktopResource> GetIfExists(string desktopName, CancellationToken cancellationToken = default)
         {
-            if (desktopName == null)
-            {
-                throw new ArgumentNullException(nameof(desktopName));
-            }
-            if (desktopName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(desktopName));
-            }
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
 
             using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
             scope.Start();

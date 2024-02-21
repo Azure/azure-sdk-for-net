@@ -67,30 +67,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PaloAltoNetworksFirewallStatusListResult>> ListByFirewallsAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateListByFirewallsRequest(subscriptionId, resourceGroupName, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +96,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PaloAltoNetworksFirewallStatusListResult> ListByFirewalls(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateListByFirewallsRequest(subscriptionId, resourceGroupName, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -188,30 +146,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PaloAltoNetworksFirewallStatusData>> GetAsync(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -240,30 +177,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PaloAltoNetworksFirewallStatusData> Get(string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -307,34 +223,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PaloAltoNetworksFirewallStatusListResult>> ListByFirewallsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateListByFirewallsNextPageRequest(nextLink, subscriptionId, resourceGroupName, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -362,34 +254,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PaloAltoNetworksFirewallStatusListResult> ListByFirewallsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallName));
-            }
-            if (firewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
 
             using var message = CreateListByFirewallsNextPageRequest(nextLink, subscriptionId, resourceGroupName, firewallName);
             _pipeline.Send(message, cancellationToken);

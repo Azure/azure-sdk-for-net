@@ -24,18 +24,9 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="sequenceId"/> or <paramref name="version"/> is null. </exception>
         internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, DateTimeOffset createdOn)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (sequenceId == null)
-            {
-                throw new ArgumentNullException(nameof(sequenceId));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(sequenceId, nameof(sequenceId));
+            Argument.AssertNotNull(version, nameof(version));
 
             Id = id;
             Type = type;

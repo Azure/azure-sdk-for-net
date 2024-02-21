@@ -350,10 +350,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureSetContainerResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningFeatureSetContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics.CreateScope("MachineLearningFeatureSetContainerResource.Update");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeatureSetContainerResource> Update(WaitUntil waitUntil, MachineLearningFeatureSetContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningFeatureSetContainerFeaturesetContainersClientDiagnostics.CreateScope("MachineLearningFeatureSetContainerResource.Update");
             scope.Start();

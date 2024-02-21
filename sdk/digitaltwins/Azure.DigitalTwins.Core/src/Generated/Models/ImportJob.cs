@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -19,14 +20,8 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobUri"/> or <paramref name="outputBlobUri"/> is null. </exception>
         public ImportJob(Uri inputBlobUri, Uri outputBlobUri)
         {
-            if (inputBlobUri == null)
-            {
-                throw new ArgumentNullException(nameof(inputBlobUri));
-            }
-            if (outputBlobUri == null)
-            {
-                throw new ArgumentNullException(nameof(outputBlobUri));
-            }
+            Argument.AssertNotNull(inputBlobUri, nameof(inputBlobUri));
+            Argument.AssertNotNull(outputBlobUri, nameof(outputBlobUri));
 
             InputBlobUri = inputBlobUri;
             OutputBlobUri = outputBlobUri;

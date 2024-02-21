@@ -287,10 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GuestConfigurationHcrpAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
@@ -336,10 +333,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GuestConfigurationHcrpAssignmentResource> Update(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
@@ -431,14 +425,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            if (reportId == null)
-            {
-                throw new ArgumentNullException(nameof(reportId));
-            }
-            if (reportId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
-            }
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();
@@ -477,14 +464,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual Response<GuestConfigurationAssignmentReport> GetReport(string reportId, CancellationToken cancellationToken = default)
         {
-            if (reportId == null)
-            {
-                throw new ArgumentNullException(nameof(reportId));
-            }
-            if (reportId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
-            }
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ObjectReplicationPolicyResource>> UpdateAsync(WaitUntil waitUntil, ObjectReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ObjectReplicationPolicyResource> Update(WaitUntil waitUntil, ObjectReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
             scope.Start();

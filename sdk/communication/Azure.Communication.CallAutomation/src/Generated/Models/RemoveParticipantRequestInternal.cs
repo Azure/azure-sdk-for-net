@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
         public RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove)
         {
-            if (participantToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(participantToRemove));
-            }
+            Argument.AssertNotNull(participantToRemove, nameof(participantToRemove));
 
             ParticipantToRemove = participantToRemove;
         }

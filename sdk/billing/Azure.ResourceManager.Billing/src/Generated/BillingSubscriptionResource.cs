@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BillingSubscriptionResource> Update(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Update");
             scope.Start();
@@ -379,10 +373,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> MoveAsync(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
@@ -428,10 +419,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BillingSubscriptionResource> Move(WaitUntil waitUntil, BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Move");
             scope.Start();
@@ -476,10 +464,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BillingSubscriptionValidateMoveEligibilityResult>> ValidateMoveEligibilityAsync(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
@@ -521,10 +506,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BillingSubscriptionValidateMoveEligibilityResult> ValidateMoveEligibility(BillingSubscriptionMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.ValidateMoveEligibility");
             scope.Start();
@@ -567,10 +549,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> MergeAsync(WaitUntil waitUntil, BillingSubscriptionMergeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Merge");
             scope.Start();
@@ -616,10 +595,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BillingSubscriptionResource> Merge(WaitUntil waitUntil, BillingSubscriptionMergeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Merge");
             scope.Start();
@@ -665,10 +641,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> SplitAsync(WaitUntil waitUntil, BillingSubscriptionSplitContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Split");
             scope.Start();
@@ -714,10 +687,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BillingSubscriptionResource> Split(WaitUntil waitUntil, BillingSubscriptionSplitContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionResource.Split");
             scope.Start();

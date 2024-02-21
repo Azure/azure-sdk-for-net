@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebTestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string webTestName, WebTestData data, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebTestResource> CreateOrUpdate(WaitUntil waitUntil, string webTestName, WebTestData data, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual async Task<Response<WebTestResource>> GetAsync(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual Response<WebTestResource> Get(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebTestResource>> GetIfExistsAsync(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         public virtual NullableResponse<WebTestResource> GetIfExists(string webTestName, CancellationToken cancellationToken = default)
         {
-            if (webTestName == null)
-            {
-                throw new ArgumentNullException(nameof(webTestName));
-            }
-            if (webTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webTestName));
-            }
+            Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestCollection.GetIfExists");
             scope.Start();

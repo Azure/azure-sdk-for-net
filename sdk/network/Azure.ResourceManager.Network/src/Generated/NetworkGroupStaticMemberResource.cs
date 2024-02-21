@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkGroupStaticMemberResource>> UpdateAsync(WaitUntil waitUntil, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkGroupStaticMemberResource> Update(WaitUntil waitUntil, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberResource.Update");
             scope.Start();

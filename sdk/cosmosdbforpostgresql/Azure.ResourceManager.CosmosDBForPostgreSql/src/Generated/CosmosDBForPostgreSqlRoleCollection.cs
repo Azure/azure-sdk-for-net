@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBForPostgreSqlRoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleName, CosmosDBForPostgreSqlRoleData data, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CosmosDBForPostgreSqlRoleResource> CreateOrUpdate(WaitUntil waitUntil, string roleName, CosmosDBForPostgreSqlRoleData data, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlRoleResource>> GetAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<CosmosDBForPostgreSqlRoleResource> Get(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBForPostgreSqlRoleResource>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBForPostgreSqlRoleResource> GetIfExists(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
             scope.Start();

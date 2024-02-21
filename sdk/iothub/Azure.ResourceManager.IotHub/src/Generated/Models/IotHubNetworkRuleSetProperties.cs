@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipRules"/> is null. </exception>
         public IotHubNetworkRuleSetProperties(bool applyToBuiltInEventHubEndpoint, IEnumerable<IotHubNetworkRuleSetIPRule> ipRules)
         {
-            if (ipRules == null)
-            {
-                throw new ArgumentNullException(nameof(ipRules));
-            }
+            Argument.AssertNotNull(ipRules, nameof(ipRules));
 
             ApplyToBuiltInEventHubEndpoint = applyToBuiltInEventHubEndpoint;
             IPRules = ipRules.ToList();

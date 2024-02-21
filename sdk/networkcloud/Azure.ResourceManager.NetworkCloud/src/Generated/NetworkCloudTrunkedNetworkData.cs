@@ -60,18 +60,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="isolationDomainIds"/> or <paramref name="vlans"/> is null. </exception>
         public NetworkCloudTrunkedNetworkData(AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> isolationDomainIds, IEnumerable<long> vlans) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
-            if (isolationDomainIds == null)
-            {
-                throw new ArgumentNullException(nameof(isolationDomainIds));
-            }
-            if (vlans == null)
-            {
-                throw new ArgumentNullException(nameof(vlans));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            Argument.AssertNotNull(isolationDomainIds, nameof(isolationDomainIds));
+            Argument.AssertNotNull(vlans, nameof(vlans));
 
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = new ChangeTrackingList<string>();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         public AddonHcxProperties(string offer)
         {
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
+            Argument.AssertNotNull(offer, nameof(offer));
 
             Offer = offer;
             AddonType = AddonType.HCX;

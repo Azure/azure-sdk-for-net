@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,10 +20,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilities"/> is null. </exception>
         public PhoneNumberSearchRequest(PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities)
         {
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;

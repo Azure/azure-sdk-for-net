@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformApiPortalResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiPortalName, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformApiPortalResource> CreateOrUpdate(WaitUntil waitUntil, string apiPortalName, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformApiPortalResource>> GetAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual Response<AppPlatformApiPortalResource> Get(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual Response<bool> Exists(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformApiPortalResource>> GetIfExistsAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformApiPortalResource> GetIfExists(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            if (apiPortalName == null)
-            {
-                throw new ArgumentNullException(nameof(apiPortalName));
-            }
-            if (apiPortalName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiPortalName));
-            }
+            Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetIfExists");
             scope.Start();

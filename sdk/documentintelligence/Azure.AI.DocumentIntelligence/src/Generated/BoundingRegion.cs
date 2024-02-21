@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -57,10 +58,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="polygon"/> is null. </exception>
         internal BoundingRegion(int pageNumber, IEnumerable<float> polygon)
         {
-            if (polygon == null)
-            {
-                throw new ArgumentNullException(nameof(polygon));
-            }
+            Argument.AssertNotNull(polygon, nameof(polygon));
 
             PageNumber = pageNumber;
             Polygon = polygon.ToList();

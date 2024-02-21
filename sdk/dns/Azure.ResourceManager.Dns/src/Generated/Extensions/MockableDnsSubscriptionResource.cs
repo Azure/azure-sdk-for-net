@@ -133,10 +133,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources");
             scope.Start();
@@ -174,10 +171,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources");
             scope.Start();

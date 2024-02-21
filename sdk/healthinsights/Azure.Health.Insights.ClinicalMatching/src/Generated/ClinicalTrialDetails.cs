@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
@@ -51,14 +52,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="metadata"/> is null. </exception>
         public ClinicalTrialDetails(string id, ClinicalTrialMetadata metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             Id = id;
             Metadata = metadata;

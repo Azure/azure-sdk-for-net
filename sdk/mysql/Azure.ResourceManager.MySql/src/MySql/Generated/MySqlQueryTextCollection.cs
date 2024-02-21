@@ -79,14 +79,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual async Task<Response<MySqlQueryTextResource>> GetAsync(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.Get");
             scope.Start();
@@ -131,14 +124,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual Response<MySqlQueryTextResource> Get(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.Get");
             scope.Start();
@@ -183,10 +169,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlQueryTextResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlQueryTextResource> GetAllAsync(IEnumerable<string> queryIds, CancellationToken cancellationToken = default)
         {
-            if (queryIds == null)
-            {
-                throw new ArgumentNullException(nameof(queryIds));
-            }
+            Argument.AssertNotNull(queryIds, nameof(queryIds));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
@@ -220,10 +203,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlQueryTextResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlQueryTextResource> GetAll(IEnumerable<string> queryIds, CancellationToken cancellationToken = default)
         {
-            if (queryIds == null)
-            {
-                throw new ArgumentNullException(nameof(queryIds));
-            }
+            Argument.AssertNotNull(queryIds, nameof(queryIds));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryTextQueryTextsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, queryIds);
@@ -257,14 +237,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.Exists");
             scope.Start();
@@ -307,14 +280,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual Response<bool> Exists(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.Exists");
             scope.Start();
@@ -357,14 +323,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlQueryTextResource>> GetIfExistsAsync(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetIfExists");
             scope.Start();
@@ -409,14 +368,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         public virtual NullableResponse<MySqlQueryTextResource> GetIfExists(string queryId, CancellationToken cancellationToken = default)
         {
-            if (queryId == null)
-            {
-                throw new ArgumentNullException(nameof(queryId));
-            }
-            if (queryId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryId));
-            }
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
             using var scope = _mySqlQueryTextQueryTextsClientDiagnostics.CreateScope("MySqlQueryTextCollection.GetIfExists");
             scope.Start();

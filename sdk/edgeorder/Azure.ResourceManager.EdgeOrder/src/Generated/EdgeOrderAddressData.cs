@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public EdgeOrderAddressData(AzureLocation location, EdgeOrderAddressContactDetails contactDetails) : base(location)
         {
-            if (contactDetails == null)
-            {
-                throw new ArgumentNullException(nameof(contactDetails));
-            }
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
             ContactDetails = contactDetails;
         }

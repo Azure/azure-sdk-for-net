@@ -54,18 +54,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/>, <paramref name="ruleSetVersion"/> or <paramref name="ruleGroups"/> is null. </exception>
         internal ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups)
         {
-            if (ruleSetType == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetType));
-            }
-            if (ruleSetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetVersion));
-            }
-            if (ruleGroups == null)
-            {
-                throw new ArgumentNullException(nameof(ruleGroups));
-            }
+            Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
+            Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
+            Argument.AssertNotNull(ruleGroups, nameof(ruleGroups));
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;

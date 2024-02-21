@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="metrics"/> is null. </exception>
         internal MetricsQueryResult(string timespan, IEnumerable<MetricResult> metrics)
         {
-            if (timespan == null)
-            {
-                throw new ArgumentNullException(nameof(timespan));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(timespan, nameof(timespan));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             _timespan = timespan;
             Metrics = metrics.ToList();

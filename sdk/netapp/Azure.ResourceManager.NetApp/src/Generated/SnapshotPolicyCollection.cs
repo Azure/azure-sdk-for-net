@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SnapshotPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotPolicyName, SnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SnapshotPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotPolicyName, SnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual async Task<Response<SnapshotPolicyResource>> GetAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual Response<SnapshotPolicyResource> Get(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<SnapshotPolicyResource>> GetIfExistsAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
         public virtual NullableResponse<SnapshotPolicyResource> GetIfExists(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
-            if (snapshotPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotPolicyName));
-            }
-            if (snapshotPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
             using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.GetIfExists");
             scope.Start();

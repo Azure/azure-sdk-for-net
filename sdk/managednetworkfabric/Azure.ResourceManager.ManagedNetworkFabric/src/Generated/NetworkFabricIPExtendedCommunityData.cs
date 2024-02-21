@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
         public NetworkFabricIPExtendedCommunityData(AzureLocation location, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules) : base(location)
         {
-            if (ipExtendedCommunityRules == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityRules));
-            }
+            Argument.AssertNotNull(ipExtendedCommunityRules, nameof(ipExtendedCommunityRules));
 
             IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }

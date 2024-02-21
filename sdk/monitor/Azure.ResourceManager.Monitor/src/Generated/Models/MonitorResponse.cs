@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="value"/> is null. </exception>
         internal MonitorResponse(string timespan, IEnumerable<MonitorMetric> value)
         {
-            if (timespan == null)
-            {
-                throw new ArgumentNullException(nameof(timespan));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(timespan, nameof(timespan));
+            Argument.AssertNotNull(value, nameof(value));
 
             Timespan = timespan;
             Value = value.ToList();

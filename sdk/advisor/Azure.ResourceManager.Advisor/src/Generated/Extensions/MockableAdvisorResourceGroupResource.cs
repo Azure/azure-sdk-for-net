@@ -118,10 +118,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateConfiguration");
             scope.Start();
@@ -160,10 +157,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateConfiguration");
             scope.Start();

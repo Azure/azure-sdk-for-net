@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiIssueCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiIssueCommentResource> CreateOrUpdate(WaitUntil waitUntil, string commentId, ApiIssueCommentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual async Task<Response<ApiIssueCommentResource>> GetAsync(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual Response<ApiIssueCommentResource> Get(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.Get");
             scope.Start();
@@ -370,14 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.Exists");
             scope.Start();
@@ -420,14 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual Response<bool> Exists(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.Exists");
             scope.Start();
@@ -470,14 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiIssueCommentResource>> GetIfExistsAsync(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.GetIfExists");
             scope.Start();
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         public virtual NullableResponse<ApiIssueCommentResource> GetIfExists(string commentId, CancellationToken cancellationToken = default)
         {
-            if (commentId == null)
-            {
-                throw new ArgumentNullException(nameof(commentId));
-            }
-            if (commentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commentId));
-            }
+            Argument.AssertNotNullOrEmpty(commentId, nameof(commentId));
 
             using var scope = _apiIssueCommentClientDiagnostics.CreateScope("ApiIssueCommentCollection.GetIfExists");
             scope.Start();

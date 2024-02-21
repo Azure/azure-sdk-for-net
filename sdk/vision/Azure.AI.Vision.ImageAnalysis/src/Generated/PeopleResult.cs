@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -51,10 +52,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal PeopleResult(IEnumerable<DetectedPerson> values)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(values, nameof(values));
 
             Values = values.ToList();
         }

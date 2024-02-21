@@ -19,10 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="searchString"/> is null. </exception>
         public SearchInstancesRequest(string searchString)
         {
-            if (searchString == null)
-            {
-                throw new ArgumentNullException(nameof(searchString));
-            }
+            Argument.AssertNotNull(searchString, nameof(searchString));
 
             SearchString = searchString;
             Path = new ChangeTrackingList<string>();

@@ -351,10 +351,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SuppressionListResource>> UpdateAsync(WaitUntil waitUntil, SuppressionListResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResource.Update");
             scope.Start();
@@ -400,10 +397,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SuppressionListResource> Update(WaitUntil waitUntil, SuppressionListResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResource.Update");
             scope.Start();

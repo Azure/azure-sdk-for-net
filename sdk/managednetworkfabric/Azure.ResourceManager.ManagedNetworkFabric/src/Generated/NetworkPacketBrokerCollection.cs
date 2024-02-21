@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkPacketBrokerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkPacketBrokerName, NetworkPacketBrokerData data, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkPacketBrokerResource> CreateOrUpdate(WaitUntil waitUntil, string networkPacketBrokerName, NetworkPacketBrokerData data, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual async Task<Response<NetworkPacketBrokerResource>> GetAsync(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual Response<NetworkPacketBrokerResource> Get(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkPacketBrokerResource>> GetIfExistsAsync(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerName"/> is null. </exception>
         public virtual NullableResponse<NetworkPacketBrokerResource> GetIfExists(string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (networkPacketBrokerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerName));
-            }
-            if (networkPacketBrokerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkPacketBrokerName));
-            }
+            Argument.AssertNotNullOrEmpty(networkPacketBrokerName, nameof(networkPacketBrokerName));
 
             using var scope = _networkPacketBrokerClientDiagnostics.CreateScope("NetworkPacketBrokerCollection.GetIfExists");
             scope.Start();

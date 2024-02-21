@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpointInvocationDefinition"/> is null. </exception>
         public MachineLearningEndpointScheduleAction(BinaryData endpointInvocationDefinition)
         {
-            if (endpointInvocationDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(endpointInvocationDefinition));
-            }
+            Argument.AssertNotNull(endpointInvocationDefinition, nameof(endpointInvocationDefinition));
 
             EndpointInvocationDefinition = endpointInvocationDefinition;
             ActionType = ScheduleActionType.InvokeBatchEndpoint;

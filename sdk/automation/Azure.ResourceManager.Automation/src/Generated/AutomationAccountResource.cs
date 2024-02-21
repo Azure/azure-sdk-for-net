@@ -1790,10 +1790,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountResource>> UpdateAsync(AutomationAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
             scope.Start();
@@ -1835,10 +1832,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AutomationAccountResource> Update(AutomationAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
             scope.Start();
@@ -1994,10 +1988,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AgentRegistration>> RegenerateKeyAgentRegistrationInformationAsync(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
             scope.Start();
@@ -2035,10 +2026,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AgentRegistration> RegenerateKeyAgentRegistrationInformation(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
             scope.Start();
@@ -2082,14 +2070,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual async Task<Response<AutomationJobStream>> GetStreamDscCompilationJobAsync(Guid jobId, string jobStreamId, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("AutomationAccountResource.GetStreamDscCompilationJob");
             scope.Start();
@@ -2133,14 +2114,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual Response<AutomationJobStream> GetStreamDscCompilationJob(Guid jobId, string jobStreamId, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("AutomationAccountResource.GetStreamDscCompilationJob");
             scope.Start();
@@ -2504,14 +2478,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
@@ -2541,14 +2508,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
@@ -2576,10 +2536,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GraphicalRunbookContent>> ConvertGraphRunbookContentAsync(GraphicalRunbookContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
             scope.Start();
@@ -2617,10 +2574,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GraphicalRunbookContent> ConvertGraphRunbookContent(GraphicalRunbookContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
             scope.Start();
@@ -2999,14 +2953,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
             scope.Start();
@@ -3067,14 +3015,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AutomationAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
             scope.Start();
@@ -3134,10 +3076,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
             scope.Start();
@@ -3194,10 +3133,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AutomationAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
             scope.Start();
@@ -3254,10 +3190,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
             scope.Start();
@@ -3317,10 +3250,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AutomationAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
             scope.Start();

@@ -60,14 +60,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReportResourceData>> GetAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateGetRequest(reportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,14 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReportResourceData> Get(string reportName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateGetRequest(reportName);
             _pipeline.Send(message, cancellationToken);
@@ -149,18 +135,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string reportName, ReportResourceData data, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(reportName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,18 +158,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string reportName, ReportResourceData data, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(reportName, data);
             _pipeline.Send(message, cancellationToken);
@@ -235,18 +201,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string reportName, ReportResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reportName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,18 +225,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string reportName, ReportResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reportName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -318,14 +264,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateDeleteRequest(reportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -347,14 +286,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string reportName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateDeleteRequest(reportName);
             _pipeline.Send(message, cancellationToken);

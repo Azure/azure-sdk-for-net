@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectId, PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, string objectId, PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>> GetAsync(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual Response<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> Get(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual Response<bool> Exists(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>> GetIfExistsAsync(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetIfExists(string objectId, CancellationToken cancellationToken = default)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (objectId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectId));
-            }
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
             using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetIfExists");
             scope.Start();

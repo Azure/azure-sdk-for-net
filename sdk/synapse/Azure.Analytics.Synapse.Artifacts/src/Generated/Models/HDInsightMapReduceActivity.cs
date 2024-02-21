@@ -21,18 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         public HDInsightMapReduceActivity(string name, object className, object jarFilePath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (className == null)
-            {
-                throw new ArgumentNullException(nameof(className));
-            }
-            if (jarFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(jarFilePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(className, nameof(className));
+            Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
             StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
             Arguments = new ChangeTrackingList<object>();

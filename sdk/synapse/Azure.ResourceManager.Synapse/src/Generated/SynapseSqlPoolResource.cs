@@ -1010,10 +1010,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseSqlPoolResource>> UpdateAsync(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Update");
             scope.Start();
@@ -1059,10 +1056,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SynapseSqlPoolResource> Update(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Update");
             scope.Start();
@@ -1275,10 +1269,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
         public virtual async Task<Response> RenameAsync(SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (synapseResourceMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(synapseResourceMoveDefinition));
-            }
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Rename");
             scope.Start();
@@ -1320,10 +1311,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
         public virtual Response Rename(SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (synapseResourceMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(synapseResourceMoveDefinition));
-            }
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Rename");
             scope.Start();
@@ -1366,10 +1354,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseRestorePointResource>> CreateSqlPoolRestorePointAsync(WaitUntil waitUntil, SqlPoolCreateRestorePointContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseSqlPoolResource.CreateSqlPoolRestorePoint");
             scope.Start();
@@ -1415,10 +1400,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SynapseRestorePointResource> CreateSqlPoolRestorePoint(WaitUntil waitUntil, SqlPoolCreateRestorePointContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseSqlPoolResource.CreateSqlPoolRestorePoint");
             scope.Start();
@@ -1577,10 +1559,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
         public virtual async Task<Response> UpdateSqlPoolSensitivityLabelAsync(SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
-            if (synapseSensitivityLabelUpdateListResult == null)
-            {
-                throw new ArgumentNullException(nameof(synapseSensitivityLabelUpdateListResult));
-            }
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolSensitivityLabel");
             scope.Start();
@@ -1622,10 +1601,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
         public virtual Response UpdateSqlPoolSensitivityLabel(SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
-            if (synapseSensitivityLabelUpdateListResult == null)
-            {
-                throw new ArgumentNullException(nameof(synapseSensitivityLabelUpdateListResult));
-            }
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolSensitivityLabel");
             scope.Start();
@@ -1729,10 +1705,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
         public virtual async Task<Response> UpdateSqlPoolRecommendedSensitivityLabelAsync(SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, CancellationToken cancellationToken = default)
         {
-            if (synapseRecommendedSensitivityLabelUpdateOperationListResult == null)
-            {
-                throw new ArgumentNullException(nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
-            }
+            Argument.AssertNotNull(synapseRecommendedSensitivityLabelUpdateOperationListResult, nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
 
             using var scope = _sqlPoolRecommendedSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolRecommendedSensitivityLabel");
             scope.Start();
@@ -1770,10 +1743,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
         public virtual Response UpdateSqlPoolRecommendedSensitivityLabel(SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, CancellationToken cancellationToken = default)
         {
-            if (synapseRecommendedSensitivityLabelUpdateOperationListResult == null)
-            {
-                throw new ArgumentNullException(nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
-            }
+            Argument.AssertNotNull(synapseRecommendedSensitivityLabelUpdateOperationListResult, nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
 
             using var scope = _sqlPoolRecommendedSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolRecommendedSensitivityLabel");
             scope.Start();
@@ -1816,14 +1786,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SynapseSqlPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.AddTag");
             scope.Start();
@@ -1884,14 +1848,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SynapseSqlPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.AddTag");
             scope.Start();
@@ -1951,10 +1909,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SynapseSqlPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.SetTags");
             scope.Start();
@@ -2011,10 +1966,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SynapseSqlPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.SetTags");
             scope.Start();
@@ -2071,10 +2023,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SynapseSqlPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.RemoveTag");
             scope.Start();
@@ -2134,10 +2083,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SynapseSqlPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.RemoveTag");
             scope.Start();

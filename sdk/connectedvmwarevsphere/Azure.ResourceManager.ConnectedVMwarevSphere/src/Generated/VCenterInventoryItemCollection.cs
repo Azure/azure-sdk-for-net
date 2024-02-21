@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VCenterInventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VCenterInventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, VCenterInventoryItemData data, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual async Task<Response<VCenterInventoryItemResource>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual Response<VCenterInventoryItemResource> Get(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<VCenterInventoryItemResource>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
         public virtual NullableResponse<VCenterInventoryItemResource> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var scope = _vCenterInventoryItemInventoryItemsClientDiagnostics.CreateScope("VCenterInventoryItemCollection.GetIfExists");
             scope.Start();

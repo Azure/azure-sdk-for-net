@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mountPath"/> is null. </exception>
         public ContainerVolumeMount(string name, string mountPath)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mountPath == null)
-            {
-                throw new ArgumentNullException(nameof(mountPath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mountPath, nameof(mountPath));
 
             Name = name;
             MountPath = mountPath;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -63,26 +64,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="assistantId"/>, <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepDetails"/> is null. </exception>
         internal RunStep(string id, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (stepDetails == null)
-            {
-                throw new ArgumentNullException(nameof(stepDetails));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(stepDetails, nameof(stepDetails));
 
             Id = id;
             Type = type;

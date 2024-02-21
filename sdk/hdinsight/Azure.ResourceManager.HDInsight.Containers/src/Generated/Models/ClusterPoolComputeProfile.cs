@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public ClusterPoolComputeProfile(string vmSize)
         {
-            if (vmSize == null)
-            {
-                throw new ArgumentNullException(nameof(vmSize));
-            }
+            Argument.AssertNotNull(vmSize, nameof(vmSize));
 
             VmSize = vmSize;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         public LakeHouseArtifact(string artifactName) : base(artifactName)
         {
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             ArtifactType = OneLakeArtifactType.LakeHouse;
         }

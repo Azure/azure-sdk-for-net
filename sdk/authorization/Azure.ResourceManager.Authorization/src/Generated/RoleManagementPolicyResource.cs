@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<RoleManagementPolicyResource>> UpdateAsync(RoleManagementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
             scope.Start();
@@ -239,10 +236,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<RoleManagementPolicyResource> Update(RoleManagementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
             scope.Start();

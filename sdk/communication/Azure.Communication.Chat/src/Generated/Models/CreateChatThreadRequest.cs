@@ -19,10 +19,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public CreateChatThreadRequest(string topic)
         {
-            if (topic == null)
-            {
-                throw new ArgumentNullException(nameof(topic));
-            }
+            Argument.AssertNotNull(topic, nameof(topic));
 
             Topic = topic;
             Participants = new ChangeTrackingList<ChatParticipantInternal>();

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedNetworkPeeringPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedNetworkPeeringPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual async Task<Response<ManagedNetworkPeeringPolicyResource>> GetAsync(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual Response<ManagedNetworkPeeringPolicyResource> Get(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.Exists");
             scope.Start();
@@ -466,14 +418,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedNetworkPeeringPolicyResource>> GetIfExistsAsync(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.GetIfExists");
             scope.Start();
@@ -518,14 +463,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkPeeringPolicyName"/> is null. </exception>
         public virtual NullableResponse<ManagedNetworkPeeringPolicyResource> GetIfExists(string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyCollection.GetIfExists");
             scope.Start();

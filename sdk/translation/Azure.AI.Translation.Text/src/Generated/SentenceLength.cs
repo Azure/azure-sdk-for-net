@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -58,14 +59,8 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="srcSentLen"/> or <paramref name="transSentLen"/> is null. </exception>
         internal SentenceLength(IEnumerable<int> srcSentLen, IEnumerable<int> transSentLen)
         {
-            if (srcSentLen == null)
-            {
-                throw new ArgumentNullException(nameof(srcSentLen));
-            }
-            if (transSentLen == null)
-            {
-                throw new ArgumentNullException(nameof(transSentLen));
-            }
+            Argument.AssertNotNull(srcSentLen, nameof(srcSentLen));
+            Argument.AssertNotNull(transSentLen, nameof(transSentLen));
 
             SrcSentLen = srcSentLen.ToList();
             TransSentLen = transSentLen.ToList();

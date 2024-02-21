@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ObjectReplicationPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectReplicationPolicyId, ObjectReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ObjectReplicationPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string objectReplicationPolicyId, ObjectReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual async Task<Response<ObjectReplicationPolicyResource>> GetAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual Response<ObjectReplicationPolicyResource> Get(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual Response<bool> Exists(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual async Task<NullableResponse<ObjectReplicationPolicyResource>> GetIfExistsAsync(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="objectReplicationPolicyId"/> is null. </exception>
         public virtual NullableResponse<ObjectReplicationPolicyResource> GetIfExists(string objectReplicationPolicyId, CancellationToken cancellationToken = default)
         {
-            if (objectReplicationPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(objectReplicationPolicyId));
-            }
-            if (objectReplicationPolicyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(objectReplicationPolicyId));
-            }
+            Argument.AssertNotNullOrEmpty(objectReplicationPolicyId, nameof(objectReplicationPolicyId));
 
             using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyCollection.GetIfExists");
             scope.Start();

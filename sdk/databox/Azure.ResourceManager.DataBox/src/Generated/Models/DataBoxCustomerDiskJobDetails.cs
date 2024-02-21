@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> or <paramref name="returnToCustomerPackageDetails"/> is null. </exception>
         public DataBoxCustomerDiskJobDetails(DataBoxContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
         {
-            if (contactDetails == null)
-            {
-                throw new ArgumentNullException(nameof(contactDetails));
-            }
-            if (returnToCustomerPackageDetails == null)
-            {
-                throw new ArgumentNullException(nameof(returnToCustomerPackageDetails));
-            }
+            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+            Argument.AssertNotNull(returnToCustomerPackageDetails, nameof(returnToCustomerPackageDetails));
 
             ImportDiskDetails = new ChangeTrackingDictionary<string, ImportDiskDetails>();
             ExportDiskDetails = new ChangeTrackingDictionary<string, ExportDiskDetails>();

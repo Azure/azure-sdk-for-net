@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -51,14 +52,8 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="script"/> is null. </exception>
         internal TransliteratedText(string text, string script)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (script == null)
-            {
-                throw new ArgumentNullException(nameof(script));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(script, nameof(script));
 
             Text = text;
             Script = script;

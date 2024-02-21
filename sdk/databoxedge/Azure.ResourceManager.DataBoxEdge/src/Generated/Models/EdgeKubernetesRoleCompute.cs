@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmProfile"/> is null. </exception>
         public EdgeKubernetesRoleCompute(string vmProfile)
         {
-            if (vmProfile == null)
-            {
-                throw new ArgumentNullException(nameof(vmProfile));
-            }
+            Argument.AssertNotNull(vmProfile, nameof(vmProfile));
 
             VmProfile = vmProfile;
         }

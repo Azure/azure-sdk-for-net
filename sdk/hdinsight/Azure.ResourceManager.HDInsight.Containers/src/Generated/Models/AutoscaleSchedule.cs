@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -54,10 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
         public AutoscaleSchedule(DateTimeOffset startOn, DateTimeOffset endOn, int count, IEnumerable<AutoscaleScheduleDay> days)
         {
-            if (days == null)
-            {
-                throw new ArgumentNullException(nameof(days));
-            }
+            Argument.AssertNotNull(days, nameof(days));
 
             StartOn = startOn;
             EndOn = endOn;

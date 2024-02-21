@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="monitorDefinition"/> is null. </exception>
         public CreateMonitorAction(MonitorDefinition monitorDefinition)
         {
-            if (monitorDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(monitorDefinition));
-            }
+            Argument.AssertNotNull(monitorDefinition, nameof(monitorDefinition));
 
             MonitorDefinition = monitorDefinition;
             ActionType = ScheduleActionType.CreateMonitor;

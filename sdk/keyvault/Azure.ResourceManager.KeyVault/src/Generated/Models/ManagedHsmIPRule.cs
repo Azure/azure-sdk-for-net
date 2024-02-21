@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
         public ManagedHsmIPRule(string addressRange)
         {
-            if (addressRange == null)
-            {
-                throw new ArgumentNullException(nameof(addressRange));
-            }
+            Argument.AssertNotNull(addressRange, nameof(addressRange));
 
             AddressRange = addressRange;
         }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="commentValue"/> is null. </exception>
         public CommentFeedbackValue(string commentValue)
         {
-            if (commentValue == null)
-            {
-                throw new ArgumentNullException(nameof(commentValue));
-            }
+            Argument.AssertNotNull(commentValue, nameof(commentValue));
 
             CommentValue = commentValue;
         }

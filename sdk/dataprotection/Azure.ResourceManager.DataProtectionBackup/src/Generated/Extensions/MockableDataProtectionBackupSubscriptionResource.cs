@@ -136,10 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
@@ -178,10 +175,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();

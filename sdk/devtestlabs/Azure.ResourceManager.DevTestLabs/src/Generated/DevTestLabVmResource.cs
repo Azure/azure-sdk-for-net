@@ -355,10 +355,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DevTestLabVmResource>> UpdateAsync(DevTestLabVmPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
             scope.Start();
@@ -400,10 +397,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DevTestLabVmResource> Update(DevTestLabVmPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Update");
             scope.Start();
@@ -446,10 +440,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="dataDiskProperties"/> is null. </exception>
         public virtual async Task<ArmOperation> AddDataDiskAsync(WaitUntil waitUntil, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
-            if (dataDiskProperties == null)
-            {
-                throw new ArgumentNullException(nameof(dataDiskProperties));
-            }
+            Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
             scope.Start();
@@ -495,10 +486,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="dataDiskProperties"/> is null. </exception>
         public virtual ArmOperation AddDataDisk(WaitUntil waitUntil, DevTestLabDataDiskProperties dataDiskProperties, CancellationToken cancellationToken = default)
         {
-            if (dataDiskProperties == null)
-            {
-                throw new ArgumentNullException(nameof(dataDiskProperties));
-            }
+            Argument.AssertNotNull(dataDiskProperties, nameof(dataDiskProperties));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddDataDisk");
             scope.Start();
@@ -544,10 +532,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ApplyArtifactsAsync(WaitUntil waitUntil, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
             scope.Start();
@@ -593,10 +578,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ApplyArtifacts(WaitUntil waitUntil, DevTestLabVmApplyArtifactsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.ApplyArtifacts");
             scope.Start();
@@ -726,10 +708,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> DetachDataDiskAsync(WaitUntil waitUntil, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
@@ -775,10 +754,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation DetachDataDisk(WaitUntil waitUntil, DevTestLabVmDetachDataDiskContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.DetachDataDisk");
             scope.Start();
@@ -1060,10 +1036,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ResizeAsync(WaitUntil waitUntil, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
@@ -1109,10 +1082,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Resize(WaitUntil waitUntil, DevTestLabVmResizeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.Resize");
             scope.Start();
@@ -1578,14 +1548,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DevTestLabVmResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
             scope.Start();
@@ -1646,14 +1610,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DevTestLabVmResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.AddTag");
             scope.Start();
@@ -1713,10 +1671,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevTestLabVmResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
             scope.Start();
@@ -1773,10 +1728,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevTestLabVmResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.SetTags");
             scope.Start();
@@ -1833,10 +1785,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DevTestLabVmResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
             scope.Start();
@@ -1896,10 +1845,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DevTestLabVmResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabVmVirtualMachinesClientDiagnostics.CreateScope("DevTestLabVmResource.RemoveTag");
             scope.Start();

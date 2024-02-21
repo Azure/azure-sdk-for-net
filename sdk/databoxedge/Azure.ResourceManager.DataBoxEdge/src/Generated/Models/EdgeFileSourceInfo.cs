@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         public EdgeFileSourceInfo(ResourceIdentifier shareId)
         {
-            if (shareId == null)
-            {
-                throw new ArgumentNullException(nameof(shareId));
-            }
+            Argument.AssertNotNull(shareId, nameof(shareId));
 
             ShareId = shareId;
         }

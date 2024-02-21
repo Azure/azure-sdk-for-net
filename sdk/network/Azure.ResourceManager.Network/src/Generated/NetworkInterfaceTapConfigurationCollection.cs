@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkInterfaceTapConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tapConfigurationName, NetworkInterfaceTapConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkInterfaceTapConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string tapConfigurationName, NetworkInterfaceTapConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual async Task<Response<NetworkInterfaceTapConfigurationResource>> GetAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual Response<NetworkInterfaceTapConfigurationResource> Get(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkInterfaceTapConfigurationResource>> GetIfExistsAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         public virtual NullableResponse<NetworkInterfaceTapConfigurationResource> GetIfExists(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (tapConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(tapConfigurationName));
-            }
-            if (tapConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tapConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(tapConfigurationName, nameof(tapConfigurationName));
 
             using var scope = _networkInterfaceTapConfigurationClientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationCollection.GetIfExists");
             scope.Start();

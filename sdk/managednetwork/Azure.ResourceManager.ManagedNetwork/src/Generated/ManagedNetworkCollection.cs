@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNetworkName, ManagedNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string managedNetworkName, ManagedNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual async Task<Response<ManagedNetworkResource>> GetAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual Response<ManagedNetworkResource> Get(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.Get");
             scope.Start();
@@ -367,14 +333,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedNetworkResource>> GetIfExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
             scope.Start();
@@ -519,14 +464,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         public virtual NullableResponse<ManagedNetworkResource> GetIfExists(string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var scope = _managedNetworkClientDiagnostics.CreateScope("ManagedNetworkCollection.GetIfExists");
             scope.Start();

@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> Returns a <see cref="GraphServicesAccountResource"/> object. </returns>
         public static GraphServicesAccountResource GetGraphServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableGraphServicesArmClient(client).GetGraphServicesAccountResource(id);
         }
@@ -68,10 +65,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
         public static GraphServicesAccountResourceCollection GetGraphServicesAccountResources(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResources();
         }
@@ -109,10 +103,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static async Task<Response<GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResourceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -150,10 +141,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static Response<GraphServicesAccountResource> GetGraphServicesAccountResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResource(resourceName, cancellationToken);
         }
@@ -189,10 +177,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> An async collection of <see cref="GraphServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableGraphServicesSubscriptionResource(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
         }
@@ -228,10 +213,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> A collection of <see cref="GraphServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GraphServicesAccountResource> GetGraphServicesAccountResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableGraphServicesSubscriptionResource(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
         }

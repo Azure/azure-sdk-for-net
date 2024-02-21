@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="snssai"/> is null. </exception>
         public MobileNetworkSliceData(AzureLocation location, Snssai snssai) : base(location)
         {
-            if (snssai == null)
-            {
-                throw new ArgumentNullException(nameof(snssai));
-            }
+            Argument.AssertNotNull(snssai, nameof(snssai));
 
             Snssai = snssai;
         }

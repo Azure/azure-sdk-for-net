@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bindingName, AppPlatformBindingData data, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBindingResource> CreateOrUpdate(WaitUntil waitUntil, string bindingName, AppPlatformBindingData data, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformBindingResource>> GetAsync(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual Response<AppPlatformBindingResource> Get(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual Response<bool> Exists(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformBindingResource>> GetIfExistsAsync(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformBindingResource> GetIfExists(string bindingName, CancellationToken cancellationToken = default)
         {
-            if (bindingName == null)
-            {
-                throw new ArgumentNullException(nameof(bindingName));
-            }
-            if (bindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bindingName));
-            }
+            Argument.AssertNotNullOrEmpty(bindingName, nameof(bindingName));
 
             using var scope = _appPlatformBindingBindingsClientDiagnostics.CreateScope("AppPlatformBindingCollection.GetIfExists");
             scope.Start();

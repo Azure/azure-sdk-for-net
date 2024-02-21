@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorSecurityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPolicyName, FrontDoorSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorSecurityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string securityPolicyName, FrontDoorSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<FrontDoorSecurityPolicyResource> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorSecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorSecurityPolicyResource> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (securityPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
             using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();

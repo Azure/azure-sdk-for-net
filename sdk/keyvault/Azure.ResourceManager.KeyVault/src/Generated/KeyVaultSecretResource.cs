@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<KeyVaultSecretResource>> UpdateAsync(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();
@@ -242,10 +239,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<KeyVaultSecretResource> Update(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();

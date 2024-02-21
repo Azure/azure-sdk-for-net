@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkPacketCaptureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packetCaptureName, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkPacketCaptureResource> CreateOrUpdate(WaitUntil waitUntil, string packetCaptureName, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkPacketCaptureResource>> GetAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual Response<MobileNetworkPacketCaptureResource> Get(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual Response<bool> Exists(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkPacketCaptureResource>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkPacketCaptureResource> GetIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            if (packetCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCaptureName));
-            }
-            if (packetCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureCollection.GetIfExists");
             scope.Start();

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeeringRegisteredAsnResource>> UpdateAsync(WaitUntil waitUntil, PeeringRegisteredAsnData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeeringRegisteredAsnResource> Update(WaitUntil waitUntil, PeeringRegisteredAsnData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnResource.Update");
             scope.Start();

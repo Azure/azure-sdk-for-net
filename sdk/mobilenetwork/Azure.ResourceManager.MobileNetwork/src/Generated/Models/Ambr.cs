@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public Ambr(string uplink, string downlink)
         {
-            if (uplink == null)
-            {
-                throw new ArgumentNullException(nameof(uplink));
-            }
-            if (downlink == null)
-            {
-                throw new ArgumentNullException(nameof(downlink));
-            }
+            Argument.AssertNotNull(uplink, nameof(uplink));
+            Argument.AssertNotNull(downlink, nameof(downlink));
 
             Uplink = uplink;
             Downlink = downlink;

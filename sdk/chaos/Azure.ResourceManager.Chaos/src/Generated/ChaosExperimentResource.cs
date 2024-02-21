@@ -351,10 +351,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ChaosExperimentResource>> UpdateAsync(WaitUntil waitUntil, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Update");
             scope.Start();
@@ -400,10 +397,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ChaosExperimentResource> Update(WaitUntil waitUntil, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentResource.Update");
             scope.Start();

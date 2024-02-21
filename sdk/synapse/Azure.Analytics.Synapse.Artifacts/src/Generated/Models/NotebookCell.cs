@@ -22,18 +22,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="cellType"/>, <paramref name="metadata"/> or <paramref name="source"/> is null. </exception>
         public NotebookCell(string cellType, object metadata, IEnumerable<string> source)
         {
-            if (cellType == null)
-            {
-                throw new ArgumentNullException(nameof(cellType));
-            }
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(cellType, nameof(cellType));
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(source, nameof(source));
 
             CellType = cellType;
             Metadata = metadata;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -70,14 +71,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="tokens"/> is null. </exception>
         internal AudioTranscriptionSegment(int id, TimeSpan start, TimeSpan end, string text, float temperature, float averageLogProbability, float compressionRatio, float noSpeechProbability, IEnumerable<int> tokens, int seek)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (tokens == null)
-            {
-                throw new ArgumentNullException(nameof(tokens));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(tokens, nameof(tokens));
 
             Id = id;
             Start = start;

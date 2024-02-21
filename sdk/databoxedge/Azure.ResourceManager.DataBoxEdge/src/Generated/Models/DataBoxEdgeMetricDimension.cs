@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="sourceName"/> is null. </exception>
         public DataBoxEdgeMetricDimension(string sourceType, string sourceName)
         {
-            if (sourceType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceType));
-            }
-            if (sourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceName));
-            }
+            Argument.AssertNotNull(sourceType, nameof(sourceType));
+            Argument.AssertNotNull(sourceName, nameof(sourceName));
 
             SourceType = sourceType;
             SourceName = sourceName;

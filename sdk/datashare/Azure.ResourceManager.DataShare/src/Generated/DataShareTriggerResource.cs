@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataShareTriggerResource>> UpdateAsync(WaitUntil waitUntil, DataShareTriggerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataShareTriggerResource> Update(WaitUntil waitUntil, DataShareTriggerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerResource.Update");
             scope.Start();

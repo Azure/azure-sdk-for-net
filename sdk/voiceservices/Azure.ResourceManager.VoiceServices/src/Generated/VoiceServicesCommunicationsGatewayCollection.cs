@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VoiceServicesCommunicationsGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationsGatewayName, VoiceServicesCommunicationsGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VoiceServicesCommunicationsGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string communicationsGatewayName, VoiceServicesCommunicationsGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCommunicationsGatewayResource>> GetAsync(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual Response<VoiceServicesCommunicationsGatewayResource> Get(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<VoiceServicesCommunicationsGatewayResource>> GetIfExistsAsync(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="communicationsGatewayName"/> is null. </exception>
         public virtual NullableResponse<VoiceServicesCommunicationsGatewayResource> GetIfExists(string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (communicationsGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationsGatewayName));
-            }
-            if (communicationsGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationsGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationsGatewayName, nameof(communicationsGatewayName));
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayCollection.GetIfExists");
             scope.Start();

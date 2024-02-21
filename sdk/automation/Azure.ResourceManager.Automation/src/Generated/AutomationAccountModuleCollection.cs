@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationAccountModuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moduleName, AutomationAccountModuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationAccountModuleResource> CreateOrUpdate(WaitUntil waitUntil, string moduleName, AutomationAccountModuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountModuleResource>> GetAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual Response<AutomationAccountModuleResource> Get(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationAccountModuleResource>> GetIfExistsAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual NullableResponse<AutomationAccountModuleResource> GetIfExists(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
             scope.Start();

@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual async Task<Response<CollectorPolicyResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.Update");
             scope.Start();
@@ -327,10 +324,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual Response<CollectorPolicyResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.Update");
             scope.Start();
@@ -373,14 +367,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CollectorPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.AddTag");
             scope.Start();
@@ -441,14 +429,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CollectorPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.AddTag");
             scope.Start();
@@ -508,10 +490,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CollectorPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.SetTags");
             scope.Start();
@@ -568,10 +547,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CollectorPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.SetTags");
             scope.Start();
@@ -628,10 +604,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CollectorPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.RemoveTag");
             scope.Start();
@@ -691,10 +664,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CollectorPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyResource.RemoveTag");
             scope.Start();

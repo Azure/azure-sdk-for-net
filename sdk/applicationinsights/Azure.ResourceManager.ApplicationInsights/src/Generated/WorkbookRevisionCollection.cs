@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual async Task<Response<WorkbookRevisionResource>> GetAsync(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual Response<WorkbookRevisionResource> Get(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual Response<bool> Exists(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkbookRevisionResource>> GetIfExistsAsync(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
         public virtual NullableResponse<WorkbookRevisionResource> GetIfExists(string revisionId, CancellationToken cancellationToken = default)
         {
-            if (revisionId == null)
-            {
-                throw new ArgumentNullException(nameof(revisionId));
-            }
-            if (revisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionId));
-            }
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
             using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.GetIfExists");
             scope.Start();

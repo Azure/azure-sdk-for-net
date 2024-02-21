@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
         public PolicyAttestationData(ResourceIdentifier policyAssignmentId)
         {
-            if (policyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentId));
-            }
+            Argument.AssertNotNull(policyAssignmentId, nameof(policyAssignmentId));
 
             PolicyAssignmentId = policyAssignmentId;
             Evidence = new ChangeTrackingList<AttestationEvidence>();

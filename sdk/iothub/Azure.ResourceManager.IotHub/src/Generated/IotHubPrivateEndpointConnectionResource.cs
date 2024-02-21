@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotHubPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotHubPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Update");
             scope.Start();

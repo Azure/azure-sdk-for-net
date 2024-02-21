@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lowThresholds"/> or <paramref name="highThresholds"/> is null. </exception>
         internal MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity, IEnumerable<double> lowThresholds, IEnumerable<double> highThresholds)
         {
-            if (lowThresholds == null)
-            {
-                throw new ArgumentNullException(nameof(lowThresholds));
-            }
-            if (highThresholds == null)
-            {
-                throw new ArgumentNullException(nameof(highThresholds));
-            }
+            Argument.AssertNotNull(lowThresholds, nameof(lowThresholds));
+            Argument.AssertNotNull(highThresholds, nameof(highThresholds));
 
             Sensitivity = sensitivity;
             LowThresholds = lowThresholds.ToList();

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFunctionDefinitionVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFunctionDefinitionVersionResource> CreateOrUpdate(WaitUntil waitUntil, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionVersionResource>> GetAsync(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionVersionResource> Get(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFunctionDefinitionVersionResource>> GetIfExistsAsync(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
         public virtual NullableResponse<NetworkFunctionDefinitionVersionResource> GetIfExists(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionDefinitionVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionDefinitionVersionName));
-            }
-            if (networkFunctionDefinitionVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
 
             using var scope = _networkFunctionDefinitionVersionClientDiagnostics.CreateScope("NetworkFunctionDefinitionVersionCollection.GetIfExists");
             scope.Start();

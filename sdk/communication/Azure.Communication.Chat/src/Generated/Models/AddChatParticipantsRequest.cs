@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -19,10 +20,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
         public AddChatParticipantsRequest(IEnumerable<ChatParticipantInternal> participants)
         {
-            if (participants == null)
-            {
-                throw new ArgumentNullException(nameof(participants));
-            }
+            Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
         }

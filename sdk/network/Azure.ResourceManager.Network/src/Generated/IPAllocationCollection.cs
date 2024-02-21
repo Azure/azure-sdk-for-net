@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IPAllocationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipAllocationName, IPAllocationData data, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IPAllocationResource> CreateOrUpdate(WaitUntil waitUntil, string ipAllocationName, IPAllocationData data, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual async Task<Response<IPAllocationResource>> GetAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual Response<IPAllocationResource> Get(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual async Task<NullableResponse<IPAllocationResource>> GetIfExistsAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
         public virtual NullableResponse<IPAllocationResource> GetIfExists(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipAllocationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipAllocationName));
-            }
-            if (ipAllocationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipAllocationName));
-            }
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
             using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetIfExists");
             scope.Start();

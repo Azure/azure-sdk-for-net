@@ -131,10 +131,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("MockableFrontDoorSubscriptionResource.CheckFrontDoorNameAvailability");
             scope.Start();
@@ -172,10 +169,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics.CreateScope("MockableFrontDoorSubscriptionResource.CheckFrontDoorNameAvailability");
             scope.Start();

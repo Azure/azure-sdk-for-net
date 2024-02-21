@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeAnalyticsComputePolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string computePolicyName, DataLakeAnalyticsComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataLakeAnalyticsComputePolicyResource> CreateOrUpdate(WaitUntil waitUntil, string computePolicyName, DataLakeAnalyticsComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual async Task<Response<DataLakeAnalyticsComputePolicyResource>> GetAsync(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual Response<DataLakeAnalyticsComputePolicyResource> Get(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeAnalyticsComputePolicyResource>> GetIfExistsAsync(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="computePolicyName"/> is null. </exception>
         public virtual NullableResponse<DataLakeAnalyticsComputePolicyResource> GetIfExists(string computePolicyName, CancellationToken cancellationToken = default)
         {
-            if (computePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(computePolicyName));
-            }
-            if (computePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(computePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(computePolicyName, nameof(computePolicyName));
 
             using var scope = _dataLakeAnalyticsComputePolicyComputePoliciesClientDiagnostics.CreateScope("DataLakeAnalyticsComputePolicyCollection.GetIfExists");
             scope.Start();

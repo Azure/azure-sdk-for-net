@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="shareName"/> is null. </exception>
         public SmbMountEndpointProperties(string host, string shareName)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(shareName, nameof(shareName));
 
             Host = host;
             ShareName = shareName;

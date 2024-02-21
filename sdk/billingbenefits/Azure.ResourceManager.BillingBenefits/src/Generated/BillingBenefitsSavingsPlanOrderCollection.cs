@@ -82,14 +82,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.Get");
             scope.Start();
@@ -135,14 +128,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual Response<BillingBenefitsSavingsPlanOrderResource> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.Get");
             scope.Start();
@@ -248,14 +234,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.Exists");
             scope.Start();
@@ -299,14 +278,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual Response<bool> Exists(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.Exists");
             scope.Start();
@@ -350,14 +322,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual async Task<NullableResponse<BillingBenefitsSavingsPlanOrderResource>> GetIfExistsAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.GetIfExists");
             scope.Start();
@@ -403,14 +368,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         public virtual NullableResponse<BillingBenefitsSavingsPlanOrderResource> GetIfExists(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var scope = _billingBenefitsSavingsPlanOrderSavingsPlanOrderClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderCollection.GetIfExists");
             scope.Start();

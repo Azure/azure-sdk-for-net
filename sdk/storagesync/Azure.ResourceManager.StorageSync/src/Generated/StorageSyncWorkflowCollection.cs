@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual async Task<Response<StorageSyncWorkflowResource>> GetAsync(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual Response<StorageSyncWorkflowResource> Get(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Get");
             scope.Start();
@@ -242,14 +228,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Exists");
             scope.Start();
@@ -292,14 +271,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual Response<bool> Exists(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.Exists");
             scope.Start();
@@ -342,14 +314,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageSyncWorkflowResource>> GetIfExistsAsync(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetIfExists");
             scope.Start();
@@ -394,14 +359,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
         public virtual NullableResponse<StorageSyncWorkflowResource> GetIfExists(string workflowId, CancellationToken cancellationToken = default)
         {
-            if (workflowId == null)
-            {
-                throw new ArgumentNullException(nameof(workflowId));
-            }
-            if (workflowId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowId));
-            }
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
 
             using var scope = _storageSyncWorkflowWorkflowsClientDiagnostics.CreateScope("StorageSyncWorkflowCollection.GetIfExists");
             scope.Start();

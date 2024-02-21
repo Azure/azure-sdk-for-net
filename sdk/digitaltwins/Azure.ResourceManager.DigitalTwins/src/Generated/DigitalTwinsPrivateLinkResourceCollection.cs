@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual async Task<Response<DigitalTwinsPrivateLinkResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual Response<DigitalTwinsPrivateLinkResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +228,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -292,14 +271,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -342,14 +314,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual async Task<NullableResponse<DigitalTwinsPrivateLinkResource>> GetIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -394,14 +359,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public virtual NullableResponse<DigitalTwinsPrivateLinkResource> GetIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var scope = _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("DigitalTwinsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

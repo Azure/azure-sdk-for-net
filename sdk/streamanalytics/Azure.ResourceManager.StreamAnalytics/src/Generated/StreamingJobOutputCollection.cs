@@ -84,18 +84,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingJobOutputResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string outputName, StreamingJobOutputData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.CreateOrUpdate");
             scope.Start();
@@ -145,18 +135,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingJobOutputResource> CreateOrUpdate(WaitUntil waitUntil, string outputName, StreamingJobOutputData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +182,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual async Task<Response<StreamingJobOutputResource>> GetAsync(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.Get");
             scope.Start();
@@ -254,14 +227,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual Response<StreamingJobOutputResource> Get(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.Get");
             scope.Start();
@@ -368,14 +334,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.Exists");
             scope.Start();
@@ -418,14 +377,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual Response<bool> Exists(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual async Task<NullableResponse<StreamingJobOutputResource>> GetIfExistsAsync(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
         public virtual NullableResponse<StreamingJobOutputResource> GetIfExists(string outputName, CancellationToken cancellationToken = default)
         {
-            if (outputName == null)
-            {
-                throw new ArgumentNullException(nameof(outputName));
-            }
-            if (outputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outputName));
-            }
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
             scope.Start();

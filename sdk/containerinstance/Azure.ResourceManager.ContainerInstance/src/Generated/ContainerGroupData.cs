@@ -59,10 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : base(location)
         {
-            if (containers == null)
-            {
-                throw new ArgumentNullException(nameof(containers));
-            }
+            Argument.AssertNotNull(containers, nameof(containers));
 
             Zones = new ChangeTrackingList<string>();
             Containers = containers.ToList();

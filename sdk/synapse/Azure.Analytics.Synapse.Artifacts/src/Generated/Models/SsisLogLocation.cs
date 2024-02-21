@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
         public SsisLogLocation(object logPath, SsisLogLocationType type)
         {
-            if (logPath == null)
-            {
-                throw new ArgumentNullException(nameof(logPath));
-            }
+            Argument.AssertNotNull(logPath, nameof(logPath));
 
             LogPath = logPath;
             Type = type;

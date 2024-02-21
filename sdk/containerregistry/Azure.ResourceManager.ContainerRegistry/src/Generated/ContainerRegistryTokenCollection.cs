@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryTokenResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tokenName, ContainerRegistryTokenData data, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryTokenResource> CreateOrUpdate(WaitUntil waitUntil, string tokenName, ContainerRegistryTokenData data, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryTokenResource>> GetAsync(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual Response<ContainerRegistryTokenResource> Get(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual Response<bool> Exists(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryTokenResource>> GetIfExistsAsync(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
         public virtual NullableResponse<ContainerRegistryTokenResource> GetIfExists(string tokenName, CancellationToken cancellationToken = default)
         {
-            if (tokenName == null)
-            {
-                throw new ArgumentNullException(nameof(tokenName));
-            }
-            if (tokenName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
-            }
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
 
             using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
             scope.Start();

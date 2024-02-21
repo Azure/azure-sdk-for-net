@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridRunbookWorkerResource>> UpdateAsync(WaitUntil waitUntil, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<HybridRunbookWorkerResource> Update(WaitUntil waitUntil, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Update");
             scope.Start();
@@ -380,10 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> MoveAsync(HybridRunbookWorkerMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Move");
             scope.Start();
@@ -425,10 +416,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response Move(HybridRunbookWorkerMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _hybridRunbookWorkerClientDiagnostics.CreateScope("HybridRunbookWorkerResource.Move");
             scope.Start();

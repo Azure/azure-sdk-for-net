@@ -277,10 +277,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = TenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("MockableSupportTenantResource.CheckNameAvailabilitySupportTicketsNoSubscription");
             scope.Start();
@@ -322,10 +319,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = TenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("MockableSupportTenantResource.CheckNameAvailabilitySupportTicketsNoSubscription");
             scope.Start();

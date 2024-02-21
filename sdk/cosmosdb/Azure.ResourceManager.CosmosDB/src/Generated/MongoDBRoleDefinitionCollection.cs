@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoDBRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MongoDBRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<MongoDBRoleDefinitionResource>> GetAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual Response<MongoDBRoleDefinitionResource> Get(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
             scope.Start();
@@ -361,14 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
             scope.Start();
@@ -411,14 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual Response<bool> Exists(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
             scope.Start();
@@ -461,14 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual async Task<NullableResponse<MongoDBRoleDefinitionResource>> GetIfExistsAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
             scope.Start();
@@ -513,14 +458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
         public virtual NullableResponse<MongoDBRoleDefinitionResource> GetIfExists(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (mongoRoleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(mongoRoleDefinitionId));
-            }
-            if (mongoRoleDefinitionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoRoleDefinitionId));
-            }
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
             using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
             scope.Start();

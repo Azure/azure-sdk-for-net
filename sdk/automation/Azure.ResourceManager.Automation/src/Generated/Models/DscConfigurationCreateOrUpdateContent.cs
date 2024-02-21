@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public DscConfigurationCreateOrUpdateContent(AutomationContentSource source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(source, nameof(source));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Source = source;

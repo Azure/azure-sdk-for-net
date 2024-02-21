@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual async Task<Response<RoleManagementPolicyResource>> GetAsync(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.Get");
             scope.Start();
@@ -122,14 +115,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual Response<RoleManagementPolicyResource> Get(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.Get");
             scope.Start();
@@ -234,14 +220,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.Exists");
             scope.Start();
@@ -284,14 +263,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.Exists");
             scope.Start();
@@ -334,14 +306,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoleManagementPolicyResource>> GetIfExistsAsync(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetIfExists");
             scope.Start();
@@ -386,14 +351,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
         public virtual NullableResponse<RoleManagementPolicyResource> GetIfExists(string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetIfExists");
             scope.Start();

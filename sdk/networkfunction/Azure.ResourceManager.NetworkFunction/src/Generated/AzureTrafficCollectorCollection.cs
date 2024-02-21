@@ -88,18 +88,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureTrafficCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureTrafficCollectorName, AzureTrafficCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -147,18 +137,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureTrafficCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string azureTrafficCollectorName, AzureTrafficCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -204,14 +184,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual async Task<Response<AzureTrafficCollectorResource>> GetAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Get");
             scope.Start();
@@ -256,14 +229,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual Response<AzureTrafficCollectorResource> Get(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Get");
             scope.Start();
@@ -368,14 +334,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Exists");
             scope.Start();
@@ -418,14 +377,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<AzureTrafficCollectorResource>> GetIfExistsAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         public virtual NullableResponse<AzureTrafficCollectorResource> GetIfExists(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (azureTrafficCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureTrafficCollectorName));
-            }
-            if (azureTrafficCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureTrafficCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.GetIfExists");
             scope.Start();

@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual Response<LogicWorkflowRunActionRepetitionRequestHistoryResource> Get(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual Response<bool> Exists(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowRunActionRepetitionRequestHistoryResource> GetIfExists(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryCollection.GetIfExists");
             scope.Start();

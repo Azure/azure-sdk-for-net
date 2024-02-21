@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<HciSkuResource>> GetAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Get");
             scope.Start();
@@ -134,14 +127,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<HciSkuResource> Get(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Get");
             scope.Start();
@@ -249,14 +235,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
             scope.Start();
@@ -300,14 +279,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<bool> Exists(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
             scope.Start();
@@ -351,14 +323,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<NullableResponse<HciSkuResource>> GetIfExistsAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
             scope.Start();
@@ -404,14 +369,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual NullableResponse<HciSkuResource> GetIfExists(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
             scope.Start();

@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
         public DatabricksSparkJarActivity(string name, object mainClassName) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mainClassName == null)
-            {
-                throw new ArgumentNullException(nameof(mainClassName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mainClassName, nameof(mainClassName));
 
             MainClassName = mainClassName;
             Parameters = new ChangeTrackingList<object>();

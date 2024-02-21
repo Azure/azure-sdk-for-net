@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> or <paramref name="limitSettings"/> is null. </exception>
         public ImageInstanceSegmentation(MachineLearningTableJobInput trainingData, ImageLimitSettings limitSettings) : base(trainingData)
         {
-            if (trainingData == null)
-            {
-                throw new ArgumentNullException(nameof(trainingData));
-            }
-            if (limitSettings == null)
-            {
-                throw new ArgumentNullException(nameof(limitSettings));
-            }
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
+            Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
             SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>();
             LimitSettings = limitSettings;

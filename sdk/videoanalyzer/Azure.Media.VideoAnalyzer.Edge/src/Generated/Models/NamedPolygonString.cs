@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="polygon"/> is null. </exception>
         public NamedPolygonString(string name, string polygon) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (polygon == null)
-            {
-                throw new ArgumentNullException(nameof(polygon));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(polygon, nameof(polygon));
 
             Polygon = polygon;
             Type = "#Microsoft.VideoAnalyzer.NamedPolygonString";

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,14 +20,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="keyId"/> is null. </exception>
         public OnYourDataKeyAndKeyIdAuthenticationOptions(string key, string keyId)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (keyId == null)
-            {
-                throw new ArgumentNullException(nameof(keyId));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(keyId, nameof(keyId));
 
             Type = OnYourDataAuthenticationType.KeyAndKeyId;
             Key = key;

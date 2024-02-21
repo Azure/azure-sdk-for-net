@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="directoryItems"/> or <paramref name="fileItems"/> is null. </exception>
         internal FilesAndDirectoriesListSegment(IEnumerable<DirectoryItem> directoryItems, IEnumerable<FileItem> fileItems)
         {
-            if (directoryItems == null)
-            {
-                throw new ArgumentNullException(nameof(directoryItems));
-            }
-            if (fileItems == null)
-            {
-                throw new ArgumentNullException(nameof(fileItems));
-            }
+            Argument.AssertNotNull(directoryItems, nameof(directoryItems));
+            Argument.AssertNotNull(fileItems, nameof(fileItems));
 
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();

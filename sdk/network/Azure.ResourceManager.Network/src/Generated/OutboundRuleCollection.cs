@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual async Task<Response<OutboundRuleResource>> GetAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual Response<OutboundRuleResource> Get(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<OutboundRuleResource>> GetIfExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
         public virtual NullableResponse<OutboundRuleResource> GetIfExists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
-            if (outboundRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(outboundRuleName));
-            }
-            if (outboundRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
             scope.Start();

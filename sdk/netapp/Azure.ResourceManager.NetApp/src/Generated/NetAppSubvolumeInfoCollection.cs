@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> or <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppSubvolumeInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string subvolumeName, NetAppSubvolumeInfoData info, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> or <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<NetAppSubvolumeInfoResource> CreateOrUpdate(WaitUntil waitUntil, string subvolumeName, NetAppSubvolumeInfoData info, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual Response<NetAppSubvolumeInfoResource> Get(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual Response<bool> Exists(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppSubvolumeInfoResource>> GetIfExistsAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
         public virtual NullableResponse<NetAppSubvolumeInfoResource> GetIfExists(string subvolumeName, CancellationToken cancellationToken = default)
         {
-            if (subvolumeName == null)
-            {
-                throw new ArgumentNullException(nameof(subvolumeName));
-            }
-            if (subvolumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subvolumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subvolumeName, nameof(subvolumeName));
 
             using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoCollection.GetIfExists");
             scope.Start();

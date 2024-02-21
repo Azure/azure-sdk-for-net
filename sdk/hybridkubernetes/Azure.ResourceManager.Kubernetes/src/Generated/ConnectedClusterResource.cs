@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ConnectedClusterResource>> UpdateAsync(ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.Update");
             scope.Start();
@@ -327,10 +324,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ConnectedClusterResource> Update(ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.Update");
             scope.Start();
@@ -372,10 +366,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialAsync(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -417,10 +408,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public virtual Response<CredentialResults> GetClusterUserCredential(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -463,14 +451,8 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ConnectedClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.AddTag");
             scope.Start();
@@ -531,14 +513,8 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ConnectedClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.AddTag");
             scope.Start();
@@ -598,10 +574,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ConnectedClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.SetTags");
             scope.Start();
@@ -658,10 +631,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ConnectedClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.SetTags");
             scope.Start();
@@ -718,10 +688,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ConnectedClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.RemoveTag");
             scope.Start();
@@ -781,10 +748,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ConnectedClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.RemoveTag");
             scope.Start();

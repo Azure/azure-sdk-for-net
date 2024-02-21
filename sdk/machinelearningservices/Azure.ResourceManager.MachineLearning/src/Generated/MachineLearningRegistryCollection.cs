@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registryName, MachineLearningRegistryData data, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string registryName, MachineLearningRegistryData data, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningRegistryResource>> GetAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual Response<MachineLearningRegistryResource> Get(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual Response<bool> Exists(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningRegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
         {
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
             scope.Start();

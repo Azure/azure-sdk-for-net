@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public ChatTranscriptMessageProperties(string body)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             Body = body;
         }

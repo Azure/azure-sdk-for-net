@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformConfigurationServiceResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformConfigurationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformConfigurationServiceResource> Update(WaitUntil waitUntil, AppPlatformConfigurationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceResource.Update");
             scope.Start();
@@ -380,10 +374,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformConfigurationServiceSettingsValidateResult>> ValidateAsync(WaitUntil waitUntil, AppPlatformConfigurationServiceSettings settings, CancellationToken cancellationToken = default)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNull(settings, nameof(settings));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceResource.Validate");
             scope.Start();
@@ -429,10 +420,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public virtual ArmOperation<AppPlatformConfigurationServiceSettingsValidateResult> Validate(WaitUntil waitUntil, AppPlatformConfigurationServiceSettings settings, CancellationToken cancellationToken = default)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNull(settings, nameof(settings));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceResource.Validate");
             scope.Start();

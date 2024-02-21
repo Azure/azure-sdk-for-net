@@ -65,14 +65,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> PutAsync(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(connectedClusterResourceUri, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,14 +92,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Put(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(connectedClusterResourceUri, data);
             _pipeline.Send(message, cancellationToken);
@@ -147,10 +135,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> GetAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateGetRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -176,10 +161,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Get(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateGetRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -222,10 +204,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response> DeleteAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateDeleteRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -245,10 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response Delete(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateDeleteRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -285,10 +261,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByClusterAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByClusterRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -312,10 +285,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByCluster(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByClusterRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -354,14 +324,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByClusterNextPageAsync(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -386,14 +350,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByClusterNextPage(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);

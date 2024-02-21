@@ -7,6 +7,7 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,10 +23,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal HealthcareEntityProperties(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Category = category;

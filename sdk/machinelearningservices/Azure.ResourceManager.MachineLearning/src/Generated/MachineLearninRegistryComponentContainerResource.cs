@@ -350,10 +350,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearninRegistryComponentContainerResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerResource.Update");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearninRegistryComponentContainerResource> Update(WaitUntil waitUntil, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearninRegistryComponentContainerRegistryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerResource.Update");
             scope.Start();

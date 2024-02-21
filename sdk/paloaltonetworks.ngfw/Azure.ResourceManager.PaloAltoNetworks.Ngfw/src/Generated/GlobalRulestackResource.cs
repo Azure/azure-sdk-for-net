@@ -625,10 +625,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<GlobalRulestackResource>> UpdateAsync(GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();
@@ -670,10 +667,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<GlobalRulestackResource> Update(GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();

@@ -21,14 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
         public ComposeDocumentModelRequest(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (componentModels == null)
-            {
-                throw new ArgumentNullException(nameof(componentModels));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(componentModels, nameof(componentModels));
 
             ModelId = modelId;
             ComponentModels = componentModels.ToList();

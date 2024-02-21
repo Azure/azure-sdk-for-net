@@ -84,14 +84,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual async Task<Response<MeshRevisionProfileResource>> GetAsync(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
             scope.Start();
@@ -136,14 +129,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual Response<MeshRevisionProfileResource> Get(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
             scope.Start();
@@ -248,14 +234,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
             scope.Start();
@@ -298,14 +277,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual Response<bool> Exists(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
             scope.Start();
@@ -348,14 +320,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual async Task<NullableResponse<MeshRevisionProfileResource>> GetIfExistsAsync(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
             scope.Start();
@@ -400,14 +365,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
         public virtual NullableResponse<MeshRevisionProfileResource> GetIfExists(string mode, CancellationToken cancellationToken = default)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-            if (mode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mode));
-            }
+            Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
             using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
             scope.Start();

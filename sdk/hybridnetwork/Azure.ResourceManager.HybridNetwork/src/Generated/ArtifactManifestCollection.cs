@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ArtifactManifestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string artifactManifestName, ArtifactManifestData data, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ArtifactManifestResource> CreateOrUpdate(WaitUntil waitUntil, string artifactManifestName, ArtifactManifestData data, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual async Task<Response<ArtifactManifestResource>> GetAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual Response<ArtifactManifestResource> Get(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual Response<bool> Exists(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArtifactManifestResource>> GetIfExistsAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
         public virtual NullableResponse<ArtifactManifestResource> GetIfExists(string artifactManifestName, CancellationToken cancellationToken = default)
         {
-            if (artifactManifestName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactManifestName));
-            }
-            if (artifactManifestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactManifestName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
             using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
             scope.Start();

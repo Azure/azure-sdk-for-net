@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual async Task<Response<ScriptCmdletResource>> GetAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual Response<ScriptCmdletResource> Get(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual Response<bool> Exists(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScriptCmdletResource>> GetIfExistsAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
         public virtual NullableResponse<ScriptCmdletResource> GetIfExists(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var scope = _scriptCmdletClientDiagnostics.CreateScope("ScriptCmdletCollection.GetIfExists");
             scope.Start();

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, MySqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlFirewallRuleResource> Update(WaitUntil waitUntil, MySqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleResource.Update");
             scope.Start();

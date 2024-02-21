@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalNetworkGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string localNetworkGatewayName, LocalNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalNetworkGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string localNetworkGatewayName, LocalNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual async Task<Response<LocalNetworkGatewayResource>> GetAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<LocalNetworkGatewayResource> Get(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<LocalNetworkGatewayResource>> GetIfExistsAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
         public virtual NullableResponse<LocalNetworkGatewayResource> GetIfExists(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (localNetworkGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localNetworkGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
 
             using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetIfExists");
             scope.Start();

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SupportTicketFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SupportTicketFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<Response<SupportTicketFileResource>> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual Response<SupportTicketFileResource> Get(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual Response<bool> Exists(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<NullableResponse<SupportTicketFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual NullableResponse<SupportTicketFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileCollection.GetIfExists");
             scope.Start();

@@ -185,10 +185,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlSubscriptionResource.CheckMySqlNameAvailability");
             scope.Start();
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableMySqlSubscriptionResource.CheckMySqlNameAvailability");
             scope.Start();

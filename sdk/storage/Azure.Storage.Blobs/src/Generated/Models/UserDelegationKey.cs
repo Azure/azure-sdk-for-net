@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -23,26 +24,11 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
         internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
         {
-            if (signedObjectId == null)
-            {
-                throw new ArgumentNullException(nameof(signedObjectId));
-            }
-            if (signedTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(signedTenantId));
-            }
-            if (signedService == null)
-            {
-                throw new ArgumentNullException(nameof(signedService));
-            }
-            if (signedVersion == null)
-            {
-                throw new ArgumentNullException(nameof(signedVersion));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(signedObjectId, nameof(signedObjectId));
+            Argument.AssertNotNull(signedTenantId, nameof(signedTenantId));
+            Argument.AssertNotNull(signedService, nameof(signedService));
+            Argument.AssertNotNull(signedVersion, nameof(signedVersion));
+            Argument.AssertNotNull(value, nameof(value));
 
             SignedObjectId = signedObjectId;
             SignedTenantId = signedTenantId;

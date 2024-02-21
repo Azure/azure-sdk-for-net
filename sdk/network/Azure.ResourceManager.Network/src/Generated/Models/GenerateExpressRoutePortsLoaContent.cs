@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         public GenerateExpressRoutePortsLoaContent(string customerName)
         {
-            if (customerName == null)
-            {
-                throw new ArgumentNullException(nameof(customerName));
-            }
+            Argument.AssertNotNull(customerName, nameof(customerName));
 
             CustomerName = customerName;
         }

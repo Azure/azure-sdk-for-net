@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformGatewayRouteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeConfigName, AppPlatformGatewayRouteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformGatewayRouteConfigResource> CreateOrUpdate(WaitUntil waitUntil, string routeConfigName, AppPlatformGatewayRouteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformGatewayRouteConfigResource>> GetAsync(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual Response<AppPlatformGatewayRouteConfigResource> Get(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformGatewayRouteConfigResource>> GetIfExistsAsync(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformGatewayRouteConfigResource> GetIfExists(string routeConfigName, CancellationToken cancellationToken = default)
         {
-            if (routeConfigName == null)
-            {
-                throw new ArgumentNullException(nameof(routeConfigName));
-            }
-            if (routeConfigName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeConfigName));
-            }
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
 
             using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.GetIfExists");
             scope.Start();

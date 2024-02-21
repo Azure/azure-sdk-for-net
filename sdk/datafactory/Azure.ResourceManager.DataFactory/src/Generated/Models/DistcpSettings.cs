@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceManagerEndpoint"/> or <paramref name="tempScriptPath"/> is null. </exception>
         public DistcpSettings(DataFactoryElement<string> resourceManagerEndpoint, DataFactoryElement<string> tempScriptPath)
         {
-            if (resourceManagerEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(resourceManagerEndpoint));
-            }
-            if (tempScriptPath == null)
-            {
-                throw new ArgumentNullException(nameof(tempScriptPath));
-            }
+            Argument.AssertNotNull(resourceManagerEndpoint, nameof(resourceManagerEndpoint));
+            Argument.AssertNotNull(tempScriptPath, nameof(tempScriptPath));
 
             ResourceManagerEndpoint = resourceManagerEndpoint;
             TempScriptPath = tempScriptPath;

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeeringRegisteredAsnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registeredAsnName, PeeringRegisteredAsnData data, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeeringRegisteredAsnResource> CreateOrUpdate(WaitUntil waitUntil, string registeredAsnName, PeeringRegisteredAsnData data, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual async Task<Response<PeeringRegisteredAsnResource>> GetAsync(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual Response<PeeringRegisteredAsnResource> Get(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual Response<bool> Exists(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual async Task<NullableResponse<PeeringRegisteredAsnResource>> GetIfExistsAsync(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
         public virtual NullableResponse<PeeringRegisteredAsnResource> GetIfExists(string registeredAsnName, CancellationToken cancellationToken = default)
         {
-            if (registeredAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(registeredAsnName));
-            }
-            if (registeredAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registeredAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(registeredAsnName, nameof(registeredAsnName));
 
             using var scope = _peeringRegisteredAsnRegisteredAsnsClientDiagnostics.CreateScope("PeeringRegisteredAsnCollection.GetIfExists");
             scope.Start();

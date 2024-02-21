@@ -280,10 +280,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseWorkspaceSqlAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics.CreateScope("SynapseWorkspaceSqlAdministratorResource.CreateOrUpdate");
             scope.Start();
@@ -329,10 +326,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseWorkspaceSqlAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics.CreateScope("SynapseWorkspaceSqlAdministratorResource.CreateOrUpdate");
             scope.Start();

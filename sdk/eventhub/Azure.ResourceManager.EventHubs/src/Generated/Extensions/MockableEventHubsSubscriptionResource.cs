@@ -253,10 +253,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability");
             scope.Start();
@@ -298,10 +295,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability");
             scope.Start();

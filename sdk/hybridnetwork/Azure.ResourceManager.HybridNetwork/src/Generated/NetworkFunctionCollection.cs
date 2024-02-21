@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkFunctionName, NetworkFunctionData data, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string networkFunctionName, NetworkFunctionData data, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionResource>> GetAsync(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual Response<NetworkFunctionResource> Get(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFunctionResource>> GetIfExistsAsync(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
         public virtual NullableResponse<NetworkFunctionResource> GetIfExists(string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (networkFunctionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFunctionName));
-            }
-            if (networkFunctionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
 
             using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.GetIfExists");
             scope.Start();

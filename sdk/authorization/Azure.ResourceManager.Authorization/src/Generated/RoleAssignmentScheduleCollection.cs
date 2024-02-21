@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual async Task<Response<RoleAssignmentScheduleResource>> GetAsync(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.Get");
             scope.Start();
@@ -122,14 +115,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual Response<RoleAssignmentScheduleResource> Get(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.Get");
             scope.Start();
@@ -236,14 +222,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.Exists");
             scope.Start();
@@ -286,14 +265,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.Exists");
             scope.Start();
@@ -336,14 +308,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoleAssignmentScheduleResource>> GetIfExistsAsync(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetIfExists");
             scope.Start();
@@ -388,14 +353,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
         public virtual NullableResponse<RoleAssignmentScheduleResource> GetIfExists(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleName));
-            }
-            if (roleAssignmentScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
 
             using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetIfExists");
             scope.Start();

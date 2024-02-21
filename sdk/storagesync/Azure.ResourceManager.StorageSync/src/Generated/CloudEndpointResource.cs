@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudEndpointResource>> UpdateAsync(WaitUntil waitUntil, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CloudEndpointResource> Update(WaitUntil waitUntil, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Update");
             scope.Start();
@@ -381,10 +375,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PreBackupAsync(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreBackup");
             scope.Start();
@@ -430,10 +421,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PreBackup(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreBackup");
             scope.Start();
@@ -479,10 +467,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudEndpointPostBackupResult>> PostBackupAsync(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostBackup");
             scope.Start();
@@ -528,10 +513,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CloudEndpointPostBackupResult> PostBackup(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostBackup");
             scope.Start();
@@ -577,10 +559,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PreRestoreAsync(WaitUntil waitUntil, PreRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreRestore");
             scope.Start();
@@ -626,10 +605,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PreRestore(WaitUntil waitUntil, PreRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreRestore");
             scope.Start();
@@ -751,10 +727,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PostRestoreAsync(WaitUntil waitUntil, PostRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostRestore");
             scope.Start();
@@ -800,10 +773,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PostRestore(WaitUntil waitUntil, PostRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostRestore");
             scope.Start();
@@ -849,10 +819,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> TriggerChangeDetectionAsync(WaitUntil waitUntil, TriggerChangeDetectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.TriggerChangeDetection");
             scope.Start();
@@ -898,10 +865,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation TriggerChangeDetection(WaitUntil waitUntil, TriggerChangeDetectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.TriggerChangeDetection");
             scope.Start();

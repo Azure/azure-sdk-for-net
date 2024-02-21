@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProjectFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProjectFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, ProjectFileData data, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<Response<ProjectFileResource>> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual Response<ProjectFileResource> Get(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual Response<bool> Exists(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProjectFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public virtual NullableResponse<ProjectFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetIfExists");
             scope.Start();

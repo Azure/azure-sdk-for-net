@@ -84,18 +84,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiTagDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +134,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiTagDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +181,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual async Task<Response<ApiTagDescriptionResource>> GetAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual Response<ApiTagDescriptionResource> Get(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.Get");
             scope.Start();
@@ -371,14 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.Exists");
             scope.Start();
@@ -421,14 +380,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual Response<bool> Exists(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.Exists");
             scope.Start();
@@ -471,14 +423,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiTagDescriptionResource>> GetIfExistsAsync(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.GetIfExists");
             scope.Start();
@@ -523,14 +468,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> is null. </exception>
         public virtual NullableResponse<ApiTagDescriptionResource> GetIfExists(string tagDescriptionId, CancellationToken cancellationToken = default)
         {
-            if (tagDescriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(tagDescriptionId));
-            }
-            if (tagDescriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagDescriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
 
             using var scope = _apiTagDescriptionClientDiagnostics.CreateScope("ApiTagDescriptionCollection.GetIfExists");
             scope.Start();

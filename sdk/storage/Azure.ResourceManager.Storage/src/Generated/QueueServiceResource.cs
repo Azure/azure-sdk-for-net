@@ -265,10 +265,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<QueueServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, QueueServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _queueServiceClientDiagnostics.CreateScope("QueueServiceResource.CreateOrUpdate");
             scope.Start();
@@ -314,10 +311,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<QueueServiceResource> CreateOrUpdate(WaitUntil waitUntil, QueueServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _queueServiceClientDiagnostics.CreateScope("QueueServiceResource.CreateOrUpdate");
             scope.Start();

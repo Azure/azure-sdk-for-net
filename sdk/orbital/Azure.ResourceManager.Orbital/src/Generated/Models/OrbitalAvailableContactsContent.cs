@@ -55,14 +55,8 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfile"/> or <paramref name="groundStationName"/> is null. </exception>
         public OrbitalAvailableContactsContent(WritableSubResource contactProfile, string groundStationName, DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            if (contactProfile == null)
-            {
-                throw new ArgumentNullException(nameof(contactProfile));
-            }
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
+            Argument.AssertNotNull(contactProfile, nameof(contactProfile));
+            Argument.AssertNotNull(groundStationName, nameof(groundStationName));
 
             ContactProfile = contactProfile;
             GroundStationName = groundStationName;

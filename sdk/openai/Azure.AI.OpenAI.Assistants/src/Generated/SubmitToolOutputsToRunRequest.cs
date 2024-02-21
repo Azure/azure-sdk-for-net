@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -51,10 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="toolOutputs"/> is null. </exception>
         public SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
         {
-            if (toolOutputs == null)
-            {
-                throw new ArgumentNullException(nameof(toolOutputs));
-            }
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             ToolOutputs = toolOutputs.ToList();
         }

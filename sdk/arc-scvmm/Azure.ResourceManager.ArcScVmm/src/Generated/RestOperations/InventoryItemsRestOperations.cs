@@ -74,42 +74,11 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -138,42 +107,11 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName, data);
             _pipeline.Send(message, cancellationToken);
@@ -223,38 +161,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,38 +194,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemData> Get(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
             _pipeline.Send(message, cancellationToken);
@@ -367,38 +249,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -422,38 +276,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
-            if (inventoryItemName == null)
-            {
-                throw new ArgumentNullException(nameof(inventoryItemName));
-            }
-            if (inventoryItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inventoryItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
             _pipeline.Send(message, cancellationToken);
@@ -497,30 +323,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemsList>> ListByVmmServerAsync(string subscriptionId, string resourceGroupName, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
 
             using var message = CreateListByVmmServerRequest(subscriptionId, resourceGroupName, vmmServerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -547,30 +352,9 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemsList> ListByVmmServer(string subscriptionId, string resourceGroupName, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
 
             using var message = CreateListByVmmServerRequest(subscriptionId, resourceGroupName, vmmServerName);
             _pipeline.Send(message, cancellationToken);
@@ -612,34 +396,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InventoryItemsList>> ListByVmmServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
 
             using var message = CreateListByVmmServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmmServerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -667,34 +427,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InventoryItemsList> ListByVmmServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vmmServerName == null)
-            {
-                throw new ArgumentNullException(nameof(vmmServerName));
-            }
-            if (vmmServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
 
             using var message = CreateListByVmmServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmmServerName);
             _pipeline.Send(message, cancellationToken);

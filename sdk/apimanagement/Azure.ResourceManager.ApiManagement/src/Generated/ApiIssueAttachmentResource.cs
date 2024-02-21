@@ -286,10 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiIssueAttachmentResource>> UpdateAsync(WaitUntil waitUntil, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentResource.Update");
             scope.Start();
@@ -336,10 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiIssueAttachmentResource> Update(WaitUntil waitUntil, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentResource.Update");
             scope.Start();

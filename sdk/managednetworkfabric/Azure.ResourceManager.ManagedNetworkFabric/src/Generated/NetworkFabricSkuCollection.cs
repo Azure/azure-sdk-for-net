@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricSkuResource>> GetAsync(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.Get");
             scope.Start();
@@ -133,14 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual Response<NetworkFabricSkuResource> Get(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.Get");
             scope.Start();
@@ -245,14 +231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.Exists");
             scope.Start();
@@ -295,14 +274,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.Exists");
             scope.Start();
@@ -345,14 +317,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricSkuResource>> GetIfExistsAsync(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.GetIfExists");
             scope.Start();
@@ -397,14 +362,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricSkuResource> GetIfExists(string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricSkuName));
-            }
-            if (networkFabricSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricSkuName, nameof(networkFabricSkuName));
 
             using var scope = _networkFabricSkuClientDiagnostics.CreateScope("NetworkFabricSkuCollection.GetIfExists");
             scope.Start();

@@ -69,10 +69,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual async Task<Response<CostManagementAlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Get");
             scope.Start();
@@ -116,10 +113,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual Response<CostManagementAlertResource> Get(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Get");
             scope.Start();
@@ -221,10 +215,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Exists");
             scope.Start();
@@ -266,10 +257,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual Response<bool> Exists(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.Exists");
             scope.Start();
@@ -311,10 +299,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual async Task<NullableResponse<CostManagementAlertResource>> GetIfExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.GetIfExists");
             scope.Start();
@@ -358,10 +343,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         public virtual NullableResponse<CostManagementAlertResource> GetIfExists(string alertId, CancellationToken cancellationToken = default)
         {
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.GetIfExists");
             scope.Start();

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InboundNatRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inboundNatRuleName, InboundNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InboundNatRuleResource> CreateOrUpdate(WaitUntil waitUntil, string inboundNatRuleName, InboundNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual async Task<Response<InboundNatRuleResource>> GetAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual Response<InboundNatRuleResource> Get(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<InboundNatRuleResource>> GetIfExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
         public virtual NullableResponse<InboundNatRuleResource> GetIfExists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (inboundNatRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatRuleName));
-            }
-            if (inboundNatRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundNatRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(inboundNatRuleName, nameof(inboundNatRuleName));
 
             using var scope = _inboundNatRuleClientDiagnostics.CreateScope("InboundNatRuleCollection.GetIfExists");
             scope.Start();

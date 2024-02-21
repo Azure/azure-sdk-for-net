@@ -50,14 +50,8 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public LoadTestRunClient(Uri endpoint, TokenCredential credential, LoadTestingClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new LoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -87,18 +81,8 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
             scope.Start();
@@ -134,18 +118,8 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
             scope.Start();
@@ -180,14 +154,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRun");
             scope.Start();
@@ -222,14 +189,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRun(string,RequestContext)']/*" />
         public virtual Response GetTestRun(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRun");
             scope.Start();
@@ -264,14 +224,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='DeleteTestRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTestRunAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestRun");
             scope.Start();
@@ -306,14 +259,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='DeleteTestRun(string,RequestContext)']/*" />
         public virtual Response DeleteTestRun(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestRun");
             scope.Start();
@@ -349,22 +295,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFileAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
@@ -400,22 +332,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunFile(string,string,RequestContext)']/*" />
         public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
@@ -450,14 +368,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRunAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRun");
             scope.Start();
@@ -492,14 +403,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='StopTestRun(string,RequestContext)']/*" />
         public virtual Response StopTestRun(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRun");
             scope.Start();
@@ -534,14 +438,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespacesAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaces");
             scope.Start();
@@ -576,14 +473,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricNamespaces(string,RequestContext)']/*" />
         public virtual Response GetMetricNamespaces(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaces");
             scope.Start();
@@ -619,18 +509,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitionsAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (metricNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(metricNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitions");
             scope.Start();
@@ -666,18 +546,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDefinitions(string,string,RequestContext)']/*" />
         public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (metricNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(metricNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitions");
             scope.Start();
@@ -713,18 +583,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponentsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponents");
             scope.Start();
@@ -760,18 +620,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateAppComponents(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateAppComponents(string testRunId, RequestContent content, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponents");
             scope.Start();
@@ -806,14 +656,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponents");
             scope.Start();
@@ -848,14 +691,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetAppComponents(string,RequestContext)']/*" />
         public virtual Response GetAppComponents(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponents");
             scope.Start();
@@ -891,18 +727,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfigAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
@@ -938,18 +764,8 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateServerMetricsConfig(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateServerMetricsConfig(string testRunId, RequestContent content, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
@@ -984,14 +800,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
             scope.Start();
@@ -1026,14 +835,7 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,RequestContext)']/*" />
         public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
             scope.Start();
@@ -1073,34 +875,11 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValuesAsync(string,string,string,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timeInterval, string interval = null, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
-            if (metricNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(metricNamespace));
-            }
-            if (timeInterval == null)
-            {
-                throw new ArgumentNullException(nameof(timeInterval));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timeInterval, nameof(timeInterval));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
@@ -1131,34 +910,11 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timeInterval, string interval = null, RequestContext context = null)
         {
-            if (testRunId == null)
-            {
-                throw new ArgumentNullException(nameof(testRunId));
-            }
-            if (testRunId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(testRunId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
-            if (metricNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(metricNamespace));
-            }
-            if (timeInterval == null)
-            {
-                throw new ArgumentNullException(nameof(timeInterval));
-            }
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timeInterval, nameof(timeInterval));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricName, metricNamespace, timeInterval, interval, context);

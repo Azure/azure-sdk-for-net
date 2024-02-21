@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
         public DataFactoryLogSettings(LogLocationSettings logLocationSettings)
         {
-            if (logLocationSettings == null)
-            {
-                throw new ArgumentNullException(nameof(logLocationSettings));
-            }
+            Argument.AssertNotNull(logLocationSettings, nameof(logLocationSettings));
 
             LogLocationSettings = logLocationSettings;
         }

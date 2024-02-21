@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudVolumeResource>> GetAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual Response<NetworkCloudVolumeResource> Get(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudVolumeResource>> GetIfExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudVolumeResource> GetIfExists(string volumeName, CancellationToken cancellationToken = default)
         {
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var scope = _networkCloudVolumeVolumesClientDiagnostics.CreateScope("NetworkCloudVolumeCollection.GetIfExists");
             scope.Start();

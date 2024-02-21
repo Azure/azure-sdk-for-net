@@ -196,10 +196,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiagnosticRemoteSupportSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
             scope.Start();
@@ -245,10 +242,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiagnosticRemoteSupportSettingResource> CreateOrUpdate(WaitUntil waitUntil, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
             scope.Start();

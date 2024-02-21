@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
         public SsisLogLocation(DataFactoryElement<string> logPath, SsisLogLocationType locationType)
         {
-            if (logPath == null)
-            {
-                throw new ArgumentNullException(nameof(logPath));
-            }
+            Argument.AssertNotNull(logPath, nameof(logPath));
 
             LogPath = logPath;
             LocationType = locationType;

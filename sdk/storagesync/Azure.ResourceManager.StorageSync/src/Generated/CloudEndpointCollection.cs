@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CloudEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string cloudEndpointName, CloudEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual async Task<Response<CloudEndpointResource>> GetAsync(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual Response<CloudEndpointResource> Get(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.Get");
             scope.Start();
@@ -361,14 +327,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.Exists");
             scope.Start();
@@ -411,14 +370,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.Exists");
             scope.Start();
@@ -461,14 +413,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudEndpointResource>> GetIfExistsAsync(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.GetIfExists");
             scope.Start();
@@ -513,14 +458,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
         public virtual NullableResponse<CloudEndpointResource> GetIfExists(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
-            if (cloudEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudEndpointName));
-            }
-            if (cloudEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudEndpointName, nameof(cloudEndpointName));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointCollection.GetIfExists");
             scope.Start();

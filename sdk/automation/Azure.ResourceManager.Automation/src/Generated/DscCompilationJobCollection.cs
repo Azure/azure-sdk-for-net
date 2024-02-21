@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DscCompilationJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string compilationJobName, DscCompilationJobCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DscCompilationJobResource> CreateOrUpdate(WaitUntil waitUntil, string compilationJobName, DscCompilationJobCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual async Task<Response<DscCompilationJobResource>> GetAsync(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual Response<DscCompilationJobResource> Get(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.Exists");
             scope.Start();
@@ -415,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual Response<bool> Exists(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.Exists");
             scope.Start();
@@ -465,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual async Task<NullableResponse<DscCompilationJobResource>> GetIfExistsAsync(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
             scope.Start();
@@ -517,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
         public virtual NullableResponse<DscCompilationJobResource> GetIfExists(string compilationJobName, CancellationToken cancellationToken = default)
         {
-            if (compilationJobName == null)
-            {
-                throw new ArgumentNullException(nameof(compilationJobName));
-            }
-            if (compilationJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(compilationJobName));
-            }
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
 
             using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
             scope.Start();

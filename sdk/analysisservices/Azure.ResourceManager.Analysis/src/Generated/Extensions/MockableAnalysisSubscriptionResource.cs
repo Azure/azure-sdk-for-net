@@ -188,10 +188,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = AnalysisServerServersClientDiagnostics.CreateScope("MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability");
             scope.Start();
@@ -234,10 +231,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = AnalysisServerServersClientDiagnostics.CreateScope("MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability");
             scope.Start();

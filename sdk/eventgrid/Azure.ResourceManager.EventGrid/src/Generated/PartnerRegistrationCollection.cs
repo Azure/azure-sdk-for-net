@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerRegistrationName, PartnerRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PartnerRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string partnerRegistrationName, PartnerRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual async Task<Response<PartnerRegistrationResource>> GetAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual Response<PartnerRegistrationResource> Get(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
             scope.Start();
@@ -367,14 +333,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual Response<bool> Exists(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerRegistrationResource>> GetIfExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
             scope.Start();
@@ -519,14 +464,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
         public virtual NullableResponse<PartnerRegistrationResource> GetIfExists(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
-            if (partnerRegistrationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerRegistrationName));
-            }
-            if (partnerRegistrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerRegistrationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
             using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
             scope.Start();

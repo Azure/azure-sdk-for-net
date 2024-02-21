@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> is null. </exception>
         public ContainerRegistryEncodedTaskStep(string encodedTaskContent)
         {
-            if (encodedTaskContent == null)
-            {
-                throw new ArgumentNullException(nameof(encodedTaskContent));
-            }
+            Argument.AssertNotNull(encodedTaskContent, nameof(encodedTaskContent));
 
             EncodedTaskContent = encodedTaskContent;
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

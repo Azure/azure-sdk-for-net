@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
         internal SubmitToolOutputsAction(InternalSubmitToolOutputsDetails internalDetails)
         {
-            if (internalDetails == null)
-            {
-                throw new ArgumentNullException(nameof(internalDetails));
-            }
+            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
             Type = "submit_tool_outputs";
             InternalDetails = internalDetails;

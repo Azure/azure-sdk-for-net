@@ -59,18 +59,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/> or <paramref name="orderId"/> is null. </exception>
         public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, ResourceIdentifier orderId) : base(location)
         {
-            if (orderItemDetails == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemDetails));
-            }
-            if (addressDetails == null)
-            {
-                throw new ArgumentNullException(nameof(addressDetails));
-            }
-            if (orderId == null)
-            {
-                throw new ArgumentNullException(nameof(orderId));
-            }
+            Argument.AssertNotNull(orderItemDetails, nameof(orderItemDetails));
+            Argument.AssertNotNull(addressDetails, nameof(addressDetails));
+            Argument.AssertNotNull(orderId, nameof(orderId));
 
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;

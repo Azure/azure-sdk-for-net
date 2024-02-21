@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -20,14 +21,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
         public MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
-            if (mediaUri == null)
-            {
-                throw new ArgumentNullException(nameof(mediaUri));
-            }
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             Kind = CommunicationMessageKind.Image;
             MediaUri = mediaUri;

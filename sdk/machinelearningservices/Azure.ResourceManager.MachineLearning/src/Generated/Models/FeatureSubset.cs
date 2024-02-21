@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         public FeatureSubset(IEnumerable<string> features)
         {
-            if (features == null)
-            {
-                throw new ArgumentNullException(nameof(features));
-            }
+            Argument.AssertNotNull(features, nameof(features));
 
             Features = features.ToList();
             FilterType = MonitoringFeatureFilterType.FeatureSubset;

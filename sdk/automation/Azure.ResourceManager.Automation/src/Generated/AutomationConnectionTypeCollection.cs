@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationConnectionTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationConnectionTypeResource> CreateOrUpdate(WaitUntil waitUntil, string connectionTypeName, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual async Task<Response<AutomationConnectionTypeResource>> GetAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual Response<AutomationConnectionTypeResource> Get(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationConnectionTypeResource>> GetIfExistsAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
         public virtual NullableResponse<AutomationConnectionTypeResource> GetIfExists(string connectionTypeName, CancellationToken cancellationToken = default)
         {
-            if (connectionTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionTypeName));
-            }
-            if (connectionTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeCollection.GetIfExists");
             scope.Start();

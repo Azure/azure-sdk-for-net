@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformStorageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageName, AppPlatformStorageData data, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformStorageResource> CreateOrUpdate(WaitUntil waitUntil, string storageName, AppPlatformStorageData data, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformStorageResource>> GetAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual Response<AppPlatformStorageResource> Get(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformStorageResource>> GetIfExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformStorageResource> GetIfExists(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _appPlatformStorageStoragesClientDiagnostics.CreateScope("AppPlatformStorageCollection.GetIfExists");
             scope.Start();

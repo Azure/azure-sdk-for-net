@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaLiveOutputResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string liveOutputName, MediaLiveOutputData data, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaLiveOutputResource> CreateOrUpdate(WaitUntil waitUntil, string liveOutputName, MediaLiveOutputData data, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual async Task<Response<MediaLiveOutputResource>> GetAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual Response<MediaLiveOutputResource> Get(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual Response<bool> Exists(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaLiveOutputResource>> GetIfExistsAsync(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
         public virtual NullableResponse<MediaLiveOutputResource> GetIfExists(string liveOutputName, CancellationToken cancellationToken = default)
         {
-            if (liveOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(liveOutputName));
-            }
-            if (liveOutputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveOutputName));
-            }
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
             scope.Start();

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkDhcpResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkDhcpResource> CreateOrUpdate(WaitUntil waitUntil, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual Response<WorkloadNetworkDhcpResource> Get(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual Response<bool> Exists(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkDhcpResource>> GetIfExistsAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkDhcpResource> GetIfExists(string dhcpId, CancellationToken cancellationToken = default)
         {
-            if (dhcpId == null)
-            {
-                throw new ArgumentNullException(nameof(dhcpId));
-            }
-            if (dhcpId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
-            }
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
 
             using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
             scope.Start();

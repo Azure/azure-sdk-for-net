@@ -20,14 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ShareItemInternal(string name, SharePropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Properties = properties;

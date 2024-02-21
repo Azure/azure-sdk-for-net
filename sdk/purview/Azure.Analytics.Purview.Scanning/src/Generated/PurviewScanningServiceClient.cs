@@ -50,14 +50,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewScanningServiceClient(Uri endpoint, TokenCredential credential, PurviewScanningServiceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -86,14 +80,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferenceAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -128,14 +115,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReference(string,RequestContext)']/*" />
         public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetKeyVaultReference");
             scope.Start();
@@ -171,18 +151,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateKeyVaultReferenceAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, RequestContent content, RequestContext context = null)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
@@ -218,18 +188,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateKeyVaultReference(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateKeyVaultReference(string keyVaultName, RequestContent content, RequestContext context = null)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference");
             scope.Start();
@@ -264,14 +224,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteKeyVaultReferenceAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -306,14 +259,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteKeyVaultReference(string,RequestContext)']/*" />
         public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context)
         {
-            if (keyVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultName));
-            }
-            if (keyVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteKeyVaultReference");
             scope.Start();
@@ -348,14 +294,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesetAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -390,14 +329,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRuleset(string,RequestContext)']/*" />
         public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetScanRuleset");
             scope.Start();
@@ -433,14 +365,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateScanRulesetAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context = null)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
@@ -476,14 +401,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateScanRuleset(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context = null)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.CreateOrUpdateScanRuleset");
             scope.Start();
@@ -518,14 +436,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteScanRulesetAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -560,14 +471,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteScanRuleset(string,RequestContext)']/*" />
         public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context)
         {
-            if (scanRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(scanRulesetName));
-            }
-            if (scanRulesetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scanRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.DeleteScanRuleset");
             scope.Start();
@@ -602,14 +506,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSourceAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context)
         {
-            if (dataSourceType == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceType));
-            }
-            if (dataSourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceType));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();
@@ -644,14 +541,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSource(string,RequestContext)']/*" />
         public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context)
         {
-            if (dataSourceType == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceType));
-            }
-            if (dataSourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceType));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForDataSource");
             scope.Start();

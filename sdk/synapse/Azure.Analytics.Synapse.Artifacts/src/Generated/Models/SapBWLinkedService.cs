@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="systemNumber"/> or <paramref name="clientId"/> is null. </exception>
         public SapBWLinkedService(object server, object systemNumber, object clientId)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (systemNumber == null)
-            {
-                throw new ArgumentNullException(nameof(systemNumber));
-            }
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(systemNumber, nameof(systemNumber));
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
             Server = server;
             SystemNumber = systemNumber;

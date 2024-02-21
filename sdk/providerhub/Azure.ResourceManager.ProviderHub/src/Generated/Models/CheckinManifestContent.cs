@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/> is null. </exception>
         public CheckinManifestContent(string environment, AzureLocation baselineArmManifestLocation)
         {
-            if (environment == null)
-            {
-                throw new ArgumentNullException(nameof(environment));
-            }
+            Argument.AssertNotNull(environment, nameof(environment));
 
             Environment = environment;
             BaselineArmManifestLocation = baselineArmManifestLocation;

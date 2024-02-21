@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
         public EnvironmentVariableSetup(string variableName, string variableValue)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableValue == null)
-            {
-                throw new ArgumentNullException(nameof(variableValue));
-            }
+            Argument.AssertNotNull(variableName, nameof(variableName));
+            Argument.AssertNotNull(variableValue, nameof(variableValue));
 
             VariableName = variableName;
             VariableValue = variableValue;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -23,14 +24,8 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="translation"/> is null. </exception>
         public DictionaryExampleTextItem(string text, string translation) : base(text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (translation == null)
-            {
-                throw new ArgumentNullException(nameof(translation));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(translation, nameof(translation));
 
             Translation = translation;
         }

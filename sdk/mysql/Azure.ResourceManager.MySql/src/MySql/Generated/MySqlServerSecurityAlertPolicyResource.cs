@@ -198,10 +198,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlServerSecurityAlertPolicyResource>> UpdateAsync(WaitUntil waitUntil, MySqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("MySqlServerSecurityAlertPolicyResource.Update");
             scope.Start();
@@ -247,10 +244,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlServerSecurityAlertPolicyResource> Update(WaitUntil waitUntil, MySqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("MySqlServerSecurityAlertPolicyResource.Update");
             scope.Start();

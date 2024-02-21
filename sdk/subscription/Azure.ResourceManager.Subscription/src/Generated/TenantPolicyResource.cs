@@ -195,10 +195,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
@@ -244,10 +241,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<TenantPolicyResource> CreateOrUpdate(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();

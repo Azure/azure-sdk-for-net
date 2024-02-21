@@ -20,14 +20,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
         public TranslationTarget(Uri targetUri, string languageCode)
         {
-            if (targetUri == null)
-            {
-                throw new ArgumentNullException(nameof(targetUri));
-            }
-            if (languageCode == null)
-            {
-                throw new ArgumentNullException(nameof(languageCode));
-            }
+            Argument.AssertNotNull(targetUri, nameof(targetUri));
+            Argument.AssertNotNull(languageCode, nameof(languageCode));
 
             TargetUri = targetUri;
             LanguageCode = languageCode;

@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GremlinGraphResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GremlinGraphResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GremlinGraphCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<Response<GremlinGraphResource>> GetAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual Response<GremlinGraphResource> Get(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Get");
             scope.Start();
@@ -361,14 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
             scope.Start();
@@ -411,14 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual Response<bool> Exists(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.Exists");
             scope.Start();
@@ -461,14 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<NullableResponse<GremlinGraphResource>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.GetIfExists");
             scope.Start();
@@ -513,14 +458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual NullableResponse<GremlinGraphResource> GetIfExists(string graphName, CancellationToken cancellationToken = default)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
-            if (graphName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
-            }
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
 
             using var scope = _gremlinGraphGremlinResourcesClientDiagnostics.CreateScope("GremlinGraphCollection.GetIfExists");
             scope.Start();
