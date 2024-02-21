@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="productDetails"/> is null. </exception>
         public EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType)
         {
-            Argument.AssertNotNull(productDetails, nameof(productDetails));
+            if (productDetails == null)
+            {
+                throw new ArgumentNullException(nameof(productDetails));
+            }
 
             ProductDetails = productDetails;
             OrderItemType = orderItemType;

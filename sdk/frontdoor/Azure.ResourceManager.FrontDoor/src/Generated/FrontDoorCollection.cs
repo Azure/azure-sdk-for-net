@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string frontDoorName, FrontDoorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorResource> CreateOrUpdate(WaitUntil waitUntil, string frontDoorName, FrontDoorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorResource>> GetAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual Response<FrontDoorResource> Get(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual Response<bool> Exists(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorResource>> GetIfExistsAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorResource> GetIfExists(string frontDoorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            if (frontDoorName == null)
+            {
+                throw new ArgumentNullException(nameof(frontDoorName));
+            }
+            if (frontDoorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(frontDoorName));
+            }
 
             using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
             scope.Start();

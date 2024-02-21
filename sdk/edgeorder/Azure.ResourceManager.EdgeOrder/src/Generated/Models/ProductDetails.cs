@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ProductDetails(HierarchyInformation hierarchyInformation)
         {
-            Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
+            if (hierarchyInformation == null)
+            {
+                throw new ArgumentNullException(nameof(hierarchyInformation));
+            }
 
             HierarchyInformation = hierarchyInformation;
             DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();

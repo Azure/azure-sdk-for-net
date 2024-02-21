@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selector"/> is null. </exception>
         public ManagedRuleExclusion(ManagedRuleExclusionMatchVariable matchVariable, ManagedRuleExclusionSelectorMatchOperator selectorMatchOperator, string selector)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
