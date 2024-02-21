@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SquareObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SquareObjectDataset"/> for deserialization. </summary>
+        internal SquareObjectDataset()
+        {
+        }
+
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

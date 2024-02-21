@@ -158,6 +158,11 @@ namespace Azure.Storage.DataMovement.Blobs
                 range = ContentRange.ToHttpRange(contentRange);
                 size = contentRange.Size;
             }
+            else if (result.Details.ContentLength > 0)
+            {
+                range = new HttpRange(0, result.Details.ContentLength);
+                size = result.Details.ContentLength;
+            }
 
             return new StorageResourceReadStreamResult(
                 content: result.Content,

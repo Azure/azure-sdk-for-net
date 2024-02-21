@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureDataExplorerCommand";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerCommandActivity"/> for deserialization. </summary>
+        internal AzureDataExplorerCommandActivity()
+        {
+        }
+
         /// <summary> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Command { get; set; }
         /// <summary> Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..). </summary>

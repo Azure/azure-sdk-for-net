@@ -3,12 +3,13 @@
 
 using System;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
     internal readonly struct QuickPulseResponse
     {
-        public QuickPulseResponse(bool success, ResponseHeaders? responseHeaders = null)
+        public QuickPulseResponse(bool success, ResponseHeaders? responseHeaders = null, CollectionConfigurationInfo? info = null)
         {
             Success = success;
 
@@ -23,13 +24,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     Subscribed = Convert.ToBoolean(subscribedValue);
                 }
+
+                CollectionConfigurationInfo = info;
             }
         }
 
         public bool Success { get; }
         public string? ConfigurationEtag { get; }
         public bool Subscribed { get; }
-
-        // TODO: Filtering parameters can be added here.
+        public CollectionConfigurationInfo? CollectionConfigurationInfo { get; }
     }
 }

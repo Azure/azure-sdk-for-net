@@ -32,41 +32,35 @@ public partial class HttpClientPipelineTransport
             _headers = new ArrayBackedRequestHeaders();
         }
 
-        protected override string GetMethodCore()
-            => _method;
-
-        protected override void SetMethodCore(string method)
+        protected override string MethodCore
         {
-            Argument.AssertNotNull(method, nameof(method));
-
-            _method = method;
-        }
-
-        protected override Uri GetUriCore()
-        {
-            if (_uri is null)
+            get => _method;
+            set
             {
-                throw new InvalidOperationException("Uri has not been set on this instance.");
+                Argument.AssertNotNull(value, nameof(value));
+
+                _method = value;
             }
-
-            return _uri;
         }
 
-        protected override void SetUriCore(Uri uri)
+        protected override Uri? UriCore
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            get => _uri;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-            _uri = uri;
+                _uri = value;
+            }
         }
 
-        protected override BinaryContent? GetContentCore()
-            => _content;
+        protected override BinaryContent? ContentCore
+        {
+            get => _content;
+            set => _content = value;
+        }
 
-        protected override void SetContentCore(BinaryContent? content)
-            => _content = content;
-
-        protected override PipelineRequestHeaders GetHeadersCore()
-            => _headers;
+        protected override PipelineRequestHeaders HeadersCore => _headers;
 
         // PATCH value needed for compat with pre-net5.0 TFMs
         private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -82,11 +76,16 @@ public partial class HttpClientPipelineTransport
                 "DELETE" => HttpMethod.Delete,
                 "PATCH" => _patchMethod,
                 _ => new HttpMethod(method),
-            }; ;
+            };
         }
 
         internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
         {
+            if (request.Uri is null)
+            {
+                throw new InvalidOperationException("Uri must be set on message request prior to sending message.");
+            }
+
             HttpMethod method = ToHttpMethod(request.Method);
             Uri uri = request.Uri;
             HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);

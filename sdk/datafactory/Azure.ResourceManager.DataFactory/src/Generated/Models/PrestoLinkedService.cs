@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Presto";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/> for deserialization. </summary>
+        internal PrestoLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The version of the Presto server. (i.e. 0.148-t). </summary>
