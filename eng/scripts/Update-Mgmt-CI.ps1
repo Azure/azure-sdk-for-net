@@ -1,4 +1,4 @@
-. (Join-Path -Path $PSScriptRoot -ChildPath 'automation\GenerateAndBuildLib.ps1')
+. (Join-Path $PSScriptRoot automation GenerateAndBuildLib.ps1)
 
 $packagesPath = "$PSScriptRoot/../../sdk"
 

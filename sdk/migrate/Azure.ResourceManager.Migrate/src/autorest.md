@@ -8,7 +8,7 @@ csharp: true
 library-name: Migrate
 namespace: Azure.ResourceManager.Migrate
 require: https://github.com/Azure/azure-rest-api-specs/blob/e79c2debdebd659662c78885c117603d991d3b06/specification/migrate/resource-manager/readme.md
-tag: package-migrate-2023-03
+#tag: package-migrate-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
