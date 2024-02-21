@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -68,10 +69,7 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            if (dataSource == null)
-            {
-                throw new ArgumentNullException(nameof(dataSource));
-            }
+            Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
             StartTime = startTime;

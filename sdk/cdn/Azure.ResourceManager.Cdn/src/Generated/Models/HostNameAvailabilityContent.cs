@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public HostNameAvailabilityContent(string hostName)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostName = hostName;
         }

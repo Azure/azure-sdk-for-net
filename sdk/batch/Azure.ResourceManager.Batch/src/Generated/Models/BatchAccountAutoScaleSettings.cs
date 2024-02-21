@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="formula"/> is null. </exception>
         public BatchAccountAutoScaleSettings(string formula)
         {
-            if (formula == null)
-            {
-                throw new ArgumentNullException(nameof(formula));
-            }
+            Argument.AssertNotNull(formula, nameof(formula));
 
             Formula = formula;
         }

@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual async Task<Response<DscNodeResource>> GetAsync(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual Response<DscNodeResource> Get(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.Get");
             scope.Start();
@@ -252,14 +238,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.Exists");
             scope.Start();
@@ -302,14 +281,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual Response<bool> Exists(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.Exists");
             scope.Start();
@@ -352,14 +324,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual async Task<NullableResponse<DscNodeResource>> GetIfExistsAsync(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.GetIfExists");
             scope.Start();
@@ -404,14 +369,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
         public virtual NullableResponse<DscNodeResource> GetIfExists(string nodeId, CancellationToken cancellationToken = default)
         {
-            if (nodeId == null)
-            {
-                throw new ArgumentNullException(nameof(nodeId));
-            }
-            if (nodeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeId));
-            }
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeCollection.GetIfExists");
             scope.Start();

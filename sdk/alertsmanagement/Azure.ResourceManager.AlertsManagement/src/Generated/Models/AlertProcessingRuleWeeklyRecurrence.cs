@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
         public AlertProcessingRuleWeeklyRecurrence(IEnumerable<AlertsManagementDayOfWeek> daysOfWeek)
         {
-            if (daysOfWeek == null)
-            {
-                throw new ArgumentNullException(nameof(daysOfWeek));
-            }
+            Argument.AssertNotNull(daysOfWeek, nameof(daysOfWeek));
 
             DaysOfWeek = daysOfWeek.ToList();
             RecurrenceType = RecurrenceType.Weekly;

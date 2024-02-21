@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatPools"/> is null. </exception>
         public PoolEndpointConfiguration(IEnumerable<BatchInboundNatPool> inboundNatPools)
         {
-            if (inboundNatPools == null)
-            {
-                throw new ArgumentNullException(nameof(inboundNatPools));
-            }
+            Argument.AssertNotNull(inboundNatPools, nameof(inboundNatPools));
 
             InboundNatPools = inboundNatPools.ToList();
         }

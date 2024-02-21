@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,10 +22,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="dialog"/> is null. </exception>
         public UpdateDialogRequestInternal(DialogUpdateBase dialog)
         {
-            if (dialog == null)
-            {
-                throw new ArgumentNullException(nameof(dialog));
-            }
+            Argument.AssertNotNull(dialog, nameof(dialog));
 
             Dialog = dialog;
         }
