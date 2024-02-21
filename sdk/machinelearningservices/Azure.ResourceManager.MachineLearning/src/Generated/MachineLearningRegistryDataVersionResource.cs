@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryDataVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningRegistryDataVersionResource> Update(WaitUntil waitUntil, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
             scope.Start();
@@ -374,7 +380,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<PendingUploadResponseDto>> CreateOrGetStartPendingUploadAsync(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
             scope.Start();
@@ -416,7 +425,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<PendingUploadResponseDto> CreateOrGetStartPendingUpload(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
             scope.Start();

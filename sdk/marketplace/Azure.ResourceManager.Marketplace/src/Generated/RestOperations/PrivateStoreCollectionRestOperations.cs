@@ -192,7 +192,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public async Task<Response<PrivateStoreCollectionInfoData>> CreateOrUpdateAsync(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, collectionId, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -218,7 +221,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public Response<PrivateStoreCollectionInfoData> CreateOrUpdate(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, collectionId, info);
             _pipeline.Send(message, cancellationToken);

@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeaturestoreEntityVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningFeaturestoreEntityVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeaturestoreEntityVersionResource> Update(WaitUntil waitUntil, MachineLearningFeaturestoreEntityVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionResource.Update");
             scope.Start();

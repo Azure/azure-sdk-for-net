@@ -19,7 +19,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public WebhookHookParameter(string endpoint)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             Endpoint = endpoint;
             Headers = new ChangeTrackingDictionary<string, string>();

@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedNetworkPeeringPolicyResource>> UpdateAsync(WaitUntil waitUntil, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedNetworkPeeringPolicyResource> Update(WaitUntil waitUntil, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedNetworkPeeringPolicyClientDiagnostics.CreateScope("ManagedNetworkPeeringPolicyResource.Update");
             scope.Start();
