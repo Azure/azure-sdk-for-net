@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public MachineLearningCommandJob(string command, ResourceIdentifier environmentId)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(environmentId, nameof(environmentId));
 
             Command = command;
             EnvironmentId = environmentId;

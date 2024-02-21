@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/> is null. </exception>
         public MediaOutputFile(IEnumerable<string> labels)
         {
-            if (labels == null)
-            {
-                throw new ArgumentNullException(nameof(labels));
-            }
+            Argument.AssertNotNull(labels, nameof(labels));
 
             Labels = labels.ToList();
         }

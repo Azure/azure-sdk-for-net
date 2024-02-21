@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
         public ProvisionedClusterUpgradeProfileData(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile)
         {
-            if (controlPlaneProfile == null)
-            {
-                throw new ArgumentNullException(nameof(controlPlaneProfile));
-            }
+            Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
 
             ControlPlaneProfile = controlPlaneProfile;
         }

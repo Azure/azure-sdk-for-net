@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="widevineTemplate"/> is null. </exception>
         public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
         {
-            if (widevineTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(widevineTemplate));
-            }
+            Argument.AssertNotNull(widevineTemplate, nameof(widevineTemplate));
 
             WidevineTemplate = widevineTemplate;
             OdataType = "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";

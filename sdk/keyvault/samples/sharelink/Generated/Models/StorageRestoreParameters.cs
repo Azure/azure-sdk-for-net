@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
         public StorageRestoreParameters(byte[] storageBundleBackup)
         {
-            if (storageBundleBackup == null)
-            {
-                throw new ArgumentNullException(nameof(storageBundleBackup));
-            }
+            Argument.AssertNotNull(storageBundleBackup, nameof(storageBundleBackup));
 
             StorageBundleBackup = storageBundleBackup;
         }

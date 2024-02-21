@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -33,18 +34,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricThreshold"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public ModelPerformanceSignal(ModelPerformanceMetricThresholdBase metricThreshold, IEnumerable<MonitoringInputDataBase> productionData, MonitoringInputDataBase referenceData)
         {
-            if (metricThreshold == null)
-            {
-                throw new ArgumentNullException(nameof(metricThreshold));
-            }
-            if (productionData == null)
-            {
-                throw new ArgumentNullException(nameof(productionData));
-            }
-            if (referenceData == null)
-            {
-                throw new ArgumentNullException(nameof(referenceData));
-            }
+            Argument.AssertNotNull(metricThreshold, nameof(metricThreshold));
+            Argument.AssertNotNull(productionData, nameof(productionData));
+            Argument.AssertNotNull(referenceData, nameof(referenceData));
 
             MetricThreshold = metricThreshold;
             ProductionData = productionData.ToList();

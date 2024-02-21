@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metric"/> is null. </exception>
         public CustomMetricThreshold(string metric)
         {
-            if (metric == null)
-            {
-                throw new ArgumentNullException(nameof(metric));
-            }
+            Argument.AssertNotNull(metric, nameof(metric));
 
             Metric = metric;
         }

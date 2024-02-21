@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterResourceId"/> is null. </exception>
         public ClusterMigrateContent(string clusterResourceId)
         {
-            if (clusterResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterResourceId));
-            }
+            Argument.AssertNotNull(clusterResourceId, nameof(clusterResourceId));
 
             ClusterResourceId = clusterResourceId;
         }

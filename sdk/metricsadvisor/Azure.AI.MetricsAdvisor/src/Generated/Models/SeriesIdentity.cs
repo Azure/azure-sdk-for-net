@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimension"/> is null. </exception>
         public SeriesIdentity(IDictionary<string, string> dimension)
         {
-            if (dimension == null)
-            {
-                throw new ArgumentNullException(nameof(dimension));
-            }
+            Argument.AssertNotNull(dimension, nameof(dimension));
 
             Dimension = dimension;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="infrastructureVpnConfiguration"/> or <paramref name="workloadVpnConfiguration"/> is null. </exception>
         public ManagementNetworkConfigurationProperties(VpnConfigurationProperties infrastructureVpnConfiguration, VpnConfigurationProperties workloadVpnConfiguration)
         {
-            if (infrastructureVpnConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(infrastructureVpnConfiguration));
-            }
-            if (workloadVpnConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(workloadVpnConfiguration));
-            }
+            Argument.AssertNotNull(infrastructureVpnConfiguration, nameof(infrastructureVpnConfiguration));
+            Argument.AssertNotNull(workloadVpnConfiguration, nameof(workloadVpnConfiguration));
 
             InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
             WorkloadVpnConfiguration = workloadVpnConfiguration;
