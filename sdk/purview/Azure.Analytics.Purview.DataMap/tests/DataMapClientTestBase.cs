@@ -26,7 +26,8 @@ namespace Azure.Analytics.Purview.DataMap.Tests
                 return true;
             };
             var options = new DataMapClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            Uri endpoint = new Uri("https://xspm.purview.azure.com/");
+            var env = new PurviewDataMapTestEnvironment();
+            Uri endpoint = env.Endpoint;
             TokenCredential credential = new DefaultAzureCredential();
             var client = InstrumentClient(
                 //new DataMapClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
