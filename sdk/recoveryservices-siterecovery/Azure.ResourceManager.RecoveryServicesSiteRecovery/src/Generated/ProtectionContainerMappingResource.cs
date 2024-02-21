@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ProtectionContainerMappingResource>> UpdateAsync(WaitUntil waitUntil, ProtectionContainerMappingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingResource.Update");
             scope.Start();
@@ -330,7 +333,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ProtectionContainerMappingResource> Update(WaitUntil waitUntil, ProtectionContainerMappingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingResource.Update");
             scope.Start();
@@ -376,7 +382,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, RemoveProtectionContainerMappingContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingResource.Delete");
             scope.Start();
@@ -422,7 +431,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, RemoveProtectionContainerMappingContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingResource.Delete");
             scope.Start();

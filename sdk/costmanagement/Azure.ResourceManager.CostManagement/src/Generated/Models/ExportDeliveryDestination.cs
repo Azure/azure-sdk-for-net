@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="container"/> is null. </exception>
         public ExportDeliveryDestination(string container)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
 
             Container = container;
         }

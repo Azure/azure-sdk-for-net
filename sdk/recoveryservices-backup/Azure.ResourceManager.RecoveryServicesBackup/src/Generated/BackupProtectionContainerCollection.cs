@@ -84,10 +84,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -139,10 +163,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -190,9 +238,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
@@ -239,9 +308,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual Response<BackupProtectionContainerResource> Get(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
@@ -288,9 +378,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
@@ -335,9 +446,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
@@ -382,9 +514,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();
@@ -431,9 +584,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
         public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();

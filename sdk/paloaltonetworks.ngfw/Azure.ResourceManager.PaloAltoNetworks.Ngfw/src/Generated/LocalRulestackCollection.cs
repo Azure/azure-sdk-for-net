@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalRulestackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string localRulestackName, LocalRulestackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalRulestackResource> CreateOrUpdate(WaitUntil waitUntil, string localRulestackName, LocalRulestackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackResource>> GetAsync(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual Response<LocalRulestackResource> Get(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual Response<bool> Exists(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual async Task<NullableResponse<LocalRulestackResource>> GetIfExistsAsync(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
         public virtual NullableResponse<LocalRulestackResource> GetIfExists(string localRulestackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            if (localRulestackName == null)
+            {
+                throw new ArgumentNullException(nameof(localRulestackName));
+            }
+            if (localRulestackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
+            }
 
             using var scope = _localRulestackClientDiagnostics.CreateScope("LocalRulestackCollection.GetIfExists");
             scope.Start();

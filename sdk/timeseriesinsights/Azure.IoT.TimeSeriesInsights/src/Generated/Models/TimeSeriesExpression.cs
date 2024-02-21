@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,7 +17,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public TimeSeriesExpression(string expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             Expression = expression;
         }

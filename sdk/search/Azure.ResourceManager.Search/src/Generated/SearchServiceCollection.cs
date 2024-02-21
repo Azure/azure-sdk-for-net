@@ -85,8 +85,18 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SearchServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -135,8 +145,18 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SearchServiceResource> CreateOrUpdate(WaitUntil waitUntil, string searchServiceName, SearchServiceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -183,7 +203,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual async Task<Response<SearchServiceResource>> GetAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
             scope.Start();
@@ -229,7 +256,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual Response<SearchServiceResource> Get(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Get");
             scope.Start();
@@ -337,7 +371,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
             scope.Start();
@@ -381,7 +422,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.Exists");
             scope.Start();
@@ -425,7 +473,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SearchServiceResource>> GetIfExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
             scope.Start();
@@ -471,7 +526,14 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         public virtual NullableResponse<SearchServiceResource> GetIfExists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+            if (searchServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(searchServiceName));
+            }
+            if (searchServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(searchServiceName));
+            }
 
             using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
             scope.Start();

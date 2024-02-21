@@ -20,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
         public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sparkJob, nameof(sparkJob));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (sparkJob == null)
+            {
+                throw new ArgumentNullException(nameof(sparkJob));
+            }
 
             SparkJob = sparkJob;
             Arguments = new ChangeTrackingList<object>();

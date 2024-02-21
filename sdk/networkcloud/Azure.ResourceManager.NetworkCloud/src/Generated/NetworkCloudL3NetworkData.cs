@@ -59,8 +59,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="l3IsolationDomainId"/> is null. </exception>
         public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (l3IsolationDomainId == null)
+            {
+                throw new ArgumentNullException(nameof(l3IsolationDomainId));
+            }
 
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareV2FabricCreationContent(ResourceIdentifier migrationSolutionId)
         {
-            Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
+            if (migrationSolutionId == null)
+            {
+                throw new ArgumentNullException(nameof(migrationSolutionId));
+            }
 
             MigrationSolutionId = migrationSolutionId;
             InstanceType = "VMwareV2";

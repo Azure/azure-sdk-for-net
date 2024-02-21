@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlServerSecurityAlertPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PostgreSqlSecurityAlertPolicyName securityAlertPolicyName, PostgreSqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("PostgreSqlServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlServerSecurityAlertPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PostgreSqlSecurityAlertPolicyName securityAlertPolicyName, PostgreSqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("PostgreSqlServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();

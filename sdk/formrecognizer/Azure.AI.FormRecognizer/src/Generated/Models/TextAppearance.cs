@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
         internal TextAppearance(Style style)
         {
-            Argument.AssertNotNull(style, nameof(style));
+            if (style == null)
+            {
+                throw new ArgumentNullException(nameof(style));
+            }
 
             Style = style;
         }

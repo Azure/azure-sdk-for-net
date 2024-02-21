@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<PeerExpressRouteCircuitConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<PeerExpressRouteCircuitConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<PeerExpressRouteCircuitConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual NullableResponse<PeerExpressRouteCircuitConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _peerExpressRouteCircuitConnectionClientDiagnostics.CreateScope("PeerExpressRouteCircuitConnectionCollection.GetIfExists");
             scope.Start();

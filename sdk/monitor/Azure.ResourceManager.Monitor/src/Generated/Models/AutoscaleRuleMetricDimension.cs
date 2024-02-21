@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> or <paramref name="values"/> is null. </exception>
         public AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
         {
-            Argument.AssertNotNull(dimensionName, nameof(dimensionName));
-            Argument.AssertNotNull(values, nameof(values));
+            if (dimensionName == null)
+            {
+                throw new ArgumentNullException(nameof(dimensionName));
+            }
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             DimensionName = dimensionName;
             Operator = @operator;

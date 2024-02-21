@@ -70,8 +70,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public BlocklistClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -91,8 +97,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public BlocklistClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -112,8 +124,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='AddOrUpdateBlocklistItemsAsync(string,AddOrUpdateTextBlocklistItemsOptions,CancellationToken)']/*" />
         public virtual async Task<Response<AddOrUpdateTextBlocklistItemsResult>> AddOrUpdateBlocklistItemsAsync(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -131,8 +153,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='AddOrUpdateBlocklistItems(string,AddOrUpdateTextBlocklistItemsOptions,CancellationToken)']/*" />
         public virtual Response<AddOrUpdateTextBlocklistItemsResult> AddOrUpdateBlocklistItems(string name, AddOrUpdateTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -165,8 +197,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='AddOrUpdateBlocklistItemsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddOrUpdateBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.AddOrUpdateBlocklistItems");
             scope.Start();
@@ -207,8 +249,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='AddOrUpdateBlocklistItems(string,RequestContent,RequestContext)']/*" />
         public virtual Response AddOrUpdateBlocklistItems(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.AddOrUpdateBlocklistItems");
             scope.Start();
@@ -244,8 +296,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='CreateOrUpdateTextBlocklistAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateTextBlocklistAsync(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.CreateOrUpdateTextBlocklist");
             scope.Start();
@@ -281,8 +343,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='CreateOrUpdateTextBlocklist(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateTextBlocklist(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.CreateOrUpdateTextBlocklist");
             scope.Start();
@@ -318,7 +390,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='DeleteTextBlocklistAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTextBlocklistAsync(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.DeleteTextBlocklist");
             scope.Start();
@@ -354,7 +433,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='DeleteTextBlocklist(string,RequestContext)']/*" />
         public virtual Response DeleteTextBlocklist(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.DeleteTextBlocklist");
             scope.Start();
@@ -379,7 +465,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TextBlocklist>> GetTextBlocklistAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTextBlocklistAsync(name, context).ConfigureAwait(false);
@@ -395,7 +488,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklist(string,CancellationToken)']/*" />
         public virtual Response<TextBlocklist> GetTextBlocklist(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTextBlocklist(name, context);
@@ -426,7 +526,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTextBlocklistAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklist");
             scope.Start();
@@ -466,7 +573,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklist(string,RequestContext)']/*" />
         public virtual Response GetTextBlocklist(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklist");
             scope.Start();
@@ -492,8 +606,22 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItemAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<TextBlocklistItem>> GetTextBlocklistItemAsync(string name, string blocklistItemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (blocklistItemId == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemId));
+            }
+            if (blocklistItemId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(blocklistItemId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTextBlocklistItemAsync(name, blocklistItemId, context).ConfigureAwait(false);
@@ -510,8 +638,22 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItem(string,string,CancellationToken)']/*" />
         public virtual Response<TextBlocklistItem> GetTextBlocklistItem(string name, string blocklistItemId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (blocklistItemId == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemId));
+            }
+            if (blocklistItemId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(blocklistItemId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTextBlocklistItem(name, blocklistItemId, context);
@@ -543,8 +685,22 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItemAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTextBlocklistItemAsync(string name, string blocklistItemId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (blocklistItemId == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemId));
+            }
+            if (blocklistItemId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(blocklistItemId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklistItem");
             scope.Start();
@@ -585,8 +741,22 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItem(string,string,RequestContext)']/*" />
         public virtual Response GetTextBlocklistItem(string name, string blocklistItemId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(blocklistItemId, nameof(blocklistItemId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (blocklistItemId == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemId));
+            }
+            if (blocklistItemId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(blocklistItemId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklistItem");
             scope.Start();
@@ -612,8 +782,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='RemoveBlocklistItemsAsync(string,RemoveTextBlocklistItemsOptions,CancellationToken)']/*" />
         public virtual async Task<Response> RemoveBlocklistItemsAsync(string name, RemoveTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -631,8 +811,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='RemoveBlocklistItems(string,RemoveTextBlocklistItemsOptions,CancellationToken)']/*" />
         public virtual Response RemoveBlocklistItems(string name, RemoveTextBlocklistItemsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(options, nameof(options));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -665,8 +855,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='RemoveBlocklistItemsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveBlocklistItemsAsync(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.RemoveBlocklistItems");
             scope.Start();
@@ -707,8 +907,18 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='RemoveBlocklistItems(string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveBlocklistItems(string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("BlocklistClient.RemoveBlocklistItems");
             scope.Start();
@@ -736,7 +946,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItemsAsync(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<TextBlocklistItem> GetTextBlocklistItemsAsync(string name, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(name, maxCount, skip, maxpagesize, context);
@@ -756,7 +973,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItems(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<TextBlocklistItem> GetTextBlocklistItems(string name, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(name, maxCount, skip, maxpagesize, context);
@@ -791,7 +1015,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItemsAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTextBlocklistItemsAsync(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(name, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, name, maxCount, skip, maxpagesize, context);
@@ -825,7 +1056,14 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/BlocklistClient.xml" path="doc/members/member[@name='GetTextBlocklistItems(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTextBlocklistItems(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTextBlocklistItemsRequest(name, maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTextBlocklistItemsNextPageRequest(nextLink, name, maxCount, skip, maxpagesize, context);

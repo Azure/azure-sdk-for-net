@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
 
             Name = name;
             SubnetId = subnetId;

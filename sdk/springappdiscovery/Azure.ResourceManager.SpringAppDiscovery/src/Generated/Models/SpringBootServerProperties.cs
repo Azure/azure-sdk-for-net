@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SpringBootServerProperties(string server)
         {
-            Argument.AssertNotNull(server, nameof(server));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
 
             Server = server;
             FqdnAndIPAddressList = new ChangeTrackingList<IPAddress>();

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal AnalyzedTokenInfo(string token, int startOffset, int endOffset, int position)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
 
             Token = token;
             StartOffset = startOffset;

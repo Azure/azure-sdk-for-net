@@ -25,11 +25,26 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="fileName"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/> or <paramref name="subscriptionId"/> is null. </exception>
         public AdlsGen1FileDataSet(string accountName, string fileName, string folderPath, string resourceGroup, string subscriptionId)
         {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(fileName, nameof(fileName));
-            Argument.AssertNotNull(folderPath, nameof(folderPath));
-            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (fileName == null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            if (folderPath == null)
+            {
+                throw new ArgumentNullException(nameof(folderPath));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
             AccountName = accountName;
             FileName = fileName;

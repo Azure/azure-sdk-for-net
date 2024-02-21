@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<Response<StreamingJobInputResource>> UpdateAsync(StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputResource.Update");
             scope.Start();
@@ -325,7 +328,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual Response<StreamingJobInputResource> Update(StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputResource.Update");
             scope.Start();

@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="workspaceKey"/> is null. </exception>
         public ContainerGroupLogAnalytics(string workspaceId, string workspaceKey)
         {
-            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(workspaceKey, nameof(workspaceKey));
+            if (workspaceId == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceId));
+            }
+            if (workspaceKey == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceKey));
+            }
 
             WorkspaceId = workspaceId;
             WorkspaceKey = workspaceKey;

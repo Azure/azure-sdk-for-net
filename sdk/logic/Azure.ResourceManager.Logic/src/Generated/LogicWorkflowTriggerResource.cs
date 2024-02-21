@@ -494,7 +494,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> SetStateAsync(LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerResource.SetState");
             scope.Start();
@@ -536,7 +539,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response SetState(LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerResource.SetState");
             scope.Start();

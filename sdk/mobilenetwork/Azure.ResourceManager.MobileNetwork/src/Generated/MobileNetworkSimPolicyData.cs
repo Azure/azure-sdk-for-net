@@ -61,9 +61,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueAmbr"/>, <paramref name="defaultSlice"/> or <paramref name="sliceConfigurations"/> is null. </exception>
         public MobileNetworkSimPolicyData(AzureLocation location, Ambr ueAmbr, WritableSubResource defaultSlice, IEnumerable<MobileNetworkSliceConfiguration> sliceConfigurations) : base(location)
         {
-            Argument.AssertNotNull(ueAmbr, nameof(ueAmbr));
-            Argument.AssertNotNull(defaultSlice, nameof(defaultSlice));
-            Argument.AssertNotNull(sliceConfigurations, nameof(sliceConfigurations));
+            if (ueAmbr == null)
+            {
+                throw new ArgumentNullException(nameof(ueAmbr));
+            }
+            if (defaultSlice == null)
+            {
+                throw new ArgumentNullException(nameof(defaultSlice));
+            }
+            if (sliceConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(sliceConfigurations));
+            }
 
             SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             UeAmbr = ueAmbr;

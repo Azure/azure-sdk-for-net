@@ -199,7 +199,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectionIntentResource>> UpdateAsync(WaitUntil waitUntil, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectionIntentResource> Update(WaitUntil waitUntil, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentResource.Update");
             scope.Start();

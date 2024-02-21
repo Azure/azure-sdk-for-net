@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -25,9 +24,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="computeIdentity"/>, <paramref name="instanceType"/> or <paramref name="runtimeVersion"/> is null. </exception>
         public MonitorServerlessSparkCompute(MonitorComputeIdentityBase computeIdentity, string instanceType, string runtimeVersion)
         {
-            Argument.AssertNotNull(computeIdentity, nameof(computeIdentity));
-            Argument.AssertNotNull(instanceType, nameof(instanceType));
-            Argument.AssertNotNull(runtimeVersion, nameof(runtimeVersion));
+            if (computeIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(computeIdentity));
+            }
+            if (instanceType == null)
+            {
+                throw new ArgumentNullException(nameof(instanceType));
+            }
+            if (runtimeVersion == null)
+            {
+                throw new ArgumentNullException(nameof(runtimeVersion));
+            }
 
             ComputeIdentity = computeIdentity;
             InstanceType = instanceType;

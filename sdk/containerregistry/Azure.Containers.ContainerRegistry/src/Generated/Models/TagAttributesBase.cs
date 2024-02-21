@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -21,8 +20,14 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(digest, nameof(digest));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
 
             Name = name;
             Digest = digest;

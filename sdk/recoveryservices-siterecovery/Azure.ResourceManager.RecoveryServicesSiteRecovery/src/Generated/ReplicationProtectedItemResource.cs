@@ -358,7 +358,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, ReplicationProtectedItemPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Update");
             scope.Start();
@@ -404,7 +407,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> Update(WaitUntil waitUntil, ReplicationProtectedItemPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Update");
             scope.Start();
@@ -450,7 +456,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> AddDisksAsync(WaitUntil waitUntil, SiteRecoveryAddDisksContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.AddDisks");
             scope.Start();
@@ -496,7 +505,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> AddDisks(WaitUntil waitUntil, SiteRecoveryAddDisksContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.AddDisks");
             scope.Start();
@@ -542,7 +554,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ApplyRecoveryPointAsync(WaitUntil waitUntil, SiteRecoveryApplyRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.ApplyRecoveryPoint");
             scope.Start();
@@ -588,7 +603,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> ApplyRecoveryPoint(WaitUntil waitUntil, SiteRecoveryApplyRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.ApplyRecoveryPoint");
             scope.Start();
@@ -802,7 +820,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> PlannedFailoverAsync(WaitUntil waitUntil, PlannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.PlannedFailover");
             scope.Start();
@@ -848,7 +869,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> PlannedFailover(WaitUntil waitUntil, PlannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.PlannedFailover");
             scope.Start();
@@ -894,7 +918,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, DisableProtectionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Delete");
             scope.Start();
@@ -940,7 +967,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, DisableProtectionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Delete");
             scope.Start();
@@ -986,7 +1016,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> RemoveDisksAsync(WaitUntil waitUntil, RemoveDisksContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.RemoveDisks");
             scope.Start();
@@ -1032,7 +1065,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> RemoveDisks(WaitUntil waitUntil, RemoveDisksContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.RemoveDisks");
             scope.Start();
@@ -1162,7 +1198,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ReprotectAsync(WaitUntil waitUntil, ReverseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Reprotect");
             scope.Start();
@@ -1208,7 +1247,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> Reprotect(WaitUntil waitUntil, ReverseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.Reprotect");
             scope.Start();
@@ -1254,7 +1296,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ResolveHealthErrorsAsync(WaitUntil waitUntil, ResolveHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.ResolveHealthErrors");
             scope.Start();
@@ -1300,7 +1345,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> ResolveHealthErrors(WaitUntil waitUntil, ResolveHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.ResolveHealthErrors");
             scope.Start();
@@ -1346,7 +1394,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> SwitchProviderAsync(WaitUntil waitUntil, SwitchProviderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.SwitchProvider");
             scope.Start();
@@ -1392,7 +1443,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> SwitchProvider(WaitUntil waitUntil, SwitchProviderContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.SwitchProvider");
             scope.Start();
@@ -1438,7 +1492,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> TestFailoverAsync(WaitUntil waitUntil, TestFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.TestFailover");
             scope.Start();
@@ -1484,7 +1541,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> TestFailover(WaitUntil waitUntil, TestFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.TestFailover");
             scope.Start();
@@ -1530,7 +1590,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> TestFailoverCleanupAsync(WaitUntil waitUntil, TestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.TestFailoverCleanup");
             scope.Start();
@@ -1576,7 +1639,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> TestFailoverCleanup(WaitUntil waitUntil, TestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.TestFailoverCleanup");
             scope.Start();
@@ -1622,7 +1688,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> UnplannedFailoverAsync(WaitUntil waitUntil, UnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UnplannedFailover");
             scope.Start();
@@ -1668,7 +1737,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> UnplannedFailover(WaitUntil waitUntil, UnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UnplannedFailover");
             scope.Start();
@@ -1714,7 +1786,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> UpdateApplianceAsync(WaitUntil waitUntil, UpdateApplianceForReplicationProtectedItemContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UpdateAppliance");
             scope.Start();
@@ -1760,7 +1835,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> UpdateAppliance(WaitUntil waitUntil, UpdateApplianceForReplicationProtectedItemContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UpdateAppliance");
             scope.Start();
@@ -1806,7 +1884,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> UpdateMobilityServiceAsync(WaitUntil waitUntil, UpdateMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UpdateMobilityService");
             scope.Start();
@@ -1852,7 +1933,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectedItemResource> UpdateMobilityService(WaitUntil waitUntil, UpdateMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemResource.UpdateMobilityService");
             scope.Start();

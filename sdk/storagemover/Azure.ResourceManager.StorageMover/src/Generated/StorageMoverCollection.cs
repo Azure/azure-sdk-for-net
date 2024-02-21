@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageMoverResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageMoverName, StorageMoverData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageMoverResource> CreateOrUpdate(WaitUntil waitUntil, string storageMoverName, StorageMoverData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual async Task<Response<StorageMoverResource>> GetAsync(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual Response<StorageMoverResource> Get(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageMoverResource>> GetIfExistsAsync(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         public virtual NullableResponse<StorageMoverResource> GetIfExists(string storageMoverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
 
             using var scope = _storageMoverClientDiagnostics.CreateScope("StorageMoverCollection.GetIfExists");
             scope.Start();

@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual async Task<Response<NetworkDeviceSkuResource>> GetAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual Response<NetworkDeviceSkuResource> Get(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkDeviceSkuResource>> GetIfExistsAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
         public virtual NullableResponse<NetworkDeviceSkuResource> GetIfExists(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
+            if (networkDeviceSkuName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceSkuName));
+            }
+            if (networkDeviceSkuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
+            }
 
             using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
             scope.Start();

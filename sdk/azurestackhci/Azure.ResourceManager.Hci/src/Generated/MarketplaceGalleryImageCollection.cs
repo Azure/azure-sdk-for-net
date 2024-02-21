@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceGalleryImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string marketplaceGalleryImageName, MarketplaceGalleryImageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceGalleryImageResource> CreateOrUpdate(WaitUntil waitUntil, string marketplaceGalleryImageName, MarketplaceGalleryImageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual async Task<Response<MarketplaceGalleryImageResource>> GetAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual Response<MarketplaceGalleryImageResource> Get(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual Response<bool> Exists(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual async Task<NullableResponse<MarketplaceGalleryImageResource>> GetIfExistsAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
         public virtual NullableResponse<MarketplaceGalleryImageResource> GetIfExists(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
+            if (marketplaceGalleryImageName == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceGalleryImageName));
+            }
+            if (marketplaceGalleryImageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceGalleryImageName));
+            }
 
             using var scope = _marketplaceGalleryImageClientDiagnostics.CreateScope("MarketplaceGalleryImageCollection.GetIfExists");
             scope.Start();

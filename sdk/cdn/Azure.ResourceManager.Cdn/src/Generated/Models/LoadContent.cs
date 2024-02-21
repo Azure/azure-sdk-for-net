@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public LoadContent(IEnumerable<string> contentPaths)
         {
-            Argument.AssertNotNull(contentPaths, nameof(contentPaths));
+            if (contentPaths == null)
+            {
+                throw new ArgumentNullException(nameof(contentPaths));
+            }
 
             ContentPaths = contentPaths.ToList();
         }

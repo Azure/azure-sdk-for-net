@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,9 +19,18 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
         internal MetadataFunction(string id, string name, string body)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             Id = id;
             Name = name;

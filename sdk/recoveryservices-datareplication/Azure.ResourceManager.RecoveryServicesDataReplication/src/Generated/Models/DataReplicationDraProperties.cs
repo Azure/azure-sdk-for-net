@@ -59,11 +59,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="machineId"/>, <paramref name="machineName"/>, <paramref name="authenticationIdentity"/>, <paramref name="resourceAccessIdentity"/> or <paramref name="customProperties"/> is null. </exception>
         public DataReplicationDraProperties(string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, DraModelCustomProperties customProperties)
         {
-            Argument.AssertNotNull(machineId, nameof(machineId));
-            Argument.AssertNotNull(machineName, nameof(machineName));
-            Argument.AssertNotNull(authenticationIdentity, nameof(authenticationIdentity));
-            Argument.AssertNotNull(resourceAccessIdentity, nameof(resourceAccessIdentity));
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
+            if (machineId == null)
+            {
+                throw new ArgumentNullException(nameof(machineId));
+            }
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (authenticationIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(authenticationIdentity));
+            }
+            if (resourceAccessIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(resourceAccessIdentity));
+            }
+            if (customProperties == null)
+            {
+                throw new ArgumentNullException(nameof(customProperties));
+            }
 
             MachineId = machineId;
             MachineName = machineName;

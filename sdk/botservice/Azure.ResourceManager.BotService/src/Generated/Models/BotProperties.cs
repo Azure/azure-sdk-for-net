@@ -54,8 +54,14 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="msaAppId"/> is null. </exception>
         public BotProperties(string displayName, Uri endpoint, string msaAppId)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(msaAppId, nameof(msaAppId));
+            if (displayName == null)
+            {
+                throw new ArgumentNullException(nameof(displayName));
+            }
+            if (msaAppId == null)
+            {
+                throw new ArgumentNullException(nameof(msaAppId));
+            }
 
             DisplayName = displayName;
             Endpoint = endpoint;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -20,9 +19,18 @@ namespace Azure.Communication.Identity.Models
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
         public TeamsUserExchangeTokenRequest(string token, string appId, string userId)
         {
-            Argument.AssertNotNull(token, nameof(token));
-            Argument.AssertNotNull(appId, nameof(appId));
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             Token = token;
             AppId = appId;

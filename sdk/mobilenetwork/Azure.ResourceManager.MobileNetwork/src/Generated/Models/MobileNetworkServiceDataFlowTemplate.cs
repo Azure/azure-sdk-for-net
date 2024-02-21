@@ -55,9 +55,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="templateName"/>, <paramref name="protocol"/> or <paramref name="remoteIPList"/> is null. </exception>
         public MobileNetworkServiceDataFlowTemplate(string templateName, MobileNetworkSdfDirectionS direction, IEnumerable<string> protocol, IEnumerable<string> remoteIPList)
         {
-            Argument.AssertNotNull(templateName, nameof(templateName));
-            Argument.AssertNotNull(protocol, nameof(protocol));
-            Argument.AssertNotNull(remoteIPList, nameof(remoteIPList));
+            if (templateName == null)
+            {
+                throw new ArgumentNullException(nameof(templateName));
+            }
+            if (protocol == null)
+            {
+                throw new ArgumentNullException(nameof(protocol));
+            }
+            if (remoteIPList == null)
+            {
+                throw new ArgumentNullException(nameof(remoteIPList));
+            }
 
             TemplateName = templateName;
             Direction = direction;

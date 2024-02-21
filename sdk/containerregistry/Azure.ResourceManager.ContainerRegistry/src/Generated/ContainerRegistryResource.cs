@@ -982,7 +982,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.Update");
             scope.Start();
@@ -1028,7 +1031,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryResource> Update(WaitUntil waitUntil, ContainerRegistryPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.Update");
             scope.Start();
@@ -1074,7 +1080,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ImportImageAsync(WaitUntil waitUntil, ContainerRegistryImportImageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.ImportImage");
             scope.Start();
@@ -1120,7 +1129,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ImportImage(WaitUntil waitUntil, ContainerRegistryImportImageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.ImportImage");
             scope.Start();
@@ -1299,7 +1311,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryListCredentialsResult>> RegenerateCredentialAsync(ContainerRegistryCredentialRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.RegenerateCredential");
             scope.Start();
@@ -1341,7 +1356,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ContainerRegistryListCredentialsResult> RegenerateCredential(ContainerRegistryCredentialRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.RegenerateCredential");
             scope.Start();
@@ -1384,7 +1402,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryGenerateCredentialsResult>> GenerateCredentialsAsync(WaitUntil waitUntil, ContainerRegistryGenerateCredentialsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.GenerateCredentials");
             scope.Start();
@@ -1430,7 +1451,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryGenerateCredentialsResult> GenerateCredentials(WaitUntil waitUntil, ContainerRegistryGenerateCredentialsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.GenerateCredentials");
             scope.Start();
@@ -1472,7 +1496,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryRunResource>> ScheduleRunAsync(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _schedulesClientDiagnostics.CreateScope("ContainerRegistryResource.ScheduleRun");
             scope.Start();
@@ -1514,7 +1541,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryRunResource> ScheduleRun(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _schedulesClientDiagnostics.CreateScope("ContainerRegistryResource.ScheduleRun");
             scope.Start();
@@ -1628,8 +1658,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.AddTag");
             scope.Start();
@@ -1690,8 +1726,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ContainerRegistryResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.AddTag");
             scope.Start();
@@ -1751,7 +1793,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.SetTags");
             scope.Start();
@@ -1808,7 +1853,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerRegistryResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.SetTags");
             scope.Start();
@@ -1865,7 +1913,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.RemoveTag");
             scope.Start();
@@ -1925,7 +1976,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ContainerRegistryResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryResource.RemoveTag");
             scope.Start();

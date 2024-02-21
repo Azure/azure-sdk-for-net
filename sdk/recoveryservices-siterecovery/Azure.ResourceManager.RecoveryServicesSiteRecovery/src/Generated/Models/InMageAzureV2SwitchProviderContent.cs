@@ -21,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetVaultId"/>, <paramref name="targetFabricId"/> or <paramref name="targetApplianceId"/> is null. </exception>
         public InMageAzureV2SwitchProviderContent(ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId)
         {
-            Argument.AssertNotNull(targetVaultId, nameof(targetVaultId));
-            Argument.AssertNotNull(targetFabricId, nameof(targetFabricId));
-            Argument.AssertNotNull(targetApplianceId, nameof(targetApplianceId));
+            if (targetVaultId == null)
+            {
+                throw new ArgumentNullException(nameof(targetVaultId));
+            }
+            if (targetFabricId == null)
+            {
+                throw new ArgumentNullException(nameof(targetFabricId));
+            }
+            if (targetApplianceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetApplianceId));
+            }
 
             TargetVaultId = targetVaultId;
             TargetFabricId = targetFabricId;
