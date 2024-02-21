@@ -30,7 +30,6 @@ namespace System.ClientModel.Primitives
         private protected readonly string _subtype;
         private protected readonly string _boundary;
         internal readonly Dictionary<string, string> _headers;
-        //private protected readonly string MultipartContentTypePrefix = "multipart/mixed; boundary=";
         public readonly string ContentType;
 
         /// <summary> The list of request content parts. </summary>
@@ -494,34 +493,7 @@ namespace System.ClientModel.Primitives
                 }
             }
             // Read the content into a stream.
-            List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
-            Stream content = data.ToStream();
-            CancellationToken cancellationToken = new CancellationToken();
-            bool expectBoundariesWithCRLF = false;
-            MultipartReader reader = new MultipartReader(boundary, content) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
-            for (MultipartSection section = await reader.ReadNextSectionAsync(cancellationToken).ConfigureAwait(false);
-                section != null;
-                section = await reader.ReadNextSectionAsync(cancellationToken).ConfigureAwait(false))
-            {
-                if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
-                        contentTypeValues.Length == 1 &&
-                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
-                {
-                    // ExpectBoundariesWithCRLF should always be true for the Body.
-                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
-                    continue;
-                }
-                Dictionary<string, string> headers = new Dictionary<string, string>();
-                if (section.Headers != null)
-                {
-                    foreach (KeyValuePair<string, string[]> header in section.Headers)
-                    {
-                        headers.Add(header.Key, string.Join(";", header.Value));
-                    }
-                }
-                parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
-            }
-            return parts;
+            return await ReadAsync(data.ToStream(), subType, boundary).ConfigureAwait(false);
         }
 
         private protected static IReadOnlyList<MultipartBodyPart> Read(BinaryData data, string subType, string boundary)
@@ -552,33 +524,7 @@ namespace System.ClientModel.Primitives
                 }
             }
             // Read the content into a stream.
-            List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
-            Stream content = data.ToStream();
-            bool expectBoundariesWithCRLF = false;
-            MultipartReader reader = new MultipartReader(boundary, content) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
-            for (MultipartSection section = reader.ReadNextSection();
-                section != null;
-                section = reader.ReadNextSection())
-            {
-                if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
-                        contentTypeValues.Length == 1 &&
-                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
-                {
-                    // ExpectBoundariesWithCRLF should always be true for the Body.
-                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
-                    continue;
-                }
-                Dictionary<string, string> headers = new Dictionary<string, string>();
-                if (section.Headers != null)
-                {
-                    foreach (KeyValuePair<string, string[]> header in section.Headers)
-                    {
-                        headers.Add(header.Key, string.Join(";", header.Value));
-                    }
-                }
-                parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
-            }
-            return parts;
+            return Read(data.ToStream(), subType, boundary);
         }
 
         private void AddInternal(object content, Dictionary<string, string> headers)
