@@ -61,10 +61,22 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
         public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
-            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (aggregatorOrSingleRackDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatorOrSingleRackDefinition));
+            }
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (networkFabricId == null)
+            {
+                throw new ArgumentNullException(nameof(networkFabricId));
+            }
 
             ExtendedLocation = extendedLocation;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;

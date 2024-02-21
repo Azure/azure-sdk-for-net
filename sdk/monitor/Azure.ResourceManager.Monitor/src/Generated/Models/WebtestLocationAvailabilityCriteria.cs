@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="webTestId"/> or <paramref name="componentId"/> is null. </exception>
         public WebtestLocationAvailabilityCriteria(ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount)
         {
-            Argument.AssertNotNull(webTestId, nameof(webTestId));
-            Argument.AssertNotNull(componentId, nameof(componentId));
+            if (webTestId == null)
+            {
+                throw new ArgumentNullException(nameof(webTestId));
+            }
+            if (componentId == null)
+            {
+                throw new ArgumentNullException(nameof(componentId));
+            }
 
             WebTestId = webTestId;
             ComponentId = componentId;

@@ -49,8 +49,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ApprovalClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -79,7 +85,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/ApprovalClient.xml" path="doc/members/member[@name='ApproveAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ApproveAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ApprovalClient.Approve");
             scope.Start();
@@ -114,7 +123,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/ApprovalClient.xml" path="doc/members/member[@name='Approve(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response Approve(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ApprovalClient.Approve");
             scope.Start();
@@ -149,7 +161,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/ApprovalClient.xml" path="doc/members/member[@name='RejectAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RejectAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ApprovalClient.Reject");
             scope.Start();
@@ -184,7 +199,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/ApprovalClient.xml" path="doc/members/member[@name='Reject(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response Reject(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ApprovalClient.Reject");
             scope.Start();

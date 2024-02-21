@@ -52,7 +52,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public CreateMessageRequest(MessageRole role, string content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Role = role;
             Content = content;

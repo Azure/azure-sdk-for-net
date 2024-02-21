@@ -286,7 +286,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingResource>> UpdateAsync(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AutoscaleSettingResource> Update(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.Update");
             scope.Start();
@@ -370,10 +376,22 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (timespan == null)
+            {
+                throw new ArgumentNullException(nameof(timespan));
+            }
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             using var scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
             scope.Start();
@@ -415,10 +433,22 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         public virtual Response<AutoscaleSettingPredicativeResult> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (timespan == null)
+            {
+                throw new ArgumentNullException(nameof(timespan));
+            }
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             using var scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
             scope.Start();
@@ -461,8 +491,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.AddTag");
             scope.Start();
@@ -523,8 +559,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AutoscaleSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.AddTag");
             scope.Start();
@@ -584,7 +626,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.SetTags");
             scope.Start();
@@ -641,7 +686,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AutoscaleSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.SetTags");
             scope.Start();
@@ -698,7 +746,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.RemoveTag");
             scope.Start();
@@ -758,7 +809,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AutoscaleSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingResource.RemoveTag");
             scope.Start();

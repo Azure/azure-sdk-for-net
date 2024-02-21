@@ -68,9 +68,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CloudServiceSwapData>> GetAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, groupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,9 +120,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CloudServiceSwapData> Get(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, groupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -157,10 +199,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string groupName, string resourceName, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, groupName, resourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -184,10 +250,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string groupName, string resourceName, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, groupName, resourceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -231,9 +321,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CloudServiceSwapListResult>> ListAsync(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, groupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -260,9 +371,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CloudServiceSwapListResult> List(string subscriptionId, string groupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, groupName, resourceName);
             _pipeline.Send(message, cancellationToken);

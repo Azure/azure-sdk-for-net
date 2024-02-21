@@ -77,13 +77,46 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutoscaleSettingPredicativeResult>> GetAsync(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (autoscaleSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(autoscaleSettingName));
+            }
+            if (autoscaleSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
+            }
+            if (timespan == null)
+            {
+                throw new ArgumentNullException(nameof(timespan));
+            }
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, autoscaleSettingName, timespan, interval, metricNamespace, metricName, aggregation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,13 +148,46 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autoscaleSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutoscaleSettingPredicativeResult> Get(string subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (autoscaleSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(autoscaleSettingName));
+            }
+            if (autoscaleSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
+            }
+            if (timespan == null)
+            {
+                throw new ArgumentNullException(nameof(timespan));
+            }
+            if (metricNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(metricNamespace));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, autoscaleSettingName, timespan, interval, metricNamespace, metricName, aggregation);
             _pipeline.Send(message, cancellationToken);

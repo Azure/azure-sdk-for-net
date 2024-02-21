@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountContainerUri"/> is null. </exception>
         public DiagnosticsUploadConfiguration(Uri storageAccountContainerUri)
         {
-            Argument.AssertNotNull(storageAccountContainerUri, nameof(storageAccountContainerUri));
+            if (storageAccountContainerUri == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountContainerUri));
+            }
 
             StorageAccountContainerUri = storageAccountContainerUri;
         }
