@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public SparkJobPythonEntry(string file)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
 
             File = file;
             SparkJobEntryType = SparkJobEntryType.SparkJobPythonEntry;

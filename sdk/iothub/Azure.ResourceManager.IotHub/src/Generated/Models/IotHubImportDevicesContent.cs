@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobContainerUri"/> or <paramref name="outputBlobContainerUri"/> is null. </exception>
         public IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri)
         {
-            Argument.AssertNotNull(inputBlobContainerUri, nameof(inputBlobContainerUri));
-            Argument.AssertNotNull(outputBlobContainerUri, nameof(outputBlobContainerUri));
+            if (inputBlobContainerUri == null)
+            {
+                throw new ArgumentNullException(nameof(inputBlobContainerUri));
+            }
+            if (outputBlobContainerUri == null)
+            {
+                throw new ArgumentNullException(nameof(outputBlobContainerUri));
+            }
 
             InputBlobContainerUri = inputBlobContainerUri;
             OutputBlobContainerUri = outputBlobContainerUri;

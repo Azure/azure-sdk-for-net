@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricAccessControlListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accessControlListName, NetworkFabricAccessControlListData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricAccessControlListResource> CreateOrUpdate(WaitUntil waitUntil, string accessControlListName, NetworkFabricAccessControlListData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricAccessControlListResource>> GetAsync(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual Response<NetworkFabricAccessControlListResource> Get(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual Response<bool> Exists(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricAccessControlListResource>> GetIfExistsAsync(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricAccessControlListResource> GetIfExists(string accessControlListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+            if (accessControlListName == null)
+            {
+                throw new ArgumentNullException(nameof(accessControlListName));
+            }
+            if (accessControlListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accessControlListName));
+            }
 
             using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.GetIfExists");
             scope.Start();
