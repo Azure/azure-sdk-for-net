@@ -2228,8 +2228,8 @@ namespace Azure.ResourceManager.Migrate.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AzureNetworkAdapterSuitabilityDetail(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedMissing { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedOutOfRange { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedMissing { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedMissing { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail None { get { throw null; } }

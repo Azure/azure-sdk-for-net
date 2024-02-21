@@ -149,6 +149,8 @@ rename-mapping:
   AzureDiskSize.StandardSSD_E3: StandardSsdE3
   AzureDiskSize.StandardSSD_E4: StandardSsdE4
   AzureDiskSize.StandardSSD_E6: StandardSsdE6
+  AzureNetworkAdapterSuitabilityDetail.MegabytesOfDataRecievedMissing: MegabytesOfDataReceivedMissing
+  AzureNetworkAdapterSuitabilityDetail.MegabytesOfDataRecievedOutOfRange: MegabytesOfDataReceivedOutOfRange
 
 prepend-rp-prefix:
   # Correct the violations of the naming rules
