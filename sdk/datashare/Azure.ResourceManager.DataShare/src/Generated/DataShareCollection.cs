@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataShareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string shareName, DataShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataShareResource> CreateOrUpdate(WaitUntil waitUntil, string shareName, DataShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<DataShareResource>> GetAsync(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<DataShareResource> Get(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<bool> Exists(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataShareResource>> GetIfExistsAsync(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual NullableResponse<DataShareResource> GetIfExists(string shareName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (shareName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
+            }
 
             using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
             scope.Start();

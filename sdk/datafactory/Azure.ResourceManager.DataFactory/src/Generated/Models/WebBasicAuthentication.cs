@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Username = username;
             Password = password;

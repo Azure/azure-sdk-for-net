@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exportSettings"/> is null. </exception>
         public SnowflakeV2Source(SnowflakeExportCopyCommand exportSettings)
         {
-            Argument.AssertNotNull(exportSettings, nameof(exportSettings));
+            if (exportSettings == null)
+            {
+                throw new ArgumentNullException(nameof(exportSettings));
+            }
 
             ExportSettings = exportSettings;
             CopySourceType = "SnowflakeV2Source";

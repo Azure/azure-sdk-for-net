@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactPerson"/>, <paramref name="companyName"/>, <paramref name="phone"/> or <paramref name="emailList"/> is null. </exception>
         public DataBoxEdgeContactDetails(string contactPerson, string companyName, string phone, IEnumerable<string> emailList)
         {
-            Argument.AssertNotNull(contactPerson, nameof(contactPerson));
-            Argument.AssertNotNull(companyName, nameof(companyName));
-            Argument.AssertNotNull(phone, nameof(phone));
-            Argument.AssertNotNull(emailList, nameof(emailList));
+            if (contactPerson == null)
+            {
+                throw new ArgumentNullException(nameof(contactPerson));
+            }
+            if (companyName == null)
+            {
+                throw new ArgumentNullException(nameof(companyName));
+            }
+            if (phone == null)
+            {
+                throw new ArgumentNullException(nameof(phone));
+            }
+            if (emailList == null)
+            {
+                throw new ArgumentNullException(nameof(emailList));
+            }
 
             ContactPerson = contactPerson;
             CompanyName = companyName;

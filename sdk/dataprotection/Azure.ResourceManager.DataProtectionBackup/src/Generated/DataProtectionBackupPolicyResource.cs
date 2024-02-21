@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupPolicyResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupPolicyResource> Update(WaitUntil waitUntil, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyResource.Update");
             scope.Start();

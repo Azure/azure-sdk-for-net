@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
         {
-            Argument.AssertNotNull(targetName, nameof(targetName));
-            Argument.AssertNotNull(userName, nameof(userName));
-            Argument.AssertNotNull(password, nameof(password));
+            if (targetName == null)
+            {
+                throw new ArgumentNullException(nameof(targetName));
+            }
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             TargetName = targetName;
             UserName = userName;
