@@ -70,10 +70,38 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobDefinitionList>> ListAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, storageMoverName, projectName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobDefinitionList> List(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, storageMoverName, projectName);
             _pipeline.Send(message, cancellationToken);
@@ -157,11 +213,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -192,11 +283,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobDefinitionData> Get(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -256,12 +382,50 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,12 +455,50 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -354,12 +556,50 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobDefinitionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, JobDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -389,12 +629,50 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobDefinitionData> Update(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, JobDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -447,11 +725,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -477,11 +790,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -532,11 +880,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobRunResourceId>> StartJobAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateStartJobRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -565,11 +948,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobRunResourceId> StartJob(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateStartJobRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -623,11 +1041,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobRunResourceId>> StopJobAsync(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateStopJobRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -656,11 +1109,46 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobRunResourceId> StopJob(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (jobDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(jobDefinitionName));
+            }
+            if (jobDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobDefinitionName));
+            }
 
             using var message = CreateStopJobRequest(subscriptionId, resourceGroupName, storageMoverName, projectName, jobDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -703,11 +1191,42 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobDefinitionList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageMoverName, projectName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -736,11 +1255,42 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobDefinitionList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (storageMoverName == null)
+            {
+                throw new ArgumentNullException(nameof(storageMoverName));
+            }
+            if (storageMoverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageMoverName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, storageMoverName, projectName);
             _pipeline.Send(message, cancellationToken);

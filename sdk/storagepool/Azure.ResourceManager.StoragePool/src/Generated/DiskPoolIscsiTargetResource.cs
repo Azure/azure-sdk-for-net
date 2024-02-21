@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskPoolIscsiTargetResource>> UpdateAsync(WaitUntil waitUntil, DiskPoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DiskPoolIscsiTargetResource> Update(WaitUntil waitUntil, DiskPoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetResource.Update");
             scope.Start();

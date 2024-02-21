@@ -19,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SqlScript(SqlScriptContent content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Content = content;
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();

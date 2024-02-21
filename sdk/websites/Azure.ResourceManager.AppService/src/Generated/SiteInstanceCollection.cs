@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual async Task<Response<SiteInstanceResource>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<SiteInstanceResource> Get(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteInstanceResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         public virtual NullableResponse<SiteInstanceResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            if (instanceId == null)
+            {
+                throw new ArgumentNullException(nameof(instanceId));
+            }
+            if (instanceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
+            }
 
             using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetIfExists");
             scope.Start();

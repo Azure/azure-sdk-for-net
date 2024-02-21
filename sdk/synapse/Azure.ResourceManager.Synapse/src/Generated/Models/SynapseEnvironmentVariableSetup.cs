@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
         public SynapseEnvironmentVariableSetup(string variableName, string variableValue)
         {
-            Argument.AssertNotNull(variableName, nameof(variableName));
-            Argument.AssertNotNull(variableValue, nameof(variableValue));
+            if (variableName == null)
+            {
+                throw new ArgumentNullException(nameof(variableName));
+            }
+            if (variableValue == null)
+            {
+                throw new ArgumentNullException(nameof(variableValue));
+            }
 
             VariableName = variableName;
             VariableValue = variableValue;
