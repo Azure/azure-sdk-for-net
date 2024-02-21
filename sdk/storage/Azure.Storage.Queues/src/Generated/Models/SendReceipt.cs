@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="popReceipt"/> is null. </exception>
         internal SendReceipt(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (popReceipt == null)
-            {
-                throw new ArgumentNullException(nameof(popReceipt));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(popReceipt, nameof(popReceipt));
 
             MessageId = messageId;
             InsertionTime = insertionTime;

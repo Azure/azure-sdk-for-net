@@ -79,14 +79,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantFileWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -133,14 +126,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual ArmOperation<TenantFileWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -186,14 +172,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual async Task<Response<TenantFileWorkspaceResource>> GetAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.Get");
             scope.Start();
@@ -238,14 +217,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual Response<TenantFileWorkspaceResource> Get(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.Get");
             scope.Start();
@@ -290,14 +262,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.Exists");
             scope.Start();
@@ -340,14 +305,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.Exists");
             scope.Start();
@@ -390,14 +348,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<TenantFileWorkspaceResource>> GetIfExistsAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -442,14 +393,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         public virtual NullableResponse<TenantFileWorkspaceResource> GetIfExists(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceCollection.GetIfExists");
             scope.Start();

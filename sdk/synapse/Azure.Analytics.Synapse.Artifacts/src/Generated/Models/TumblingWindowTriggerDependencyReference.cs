@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(TriggerReference referenceTrigger) : base(referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             Type = "TumblingWindowTriggerDependencyReference";
         }

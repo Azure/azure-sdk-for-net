@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="line"/> is null. </exception>
         public NamedLineString(string name, string line) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (line == null)
-            {
-                throw new ArgumentNullException(nameof(line));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(line, nameof(line));
 
             Line = line;
             Type = "#Microsoft.VideoAnalyzer.NamedLineString";

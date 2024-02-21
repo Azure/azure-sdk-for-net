@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="notebook"/> is null. </exception>
         internal RunNotebookSnapshot(string id, string notebook)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (notebook == null)
-            {
-                throw new ArgumentNullException(nameof(notebook));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(notebook, nameof(notebook));
 
             Id = id;
             Notebook = notebook;

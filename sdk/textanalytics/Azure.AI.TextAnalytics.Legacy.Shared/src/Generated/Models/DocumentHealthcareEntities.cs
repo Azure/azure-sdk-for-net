@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,22 +23,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="relations"/> or <paramref name="warnings"/> is null. </exception>
         internal DocumentHealthcareEntities(string id, IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelation> relations, IEnumerable<TextAnalyticsWarning> warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
-            if (relations == null)
-            {
-                throw new ArgumentNullException(nameof(relations));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(entities, nameof(entities));
+            Argument.AssertNotNull(relations, nameof(relations));
+            Argument.AssertNotNull(warnings, nameof(warnings));
 
             Id = id;
             Entities = entities.ToList();

@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SupportTicketFileResource>> UpdateAsync(WaitUntil waitUntil, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Update");
             scope.Start();
@@ -246,10 +243,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SupportTicketFileResource> Update(WaitUntil waitUntil, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Update");
             scope.Start();
@@ -294,10 +288,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> UploadAsync(UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Upload");
             scope.Start();
@@ -339,10 +330,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response Upload(UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketFileFilesClientDiagnostics.CreateScope("SupportTicketFileResource.Upload");
             scope.Start();

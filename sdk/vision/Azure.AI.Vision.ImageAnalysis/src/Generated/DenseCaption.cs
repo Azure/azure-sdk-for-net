@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -55,14 +56,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal DenseCaption(float confidence, string text, ImageBoundingBox boundingBox)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
 
             Confidence = confidence;
             Text = text;

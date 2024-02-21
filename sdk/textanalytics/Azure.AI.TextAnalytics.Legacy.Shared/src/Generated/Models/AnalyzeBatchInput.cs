@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -18,14 +19,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="tasks"/> is null. </exception>
         public AnalyzeBatchInput(MultiLanguageBatchInput analysisInput, JobManifestTasks tasks)
         {
-            if (analysisInput == null)
-            {
-                throw new ArgumentNullException(nameof(analysisInput));
-            }
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(analysisInput, nameof(analysisInput));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             AnalysisInput = analysisInput;
             Tasks = tasks;

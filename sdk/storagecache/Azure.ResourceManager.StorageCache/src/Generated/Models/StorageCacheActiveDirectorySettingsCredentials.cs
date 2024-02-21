@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public StorageCacheActiveDirectorySettingsCredentials(string username)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(username, nameof(username));
 
             Username = username;
         }

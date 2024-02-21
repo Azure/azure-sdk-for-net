@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public SynapseComponentSetup(string componentName)
         {
-            if (componentName == null)
-            {
-                throw new ArgumentNullException(nameof(componentName));
-            }
+            Argument.AssertNotNull(componentName, nameof(componentName));
 
             ComponentName = componentName;
             CustomSetupBaseType = "ComponentSetup";

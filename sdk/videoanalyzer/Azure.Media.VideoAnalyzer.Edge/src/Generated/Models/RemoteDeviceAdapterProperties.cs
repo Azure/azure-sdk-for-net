@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="iotHubDeviceConnection"/> is null. </exception>
         public RemoteDeviceAdapterProperties(RemoteDeviceAdapterTarget target, IotHubDeviceConnection iotHubDeviceConnection)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-            if (iotHubDeviceConnection == null)
-            {
-                throw new ArgumentNullException(nameof(iotHubDeviceConnection));
-            }
+            Argument.AssertNotNull(target, nameof(target));
+            Argument.AssertNotNull(iotHubDeviceConnection, nameof(iotHubDeviceConnection));
 
             Target = target;
             IotHubDeviceConnection = iotHubDeviceConnection;

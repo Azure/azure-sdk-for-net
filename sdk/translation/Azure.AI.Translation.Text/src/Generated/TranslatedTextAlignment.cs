@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -57,10 +58,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="proj"/> is null. </exception>
         internal TranslatedTextAlignment(string proj)
         {
-            if (proj == null)
-            {
-                throw new ArgumentNullException(nameof(proj));
-            }
+            Argument.AssertNotNull(proj, nameof(proj));
 
             Proj = proj;
         }
