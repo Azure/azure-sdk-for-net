@@ -4,10 +4,10 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace Azure.Core
@@ -68,12 +68,15 @@ namespace Azure.Core
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions? options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<object> model when options is not null:
+                    model.Write(writer, options);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
