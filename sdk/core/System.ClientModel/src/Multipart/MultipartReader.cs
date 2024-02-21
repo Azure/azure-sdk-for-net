@@ -75,6 +75,23 @@ namespace System.ClientModel.Primitives
         /// <value></value>
         public bool ExpectBoundariesWithCRLF { get; set; } = true;
 
+        public MultipartSection ReadNextSection()
+        {
+            // Drain the prior section
+            _currentStream.Drain();
+            // If we're at the end return null
+            if (_currentStream.FinalBoundaryFound)
+            {
+                // There may be trailer data after the last boundary.
+                _stream.Drain(HeadersLengthLimit);
+                return null;
+            }
+            var headers = ReadHeaders();
+            _boundary.ExpectLeadingCrlf = ExpectBoundariesWithCRLF;
+            _currentStream = new MultipartReaderStream(_stream, _boundary) { LengthLimit = BodyLengthLimit };
+            long? baseStreamOffset = _stream.CanSeek ? (long?)_stream.Position : null;
+            return new MultipartSection() { Headers = headers, Body = _currentStream, BaseStreamOffset = baseStreamOffset };
+        }
         public async Task<MultipartSection> ReadNextSectionAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             // Drain the prior section.
@@ -93,6 +110,34 @@ namespace System.ClientModel.Primitives
             return new MultipartSection() { Headers = headers, Body = _currentStream, BaseStreamOffset = baseStreamOffset };
         }
 
+        private Dictionary<string, string[]> ReadHeaders()
+        {
+            int totalSize = 0;
+            var accumulator = new KeyValueAccumulator();
+            var line = _stream.ReadLine(HeadersLengthLimit - totalSize);
+            while (!string.IsNullOrEmpty(line))
+            {
+                if (HeadersLengthLimit - totalSize < line.Length)
+                {
+                    throw new InvalidDataException($"Multipart headers length limit {HeadersLengthLimit} exceeded.");
+                }
+                totalSize += line.Length;
+                int splitIndex = line.IndexOf(':');
+                if (splitIndex <= 0)
+                {
+                    throw new InvalidDataException($"Invalid header line: {line}");
+                }
+                var name = line.Substring(0, splitIndex);
+                var value = line.Substring(splitIndex + 1, line.Length - splitIndex - 1).Trim();
+                accumulator.Append(name, value);
+                if (accumulator.KeyCount > HeadersCountLimit)
+                {
+                    throw new InvalidDataException($"Multipart headers count limit {HeadersCountLimit} exceeded.");
+                }
+                line = _stream.ReadLine(HeadersLengthLimit - totalSize);
+            }
+            return accumulator.GetResults();
+        }
         private async Task<Dictionary<string, string[]>> ReadHeadersAsync(CancellationToken cancellationToken)
         {
             int totalSize = 0;

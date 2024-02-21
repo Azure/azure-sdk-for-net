@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -319,9 +320,8 @@ namespace System.ClientModel.Primitives
         /// <returns></returns>
         private protected Task WriteToStreamAsync(Stream stream, CancellationToken cancellation) =>
             SerializeToStreamAsync(stream, cancellation);
-        private async Task<string> SerializeToStreamAsync(Stream stream, CancellationToken cancellationToken)
+        private async Task SerializeToStreamAsync(Stream stream, CancellationToken cancellationToken)
         {
-            string contentType = $"multipart/{_subtype}; boundary={_boundary}";
             try
             {
                 // Write start boundary.
@@ -383,13 +383,90 @@ namespace System.ClientModel.Primitives
             {
                 throw;
             }
-            return contentType;
+        }
+        private static async Task<IReadOnlyList<MultipartBodyPart>> ReadAsync(Stream stream, string subType, string boundary)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            if (stream.Length == 0)
+            {
+                throw new ArgumentException("Empty data", nameof(stream));
+            }
+            // Read the content into a stream.
+            List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
+            //Stream content = data.ToStream();
+            CancellationToken cancellationToken = new CancellationToken();
+            bool expectBoundariesWithCRLF = false;
+            MultipartReader reader = new MultipartReader(boundary, stream) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
+            for (MultipartSection section = await reader.ReadNextSectionAsync(cancellationToken).ConfigureAwait(false);
+                section != null;
+                section = await reader.ReadNextSectionAsync(cancellationToken).ConfigureAwait(false))
+            {
+                if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
+                        contentTypeValues.Length == 1 &&
+                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
+                {
+                    // ExpectBoundariesWithCRLF should always be true for the Body.
+                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
+                    continue;
+                }
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                if (section.Headers != null)
+                {
+                    foreach (KeyValuePair<string, string[]> header in section.Headers)
+                    {
+                        headers.Add(header.Key, string.Join(";", header.Value));
+                    }
+                }
+                parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
+            }
+            return parts;
+        }
+        private protected static IReadOnlyList<MultipartBodyPart> Read(Stream stream, string subType, string boundary)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+            if (stream.Length == 0)
+            {
+                throw new ArgumentException("Empty data", nameof(stream));
+            }
+            // Read the content into a stream.
+            List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
+            bool expectBoundariesWithCRLF = false;
+            MultipartReader reader = new MultipartReader(boundary, stream) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
+            for (MultipartSection section = reader.ReadNextSection();
+                section != null;
+                section = reader.ReadNextSection())
+            {
+                if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
+                        contentTypeValues.Length == 1 &&
+                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
+                {
+                    // ExpectBoundariesWithCRLF should always be true for the Body.
+                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
+                    continue;
+                }
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                if (section.Headers != null)
+                {
+                    foreach (KeyValuePair<string, string[]> header in section.Headers)
+                    {
+                        headers.Add(header.Key, string.Join(";", header.Value));
+                    }
+                }
+                parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
+            }
+            return parts;
         }
         /// <summary>
         ///  Read the content from BinaryData and parse it.
         ///  each part of BinaryData separted by boundary will be parsed as one MultipartContentPart.
         /// </summary>
-        private static async Task<IReadOnlyList<MultipartBodyPart>> ReadAsync(BinaryData data, string subType = "mixed", string boundary = null)
+        private static async Task<IReadOnlyList<MultipartBodyPart>> ReadAsync(BinaryData data, string subType, string boundary)
         {
             if (data == null)
             {
@@ -411,7 +488,7 @@ namespace System.ClientModel.Primitives
                 {
                     throw new ArgumentException("Invalid content type", nameof(data));
                 }
-                if (!GetBoundary(contentType, prefix, out boundary))
+                if (!GetBoundary(contentType, out subType, out boundary))
                 {
                     throw new ArgumentException("Missing boundary", nameof(data));
                 }
@@ -428,7 +505,7 @@ namespace System.ClientModel.Primitives
             {
                 if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
                         contentTypeValues.Length == 1 &&
-                        GetBoundary(contentTypeValues[0], prefix, out string subBoundary))
+                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
                 {
                     // ExpectBoundariesWithCRLF should always be true for the Body.
                     reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
@@ -447,12 +524,61 @@ namespace System.ClientModel.Primitives
             return parts;
         }
 
-        private protected static IReadOnlyList<MultipartBodyPart> Read(BinaryData data, string subType = "mixed", string boundary = null)
+        private protected static IReadOnlyList<MultipartBodyPart> Read(BinaryData data, string subType, string boundary)
         {
-            //return multipartContent;
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            return ReadAsync(data, subType, boundary).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            if (data.Length == 0)
+            {
+                throw new ArgumentException("Empty data", nameof(data));
+            }
+            string prefix = $"multipart/{subType}; boundary=";
+            if (boundary == null)
+            {
+                string contentType = data.MediaType;
+                if (string.IsNullOrEmpty(contentType))
+                {
+                    throw new ArgumentException("Missing content type", nameof(data));
+                }
+                if (contentType == null || !contentType.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentException("Invalid content type", nameof(data));
+                }
+                if (!GetBoundary(contentType, out subType, out boundary))
+                {
+                    throw new ArgumentException("Missing boundary", nameof(data));
+                }
+            }
+            // Read the content into a stream.
+            List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
+            Stream content = data.ToStream();
+            bool expectBoundariesWithCRLF = false;
+            MultipartReader reader = new MultipartReader(boundary, content) { ExpectBoundariesWithCRLF = expectBoundariesWithCRLF };
+            for (MultipartSection section = reader.ReadNextSection();
+                section != null;
+                section = reader.ReadNextSection())
+            {
+                if (section.Headers != null && section.Headers.TryGetValue("Content-Type", out string[] contentTypeValues) &&
+                        contentTypeValues.Length == 1 &&
+                        GetBoundary(contentTypeValues[0], out string nestedSubType, out string subBoundary))
+                {
+                    // ExpectBoundariesWithCRLF should always be true for the Body.
+                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
+                    continue;
+                }
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                if (section.Headers != null)
+                {
+                    foreach (KeyValuePair<string, string[]> header in section.Headers)
+                    {
+                        headers.Add(header.Key, string.Join(";", header.Value));
+                    }
+                }
+                parts.Add(new MultipartBodyPart(BinaryData.FromStream(section.Body), headers));
+            }
+            return parts;
         }
 
         private void AddInternal(object content, Dictionary<string, string> headers)
@@ -503,14 +629,18 @@ namespace System.ClientModel.Primitives
         {
             return Encoding.Default.GetByteCount(input);
         }
-        private protected static bool GetBoundary(string contentType, string prefix, out string boundary)
+        private protected static bool GetBoundary(string contentType, out string subType, out string boundary)
         {
-            if (contentType == null || !contentType.StartsWith(prefix, StringComparison.Ordinal))
+            string regex = @"^multipart/(?<subType>.*); boundary=(?<boundary>.*)";
+            var matchs = Regex.Matches(contentType, regex);
+            if (matchs.Count == 0)
             {
+                subType = null;
                 boundary = null;
                 return false;
             }
-            boundary = contentType.Substring(prefix.Length);
+            subType = matchs[0].Groups["subType"].Value;
+            boundary = matchs[0].Groups["boundary"].Value;
             return true;
         }
         /// <summary>

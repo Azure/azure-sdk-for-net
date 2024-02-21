@@ -101,7 +101,6 @@ namespace System.ClientModel.Primitives
                 throw new ArgumentException("Empty data", nameof(data));
             }
             string MultipartContentTypePrefix = $"multipart/{_subtype}; boundary=";
-            string boundary = null;
             string contentType = data.MediaType;
             if (string.IsNullOrEmpty(contentType))
             {
@@ -111,7 +110,7 @@ namespace System.ClientModel.Primitives
             {
                 throw new ArgumentException("Invalid content type", nameof(data));
             }
-            if (!GetBoundary(contentType, MultipartContentTypePrefix, out boundary))
+            if (!GetBoundary(contentType, out _, out string boundary))
             {
                 throw new ArgumentException("Missing boundary", nameof(data));
             }
@@ -134,10 +133,17 @@ namespace System.ClientModel.Primitives
             return WriteToStreamAsync(stream, cancellation);
         }
 
-        MultipartFormData IPersistableStreamModel<MultipartFormData>.Create(Stream stream, ModelReaderWriterOptions options)
+        MultipartFormData IPersistableStreamModel<MultipartFormData>.Create(Stream stream, string contentType, ModelReaderWriterOptions options)
         {
-            //Not implemented.
-            return new MultipartFormData();
+            if (options == null || options.Format != "MPFD")
+            {
+                throw new InvalidOperationException("The specified format is not supported.");
+            }
+            if (!GetBoundary(contentType, out string subType, out string boundary))
+            {
+                throw new ArgumentException("Invalid content type", nameof(contentType));
+            }
+            return new MultipartFormData(boundary, Read(stream, subType, boundary));
         }
 
         string IPersistableStreamModel<MultipartFormData>.GetMediaType(ModelReaderWriterOptions options)

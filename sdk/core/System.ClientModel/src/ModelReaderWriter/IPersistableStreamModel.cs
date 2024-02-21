@@ -34,10 +34,11 @@ namespace System.ClientModel.Primitives
         /// Converts the provided <see cref="BinaryData"/> into a model.
         /// </summary>
         /// <param name="stream">The <see cref="BinaryData"/> to parse.</param>
+        /// <param name="contentType">The content type of the data.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the data.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-        T Create(Stream stream, ModelReaderWriterOptions options);
+        T Create(Stream stream, string contentType, ModelReaderWriterOptions options);
 
         /// <summary>
         /// Gets the data content type of the model when communicating with the service.

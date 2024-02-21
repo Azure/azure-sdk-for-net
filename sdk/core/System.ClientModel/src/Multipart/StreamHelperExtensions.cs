@@ -21,11 +21,19 @@ namespace System.ClientModel.Primitives
             return stream.DrainAsync(ArrayPool<byte>.Shared, null, cancellationToken);
         }
 
+        public static void Drain(this Stream stream)
+        {
+            stream.Drain(ArrayPool<byte>.Shared, null);
+        }
         public static Task DrainAsync(this Stream stream, long? limit, CancellationToken cancellationToken)
         {
             return stream.DrainAsync(ArrayPool<byte>.Shared, limit, cancellationToken);
         }
 
+        public static void Drain(this Stream stream, long? limit)
+        {
+            stream.Drain(ArrayPool<byte>.Shared, limit);
+        }
         public static async Task DrainAsync(this Stream stream, ArrayPool<byte> bytePool, long? limit, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -46,6 +54,29 @@ namespace System.ClientModel.Primitives
                     total += read;
                     read = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
 #pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
+                }
+            }
+            finally
+            {
+                bytePool.Return(buffer);
+            }
+        }
+
+        public static void Drain(this Stream stream, ArrayPool<byte> bytePool, long? limit)
+        {
+            var buffer = bytePool.Rent(_maxReadBufferSize);
+            long total = 0;
+            try
+            {
+                var read = stream.Read(buffer, 0, buffer.Length);
+                while (read > 0)
+                {
+                    if (limit.HasValue && limit.GetValueOrDefault() - total < read)
+                    {
+                        throw new InvalidDataException($"The stream exceeded the data limit {limit.GetValueOrDefault()}.");
+                    }
+                    total += read;
+                    read = stream.Read(buffer, 0, buffer.Length);
                 }
             }
             finally
