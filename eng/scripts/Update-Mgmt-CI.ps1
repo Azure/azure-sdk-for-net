@@ -97,3 +97,4 @@ foreach($mgmtDir in $track2MgmtDirs) {
 Write-Host "Updating mgmt core client ci.mgmt.yml"
 #add path for each mgmt library into Azure.ResourceManager
 RegisterMgmtSDKToMgmtCoreClient -packagesPath $packagesPath
+
