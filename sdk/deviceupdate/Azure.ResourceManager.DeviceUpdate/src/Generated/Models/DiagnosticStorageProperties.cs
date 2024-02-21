@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DiagnosticStorageProperties(DiagnosticStorageAuthenticationType authenticationType, ResourceIdentifier resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             AuthenticationType = authenticationType;
             ResourceId = resourceId;

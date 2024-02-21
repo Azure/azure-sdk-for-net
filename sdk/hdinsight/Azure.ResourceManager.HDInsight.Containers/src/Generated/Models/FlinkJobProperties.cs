@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public FlinkJobProperties(string jobName)
         {
-            Argument.AssertNotNull(jobName, nameof(jobName));
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
 
             JobName = jobName;
             FlinkConfiguration = new ChangeTrackingDictionary<string, string>();

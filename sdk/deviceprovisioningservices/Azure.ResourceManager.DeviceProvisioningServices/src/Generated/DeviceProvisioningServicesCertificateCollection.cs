@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +201,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<DeviceProvisioningServicesCertificateResource> Get(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
             scope.Start();
@@ -419,7 +467,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceProvisioningServicesCertificateResource>> GetIfExistsAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual NullableResponse<DeviceProvisioningServicesCertificateResource> GetIfExists(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
             scope.Start();

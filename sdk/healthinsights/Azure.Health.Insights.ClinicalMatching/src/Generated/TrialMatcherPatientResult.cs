@@ -53,8 +53,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="inferences"/> is null. </exception>
         internal TrialMatcherPatientResult(string id, IEnumerable<TrialMatcherInference> inferences)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(inferences, nameof(inferences));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (inferences == null)
+            {
+                throw new ArgumentNullException(nameof(inferences));
+            }
 
             Id = id;
             Inferences = inferences.ToList();

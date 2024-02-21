@@ -286,7 +286,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<EdgeOrderItemResource>> UpdateAsync(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
             scope.Start();
@@ -333,7 +336,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<EdgeOrderItemResource> Update(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
             scope.Start();
@@ -378,7 +384,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public virtual async Task<Response> CancelAsync(EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+            if (cancellationReason == null)
+            {
+                throw new ArgumentNullException(nameof(cancellationReason));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
             scope.Start();
@@ -420,7 +429,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public virtual Response Cancel(EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
+            if (cancellationReason == null)
+            {
+                throw new ArgumentNullException(nameof(cancellationReason));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
             scope.Start();
@@ -463,7 +475,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ReturnAsync(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
             scope.Start();
@@ -509,7 +524,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Return(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
             scope.Start();
@@ -555,8 +573,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<EdgeOrderItemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
             scope.Start();
@@ -617,8 +641,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<EdgeOrderItemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
             scope.Start();
@@ -678,7 +708,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<EdgeOrderItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
             scope.Start();
@@ -735,7 +768,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<EdgeOrderItemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
             scope.Start();
@@ -792,7 +828,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<EdgeOrderItemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
             scope.Start();
@@ -852,7 +891,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<EdgeOrderItemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
             scope.Start();

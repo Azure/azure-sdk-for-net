@@ -74,10 +74,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceProvisioningServicesCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,10 +136,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceProvisioningServicesCertificateData> Get(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -173,11 +229,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceProvisioningServicesCertificateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,11 +294,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceProvisioningServicesCertificateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -303,11 +421,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -340,11 +489,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             _pipeline.Send(message, cancellationToken);
@@ -388,9 +568,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CertificateListDescription>> ListAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, provisioningServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,9 +618,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CertificateListDescription> List(string subscriptionId, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, provisioningServiceName);
             _pipeline.Send(message, cancellationToken);
@@ -512,11 +734,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             using var message = CreateGenerateVerificationCodeRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,11 +806,42 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CertificateVerificationCodeResult> GenerateVerificationCode(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             using var message = CreateGenerateVerificationCodeRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             _pipeline.Send(message, cancellationToken);
@@ -655,12 +939,46 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceProvisioningServicesCertificateData>> VerifyCertificateAsync(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateVerifyCertificateRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -698,12 +1016,46 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="provisioningServiceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceProvisioningServicesCertificateData> VerifyCertificate(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (provisioningServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(provisioningServiceName));
+            }
+            if (provisioningServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
+            }
+            if (certificateName == null)
+            {
+                throw new ArgumentNullException(nameof(certificateName));
+            }
+            if (certificateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+            }
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateVerifyCertificateRequest(subscriptionId, resourceGroupName, provisioningServiceName, certificateName, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce);
             _pipeline.Send(message, cancellationToken);
