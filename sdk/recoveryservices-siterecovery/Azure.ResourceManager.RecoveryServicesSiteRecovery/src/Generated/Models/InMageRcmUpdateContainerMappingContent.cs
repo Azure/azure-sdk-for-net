@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="enableAgentAutoUpgrade"/> is null. </exception>
         public InMageRcmUpdateContainerMappingContent(string enableAgentAutoUpgrade)
         {
-            Argument.AssertNotNull(enableAgentAutoUpgrade, nameof(enableAgentAutoUpgrade));
+            if (enableAgentAutoUpgrade == null)
+            {
+                throw new ArgumentNullException(nameof(enableAgentAutoUpgrade));
+            }
 
             EnableAgentAutoUpgrade = enableAgentAutoUpgrade;
             InstanceType = "InMageRcm";

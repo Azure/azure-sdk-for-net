@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JitNetworkAccessPolicyResource>> UpdateAsync(WaitUntil waitUntil, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JitNetworkAccessPolicyResource> Update(WaitUntil waitUntil, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyResource.Update");
             scope.Start();
@@ -374,7 +380,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<JitNetworkAccessRequestInfo>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyResource.Initiate");
             scope.Start();
@@ -416,7 +425,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<JitNetworkAccessRequestInfo> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyResource.Initiate");
             scope.Start();

@@ -58,12 +58,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="alertVendorName"/>, <paramref name="packageInfoUri"/>, <paramref name="productName"/>, <paramref name="publisher"/>, <paramref name="publisherDisplayName"/> or <paramref name="template"/> is null. </exception>
         public SecuritySolutionsReferenceData(SecurityFamily securityFamily, string alertVendorName, Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template)
         {
-            Argument.AssertNotNull(alertVendorName, nameof(alertVendorName));
-            Argument.AssertNotNull(packageInfoUri, nameof(packageInfoUri));
-            Argument.AssertNotNull(productName, nameof(productName));
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(publisherDisplayName, nameof(publisherDisplayName));
-            Argument.AssertNotNull(template, nameof(template));
+            if (alertVendorName == null)
+            {
+                throw new ArgumentNullException(nameof(alertVendorName));
+            }
+            if (packageInfoUri == null)
+            {
+                throw new ArgumentNullException(nameof(packageInfoUri));
+            }
+            if (productName == null)
+            {
+                throw new ArgumentNullException(nameof(productName));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (publisherDisplayName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherDisplayName));
+            }
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
 
             SecurityFamily = securityFamily;
             AlertVendorName = alertVendorName;

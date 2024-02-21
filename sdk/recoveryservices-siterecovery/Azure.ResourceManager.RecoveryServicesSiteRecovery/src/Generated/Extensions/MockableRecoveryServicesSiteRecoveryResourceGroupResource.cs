@@ -784,7 +784,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryReplicationAppliance> GetReplicationAppliancesAsync(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
@@ -816,7 +823,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryReplicationAppliance> GetReplicationAppliances(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
@@ -851,7 +865,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryNetworkResource> GetSiteRecoveryNetworksAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryNetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryNetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -886,7 +907,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryNetworkResource> GetSiteRecoveryNetworks(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryNetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryNetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -921,7 +949,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryNetworkMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -956,7 +991,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryNetworkMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryNetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -991,7 +1033,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1026,7 +1075,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainers(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1064,7 +1120,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryMigrationItemResource> GetSiteRecoveryMigrationItemsAsync(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
@@ -1102,7 +1165,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryMigrationItemResource> GetSiteRecoveryMigrationItems(string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
@@ -1139,7 +1209,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
@@ -1176,7 +1253,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationProtectedItemResource> GetReplicationProtectedItems(string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
@@ -1211,7 +1295,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1246,7 +1337,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionContainerMappingResource> GetProtectionContainerMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1281,7 +1379,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryServicesProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvidersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1316,7 +1421,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryServicesProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProviders(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1351,7 +1463,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationResource> GetStorageClassificationsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1386,7 +1505,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationResource> GetStorageClassifications(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1421,7 +1547,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1456,7 +1589,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationMappingResource> GetStorageClassificationMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1491,7 +1631,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> An async collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryVCenterResource> GetSiteRecoveryVCentersAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryVCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryVCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1526,7 +1673,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <returns> A collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryVCenterResource> GetSiteRecoveryVCenters(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryVCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryVCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
@@ -1557,7 +1711,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoverySupportedOperatingSystems>> GetSupportedOperatingSystemAsync(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = SupportedOperatingSystemsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSupportedOperatingSystem");
             scope.Start();
@@ -1597,7 +1758,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<SiteRecoverySupportedOperatingSystems> GetSupportedOperatingSystem(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = SupportedOperatingSystemsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSupportedOperatingSystem");
             scope.Start();
@@ -1636,7 +1804,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<VaultHealthDetails>> GetReplicationVaultHealthAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = ReplicationVaultHealthClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationVaultHealth");
             scope.Start();
@@ -1675,7 +1850,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<VaultHealthDetails> GetReplicationVaultHealth(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = ReplicationVaultHealthClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationVaultHealth");
             scope.Start();
@@ -1715,7 +1897,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<ArmOperation<VaultHealthDetails>> RefreshReplicationVaultHealthAsync(WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = ReplicationVaultHealthClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.RefreshReplicationVaultHealth");
             scope.Start();
@@ -1758,7 +1947,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual ArmOperation<VaultHealthDetails> RefreshReplicationVaultHealth(WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var scope = ReplicationVaultHealthClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.RefreshReplicationVaultHealth");
             scope.Start();

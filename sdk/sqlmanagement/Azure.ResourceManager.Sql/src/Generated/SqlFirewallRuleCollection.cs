@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, SqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, SqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<SqlFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<SqlFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual NullableResponse<SqlFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _sqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("SqlFirewallRuleCollection.GetIfExists");
             scope.Start();
