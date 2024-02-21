@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,8 +20,14 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> or <paramref name="locale"/> is null. </exception>
         public TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, bool startTranscription)
         {
-            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
-            Argument.AssertNotNull(locale, nameof(locale));
+            if (transportUrl == null)
+            {
+                throw new ArgumentNullException(nameof(transportUrl));
+            }
+            if (locale == null)
+            {
+                throw new ArgumentNullException(nameof(locale));
+            }
 
             TransportUrl = transportUrl;
             TransportType = transportType;

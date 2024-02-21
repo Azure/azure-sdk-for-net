@@ -68,9 +68,22 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleEligibilityScheduleRequestData>> CreateAsync(string scope, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(scope, roleEligibilityScheduleRequestName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,9 +110,22 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleEligibilityScheduleRequestData> Create(string scope, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(scope, roleEligibilityScheduleRequestName, data);
             _pipeline.Send(message, cancellationToken);
@@ -143,8 +169,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleEligibilityScheduleRequestData>> GetAsync(string scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
 
             using var message = CreateGetRequest(scope, roleEligibilityScheduleRequestName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -172,8 +208,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleEligibilityScheduleRequestData> Get(string scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
 
             using var message = CreateGetRequest(scope, roleEligibilityScheduleRequestName);
             _pipeline.Send(message, cancellationToken);
@@ -221,7 +267,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleEligibilityScheduleRequestListResult>> ListForScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListForScopeRequest(scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -246,7 +295,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<RoleEligibilityScheduleRequestListResult> ListForScope(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListForScopeRequest(scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -291,8 +343,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
 
             using var message = CreateCancelRequest(scope, roleEligibilityScheduleRequestName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -313,8 +375,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
 
             using var message = CreateCancelRequest(scope, roleEligibilityScheduleRequestName);
             _pipeline.Send(message, cancellationToken);
@@ -359,9 +431,22 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleEligibilityScheduleRequestData>> ValidateAsync(string scope, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateValidateRequest(scope, roleEligibilityScheduleRequestName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -388,9 +473,22 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleEligibilityScheduleRequestData> Validate(string scope, string roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleEligibilityScheduleRequestName == null)
+            {
+                throw new ArgumentNullException(nameof(roleEligibilityScheduleRequestName));
+            }
+            if (roleEligibilityScheduleRequestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(roleEligibilityScheduleRequestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateValidateRequest(scope, roleEligibilityScheduleRequestName, data);
             _pipeline.Send(message, cancellationToken);
@@ -430,8 +528,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleEligibilityScheduleRequestListResult>> ListForScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -457,8 +561,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleEligibilityScheduleRequestListResult> ListForScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);

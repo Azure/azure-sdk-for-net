@@ -862,7 +862,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformServiceResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
             scope.Start();
@@ -908,7 +911,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformServiceResource> Update(WaitUntil waitUntil, AppPlatformServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.Update");
             scope.Start();
@@ -1029,7 +1035,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppPlatformServiceTestKeys>> RegenerateTestKeyAsync(RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
             scope.Start();
@@ -1071,7 +1080,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppPlatformServiceTestKeys> RegenerateTestKey(RegenerateAppPlatformServiceTestKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RegenerateTestKey");
             scope.Start();
@@ -1434,7 +1446,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfigServerSettingsValidateResult>> ValidateConfigServerAsync(WaitUntil waitUntil, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(settings, nameof(settings));
+            if (settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
             scope.Start();
@@ -1480,7 +1495,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public virtual ArmOperation<ConfigServerSettingsValidateResult> ValidateConfigServer(WaitUntil waitUntil, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(settings, nameof(settings));
+            if (settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
 
             using var scope = _appPlatformConfigServerConfigServersClientDiagnostics.CreateScope("AppPlatformServiceResource.ValidateConfigServer");
             scope.Start();
@@ -1588,8 +1606,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AppPlatformServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
             scope.Start();
@@ -1650,8 +1674,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppPlatformServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.AddTag");
             scope.Start();
@@ -1711,7 +1741,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AppPlatformServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
             scope.Start();
@@ -1768,7 +1801,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppPlatformServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.SetTags");
             scope.Start();
@@ -1825,7 +1861,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AppPlatformServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
             scope.Start();
@@ -1885,7 +1924,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppPlatformServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _appPlatformServiceServicesClientDiagnostics.CreateScope("AppPlatformServiceResource.RemoveTag");
             scope.Start();

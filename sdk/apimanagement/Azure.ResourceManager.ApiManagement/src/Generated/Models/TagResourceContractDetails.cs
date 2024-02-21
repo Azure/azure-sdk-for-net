@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         internal TagResourceContractDetails(AssociatedTagProperties tag)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            if (tag == null)
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
 
             Tag = tag;
         }
