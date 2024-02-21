@@ -519,7 +519,7 @@
      "Type": {
       "$id": "64",
       "Kind": "Primitive",
-      "Name": "String",
+      "Name": "Guid",
       "IsNullable": false
      },
      "IsRequired": true,
@@ -1736,7 +1736,7 @@
      "$id": "199",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
-     "Description": "List all templates for given ACS channel",
+     "Description": "List all templates for given Azure Communication Services channel",
      "Parameters": [
       {
        "$ref": "155"
@@ -1773,7 +1773,7 @@
        "Type": {
         "$id": "203",
         "Kind": "Primitive",
-        "Name": "String",
+        "Name": "Guid",
         "IsNullable": false
        },
        "Location": "Path",
