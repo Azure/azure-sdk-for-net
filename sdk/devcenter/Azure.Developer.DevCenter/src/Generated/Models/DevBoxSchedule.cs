@@ -51,9 +51,10 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
-        internal DevBoxSchedule(ScheduledType scheduledType, ScheduleFrequency frequency, TimeSpan time, string timeZone)
+        /// <exception cref="ArgumentNullException"> <paramref name="time"/> or <paramref name="timeZone"/> is null. </exception>
+        internal DevBoxSchedule(ScheduledType scheduledType, ScheduleFrequency frequency, string time, string timeZone)
         {
+            Argument.AssertNotNull(time, nameof(time));
             Argument.AssertNotNull(timeZone, nameof(timeZone));
 
             ScheduledType = scheduledType;
@@ -69,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxSchedule(string name, ScheduledType scheduledType, ScheduleFrequency frequency, TimeSpan time, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxSchedule(string name, ScheduledType scheduledType, ScheduleFrequency frequency, string time, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ScheduledType = scheduledType;
@@ -91,7 +92,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The frequency of this scheduled task. </summary>
         public ScheduleFrequency Frequency { get; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
-        public TimeSpan Time { get; }
+        public string Time { get; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
         public string TimeZone { get; }
     }

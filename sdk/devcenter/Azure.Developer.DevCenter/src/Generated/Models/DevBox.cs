@@ -75,7 +75,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState powerState, Guid? uniqueId, ResponseError error, AzureLocation location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProjectName = projectName;
@@ -115,7 +115,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         public string ActionState { get; }
         /// <summary> The current power state of the Dev Box. </summary>
-        public PowerState PowerState { get; }
+        public PowerState? PowerState { get; }
         /// <summary>
         /// A unique identifier for the Dev Box. This is a GUID-formatted string (e.g.
         /// 00000000-0000-0000-0000-000000000000).

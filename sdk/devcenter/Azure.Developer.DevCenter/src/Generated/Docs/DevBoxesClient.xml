@@ -280,7 +280,6 @@ Response response = await client.GetDevBoxAsync("<projectName>", "<userId>", "<d
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());
-Console.WriteLine(result.GetProperty("powerState").ToString());
 ]]></code>
 This sample shows how to call GetDevBoxAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -332,7 +331,6 @@ Response response = client.GetDevBox("<projectName>", "<userId>", "<devBoxName>"
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());
-Console.WriteLine(result.GetProperty("powerState").ToString());
 ]]></code>
 This sample shows how to call GetDevBox with all parameters and parse the result.
 <code><![CDATA[
@@ -1018,7 +1016,6 @@ await foreach (BinaryData item in client.GetAllDevBoxesAsync(null))
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDevBoxesAsync with all parameters and parse the result.
@@ -1072,7 +1069,6 @@ foreach (BinaryData item in client.GetAllDevBoxes(null))
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDevBoxes with all parameters and parse the result.
@@ -1172,7 +1168,6 @@ await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("<userId>", n
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDevBoxesByUserAsync with all parameters and parse the result.
@@ -1226,7 +1221,6 @@ foreach (BinaryData item in client.GetAllDevBoxesByUser("<userId>", null))
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDevBoxesByUser with all parameters and parse the result.
@@ -1326,7 +1320,6 @@ await foreach (BinaryData item in client.GetDevBoxesAsync("<projectName>", "<use
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetDevBoxesAsync with all parameters and parse the result.
@@ -1380,7 +1373,6 @@ foreach (BinaryData item in client.GetDevBoxes("<projectName>", "<userId>", null
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolName").ToString());
-    Console.WriteLine(result.GetProperty("powerState").ToString());
 }
 ]]></code>
 This sample shows how to call GetDevBoxes with all parameters and parse the result.
@@ -1673,7 +1665,6 @@ BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());
-Console.WriteLine(result.GetProperty("powerState").ToString());
 ]]></code>
 This sample shows how to call CreateDevBoxAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -1736,7 +1727,6 @@ BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolName").ToString());
-Console.WriteLine(result.GetProperty("powerState").ToString());
 ]]></code>
 This sample shows how to call CreateDevBox with all parameters and request content and parse the result.
 <code><![CDATA[

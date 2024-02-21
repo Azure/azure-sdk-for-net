@@ -112,7 +112,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
-        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduledType scheduledType = default, ScheduleFrequency frequency = default, TimeSpan time = default, string timeZone = null)
+        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduledType scheduledType = default, ScheduleFrequency frequency = default, string time = null, string timeZone = null)
         {
             return new DevBoxSchedule(name, scheduledType, frequency, time, timeZone, serializedAdditionalRawData: null);
         }
@@ -145,7 +145,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
-        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState powerState = default, Guid? uniqueId = null, ResponseError error = null, AzureLocation location = default, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
+        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation location = default, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
         {
             return new DevBox(name, projectName, poolName, hibernateSupport, provisioningState, actionState, powerState, uniqueId, error, location, osType, userId, hardwareProfile, storageProfile, imageReference, createdTime, localAdministratorStatus, serializedAdditionalRawData: null);
         }

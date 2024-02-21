@@ -54,10 +54,10 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("actionState"u8);
                 writer.WriteStringValue(ActionState);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteStringValue(PowerState.ToString());
+                writer.WriteStringValue(PowerState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
@@ -153,7 +153,7 @@ namespace Azure.Developer.DevCenter.Models
             Optional<HibernateSupport> hibernateSupport = default;
             Optional<DevBoxProvisioningState> provisioningState = default;
             Optional<string> actionState = default;
-            PowerState powerState = default;
+            Optional<PowerState> powerState = default;
             Optional<Guid> uniqueId = default;
             Optional<ResponseError> error = default;
             Optional<AzureLocation> location = default;
@@ -208,6 +208,10 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("powerState"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     powerState = new PowerState(property.Value.GetString());
                     continue;
                 }
@@ -307,7 +311,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator), serializedAdditionalRawData);
+            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, Optional.ToNullable(powerState), Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBox>.Write(ModelReaderWriterOptions options)

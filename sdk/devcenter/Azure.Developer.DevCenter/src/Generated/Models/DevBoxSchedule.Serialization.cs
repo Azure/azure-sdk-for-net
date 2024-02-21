@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter.Models
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("time"u8);
-            writer.WriteStringValue(Time, "T");
+            writer.WriteStringValue(Time);
             writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +81,7 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             ScheduledType type = default;
             ScheduleFrequency frequency = default;
-            TimeSpan time = default;
+            string time = default;
             string timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("time"u8))
                 {
-                    time = property.Value.GetTimeSpan("T");
+                    time = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
