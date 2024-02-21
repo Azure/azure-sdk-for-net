@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="counters"/> or <paramref name="limits"/> is null. </exception>
         internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits)
         {
-            Argument.AssertNotNull(counters, nameof(counters));
-            Argument.AssertNotNull(limits, nameof(limits));
+            if (counters == null)
+            {
+                throw new ArgumentNullException(nameof(counters));
+            }
+            if (limits == null)
+            {
+                throw new ArgumentNullException(nameof(limits));
+            }
 
             Counters = counters;
             Limits = limits;

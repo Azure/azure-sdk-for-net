@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)
         {
-            Argument.AssertNotNull(weights, nameof(weights));
+            if (weights == null)
+            {
+                throw new ArgumentNullException(nameof(weights));
+            }
 
             Weights = weights;
         }

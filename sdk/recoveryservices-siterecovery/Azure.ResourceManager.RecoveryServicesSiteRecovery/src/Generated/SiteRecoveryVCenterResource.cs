@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryVCenterResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryVCenterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryVCenterResource> Update(WaitUntil waitUntil, SiteRecoveryVCenterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterResource.Update");
             scope.Start();

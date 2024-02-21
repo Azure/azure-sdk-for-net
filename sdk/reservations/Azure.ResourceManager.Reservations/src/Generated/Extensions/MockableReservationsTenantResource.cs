@@ -216,7 +216,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
             scope.Start();
@@ -258,7 +261,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CalculatePriceResult> CalculateReservationOrder(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
             scope.Start();
@@ -298,7 +304,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
             scope.Start();
@@ -341,7 +350,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CalculateExchangeResult> CalculateReservationExchange(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
             scope.Start();
@@ -384,7 +396,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ExchangeResult>> ExchangeAsync(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
             scope.Start();
@@ -427,7 +442,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ExchangeResult> Exchange(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
             scope.Start();

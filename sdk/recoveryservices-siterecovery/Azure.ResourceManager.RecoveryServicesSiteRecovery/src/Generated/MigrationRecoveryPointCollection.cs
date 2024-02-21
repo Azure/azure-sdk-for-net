@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual async Task<Response<MigrationRecoveryPointResource>> GetAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual Response<MigrationRecoveryPointResource> Get(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual Response<bool> Exists(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrationRecoveryPointResource>> GetIfExistsAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         public virtual NullableResponse<MigrationRecoveryPointResource> GetIfExists(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+            if (migrationRecoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(migrationRecoveryPointName));
+            }
+            if (migrationRecoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationRecoveryPointName));
+            }
 
             using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.GetIfExists");
             scope.Start();
