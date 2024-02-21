@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,8 +23,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="accessToken"/> is null. </exception>
         public AzureDatabricksDeltaLakeLinkedService(object domain, SecretBase accessToken)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
 
             Domain = domain;
             AccessToken = accessToken;

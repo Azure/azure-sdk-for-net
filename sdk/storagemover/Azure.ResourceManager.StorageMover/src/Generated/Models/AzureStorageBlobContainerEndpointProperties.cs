@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="blobContainerName"/> is null. </exception>
         public AzureStorageBlobContainerEndpointProperties(string storageAccountResourceId, string blobContainerName)
         {
-            Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
-            Argument.AssertNotNull(blobContainerName, nameof(blobContainerName));
+            if (storageAccountResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountResourceId));
+            }
+            if (blobContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(blobContainerName));
+            }
 
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;

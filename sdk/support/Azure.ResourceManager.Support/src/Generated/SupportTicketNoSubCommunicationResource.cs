@@ -195,7 +195,10 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SupportTicketNoSubCommunicationResource>> UpdateAsync(WaitUntil waitUntil, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationResource.Update");
             scope.Start();
@@ -241,7 +244,10 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SupportTicketNoSubCommunicationResource> Update(WaitUntil waitUntil, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationResource.Update");
             scope.Start();

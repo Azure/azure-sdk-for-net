@@ -185,7 +185,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual AsyncPageable<ManagedPrivateEndpoint> ListAsync(string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
+            if (managedVirtualNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);
@@ -198,7 +205,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual Pageable<ManagedPrivateEndpoint> List(string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            if (managedVirtualNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
+            }
+            if (managedVirtualNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);

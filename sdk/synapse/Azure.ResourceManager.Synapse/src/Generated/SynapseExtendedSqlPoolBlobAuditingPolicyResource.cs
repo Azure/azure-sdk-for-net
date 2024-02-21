@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateOrUpdate");
             scope.Start();
@@ -243,7 +246,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, SynapseExtendedSqlPoolBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateOrUpdate");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -26,10 +25,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public Office365LinkedService(object office365TenantId, object servicePrincipalTenantId, object servicePrincipalId, SecretBase servicePrincipalKey)
         {
-            Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
-            Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+            if (office365TenantId == null)
+            {
+                throw new ArgumentNullException(nameof(office365TenantId));
+            }
+            if (servicePrincipalTenantId == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalTenantId));
+            }
+            if (servicePrincipalId == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalId));
+            }
+            if (servicePrincipalKey == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalKey));
+            }
 
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;

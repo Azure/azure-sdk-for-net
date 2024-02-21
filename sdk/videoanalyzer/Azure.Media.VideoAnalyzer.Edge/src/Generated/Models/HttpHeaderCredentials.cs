@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> or <paramref name="headerValue"/> is null. </exception>
         public HttpHeaderCredentials(string headerName, string headerValue)
         {
-            Argument.AssertNotNull(headerName, nameof(headerName));
-            Argument.AssertNotNull(headerValue, nameof(headerValue));
+            if (headerName == null)
+            {
+                throw new ArgumentNullException(nameof(headerName));
+            }
+            if (headerValue == null)
+            {
+                throw new ArgumentNullException(nameof(headerValue));
+            }
 
             HeaderName = headerName;
             HeaderValue = headerValue;
