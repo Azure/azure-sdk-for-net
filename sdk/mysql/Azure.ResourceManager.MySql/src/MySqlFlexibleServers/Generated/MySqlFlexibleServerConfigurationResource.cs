@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurationResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerConfigurationResource.Update");
             scope.Start();
@@ -243,7 +246,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlFlexibleServerConfigurationResource> Update(WaitUntil waitUntil, MySqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerConfigurationResource.Update");
             scope.Start();

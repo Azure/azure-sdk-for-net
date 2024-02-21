@@ -72,8 +72,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();
@@ -121,8 +131,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataCollectionRuleAssociationResource> CreateOrUpdate(WaitUntil waitUntil, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.CreateOrUpdate");
             scope.Start();
@@ -168,7 +188,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual async Task<Response<DataCollectionRuleAssociationResource>> GetAsync(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
             scope.Start();
@@ -213,7 +240,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual Response<DataCollectionRuleAssociationResource> Get(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Get");
             scope.Start();
@@ -318,7 +352,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
             scope.Start();
@@ -361,7 +402,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual Response<bool> Exists(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.Exists");
             scope.Start();
@@ -404,7 +452,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataCollectionRuleAssociationResource>> GetIfExistsAsync(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
             scope.Start();
@@ -449,7 +504,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
         public virtual NullableResponse<DataCollectionRuleAssociationResource> GetIfExists(string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationCollection.GetIfExists");
             scope.Start();

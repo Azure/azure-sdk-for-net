@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="port"/> or <paramref name="address"/> is null. </exception>
         public FirewallEndpointConfiguration(string port, IPAddressInfo address)
         {
-            Argument.AssertNotNull(port, nameof(port));
-            Argument.AssertNotNull(address, nameof(address));
+            if (port == null)
+            {
+                throw new ArgumentNullException(nameof(port));
+            }
+            if (address == null)
+            {
+                throw new ArgumentNullException(nameof(address));
+            }
 
             Port = port;
             Address = address;

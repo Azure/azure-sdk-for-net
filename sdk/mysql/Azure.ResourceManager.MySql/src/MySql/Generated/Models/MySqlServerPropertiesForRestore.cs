@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public MySqlServerPropertiesForRestore(ResourceIdentifier sourceServerId, DateTimeOffset restorePointInTime)
         {
-            Argument.AssertNotNull(sourceServerId, nameof(sourceServerId));
+            if (sourceServerId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceServerId));
+            }
 
             SourceServerId = sourceServerId;
             RestorePointInTime = restorePointInTime;

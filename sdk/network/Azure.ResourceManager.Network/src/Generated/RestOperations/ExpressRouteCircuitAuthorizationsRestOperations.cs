@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, circuitName, authorizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,10 +125,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, circuitName, authorizationName);
             _pipeline.Send(message, cancellationToken);
@@ -147,10 +203,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRouteCircuitAuthorizationData>> GetAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, circuitName, authorizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -180,10 +264,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRouteCircuitAuthorizationData> Get(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, circuitName, authorizationName);
             _pipeline.Send(message, cancellationToken);
@@ -240,11 +352,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, circuitName, authorizationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,11 +412,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
+            if (authorizationName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationName));
+            }
+            if (authorizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, circuitName, authorizationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -317,9 +491,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AuthorizationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, circuitName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,9 +541,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AuthorizationListResult> List(string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, circuitName);
             _pipeline.Send(message, cancellationToken);
@@ -390,10 +606,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AuthorizationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, circuitName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,10 +661,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AuthorizationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (circuitName == null)
+            {
+                throw new ArgumentNullException(nameof(circuitName));
+            }
+            if (circuitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(circuitName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, circuitName);
             _pipeline.Send(message, cancellationToken);

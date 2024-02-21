@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
         {
-            Argument.AssertNotNull(allTables, nameof(allTables));
+            if (allTables == null)
+            {
+                throw new ArgumentNullException(nameof(allTables));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>

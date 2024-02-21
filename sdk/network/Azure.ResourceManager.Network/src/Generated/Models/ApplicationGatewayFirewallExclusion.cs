@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchVariable"/>, <paramref name="selectorMatchOperator"/> or <paramref name="selector"/> is null. </exception>
         public ApplicationGatewayFirewallExclusion(string matchVariable, string selectorMatchOperator, string selector)
         {
-            Argument.AssertNotNull(matchVariable, nameof(matchVariable));
-            Argument.AssertNotNull(selectorMatchOperator, nameof(selectorMatchOperator));
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (matchVariable == null)
+            {
+                throw new ArgumentNullException(nameof(matchVariable));
+            }
+            if (selectorMatchOperator == null)
+            {
+                throw new ArgumentNullException(nameof(selectorMatchOperator));
+            }
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;

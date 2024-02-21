@@ -266,7 +266,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateRecommendedActionSessionAsync(WaitUntil waitUntil, string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
 
             using var scope = _defaultClientDiagnostics.CreateScope("MySqlAdvisorResource.CreateRecommendedActionSession");
             scope.Start();
@@ -308,7 +311,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual ArmOperation CreateRecommendedActionSession(WaitUntil waitUntil, string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
 
             using var scope = _defaultClientDiagnostics.CreateScope("MySqlAdvisorResource.CreateRecommendedActionSession");
             scope.Start();

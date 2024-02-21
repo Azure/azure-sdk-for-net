@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsTableResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsTableData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsTableTablesClientDiagnostics.CreateScope("OperationalInsightsTableResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsTableResource> Update(WaitUntil waitUntil, OperationalInsightsTableData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsTableTablesClientDiagnostics.CreateScope("OperationalInsightsTableResource.Update");
             scope.Start();

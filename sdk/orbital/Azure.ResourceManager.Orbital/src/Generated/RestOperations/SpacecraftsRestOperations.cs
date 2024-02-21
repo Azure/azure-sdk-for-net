@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrbitalSpacecraftListResult>> ListBySubscriptionAsync(string subscriptionId, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrbitalSpacecraftListResult> ListBySubscription(string subscriptionId, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -142,8 +156,22 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrbitalSpacecraftListResult>> ListAsync(string subscriptionId, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -170,8 +198,22 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrbitalSpacecraftListResult> List(string subscriptionId, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -218,9 +260,30 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrbitalSpacecraftData>> GetAsync(string subscriptionId, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, spacecraftName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -249,9 +312,30 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrbitalSpacecraftData> Get(string subscriptionId, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, spacecraftName);
             _pipeline.Send(message, cancellationToken);
@@ -305,10 +389,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, spacecraftName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -332,10 +440,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, spacecraftName, data);
             _pipeline.Send(message, cancellationToken);
@@ -378,9 +510,30 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, spacecraftName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -404,9 +557,30 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, spacecraftName);
             _pipeline.Send(message, cancellationToken);
@@ -455,10 +629,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftTags orbitalSpacecraftTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(orbitalSpacecraftTags, nameof(orbitalSpacecraftTags));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (orbitalSpacecraftTags == null)
+            {
+                throw new ArgumentNullException(nameof(orbitalSpacecraftTags));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, spacecraftName, orbitalSpacecraftTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -482,10 +680,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateTags(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalSpacecraftTags orbitalSpacecraftTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(orbitalSpacecraftTags, nameof(orbitalSpacecraftTags));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (orbitalSpacecraftTags == null)
+            {
+                throw new ArgumentNullException(nameof(orbitalSpacecraftTags));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, spacecraftName, orbitalSpacecraftTags);
             _pipeline.Send(message, cancellationToken);
@@ -534,10 +756,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ListAvailableContactsAsync(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateListAvailableContactsRequest(subscriptionId, resourceGroupName, spacecraftName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -561,10 +807,34 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="spacecraftName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ListAvailableContacts(string subscriptionId, string resourceGroupName, string spacecraftName, OrbitalAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(spacecraftName, nameof(spacecraftName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (spacecraftName == null)
+            {
+                throw new ArgumentNullException(nameof(spacecraftName));
+            }
+            if (spacecraftName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(spacecraftName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateListAvailableContactsRequest(subscriptionId, resourceGroupName, spacecraftName, content);
             _pipeline.Send(message, cancellationToken);
@@ -601,8 +871,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrbitalSpacecraftListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -629,8 +909,18 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrbitalSpacecraftListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -672,9 +962,26 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrbitalSpacecraftListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -702,9 +1009,26 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrbitalSpacecraftListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, skiptoken);
             _pipeline.Send(message, cancellationToken);

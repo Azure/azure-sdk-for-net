@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OnYourDataConnectionStringAuthenticationOptions(string connectionString)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
 
             Type = OnYourDataAuthenticationType.ConnectionString;
             ConnectionString = connectionString;

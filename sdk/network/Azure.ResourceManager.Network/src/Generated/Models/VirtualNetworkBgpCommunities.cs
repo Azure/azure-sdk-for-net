@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkCommunity"/> is null. </exception>
         public VirtualNetworkBgpCommunities(string virtualNetworkCommunity)
         {
-            Argument.AssertNotNull(virtualNetworkCommunity, nameof(virtualNetworkCommunity));
+            if (virtualNetworkCommunity == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkCommunity));
+            }
 
             VirtualNetworkCommunity = virtualNetworkCommunity;
         }

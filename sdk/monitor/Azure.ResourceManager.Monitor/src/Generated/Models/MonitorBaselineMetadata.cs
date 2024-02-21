@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         internal MonitorBaselineMetadata(string name, string value)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Name = name;
             Value = value;
