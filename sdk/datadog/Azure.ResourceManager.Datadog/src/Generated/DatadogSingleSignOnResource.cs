@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatadogSingleSignOnResource>> UpdateAsync(WaitUntil waitUntil, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
             scope.Start();
@@ -243,7 +246,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatadogSingleSignOnResource> Update(WaitUntil waitUntil, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResource.Update");
             scope.Start();

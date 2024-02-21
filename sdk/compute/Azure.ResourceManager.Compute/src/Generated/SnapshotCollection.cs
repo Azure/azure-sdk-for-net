@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<SnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<SnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<NullableResponse<SnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual NullableResponse<SnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
             scope.Start();

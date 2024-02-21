@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -53,9 +52,18 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/>, <paramref name="blocklistItemId"/> or <paramref name="blocklistItemText"/> is null. </exception>
         internal TextBlocklistMatch(string blocklistName, string blocklistItemId, string blocklistItemText)
         {
-            Argument.AssertNotNull(blocklistName, nameof(blocklistName));
-            Argument.AssertNotNull(blocklistItemId, nameof(blocklistItemId));
-            Argument.AssertNotNull(blocklistItemText, nameof(blocklistItemText));
+            if (blocklistName == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistName));
+            }
+            if (blocklistItemId == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemId));
+            }
+            if (blocklistItemText == null)
+            {
+                throw new ArgumentNullException(nameof(blocklistItemText));
+            }
 
             BlocklistName = blocklistName;
             BlocklistItemId = blocklistItemId;

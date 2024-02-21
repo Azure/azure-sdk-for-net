@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
         public KustoClusterDataSetMapping(Guid dataSetId, ResourceIdentifier kustoClusterResourceId)
         {
-            Argument.AssertNotNull(kustoClusterResourceId, nameof(kustoClusterResourceId));
+            if (kustoClusterResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(kustoClusterResourceId));
+            }
 
             DataSetId = dataSetId;
             KustoClusterResourceId = kustoClusterResourceId;

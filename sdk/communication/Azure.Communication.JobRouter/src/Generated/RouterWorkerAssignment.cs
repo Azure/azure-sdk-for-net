@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -54,8 +53,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="jobId"/> is null. </exception>
         internal RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt)
         {
-            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            if (assignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentId));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
 
             AssignmentId = assignmentId;
             JobId = jobId;

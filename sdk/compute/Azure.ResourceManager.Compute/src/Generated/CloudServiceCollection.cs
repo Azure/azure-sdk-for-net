@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServiceName, CloudServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CloudServiceResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServiceName, CloudServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual async Task<Response<CloudServiceResource>> GetAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual Response<CloudServiceResource> Get(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudServiceResource>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public virtual NullableResponse<CloudServiceResource> GetIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+            if (cloudServiceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
+            }
 
             using var scope = _cloudServiceClientDiagnostics.CreateScope("CloudServiceCollection.GetIfExists");
             scope.Start();

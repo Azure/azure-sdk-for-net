@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GalleryApplicationVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryApplicationVersionName, GalleryApplicationVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GalleryApplicationVersionResource> CreateOrUpdate(WaitUntil waitUntil, string galleryApplicationVersionName, GalleryApplicationVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual async Task<Response<GalleryApplicationVersionResource>> GetAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual Response<GalleryApplicationVersionResource> Get(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<GalleryApplicationVersionResource>> GetIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
         public virtual NullableResponse<GalleryApplicationVersionResource> GetIfExists(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
             scope.Start();
