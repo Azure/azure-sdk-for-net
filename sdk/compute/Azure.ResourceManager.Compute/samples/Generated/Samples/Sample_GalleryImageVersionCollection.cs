@@ -101,7 +101,7 @@ IsExcludedFromLatest = false,
                 {
                     GallerySource = new GalleryArtifactVersionFullSource()
                     {
-                        VirtualMachineId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                        VirtualMachineId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
                     },
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile()

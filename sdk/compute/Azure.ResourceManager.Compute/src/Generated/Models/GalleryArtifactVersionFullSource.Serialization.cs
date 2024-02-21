@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<string> communityGalleryImageId = default;
-            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<ResourceIdentifier> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("virtualMachineId"u8))
                 {
-                    virtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
