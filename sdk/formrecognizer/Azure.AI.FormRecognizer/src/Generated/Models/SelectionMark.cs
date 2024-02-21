@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         internal SelectionMark(IEnumerable<float> boundingBox, float confidence, SelectionMarkState state)
         {
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
 
             BoundingBox = boundingBox.ToList();
             Confidence = confidence;

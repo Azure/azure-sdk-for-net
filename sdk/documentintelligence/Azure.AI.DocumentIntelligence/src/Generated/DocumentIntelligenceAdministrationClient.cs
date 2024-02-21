@@ -62,14 +62,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureAIDocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -86,14 +80,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureAIDocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -113,10 +101,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopyAsync(AuthorizeCopyContent,CancellationToken)']/*" />
         public virtual async Task<Response<CopyAuthorization>> AuthorizeModelCopyAsync(AuthorizeCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
-            if (authorizeCopyRequest == null)
-            {
-                throw new ArgumentNullException(nameof(authorizeCopyRequest));
-            }
+            Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
@@ -134,10 +119,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopy(AuthorizeCopyContent,CancellationToken)']/*" />
         public virtual Response<CopyAuthorization> AuthorizeModelCopy(AuthorizeCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
-            if (authorizeCopyRequest == null)
-            {
-                throw new ArgumentNullException(nameof(authorizeCopyRequest));
-            }
+            Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
@@ -169,10 +151,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopyAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AuthorizeModelCopyAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
             scope.Start();
@@ -212,10 +191,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopy(RequestContent,RequestContext)']/*" />
         public virtual Response AuthorizeModelCopy(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
             scope.Start();
@@ -239,14 +215,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetModelAsync(modelId, context).ConfigureAwait(false);
@@ -261,14 +230,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModel(string,CancellationToken)']/*" />
         public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetModel(modelId, context);
@@ -299,14 +261,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetModelAsync(string modelId, RequestContext context)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
             scope.Start();
@@ -346,14 +301,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModel(string,RequestContext)']/*" />
         public virtual Response GetModel(string modelId, RequestContext context)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
             scope.Start();
@@ -389,14 +337,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteModelAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteModelAsync(string modelId, RequestContext context = null)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
             scope.Start();
@@ -432,14 +373,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteModel(string,RequestContext)']/*" />
         public virtual Response DeleteModel(string modelId, RequestContext context = null)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
             scope.Start();
@@ -553,14 +487,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifierAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentClassifierDetails>> GetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassifierAsync(classifierId, context).ConfigureAwait(false);
@@ -575,14 +502,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifier(string,CancellationToken)']/*" />
         public virtual Response<DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassifier(classifierId, context);
@@ -613,14 +533,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifierAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassifierAsync(string classifierId, RequestContext context)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
             scope.Start();
@@ -660,14 +573,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifier(string,RequestContext)']/*" />
         public virtual Response GetClassifier(string classifierId, RequestContext context)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
             scope.Start();
@@ -703,14 +609,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteClassifierAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteClassifierAsync(string classifierId, RequestContext context = null)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
             scope.Start();
@@ -746,14 +645,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteClassifier(string,RequestContext)']/*" />
         public virtual Response DeleteClassifier(string classifierId, RequestContext context = null)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (classifierId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(classifierId));
-            }
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
             using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
             scope.Start();
@@ -999,10 +891,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentClassifierDetails>> BuildClassifierAsync(WaitUntil waitUntil, BuildDocumentClassifierContent buildRequest, CancellationToken cancellationToken = default)
         {
-            if (buildRequest == null)
-            {
-                throw new ArgumentNullException(nameof(buildRequest));
-            }
+            Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
@@ -1018,10 +907,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)']/*" />
         public virtual Operation<DocumentClassifierDetails> BuildClassifier(WaitUntil waitUntil, BuildDocumentClassifierContent buildRequest, CancellationToken cancellationToken = default)
         {
-            if (buildRequest == null)
-            {
-                throw new ArgumentNullException(nameof(buildRequest));
-            }
+            Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();

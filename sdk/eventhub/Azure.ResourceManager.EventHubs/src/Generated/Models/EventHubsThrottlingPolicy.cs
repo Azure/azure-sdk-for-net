@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubsThrottlingPolicy(string name, long rateLimitThreshold, EventHubsMetricId metricId) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             RateLimitThreshold = rateLimitThreshold;
             MetricId = metricId;

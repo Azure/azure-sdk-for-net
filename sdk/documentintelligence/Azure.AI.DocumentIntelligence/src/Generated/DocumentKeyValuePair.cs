@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -54,10 +55,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal DocumentKeyValuePair(DocumentKeyValueElement key, float confidence)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Confidence = confidence;

@@ -21,10 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentPage(int pageNumber, IEnumerable<DocumentSpan> spans)
         {
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(spans, nameof(spans));
 
             PageNumber = pageNumber;
             Spans = spans.ToList();

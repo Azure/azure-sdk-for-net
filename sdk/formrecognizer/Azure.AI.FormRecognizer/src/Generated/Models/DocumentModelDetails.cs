@@ -20,10 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal DocumentModelDetails(string modelId, DateTimeOffset createdOn)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
             CreatedOn = createdOn;

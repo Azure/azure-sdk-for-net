@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EasmLabelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string labelName, EasmLabelData data, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EasmLabelResource> CreateOrUpdate(WaitUntil waitUntil, string labelName, EasmLabelData data, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual async Task<Response<EasmLabelResource>> GetAsync(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual Response<EasmLabelResource> Get(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual Response<bool> Exists(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual async Task<NullableResponse<EasmLabelResource>> GetIfExistsAsync(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public virtual NullableResponse<EasmLabelResource> GetIfExists(string labelName, CancellationToken cancellationToken = default)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
-            if (labelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labelName));
-            }
+            Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelCollection.GetIfExists");
             scope.Start();

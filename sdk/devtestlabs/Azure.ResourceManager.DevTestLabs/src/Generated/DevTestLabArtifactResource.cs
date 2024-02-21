@@ -200,10 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DevTestLabArmTemplateInfo>> GenerateArmTemplateAsync(DevTestLabArtifactGenerateArmTemplateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
             scope.Start();
@@ -245,10 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DevTestLabArmTemplateInfo> GenerateArmTemplate(DevTestLabArtifactGenerateArmTemplateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabArtifactArtifactsClientDiagnostics.CreateScope("DevTestLabArtifactResource.GenerateArmTemplate");
             scope.Start();

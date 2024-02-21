@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetDocumentModelsResponse(IEnumerable<DocumentModelSummary> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

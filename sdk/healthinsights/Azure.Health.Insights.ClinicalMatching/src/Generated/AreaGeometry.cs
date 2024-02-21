@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
@@ -55,10 +56,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public AreaGeometry(GeoJsonGeometryType type, IEnumerable<float> coordinates)
         {
-            if (coordinates == null)
-            {
-                throw new ArgumentNullException(nameof(coordinates));
-            }
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Type = type;
             Coordinates = coordinates.ToList();

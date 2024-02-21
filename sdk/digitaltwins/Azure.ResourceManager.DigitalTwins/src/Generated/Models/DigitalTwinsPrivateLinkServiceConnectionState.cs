@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         public DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus status, string description)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public SparkUserPlugin(string path)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
+            Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
         }
