@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Tests
         public static byte[] MakeEncodedData(byte[] data, long segmentContentLength, Flags flags)
         {
             int segmentCount = (int) Math.Ceiling(data.Length / (double)segmentContentLength);
-            int segmentFooterLen = flags.HasFlag(Flags.CrcSegment) ? 8 : 0;
+            int segmentFooterLen = flags.HasFlag(Flags.Crc) ? 8 : 0;
 
             byte[] encodedData = new byte[V1_0.StreamHeaderLength + segmentCount*(V1_0.SegmentHeaderLength + segmentFooterLen) + data.Length];
             V1_0.WriteStreamHeader(
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Tests
                     .CopyTo(new Span<byte>(encodedData).Slice(i));
                 i += segContentLen;
 
-                if (flags.HasFlag(Flags.CrcSegment))
+                if (flags.HasFlag(Flags.Crc))
                 {
                     var crc = StorageCrc64HashAlgorithm.Create();
                     crc.Append(new Span<byte>(data).Slice(j, segContentLen));

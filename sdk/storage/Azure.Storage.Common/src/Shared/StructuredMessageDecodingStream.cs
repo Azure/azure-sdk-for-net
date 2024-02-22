@@ -335,9 +335,9 @@ internal class StructuredMessageDecodingStream : Stream
             out _innerStreamLength,
             out _flags,
             out _totalSegments);
-        if (_flags.HasFlag(StructuredMessage.Flags.CrcSegment))
+        if (_flags.HasFlag(StructuredMessage.Flags.Crc))
         {
-            _segmentFooterLength = _flags.HasFlag(StructuredMessage.Flags.CrcSegment) ? StructuredMessage.Crc64Length : 0;
+            _segmentFooterLength = _flags.HasFlag(StructuredMessage.Flags.Crc) ? StructuredMessage.Crc64Length : 0;
             _segmentCrc = StorageCrc64HashAlgorithm.Create();
             _totalContentCrc = StorageCrc64HashAlgorithm.Create();
         }
@@ -369,7 +369,7 @@ internal class StructuredMessageDecodingStream : Stream
     private int ProcessSegmentFooter(ReadOnlySpan<byte> span)
     {
         int totalProcessed = 0;
-        if (_flags.HasFlag(StructuredMessage.Flags.CrcSegment))
+        if (_flags.HasFlag(StructuredMessage.Flags.Crc))
         {
             totalProcessed += StructuredMessage.Crc64Length;
             using (ArrayPool<byte>.Shared.RentAsSpanDisposable(StructuredMessage.Crc64Length, out Span<byte> calculated))

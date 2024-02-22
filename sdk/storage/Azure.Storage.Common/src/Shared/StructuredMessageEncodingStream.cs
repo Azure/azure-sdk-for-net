@@ -24,7 +24,7 @@ internal class StructuredMessageEncodingStream : Stream
     private readonly StructuredMessage.Flags _flags;
     private bool _disposed;
 
-    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.CrcSegment);
+    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.Crc);
     private readonly StorageCrc64HashAlgorithm _runningCrc;
     private readonly byte[] _runningCrcCheckpoints;
     private int _latestSegmentCrcd = 0;
