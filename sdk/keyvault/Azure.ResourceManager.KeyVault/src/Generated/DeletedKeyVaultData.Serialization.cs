@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    properties = DeletedKeyVaultProperties.DeserializeDeletedKeyVaultProperties(property.Value, options);
+                    properties = DeletedKeyVaultProperties.DeserializeDeletedKeyVaultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

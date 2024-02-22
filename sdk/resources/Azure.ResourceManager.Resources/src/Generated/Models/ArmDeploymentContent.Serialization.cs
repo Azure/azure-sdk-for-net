@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ArmDeploymentProperties.DeserializeArmDeploymentProperties(property.Value, options);
+                    properties = ArmDeploymentProperties.DeserializeArmDeploymentProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

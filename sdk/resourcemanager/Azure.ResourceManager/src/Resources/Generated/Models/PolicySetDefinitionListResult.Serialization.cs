@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PolicySetDefinitionData> array = new List<PolicySetDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySetDefinitionData.DeserializePolicySetDefinitionData(item, options));
+                        array.Add(PolicySetDefinitionData.DeserializePolicySetDefinitionData(item));
                     }
                     value = array;
                     continue;

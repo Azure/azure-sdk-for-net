@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item, options));
+                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
                     }
                     metrics = array;
                     continue;
@@ -148,45 +149,83 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(IntervalStartTime))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalStartTime), out propertyOverride);
+            if (Optional.IsDefined(IntervalStartTime) || hasPropertyOverride)
             {
-                builder.Append("  intervalStartTime:");
-                if (IntervalStartTime.Contains(Environment.NewLine))
+                builder.Append("  intervalStartTime: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{IntervalStartTime}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{IntervalStartTime}'");
+                    if (IntervalStartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IntervalStartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IntervalStartTime}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IntervalType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
+            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
             {
-                builder.Append("  intervalType:");
-                builder.AppendLine($" '{IntervalType.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(ExecutionCount))
-            {
-                builder.Append("  executionCount:");
-                builder.AppendLine($" '{ExecutionCount.Value.ToString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(Metrics))
-            {
-                if (Metrics.Any())
+                builder.Append("  intervalType: ");
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  metrics:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Metrics)
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IntervalType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecutionCount), out propertyOverride);
+            if (Optional.IsDefined(ExecutionCount) || hasPropertyOverride)
+            {
+                builder.Append("  executionCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ExecutionCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            if (Optional.IsCollectionDefined(Metrics) || hasPropertyOverride)
+            {
+                if (Metrics.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  metrics: ");
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($"{propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Metrics)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  metrics: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
@@ -194,12 +233,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -220,12 +262,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value, options);
+                    definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

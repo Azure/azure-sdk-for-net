@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Storage
                             List<StoragePermissionScope> array = new List<StoragePermissionScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item, options));
+                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item));
                             }
                             permissionScopes = array;
                             continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Storage
                             List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item, options));
+                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
                             }
                             sshAuthorizedKeys = array;
                             continue;

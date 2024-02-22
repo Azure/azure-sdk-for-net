@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

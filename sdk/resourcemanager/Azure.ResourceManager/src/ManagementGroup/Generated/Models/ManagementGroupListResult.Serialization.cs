@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupData> array = new List<ManagementGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupData.DeserializeManagementGroupData(item, options));
+                        array.Add(ManagementGroupData.DeserializeManagementGroupData(item));
                     }
                     value = array;
                     continue;

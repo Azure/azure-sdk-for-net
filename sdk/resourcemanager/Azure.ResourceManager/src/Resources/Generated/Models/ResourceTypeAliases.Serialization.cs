@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
                     }
                     aliases = array;
                     continue;

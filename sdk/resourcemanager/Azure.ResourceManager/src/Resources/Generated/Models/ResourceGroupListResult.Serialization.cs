@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceGroupData> array = new List<ResourceGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGroupData.DeserializeResourceGroupData(item, options));
+                        array.Add(ResourceGroupData.DeserializeResourceGroupData(item));
                     }
                     value = array;
                     continue;

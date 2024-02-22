@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyRule> array = new List<ManagementPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item, options));
+                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
                     }
                     rules = array;
                     continue;

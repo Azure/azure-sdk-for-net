@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    properties = SecretPatchProperties.DeserializeSecretPatchProperties(property.Value, options);
+                    properties = SecretPatchProperties.DeserializeSecretPatchProperties(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

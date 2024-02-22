@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item, options));
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
                     }
                     locationMappings = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
                     }
                     aliases = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
                     }
                     zoneMappings = array;
                     continue;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ApiProfile> array = new List<ApiProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiProfile.DeserializeApiProfile(item, options));
+                        array.Add(ApiProfile.DeserializeApiProfile(item));
                     }
                     apiProfiles = array;
                     continue;

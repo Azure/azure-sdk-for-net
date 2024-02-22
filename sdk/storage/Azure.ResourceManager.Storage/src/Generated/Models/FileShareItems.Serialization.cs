@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<FileShareData> array = new List<FileShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileShareData.DeserializeFileShareData(item, options));
+                        array.Add(FileShareData.DeserializeFileShareData(item));
                     }
                     value = array;
                     continue;

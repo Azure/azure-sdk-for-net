@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
+                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

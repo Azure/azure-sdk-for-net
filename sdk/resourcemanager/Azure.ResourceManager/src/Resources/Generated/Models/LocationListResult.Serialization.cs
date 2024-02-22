@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<LocationExpanded> array = new List<LocationExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocationExpanded.DeserializeLocationExpanded(item, options));
+                        array.Add(LocationExpanded.DeserializeLocationExpanded(item));
                     }
                     value = array;
                     continue;

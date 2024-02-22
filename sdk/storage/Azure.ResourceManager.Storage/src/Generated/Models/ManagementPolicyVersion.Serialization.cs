@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
+                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PairedRegion.DeserializePairedRegion(item, options));
+                        array.Add(PairedRegion.DeserializePairedRegion(item));
                     }
                     pairedRegion = array;
                     continue;

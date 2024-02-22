@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobServiceData> array = new List<BlobServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobServiceData.DeserializeBlobServiceData(item, options));
+                        array.Add(BlobServiceData.DeserializeBlobServiceData(item));
                     }
                     value = array;
                     continue;

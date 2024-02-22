@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    multichannel = Multichannel.DeserializeMultichannel(property.Value, options);
+                    multichannel = Multichannel.DeserializeMultichannel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("versions"u8))

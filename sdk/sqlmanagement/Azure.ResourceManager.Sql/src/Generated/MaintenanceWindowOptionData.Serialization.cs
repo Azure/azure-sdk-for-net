@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Sql
                             List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item, options));
+                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
                             }
                             maintenanceWindowCycles = array;
                             continue;
@@ -262,86 +263,172 @@ namespace Azure.ResourceManager.Sql
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(IsEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
             {
-                builder.Append("    isEnabled:");
-                var boolValue = IsEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
-            {
-                if (MaintenanceWindowCycles.Any())
+                builder.Append("    isEnabled: ");
+                if (hasPropertyOverride)
                 {
-                    builder.Append("    maintenanceWindowCycles:");
-                    builder.AppendLine(" [");
-                    foreach (var item in MaintenanceWindowCycles)
-                    {
-                        AppendChildObject(builder, item, options, 6, true);
-                    }
-                    builder.AppendLine("    ]");
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
-            if (Optional.IsDefined(MinDurationInMinutes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindowCycles), out propertyOverride);
+            if (Optional.IsCollectionDefined(MaintenanceWindowCycles) || hasPropertyOverride)
             {
-                builder.Append("    minDurationInMinutes:");
-                builder.AppendLine($" {MinDurationInMinutes.Value}");
+                if (MaintenanceWindowCycles.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    maintenanceWindowCycles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in MaintenanceWindowCycles)
+                        {
+                            AppendChildObject(builder, item, options, 6, true, "    maintenanceWindowCycles: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
             }
 
-            if (Optional.IsDefined(DefaultDurationInMinutes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinDurationInMinutes), out propertyOverride);
+            if (Optional.IsDefined(MinDurationInMinutes) || hasPropertyOverride)
             {
-                builder.Append("    defaultDurationInMinutes:");
-                builder.AppendLine($" {DefaultDurationInMinutes.Value}");
+                builder.Append("    minDurationInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MinDurationInMinutes.Value}");
+                }
             }
 
-            if (Optional.IsDefined(MinCycles))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDurationInMinutes), out propertyOverride);
+            if (Optional.IsDefined(DefaultDurationInMinutes) || hasPropertyOverride)
             {
-                builder.Append("    minCycles:");
-                builder.AppendLine($" {MinCycles.Value}");
+                builder.Append("    defaultDurationInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{DefaultDurationInMinutes.Value}");
+                }
             }
 
-            if (Optional.IsDefined(TimeGranularityInMinutes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCycles), out propertyOverride);
+            if (Optional.IsDefined(MinCycles) || hasPropertyOverride)
             {
-                builder.Append("    timeGranularityInMinutes:");
-                builder.AppendLine($" {TimeGranularityInMinutes.Value}");
+                builder.Append("    minCycles: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MinCycles.Value}");
+                }
             }
 
-            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGranularityInMinutes), out propertyOverride);
+            if (Optional.IsDefined(TimeGranularityInMinutes) || hasPropertyOverride)
             {
-                builder.Append("    allowMultipleMaintenanceWindowsPerCycle:");
-                var boolValue = AllowMultipleMaintenanceWindowsPerCycle.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                builder.Append("    timeGranularityInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TimeGranularityInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowMultipleMaintenanceWindowsPerCycle), out propertyOverride);
+            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle) || hasPropertyOverride)
+            {
+                builder.Append("    allowMultipleMaintenanceWindowsPerCycle: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = AllowMultipleMaintenanceWindowsPerCycle.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
             }
 
             builder.AppendLine("  }");
@@ -349,12 +436,15 @@ namespace Azure.ResourceManager.Sql
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -375,12 +465,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

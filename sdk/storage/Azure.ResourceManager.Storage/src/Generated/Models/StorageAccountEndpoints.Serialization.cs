@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value, options);
+                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value);
                     continue;
                 }
                 if (property.NameEquals("internetEndpoints"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value, options);
+                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

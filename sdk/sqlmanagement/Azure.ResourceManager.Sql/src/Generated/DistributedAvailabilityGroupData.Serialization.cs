@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -272,141 +273,251 @@ namespace Azure.ResourceManager.Sql
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(TargetDatabase))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDatabase), out propertyOverride);
+            if (Optional.IsDefined(TargetDatabase) || hasPropertyOverride)
             {
-                builder.Append("    targetDatabase:");
-                if (TargetDatabase.Contains(Environment.NewLine))
+                builder.Append("    targetDatabase: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TargetDatabase}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TargetDatabase}'");
+                    if (TargetDatabase.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetDatabase}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetDatabase}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SourceEndpoint))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEndpoint), out propertyOverride);
+            if (Optional.IsDefined(SourceEndpoint) || hasPropertyOverride)
             {
-                builder.Append("    sourceEndpoint:");
-                if (SourceEndpoint.Contains(Environment.NewLine))
+                builder.Append("    sourceEndpoint: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SourceEndpoint}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SourceEndpoint}'");
+                    if (SourceEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceEndpoint}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAvailabilityGroupName), out propertyOverride);
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName) || hasPropertyOverride)
             {
-                builder.Append("    primaryAvailabilityGroupName:");
-                if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
+                builder.Append("    primaryAvailabilityGroupName: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
-                }
-                else
-                {
-                    builder.AppendLine($" '{PrimaryAvailabilityGroupName}'");
-                }
-            }
-
-            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
-            {
-                builder.Append("    secondaryAvailabilityGroupName:");
-                if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
-                {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SecondaryAvailabilityGroupName}'");
+                    if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryAvailabilityGroupName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ReplicationMode))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAvailabilityGroupName), out propertyOverride);
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName) || hasPropertyOverride)
             {
-                builder.Append("    replicationMode:");
-                builder.AppendLine($" '{ReplicationMode.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(DistributedAvailabilityGroupId))
-            {
-                builder.Append("    distributedAvailabilityGroupId:");
-                builder.AppendLine($" '{DistributedAvailabilityGroupId.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(SourceReplicaId))
-            {
-                builder.Append("    sourceReplicaId:");
-                builder.AppendLine($" '{SourceReplicaId.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(TargetReplicaId))
-            {
-                builder.Append("    targetReplicaId:");
-                builder.AppendLine($" '{TargetReplicaId.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(LinkState))
-            {
-                builder.Append("    linkState:");
-                if (LinkState.Contains(Environment.NewLine))
+                builder.Append("    secondaryAvailabilityGroupName: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LinkState}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LinkState}'");
+                    if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryAvailabilityGroupName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(LastHardenedLsn))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
+            if (Optional.IsDefined(ReplicationMode) || hasPropertyOverride)
             {
-                builder.Append("    lastHardenedLsn:");
-                if (LastHardenedLsn.Contains(Environment.NewLine))
+                builder.Append("    replicationMode: ");
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LastHardenedLsn}'''");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LastHardenedLsn}'");
+                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributedAvailabilityGroupId), out propertyOverride);
+            if (Optional.IsDefined(DistributedAvailabilityGroupId) || hasPropertyOverride)
+            {
+                builder.Append("    distributedAvailabilityGroupId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DistributedAvailabilityGroupId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceReplicaId), out propertyOverride);
+            if (Optional.IsDefined(SourceReplicaId) || hasPropertyOverride)
+            {
+                builder.Append("    sourceReplicaId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SourceReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetReplicaId), out propertyOverride);
+            if (Optional.IsDefined(TargetReplicaId) || hasPropertyOverride)
+            {
+                builder.Append("    targetReplicaId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TargetReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkState), out propertyOverride);
+            if (Optional.IsDefined(LinkState) || hasPropertyOverride)
+            {
+                builder.Append("    linkState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LinkState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHardenedLsn), out propertyOverride);
+            if (Optional.IsDefined(LastHardenedLsn) || hasPropertyOverride)
+            {
+                builder.Append("    lastHardenedLsn: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LastHardenedLsn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastHardenedLsn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastHardenedLsn}'");
+                    }
                 }
             }
 
@@ -415,12 +526,15 @@ namespace Azure.ResourceManager.Sql
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -441,12 +555,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageUsage> array = new List<StorageUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageUsage.DeserializeStorageUsage(item, options));
+                        array.Add(StorageUsage.DeserializeStorageUsage(item));
                     }
                     value = array;
                     continue;
