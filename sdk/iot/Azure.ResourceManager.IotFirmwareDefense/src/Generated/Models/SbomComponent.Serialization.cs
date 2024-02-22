@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("releaseDate"u8);
                 writer.WriteStringValue(ReleaseOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();

@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DeviceContent))
+            if (!(DeviceContent is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deviceContent"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ModulesContent))
+            if (!(ModulesContent is ChangeTrackingDictionary<string, IDictionary<string, object>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("modulesContent"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ModuleContent))
+            if (!(ModuleContent is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("moduleContent"u8);
                 writer.WriteStartObject();

@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            if (!(DimensionsToSplitAlert is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();

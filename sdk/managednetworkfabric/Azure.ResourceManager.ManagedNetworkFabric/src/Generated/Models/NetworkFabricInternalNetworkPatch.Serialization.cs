@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
+            if (!(ConnectedIPv4Subnets is ChangeTrackingList<ConnectedSubnet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
+            if (!(ConnectedIPv6Subnets is ChangeTrackingList<ConnectedSubnet> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();

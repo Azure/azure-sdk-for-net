@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipPrefixId"u8);
                 writer.WriteStringValue(IPPrefixId);
             }
-            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
+            if (!(IPExtendedCommunityIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPCommunityIds))
+            if (!(IPCommunityIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();

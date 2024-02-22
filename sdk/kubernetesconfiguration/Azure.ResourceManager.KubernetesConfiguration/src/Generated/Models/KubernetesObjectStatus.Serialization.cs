@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("appliedBy");
                 }
             }
-            if (Optional.IsCollectionDefined(StatusConditions))
+            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
             {
                 if (StatusConditions != null)
                 {

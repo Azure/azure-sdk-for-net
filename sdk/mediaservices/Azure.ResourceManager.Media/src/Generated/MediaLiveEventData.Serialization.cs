@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteObjectValue(Encoding);
             }
-            if (Optional.IsCollectionDefined(Transcriptions))
+            if (!(Transcriptions is ChangeTrackingList<LiveEventTranscription> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("transcriptions"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("hostnamePrefix"u8);
                 writer.WriteStringValue(HostnamePrefix);
             }
-            if (Optional.IsCollectionDefined(StreamOptions))
+            if (!(StreamOptions is ChangeTrackingList<StreamOptionsFlag> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("streamOptions"u8);
                 writer.WriteStartArray();

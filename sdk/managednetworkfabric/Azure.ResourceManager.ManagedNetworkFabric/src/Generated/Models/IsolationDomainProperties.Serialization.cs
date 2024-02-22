@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NeighborGroupIds))
+            if (!(NeighborGroupIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("neighborGroupIds"u8);
                 writer.WriteStartArray();

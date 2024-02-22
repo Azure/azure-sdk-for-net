@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataSegment");
                 }
             }
-            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
+            if (!(FeatureDataTypeOverride is ChangeTrackingDictionary<string, MonitoringFeatureDataType> collection && collection.IsUndefined))
             {
                 if (FeatureDataTypeOverride != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<HybridComputeMachineExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("lastStatusChange"u8);
                 writer.WriteStringValue(LastStatusChange.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("vmUuid"u8);
                 writer.WriteStringValue(VmUuid.Value);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<MachineExtensionInstanceView> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("mssqlDiscovered"u8);
                 writer.WriteStringValue(MSSqlDiscovered);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetectedProperties))
+            if (options.Format != "W" && !(DetectedProperties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("detectedProperties"u8);
                 writer.WriteStartObject();

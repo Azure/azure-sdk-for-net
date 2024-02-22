@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (DependsOn != null)
                 {

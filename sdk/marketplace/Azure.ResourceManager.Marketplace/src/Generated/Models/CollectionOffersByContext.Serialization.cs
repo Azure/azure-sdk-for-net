@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             writer.WritePropertyName("offers"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PrivateStoreOfferResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

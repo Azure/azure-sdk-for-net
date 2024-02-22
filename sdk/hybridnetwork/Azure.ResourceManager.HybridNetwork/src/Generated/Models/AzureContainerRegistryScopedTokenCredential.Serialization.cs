@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("acrServerUrl"u8);
                 writer.WriteStringValue(AcrServerUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Repositories))
+            if (!(Repositories is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();

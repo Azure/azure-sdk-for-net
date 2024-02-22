@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
+            if (options.Format != "W" && !(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();

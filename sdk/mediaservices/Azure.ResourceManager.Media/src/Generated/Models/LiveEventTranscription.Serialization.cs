@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsCollectionDefined(InputTrackSelection))
+            if (!(InputTrackSelection is ChangeTrackingList<LiveEventInputTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();

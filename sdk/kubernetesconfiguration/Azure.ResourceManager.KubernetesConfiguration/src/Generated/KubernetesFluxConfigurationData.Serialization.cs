@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (Optional.IsCollectionDefined(Kustomizations))
+            if (!(Kustomizations is ChangeTrackingDictionary<string, Kustomization> collection && collection.IsUndefined))
             {
                 if (Kustomizations != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<KubernetesObjectStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {

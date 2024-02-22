@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobInstructions");
                 }
             }
-            if (Optional.IsCollectionDefined(LabelCategories))
+            if (!(LabelCategories is ChangeTrackingDictionary<string, LabelCategory> collection && collection.IsUndefined))
             {
                 if (LabelCategories != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StatusMessages))
+            if (options.Format != "W" && !(StatusMessages is ChangeTrackingList<JobStatusMessage> collection0 && collection0.IsUndefined))
             {
                 if (StatusMessages != null)
                 {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection1 && collection1.IsUndefined))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection2 && collection2.IsUndefined))
             {
                 if (Services != null)
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 if (Tags != null)
                 {

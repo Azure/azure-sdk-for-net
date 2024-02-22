@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Plans))
+            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();

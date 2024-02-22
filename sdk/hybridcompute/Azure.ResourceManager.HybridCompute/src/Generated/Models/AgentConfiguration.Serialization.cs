@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("proxyUrl"u8);
                 writer.WriteStringValue(ProxyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IncomingConnectionsPorts))
+            if (options.Format != "W" && !(IncomingConnectionsPorts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("incomingConnectionsPorts"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsAllowList))
+            if (options.Format != "W" && !(ExtensionsAllowList is ChangeTrackingList<HybridComputeConfigurationExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensionsAllowList"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsBlockList))
+            if (options.Format != "W" && !(ExtensionsBlockList is ChangeTrackingList<HybridComputeConfigurationExtension> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extensionsBlockList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProxyBypass))
+            if (options.Format != "W" && !(ProxyBypass is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("proxyBypass"u8);
                 writer.WriteStartArray();

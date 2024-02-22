@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
+            if (!(IPv4ListenRangePrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6ListenRangePrefixes))
+            if (!(IPv6ListenRangePrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6ListenRangePrefixes"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv4NeighborAddress))
+            if (!(IPv4NeighborAddress is ChangeTrackingList<NeighborAddress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipv4NeighborAddress"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6NeighborAddress))
+            if (!(IPv6NeighborAddress is ChangeTrackingList<NeighborAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipv6NeighborAddress"u8);
                 writer.WriteStartArray();

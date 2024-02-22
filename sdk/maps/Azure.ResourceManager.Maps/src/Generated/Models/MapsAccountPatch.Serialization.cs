@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(LinkedResources))
+            if (!(LinkedResources is ChangeTrackingList<MapsLinkedResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();

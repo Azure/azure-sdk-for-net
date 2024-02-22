@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(RetryHistory))
+            if (!(RetryHistory is ChangeTrackingList<LogicWorkRetryHistory> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("iterationCount"u8);
                 writer.WriteNumberValue(IterationCount.Value);
             }
-            if (Optional.IsCollectionDefined(RepetitionIndexes))
+            if (!(RepetitionIndexes is ChangeTrackingList<LogicWorkflowRepetitionIndex> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("repetitionIndexes"u8);
                 writer.WriteStartArray();

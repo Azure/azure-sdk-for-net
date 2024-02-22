@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MatchConfigurations))
+            if (!(MatchConfigurations is ChangeTrackingList<AccessControlListMatchConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            if (!(DynamicMatchConfigurations is ChangeTrackingList<CommonDynamicMatchConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dynamicMatchConfigurations"u8);
                 writer.WriteStartArray();

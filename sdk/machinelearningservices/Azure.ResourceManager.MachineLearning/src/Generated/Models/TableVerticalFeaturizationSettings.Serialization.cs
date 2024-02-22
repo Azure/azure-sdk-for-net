@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlockedTransformers))
+            if (!(BlockedTransformers is ChangeTrackingList<BlockedTransformer> collection && collection.IsUndefined))
             {
                 if (BlockedTransformers != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTransformers");
                 }
             }
-            if (Optional.IsCollectionDefined(ColumnNameAndTypes))
+            if (!(ColumnNameAndTypes is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ColumnNameAndTypes != null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TransformerParams))
+            if (!(TransformerParams is ChangeTrackingDictionary<string, IList<ColumnTransformer>> collection1 && collection1.IsUndefined))
             {
                 if (TransformerParams != null)
                 {

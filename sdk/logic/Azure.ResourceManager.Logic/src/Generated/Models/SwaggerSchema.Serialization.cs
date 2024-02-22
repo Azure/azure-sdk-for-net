@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("items"u8);
                 writer.WriteObjectValue(Items);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(RequiredProperties))
+            if (!(RequiredProperties is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("minProperties"u8);
                 writer.WriteNumberValue(MinProperties.Value);
             }
-            if (Optional.IsCollectionDefined(AllOf))
+            if (!(AllOf is ChangeTrackingList<SwaggerSchema> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WritePropertyName("industry"u8);
                 writer.WriteStringValue(Industry);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotCentralAppTemplateLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

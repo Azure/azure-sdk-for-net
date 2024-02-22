@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SuccessfulDevices))
+            if (!(SuccessfulDevices is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("successfulDevices"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailedDevices))
+            if (!(FailedDevices is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failedDevices"u8);
                 writer.WriteStartArray();

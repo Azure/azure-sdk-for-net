@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 writer.WriteNull("primaryVerificationKey");
             }
-            if (Optional.IsCollectionDefined(AlternateVerificationKeys))
+            if (!(AlternateVerificationKeys is ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredClaims))
+            if (!(RequiredClaims is ChangeTrackingList<ContentKeyPolicyTokenClaim> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();

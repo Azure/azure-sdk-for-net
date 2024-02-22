@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("retry"u8);
                 writer.WriteStringValue(Retry.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingList<MediaJobErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

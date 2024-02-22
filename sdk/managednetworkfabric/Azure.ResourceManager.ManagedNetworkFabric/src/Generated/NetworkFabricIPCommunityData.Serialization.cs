@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsCollectionDefined(IPCommunityRules))
+            if (!(IPCommunityRules is ChangeTrackingList<IPCommunityRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipCommunityRules"u8);
                 writer.WriteStartArray();

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<MachineLearningError> collection && collection.IsUndefined))
             {
                 if (ProvisioningErrors != null)
                 {

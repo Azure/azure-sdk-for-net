@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("fabricVersion"u8);
                 writer.WriteStringValue(FabricVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RouterIds))
+            if (options.Format != "W" && !(RouterIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("routerIds"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteObjectValue(TerminalServerConfiguration);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
             writer.WriteObjectValue(ManagementNetworkConfiguration);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
+            if (options.Format != "W" && !(Racks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("racks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L2IsolationDomains))
+            if (options.Format != "W" && !(L2IsolationDomains is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("l2IsolationDomains"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L3IsolationDomains))
+            if (options.Format != "W" && !(L3IsolationDomains is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("l3IsolationDomains"u8);
                 writer.WriteStartArray();

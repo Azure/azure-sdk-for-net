@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (!(AccessPolicies is ChangeTrackingList<KeyVaultAccessPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();

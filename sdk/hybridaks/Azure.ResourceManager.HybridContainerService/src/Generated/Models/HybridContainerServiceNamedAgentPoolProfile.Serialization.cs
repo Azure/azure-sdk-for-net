@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NodeLabels))
+            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeTaints))
+            if (!(NodeTaints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();

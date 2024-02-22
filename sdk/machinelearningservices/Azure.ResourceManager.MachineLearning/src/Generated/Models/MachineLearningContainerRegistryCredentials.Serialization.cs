@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Passwords))
+            if (!(Passwords is ChangeTrackingList<MachineLearningPasswordDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();

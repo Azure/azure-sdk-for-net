@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Requesters))
+            if (options.Format != "W" && !(Requesters is ChangeTrackingList<PlanRequesterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requesters"u8);
                 writer.WriteStartArray();

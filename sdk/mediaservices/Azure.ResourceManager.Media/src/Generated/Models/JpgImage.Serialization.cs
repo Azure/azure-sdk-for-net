@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingList<JpgLayer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();

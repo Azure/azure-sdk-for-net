@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (Optional.IsCollectionDefined(SupportedVersions))
+            if (!(SupportedVersions is ChangeTrackingList<SupportedVersionProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedRoleTypes))
+            if (!(SupportedRoleTypes is ChangeTrackingList<NetworkDeviceRoleName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedRoleTypes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Interfaces))
+            if (!(Interfaces is ChangeTrackingList<NetworkDeviceInterfaceProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();

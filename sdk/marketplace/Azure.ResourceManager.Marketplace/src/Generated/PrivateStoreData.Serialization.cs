@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CollectionIds))
+            if (options.Format != "W" && !(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Branding))
+            if (!(Branding is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Recipients))
+            if (!(Recipients is ChangeTrackingList<NotificationRecipient> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();

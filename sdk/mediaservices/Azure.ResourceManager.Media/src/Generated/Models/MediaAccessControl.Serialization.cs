@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPAllowList))
+            if (!(IPAllowList is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAllowList"u8);
                 writer.WriteStartArray();

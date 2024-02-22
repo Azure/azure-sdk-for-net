@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
+            if (!(ManagedByTenantApprovers is ChangeTrackingList<ManagedServicesEligibleApprover> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();

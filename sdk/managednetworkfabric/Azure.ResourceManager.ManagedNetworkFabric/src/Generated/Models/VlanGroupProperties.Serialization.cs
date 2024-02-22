@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Vlans))
+            if (!(Vlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vlans"u8);
                 writer.WriteStartArray();

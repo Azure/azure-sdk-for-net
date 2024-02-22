@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sshSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(CustomServices))
+            if (!(CustomServices is ChangeTrackingList<CustomService> collection && collection.IsUndefined))
             {
                 if (CustomServices != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteObjectValue(ConnectivityEndpoints);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Applications))
+            if (options.Format != "W" && !(Applications is ChangeTrackingList<MachineLearningComputeInstanceApplication> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<MachineLearningError> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableNodePublicIp");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Containers))
+            if (options.Format != "W" && !(Containers is ChangeTrackingList<MachineLearningComputeInstanceContainer> collection2 && collection2.IsUndefined))
             {
                 if (Containers != null)
                 {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containers");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataDisks))
+            if (options.Format != "W" && !(DataDisks is ChangeTrackingList<MachineLearningComputeInstanceDataDisk> collection3 && collection3.IsUndefined))
             {
                 if (DataDisks != null)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataDisks");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataMounts))
+            if (options.Format != "W" && !(DataMounts is ChangeTrackingList<MachineLearningComputeInstanceDataMount> collection4 && collection4.IsUndefined))
             {
                 if (DataMounts != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ControlPlaneStatus))
+            if (!(ControlPlaneStatus is ChangeTrackingList<ProvisionedClusterAddonStatusProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controlPlaneStatus"u8);
                 writer.WriteStartArray();

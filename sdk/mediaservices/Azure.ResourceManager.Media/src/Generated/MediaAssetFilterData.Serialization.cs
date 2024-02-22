@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("firstQuality"u8);
                 writer.WriteObjectValue(FirstQuality);
             }
-            if (Optional.IsCollectionDefined(Tracks))
+            if (!(Tracks is ChangeTrackingList<FilterTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();

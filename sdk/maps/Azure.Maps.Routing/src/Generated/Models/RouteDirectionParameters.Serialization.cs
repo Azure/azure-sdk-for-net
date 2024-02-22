@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing
                 writer.WritePropertyName("supportingPoints"u8);
                 writer.WriteObjectValue(_GeoJsonSupportingPoints);
             }
-            if (Optional.IsCollectionDefined(AvoidVignette))
+            if (!(AvoidVignette is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("avoidVignette"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowVignette))
+            if (!(AllowVignette is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowVignette"u8);
                 writer.WriteStartArray();

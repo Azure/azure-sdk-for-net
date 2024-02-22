@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsCollectionDefined(Audiences))
+            if (!(Audiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();

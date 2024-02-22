@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
+            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();

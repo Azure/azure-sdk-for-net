@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clusterFqdn");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SystemServices))
+            if (options.Format != "W" && !(SystemServices is ChangeTrackingList<MachineLearningComputeSystemService> collection && collection.IsUndefined))
             {
                 if (SystemServices != null)
                 {

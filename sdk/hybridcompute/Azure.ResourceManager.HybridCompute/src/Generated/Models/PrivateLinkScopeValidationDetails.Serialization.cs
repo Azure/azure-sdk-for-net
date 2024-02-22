@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ConnectionDetails))
+            if (!(ConnectionDetails is ChangeTrackingList<HybridComputeConnectionDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();

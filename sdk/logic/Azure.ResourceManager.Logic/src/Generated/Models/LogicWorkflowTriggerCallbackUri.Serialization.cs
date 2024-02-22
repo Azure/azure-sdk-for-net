@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Optional.IsCollectionDefined(RelativePathParameters))
+            if (!(RelativePathParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("relativePathParameters"u8);
                 writer.WriteStartArray();

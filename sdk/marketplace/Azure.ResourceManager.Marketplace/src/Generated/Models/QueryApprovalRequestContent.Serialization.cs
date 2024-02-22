@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsCollectionDefined(PlanIds))
+            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();

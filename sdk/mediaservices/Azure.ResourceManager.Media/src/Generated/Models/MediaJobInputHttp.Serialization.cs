@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("baseUri"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsCollectionDefined(InputDefinitions))
+            if (!(InputDefinitions is ChangeTrackingList<MediaJobInputDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();

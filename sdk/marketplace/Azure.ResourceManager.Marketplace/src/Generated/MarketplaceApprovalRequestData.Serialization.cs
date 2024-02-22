@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsCollectionDefined(PlansDetails))
+            if (!(PlansDetails is ChangeTrackingList<PrivateStorePlanDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartArray();

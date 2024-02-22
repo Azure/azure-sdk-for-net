@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("artifactManifestState"u8);
                 writer.WriteStringValue(ArtifactManifestState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Artifacts))
+            if (!(Artifacts is ChangeTrackingList<ManifestArtifactFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();

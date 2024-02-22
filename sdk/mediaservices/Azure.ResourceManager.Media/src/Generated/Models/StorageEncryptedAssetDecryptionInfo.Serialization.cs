@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteBase64StringValue(Key, "D");
             }
-            if (Optional.IsCollectionDefined(AssetFileEncryptionMetadata))
+            if (!(AssetFileEncryptionMetadata is ChangeTrackingList<MediaAssetFileEncryptionMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assetFileEncryptionMetadata"u8);
                 writer.WriteStartArray();

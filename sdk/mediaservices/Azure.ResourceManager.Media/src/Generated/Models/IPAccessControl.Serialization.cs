@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedIPs))
+            if (!(AllowedIPs is ChangeTrackingList<IPRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();

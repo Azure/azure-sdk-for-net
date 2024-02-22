@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("estimatedVMPrices"u8);
                 writer.WriteObjectValue(EstimatedVmPrices);
             }
-            if (Optional.IsCollectionDefined(SupportedComputeTypes))
+            if (!(SupportedComputeTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedComputeTypes"u8);
                 writer.WriteStartArray();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AuthorizationPolicies))
+            if (!(AuthorizationPolicies is ChangeTrackingList<SharedAccessSignatureAuthorizationRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedFqdns))
+            if (!(AllowedFqdns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPFilterRules))
+            if (!(IPFilterRules is ChangeTrackingList<IotHubIPFilterRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("minTlsVersion"u8);
                 writer.WriteStringValue(MinTlsVersion);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<IotHubPrivateEndpointConnectionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsCollectionDefined(EventHubEndpoints))
+            if (!(EventHubEndpoints is ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("eventHubEndpoints"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("routing"u8);
                 writer.WriteObjectValue(Routing);
             }
-            if (Optional.IsCollectionDefined(StorageEndpoints))
+            if (!(StorageEndpoints is ChangeTrackingDictionary<string, IotHubStorageEndpointProperties> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartObject();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(MessagingEndpoints))
+            if (!(MessagingEndpoints is ChangeTrackingDictionary<string, MessagingEndpointProperties> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("messagingEndpoints"u8);
                 writer.WriteStartObject();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotHubLocationDescription> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

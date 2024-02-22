@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("selectableFilter"u8);
                 writer.WriteStringValue(SelectableFilter);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

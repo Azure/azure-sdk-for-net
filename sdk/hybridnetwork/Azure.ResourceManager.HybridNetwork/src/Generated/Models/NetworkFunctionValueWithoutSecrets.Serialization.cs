@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
-            if (Optional.IsCollectionDefined(RoleOverrideValues))
+            if (!(RoleOverrideValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
                 writer.WriteStartArray();

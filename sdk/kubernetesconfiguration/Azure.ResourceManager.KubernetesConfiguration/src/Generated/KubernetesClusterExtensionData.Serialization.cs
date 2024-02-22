@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
+            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<KubernetesClusterExtensionStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("errorInfo");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
+            if (options.Format != "W" && !(CustomLocationSettings is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 if (CustomLocationSettings != null)
                 {

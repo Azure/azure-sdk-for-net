@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();

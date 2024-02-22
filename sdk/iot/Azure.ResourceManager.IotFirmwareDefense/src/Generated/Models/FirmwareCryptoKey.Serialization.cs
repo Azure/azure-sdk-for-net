@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyAlgorithm");
                 }
             }
-            if (Optional.IsCollectionDefined(Usage))
+            if (!(Usage is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Usage != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("usage");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
+            if (options.Format != "W" && !(FilePaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (FilePaths != null)
                 {

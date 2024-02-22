@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
+            if (!(AllowedCallerIPAddresses is ChangeTrackingList<FlowAccessControlIPAddressRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();

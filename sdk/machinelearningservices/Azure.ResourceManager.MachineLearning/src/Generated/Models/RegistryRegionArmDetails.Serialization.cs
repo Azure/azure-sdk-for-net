@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AcrDetails))
+            if (!(AcrDetails is ChangeTrackingList<RegistryAcrDetails> collection && collection.IsUndefined))
             {
                 if (AcrDetails != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("location");
                 }
             }
-            if (Optional.IsCollectionDefined(StorageAccountDetails))
+            if (!(StorageAccountDetails is ChangeTrackingList<StorageAccountDetails> collection0 && collection0.IsUndefined))
             {
                 if (StorageAccountDetails != null)
                 {
