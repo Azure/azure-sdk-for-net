@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lastBackupName"/> is null. </exception>
         public CompleteDatabaseRestoreDefinition(string lastBackupName)
         {
-            Argument.AssertNotNull(lastBackupName, nameof(lastBackupName));
+            if (lastBackupName == null)
+            {
+                throw new ArgumentNullException(nameof(lastBackupName));
+            }
 
             LastBackupName = lastBackupName;
         }

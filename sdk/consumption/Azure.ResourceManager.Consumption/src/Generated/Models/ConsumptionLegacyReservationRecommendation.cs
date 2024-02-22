@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         internal ConsumptionLegacyReservationRecommendation(string scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             Scope = scope;
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();

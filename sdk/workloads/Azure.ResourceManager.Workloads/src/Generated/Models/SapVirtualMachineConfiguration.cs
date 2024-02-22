@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/>, <paramref name="imageReference"/> or <paramref name="osProfile"/> is null. </exception>
         public SapVirtualMachineConfiguration(string vmSize, SapImageReference imageReference, SapOSProfile osProfile)
         {
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
-            Argument.AssertNotNull(imageReference, nameof(imageReference));
-            Argument.AssertNotNull(osProfile, nameof(osProfile));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (imageReference == null)
+            {
+                throw new ArgumentNullException(nameof(imageReference));
+            }
+            if (osProfile == null)
+            {
+                throw new ArgumentNullException(nameof(osProfile));
+            }
 
             VmSize = vmSize;
             ImageReference = imageReference;

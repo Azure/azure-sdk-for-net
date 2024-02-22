@@ -49,8 +49,14 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="credential"/> is null. </exception>
         public TemplateClient(string vaultBaseUrl, TokenCredential credential, TemplateClientOptions options)
         {
-            Argument.AssertNotNull(vaultBaseUrl, nameof(vaultBaseUrl));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new TemplateClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -79,7 +85,14 @@ namespace Azure.Template
         /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecretAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSecretAsync(string secretName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecret");
             scope.Start();
@@ -114,7 +127,14 @@ namespace Azure.Template
         /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecret(string,RequestContext)']/*" />
         public virtual Response GetSecret(string secretName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecret");
             scope.Start();

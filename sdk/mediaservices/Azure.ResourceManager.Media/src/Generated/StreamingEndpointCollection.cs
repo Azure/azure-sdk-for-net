@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string streamingEndpointName, StreamingEndpointData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual async Task<Response<StreamingEndpointResource>> GetAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual Response<StreamingEndpointResource> Get(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<StreamingEndpointResource>> GetIfExistsAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
         public virtual NullableResponse<StreamingEndpointResource> GetIfExists(string streamingEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+            if (streamingEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingEndpointName));
+            }
+            if (streamingEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingEndpointName));
+            }
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetIfExists");
             scope.Start();

@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCommunicationsGatewayResource>> UpdateAsync(VoiceServicesCommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.Update");
             scope.Start();
@@ -393,7 +396,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<VoiceServicesCommunicationsGatewayResource> Update(VoiceServicesCommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.Update");
             scope.Start();
@@ -436,8 +442,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCommunicationsGatewayResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.AddTag");
             scope.Start();
@@ -498,8 +510,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VoiceServicesCommunicationsGatewayResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.AddTag");
             scope.Start();
@@ -559,7 +577,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCommunicationsGatewayResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.SetTags");
             scope.Start();
@@ -616,7 +637,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VoiceServicesCommunicationsGatewayResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.SetTags");
             scope.Start();
@@ -673,7 +697,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCommunicationsGatewayResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.RemoveTag");
             scope.Start();
@@ -733,7 +760,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VoiceServicesCommunicationsGatewayResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _voiceServicesCommunicationsGatewayCommunicationsGatewaysClientDiagnostics.CreateScope("VoiceServicesCommunicationsGatewayResource.RemoveTag");
             scope.Start();

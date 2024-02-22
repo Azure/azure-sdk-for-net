@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="warning"/> is null. </exception>
         internal UserFacingWarningDetail(ResponseError warning)
         {
-            Argument.AssertNotNull(warning, nameof(warning));
+            if (warning == null)
+            {
+                throw new ArgumentNullException(nameof(warning));
+            }
 
             Warning = warning;
         }

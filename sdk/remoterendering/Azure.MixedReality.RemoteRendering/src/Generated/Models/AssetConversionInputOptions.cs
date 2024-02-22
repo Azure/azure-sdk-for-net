@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -19,8 +18,14 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> or <paramref name="relativeInputAssetPath"/> is null. </exception>
         public AssetConversionInputOptions(Uri storageContainerUri, string relativeInputAssetPath)
         {
-            Argument.AssertNotNull(storageContainerUri, nameof(storageContainerUri));
-            Argument.AssertNotNull(relativeInputAssetPath, nameof(relativeInputAssetPath));
+            if (storageContainerUri == null)
+            {
+                throw new ArgumentNullException(nameof(storageContainerUri));
+            }
+            if (relativeInputAssetPath == null)
+            {
+                throw new ArgumentNullException(nameof(relativeInputAssetPath));
+            }
 
             StorageContainerUri = storageContainerUri;
             RelativeInputAssetPath = relativeInputAssetPath;

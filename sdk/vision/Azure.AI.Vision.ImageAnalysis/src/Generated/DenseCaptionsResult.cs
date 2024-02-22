@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -55,7 +54,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal DenseCaptionsResult(IEnumerable<DenseCaption> values)
         {
-            Argument.AssertNotNull(values, nameof(values));
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             Values = values.ToList();
         }

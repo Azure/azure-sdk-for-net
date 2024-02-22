@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.Sms.Models
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public SmsRecipient(string to)
         {
-            Argument.AssertNotNull(to, nameof(to));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
 
             To = to;
         }

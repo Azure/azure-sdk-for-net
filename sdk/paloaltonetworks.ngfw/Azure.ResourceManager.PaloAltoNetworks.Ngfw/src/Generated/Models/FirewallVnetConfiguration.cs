@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vnet"/>, <paramref name="trustSubnet"/> or <paramref name="unTrustSubnet"/> is null. </exception>
         public FirewallVnetConfiguration(IPAddressSpaceInfo vnet, IPAddressSpaceInfo trustSubnet, IPAddressSpaceInfo unTrustSubnet)
         {
-            Argument.AssertNotNull(vnet, nameof(vnet));
-            Argument.AssertNotNull(trustSubnet, nameof(trustSubnet));
-            Argument.AssertNotNull(unTrustSubnet, nameof(unTrustSubnet));
+            if (vnet == null)
+            {
+                throw new ArgumentNullException(nameof(vnet));
+            }
+            if (trustSubnet == null)
+            {
+                throw new ArgumentNullException(nameof(trustSubnet));
+            }
+            if (unTrustSubnet == null)
+            {
+                throw new ArgumentNullException(nameof(unTrustSubnet));
+            }
 
             Vnet = vnet;
             TrustSubnet = trustSubnet;

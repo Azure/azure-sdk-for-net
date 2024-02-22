@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> or <paramref name="parameters"/> is null. </exception>
         public PolicyAssignmentArtifact(string policyDefinitionId, IDictionary<string, ParameterValue> parameters)
         {
-            Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (policyDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(policyDefinitionId));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
             DependsOn = new ChangeTrackingList<string>();
             PolicyDefinitionId = policyDefinitionId;

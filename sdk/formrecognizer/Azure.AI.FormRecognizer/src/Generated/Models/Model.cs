@@ -20,7 +20,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         internal Model(CustomFormModelInfo modelInfo)
         {
-            Argument.AssertNotNull(modelInfo, nameof(modelInfo));
+            if (modelInfo == null)
+            {
+                throw new ArgumentNullException(nameof(modelInfo));
+            }
 
             ModelInfo = modelInfo;
             ComposedTrainResults = new ChangeTrackingList<TrainResult>();

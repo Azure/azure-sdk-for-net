@@ -68,9 +68,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GenerateBenefitUtilizationSummariesReportAsync(string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (reservationOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderId));
+            }
+            if (reservationOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
+            }
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+            if (reservationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,9 +110,26 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GenerateBenefitUtilizationSummariesReport(string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (reservationOrderId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationOrderId));
+            }
+            if (reservationOrderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
+            }
+            if (reservationId == null)
+            {
+                throw new ArgumentNullException(nameof(reservationId));
+            }
+            if (reservationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content);
             _pipeline.Send(message, cancellationToken);

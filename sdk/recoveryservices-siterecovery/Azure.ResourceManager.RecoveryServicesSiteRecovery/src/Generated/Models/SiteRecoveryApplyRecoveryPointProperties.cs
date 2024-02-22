@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="providerSpecificDetails"/> is null. </exception>
         public SiteRecoveryApplyRecoveryPointProperties(SiteRecoveryApplyRecoveryPointProviderSpecificContent providerSpecificDetails)
         {
-            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
+            if (providerSpecificDetails == null)
+            {
+                throw new ArgumentNullException(nameof(providerSpecificDetails));
+            }
 
             ProviderSpecificDetails = providerSpecificDetails;
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         internal SmsSendResult(string to, int httpStatusCode, bool successful)
         {
-            Argument.AssertNotNull(to, nameof(to));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
 
             To = to;
             HttpStatusCode = httpStatusCode;

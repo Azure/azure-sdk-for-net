@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TriggerType = triggerType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/> for deserialization. </summary>
+        internal UnknownTrigger()
+        {
+        }
     }
 }

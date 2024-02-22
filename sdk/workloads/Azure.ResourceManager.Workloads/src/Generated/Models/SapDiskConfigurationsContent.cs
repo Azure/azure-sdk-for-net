@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dbVmSku"/> is null. </exception>
         public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
         {
-            Argument.AssertNotNull(dbVmSku, nameof(dbVmSku));
+            if (dbVmSku == null)
+            {
+                throw new ArgumentNullException(nameof(dbVmSku));
+            }
 
             AppLocation = appLocation;
             Environment = environment;

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppAuthConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authConfigName, ContainerAppAuthConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppAuthConfigResource> CreateOrUpdate(WaitUntil waitUntil, string authConfigName, ContainerAppAuthConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppAuthConfigResource>> GetAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual Response<ContainerAppAuthConfigResource> Get(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual Response<bool> Exists(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppAuthConfigResource>> GetIfExistsAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppAuthConfigResource> GetIfExists(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+            if (authConfigName == null)
+            {
+                throw new ArgumentNullException(nameof(authConfigName));
+            }
+            if (authConfigName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authConfigName));
+            }
 
             using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetIfExists");
             scope.Start();

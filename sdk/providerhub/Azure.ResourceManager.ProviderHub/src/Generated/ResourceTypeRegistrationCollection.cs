@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceTypeRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceTypeRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<Response<ResourceTypeRegistrationResource>> GetAsync(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual Response<ResourceTypeRegistrationResource> Get(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceTypeRegistrationResource>> GetIfExistsAsync(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual NullableResponse<ResourceTypeRegistrationResource> GetIfExists(string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
             scope.Start();

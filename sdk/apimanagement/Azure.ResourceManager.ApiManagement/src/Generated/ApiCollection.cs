@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.CreateOrUpdate");
             scope.Start();
@@ -134,8 +144,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiResource> CreateOrUpdate(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +201,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<ApiResource>> GetAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<ApiResource> Get(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.Get");
             scope.Start();
@@ -341,7 +375,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.Exists");
             scope.Start();
@@ -384,7 +425,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<bool> Exists(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.Exists");
             scope.Start();
@@ -427,7 +475,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiResource>> GetIfExistsAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetIfExists");
             scope.Start();
@@ -472,7 +527,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual NullableResponse<ApiResource> GetIfExists(string apiId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
+            if (apiId == null)
+            {
+                throw new ArgumentNullException(nameof(apiId));
+            }
+            if (apiId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
+            }
 
             using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetIfExists");
             scope.Start();

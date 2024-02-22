@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            IReadOnlyList<ToolCall> toolCalls = default;
+            IReadOnlyList<RunStepToolCall> toolCalls = default;
             RunStepType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -82,10 +82,10 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("tool_calls"u8))
                 {
-                    List<ToolCall> array = new List<ToolCall>();
+                    List<RunStepToolCall> array = new List<RunStepToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolCall.DeserializeToolCall(item));
+                        array.Add(RunStepToolCall.DeserializeRunStepToolCall(item));
                     }
                     toolCalls = array;
                     continue;

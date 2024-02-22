@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceWebAppId"/> is null. </exception>
         public CloningInfo(ResourceIdentifier sourceWebAppId)
         {
-            Argument.AssertNotNull(sourceWebAppId, nameof(sourceWebAppId));
+            if (sourceWebAppId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceWebAppId));
+            }
 
             SourceWebAppId = sourceWebAppId;
             AppSettingsOverrides = new ChangeTrackingDictionary<string, string>();

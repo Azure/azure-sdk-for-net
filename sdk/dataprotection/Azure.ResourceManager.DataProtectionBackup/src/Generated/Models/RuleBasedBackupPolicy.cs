@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -25,8 +24,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceTypes"/> or <paramref name="policyRules"/> is null. </exception>
         public RuleBasedBackupPolicy(IEnumerable<string> dataSourceTypes, IEnumerable<DataProtectionBasePolicyRule> policyRules) : base(dataSourceTypes)
         {
-            Argument.AssertNotNull(dataSourceTypes, nameof(dataSourceTypes));
-            Argument.AssertNotNull(policyRules, nameof(policyRules));
+            if (dataSourceTypes == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceTypes));
+            }
+            if (policyRules == null)
+            {
+                throw new ArgumentNullException(nameof(policyRules));
+            }
 
             PolicyRules = policyRules.ToList();
             ObjectType = "BackupPolicy";

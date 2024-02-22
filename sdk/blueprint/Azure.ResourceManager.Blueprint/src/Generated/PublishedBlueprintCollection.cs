@@ -79,8 +79,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublishedBlueprintResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionId, PublishedBlueprintData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.CreateOrUpdate");
             scope.Start();
@@ -128,8 +138,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublishedBlueprintResource> CreateOrUpdate(WaitUntil waitUntil, string versionId, PublishedBlueprintData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +195,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<Response<PublishedBlueprintResource>> GetAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.Get");
             scope.Start();
@@ -220,7 +247,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual Response<PublishedBlueprintResource> Get(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.Get");
             scope.Start();
@@ -265,7 +299,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.Exists");
             scope.Start();
@@ -308,7 +349,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual Response<bool> Exists(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.Exists");
             scope.Start();
@@ -351,7 +399,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<NullableResponse<PublishedBlueprintResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.GetIfExists");
             scope.Start();
@@ -396,7 +451,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual NullableResponse<PublishedBlueprintResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            if (versionId == null)
+            {
+                throw new ArgumentNullException(nameof(versionId));
+            }
+            if (versionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
+            }
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.GetIfExists");
             scope.Start();

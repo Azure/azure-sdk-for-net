@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AlertRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, AlertRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AlertRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, AlertRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<AlertRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<AlertRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<NullableResponse<AlertRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual NullableResponse<AlertRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleName));
+            }
+            if (ruleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
+            }
 
             using var scope = _alertRuleClientDiagnostics.CreateScope("AlertRuleCollection.GetIfExists");
             scope.Start();

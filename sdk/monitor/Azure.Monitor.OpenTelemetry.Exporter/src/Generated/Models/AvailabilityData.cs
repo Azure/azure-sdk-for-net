@@ -23,9 +23,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="duration"/> is null. </exception>
         public AvailabilityData(int version, string id, string name, string duration, bool success) : base(version)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(duration, nameof(duration));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (duration == null)
+            {
+                throw new ArgumentNullException(nameof(duration));
+            }
 
             Id = id;
             Name = name;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filterableProperties"/> is null. </exception>
         public ProductFamiliesContent(IDictionary<string, IList<FilterableProperty>> filterableProperties)
         {
-            Argument.AssertNotNull(filterableProperties, nameof(filterableProperties));
+            if (filterableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(filterableProperties));
+            }
 
             FilterableProperties = filterableProperties;
         }

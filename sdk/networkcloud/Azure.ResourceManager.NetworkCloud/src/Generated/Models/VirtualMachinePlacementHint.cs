@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public VirtualMachinePlacementHint(VirtualMachinePlacementHintType hintType, ResourceIdentifier resourceId, VirtualMachineSchedulingExecution schedulingExecution, VirtualMachinePlacementHintPodAffinityScope scope)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             HintType = hintType;
             ResourceId = resourceId;

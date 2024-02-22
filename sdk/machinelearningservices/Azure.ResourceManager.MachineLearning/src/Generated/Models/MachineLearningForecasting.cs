@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public MachineLearningForecasting(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
-            Argument.AssertNotNull(trainingData, nameof(trainingData));
+            if (trainingData == null)
+            {
+                throw new ArgumentNullException(nameof(trainingData));
+            }
 
             CvSplitColumnNames = new ChangeTrackingList<string>();
             SearchSpace = new ChangeTrackingList<TableParameterSubspace>();

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BlobContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BlobContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<BlobContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<BlobContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Get");
             scope.Start();
@@ -335,7 +369,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
             scope.Start();
@@ -378,7 +419,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<NullableResponse<BlobContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual NullableResponse<BlobContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (containerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
+            }
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
             scope.Start();

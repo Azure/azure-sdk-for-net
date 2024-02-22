@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Get");
             scope.Start();
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual Response<ResourceGroupSecurityAlertResource> Get(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual Response<bool> Exists(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceGroupSecurityAlertResource>> GetIfExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         public virtual NullableResponse<ResourceGroupSecurityAlertResource> GetIfExists(string alertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+            if (alertName == null)
+            {
+                throw new ArgumentNullException(nameof(alertName));
+            }
+            if (alertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
+            }
 
             using var scope = _resourceGroupSecurityAlertAlertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.GetIfExists");
             scope.Start();

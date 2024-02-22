@@ -19,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public DatasetCompression(object type)
         {
-            Argument.AssertNotNull(type, nameof(type));
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
 
             Type = type;
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();

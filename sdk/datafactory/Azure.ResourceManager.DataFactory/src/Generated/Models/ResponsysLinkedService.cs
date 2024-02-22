@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         public ResponsysLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             Endpoint = endpoint;
             ClientId = clientId;
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Responsys";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResponsysLinkedService"/> for deserialization. </summary>
+        internal ResponsysLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Responsys server. </summary>

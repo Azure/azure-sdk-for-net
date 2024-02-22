@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksLinkedService(DataFactoryElement<string> domain)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
 
             Domain = domain;
             NewClusterSparkConf = new ChangeTrackingDictionary<string, BinaryData>();
@@ -77,6 +80,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             PolicyId = policyId;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureDatabricks";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksLinkedService()
+        {
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>

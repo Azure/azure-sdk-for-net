@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="events"/> is null. </exception>
         public IntegrationAccountTrackingEventsContent(string sourceType, IEnumerable<IntegrationAccountTrackingEvent> events)
         {
-            Argument.AssertNotNull(sourceType, nameof(sourceType));
-            Argument.AssertNotNull(events, nameof(events));
+            if (sourceType == null)
+            {
+                throw new ArgumentNullException(nameof(sourceType));
+            }
+            if (events == null)
+            {
+                throw new ArgumentNullException(nameof(events));
+            }
 
             SourceType = sourceType;
             Events = events.ToList();

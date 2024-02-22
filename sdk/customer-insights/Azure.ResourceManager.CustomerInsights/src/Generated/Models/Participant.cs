@@ -54,9 +54,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="profileTypeName"/>, <paramref name="participantPropertyReferences"/> or <paramref name="participantName"/> is null. </exception>
         public Participant(string profileTypeName, IEnumerable<ParticipantPropertyReference> participantPropertyReferences, string participantName)
         {
-            Argument.AssertNotNull(profileTypeName, nameof(profileTypeName));
-            Argument.AssertNotNull(participantPropertyReferences, nameof(participantPropertyReferences));
-            Argument.AssertNotNull(participantName, nameof(participantName));
+            if (profileTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(profileTypeName));
+            }
+            if (participantPropertyReferences == null)
+            {
+                throw new ArgumentNullException(nameof(participantPropertyReferences));
+            }
+            if (participantName == null)
+            {
+                throw new ArgumentNullException(nameof(participantName));
+            }
 
             ProfileTypeName = profileTypeName;
             ParticipantPropertyReferences = participantPropertyReferences.ToList();

@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="action"/> is null. </exception>
         public RulesEngineRule(string name, int priority, RulesEngineAction action)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(action, nameof(action));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             Name = name;
             Priority = priority;

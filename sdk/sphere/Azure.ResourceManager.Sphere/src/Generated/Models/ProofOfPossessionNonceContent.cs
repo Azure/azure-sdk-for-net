@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="proofOfPossessionNonce"/> is null. </exception>
         public ProofOfPossessionNonceContent(string proofOfPossessionNonce)
         {
-            Argument.AssertNotNull(proofOfPossessionNonce, nameof(proofOfPossessionNonce));
+            if (proofOfPossessionNonce == null)
+            {
+                throw new ArgumentNullException(nameof(proofOfPossessionNonce));
+            }
 
             ProofOfPossessionNonce = proofOfPossessionNonce;
         }

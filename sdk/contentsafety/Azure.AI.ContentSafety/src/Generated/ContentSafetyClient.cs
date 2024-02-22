@@ -69,8 +69,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ContentSafetyClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -90,8 +96,14 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ContentSafetyClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -109,7 +121,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeTextResult>> AnalyzeTextAsync(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -125,7 +140,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextOptions,CancellationToken)']/*" />
         public virtual Response<AnalyzeTextResult> AnalyzeText(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -156,7 +174,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
             scope.Start();
@@ -195,7 +216,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeText(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
             scope.Start();
@@ -219,7 +243,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeImageAsync(AnalyzeImageOptions,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeImageResult>> AnalyzeImageAsync(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -235,7 +262,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeImage(AnalyzeImageOptions,CancellationToken)']/*" />
         public virtual Response<AnalyzeImageResult> AnalyzeImage(AnalyzeImageOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
@@ -266,7 +296,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeImageAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeImageAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeImage");
             scope.Start();
@@ -305,7 +338,10 @@ namespace Azure.AI.ContentSafety
         /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeImage(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeImage(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeImage");
             scope.Start();

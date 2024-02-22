@@ -25,12 +25,30 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/>, <paramref name="clientIp"/> or <paramref name="clientName"/> is null. </exception>
         internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime)
         {
-            Argument.AssertNotNull(handleId, nameof(handleId));
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(fileId, nameof(fileId));
-            Argument.AssertNotNull(sessionId, nameof(sessionId));
-            Argument.AssertNotNull(clientIp, nameof(clientIp));
-            Argument.AssertNotNull(clientName, nameof(clientName));
+            if (handleId == null)
+            {
+                throw new ArgumentNullException(nameof(handleId));
+            }
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (sessionId == null)
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+            if (clientIp == null)
+            {
+                throw new ArgumentNullException(nameof(clientIp));
+            }
+            if (clientName == null)
+            {
+                throw new ArgumentNullException(nameof(clientName));
+            }
 
             HandleId = handleId;
             Path = path;

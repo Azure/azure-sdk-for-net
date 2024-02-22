@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -24,8 +23,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="userToken"/> is null. </exception>
         public QuickbaseLinkedService(object url, SecretBase userToken)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(userToken, nameof(userToken));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (userToken == null)
+            {
+                throw new ArgumentNullException(nameof(userToken));
+            }
 
             Url = url;
             UserToken = userToken;

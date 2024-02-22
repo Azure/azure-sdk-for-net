@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LabPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string labPlanName, LabPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LabPlanResource> CreateOrUpdate(WaitUntil waitUntil, string labPlanName, LabPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual async Task<Response<LabPlanResource>> GetAsync(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual Response<LabPlanResource> Get(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual Response<bool> Exists(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual async Task<NullableResponse<LabPlanResource>> GetIfExistsAsync(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="labPlanName"/> is null. </exception>
         public virtual NullableResponse<LabPlanResource> GetIfExists(string labPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            if (labPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(labPlanName));
+            }
+            if (labPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
+            }
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanCollection.GetIfExists");
             scope.Start();

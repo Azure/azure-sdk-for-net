@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -21,8 +20,14 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="ArgumentNullException"> <paramref name="question"/> or <paramref name="textDocuments"/> is null. </exception>
         public AnswersFromTextOptions(string question, IEnumerable<TextDocument> textDocuments)
         {
-            Argument.AssertNotNull(question, nameof(question));
-            Argument.AssertNotNull(textDocuments, nameof(textDocuments));
+            if (question == null)
+            {
+                throw new ArgumentNullException(nameof(question));
+            }
+            if (textDocuments == null)
+            {
+                throw new ArgumentNullException(nameof(textDocuments));
+            }
 
             Question = question;
             TextDocuments = textDocuments.ToList();

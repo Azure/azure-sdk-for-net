@@ -186,7 +186,7 @@ public class AssistantsModelFactoryTests
         string functionCallName = "function_call_name";
         string functionCallArguments = "function_call_arguments";
         string functionCallOutput = "function_call_output";
-        FunctionToolCall mockFunctionToolCall = AssistantsModelFactory.FunctionToolCall(
+        RunStepFunctionToolCall mockFunctionToolCall = AssistantsModelFactory.RunStepFunctionToolCall(
             functionToolCallId,
             functionCallName,
             functionCallArguments,
@@ -200,26 +200,26 @@ public class AssistantsModelFactoryTests
         string codeInterpreterToolCallInput = "code_interprter_tool_call_input";
         string codeInterpreterLogOutput = "code_interpreter_log_output";
         string codeInterpreterImageOutputFileId = "code_interpreter_image_file_id";
-        CodeInterpreterToolCallOutput[] codeInterpreterOutputs = new CodeInterpreterToolCallOutput[]
+        RunStepCodeInterpreterToolCallOutput[] codeInterpreterOutputs = new RunStepCodeInterpreterToolCallOutput[]
         {
-            AssistantsModelFactory.CodeInterpreterLogOutput(codeInterpreterLogOutput),
-            AssistantsModelFactory.CodeInterpreterImageOutput(
-                AssistantsModelFactory.CodeInterpreterImageReference(codeInterpreterImageOutputFileId)),
+            AssistantsModelFactory.RunStepCodeInterpreterLogOutput(codeInterpreterLogOutput),
+            AssistantsModelFactory.RunStepCodeInterpreterImageOutput(
+                AssistantsModelFactory.RunStepCodeInterpreterImageReference(codeInterpreterImageOutputFileId)),
         };
-        CodeInterpreterToolCall mockCodeInterpreterToolCall = AssistantsModelFactory.CodeInterpreterToolCall(
+        RunStepCodeInterpreterToolCall mockCodeInterpreterToolCall = AssistantsModelFactory.RunStepCodeInterpreterToolCall(
             codeInterpreterToolCallId,
             codeInterpreterToolCallInput,
             codeInterpreterOutputs);
         Assert.That(mockCodeInterpreterToolCall.Id, Is.EqualTo(codeInterpreterToolCallId));
         Assert.That(mockCodeInterpreterToolCall.Input, Is.EqualTo(codeInterpreterToolCallInput));
         Assert.That(mockCodeInterpreterToolCall.Outputs.Count, Is.EqualTo(codeInterpreterOutputs.Length));
-        foreach (CodeInterpreterToolCallOutput callOutput in mockCodeInterpreterToolCall.Outputs)
+        foreach (RunStepCodeInterpreterToolCallOutput callOutput in mockCodeInterpreterToolCall.Outputs)
         {
-            if (callOutput is CodeInterpreterLogOutput logOutput)
+            if (callOutput is RunStepCodeInterpreterLogOutput logOutput)
             {
                 Assert.That(logOutput.Logs, Is.EqualTo(codeInterpreterLogOutput));
             }
-            else if (callOutput is CodeInterpreterImageOutput imageOutput)
+            else if (callOutput is RunStepCodeInterpreterImageOutput imageOutput)
             {
                 Assert.That(imageOutput.Image.FileId, Is.EqualTo(codeInterpreterImageOutputFileId));
             }
@@ -234,7 +234,7 @@ public class AssistantsModelFactoryTests
         {
             ["retrieval_key"] = "retrieval_value",
         };
-        RetrievalToolCall mockRetrievalToolCall = AssistantsModelFactory.RetrievalToolCall(retrievalToolCallId, retrievalToolCallRetrievals);
+        RunStepRetrievalToolCall mockRetrievalToolCall = AssistantsModelFactory.RunStepRetrievalToolCall(retrievalToolCallId, retrievalToolCallRetrievals);
         Assert.That(mockRetrievalToolCall.Id, Is.EqualTo(retrievalToolCallId));
         Assert.That(mockRetrievalToolCall.Retrieval.Count, Is.EqualTo(retrievalToolCallRetrievals.Count));
         foreach (KeyValuePair<string, string> expectedRetrievalKeyValuePair in retrievalToolCallRetrievals)
@@ -253,7 +253,7 @@ public class AssistantsModelFactoryTests
         RunError mockRunError = AssistantsModelFactory.RunError("errorCode", "errorMessage");
         RunStepDetails mockRunStepDetails = AssistantsModelFactory.RunStepMessageCreationDetails(
             AssistantsModelFactory.RunStepMessageCreationReference("messageId"));
-        RunStepDetails mockRunStepToolCallDetails = AssistantsModelFactory.RunStepToolCallDetails(new ToolCall[] { AssistantsModelFactory.RetrievalToolCall("id", null) });
+        RunStepDetails mockRunStepToolCallDetails = AssistantsModelFactory.RunStepToolCallDetails(new RunStepToolCall[] { AssistantsModelFactory.RunStepRetrievalToolCall("id", null) });
         RunStepError mockRunStepError = AssistantsModelFactory.RunStepError("errorCode", "errorMessage");
         RunStep mockRunStep = AssistantsModelFactory.RunStep(
             "id",
@@ -298,7 +298,7 @@ public class AssistantsModelFactoryTests
             AssistantsModelFactory.SubmitToolOutputsAction(
                 new RequiredToolCall[]
                 {
-                    AssistantsModelFactory.RequiredFunctionToolCall("id", "name", BinaryData.FromString("parameters")),
+                    AssistantsModelFactory.RequiredFunctionToolCall("id", "name", "arguments"),
                 }),
                 mockRunError,
                 "model",
