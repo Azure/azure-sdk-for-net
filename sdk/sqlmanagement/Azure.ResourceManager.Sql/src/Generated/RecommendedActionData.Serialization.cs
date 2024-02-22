@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value, options);
+                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isExecutableAction"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value, options);
+                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"u8))
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value, options);
+                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("estimatedImpact"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
                             }
                             estimatedImpact = array;
                             continue;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
                             }
                             observedImpact = array;
                             continue;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionMetricInfo> array = new List<RecommendedActionMetricInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item, options));
+                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item));
                             }
                             timeSeries = array;
                             continue;
@@ -596,21 +596,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -618,35 +618,35 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
             if (Optional.IsDefined(Location) || hasPropertyOverride)
             {
-                builder.Append("  location:");
+                builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Location.Value.ToString()}'");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Kind.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Kind}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Kind}'");
+                        builder.AppendLine($"'{Kind}'");
                     }
                 }
             }
@@ -654,28 +654,28 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -684,21 +684,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationReason), out propertyOverride);
             if (Optional.IsDefined(RecommendationReason) || hasPropertyOverride)
             {
-                builder.Append("    recommendationReason:");
+                builder.Append("    recommendationReason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RecommendationReason.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RecommendationReason}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RecommendationReason}'");
+                        builder.AppendLine($"'{RecommendationReason}'");
                     }
                 }
             }
@@ -706,249 +706,249 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidSince), out propertyOverride);
             if (Optional.IsDefined(ValidSince) || hasPropertyOverride)
             {
-                builder.Append("    validSince:");
+                builder.Append("    validSince: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(ValidSince.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastRefresh), out propertyOverride);
             if (Optional.IsDefined(LastRefresh) || hasPropertyOverride)
             {
-                builder.Append("    lastRefresh:");
+                builder.Append("    lastRefresh: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(LastRefresh.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
             if (Optional.IsDefined(State) || hasPropertyOverride)
             {
-                builder.Append("    state:");
+                builder.Append("    state: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, State, options, 4, false);
+                    AppendChildObject(builder, State, options, 4, false, "    state: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExecutableAction), out propertyOverride);
             if (Optional.IsDefined(IsExecutableAction) || hasPropertyOverride)
             {
-                builder.Append("    isExecutableAction:");
+                builder.Append("    isExecutableAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsExecutableAction.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRevertableAction), out propertyOverride);
             if (Optional.IsDefined(IsRevertableAction) || hasPropertyOverride)
             {
-                builder.Append("    isRevertableAction:");
+                builder.Append("    isRevertableAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsRevertableAction.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsArchivedAction), out propertyOverride);
             if (Optional.IsDefined(IsArchivedAction) || hasPropertyOverride)
             {
-                builder.Append("    isArchivedAction:");
+                builder.Append("    isArchivedAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsArchivedAction.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionStartOn), out propertyOverride);
             if (Optional.IsDefined(ExecuteActionStartOn) || hasPropertyOverride)
             {
-                builder.Append("    executeActionStartTime:");
+                builder.Append("    executeActionStartTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(ExecuteActionStartOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionDuration), out propertyOverride);
             if (Optional.IsDefined(ExecuteActionDuration) || hasPropertyOverride)
             {
-                builder.Append("    executeActionDuration:");
+                builder.Append("    executeActionDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedTimeSpan = TypeFormatters.ToString(ExecuteActionDuration.Value, "P");
-                    builder.AppendLine($" '{formattedTimeSpan}'");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionStartOn), out propertyOverride);
             if (Optional.IsDefined(RevertActionStartOn) || hasPropertyOverride)
             {
-                builder.Append("    revertActionStartTime:");
+                builder.Append("    revertActionStartTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(RevertActionStartOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionDuration), out propertyOverride);
             if (Optional.IsDefined(RevertActionDuration) || hasPropertyOverride)
             {
-                builder.Append("    revertActionDuration:");
+                builder.Append("    revertActionDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedTimeSpan = TypeFormatters.ToString(RevertActionDuration.Value, "P");
-                    builder.AppendLine($" '{formattedTimeSpan}'");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionInitiatedBy), out propertyOverride);
             if (Optional.IsDefined(ExecuteActionInitiatedBy) || hasPropertyOverride)
             {
-                builder.Append("    executeActionInitiatedBy:");
+                builder.Append("    executeActionInitiatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ExecuteActionInitiatedBy.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ExecuteActionInitiatedBy.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecuteActionInitiatedOn), out propertyOverride);
             if (Optional.IsDefined(ExecuteActionInitiatedOn) || hasPropertyOverride)
             {
-                builder.Append("    executeActionInitiatedTime:");
+                builder.Append("    executeActionInitiatedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(ExecuteActionInitiatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionInitiatedBy), out propertyOverride);
             if (Optional.IsDefined(RevertActionInitiatedBy) || hasPropertyOverride)
             {
-                builder.Append("    revertActionInitiatedBy:");
+                builder.Append("    revertActionInitiatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RevertActionInitiatedBy.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{RevertActionInitiatedBy.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevertActionInitiatedOn), out propertyOverride);
             if (Optional.IsDefined(RevertActionInitiatedOn) || hasPropertyOverride)
             {
-                builder.Append("    revertActionInitiatedTime:");
+                builder.Append("    revertActionInitiatedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(RevertActionInitiatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Score), out propertyOverride);
             if (Optional.IsDefined(Score) || hasPropertyOverride)
             {
-                builder.Append("    score:");
+                builder.Append("    score: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Score.Value}");
+                    builder.AppendLine($"{Score.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImplementationDetails), out propertyOverride);
             if (Optional.IsDefined(ImplementationDetails) || hasPropertyOverride)
             {
-                builder.Append("    implementationDetails:");
+                builder.Append("    implementationDetails: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ImplementationDetails, options, 4, false);
+                    AppendChildObject(builder, ImplementationDetails, options, 4, false, "    implementationDetails: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDetails), out propertyOverride);
             if (Optional.IsDefined(ErrorDetails) || hasPropertyOverride)
             {
-                builder.Append("    errorDetails:");
+                builder.Append("    errorDetails: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ErrorDetails, options, 4, false);
+                    AppendChildObject(builder, ErrorDetails, options, 4, false, "    errorDetails: ");
                 }
             }
 
@@ -957,17 +957,17 @@ namespace Azure.ResourceManager.Sql
             {
                 if (EstimatedImpact.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    estimatedImpact:");
+                    builder.Append("    estimatedImpact: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in EstimatedImpact)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    estimatedImpact: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -979,17 +979,17 @@ namespace Azure.ResourceManager.Sql
             {
                 if (ObservedImpact.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    observedImpact:");
+                    builder.Append("    observedImpact: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ObservedImpact)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    observedImpact: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1001,17 +1001,17 @@ namespace Azure.ResourceManager.Sql
             {
                 if (TimeSeries.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    timeSeries:");
+                    builder.Append("    timeSeries: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in TimeSeries)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    timeSeries: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1023,14 +1023,14 @@ namespace Azure.ResourceManager.Sql
             {
                 if (LinkedObjects.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    linkedObjects:");
+                    builder.Append("    linkedObjects: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in LinkedObjects)
                         {
                             if (item == null)
@@ -1058,23 +1058,23 @@ namespace Azure.ResourceManager.Sql
             {
                 if (Details.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    details:");
+                    builder.Append("    details: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in Details)
                         {
-                            builder.Append($"        '{item.Key}':");
+                            builder.Append($"        '{item.Key}': ");
                             if (item.Value == null)
                             {
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine($" '{item.Value.ToString()}'");
+                            builder.AppendLine($"'{item.Value.ToString()}'");
                         }
                         builder.AppendLine("    }");
                     }
@@ -1086,12 +1086,15 @@ namespace Azure.ResourceManager.Sql
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -1112,12 +1115,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

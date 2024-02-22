@@ -134,36 +134,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Time), out propertyOverride);
             if (Optional.IsDefined(Time) || hasPropertyOverride)
             {
-                builder.Append("  time:");
+                builder.Append("  time: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(Time.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceName), out propertyOverride);
             if (Optional.IsDefined(InstanceName) || hasPropertyOverride)
             {
-                builder.Append("  instanceName:");
+                builder.Append("  instanceName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (InstanceName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{InstanceName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{InstanceName}'");
+                        builder.AppendLine($"'{InstanceName}'");
                     }
                 }
             }
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
             if (Optional.IsDefined(Value) || hasPropertyOverride)
             {
-                builder.Append("  value:");
+                builder.Append("  value: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Value.Value.ToString()}'");
+                    builder.AppendLine($"'{Value.Value.ToString()}'");
                 }
             }
 
@@ -186,12 +186,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -212,12 +215,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

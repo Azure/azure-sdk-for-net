@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
+                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value, options);
+                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cleanupPreference"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    status = ScriptStatus.DeserializeScriptStatus(property.Value, options);
+                    status = ScriptStatus.DeserializeScriptStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))

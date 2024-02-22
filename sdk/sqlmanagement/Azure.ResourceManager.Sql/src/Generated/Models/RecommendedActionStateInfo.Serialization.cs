@@ -131,43 +131,43 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentValue), out propertyOverride);
             if (Optional.IsDefined(CurrentValue) || hasPropertyOverride)
             {
-                builder.Append("  currentValue:");
+                builder.Append("  currentValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CurrentValue.ToString()}'");
+                    builder.AppendLine($"'{CurrentValue.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionInitiatedBy), out propertyOverride);
             if (Optional.IsDefined(ActionInitiatedBy) || hasPropertyOverride)
             {
-                builder.Append("  actionInitiatedBy:");
+                builder.Append("  actionInitiatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ActionInitiatedBy.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ActionInitiatedBy.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModified), out propertyOverride);
             if (Optional.IsDefined(LastModified) || hasPropertyOverride)
             {
-                builder.Append("  lastModified:");
+                builder.Append("  lastModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -175,12 +175,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -201,12 +204,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

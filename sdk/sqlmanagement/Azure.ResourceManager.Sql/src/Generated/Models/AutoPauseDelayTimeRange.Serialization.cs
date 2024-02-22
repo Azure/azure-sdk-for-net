@@ -183,84 +183,84 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
             if (Optional.IsDefined(MinValue) || hasPropertyOverride)
             {
-                builder.Append("  minValue:");
+                builder.Append("  minValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MinValue.Value}");
+                    builder.AppendLine($"{MinValue.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
             if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
             {
-                builder.Append("  maxValue:");
+                builder.Append("  maxValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MaxValue.Value}");
+                    builder.AppendLine($"{MaxValue.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepSize), out propertyOverride);
             if (Optional.IsDefined(StepSize) || hasPropertyOverride)
             {
-                builder.Append("  stepSize:");
+                builder.Append("  stepSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {StepSize.Value}");
+                    builder.AppendLine($"{StepSize.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
             if (Optional.IsDefined(Default) || hasPropertyOverride)
             {
-                builder.Append("  default:");
+                builder.Append("  default: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Default.Value}");
+                    builder.AppendLine($"{Default.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
             if (Optional.IsDefined(Unit) || hasPropertyOverride)
             {
-                builder.Append("  unit:");
+                builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotPauseValue), out propertyOverride);
             if (Optional.IsDefined(DoNotPauseValue) || hasPropertyOverride)
             {
-                builder.Append("  doNotPauseValue:");
+                builder.Append("  doNotPauseValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {DoNotPauseValue.Value}");
+                    builder.AppendLine($"{DoNotPauseValue.Value}");
                 }
             }
 
@@ -268,12 +268,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -294,12 +297,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -179,21 +179,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -201,35 +201,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslState), out propertyOverride);
             if (Optional.IsDefined(SslState) || hasPropertyOverride)
             {
-                builder.Append("  sslState:");
+                builder.Append("  sslState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SslState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{SslState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualIP), out propertyOverride);
             if (Optional.IsDefined(VirtualIP) || hasPropertyOverride)
             {
-                builder.Append("  virtualIP:");
+                builder.Append("  virtualIP: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (VirtualIP.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{VirtualIP}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{VirtualIP}'");
+                        builder.AppendLine($"'{VirtualIP}'");
                     }
                 }
             }
@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThumbprintString), out propertyOverride);
             if (Optional.IsDefined(ThumbprintString) || hasPropertyOverride)
             {
-                builder.Append("  thumbprint:");
+                builder.Append("  thumbprint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ThumbprintString.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ThumbprintString}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ThumbprintString}'");
+                        builder.AppendLine($"'{ThumbprintString}'");
                     }
                 }
             }
@@ -259,29 +259,29 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ToUpdate), out propertyOverride);
             if (Optional.IsDefined(ToUpdate) || hasPropertyOverride)
             {
-                builder.Append("  toUpdate:");
+                builder.Append("  toUpdate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = ToUpdate.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostType), out propertyOverride);
             if (Optional.IsDefined(HostType) || hasPropertyOverride)
             {
-                builder.Append("  hostType:");
+                builder.Append("  hostType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{HostType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{HostType.Value.ToSerialString()}'");
                 }
             }
 
@@ -289,12 +289,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -315,12 +318,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item, options));
+                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item));
                             }
                             resourceTypeAliases = array;
                             continue;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
                             List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item, options));
+                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item));
                             }
                             effects = array;
                             continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
                                     List<DataManifestCustomResourceFunctionDefinition> array = new List<DataManifestCustomResourceFunctionDefinition>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item, options));
+                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item));
                                     }
                                     custom = array;
                                     continue;
@@ -350,21 +350,21 @@ namespace Azure.ResourceManager.Resources
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -372,28 +372,28 @@ namespace Azure.ResourceManager.Resources
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -404,14 +404,14 @@ namespace Azure.ResourceManager.Resources
             {
                 if (Namespaces.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    namespaces:");
+                    builder.Append("    namespaces: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Namespaces)
                         {
                             if (item == null)
@@ -437,21 +437,21 @@ namespace Azure.ResourceManager.Resources
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyMode), out propertyOverride);
             if (Optional.IsDefined(PolicyMode) || hasPropertyOverride)
             {
-                builder.Append("    policyMode:");
+                builder.Append("    policyMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PolicyMode.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PolicyMode}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PolicyMode}'");
+                        builder.AppendLine($"'{PolicyMode}'");
                     }
                 }
             }
@@ -459,15 +459,15 @@ namespace Azure.ResourceManager.Resources
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBuiltInOnly), out propertyOverride);
             if (Optional.IsDefined(IsBuiltInOnly) || hasPropertyOverride)
             {
-                builder.Append("    isBuiltInOnly:");
+                builder.Append("    isBuiltInOnly: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsBuiltInOnly.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -476,17 +476,17 @@ namespace Azure.ResourceManager.Resources
             {
                 if (ResourceTypeAliases.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    resourceTypeAliases:");
+                    builder.Append("    resourceTypeAliases: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ResourceTypeAliases)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    resourceTypeAliases: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -498,17 +498,17 @@ namespace Azure.ResourceManager.Resources
             {
                 if (Effects.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    effects:");
+                    builder.Append("    effects: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Effects)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    effects: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -520,14 +520,14 @@ namespace Azure.ResourceManager.Resources
             {
                 if (FieldValues.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    fieldValues:");
+                    builder.Append("    fieldValues: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in FieldValues)
                         {
                             if (item == null)
@@ -557,14 +557,14 @@ namespace Azure.ResourceManager.Resources
             {
                 if (Standard.Any() || hasPropertyOverride)
                 {
-                    builder.Append("      standard:");
+                    builder.Append("      standard: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Standard)
                         {
                             if (item == null)
@@ -592,17 +592,17 @@ namespace Azure.ResourceManager.Resources
             {
                 if (CustomDefinitions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("      custom:");
+                    builder.Append("      custom: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in CustomDefinitions)
                         {
-                            AppendChildObject(builder, item, options, 8, true);
+                            AppendChildObject(builder, item, options, 8, true, "      custom: ");
                         }
                         builder.AppendLine("      ]");
                     }
@@ -615,12 +615,15 @@ namespace Azure.ResourceManager.Resources
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -641,12 +644,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

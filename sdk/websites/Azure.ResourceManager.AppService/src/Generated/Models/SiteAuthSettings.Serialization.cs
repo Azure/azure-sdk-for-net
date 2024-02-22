@@ -709,21 +709,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -731,21 +731,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Kind.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Kind}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Kind}'");
+                        builder.AppendLine($"'{Kind}'");
                     }
                 }
             }
@@ -753,28 +753,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -783,36 +783,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
             {
-                builder.Append("    enabled:");
+                builder.Append("    enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
             if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
             {
-                builder.Append("    runtimeVersion:");
+                builder.Append("    runtimeVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RuntimeVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RuntimeVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RuntimeVersion}'");
+                        builder.AppendLine($"'{RuntimeVersion}'");
                     }
                 }
             }
@@ -820,29 +820,29 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
             if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
             {
-                builder.Append("    unauthenticatedClientAction:");
+                builder.Append("    unauthenticatedClientAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTokenStoreEnabled), out propertyOverride);
             if (Optional.IsDefined(IsTokenStoreEnabled) || hasPropertyOverride)
             {
-                builder.Append("    tokenStoreEnabled:");
+                builder.Append("    tokenStoreEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -851,14 +851,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    allowedExternalRedirectUrls:");
+                    builder.Append("    allowedExternalRedirectUrls: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedExternalRedirectUrls)
                         {
                             if (item == null)
@@ -884,49 +884,49 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProvider), out propertyOverride);
             if (Optional.IsDefined(DefaultProvider) || hasPropertyOverride)
             {
-                builder.Append("    defaultProvider:");
+                builder.Append("    defaultProvider: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultProvider.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{DefaultProvider.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
             if (Optional.IsDefined(TokenRefreshExtensionHours) || hasPropertyOverride)
             {
-                builder.Append("    tokenRefreshExtensionHours:");
+                builder.Append("    tokenRefreshExtensionHours: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TokenRefreshExtensionHours.Value.ToString()}'");
+                    builder.AppendLine($"'{TokenRefreshExtensionHours.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
             if (Optional.IsDefined(ClientId) || hasPropertyOverride)
             {
-                builder.Append("    clientId:");
+                builder.Append("    clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientId}'");
+                        builder.AppendLine($"'{ClientId}'");
                     }
                 }
             }
@@ -934,21 +934,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
             if (Optional.IsDefined(ClientSecret) || hasPropertyOverride)
             {
-                builder.Append("    clientSecret:");
+                builder.Append("    clientSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientSecret}'");
+                        builder.AppendLine($"'{ClientSecret}'");
                     }
                 }
             }
@@ -956,21 +956,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    clientSecretSettingName:");
+                builder.Append("    clientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientSecretSettingName}'");
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
                     }
                 }
             }
@@ -978,21 +978,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
             if (Optional.IsDefined(ClientSecretCertificateThumbprintString) || hasPropertyOverride)
             {
-                builder.Append("    clientSecretCertificateThumbprint:");
+                builder.Append("    clientSecretCertificateThumbprint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+                        builder.AppendLine($"'{ClientSecretCertificateThumbprintString}'");
                     }
                 }
             }
@@ -1000,21 +1000,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
             if (Optional.IsDefined(Issuer) || hasPropertyOverride)
             {
-                builder.Append("    issuer:");
+                builder.Append("    issuer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Issuer.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Issuer}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Issuer}'");
+                        builder.AppendLine($"'{Issuer}'");
                     }
                 }
             }
@@ -1022,15 +1022,15 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateIssuer), out propertyOverride);
             if (Optional.IsDefined(ValidateIssuer) || hasPropertyOverride)
             {
-                builder.Append("    validateIssuer:");
+                builder.Append("    validateIssuer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = ValidateIssuer.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -1039,14 +1039,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedAudiences.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    allowedAudiences:");
+                    builder.Append("    allowedAudiences: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {
                             if (item == null)
@@ -1074,14 +1074,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AdditionalLoginParams.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    additionalLoginParams:");
+                    builder.Append("    additionalLoginParams: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AdditionalLoginParams)
                         {
                             if (item == null)
@@ -1107,21 +1107,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClaimsAuthorization), out propertyOverride);
             if (Optional.IsDefined(AadClaimsAuthorization) || hasPropertyOverride)
             {
-                builder.Append("    aadClaimsAuthorization:");
+                builder.Append("    aadClaimsAuthorization: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AadClaimsAuthorization.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AadClaimsAuthorization}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AadClaimsAuthorization}'");
+                        builder.AppendLine($"'{AadClaimsAuthorization}'");
                     }
                 }
             }
@@ -1129,21 +1129,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientId), out propertyOverride);
             if (Optional.IsDefined(GoogleClientId) || hasPropertyOverride)
             {
-                builder.Append("    googleClientId:");
+                builder.Append("    googleClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GoogleClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GoogleClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GoogleClientId}'");
+                        builder.AppendLine($"'{GoogleClientId}'");
                     }
                 }
             }
@@ -1151,21 +1151,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecret), out propertyOverride);
             if (Optional.IsDefined(GoogleClientSecret) || hasPropertyOverride)
             {
-                builder.Append("    googleClientSecret:");
+                builder.Append("    googleClientSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GoogleClientSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GoogleClientSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GoogleClientSecret}'");
+                        builder.AppendLine($"'{GoogleClientSecret}'");
                     }
                 }
             }
@@ -1173,21 +1173,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(GoogleClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    googleClientSecretSettingName:");
+                builder.Append("    googleClientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GoogleClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GoogleClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GoogleClientSecretSettingName}'");
+                        builder.AppendLine($"'{GoogleClientSecretSettingName}'");
                     }
                 }
             }
@@ -1197,14 +1197,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (GoogleOAuthScopes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    googleOAuthScopes:");
+                    builder.Append("    googleOAuthScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in GoogleOAuthScopes)
                         {
                             if (item == null)
@@ -1230,21 +1230,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppId), out propertyOverride);
             if (Optional.IsDefined(FacebookAppId) || hasPropertyOverride)
             {
-                builder.Append("    facebookAppId:");
+                builder.Append("    facebookAppId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FacebookAppId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FacebookAppId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FacebookAppId}'");
+                        builder.AppendLine($"'{FacebookAppId}'");
                     }
                 }
             }
@@ -1252,21 +1252,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecret), out propertyOverride);
             if (Optional.IsDefined(FacebookAppSecret) || hasPropertyOverride)
             {
-                builder.Append("    facebookAppSecret:");
+                builder.Append("    facebookAppSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FacebookAppSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FacebookAppSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FacebookAppSecret}'");
+                        builder.AppendLine($"'{FacebookAppSecret}'");
                     }
                 }
             }
@@ -1274,21 +1274,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(FacebookAppSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    facebookAppSecretSettingName:");
+                builder.Append("    facebookAppSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FacebookAppSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FacebookAppSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FacebookAppSecretSettingName}'");
+                        builder.AppendLine($"'{FacebookAppSecretSettingName}'");
                     }
                 }
             }
@@ -1298,14 +1298,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (FacebookOAuthScopes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    facebookOAuthScopes:");
+                    builder.Append("    facebookOAuthScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in FacebookOAuthScopes)
                         {
                             if (item == null)
@@ -1331,21 +1331,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientId), out propertyOverride);
             if (Optional.IsDefined(GitHubClientId) || hasPropertyOverride)
             {
-                builder.Append("    gitHubClientId:");
+                builder.Append("    gitHubClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GitHubClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GitHubClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GitHubClientId}'");
+                        builder.AppendLine($"'{GitHubClientId}'");
                     }
                 }
             }
@@ -1353,21 +1353,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecret), out propertyOverride);
             if (Optional.IsDefined(GitHubClientSecret) || hasPropertyOverride)
             {
-                builder.Append("    gitHubClientSecret:");
+                builder.Append("    gitHubClientSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GitHubClientSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GitHubClientSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GitHubClientSecret}'");
+                        builder.AppendLine($"'{GitHubClientSecret}'");
                     }
                 }
             }
@@ -1375,21 +1375,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(GitHubClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    gitHubClientSecretSettingName:");
+                builder.Append("    gitHubClientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GitHubClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GitHubClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GitHubClientSecretSettingName}'");
+                        builder.AppendLine($"'{GitHubClientSecretSettingName}'");
                     }
                 }
             }
@@ -1399,14 +1399,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (GitHubOAuthScopes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    gitHubOAuthScopes:");
+                    builder.Append("    gitHubOAuthScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in GitHubOAuthScopes)
                         {
                             if (item == null)
@@ -1432,21 +1432,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerKey), out propertyOverride);
             if (Optional.IsDefined(TwitterConsumerKey) || hasPropertyOverride)
             {
-                builder.Append("    twitterConsumerKey:");
+                builder.Append("    twitterConsumerKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TwitterConsumerKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TwitterConsumerKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TwitterConsumerKey}'");
+                        builder.AppendLine($"'{TwitterConsumerKey}'");
                     }
                 }
             }
@@ -1454,21 +1454,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecret), out propertyOverride);
             if (Optional.IsDefined(TwitterConsumerSecret) || hasPropertyOverride)
             {
-                builder.Append("    twitterConsumerSecret:");
+                builder.Append("    twitterConsumerSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TwitterConsumerSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TwitterConsumerSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TwitterConsumerSecret}'");
+                        builder.AppendLine($"'{TwitterConsumerSecret}'");
                     }
                 }
             }
@@ -1476,21 +1476,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(TwitterConsumerSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    twitterConsumerSecretSettingName:");
+                builder.Append("    twitterConsumerSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TwitterConsumerSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TwitterConsumerSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TwitterConsumerSecretSettingName}'");
+                        builder.AppendLine($"'{TwitterConsumerSecretSettingName}'");
                     }
                 }
             }
@@ -1498,21 +1498,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientId), out propertyOverride);
             if (Optional.IsDefined(MicrosoftAccountClientId) || hasPropertyOverride)
             {
-                builder.Append("    microsoftAccountClientId:");
+                builder.Append("    microsoftAccountClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MicrosoftAccountClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MicrosoftAccountClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MicrosoftAccountClientId}'");
+                        builder.AppendLine($"'{MicrosoftAccountClientId}'");
                     }
                 }
             }
@@ -1520,21 +1520,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecret), out propertyOverride);
             if (Optional.IsDefined(MicrosoftAccountClientSecret) || hasPropertyOverride)
             {
-                builder.Append("    microsoftAccountClientSecret:");
+                builder.Append("    microsoftAccountClientSecret: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MicrosoftAccountClientSecret.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MicrosoftAccountClientSecret}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MicrosoftAccountClientSecret}'");
+                        builder.AppendLine($"'{MicrosoftAccountClientSecret}'");
                     }
                 }
             }
@@ -1542,21 +1542,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("    microsoftAccountClientSecretSettingName:");
+                builder.Append("    microsoftAccountClientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MicrosoftAccountClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MicrosoftAccountClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MicrosoftAccountClientSecretSettingName}'");
+                        builder.AppendLine($"'{MicrosoftAccountClientSecretSettingName}'");
                     }
                 }
             }
@@ -1566,14 +1566,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (MicrosoftAccountOAuthScopes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    microsoftAccountOAuthScopes:");
+                    builder.Append("    microsoftAccountOAuthScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in MicrosoftAccountOAuthScopes)
                         {
                             if (item == null)
@@ -1599,21 +1599,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthFromFile), out propertyOverride);
             if (Optional.IsDefined(IsAuthFromFile) || hasPropertyOverride)
             {
-                builder.Append("    isAuthFromFile:");
+                builder.Append("    isAuthFromFile: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (IsAuthFromFile.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{IsAuthFromFile}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{IsAuthFromFile}'");
+                        builder.AppendLine($"'{IsAuthFromFile}'");
                     }
                 }
             }
@@ -1621,21 +1621,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthFilePath), out propertyOverride);
             if (Optional.IsDefined(AuthFilePath) || hasPropertyOverride)
             {
-                builder.Append("    authFilePath:");
+                builder.Append("    authFilePath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AuthFilePath.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AuthFilePath}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AuthFilePath}'");
+                        builder.AppendLine($"'{AuthFilePath}'");
                     }
                 }
             }
@@ -1643,21 +1643,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigVersion), out propertyOverride);
             if (Optional.IsDefined(ConfigVersion) || hasPropertyOverride)
             {
-                builder.Append("    configVersion:");
+                builder.Append("    configVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ConfigVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ConfigVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ConfigVersion}'");
+                        builder.AppendLine($"'{ConfigVersion}'");
                     }
                 }
             }
@@ -1667,12 +1667,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -1693,12 +1696,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

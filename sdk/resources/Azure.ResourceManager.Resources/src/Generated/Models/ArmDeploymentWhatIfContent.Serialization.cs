@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ArmDeploymentWhatIfProperties.DeserializeArmDeploymentWhatIfProperties(property.Value, options);
+                    properties = ArmDeploymentWhatIfProperties.DeserializeArmDeploymentWhatIfProperties(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

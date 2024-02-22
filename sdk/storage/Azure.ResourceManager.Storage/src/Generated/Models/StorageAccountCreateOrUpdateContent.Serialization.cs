@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
+                    sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value, options);
+                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyPolicy"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value, options);
+                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customDomain"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value, options);
+                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value, options);
+                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value, options);
+                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTier"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value, options);
+                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHttpsTrafficOnly"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
+                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("allowBlobPublicAccess"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 continue;
                             }
-                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value, options);
+                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsEndpointType"u8))

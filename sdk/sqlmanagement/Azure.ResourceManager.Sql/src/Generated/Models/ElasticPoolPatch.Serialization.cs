@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value, options);
+                            perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

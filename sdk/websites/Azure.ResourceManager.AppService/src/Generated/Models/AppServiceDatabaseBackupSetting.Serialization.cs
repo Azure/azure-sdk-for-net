@@ -134,21 +134,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -156,35 +156,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseType), out propertyOverride);
             if (Optional.IsDefined(DatabaseType) || hasPropertyOverride)
             {
-                builder.Append("  databaseType:");
+                builder.Append("  databaseType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DatabaseType.ToString()}'");
+                    builder.AppendLine($"'{DatabaseType.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStringName), out propertyOverride);
             if (Optional.IsDefined(ConnectionStringName) || hasPropertyOverride)
             {
-                builder.Append("  connectionStringName:");
+                builder.Append("  connectionStringName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ConnectionStringName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ConnectionStringName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ConnectionStringName}'");
+                        builder.AppendLine($"'{ConnectionStringName}'");
                     }
                 }
             }
@@ -192,21 +192,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionString), out propertyOverride);
             if (Optional.IsDefined(ConnectionString) || hasPropertyOverride)
             {
-                builder.Append("  connectionString:");
+                builder.Append("  connectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ConnectionString.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ConnectionString}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ConnectionString}'");
+                        builder.AppendLine($"'{ConnectionString}'");
                     }
                 }
             }
@@ -215,12 +215,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -241,12 +244,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

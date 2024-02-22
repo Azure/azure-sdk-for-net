@@ -297,21 +297,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -319,21 +319,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Kind.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Kind}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Kind}'");
+                        builder.AppendLine($"'{Kind}'");
                     }
                 }
             }
@@ -341,28 +341,28 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -371,21 +371,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseAddress), out propertyOverride);
             if (Optional.IsDefined(BaseAddress) || hasPropertyOverride)
             {
-                builder.Append("    base_address:");
+                builder.Append("    base_address: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (BaseAddress.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{BaseAddress}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{BaseAddress}'");
+                        builder.AppendLine($"'{BaseAddress}'");
                     }
                 }
             }
@@ -393,21 +393,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileName), out propertyOverride);
             if (Optional.IsDefined(FileName) || hasPropertyOverride)
             {
-                builder.Append("    file_name:");
+                builder.Append("    file_name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FileName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FileName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FileName}'");
+                        builder.AppendLine($"'{FileName}'");
                     }
                 }
             }
@@ -415,21 +415,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Href), out propertyOverride);
             if (Optional.IsDefined(Href) || hasPropertyOverride)
             {
-                builder.Append("    href:");
+                builder.Append("    href: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Href.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Href}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Href}'");
+                        builder.AppendLine($"'{Href}'");
                     }
                 }
             }
@@ -437,21 +437,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilePath), out propertyOverride);
             if (Optional.IsDefined(FilePath) || hasPropertyOverride)
             {
-                builder.Append("    file_path:");
+                builder.Append("    file_path: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FilePath.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FilePath}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FilePath}'");
+                        builder.AppendLine($"'{FilePath}'");
                     }
                 }
             }
@@ -459,35 +459,35 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModuleMemorySize), out propertyOverride);
             if (Optional.IsDefined(ModuleMemorySize) || hasPropertyOverride)
             {
-                builder.Append("    module_memory_size:");
+                builder.Append("    module_memory_size: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ModuleMemorySize.Value}");
+                    builder.AppendLine($"{ModuleMemorySize.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileVersion), out propertyOverride);
             if (Optional.IsDefined(FileVersion) || hasPropertyOverride)
             {
-                builder.Append("    file_version:");
+                builder.Append("    file_version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FileVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FileVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FileVersion}'");
+                        builder.AppendLine($"'{FileVersion}'");
                     }
                 }
             }
@@ -495,21 +495,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileDescription), out propertyOverride);
             if (Optional.IsDefined(FileDescription) || hasPropertyOverride)
             {
-                builder.Append("    file_description:");
+                builder.Append("    file_description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (FileDescription.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{FileDescription}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{FileDescription}'");
+                        builder.AppendLine($"'{FileDescription}'");
                     }
                 }
             }
@@ -517,21 +517,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Product), out propertyOverride);
             if (Optional.IsDefined(Product) || hasPropertyOverride)
             {
-                builder.Append("    product:");
+                builder.Append("    product: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Product.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Product}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Product}'");
+                        builder.AppendLine($"'{Product}'");
                     }
                 }
             }
@@ -539,21 +539,21 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductVersion), out propertyOverride);
             if (Optional.IsDefined(ProductVersion) || hasPropertyOverride)
             {
-                builder.Append("    product_version:");
+                builder.Append("    product_version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ProductVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ProductVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ProductVersion}'");
+                        builder.AppendLine($"'{ProductVersion}'");
                     }
                 }
             }
@@ -561,36 +561,36 @@ namespace Azure.ResourceManager.AppService
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDebug), out propertyOverride);
             if (Optional.IsDefined(IsDebug) || hasPropertyOverride)
             {
-                builder.Append("    is_debug:");
+                builder.Append("    is_debug: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsDebug.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Language), out propertyOverride);
             if (Optional.IsDefined(Language) || hasPropertyOverride)
             {
-                builder.Append("    language:");
+                builder.Append("    language: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Language.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Language}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Language}'");
+                        builder.AppendLine($"'{Language}'");
                     }
                 }
             }
@@ -600,12 +600,15 @@ namespace Azure.ResourceManager.AppService
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -626,12 +629,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 
