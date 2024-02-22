@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    lastEnumerationStatus = CloudEndpointLastChangeEnumerationStatus.DeserializeCloudEndpointLastChangeEnumerationStatus(property.Value);
+                    lastEnumerationStatus = CloudEndpointLastChangeEnumerationStatus.DeserializeCloudEndpointLastChangeEnumerationStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    activity = CloudEndpointChangeEnumerationActivity.DeserializeCloudEndpointChangeEnumerationActivity(property.Value);
+                    activity = CloudEndpointChangeEnumerationActivity.DeserializeCloudEndpointChangeEnumerationActivity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

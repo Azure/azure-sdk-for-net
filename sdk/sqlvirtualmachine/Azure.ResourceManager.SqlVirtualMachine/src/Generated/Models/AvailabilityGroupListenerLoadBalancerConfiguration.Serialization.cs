@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"u8))

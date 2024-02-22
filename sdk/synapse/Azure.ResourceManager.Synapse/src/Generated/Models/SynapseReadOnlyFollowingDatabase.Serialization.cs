@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("leaderClusterResourceId"u8))

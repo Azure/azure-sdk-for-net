@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorDefinitionResourceData> array = new List<DetectorDefinitionResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(item));
+                        array.Add(DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(item, options));
                     }
                     value = array;
                     continue;

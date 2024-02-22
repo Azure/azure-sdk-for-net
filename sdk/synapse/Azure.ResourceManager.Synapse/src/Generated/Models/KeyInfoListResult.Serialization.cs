@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKeyData> array = new List<SynapseKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKeyData.DeserializeSynapseKeyData(item));
+                        array.Add(SynapseKeyData.DeserializeSynapseKeyData(item, options));
                     }
                     value = array;
                     continue;

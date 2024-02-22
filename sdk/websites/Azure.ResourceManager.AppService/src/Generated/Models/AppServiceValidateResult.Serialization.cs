@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = ValidateResponseError.DeserializeValidateResponseError(property.Value);
+                    error = ValidateResponseError.DeserializeValidateResponseError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

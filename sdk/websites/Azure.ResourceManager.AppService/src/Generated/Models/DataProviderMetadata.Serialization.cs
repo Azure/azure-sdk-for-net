@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;

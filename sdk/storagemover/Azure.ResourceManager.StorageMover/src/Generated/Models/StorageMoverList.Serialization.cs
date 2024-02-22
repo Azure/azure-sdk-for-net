@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     List<StorageMoverData> array = new List<StorageMoverData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageMoverData.DeserializeStorageMoverData(item));
+                        array.Add(StorageMoverData.DeserializeStorageMoverData(item, options));
                     }
                     value = array;
                     continue;

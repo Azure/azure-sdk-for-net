@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsPrivateLinkServiceConnection> array = new List<StreamAnalyticsPrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsPrivateLinkServiceConnection.DeserializeStreamAnalyticsPrivateLinkServiceConnection(item));
+                        array.Add(StreamAnalyticsPrivateLinkServiceConnection.DeserializeStreamAnalyticsPrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;

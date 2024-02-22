@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Subscription
                     {
                         continue;
                     }
-                    properties = BillingAccountPolicyProperties.DeserializeBillingAccountPolicyProperties(property.Value);
+                    properties = BillingAccountPolicyProperties.DeserializeBillingAccountPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

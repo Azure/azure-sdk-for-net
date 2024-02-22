@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = WebPubSubPrivateLinkServiceConnectionState.DeserializeWebPubSubPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = WebPubSubPrivateLinkServiceConnectionState.DeserializeWebPubSubPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

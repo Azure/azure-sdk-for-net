@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
+                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("configuration"u8))
                         {
-                            configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value);
+                            configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }
