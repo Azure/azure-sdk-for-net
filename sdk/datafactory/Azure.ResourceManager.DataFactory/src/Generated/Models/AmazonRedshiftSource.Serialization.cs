@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    redshiftUnloadSettings = RedshiftUnloadSettings.DeserializeRedshiftUnloadSettings(property.Value);
+                    redshiftUnloadSettings = RedshiftUnloadSettings.DeserializeRedshiftUnloadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

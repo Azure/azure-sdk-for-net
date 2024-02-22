@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value);
+                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childrenWorkflows"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
                     }
                     childrenWorkflows = array;
                     continue;

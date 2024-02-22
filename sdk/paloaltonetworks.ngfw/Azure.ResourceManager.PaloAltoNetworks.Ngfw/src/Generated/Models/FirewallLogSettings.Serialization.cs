@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    applicationInsights = FirewallApplicationInsights.DeserializeFirewallApplicationInsights(property.Value);
+                    applicationInsights = FirewallApplicationInsights.DeserializeFirewallApplicationInsights(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commonDestination"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    commonDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    commonDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trafficLogDestination"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    trafficLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    trafficLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("threatLogDestination"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    threatLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    threatLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("decryptLogDestination"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    decryptLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value);
+                    decryptLogDestination = FirewallLogDestination.DeserializeFirewallLogDestination(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

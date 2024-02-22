@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedSourceDatabases"/> or <paramref name="selectedTargetDatabases"/> is null. </exception>
         public GetUserTablesSqlSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<string> selectedSourceDatabases, IEnumerable<string> selectedTargetDatabases)
         {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(selectedSourceDatabases, nameof(selectedSourceDatabases));
-            Argument.AssertNotNull(selectedTargetDatabases, nameof(selectedTargetDatabases));
+            if (sourceConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceConnectionInfo));
+            }
+            if (targetConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(targetConnectionInfo));
+            }
+            if (selectedSourceDatabases == null)
+            {
+                throw new ArgumentNullException(nameof(selectedSourceDatabases));
+            }
+            if (selectedTargetDatabases == null)
+            {
+                throw new ArgumentNullException(nameof(selectedTargetDatabases));
+            }
 
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="registryUriString"/> or <paramref name="username"/> is null. </exception>
         public ImageRepositoryCredentials(string registryUriString, string username)
         {
-            Argument.AssertNotNull(registryUriString, nameof(registryUriString));
-            Argument.AssertNotNull(username, nameof(username));
+            if (registryUriString == null)
+            {
+                throw new ArgumentNullException(nameof(registryUriString));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             RegistryUriString = registryUriString;
             Username = username;

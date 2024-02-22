@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<GlobalReachConnectionData> array = new List<GlobalReachConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item));
+                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item, options));
                     }
                     value = array;
                     continue;

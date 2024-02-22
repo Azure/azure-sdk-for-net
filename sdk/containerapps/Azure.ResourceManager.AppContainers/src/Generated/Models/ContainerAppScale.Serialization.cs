@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRule> array = new List<ContainerAppScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRule.DeserializeContainerAppScaleRule(item));
+                        array.Add(ContainerAppScaleRule.DeserializeContainerAppScaleRule(item, options));
                     }
                     rules = array;
                     continue;

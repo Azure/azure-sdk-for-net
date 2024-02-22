@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderCspmGcpOfferingVmScannersConfiguration.DeserializeDefenderCspmGcpOfferingVmScannersConfiguration(property.Value);
+                    configuration = DefenderCspmGcpOfferingVmScannersConfiguration.DeserializeDefenderCspmGcpOfferingVmScannersConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAssessmentData> array = new List<SecurityAssessmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAssessmentData.DeserializeSecurityAssessmentData(item));
+                        array.Add(SecurityAssessmentData.DeserializeSecurityAssessmentData(item, options));
                     }
                     value = array;
                     continue;

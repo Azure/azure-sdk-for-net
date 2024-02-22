@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectorMappingResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mappingName, ConnectorMappingResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectorMappingResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string mappingName, ConnectorMappingResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<Response<ConnectorMappingResourceFormatResource>> GetAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual Response<ConnectorMappingResourceFormatResource> Get(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual Response<bool> Exists(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectorMappingResourceFormatResource>> GetIfExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual NullableResponse<ConnectorMappingResourceFormatResource> GetIfExists(string mappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            if (mappingName == null)
+            {
+                throw new ArgumentNullException(nameof(mappingName));
+            }
+            if (mappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
+            }
 
             using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.GetIfExists");
             scope.Start();

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    metadata = ApplianceSupportedVersionMetadata.DeserializeApplianceSupportedVersionMetadata(property.Value);
+                    metadata = ApplianceSupportedVersionMetadata.DeserializeApplianceSupportedVersionMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

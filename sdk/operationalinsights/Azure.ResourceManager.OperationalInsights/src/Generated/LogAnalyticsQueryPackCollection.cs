@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalyticsQueryPackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string queryPackName, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogAnalyticsQueryPackResource> CreateOrUpdate(WaitUntil waitUntil, string queryPackName, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual async Task<Response<LogAnalyticsQueryPackResource>> GetAsync(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual Response<LogAnalyticsQueryPackResource> Get(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual Response<bool> Exists(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogAnalyticsQueryPackResource>> GetIfExistsAsync(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         public virtual NullableResponse<LogAnalyticsQueryPackResource> GetIfExists(string queryPackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            if (queryPackName == null)
+            {
+                throw new ArgumentNullException(nameof(queryPackName));
+            }
+            if (queryPackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
+            }
 
             using var scope = _logAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("LogAnalyticsQueryPackCollection.GetIfExists");
             scope.Start();

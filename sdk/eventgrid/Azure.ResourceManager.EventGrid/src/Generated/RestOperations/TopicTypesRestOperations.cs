@@ -115,7 +115,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TopicTypeData>> GetAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+            if (topicTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(topicTypeName));
+            }
+            if (topicTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
+            }
 
             using var message = CreateGetRequest(topicTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -142,7 +149,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TopicTypeData> Get(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+            if (topicTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(topicTypeName));
+            }
+            if (topicTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
+            }
 
             using var message = CreateGetRequest(topicTypeName);
             _pipeline.Send(message, cancellationToken);
@@ -186,7 +200,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventTypesListResult>> ListEventTypesAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+            if (topicTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(topicTypeName));
+            }
+            if (topicTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
+            }
 
             using var message = CreateListEventTypesRequest(topicTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -211,7 +232,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventTypesListResult> ListEventTypes(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+            if (topicTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(topicTypeName));
+            }
+            if (topicTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
+            }
 
             using var message = CreateListEventTypesRequest(topicTypeName);
             _pipeline.Send(message, cancellationToken);

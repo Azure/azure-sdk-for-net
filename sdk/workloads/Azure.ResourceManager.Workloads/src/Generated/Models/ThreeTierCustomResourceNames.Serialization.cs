@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FullResourceName": return ThreeTierFullResourceNames.DeserializeThreeTierFullResourceNames(element);
+                    case "FullResourceName": return ThreeTierFullResourceNames.DeserializeThreeTierFullResourceNames(element, options);
                 }
             }
-            return UnknownThreeTierCustomResourceNames.DeserializeUnknownThreeTierCustomResourceNames(element);
+            return UnknownThreeTierCustomResourceNames.DeserializeUnknownThreeTierCustomResourceNames(element, options);
         }
 
         BinaryData IPersistableModel<ThreeTierCustomResourceNames>.Write(ModelReaderWriterOptions options)

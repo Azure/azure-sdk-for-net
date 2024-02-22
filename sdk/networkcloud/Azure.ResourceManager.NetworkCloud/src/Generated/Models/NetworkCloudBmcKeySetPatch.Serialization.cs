@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<KeySetUser> array = new List<KeySetUser>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                array.Add(KeySetUser.DeserializeKeySetUser(item, options));
                             }
                             userList = array;
                             continue;

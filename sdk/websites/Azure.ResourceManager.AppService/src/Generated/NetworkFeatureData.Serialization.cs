@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value);
+                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hybridConnections"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
                             List<RelayServiceConnectionEntityData> array = new List<RelayServiceConnectionEntityData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item));
+                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item, options));
                             }
                             hybridConnections = array;
                             continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
                             List<HybridConnectionData> array = new List<HybridConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item, options));
                             }
                             hybridConnectionsV2 = array;
                             continue;

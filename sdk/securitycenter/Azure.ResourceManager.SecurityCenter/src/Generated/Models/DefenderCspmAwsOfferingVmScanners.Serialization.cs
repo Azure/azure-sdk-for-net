@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderCspmAwsOfferingVmScannersConfiguration.DeserializeDefenderCspmAwsOfferingVmScannersConfiguration(property.Value);
+                    configuration = DefenderCspmAwsOfferingVmScannersConfiguration.DeserializeDefenderCspmAwsOfferingVmScannersConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

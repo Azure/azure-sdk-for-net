@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value);
+                    result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("history"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<AssignmentDeploymentJobResult> array = new List<AssignmentDeploymentJobResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(item));
+                        array.Add(AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(item, options));
                     }
                     history = array;
                     continue;

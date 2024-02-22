@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="script"/> is null. </exception>
         public GalleryApplicationCustomAction(string name, string script)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(script, nameof(script));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (script == null)
+            {
+                throw new ArgumentNullException(nameof(script));
+            }
 
             Name = name;
             Script = script;

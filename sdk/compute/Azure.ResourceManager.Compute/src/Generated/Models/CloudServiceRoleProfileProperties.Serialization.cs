@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
+                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

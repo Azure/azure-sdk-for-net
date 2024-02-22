@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuCapability> array = new List<StorageSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item));
+                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuRestriction> array = new List<StorageSkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item));
+                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;

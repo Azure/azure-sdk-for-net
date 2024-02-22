@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<StorageBackupJobTaskDetails> array = new List<StorageBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageBackupJobTaskDetails.DeserializeStorageBackupJobTaskDetails(item));
+                        array.Add(StorageBackupJobTaskDetails.DeserializeStorageBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;

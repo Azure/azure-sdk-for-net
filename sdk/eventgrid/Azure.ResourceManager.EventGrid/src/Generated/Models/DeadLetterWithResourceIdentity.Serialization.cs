@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value);
+                    identity = EventSubscriptionIdentity.DeserializeEventSubscriptionIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deadLetterDestination"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);
+                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

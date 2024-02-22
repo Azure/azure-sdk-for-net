@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyInfo = PolicyReference.DeserializePolicyReference(property.Value);
+                    policyInfo = PolicyReference.DeserializePolicyReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("evaluationResult"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value);
+                    evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

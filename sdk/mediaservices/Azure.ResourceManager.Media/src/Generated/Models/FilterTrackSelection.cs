@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trackSelections"/> is null. </exception>
         public FilterTrackSelection(IEnumerable<FilterTrackPropertyCondition> trackSelections)
         {
-            Argument.AssertNotNull(trackSelections, nameof(trackSelections));
+            if (trackSelections == null)
+            {
+                throw new ArgumentNullException(nameof(trackSelections));
+            }
 
             TrackSelections = trackSelections.ToList();
         }

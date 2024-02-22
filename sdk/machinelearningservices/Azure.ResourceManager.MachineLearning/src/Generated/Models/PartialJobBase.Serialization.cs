@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = PartialNotificationSetting.DeserializePartialNotificationSetting(property.Value);
+                    notificationSetting = PartialNotificationSetting.DeserializePartialNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

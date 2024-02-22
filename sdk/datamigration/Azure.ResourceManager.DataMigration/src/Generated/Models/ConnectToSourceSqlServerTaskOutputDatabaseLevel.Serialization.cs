@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseFileInfo> array = new List<DatabaseFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item));
+                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item, options));
                     }
                     databaseFiles = array;
                     continue;

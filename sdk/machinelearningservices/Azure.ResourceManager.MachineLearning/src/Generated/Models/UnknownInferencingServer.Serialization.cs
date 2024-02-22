@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInferencingServer(document.RootElement, options);
+            return DeserializeInferencingServer(document.RootElement, options);
         }
 
         internal static UnknownInferencingServer DeserializeUnknownInferencingServer(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInferencingServer(document.RootElement, options);
+                        return DeserializeInferencingServer(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(InferencingServer)} does not support '{options.Format}' format.");

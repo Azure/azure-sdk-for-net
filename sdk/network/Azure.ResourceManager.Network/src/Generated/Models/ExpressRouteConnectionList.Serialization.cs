@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                        array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                     }
                     value = array;
                     continue;

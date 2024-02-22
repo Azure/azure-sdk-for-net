@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerConnectionData> array = new List<NetworkManagerConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(item));
+                        array.Add(NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(item, options));
                     }
                     value = array;
                     continue;

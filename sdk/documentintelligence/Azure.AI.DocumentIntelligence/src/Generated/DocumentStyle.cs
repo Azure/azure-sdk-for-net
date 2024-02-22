@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -53,7 +52,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentStyle(IEnumerable<DocumentSpan> spans, float confidence)
         {
-            Argument.AssertNotNull(spans, nameof(spans));
+            if (spans == null)
+            {
+                throw new ArgumentNullException(nameof(spans));
+            }
 
             Spans = spans.ToList();
             Confidence = confidence;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<TldLegalAgreement> array = new List<TldLegalAgreement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TldLegalAgreement.DeserializeTldLegalAgreement(item));
+                        array.Add(TldLegalAgreement.DeserializeTldLegalAgreement(item, options));
                     }
                     value = array;
                     continue;

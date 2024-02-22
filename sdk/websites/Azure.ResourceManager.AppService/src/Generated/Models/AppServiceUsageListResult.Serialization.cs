@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceUsage> array = new List<AppServiceUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceUsage.DeserializeAppServiceUsage(item));
+                        array.Add(AppServiceUsage.DeserializeAppServiceUsage(item, options));
                     }
                     value = array;
                     continue;

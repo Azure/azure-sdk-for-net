@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPExtendedCommunityRule> array = new List<IPExtendedCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item));
+                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item, options));
                             }
                             ipExtendedCommunityRules = array;
                             continue;

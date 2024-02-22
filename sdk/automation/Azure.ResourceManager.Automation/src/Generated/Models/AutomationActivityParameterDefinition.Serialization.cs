@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterValidationSet> array = new List<AutomationActivityParameterValidationSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item));
+                        array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item, options));
                     }
                     validationSet = array;
                     continue;

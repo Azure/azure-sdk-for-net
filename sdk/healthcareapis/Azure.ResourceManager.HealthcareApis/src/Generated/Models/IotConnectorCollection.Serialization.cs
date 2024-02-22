@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisIotConnectorData> array = new List<HealthcareApisIotConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item));
+                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item, options));
                     }
                     value = array;
                     continue;

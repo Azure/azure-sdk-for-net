@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductDataType> array = new List<DataProductDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductDataType.DeserializeDataProductDataType(item));
+                        array.Add(DataProductDataType.DeserializeDataProductDataType(item, options));
                     }
                     value = array;
                     continue;

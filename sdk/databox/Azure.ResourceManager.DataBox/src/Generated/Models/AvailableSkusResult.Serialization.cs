@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxSkuInformation> array = new List<DataBoxSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item));
+                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item, options));
                     }
                     value = array;
                     continue;

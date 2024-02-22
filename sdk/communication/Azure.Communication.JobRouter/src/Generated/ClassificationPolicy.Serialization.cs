@@ -150,7 +150,7 @@ namespace Azure.Communication.JobRouter
                     List<QueueSelectorAttachment> array = new List<QueueSelectorAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueSelectorAttachment.DeserializeQueueSelectorAttachment(item));
+                        array.Add(QueueSelectorAttachment.DeserializeQueueSelectorAttachment(item, options));
                     }
                     queueSelectorAttachments = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    prioritizationRule = RouterRule.DeserializeRouterRule(property.Value);
+                    prioritizationRule = RouterRule.DeserializeRouterRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workerSelectorAttachments"u8))
@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter
                     List<WorkerSelectorAttachment> array = new List<WorkerSelectorAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelectorAttachment.DeserializeWorkerSelectorAttachment(item));
+                        array.Add(WorkerSelectorAttachment.DeserializeWorkerSelectorAttachment(item, options));
                     }
                     workerSelectorAttachments = array;
                     continue;

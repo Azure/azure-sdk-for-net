@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricVmSizeResource>> GetAsync(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
             scope.Start();
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual Response<ServiceFabricVmSizeResource> Get(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual Response<bool> Exists(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricVmSizeResource>> GetIfExistsAsync(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricVmSizeResource> GetIfExists(string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
+            if (vmSize.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
+            }
 
             using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
             scope.Start();

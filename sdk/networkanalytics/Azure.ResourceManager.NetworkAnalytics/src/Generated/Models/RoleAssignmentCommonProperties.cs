@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -57,11 +56,26 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/>, <paramref name="principalId"/>, <paramref name="userName"/>, <paramref name="dataTypeScope"/> or <paramref name="principalType"/> is null. </exception>
         public RoleAssignmentCommonProperties(string roleId, string principalId, string userName, IEnumerable<string> dataTypeScope, string principalType, DataProductUserRole role)
         {
-            Argument.AssertNotNull(roleId, nameof(roleId));
-            Argument.AssertNotNull(principalId, nameof(principalId));
-            Argument.AssertNotNull(userName, nameof(userName));
-            Argument.AssertNotNull(dataTypeScope, nameof(dataTypeScope));
-            Argument.AssertNotNull(principalType, nameof(principalType));
+            if (roleId == null)
+            {
+                throw new ArgumentNullException(nameof(roleId));
+            }
+            if (principalId == null)
+            {
+                throw new ArgumentNullException(nameof(principalId));
+            }
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+            if (dataTypeScope == null)
+            {
+                throw new ArgumentNullException(nameof(dataTypeScope));
+            }
+            if (principalType == null)
+            {
+                throw new ArgumentNullException(nameof(principalType));
+            }
 
             RoleId = roleId;
             PrincipalId = principalId;

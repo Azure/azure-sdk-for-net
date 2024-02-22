@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWorkloadProfileState> array = new List<ContainerAppWorkloadProfileState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(item));
+                        array.Add(ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<HcxEnterpriseSiteData> array = new List<HcxEnterpriseSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HcxEnterpriseSiteData.DeserializeHcxEnterpriseSiteData(item));
+                        array.Add(HcxEnterpriseSiteData.DeserializeHcxEnterpriseSiteData(item, options));
                     }
                     value = array;
                     continue;

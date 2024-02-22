@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    parameters = BlobRestoreContent.DeserializeBlobRestoreContent(property.Value);
+                    parameters = BlobRestoreContent.DeserializeBlobRestoreContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

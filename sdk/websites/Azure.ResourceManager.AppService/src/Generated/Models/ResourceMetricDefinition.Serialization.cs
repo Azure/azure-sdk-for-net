@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ResourceMetricAvailability> array = new List<ResourceMetricAvailability>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceMetricAvailability.DeserializeResourceMetricAvailability(item));
+                                array.Add(ResourceMetricAvailability.DeserializeResourceMetricAvailability(item, options));
                             }
                             metricAvailabilities = array;
                             continue;

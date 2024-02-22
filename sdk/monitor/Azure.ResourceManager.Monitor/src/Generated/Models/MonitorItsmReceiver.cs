@@ -55,10 +55,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/> or <paramref name="ticketConfiguration"/> is null. </exception>
         public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(connectionId, nameof(connectionId));
-            Argument.AssertNotNull(ticketConfiguration, nameof(ticketConfiguration));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (workspaceId == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceId));
+            }
+            if (connectionId == null)
+            {
+                throw new ArgumentNullException(nameof(connectionId));
+            }
+            if (ticketConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(ticketConfiguration));
+            }
 
             Name = name;
             WorkspaceId = workspaceId;

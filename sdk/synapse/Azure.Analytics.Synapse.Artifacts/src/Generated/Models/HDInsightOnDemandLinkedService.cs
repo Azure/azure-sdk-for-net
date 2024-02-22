@@ -25,13 +25,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
         public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup)
         {
-            Argument.AssertNotNull(clusterSize, nameof(clusterSize));
-            Argument.AssertNotNull(timeToLive, nameof(timeToLive));
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(hostSubscriptionId, nameof(hostSubscriptionId));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(clusterResourceGroup, nameof(clusterResourceGroup));
+            if (clusterSize == null)
+            {
+                throw new ArgumentNullException(nameof(clusterSize));
+            }
+            if (timeToLive == null)
+            {
+                throw new ArgumentNullException(nameof(timeToLive));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (hostSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(hostSubscriptionId));
+            }
+            if (tenant == null)
+            {
+                throw new ArgumentNullException(nameof(tenant));
+            }
+            if (clusterResourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceGroup));
+            }
 
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;

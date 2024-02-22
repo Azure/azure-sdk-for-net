@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FullResourceName": return SingleServerFullResourceNames.DeserializeSingleServerFullResourceNames(element);
+                    case "FullResourceName": return SingleServerFullResourceNames.DeserializeSingleServerFullResourceNames(element, options);
                 }
             }
-            return UnknownSingleServerCustomResourceNames.DeserializeUnknownSingleServerCustomResourceNames(element);
+            return UnknownSingleServerCustomResourceNames.DeserializeUnknownSingleServerCustomResourceNames(element, options);
         }
 
         BinaryData IPersistableModel<SingleServerCustomResourceNames>.Write(ModelReaderWriterOptions options)

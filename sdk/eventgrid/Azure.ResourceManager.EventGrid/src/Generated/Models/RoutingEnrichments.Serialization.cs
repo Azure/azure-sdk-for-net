@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<StaticRoutingEnrichment> array = new List<StaticRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item));
+                        array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item, options));
                     }
                     @static = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DynamicRoutingEnrichment> array = new List<DynamicRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item));
+                        array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item, options));
                     }
                     @dynamic = array;
                     continue;

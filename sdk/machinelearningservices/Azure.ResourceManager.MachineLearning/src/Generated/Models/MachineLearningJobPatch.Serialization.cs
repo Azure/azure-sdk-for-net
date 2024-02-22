@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = PartialJobBase.DeserializePartialJobBase(property.Value);
+                    properties = PartialJobBase.DeserializePartialJobBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

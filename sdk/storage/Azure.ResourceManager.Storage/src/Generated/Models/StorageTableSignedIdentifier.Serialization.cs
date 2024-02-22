@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    accessPolicy = StorageTableAccessPolicy.DeserializeStorageTableAccessPolicy(property.Value);
+                    accessPolicy = StorageTableAccessPolicy.DeserializeStorageTableAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

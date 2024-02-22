@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -62,11 +61,26 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/> or <paramref name="accessToken"/> is null. </exception>
         public CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, Uri targetModelLocation, string accessToken, DateTimeOffset expirationDateTime)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
-            Argument.AssertNotNull(targetModelId, nameof(targetModelId));
-            Argument.AssertNotNull(targetModelLocation, nameof(targetModelLocation));
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (targetResourceRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceRegion));
+            }
+            if (targetModelId == null)
+            {
+                throw new ArgumentNullException(nameof(targetModelId));
+            }
+            if (targetModelLocation == null)
+            {
+                throw new ArgumentNullException(nameof(targetModelLocation));
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
 
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;

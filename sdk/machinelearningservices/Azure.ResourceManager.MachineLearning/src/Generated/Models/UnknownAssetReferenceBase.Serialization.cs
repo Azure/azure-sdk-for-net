@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAssetReferenceBase(document.RootElement, options);
+            return DeserializeMachineLearningAssetReferenceBase(document.RootElement, options);
         }
 
         internal static UnknownAssetReferenceBase DeserializeUnknownAssetReferenceBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAssetReferenceBase(document.RootElement, options);
+                        return DeserializeMachineLearningAssetReferenceBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAssetReferenceBase)} does not support '{options.Format}' format.");

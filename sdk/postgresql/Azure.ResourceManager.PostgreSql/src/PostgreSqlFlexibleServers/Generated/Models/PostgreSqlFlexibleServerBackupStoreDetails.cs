@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriList"/> is null. </exception>
         public PostgreSqlFlexibleServerBackupStoreDetails(IEnumerable<string> sasUriList)
         {
-            Argument.AssertNotNull(sasUriList, nameof(sasUriList));
+            if (sasUriList == null)
+            {
+                throw new ArgumentNullException(nameof(sasUriList));
+            }
 
             SasUriList = sasUriList.ToList();
         }

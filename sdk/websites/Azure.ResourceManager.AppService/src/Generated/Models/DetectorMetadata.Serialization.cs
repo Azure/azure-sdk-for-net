@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    dataSource = DetectorDataSource.DeserializeDetectorDataSource(property.Value);
+                    dataSource = DetectorDataSource.DeserializeDetectorDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

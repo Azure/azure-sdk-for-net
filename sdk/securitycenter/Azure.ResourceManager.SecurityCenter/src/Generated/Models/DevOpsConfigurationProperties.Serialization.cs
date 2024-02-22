@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value);
+                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoDiscovery"u8))

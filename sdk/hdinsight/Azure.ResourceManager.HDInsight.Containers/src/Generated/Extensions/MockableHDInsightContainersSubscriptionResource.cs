@@ -140,7 +140,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightContainersSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
@@ -179,7 +182,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightContainersSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();

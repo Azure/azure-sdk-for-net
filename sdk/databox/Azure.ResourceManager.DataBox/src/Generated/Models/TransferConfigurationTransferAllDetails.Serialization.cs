@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    include = TransferAllDetails.DeserializeTransferAllDetails(property.Value);
+                    include = TransferAllDetails.DeserializeTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPercentileMetric> array = new List<CosmosDBPercentileMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(item));
+                        array.Add(CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(item, options));
                     }
                     value = array;
                     continue;

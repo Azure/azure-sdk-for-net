@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -56,7 +55,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         protected AutoMLVertical(MachineLearningTableJobInput trainingData)
         {
-            Argument.AssertNotNull(trainingData, nameof(trainingData));
+            if (trainingData == null)
+            {
+                throw new ArgumentNullException(nameof(trainingData));
+            }
 
             TrainingData = trainingData;
         }

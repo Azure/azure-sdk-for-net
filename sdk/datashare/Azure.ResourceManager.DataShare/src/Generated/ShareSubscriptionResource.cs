@@ -425,7 +425,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, ShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Update");
             scope.Start();
@@ -471,7 +474,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareSubscriptionResource> Update(WaitUntil waitUntil, ShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Update");
             scope.Start();
@@ -517,7 +523,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionSynchronization"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> CancelSynchronizationAsync(WaitUntil waitUntil, ShareSubscriptionSynchronization shareSubscriptionSynchronization, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
+            if (shareSubscriptionSynchronization == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionSynchronization));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.CancelSynchronization");
             scope.Start();
@@ -563,7 +572,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionSynchronization"/> is null. </exception>
         public virtual ArmOperation<ShareSubscriptionSynchronization> CancelSynchronization(WaitUntil waitUntil, ShareSubscriptionSynchronization shareSubscriptionSynchronization, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
+            if (shareSubscriptionSynchronization == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionSynchronization));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.CancelSynchronization");
             scope.Start();
@@ -674,7 +686,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
+            if (shareSubscriptionSynchronization == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionSynchronization));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
@@ -711,7 +726,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
+            if (shareSubscriptionSynchronization == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionSynchronization));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
@@ -811,7 +829,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> SynchronizeAsync(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();
@@ -857,7 +878,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ShareSubscriptionSynchronization> Synchronize(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();

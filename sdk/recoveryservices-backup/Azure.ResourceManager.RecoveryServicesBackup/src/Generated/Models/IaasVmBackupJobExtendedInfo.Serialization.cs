@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmBackupJobTaskDetails> array = new List<IaasVmBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmBackupJobTaskDetails.DeserializeIaasVmBackupJobTaskDetails(item));
+                        array.Add(IaasVmBackupJobTaskDetails.DeserializeIaasVmBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;

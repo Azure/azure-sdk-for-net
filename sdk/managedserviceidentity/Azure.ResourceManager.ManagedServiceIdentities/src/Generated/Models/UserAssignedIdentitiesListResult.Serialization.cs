@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     List<UserAssignedIdentityData> array = new List<UserAssignedIdentityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserAssignedIdentityData.DeserializeUserAssignedIdentityData(item));
+                        array.Add(UserAssignedIdentityData.DeserializeUserAssignedIdentityData(item, options));
                     }
                     value = array;
                     continue;

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = SubscriptionScopeProperties.DeserializeSubscriptionScopeProperties(property.Value);
+                    properties = SubscriptionScopeProperties.DeserializeSubscriptionScopeProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ResourceMetricDefinition> array = new List<ResourceMetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMetricDefinition.DeserializeResourceMetricDefinition(item));
+                        array.Add(ResourceMetricDefinition.DeserializeResourceMetricDefinition(item, options));
                     }
                     value = array;
                     continue;

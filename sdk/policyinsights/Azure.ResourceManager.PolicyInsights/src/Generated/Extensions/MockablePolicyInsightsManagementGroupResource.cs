@@ -301,7 +301,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictions");
             scope.Start();
@@ -339,7 +342,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsManagementGroupResource.CheckPolicyRestrictions");
             scope.Start();

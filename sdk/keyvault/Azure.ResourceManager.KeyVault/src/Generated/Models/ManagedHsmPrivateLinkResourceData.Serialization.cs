@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
+                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrigger(document.RootElement, options);
+            return DeserializeDataShareTriggerData(document.RootElement, options);
         }
 
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTrigger(document.RootElement, options);
+                        return DeserializeDataShareTriggerData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support '{options.Format}' format.");

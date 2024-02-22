@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
+                        array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item, options));
                     }
                     value = array;
                     continue;

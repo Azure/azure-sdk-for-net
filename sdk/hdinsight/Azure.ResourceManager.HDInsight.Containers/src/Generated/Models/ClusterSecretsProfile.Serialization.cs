@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterSecretReference> array = new List<ClusterSecretReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item));
+                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item, options));
                     }
                     secrets = array;
                     continue;

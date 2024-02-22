@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseWorkspaceData> array = new List<SynapseWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseWorkspaceData.DeserializeSynapseWorkspaceData(item));
+                        array.Add(SynapseWorkspaceData.DeserializeSynapseWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

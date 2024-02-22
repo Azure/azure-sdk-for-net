@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<QueryUtterancesResult> array = new List<QueryUtterancesResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item));
+                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item, options));
                     }
                     results = array;
                     continue;

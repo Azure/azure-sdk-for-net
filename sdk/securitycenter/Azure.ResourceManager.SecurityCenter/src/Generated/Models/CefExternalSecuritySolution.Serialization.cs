@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = CefSolutionProperties.DeserializeCefSolutionProperties(property.Value);
+                    properties = CefSolutionProperties.DeserializeCefSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

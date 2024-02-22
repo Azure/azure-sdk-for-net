@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceBillingMeter> array = new List<AppServiceBillingMeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceBillingMeter.DeserializeAppServiceBillingMeter(item));
+                        array.Add(AppServiceBillingMeter.DeserializeAppServiceBillingMeter(item, options));
                     }
                     value = array;
                     continue;

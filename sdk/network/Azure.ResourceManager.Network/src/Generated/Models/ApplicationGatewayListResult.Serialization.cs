@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item));
+                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item, options));
                     }
                     value = array;
                     continue;

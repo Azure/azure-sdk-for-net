@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ConfigurationGroupValueData> array = new List<ConfigurationGroupValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(item));
+                        array.Add(ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(item, options));
                     }
                     value = array;
                     continue;

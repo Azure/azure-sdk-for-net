@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value);
+                    properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

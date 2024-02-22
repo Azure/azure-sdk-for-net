@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value);
+                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyUrl"u8))

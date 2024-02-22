@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInputSchemaMapping(document.RootElement, options);
+            return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
         }
 
         internal static UnknownInputSchemaMapping DeserializeUnknownInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInputSchemaMapping(document.RootElement, options);
+                        return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EventGridInputSchemaMapping)} does not support '{options.Format}' format.");

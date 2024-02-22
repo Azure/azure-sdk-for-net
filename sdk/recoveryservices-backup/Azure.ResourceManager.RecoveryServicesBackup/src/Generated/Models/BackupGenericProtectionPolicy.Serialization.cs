@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaasVM": return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element);
-                    case "AzureSql": return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element);
-                    case "AzureStorage": return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element);
-                    case "AzureWorkload": return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element);
-                    case "GenericProtectionPolicy": return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element);
-                    case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element);
+                    case "AzureIaasVM": return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element, options);
+                    case "AzureSql": return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
+                    case "AzureStorage": return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element, options);
+                    case "AzureWorkload": return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element, options);
+                    case "GenericProtectionPolicy": return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element, options);
+                    case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element, options);
                 }
             }
-            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element);
+            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionPolicy>.Write(ModelReaderWriterOptions options)

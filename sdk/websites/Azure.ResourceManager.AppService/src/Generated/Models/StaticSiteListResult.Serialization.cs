@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StaticSiteData> array = new List<StaticSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteData.DeserializeStaticSiteData(item));
+                        array.Add(StaticSiteData.DeserializeStaticSiteData(item, options));
                     }
                     value = array;
                     continue;

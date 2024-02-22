@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public PostgreSqlFlexibleServerBackupSettings(string backupName)
         {
-            Argument.AssertNotNull(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
 
             BackupName = backupName;
         }

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupJobData> array = new List<BackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupJobData.DeserializeBackupJobData(item));
+                        array.Add(BackupJobData.DeserializeBackupJobData(item, options));
                     }
                     value = array;
                     continue;

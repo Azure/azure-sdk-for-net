@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "All": return JobAllNodes.DeserializeJobAllNodes(element);
+                    case "All": return JobAllNodes.DeserializeJobAllNodes(element, options);
                 }
             }
-            return UnknownNodes.DeserializeUnknownNodes(element);
+            return UnknownNodes.DeserializeUnknownNodes(element, options);
         }
 
         BinaryData IPersistableModel<JobNodes>.Write(ModelReaderWriterOptions options)

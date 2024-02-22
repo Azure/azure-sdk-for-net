@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
         {
-            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
+            if (remoteVolumeResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(remoteVolumeResourceId));
+            }
 
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }

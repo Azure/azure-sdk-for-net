@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningTable(Uri dataUri) : base(dataUri)
         {
-            Argument.AssertNotNull(dataUri, nameof(dataUri));
+            if (dataUri == null)
+            {
+                throw new ArgumentNullException(nameof(dataUri));
+            }
 
             ReferencedUris = new ChangeTrackingList<Uri>();
             DataType = MachineLearningDataType.Mltable;

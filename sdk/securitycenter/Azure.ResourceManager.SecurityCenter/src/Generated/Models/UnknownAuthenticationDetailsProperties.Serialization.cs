@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAuthenticationDetailsProperties(document.RootElement, options);
+            return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
         }
 
         internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAuthenticationDetailsProperties(document.RootElement, options);
+                        return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");

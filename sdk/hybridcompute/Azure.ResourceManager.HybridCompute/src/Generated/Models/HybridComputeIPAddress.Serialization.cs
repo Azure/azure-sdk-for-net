@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    subnet = HybridComputeSubnet.DeserializeHybridComputeSubnet(property.Value);
+                    subnet = HybridComputeSubnet.DeserializeHybridComputeSubnet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

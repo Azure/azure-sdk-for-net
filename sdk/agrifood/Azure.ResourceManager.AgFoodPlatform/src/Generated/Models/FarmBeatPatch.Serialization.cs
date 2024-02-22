@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value);
+                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

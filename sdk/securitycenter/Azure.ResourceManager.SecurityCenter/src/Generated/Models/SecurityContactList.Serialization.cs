@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityContactData> array = new List<SecurityContactData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityContactData.DeserializeSecurityContactData(item));
+                        array.Add(SecurityContactData.DeserializeSecurityContactData(item, options));
                     }
                     value = array;
                     continue;

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Key": return LinkedIntegrationRuntimeKeyAuthorization.DeserializeLinkedIntegrationRuntimeKeyAuthorization(element);
-                    case "RBAC": return LinkedIntegrationRuntimeRbacAuthorization.DeserializeLinkedIntegrationRuntimeRbacAuthorization(element);
+                    case "Key": return LinkedIntegrationRuntimeKeyAuthorization.DeserializeLinkedIntegrationRuntimeKeyAuthorization(element, options);
+                    case "RBAC": return LinkedIntegrationRuntimeRbacAuthorization.DeserializeLinkedIntegrationRuntimeRbacAuthorization(element, options);
                 }
             }
-            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
+            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element, options);
         }
 
         BinaryData IPersistableModel<LinkedIntegrationRuntimeType>.Write(ModelReaderWriterOptions options)

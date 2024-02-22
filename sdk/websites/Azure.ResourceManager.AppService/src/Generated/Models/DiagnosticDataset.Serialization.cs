@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value);
+                    table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value);
+                    renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

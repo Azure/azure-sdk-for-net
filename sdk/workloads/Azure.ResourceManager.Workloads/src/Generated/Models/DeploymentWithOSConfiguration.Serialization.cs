@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
+                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softwareConfiguration"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osSapConfiguration"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value);
+                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item));
+                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
                     }
                     nodePublicIPTags = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolNetworkPortRange> array = new List<AgentPoolNetworkPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item));
+                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item, options));
                     }
                     allowedHostPorts = array;
                     continue;

@@ -57,8 +57,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
         public StorageMoverAgentData(string arcResourceId, string arcVmUuid)
         {
-            Argument.AssertNotNull(arcResourceId, nameof(arcResourceId));
-            Argument.AssertNotNull(arcVmUuid, nameof(arcVmUuid));
+            if (arcResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(arcResourceId));
+            }
+            if (arcVmUuid == null)
+            {
+                throw new ArgumentNullException(nameof(arcVmUuid));
+            }
 
             ArcResourceId = arcResourceId;
             ArcVmUuid = arcVmUuid;

@@ -46,8 +46,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public FarmBeatsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new FarmBeatsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -61,7 +67,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new ApplicationData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -71,7 +80,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Attachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -81,7 +93,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Boundaries GetBoundariesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Boundaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -91,7 +106,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual CropProducts GetCropProductsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new CropProducts(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -101,7 +119,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Crops GetCropsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Crops(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -111,7 +132,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual DeviceDataModels GetDeviceDataModelsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new DeviceDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -121,7 +145,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Devices GetDevicesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Devices(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -131,7 +158,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new FarmOperationsDataIngestion(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -141,7 +171,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Farms GetFarmsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Farms(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -151,7 +184,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Fields GetFieldsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Fields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -161,7 +197,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual HarvestData GetHarvestDataClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new HarvestData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -171,7 +210,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ImageProcessing GetImageProcessingClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new ImageProcessing(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -181,7 +223,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual InsightAttachments GetInsightAttachmentsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new InsightAttachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -191,7 +236,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Insights GetInsightsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Insights(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -201,7 +249,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ManagementZones GetManagementZonesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new ManagementZones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -211,7 +262,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual ModelInference GetModelInferenceClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new ModelInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -221,7 +275,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual NutrientAnalyses GetNutrientAnalysesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new NutrientAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -231,7 +288,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual OAuthProviders GetOAuthProvidersClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new OAuthProviders(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -241,7 +301,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual FarmerOAuthTokens GetFarmerOAuthTokensClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new FarmerOAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -251,7 +314,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Parties GetPartiesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Parties(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -261,7 +327,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PlantingData GetPlantingDataClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new PlantingData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -271,7 +340,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PlantTissueAnalyses GetPlantTissueAnalysesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new PlantTissueAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -281,7 +353,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual PrescriptionMaps GetPrescriptionMapsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new PrescriptionMaps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -291,7 +366,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Prescriptions GetPrescriptionsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Prescriptions(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -301,7 +379,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Scenes GetScenesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Scenes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -311,7 +392,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SeasonalFields GetSeasonalFieldsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SeasonalFields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -321,7 +405,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Seasons GetSeasonsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Seasons(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -331,7 +418,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorDataModels GetSensorDataModelsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SensorDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -341,7 +431,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorEvents GetSensorEventsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SensorEvents(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -351,7 +444,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorMappings GetSensorMappingsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SensorMappings(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -361,7 +457,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SensorPartnerIntegrations GetSensorPartnerIntegrationsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SensorPartnerIntegrations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -371,7 +470,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Sensors GetSensorsClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Sensors(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -381,7 +483,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual SolutionInference GetSolutionInferenceClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new SolutionInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -391,7 +496,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual TillageData GetTillageDataClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new TillageData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -401,7 +509,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Weather GetWeatherClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Weather(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -411,7 +522,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual WeatherData GetWeatherDataClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new WeatherData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -421,7 +535,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Zones GetZonesClient(string apiVersion = "2022-11-01-preview")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Zones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }

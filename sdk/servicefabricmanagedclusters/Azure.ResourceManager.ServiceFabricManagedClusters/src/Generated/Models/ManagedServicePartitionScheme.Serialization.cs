@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Named": return NamedPartitionScheme.DeserializeNamedPartitionScheme(element);
-                    case "Singleton": return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element);
-                    case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element);
+                    case "Named": return NamedPartitionScheme.DeserializeNamedPartitionScheme(element, options);
+                    case "Singleton": return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element, options);
+                    case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element, options);
                 }
             }
-            return UnknownPartition.DeserializeUnknownPartition(element);
+            return UnknownPartition.DeserializeUnknownPartition(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServicePartitionScheme>.Write(ModelReaderWriterOptions options)

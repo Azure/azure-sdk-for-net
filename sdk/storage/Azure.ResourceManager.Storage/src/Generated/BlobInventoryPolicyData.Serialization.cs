@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            policy = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(property0.Value);
+                            policy = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(property0.Value, options);
                             continue;
                         }
                     }

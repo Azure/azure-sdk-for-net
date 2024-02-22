@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    name = QuotaUsageResultName.DeserializeQuotaUsageResultName(property.Value);
+                    name = QuotaUsageResultName.DeserializeQuotaUsageResultName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

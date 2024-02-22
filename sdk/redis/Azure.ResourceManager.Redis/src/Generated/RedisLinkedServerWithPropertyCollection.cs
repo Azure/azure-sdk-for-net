@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisLinkedServerWithPropertyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RedisLinkedServerWithPropertyResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual async Task<Response<RedisLinkedServerWithPropertyResource>> GetAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual Response<RedisLinkedServerWithPropertyResource> Get(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisLinkedServerWithPropertyResource>> GetIfExistsAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         public virtual NullableResponse<RedisLinkedServerWithPropertyResource> GetIfExists(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+            if (linkedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServerName));
+            }
+            if (linkedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServerName));
+            }
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
             scope.Start();

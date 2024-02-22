@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    properties = ReportProperties.DeserializeReportProperties(property.Value);
+                    properties = ReportProperties.DeserializeReportProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

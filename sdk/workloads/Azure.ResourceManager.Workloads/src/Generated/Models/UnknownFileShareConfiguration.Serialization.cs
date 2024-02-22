@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFileShareConfiguration(document.RootElement, options);
+            return DeserializeFileShareConfiguration(document.RootElement, options);
         }
 
         internal static UnknownFileShareConfiguration DeserializeUnknownFileShareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFileShareConfiguration(document.RootElement, options);
+                        return DeserializeFileShareConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FileShareConfiguration)} does not support '{options.Format}' format.");

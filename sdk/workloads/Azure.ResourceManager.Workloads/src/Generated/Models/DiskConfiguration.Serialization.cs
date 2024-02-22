@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, DiskVolumeConfiguration> dictionary = new Dictionary<string, DiskVolumeConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value, options));
                     }
                     diskVolumeConfigurations = dictionary;
                     continue;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<TopLevelDomainData> array = new List<TopLevelDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopLevelDomainData.DeserializeTopLevelDomainData(item));
+                        array.Add(TopLevelDomainData.DeserializeTopLevelDomainData(item, options));
                     }
                     value = array;
                     continue;

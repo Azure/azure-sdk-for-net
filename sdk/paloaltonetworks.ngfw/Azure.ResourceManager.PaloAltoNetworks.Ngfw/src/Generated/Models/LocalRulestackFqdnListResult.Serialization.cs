@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<LocalRulestackFqdnData> array = new List<LocalRulestackFqdnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalRulestackFqdnData.DeserializeLocalRulestackFqdnData(item));
+                        array.Add(LocalRulestackFqdnData.DeserializeLocalRulestackFqdnData(item, options));
                     }
                     value = array;
                     continue;

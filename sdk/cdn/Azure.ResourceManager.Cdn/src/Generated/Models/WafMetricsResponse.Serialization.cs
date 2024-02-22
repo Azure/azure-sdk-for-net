@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesItem> array = new List<WafMetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item));
+                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;

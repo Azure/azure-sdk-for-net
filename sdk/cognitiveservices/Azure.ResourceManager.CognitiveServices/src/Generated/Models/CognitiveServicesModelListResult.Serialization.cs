@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesModel> array = new List<CognitiveServicesModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesModel.DeserializeCognitiveServicesModel(item));
+                        array.Add(CognitiveServicesModel.DeserializeCognitiveServicesModel(item, options));
                     }
                     value = array;
                     continue;

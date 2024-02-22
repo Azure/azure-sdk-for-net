@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TriggerCriterion> array = new List<TriggerCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item));
+                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
                     }
                     triggerCriteria = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value);
+                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sections"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSection> array = new List<SelfHelpSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item, options));
                     }
                     sections = array;
                     continue;
