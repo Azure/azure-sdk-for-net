@@ -148,7 +148,31 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationCallbackUri = new Uri("https://localhost")
         };
 
+        private static readonly StartHoldMusicOptions _startHoldMusicOptionsNoMusic = new StartHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            OperationContext = "operationContext",
+            OperationCallbackUri = new Uri("https://localhost")
+        };
+
         private static readonly StopHoldMusicOptions _stopHoldMusicOptions = new StopHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            OperationContext = "operationContext"
+        };
+
+        private static readonly HoldOptions _holdOptions = new HoldOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            OperationContext = "operationContext",
+            PlaySourceInfo = _textSource,
+            OperationCallbackUri = new Uri("https://localhost")
+        };
+
+        private static readonly HoldOptions _holdOptionsNoMusic = new HoldOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            OperationContext = "operationContext",
+            OperationCallbackUri = new Uri("https://localhost")
+        };
+
+        private static readonly UnholdOptions _unholdOptions = new UnholdOptions(new CommunicationUserIdentifier("targetUserId"))
         {
             OperationContext = "operationContext"
         };
@@ -794,7 +818,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
+                   callMedia => callMedia.StartHoldMusicAsync(_startHoldMusicOptionsNoMusic)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
                    callMedia => callMedia.StopHoldMusicAsync(_stopHoldMusicOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.HoldAsync(_holdOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.HoldAsync(_holdOptionsNoMusic)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.UnholdAsync(_unholdOptions)
                 }
             };
         }
@@ -809,7 +849,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Response>?[]
                 {
+                   callMedia => callMedia.StartHoldMusic(_startHoldMusicOptionsNoMusic)
+                },
+                new Func<CallMedia, Response>?[]
+                {
                    callMedia => callMedia.StopHoldMusic(_stopHoldMusicOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Hold(_holdOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Hold(_holdOptionsNoMusic)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Unhold(_unholdOptions)
                 }
             };
         }
