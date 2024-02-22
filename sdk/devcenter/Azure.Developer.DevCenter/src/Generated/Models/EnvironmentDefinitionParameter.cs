@@ -80,7 +80,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, BinaryData defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, string defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -104,6 +104,8 @@ namespace Azure.Developer.DevCenter.Models
         public string Name { get; }
         /// <summary> Description of the parameter. </summary>
         public string Description { get; }
+        /// <summary> Default value of the parameter. </summary>
+        public string DefaultValue { get; }
         /// <summary>
         /// A string of one of the basic JSON types (number, integer, array, object,
         /// boolean, string)

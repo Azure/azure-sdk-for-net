@@ -42,14 +42,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("default"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DefaultValue);
-#else
-                using (JsonDocument document = JsonDocument.Parse(DefaultValue))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteStringValue(DefaultValue);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
@@ -111,7 +104,7 @@ namespace Azure.Developer.DevCenter.Models
             string id = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<BinaryData> @default = default;
+            Optional<string> @default = default;
             EnvironmentDefinitionParameterType type = default;
             Optional<bool> readOnly = default;
             bool required = default;
@@ -137,11 +130,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("default"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @default = BinaryData.FromString(property.Value.GetRawText());
+                    @default = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
