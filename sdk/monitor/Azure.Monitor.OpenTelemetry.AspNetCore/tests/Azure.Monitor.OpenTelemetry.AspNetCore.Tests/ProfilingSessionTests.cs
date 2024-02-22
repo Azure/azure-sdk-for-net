@@ -160,7 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                     // The ActivitySource name must begin with "Azure."
                     ActivitySource activitySource = new("Azure.Monitor.TestSource");
 
-                    // Start multiple activites.
+                    // Start multiple activities.
                     for (int i = 0; i < numActivities; i++)
                     {
                         using (Activity? activity = activitySource.StartActivity($"Test{i}"))
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                     // The ActivitySource name must begin with "Azure."
                     ActivitySource activitySource = new("Azure.Monitor.TestSource");
 
-                    // Start multiple activites.
+                    // Start multiple activities.
                     for (int i = 0; i < numActivities; i++)
                     {
                         using (Activity? activity = activitySource.StartActivity($"Test{i}"))

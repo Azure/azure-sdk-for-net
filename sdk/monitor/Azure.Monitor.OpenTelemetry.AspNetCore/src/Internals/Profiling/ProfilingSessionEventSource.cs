@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         public static ProfilingSessionEventSource Current { get; } = new();
 
         /// <summary>
-        /// Keywords
+        /// Keywords for this EventSource.
         /// </summary>
         public static class Keywords
         {
