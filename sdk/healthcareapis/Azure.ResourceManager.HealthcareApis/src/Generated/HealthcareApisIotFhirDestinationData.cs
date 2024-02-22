@@ -59,8 +59,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceResourceId"/> or <paramref name="fhirMapping"/> is null. </exception>
         public HealthcareApisIotFhirDestinationData(HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, HealthcareApisIotMappingProperties fhirMapping)
         {
-            Argument.AssertNotNull(fhirServiceResourceId, nameof(fhirServiceResourceId));
-            Argument.AssertNotNull(fhirMapping, nameof(fhirMapping));
+            if (fhirServiceResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(fhirServiceResourceId));
+            }
+            if (fhirMapping == null)
+            {
+                throw new ArgumentNullException(nameof(fhirMapping));
+            }
 
             ResourceIdentityResolutionType = resourceIdentityResolutionType;
             FhirServiceResourceId = fhirServiceResourceId;

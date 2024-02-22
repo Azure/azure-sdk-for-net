@@ -188,7 +188,10 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+            if (defaultAccountPayload == null)
+            {
+                throw new ArgumentNullException(nameof(defaultAccountPayload));
+            }
 
             using var message = CreateSetRequest(defaultAccountPayload);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -212,7 +215,10 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+            if (defaultAccountPayload == null)
+            {
+                throw new ArgumentNullException(nameof(defaultAccountPayload));
+            }
 
             using var message = CreateSetRequest(defaultAccountPayload);
             _pipeline.Send(message, cancellationToken);

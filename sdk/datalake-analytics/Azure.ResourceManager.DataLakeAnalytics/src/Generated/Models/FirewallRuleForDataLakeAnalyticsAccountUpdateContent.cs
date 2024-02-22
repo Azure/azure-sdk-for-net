@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -58,7 +57,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
         }

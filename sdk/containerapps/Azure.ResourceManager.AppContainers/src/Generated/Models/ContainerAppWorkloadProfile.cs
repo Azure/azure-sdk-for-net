@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="workloadProfileType"/> is null. </exception>
         public ContainerAppWorkloadProfile(string name, string workloadProfileType)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (workloadProfileType == null)
+            {
+                throw new ArgumentNullException(nameof(workloadProfileType));
+            }
 
             Name = name;
             WorkloadProfileType = workloadProfileType;

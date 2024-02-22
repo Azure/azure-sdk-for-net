@@ -10,37 +10,31 @@ public abstract class PipelineRequest : IDisposable
     /// </summary>
     public string Method
     {
-        get => GetMethodCore();
-        set => SetMethodCore(value);
+        get => MethodCore;
+        set => MethodCore = value;
     }
 
-    protected abstract string GetMethodCore();
+    protected abstract string MethodCore { get; set; }
 
-    protected abstract void SetMethodCore(string method);
-
-    public Uri Uri
+    public Uri? Uri
     {
-        get => GetUriCore();
-        set => SetUriCore(value);
+        get => UriCore;
+        set => UriCore = value;
     }
 
-    protected abstract Uri GetUriCore();
+    protected abstract Uri? UriCore { get; set; }
 
-    protected abstract void SetUriCore(Uri uri);
+    public PipelineRequestHeaders Headers => HeadersCore;
 
-    public PipelineRequestHeaders Headers { get => GetHeadersCore(); }
-
-    protected abstract PipelineRequestHeaders GetHeadersCore();
+    protected abstract PipelineRequestHeaders HeadersCore { get; }
 
     public BinaryContent? Content
     {
-        get => GetContentCore();
-        set => SetContentCore(value);
+        get => ContentCore;
+        set => ContentCore = value;
     }
 
-    protected abstract BinaryContent? GetContentCore();
-
-    protected abstract void SetContentCore(BinaryContent? content);
+    protected abstract BinaryContent? ContentCore { get; set; }
 
     public abstract void Dispose();
 }

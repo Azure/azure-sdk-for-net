@@ -270,7 +270,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ApiManagementServiceClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.CheckApiManagementServiceNameAvailability");
             scope.Start();
@@ -312,7 +315,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ApiManagementServiceClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.CheckApiManagementServiceNameAvailability");
             scope.Start();

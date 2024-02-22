@@ -70,10 +70,38 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateRunList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName, updateName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateRunList> List(string subscriptionId, string resourceGroupName, string clusterName, string updateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName, updateName);
             _pipeline.Send(message, cancellationToken);
@@ -157,11 +213,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,11 +278,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName);
             _pipeline.Send(message, cancellationToken);
@@ -246,12 +372,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateRunData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -281,12 +445,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateRunData> Put(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName, data);
             _pipeline.Send(message, cancellationToken);
@@ -339,11 +541,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -374,11 +611,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="updateName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateRunData> Get(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
-            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
+            if (updateRunName == null)
+            {
+                throw new ArgumentNullException(nameof(updateRunName));
+            }
+            if (updateRunName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, updateName, updateRunName);
             _pipeline.Send(message, cancellationToken);
@@ -423,11 +695,42 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateRunList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string updateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, updateName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -456,11 +759,42 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateRunList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string updateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (updateName == null)
+            {
+                throw new ArgumentNullException(nameof(updateName));
+            }
+            if (updateName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, updateName);
             _pipeline.Send(message, cancellationToken);

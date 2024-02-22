@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorCustomDomainResource>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<FrontDoorCustomDomainResource> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorCustomDomainResource>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorCustomDomainResource> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            if (customDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(customDomainName));
+            }
+            if (customDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
+            }
 
             using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();

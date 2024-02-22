@@ -69,8 +69,22 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TargetTypeListResult>> ListAsync(string subscriptionId, string locationName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var message = CreateListRequest(subscriptionId, locationName, continuationToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,8 +111,22 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TargetTypeListResult> List(string subscriptionId, string locationName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var message = CreateListRequest(subscriptionId, locationName, continuationToken);
             _pipeline.Send(message, cancellationToken);
@@ -145,9 +173,30 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChaosTargetTypeData>> GetAsync(string subscriptionId, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
+            if (targetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(targetTypeName));
+            }
+            if (targetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, locationName, targetTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -176,9 +225,30 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChaosTargetTypeData> Get(string subscriptionId, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
+            if (targetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(targetTypeName));
+            }
+            if (targetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, locationName, targetTypeName);
             _pipeline.Send(message, cancellationToken);
@@ -222,9 +292,26 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TargetTypeListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string locationName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName, continuationToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -252,9 +339,26 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TargetTypeListResult> ListNextPage(string nextLink, string subscriptionId, string locationName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName, continuationToken);
             _pipeline.Send(message, cancellationToken);

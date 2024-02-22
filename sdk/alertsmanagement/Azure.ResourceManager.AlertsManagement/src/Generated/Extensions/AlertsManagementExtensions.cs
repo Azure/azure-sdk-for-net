@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="AlertProcessingRuleResource"/> object. </returns>
         public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAlertsManagementArmClient(client).GetAlertProcessingRuleResource(id);
         }
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
         public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAlertsManagementArmClient(client).GetServiceAlertResource(id);
         }
@@ -92,7 +98,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="SmartGroupResource"/> object. </returns>
         public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAlertsManagementArmClient(client).GetSmartGroupResource(id);
         }
@@ -109,7 +118,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of AlertProcessingRuleResources and their operations over a AlertProcessingRuleResource. </returns>
         public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRules();
         }
@@ -147,7 +159,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRuleAsync(alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
         }
@@ -185,7 +200,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRule(alertProcessingRuleName, cancellationToken);
         }
@@ -202,7 +220,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlerts();
         }
@@ -239,7 +260,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
@@ -276,7 +300,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlert(alertId, cancellationToken);
         }
@@ -293,7 +320,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An object representing collection of SmartGroupResources and their operations over a SmartGroupResource. </returns>
         public static SmartGroupCollection GetSmartGroups(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroups();
         }
@@ -330,7 +360,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<SmartGroupResource>> GetSmartGroupAsync(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroupAsync(smartGroupId, cancellationToken).ConfigureAwait(false);
         }
@@ -367,7 +400,10 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<SmartGroupResource> GetSmartGroup(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroup(smartGroupId, cancellationToken);
         }
@@ -403,7 +439,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
         }
@@ -439,7 +478,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> A collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetAlertProcessingRules(cancellationToken);
         }
@@ -475,7 +517,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
         public static async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -511,7 +556,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="options"/> is null. </exception>
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
         }
@@ -547,7 +595,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
@@ -583,7 +634,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }

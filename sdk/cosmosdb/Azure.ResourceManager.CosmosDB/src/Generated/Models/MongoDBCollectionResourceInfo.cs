@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public MongoDBCollectionResourceInfo(string collectionName)
         {
-            Argument.AssertNotNull(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
 
             CollectionName = collectionName;
             ShardKey = new ChangeTrackingDictionary<string, string>();

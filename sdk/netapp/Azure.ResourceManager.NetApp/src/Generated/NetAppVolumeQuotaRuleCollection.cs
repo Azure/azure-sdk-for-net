@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeQuotaRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeQuotaRuleName, NetAppVolumeQuotaRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeQuotaRuleResource> CreateOrUpdate(WaitUntil waitUntil, string volumeQuotaRuleName, NetAppVolumeQuotaRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeQuotaRuleResource>> GetAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual Response<NetAppVolumeQuotaRuleResource> Get(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppVolumeQuotaRuleResource>> GetIfExistsAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
         public virtual NullableResponse<NetAppVolumeQuotaRuleResource> GetIfExists(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeQuotaRuleName, nameof(volumeQuotaRuleName));
+            if (volumeQuotaRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeQuotaRuleName));
+            }
+            if (volumeQuotaRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeQuotaRuleName));
+            }
 
             using var scope = _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics.CreateScope("NetAppVolumeQuotaRuleCollection.GetIfExists");
             scope.Start();

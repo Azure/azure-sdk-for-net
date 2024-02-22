@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<FirmwareWorkspaceResource>> UpdateAsync(FirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceResource.Update");
             scope.Start();
@@ -392,7 +395,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<FirmwareWorkspaceResource> Update(FirmwareWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceResource.Update");
             scope.Start();
@@ -434,7 +440,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<UriToken>> GenerateUploadUrlAsync(UploadUrlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceResource.GenerateUploadUrl");
             scope.Start();
@@ -476,7 +485,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<UriToken> GenerateUploadUrl(UploadUrlContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _firmwareWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareWorkspaceResource.GenerateUploadUrl");
             scope.Start();

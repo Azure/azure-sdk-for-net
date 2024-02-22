@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityContent"/> or <paramref name="resourceAccessIdentityContent"/> is null. </exception>
         public SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent)
         {
-            Argument.AssertNotNull(machineName, nameof(machineName));
-            Argument.AssertNotNull(authenticationIdentityContent, nameof(authenticationIdentityContent));
-            Argument.AssertNotNull(resourceAccessIdentityContent, nameof(resourceAccessIdentityContent));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (authenticationIdentityContent == null)
+            {
+                throw new ArgumentNullException(nameof(authenticationIdentityContent));
+            }
+            if (resourceAccessIdentityContent == null)
+            {
+                throw new ArgumentNullException(nameof(resourceAccessIdentityContent));
+            }
 
             MachineName = machineName;
             AuthenticationIdentityContent = authenticationIdentityContent;

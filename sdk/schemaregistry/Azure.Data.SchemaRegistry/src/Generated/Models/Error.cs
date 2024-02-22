@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errorValue"/> is null. </exception>
         internal Error(ErrorDetail errorValue)
         {
-            Argument.AssertNotNull(errorValue, nameof(errorValue));
+            if (errorValue == null)
+            {
+                throw new ArgumentNullException(nameof(errorValue));
+            }
 
             ErrorValue = errorValue;
         }

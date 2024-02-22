@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(creationToken, nameof(creationToken));
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            if (creationToken == null)
+            {
+                throw new ArgumentNullException(nameof(creationToken));
+            }
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();

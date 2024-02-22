@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -25,9 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public OracleServiceCloudLinkedService(object host, object username, SecretBase password)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Host = host;
             Username = username;

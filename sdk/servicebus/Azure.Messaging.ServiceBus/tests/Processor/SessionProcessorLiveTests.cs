@@ -2680,18 +2680,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        public async Task SessionOrderingIsGuaranteedProcessor()
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task SessionOrderingIsGuaranteedProcessor(bool prefetch, bool useSpecificSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 long lastSequenceNumber = 0;
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1, PrefetchCount = prefetch ? 5 : 0
+                };
+                if (useSpecificSession)
+                {
+                    options.SessionIds.Add("session");
+                }
 
-                await using var processor = client.CreateSessionProcessor(scope.QueueName,
-                    new ServiceBusSessionProcessorOptions
-                    {
-                        MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1
-                    });
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetVersion"/> is null. </exception>
         public UpgradableVersionsDescription(string targetVersion)
         {
-            Argument.AssertNotNull(targetVersion, nameof(targetVersion));
+            if (targetVersion == null)
+            {
+                throw new ArgumentNullException(nameof(targetVersion));
+            }
 
             TargetVersion = targetVersion;
         }

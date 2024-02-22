@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataset"/> is null. </exception>
         public QueryDefinition(ExportType exportType, TimeframeType timeframe, QueryDataset dataset)
         {
-            Argument.AssertNotNull(dataset, nameof(dataset));
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
 
             ExportType = exportType;
             Timeframe = timeframe;

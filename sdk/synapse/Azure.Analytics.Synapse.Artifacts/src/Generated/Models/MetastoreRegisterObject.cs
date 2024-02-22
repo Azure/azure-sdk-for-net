@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputFolder"/> is null. </exception>
         public MetastoreRegisterObject(string inputFolder)
         {
-            Argument.AssertNotNull(inputFolder, nameof(inputFolder));
+            if (inputFolder == null)
+            {
+                throw new ArgumentNullException(nameof(inputFolder));
+            }
 
             InputFolder = inputFolder;
         }

@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareAccountResource"/> object. </returns>
         public static DataShareAccountResource GetDataShareAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareAccountResource(id);
         }
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareConsumerInvitationResource"/> object. </returns>
         public static DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareConsumerInvitationResource(id);
         }
@@ -92,7 +98,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareDataSetResource"/> object. </returns>
         public static ShareDataSetResource GetShareDataSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetShareDataSetResource(id);
         }
@@ -111,7 +120,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareDataSetMappingResource"/> object. </returns>
         public static ShareDataSetMappingResource GetShareDataSetMappingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetShareDataSetMappingResource(id);
         }
@@ -130,7 +142,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareInvitationResource"/> object. </returns>
         public static DataShareInvitationResource GetDataShareInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareInvitationResource(id);
         }
@@ -149,7 +164,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareResource"/> object. </returns>
         public static DataShareResource GetDataShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareResource(id);
         }
@@ -168,7 +186,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ProviderShareSubscriptionResource"/> object. </returns>
         public static ProviderShareSubscriptionResource GetProviderShareSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetProviderShareSubscriptionResource(id);
         }
@@ -187,7 +208,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareSubscriptionResource"/> object. </returns>
         public static ShareSubscriptionResource GetShareSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetShareSubscriptionResource(id);
         }
@@ -206,7 +230,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareSynchronizationSettingResource"/> object. </returns>
         public static DataShareSynchronizationSettingResource GetDataShareSynchronizationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareSynchronizationSettingResource(id);
         }
@@ -225,7 +252,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareTriggerResource"/> object. </returns>
         public static DataShareTriggerResource GetDataShareTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDataShareArmClient(client).GetDataShareTriggerResource(id);
         }
@@ -242,7 +272,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
         public static DataShareAccountCollection GetDataShareAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccounts();
         }
@@ -280,7 +313,10 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static async Task<Response<DataShareAccountResource>> GetDataShareAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -318,7 +354,10 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static Response<DataShareAccountResource> GetDataShareAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccount(accountName, cancellationToken);
         }
@@ -355,7 +394,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDataShareSubscriptionResource(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
         }
@@ -392,7 +434,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataShareAccountResource> GetDataShareAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDataShareSubscriptionResource(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
         }
@@ -409,7 +454,10 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
         public static DataShareConsumerInvitationCollection GetDataShareConsumerInvitations(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitations();
         }
@@ -447,7 +495,10 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static async Task<Response<DataShareConsumerInvitationResource>> GetDataShareConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitationAsync(location, invitationId, cancellationToken).ConfigureAwait(false);
         }
@@ -485,7 +536,10 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static Response<DataShareConsumerInvitationResource> GetDataShareConsumerInvitation(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitation(location, invitationId, cancellationToken);
         }
@@ -522,7 +576,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableDataShareTenantResource(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
         }
@@ -559,7 +616,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="data"/> is null. </exception>
         public static Response<DataShareConsumerInvitationResource> RejectConsumerInvitation(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableDataShareTenantResource(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
         }
@@ -592,7 +652,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="emailRegistration"/> is null. </exception>
         public static async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableDataShareTenantResource(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
         }
@@ -625,7 +688,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="emailRegistration"/> is null. </exception>
         public static Response<DataShareEmailRegistration> ActivateEmail(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableDataShareTenantResource(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
         }
@@ -657,7 +723,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<DataShareEmailRegistration>> RegisterEmailAsync(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableDataShareTenantResource(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -689,7 +758,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<DataShareEmailRegistration> RegisterEmail(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableDataShareTenantResource(tenantResource).RegisterEmail(location, cancellationToken);
         }

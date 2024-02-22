@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="public"/> is null. </exception>
         public SecurityAssessmentPublishDates(string @public)
         {
-            Argument.AssertNotNull(@public, nameof(@public));
+            if (@public == null)
+            {
+                throw new ArgumentNullException(nameof(@public));
+            }
 
             Public = @public;
         }

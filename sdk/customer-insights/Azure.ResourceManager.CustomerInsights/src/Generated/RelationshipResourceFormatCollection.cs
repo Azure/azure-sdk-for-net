@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelationshipResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationshipName, RelationshipResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelationshipResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string relationshipName, RelationshipResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual async Task<Response<RelationshipResourceFormatResource>> GetAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual Response<RelationshipResourceFormatResource> Get(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual Response<bool> Exists(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual async Task<NullableResponse<RelationshipResourceFormatResource>> GetIfExistsAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         public virtual NullableResponse<RelationshipResourceFormatResource> GetIfExists(string relationshipName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+            if (relationshipName == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipName));
+            }
+            if (relationshipName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relationshipName));
+            }
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.GetIfExists");
             scope.Start();

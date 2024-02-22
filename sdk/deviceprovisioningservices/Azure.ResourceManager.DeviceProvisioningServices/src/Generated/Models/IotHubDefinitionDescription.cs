@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public IotHubDefinitionDescription(string connectionString, AzureLocation location)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
 
             ConnectionString = connectionString;
             Location = location;

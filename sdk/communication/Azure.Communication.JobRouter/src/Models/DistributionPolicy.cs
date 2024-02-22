@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenSerialization(nameof(OfferExpiresAfter), SerializationValueHook = nameof(WriteOfferExpiresAfter), DeserializationValueHook = nameof(ReadOfferExpiresAfter))]
-    public partial class DistributionPolicy : IUtf8JsonSerializable
+    public partial class DistributionPolicy
     {
         /// <summary> Initializes a new instance of distribution policy. </summary>
         /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
@@ -62,32 +62,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> The entity tag for this resource. </summary>
         [CodeGenMember("Etag")]
         public ETag ETag { get; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(OfferExpiresAfter))
-            {
-                writer.WritePropertyName("offerExpiresAfterSeconds"u8);
-                WriteOfferExpiresAfter(writer);
-            }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteObjectValue(Mode);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.ToString());
-            }
-            writer.WriteEndObject();
-        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

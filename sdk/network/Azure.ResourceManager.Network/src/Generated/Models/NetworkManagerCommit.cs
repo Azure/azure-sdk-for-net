@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocations"/> is null. </exception>
         public NetworkManagerCommit(IEnumerable<string> targetLocations, NetworkConfigurationDeploymentType commitType)
         {
-            Argument.AssertNotNull(targetLocations, nameof(targetLocations));
+            if (targetLocations == null)
+            {
+                throw new ArgumentNullException(nameof(targetLocations));
+            }
 
             TargetLocations = targetLocations.ToList();
             ConfigurationIds = new ChangeTrackingList<string>();

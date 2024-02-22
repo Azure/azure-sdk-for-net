@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="publisherId"/> is null. </exception>
         public PanFirewallMarketplaceDetails(string offerId, string publisherId)
         {
-            Argument.AssertNotNull(offerId, nameof(offerId));
-            Argument.AssertNotNull(publisherId, nameof(publisherId));
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
+            if (publisherId == null)
+            {
+                throw new ArgumentNullException(nameof(publisherId));
+            }
 
             OfferId = offerId;
             PublisherId = publisherId;

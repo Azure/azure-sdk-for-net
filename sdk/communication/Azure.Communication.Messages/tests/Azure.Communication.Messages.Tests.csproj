@@ -27,7 +27,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="SessionRecords\NotificationMessagesClientLiveTests\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 
 </Project>

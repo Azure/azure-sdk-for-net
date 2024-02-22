@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScopeMapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeMapName, ScopeMapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScopeMapResource> CreateOrUpdate(WaitUntil waitUntil, string scopeMapName, ScopeMapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual async Task<Response<ScopeMapResource>> GetAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual Response<ScopeMapResource> Get(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual Response<bool> Exists(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScopeMapResource>> GetIfExistsAsync(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="scopeMapName"/> is null. </exception>
         public virtual NullableResponse<ScopeMapResource> GetIfExists(string scopeMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeMapName, nameof(scopeMapName));
+            if (scopeMapName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeMapName));
+            }
+            if (scopeMapName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeMapName));
+            }
 
             using var scope = _scopeMapClientDiagnostics.CreateScope("ScopeMapCollection.GetIfExists");
             scope.Start();

@@ -50,8 +50,14 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DevCenterClient(Uri endpoint, TokenCredential credential, AzureDeveloperDevCenterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new AzureDeveloperDevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -80,7 +86,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DevCenterClient.GetProject");
             scope.Start();
@@ -115,7 +128,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DevCenterClient.GetProject");
             scope.Start();

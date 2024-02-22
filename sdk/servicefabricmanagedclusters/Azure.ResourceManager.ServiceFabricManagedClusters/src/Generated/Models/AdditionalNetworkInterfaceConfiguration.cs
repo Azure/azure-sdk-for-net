@@ -54,8 +54,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="ipConfigurations"/> is null. </exception>
         public AdditionalNetworkInterfaceConfiguration(string name, IEnumerable<ServiceFabricManagedClusterIPConfiguration> ipConfigurations)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (ipConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurations));
+            }
 
             Name = name;
             IPConfigurations = ipConfigurations.ToList();

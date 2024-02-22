@@ -796,7 +796,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> UpdateAsync(OperationalInsightsWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
             scope.Start();
@@ -838,7 +841,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspaceResource> Update(OperationalInsightsWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Update");
             scope.Start();
@@ -877,7 +883,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         public virtual async Task<Response> DisableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
+            if (intelligencePackName == null)
+            {
+                throw new ArgumentNullException(nameof(intelligencePackName));
+            }
+            if (intelligencePackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(intelligencePackName));
+            }
 
             using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
             scope.Start();
@@ -916,7 +929,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         public virtual Response DisableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
+            if (intelligencePackName == null)
+            {
+                throw new ArgumentNullException(nameof(intelligencePackName));
+            }
+            if (intelligencePackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(intelligencePackName));
+            }
 
             using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
             scope.Start();
@@ -955,7 +975,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         public virtual async Task<Response> EnableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
+            if (intelligencePackName == null)
+            {
+                throw new ArgumentNullException(nameof(intelligencePackName));
+            }
+            if (intelligencePackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(intelligencePackName));
+            }
 
             using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
             scope.Start();
@@ -994,7 +1021,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         public virtual Response EnableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
+            if (intelligencePackName == null)
+            {
+                throw new ArgumentNullException(nameof(intelligencePackName));
+            }
+            if (intelligencePackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(intelligencePackName));
+            }
 
             using var scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
             scope.Start();
@@ -1491,7 +1525,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspacePurgeResult>> PurgeAsync(OperationalInsightsWorkspacePurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
@@ -1532,7 +1569,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspacePurgeResult> Purge(OperationalInsightsWorkspacePurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Purge");
             scope.Start();
@@ -1571,7 +1611,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspacePurgeStatusResult>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+            if (purgeId == null)
+            {
+                throw new ArgumentNullException(nameof(purgeId));
+            }
+            if (purgeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(purgeId));
+            }
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
             scope.Start();
@@ -1610,7 +1657,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspacePurgeStatusResult> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+            if (purgeId == null)
+            {
+                throw new ArgumentNullException(nameof(purgeId));
+            }
+            if (purgeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(purgeId));
+            }
 
             using var scope = _workspacePurgeClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetPurgeStatus");
             scope.Start();
@@ -1653,8 +1707,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
             scope.Start();
@@ -1715,8 +1775,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.AddTag");
             scope.Start();
@@ -1776,7 +1842,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
             scope.Start();
@@ -1833,7 +1902,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.SetTags");
             scope.Start();
@@ -1890,7 +1962,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
             scope.Start();
@@ -1950,7 +2025,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<OperationalInsightsWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _operationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RemoveTag");
             scope.Start();

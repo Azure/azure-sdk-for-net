@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="keySourceParameters"/> is null. </exception>
         public UriSigningKey(string keyId, KeyVaultSigningKey keySourceParameters)
         {
-            Argument.AssertNotNull(keyId, nameof(keyId));
-            Argument.AssertNotNull(keySourceParameters, nameof(keySourceParameters));
+            if (keyId == null)
+            {
+                throw new ArgumentNullException(nameof(keyId));
+            }
+            if (keySourceParameters == null)
+            {
+                throw new ArgumentNullException(nameof(keySourceParameters));
+            }
 
             KeyId = keyId;
             KeySourceParameters = keySourceParameters;

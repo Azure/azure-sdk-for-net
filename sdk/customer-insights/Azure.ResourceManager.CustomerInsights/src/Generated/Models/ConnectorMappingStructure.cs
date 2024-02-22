@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="propertyName"/> or <paramref name="columnName"/> is null. </exception>
         public ConnectorMappingStructure(string propertyName, string columnName)
         {
-            Argument.AssertNotNull(propertyName, nameof(propertyName));
-            Argument.AssertNotNull(columnName, nameof(columnName));
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException(nameof(propertyName));
+            }
+            if (columnName == null)
+            {
+                throw new ArgumentNullException(nameof(columnName));
+            }
 
             PropertyName = propertyName;
             ColumnName = columnName;

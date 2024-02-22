@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreTrustedIdProviderResource>> UpdateAsync(DataLakeStoreTrustedIdProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderResource.Update");
             scope.Start();
@@ -323,7 +326,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DataLakeStoreTrustedIdProviderResource> Update(DataLakeStoreTrustedIdProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderResource.Update");
             scope.Start();

@@ -271,7 +271,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryManagedVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkResource.Update");
             scope.Start();
@@ -318,7 +321,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryManagedVirtualNetworkResource> Update(WaitUntil waitUntil, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkResource.Update");
             scope.Start();

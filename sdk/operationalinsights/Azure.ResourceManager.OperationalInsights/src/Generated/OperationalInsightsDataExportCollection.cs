@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsDataExportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsDataExportResource> CreateOrUpdate(WaitUntil waitUntil, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsDataExportResource>> GetAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual Response<OperationalInsightsDataExportResource> Get(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual async Task<NullableResponse<OperationalInsightsDataExportResource>> GetIfExistsAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
         public virtual NullableResponse<OperationalInsightsDataExportResource> GetIfExists(string dataExportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
+            if (dataExportName == null)
+            {
+                throw new ArgumentNullException(nameof(dataExportName));
+            }
+            if (dataExportName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataExportName));
+            }
 
             using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
             scope.Start();

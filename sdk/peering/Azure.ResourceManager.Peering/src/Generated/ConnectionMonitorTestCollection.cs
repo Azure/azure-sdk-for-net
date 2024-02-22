@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectionMonitorTestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectionMonitorTestResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<ConnectionMonitorTestResource>> GetAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<ConnectionMonitorTestResource> Get(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectionMonitorTestResource>> GetIfExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual NullableResponse<ConnectionMonitorTestResource> GetIfExists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            if (connectionMonitorTestName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorTestName));
+            }
+            if (connectionMonitorTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
+            }
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();
