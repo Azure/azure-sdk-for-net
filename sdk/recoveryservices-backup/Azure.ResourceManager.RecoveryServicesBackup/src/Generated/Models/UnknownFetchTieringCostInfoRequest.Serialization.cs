@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFetchTieringCostInfoRequest(document.RootElement, options);
+            return DeserializeFetchTieringCostInfoContent(document.RootElement, options);
         }
 
         internal static UnknownFetchTieringCostInfoRequest DeserializeUnknownFetchTieringCostInfoRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFetchTieringCostInfoRequest(document.RootElement, options);
+                        return DeserializeFetchTieringCostInfoContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FetchTieringCostInfoContent)} does not support '{options.Format}' format.");
