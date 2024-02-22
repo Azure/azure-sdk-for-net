@@ -70,7 +70,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="SummaryResource"/> object. </returns>
         public static SummaryResource GetSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableIotFirmwareDefenseArmClient(client).GetSummaryResource(id);
         }
