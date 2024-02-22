@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Synapse
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeRanges))
+            if (!(TimeRanges is ChangeTrackingList<SynapseMaintenanceWindowTimeRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("timeRanges"u8);
                 writer.WriteStartArray();

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SolutionType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<IList<AppServiceNameValuePair>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();

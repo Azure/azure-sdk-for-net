@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
-            if (Optional.IsCollectionDefined(QuotaChangeRequests))
+            if (!(QuotaChangeRequests is ChangeTrackingList<SupportQuotaChangeContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();

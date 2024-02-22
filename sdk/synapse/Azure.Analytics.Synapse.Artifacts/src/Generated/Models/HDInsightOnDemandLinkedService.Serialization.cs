@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("clusterSshPassword"u8);
                 writer.WriteObjectValue(ClusterSshPassword);
             }
-            if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
+            if (!(AdditionalLinkedServiceNames is ChangeTrackingList<LinkedServiceReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("additionalLinkedServiceNames"u8);
                 writer.WriteStartArray();
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("zookeeperNodeSize"u8);
                 writer.WriteObjectValue(ZookeeperNodeSize);
             }
-            if (Optional.IsCollectionDefined(ScriptActions))
+            if (!(ScriptActions is ChangeTrackingList<ScriptAction> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();

@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(RootPath);
             writer.WritePropertyName("entryFilePath"u8);
             writer.WriteObjectValue(EntryFilePath);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("proxyUser"u8);
                 writer.WriteObjectValue(ProxyUser);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (!(SparkConfig is ChangeTrackingDictionary<string, object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();

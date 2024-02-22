@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
+            if (!(LoadBalancerConfigurations is ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
+            if (!(MultiSubnetIPConfigurations is ChangeTrackingList<MultiSubnetIPConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("multiSubnetIpConfigurations"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("backupMetadataPropertyBag"u8);
                 writer.WriteStringValue(BackupMetadataPropertyBag);
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpec))
+            if (!(RestoreFileSpec is ChangeTrackingList<RestoreFileSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("feed_url"u8);
                 writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Authors))
+            if (!(Authors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();

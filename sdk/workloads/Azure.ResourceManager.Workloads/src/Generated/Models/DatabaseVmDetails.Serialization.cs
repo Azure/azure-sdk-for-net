@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageDetails))
+            if (options.Format != "W" && !(StorageDetails is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageDetails"u8);
                 writer.WriteStartArray();

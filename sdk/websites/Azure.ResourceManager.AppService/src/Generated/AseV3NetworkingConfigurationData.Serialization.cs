@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
+            if (options.Format != "W" && !(WindowsOutboundIPAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("windowsOutboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
+            if (options.Format != "W" && !(LinuxOutboundIPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linuxOutboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalInboundIPAddresses))
+            if (options.Format != "W" && !(ExternalInboundIPAddresses is ChangeTrackingList<IPAddress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("externalInboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InternalInboundIPAddresses))
+            if (options.Format != "W" && !(InternalInboundIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("internalInboundIpAddresses"u8);
                 writer.WriteStartArray();

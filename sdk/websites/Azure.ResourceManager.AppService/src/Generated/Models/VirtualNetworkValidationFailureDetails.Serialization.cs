@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("failed"u8);
                 writer.WriteBooleanValue(IsFailed.Value);
             }
-            if (Optional.IsCollectionDefined(FailedTests))
+            if (!(FailedTests is ChangeTrackingList<VirtualNetworkValidationTestFailure> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("failedTests"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Warnings))
+            if (!(Warnings is ChangeTrackingList<VirtualNetworkValidationTestFailure> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();

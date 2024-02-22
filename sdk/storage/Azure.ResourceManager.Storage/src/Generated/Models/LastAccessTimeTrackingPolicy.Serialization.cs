@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("trackingGranularityInDays"u8);
                 writer.WriteNumberValue(TrackingGranularityInDays.Value);
             }
-            if (Optional.IsCollectionDefined(BlobType))
+            if (!(BlobType is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("blobType"u8);
                 writer.WriteStartArray();

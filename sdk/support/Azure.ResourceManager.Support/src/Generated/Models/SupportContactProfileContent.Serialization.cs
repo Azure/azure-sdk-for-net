@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("primaryEmailAddress"u8);
                 writer.WriteStringValue(PrimaryEmailAddress);
             }
-            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();

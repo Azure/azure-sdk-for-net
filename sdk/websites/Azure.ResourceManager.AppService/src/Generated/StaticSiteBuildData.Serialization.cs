@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UserProvidedFunctionApps))
+            if (options.Format != "W" && !(UserProvidedFunctionApps is ChangeTrackingList<StaticSiteUserProvidedFunctionAppData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userProvidedFunctionApps"u8);
                 writer.WriteStartArray();

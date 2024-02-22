@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteObjectValue(Grouping);
             }
-            if (Optional.IsCollectionDefined(TopMetricsThresholds))
+            if (!(TopMetricsThresholds is ChangeTrackingList<SapLandscapeMonitorMetricThresholds> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topMetricsThresholds"u8);
                 writer.WriteStartArray();

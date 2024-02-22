@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
-            if (Optional.IsCollectionDefined(MediaProfiles))
+            if (!(MediaProfiles is ChangeTrackingList<MediaProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("toleratedNumberOfFailures"u8);
                 writer.WriteNumberValue(ToleratedNumberOfFailures.Value);
             }
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (!(CustomHeaders is ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
+            if (!(ExpectedStatusCodeRanges is ChangeTrackingList<ExpectedStatusCodeRangeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();

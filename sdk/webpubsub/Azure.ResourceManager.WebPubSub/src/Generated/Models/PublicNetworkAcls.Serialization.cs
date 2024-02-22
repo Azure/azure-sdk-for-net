@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Allow))
+            if (!(Allow is ChangeTrackingList<WebPubSubRequestType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (!(Deny is ChangeTrackingList<WebPubSubRequestType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();

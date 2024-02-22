@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (Optional.IsCollectionDefined(PerCpuUsage))
+            if (!(PerCpuUsage is ChangeTrackingList<long> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();

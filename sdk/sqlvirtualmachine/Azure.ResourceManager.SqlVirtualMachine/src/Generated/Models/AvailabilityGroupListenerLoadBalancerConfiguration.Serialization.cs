@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            if (Optional.IsCollectionDefined(SqlVmInstances))
+            if (!(SqlVmInstances is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();

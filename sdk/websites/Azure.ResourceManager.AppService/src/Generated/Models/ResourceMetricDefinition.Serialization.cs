@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
+            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<ResourceMetricAvailability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

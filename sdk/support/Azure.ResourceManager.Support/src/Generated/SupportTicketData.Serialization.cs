@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
             }
-            if (Optional.IsCollectionDefined(SecondaryConsent))
+            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();

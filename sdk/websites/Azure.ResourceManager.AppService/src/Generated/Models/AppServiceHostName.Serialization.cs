@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(SiteNames))
+            if (!(SiteNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("siteNames"u8);
                 writer.WriteStartArray();

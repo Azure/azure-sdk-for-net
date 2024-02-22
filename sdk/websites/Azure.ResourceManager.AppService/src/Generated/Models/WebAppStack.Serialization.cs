@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MajorVersions))
+            if (options.Format != "W" && !(MajorVersions is ChangeTrackingList<WebAppMajorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();

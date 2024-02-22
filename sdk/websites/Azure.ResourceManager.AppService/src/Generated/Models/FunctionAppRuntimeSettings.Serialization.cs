@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("gitHubActionSettings"u8);
                 writer.WriteObjectValue(GitHubActionSettings);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppSettingsDictionary))
+            if (options.Format != "W" && !(AppSettingsDictionary is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteObjectValue(SiteConfigPropertiesDictionary);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
+            if (options.Format != "W" && !(SupportedFunctionsExtensionVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedFunctionsExtensionVersions"u8);
                 writer.WriteStartArray();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(EnableLinkedAccessCheckOnTargetResource.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
+            if (!(AllowedAadTenantIdsForLinking is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();

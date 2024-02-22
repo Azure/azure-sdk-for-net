@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteObjectValue(Inputs);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<MachineLearningStudioOutputColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();

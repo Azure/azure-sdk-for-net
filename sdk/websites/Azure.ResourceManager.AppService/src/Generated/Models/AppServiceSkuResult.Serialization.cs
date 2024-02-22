@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (!(Skus is ChangeTrackingList<GlobalCsmSkuDescription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();

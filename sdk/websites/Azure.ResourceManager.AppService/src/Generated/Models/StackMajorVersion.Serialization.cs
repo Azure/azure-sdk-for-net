@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsCollectionDefined(MinorVersions))
+            if (!(MinorVersions is ChangeTrackingList<StackMinorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (Optional.IsCollectionDefined(AppSettingsDictionary))
+            if (!(AppSettingsDictionary is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
+            if (!(SiteConfigPropertiesDictionary is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteStartObject();

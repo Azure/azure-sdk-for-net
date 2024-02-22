@@ -21,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<ParameterDeclaration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceNodeBase> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Processors))
+            if (!(Processors is ChangeTrackingList<ProcessorNodeBase> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sinks))
+            if (!(Sinks is ChangeTrackingList<SinkNodeBase> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();

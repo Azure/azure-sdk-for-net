@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            if (!(CustomOpenIdConnectProviders is ChangeTrackingDictionary<string, CustomOpenIdConnectProvider> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();

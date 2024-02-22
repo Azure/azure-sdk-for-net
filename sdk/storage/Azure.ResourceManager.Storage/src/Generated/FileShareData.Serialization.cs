@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteStringValue(LeaseDuration.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SignedIdentifiers))
+            if (!(SignedIdentifiers is ChangeTrackingList<StorageSignedIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();

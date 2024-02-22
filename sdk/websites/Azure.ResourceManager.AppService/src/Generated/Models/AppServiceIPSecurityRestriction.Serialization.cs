@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();

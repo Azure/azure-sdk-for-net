@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<SynapseManagedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OtherErrors))
+            if (options.Format != "W" && !(OtherErrors is ChangeTrackingList<SynapseManagedIntegrationRuntimeError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("otherErrors"u8);
                 writer.WriteStartArray();

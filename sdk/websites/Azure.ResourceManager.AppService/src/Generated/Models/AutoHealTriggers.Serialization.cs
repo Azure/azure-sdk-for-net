@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
-            if (Optional.IsCollectionDefined(StatusCodes))
+            if (!(StatusCodes is ChangeTrackingList<StatusCodesBasedTrigger> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
-            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
+            if (!(SlowRequestsWithPath is ChangeTrackingList<SlowRequestsBasedTrigger> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StatusCodesRange))
+            if (!(StatusCodesRange is ChangeTrackingList<StatusCodesRangeBasedTrigger> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();

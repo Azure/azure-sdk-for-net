@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SetParameters))
+            if (!(SetParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();

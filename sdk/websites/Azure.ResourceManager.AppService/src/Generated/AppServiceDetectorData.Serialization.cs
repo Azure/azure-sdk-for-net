@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Dataset))
+            if (!(Dataset is ChangeTrackingList<DiagnosticDataset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsCollectionDefined(DataProvidersMetadata))
+            if (!(DataProvidersMetadata is ChangeTrackingList<DataProviderMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataProvidersMetadata"u8);
                 writer.WriteStartArray();

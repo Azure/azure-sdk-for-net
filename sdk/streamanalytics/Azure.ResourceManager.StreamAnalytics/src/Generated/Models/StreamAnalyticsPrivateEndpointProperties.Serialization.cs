@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
+            if (!(ManualPrivateLinkServiceConnections is ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();

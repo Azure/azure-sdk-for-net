@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();

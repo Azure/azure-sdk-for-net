@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("healthCheckUrl"u8);
                 writer.WriteStringValue(HealthCheckUrlString);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingDictionary<string, ContainerInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartObject();

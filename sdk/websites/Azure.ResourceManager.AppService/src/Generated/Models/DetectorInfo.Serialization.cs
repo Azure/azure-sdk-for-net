@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportTopicList))
+            if (options.Format != "W" && !(SupportTopicList is ChangeTrackingList<DetectorSupportTopic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AnalysisType))
+            if (options.Format != "W" && !(AnalysisType is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("analysisType"u8);
                 writer.WriteStartArray();

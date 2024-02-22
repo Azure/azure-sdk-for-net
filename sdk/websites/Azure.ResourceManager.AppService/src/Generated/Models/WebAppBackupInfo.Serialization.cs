@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("backupSchedule"u8);
                 writer.WriteObjectValue(BackupSchedule);
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();

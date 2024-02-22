@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();

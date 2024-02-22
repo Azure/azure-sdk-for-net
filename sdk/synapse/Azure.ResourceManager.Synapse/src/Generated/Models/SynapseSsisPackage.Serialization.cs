@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteNumberValue(ProjectId.Value);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<SynapseSsisParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

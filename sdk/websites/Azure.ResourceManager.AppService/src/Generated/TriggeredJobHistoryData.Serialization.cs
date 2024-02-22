@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Runs))
+            if (!(Runs is ChangeTrackingList<TriggeredJobRun> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("runs"u8);
                 writer.WriteStartArray();

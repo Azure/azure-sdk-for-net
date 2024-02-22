@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("topologyName"u8);
                 writer.WriteStringValue(TopologyName);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<ParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

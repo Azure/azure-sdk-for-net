@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("rowKey"u8);
                 writer.WriteStringValue(RowKey);
             }
-            if (Optional.IsCollectionDefined(ColumnsToRemove))
+            if (!(ColumnsToRemove is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columnsToRemove"u8);
                 writer.WriteStartArray();

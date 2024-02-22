@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MinorVersions))
+            if (options.Format != "W" && !(MinorVersions is ChangeTrackingList<WebAppMinorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();

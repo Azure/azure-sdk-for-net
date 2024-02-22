@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.VoiceServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ServiceLocations))
+            if (!(ServiceLocations is ChangeTrackingList<VoiceServicesServiceRegionProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceLocations"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WritePropertyName("connectivity"u8);
                 writer.WriteStringValue(Connectivity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Codecs))
+            if (!(Codecs is ChangeTrackingList<VoiceServicesTeamsCodec> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("codecs"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WritePropertyName("e911Type"u8);
                 writer.WriteStringValue(E911Type.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Platforms))
+            if (!(Platforms is ChangeTrackingList<VoiceServicesCommunicationsPlatform> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("platforms"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WritePropertyName("onPremMcpEnabled"u8);
                 writer.WriteBooleanValue(IsOnPremMcpEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EmergencyDialStrings))
+            if (!(EmergencyDialStrings is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("emergencyDialStrings"u8);
                 writer.WriteStartArray();

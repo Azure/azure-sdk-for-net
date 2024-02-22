@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Routes))
+            if (options.Format != "W" && !(Routes is ChangeTrackingList<AppServiceVirtualNetworkRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();

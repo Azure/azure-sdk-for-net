@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("virtualNetworkConnection"u8);
                 writer.WriteObjectValue(VirtualNetworkConnection);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
+            if (options.Format != "W" && !(HybridConnections is ChangeTrackingList<RelayServiceConnectionEntityData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hybridConnections"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnectionsV2))
+            if (options.Format != "W" && !(HybridConnectionsV2 is ChangeTrackingList<HybridConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hybridConnectionsV2"u8);
                 writer.WriteStartArray();

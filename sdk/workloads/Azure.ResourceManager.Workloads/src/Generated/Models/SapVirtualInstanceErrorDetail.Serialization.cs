@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingList<SapVirtualInstanceErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

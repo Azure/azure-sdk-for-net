@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryTags))
+            if (options.Format != "W" && !(CategoryTags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryTags"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteNumberValue(Enabled.Value);
             }
-            if (Optional.IsCollectionDefined(States))
+            if (!(States is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();

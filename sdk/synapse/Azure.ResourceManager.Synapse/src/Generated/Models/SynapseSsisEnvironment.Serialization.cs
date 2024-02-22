@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (!(Variables is ChangeTrackingList<SynapseSsisVariable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();

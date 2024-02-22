@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (Optional.IsCollectionDefined(Args))
+            if (!(Args is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Jars))
+            if (!(Jars is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Archives))
+            if (!(Archives is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();

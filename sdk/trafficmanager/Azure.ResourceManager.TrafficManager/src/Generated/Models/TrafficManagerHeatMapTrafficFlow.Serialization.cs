@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (Optional.IsCollectionDefined(QueryExperiences))
+            if (!(QueryExperiences is ChangeTrackingList<TrafficManagerHeatMapQueryExperience> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();

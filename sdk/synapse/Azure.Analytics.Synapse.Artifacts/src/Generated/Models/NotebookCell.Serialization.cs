@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("attachments");
                 }
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<NotebookCellOutputItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();

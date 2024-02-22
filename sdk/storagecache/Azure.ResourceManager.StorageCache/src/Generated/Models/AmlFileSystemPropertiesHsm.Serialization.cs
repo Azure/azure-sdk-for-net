@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
+            if (options.Format != "W" && !(ArchiveStatus is ChangeTrackingList<AmlFileSystemArchive> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("archiveStatus"u8);
                 writer.WriteStartArray();

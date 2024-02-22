@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingDictionary<string, AppServiceCertificateProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppServiceCertificateNotRenewableReasons))
+            if (options.Format != "W" && !(AppServiceCertificateNotRenewableReasons is ChangeTrackingList<AppServiceCertificateNotRenewableReason> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("appServiceCertificateNotRenewableReasons"u8);
                 writer.WriteStartArray();

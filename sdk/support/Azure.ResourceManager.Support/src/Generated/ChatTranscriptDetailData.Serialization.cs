@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<ChatTranscriptMessageProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamAnalyticsQueryInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<StreamAnalyticsQueryFunction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();

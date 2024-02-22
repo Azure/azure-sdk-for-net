@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("advancedDiagnosticConsent"u8);
                 writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SecondaryConsent))
+            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();

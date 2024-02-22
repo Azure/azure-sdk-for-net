@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
+            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Sessions))
+            if (options.Format != "W" && !(Sessions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteStartArray();

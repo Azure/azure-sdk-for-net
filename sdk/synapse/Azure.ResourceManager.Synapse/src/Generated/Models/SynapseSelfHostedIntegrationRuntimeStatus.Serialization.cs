@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("localTimeZoneOffset"u8);
                 writer.WriteStringValue(LocalTimeZoneOffset);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceUrls))
+            if (options.Format != "W" && !(ServiceUrls is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceUrls"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<SynapseLinkedIntegrationRuntime> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("serviceRegion"u8);
                 writer.WriteStringValue(ServiceRegion);
             }
-            if (Optional.IsCollectionDefined(NewerVersions))
+            if (!(NewerVersions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("newerVersions"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (!(Activities is ChangeTrackingList<Activity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();

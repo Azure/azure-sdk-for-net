@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
+            if (!(MaintenanceWindowCycles is ChangeTrackingList<SynapseMaintenanceWindowTimeRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();

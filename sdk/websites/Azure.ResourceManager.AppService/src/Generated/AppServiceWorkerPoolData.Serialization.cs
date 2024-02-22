@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InstanceNames))
+            if (options.Format != "W" && !(InstanceNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceNames"u8);
                 writer.WriteStartArray();

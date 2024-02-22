@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<LiveTraceCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();

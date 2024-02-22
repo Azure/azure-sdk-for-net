@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -30,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (!(PiiCategories is ChangeTrackingList<PiiEntityLegacyCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();

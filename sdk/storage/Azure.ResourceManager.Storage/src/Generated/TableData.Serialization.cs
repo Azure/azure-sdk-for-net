@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsCollectionDefined(SignedIdentifiers))
+            if (!(SignedIdentifiers is ChangeTrackingList<StorageTableSignedIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();

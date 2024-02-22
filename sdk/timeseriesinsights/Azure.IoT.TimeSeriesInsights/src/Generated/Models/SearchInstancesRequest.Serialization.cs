@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (Optional.IsCollectionDefined(Path))
+            if (!(Path is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();

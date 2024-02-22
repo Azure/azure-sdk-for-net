@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("log"u8);
                 writer.WriteStringValue(Log);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
+            if (options.Format != "W" && !(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();

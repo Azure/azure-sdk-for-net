@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("topicName"u8);
                 writer.WriteStringValue(TopicName);
             }
-            if (Optional.IsCollectionDefined(PropertyColumns))
+            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SystemPropertyColumns))
+            if (!(SystemPropertyColumns is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("systemPropertyColumns"u8);
                 writer.WriteStartObject();

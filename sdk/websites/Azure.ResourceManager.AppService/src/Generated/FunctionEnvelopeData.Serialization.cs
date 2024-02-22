@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();

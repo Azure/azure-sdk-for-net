@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsCollectionDefined(PublicIPs))
+            if (!(PublicIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();

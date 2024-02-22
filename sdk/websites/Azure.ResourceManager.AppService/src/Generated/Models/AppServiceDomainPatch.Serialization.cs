@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
+            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("readyForDnsRecordManagement"u8);
                 writer.WriteBooleanValue(IsReadyForDnsRecordManagement.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedHostNames))
+            if (options.Format != "W" && !(ManagedHostNames is ChangeTrackingList<AppServiceHostName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("managedHostNames"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
+            if (options.Format != "W" && !(DomainNotRenewableReasons is ChangeTrackingList<DomainNotRenewableReason> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("domainNotRenewableReasons"u8);
                 writer.WriteStartArray();
