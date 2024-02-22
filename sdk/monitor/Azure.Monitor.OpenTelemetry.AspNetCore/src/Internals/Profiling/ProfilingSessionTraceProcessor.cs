@@ -77,8 +77,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             {
                 _writeResourceAttributesPending = false;
             }
-
-            _eventSource.ActivityStart(activity);
         }
 
         /// <inheritdoc/>
@@ -89,8 +87,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             {
                 activity.SetTag(TagName, sessionId);
             }
-
-            _eventSource.ActivityStop(activity);
         }
 
         /// <summary>

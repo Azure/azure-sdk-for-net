@@ -18,10 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
     /// active. This session ID may be later used to correlate telemetry with
     /// the resulting profiler artifact.
     /// The GUID of this event source is 15ec0b5c-cb74-5fec-5d64-609c0a49ff31
-    /// The following keywords are supported:
+    /// The following keyword is supported:
     /// <list type="bullet">
     /// <item>ResourceAttributes: Emits OpenTelemetry resource attributes.</item>
-    /// <item>Activities: Emits start/stop events for activities.</item>
     /// </list>
     /// </summary>
     /// <remarks>
@@ -63,34 +62,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             /// are emitted exactly once at Informational level.
             /// </summary>
             public const EventKeywords ResourceAttributes = (EventKeywords)0b_1;
-
-            /// <summary>
-            /// Emits start/stop events for activities.
-            /// </summary>
-            public const EventKeywords Activities = (EventKeywords)0b_10;
         }
 
+        /// <summary>
+        /// Event IDs for this EventSource.
+        /// </summary>
         public static class EventIds
         {
             /// <summary>
             /// Open Telemetry Resource attributes.
             /// </summary>
             public const int ResourceAttributes = 1;
-
-            /// <summary>
-            /// An Activity is starting.
-            /// </summary>
-            public const int ActivityStart = 2;
-
-            /// <summary>
-            /// An Activity is stopping.
-            /// </summary>
-            public const int ActivityStop = 3;
         }
 
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
+        /// <remarks>
+        /// We need the self-describing format because the <see cref="ResourceAttributes(IEnumerable{KeyValuePair{string, string}})"/>
+        /// method takes a non-primitive argument.
+        /// </remarks>
         private ProfilingSessionEventSource() : base(EventSourceSettings.EtwSelfDescribingEventFormat)
         {
         }
@@ -202,56 +193,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         private void ResourceAttributes(IEnumerable<KeyValuePair<string, string>> attributes)
         {
             WriteEvent(EventIds.ResourceAttributes, attributes);
-        }
-
-        /// <summary>
-        /// Write an activity start event.
-        /// </summary>
-        /// <param name="activity">The activity.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="activity"/> is null.</exception>
-        [NonEvent]
-        public void ActivityStart(Activity activity)
-        {
-            if (activity is null)
-            {
-                throw new ArgumentNullException(nameof(activity));
-            }
-
-            if (IsEnabled(EventLevel.Informational, Keywords.Activities))
-            {
-                ActivityStart(activity.Source.Name, activity.SpanId.ToHexString(), activity.DisplayName);
-            }
-        }
-
-        [Event(EventIds.ActivityStart, Keywords = Keywords.Activities, Level = EventLevel.Informational, Opcode = EventOpcode.Start)]
-        private void ActivityStart(string source, string spanId, string displayName)
-        {
-            WriteEvent(EventIds.ActivityStart, source, spanId, displayName);
-        }
-
-        /// <summary>
-        /// Write an activity stop event.
-        /// </summary>
-        /// <param name="activity">The activity.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="activity"/> is null.</exception>
-        [NonEvent]
-        public void ActivityStop(Activity activity)
-        {
-            if (activity is null)
-            {
-                throw new ArgumentNullException(nameof(activity));
-            }
-
-            if (IsEnabled(EventLevel.Informational, Keywords.Activities))
-            {
-                ActivityStop(activity.Source.Name, activity.SpanId.ToHexString(), activity.DisplayName);
-            }
-        }
-
-        [Event(EventIds.ActivityStop, Keywords = Keywords.Activities, Level = EventLevel.Informational, Opcode = EventOpcode.Stop)]
-        private void ActivityStop(string source, string spanId, string displayName)
-        {
-            WriteEvent(EventIds.ActivityStop, source, spanId, displayName);
         }
     }
 }
