@@ -6,135 +6,160 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
     [TestFixture]
     public class ConfigurationManagerTests
     {
-        private const string audienceAppId = "testAudienceAppId";
-        private const string tenantId = "testTenantId";
-        private const string authorityUrl = "oidc";
+        private const string testAudienceAppId = "00010001-0001-0001-0001-000100010001";
+        private const string testAuthorizedPartyId = "00000000-0000-0000-0000-000000000000";
+        private const string testAuthorityUrl = "https://oidc";
+
+        private ConfigurationManager configurationManager = null;
+
+        [SetUp]
+        public void Setup()
+        {
+            configurationManager = null;
+        }
 
         [Test]
         public void Test_When_Attribute_Is_Null()
         {
-            Assert.Throws<MissingFieldException>(() => new ConfigurationManager(null), "Test when attribute is null");
+            string testMessage = "Attribute is null";
+
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(null), testMessage);
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            ValidateAuthorityUrl(configurationManager, testMessage, false);
+        }
+
+        [Test]
+        public void Test_When_Attribute_Is_Empty()
+        {
+            string testMessage = "Attributes are empty";
+
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new AuthenticationEventsTriggerAttribute()), testMessage);
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual("99045fe1-7639-4a75-9d4a-577b6ca3810f", configurationManager.AuthorizedPartyAppId, testMessage);
+
+            ValidateAuthorityUrl(configurationManager, testMessage, false);
+        }
+
+        [Test]
+        public void Test_When_Attribute_Is_Only_AuthorizedPartyIsConfigured()
+        {
+            string testMessage = "Only Authorized Party is configured.";
+
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new AuthenticationEventsTriggerAttribute() { AuthorizedPartyAppId = testAuthorizedPartyId }), testMessage);
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+
+            ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
 
         [Test]
         public void Test_When_Attributes_AudienceAppId_Is_Null()
         {
+            string testMessage = "Audience App ID is null.";
+
             var attribute = new AuthenticationEventsTriggerAttribute
             {
-                TenantId = tenantId,
-                AudienceAppId = null, // AudienceAppId is required when authority is provided.
-                AuthorityUrl = authorityUrl
+                AuthorizedPartyAppId = testAuthorizedPartyId,
+                AudienceAppId = null,
+                AuthorityUrl = testAuthorityUrl
             };
-            Assert.Throws<MissingFieldException>(() => new ConfigurationManager(attribute), "Test when attribute's audienceAppId is null");
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
+
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
+
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+
+            ValidateAuthorityUrl(configurationManager, testMessage);
+        }
+
+        [Test]
+        public void Test_When_Attributes_AuthorityUrl_Is_Null()
+        {
+            string testMessage = "Authority URL is null.";
+
+            var attribute = new AuthenticationEventsTriggerAttribute
+            {
+                AuthorizedPartyAppId = testAuthorizedPartyId,
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = null
+            };
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
+
+            Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
+            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
+
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
+
+            ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
 
         [Test]
         public void Test_When_Attributes_AudienceAppId_Is_Null_And_Authority_Is_Null()
         {
-            string testMessageString = "Test when attribute's Tenant ID is not null but other properties are. Result should be Azure Active Directory OIDC Config.";
+            string testMessage = "AudienceAppId and AuthorityUrl is null.";
 
             var attribute = new AuthenticationEventsTriggerAttribute
             {
-                TenantId = tenantId,
-                AudienceAppId = null, // AudienceAppId is required when authority is provided.
-                AuthorityUrl = null // this will force it to be ESTS
-            };
-
-            ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessageString);
-            Assert.IsNotNull(configurationManager.ConfiguredService, testMessageString);
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0),
-                actual: $"https://login.microsoftonline.com/common/{tenantId}/.well-known/openid-configuration",
-                message: testMessageString);
-
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0),
-                actual: $"https://login.microsoftonline.com/common/{tenantId}/v2.0/.well-known/openid-configuration",
-                message: testMessageString);
-        }
-
-        [Test]
-        public void Test_When_Attributes_OidcMetadataUrl_Is_Null()
-        {
-            string testMessageString = "Test when authority url is null. Result should be Azure Active Directory OIDC Config.";
-
-            var attribute = new AuthenticationEventsTriggerAttribute
-            {
-                TenantId = tenantId,
-                AudienceAppId = audienceAppId,
+                AuthorizedPartyAppId = testAuthorizedPartyId,
+                AudienceAppId = null,
                 AuthorityUrl = null
             };
 
-            ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessageString);
-            Assert.IsNotNull(configurationManager.ConfiguredService, testMessageString);
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0),
-                actual: $"https://login.microsoftonline.com/common/{tenantId}/.well-known/openid-configuration",
-                message: testMessageString);
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
 
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0),
-                actual: $"https://login.microsoftonline.com/common/{tenantId}/v2.0/.well-known/openid-configuration",
-                message: testMessageString);
-        }
+            Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
 
-        [Test]
-        public void Test_When_Attributes_TenantId_Is_Null()
-        {
-            string testMessageString = "Test when attribute's Tenant ID is null. Result should be cusomt OIDC Config.";
-
-            var attribute = new AuthenticationEventsTriggerAttribute
-            {
-                TenantId = null,
-                AudienceAppId = audienceAppId,
-                AuthorityUrl = authorityUrl
-            };
-
-            ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessageString);
-            Assert.IsNotNull(configurationManager.ConfiguredService, testMessageString);
-
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0),
-                actual: $"{authorityUrl}/.well-known/openid-configuration",
-                message: testMessageString);
-
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0),
-                actual: $"{authorityUrl}/v2.0/.well-known/openid-configuration",
-                message: testMessageString);
+            ValidateAuthorityUrl(configurationManager, testMessage, false);
         }
 
         [Test]
         public void Test_Success_Custom()
         {
-            string testMessageString = "Test when all attributes are set. Result should be custom OIDC Config.";
+            string testMessage = "Test when all attributes are set. Result should be custom OIDC Config.";
 
             var attribute = new AuthenticationEventsTriggerAttribute
             {
-                TenantId = tenantId,
-                AudienceAppId = audienceAppId,
-                AuthorityUrl = authorityUrl
+                AuthorizedPartyAppId = testAuthorizedPartyId,
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = testAuthorityUrl
             };
 
-            ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessageString);
-            Assert.IsNotNull(configurationManager.ConfiguredService, testMessageString);
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), testMessage);
+            Assert.DoesNotThrow(() => _ = configurationManager.AudienceAppId, testMessage);
+            Assert.AreEqual(testAudienceAppId, configurationManager.AudienceAppId, testMessage);
 
-            Assert.AreEqual(audienceAppId, configurationManager.ConfiguredService.ApplicationId, testMessageString);
-            Assert.AreEqual(authorityUrl, configurationManager.ConfiguredService.Authority, testMessageString);
+            Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
+            Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
 
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0),
-                actual: $"{authorityUrl}/.well-known/openid-configuration",
-                message: testMessageString);
+            ValidateAuthorityUrl(configurationManager, testMessage);
+        }
 
-            Assert.AreEqual(
-                expected: configurationManager.ConfiguredService.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0),
-                actual: $"{authorityUrl}/v2.0/.well-known/openid-configuration",
-                message: testMessageString);
+        private void ValidateAuthorityUrl(ConfigurationManager configurationManager, string testMessage, bool isSuccess = true)
+        {
+            if (isSuccess)
+            {
+                Assert.DoesNotThrow(() => _ = configurationManager.AuthorityUrl, testMessage);
+                Assert.AreEqual(testAuthorityUrl, configurationManager.AuthorityUrl, testMessage);
+
+                string odicUrlV1 = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0);
+                string odicUrlV2 = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0);
+
+                Assert.AreEqual($"{testAuthorityUrl}/.well-known/openid-configuration", odicUrlV1, testMessage);
+                Assert.AreEqual($"{testAuthorityUrl}/v2.0/.well-known/openid-configuration", odicUrlV2, testMessage);
+            }
+            else
+            {
+                Assert.Throws<MissingFieldException>(() => _ = configurationManager.AuthorityUrl, testMessage);
+                Assert.Throws<MissingFieldException>(() => _ = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V1_0), testMessage);
+                Assert.Throws<MissingFieldException>(() => _ = configurationManager.GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions.V2_0), testMessage);
+            }
         }
     }
 }

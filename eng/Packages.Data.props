@@ -143,6 +143,8 @@
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
+    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 

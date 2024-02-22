@@ -207,8 +207,11 @@
   <data name="Ex_Trigger_ApplicationId_Required" xml:space="preserve">
     <value>Please supply the ApplicationId {0} in variables in your binding configuration.</value>
   </data>
-  <data name="Ex_Trigger_TenantId_Required" xml:space="preserve">
-    <value>Please supply the TenantId {0} in variables in your binding configuration.</value>
+  <data name="Ex_Trigger_AuthorityUrl_Required" xml:space="preserve">
+    <value>Please supply the Authority URL {0} in variables in your binding configuration.</value>
+  </data>
+  <data name="Ex_Trigger_AuthorizedPartyApplicationId_Required" xml:space="preserve">
+    <value>Please supply the AuthorizedPartyApplicationId {0} in variables in your binding configuration.</value>
   </data>
   <data name="Log_EventHandler_Url" xml:space="preserve">
     <value>Listener registered at: {0}</value>

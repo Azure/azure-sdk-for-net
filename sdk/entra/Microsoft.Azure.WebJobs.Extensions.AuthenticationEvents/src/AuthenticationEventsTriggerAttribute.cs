@@ -19,9 +19,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
         }
 
-        /// <summary>Gets or sets the tenant identifier.</summary>
-        /// <value>The tenant identifier only needed for workforce or AAD Tenant</value>
-        public string TenantId { get; set; }
+        /// <summary>Gets or sets the Authorized Party application identifier.</summary>
+        /// <value>The app id would default to public cloud id</value>
+        public string AuthorizedPartyAppId { get; set; } = "99045fe1-7639-4a75-9d4a-577b6ca3810f";
 
         /// <summary>Gets or sets the audience application identifier.</summary>
         /// <value>The audience application identifier.</value>

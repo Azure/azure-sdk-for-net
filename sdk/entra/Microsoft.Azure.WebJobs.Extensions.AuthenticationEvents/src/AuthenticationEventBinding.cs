@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     throw new NotSupportedException(AuthenticationEventResource.Ex_Invalid_Inbound);
                 }
 
-                Dictionary<string, string> Claims = await GetClaimsAndValidateRequest(request).ConfigureAwait(false);
+                Dictionary<string, string> Claims = GetClaimsAndValidateRequest(request);
                 string payload = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
                 AuthenticationEventMetadata eventMetadata = GetEventAndValidateSchema(payload);
 
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         #endregion
 
         #region Validators
-        private async Task<Dictionary<string, string>> GetClaimsAndValidateRequest(HttpRequestMessage requestMessage)
+        private Dictionary<string, string> GetClaimsAndValidateRequest(HttpRequestMessage requestMessage)
         {
             ConfigurationManager configurationManager = new ConfigurationManager(_authEventTriggerAttr);
             if (configurationManager.BypassValidation)
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 new TokenValidatorEZAuth() :
                 new TokenValidatorInternal();
 
-            (bool valid, Dictionary<string, string> claims) = await validator.GetClaimsAndValidate(requestMessage, configurationManager).ConfigureAwait(false);
+            (bool valid, Dictionary<string, string> claims) = validator.ValidateAndGetClaims(requestMessage, configurationManager);
             if (valid)
             {
                 return claims;

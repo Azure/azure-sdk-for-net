@@ -9,6 +9,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Azure.WebJobs" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" />
+		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect"/>
+		<PackageReference Include="Microsoft.IdentityModel.Tokens"/>
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 	</ItemGroup>
 

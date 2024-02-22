@@ -4,6 +4,8 @@
 using System;
 using System.Globalization;
 
+using Microsoft.IdentityModel.JsonWebTokens;
+
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>
@@ -11,23 +13,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// </summary>
     internal class ConfigurationManager
     {
-        private const string AzureActiveDirectoryAppId = "99045fe1-7639-4a75-9d4a-577b6ca3810f";
-        private const string AzureActiveDirectoryAuthority = "https://login.microsoftonline.com/common";
+        private const string OpenIdConfigurationPath = "/.well-known/openid-configuration";
+        private const string OpenIdConfigurationPathV2 = "/v2.0/.well-known/openid-configuration";
 
-        /// <summary>
-        /// Application Ids for the services to validate against.
-        /// </summary>
-        internal ServiceInfo ConfiguredService { get; private set; }
+        private const string AuthorityUrlKey = "AuthenticationEvents__AuthorityUrl";
+        private const string AuthorizedPartyAppIdKey = "AuthenticationEvents__AuthorizedPartyAppId";
+        private const string AudienceAppIdKey = "AuthenticationEvents__AudienceAppId";
 
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
         private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
 
-        private const string AUTHORITY_URL = "AuthenticationEvents__AuthorityUrl";
-        private const string TENANT_ID_KEY = "AuthenticationEvents__TenantId";
-        private const string AUDIENCE_APPID_KEY = "AuthenticationEvents__AudienceAppId";
-
-        internal const string TOKEN_V1_VERIFY = "appid";
-        internal const string TOKEN_V2_VERIFY = "azp";
+        internal const string AppIdKey = "appid";
+        internal const string AzpKey = "azp";
 
         internal const string HEADER_EZAUTH_ICP = "X-MS-CLIENT-PRINCIPAL-IDP";
         internal const string HEADER_EZAUTH_ICP_VERIFY = "aad";
@@ -41,53 +38,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
         {
             this.triggerAttribute = triggerAttribute;
-
-            // if any of the values are missing, use the default AAD service info.
-            // Don't need to check tenant id or application id
-            // because they are required and will throw an exception if missing.
-            if (string.IsNullOrEmpty(AuthorityUrl))
-            {
-                // Continue to support the aad as the default service if overrides not provided.
-                ConfiguredService = GetAADServiceInfo(TenantId);
-            }
-            else
-            {
-                ConfiguredService = new ServiceInfo(
-                    appId: AudienceAppId,
-                    authorityUrl: AuthorityUrl);
-            }
-        }
-
-        /// <summary>
-        /// Get the tenant id from the environment variable or use the default value from the trigger attribute.
-        /// </summary>
-        internal string TenantId
-        {
-            get
-            {
-                string value = GetConfigValue(TENANT_ID_KEY, triggerAttribute?.TenantId);
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new MissingFieldException(
-                        string.Format(
-                            provider: CultureInfo.CurrentCulture,
-                            format: AuthenticationEventResource.Ex_Trigger_TenantId_Required,
-                            arg0: TENANT_ID_KEY));
-                }
-
-                return value;
-            }
         }
 
         /// <summary>
         /// Get the audience app id from the environment variable or use the default value from the trigger attribute.
+        /// REQUIRED FEILD
         /// </summary>
         internal string AudienceAppId
         {
             get
             {
-                string value = GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute?.AudienceAppId);
+                string value = GetConfigValue(AudienceAppIdKey, triggerAttribute?.AudienceAppId);
 
                 if (string.IsNullOrEmpty(value))
                 {
@@ -95,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                         string.Format(
                             provider: CultureInfo.CurrentCulture,
                             format: AuthenticationEventResource.Ex_Trigger_ApplicationId_Required,
-                            arg0: AUDIENCE_APPID_KEY));
+                            arg0: AudienceAppIdKey));
                 }
 
                 return value;
@@ -104,8 +65,49 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>
         /// Get the OpenId connection host from the environment variable or use the default value.
+        /// REQUIRD FEILD
         /// </summary>
-        internal string AuthorityUrl => GetConfigValue(AUTHORITY_URL, triggerAttribute?.AuthorityUrl);
+        internal string AuthorityUrl
+        {
+            get
+            {
+                string value = GetConfigValue(AuthorityUrlKey, triggerAttribute?.AuthorityUrl);
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_AuthorityUrl_Required,
+                            arg0: AuthorityUrlKey));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Get the OpenId connection host from the environment variable or use the default value.
+        /// OPTIONAL FEILD, defaults to public cloud id.
+        /// </summary>
+        internal string AuthorizedPartyAppId
+        {
+            get
+            {
+                string value = GetConfigValue(AuthorizedPartyAppIdKey, triggerAttribute?.AuthorizedPartyAppId);
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_AuthorizedPartyApplicationId_Required,
+                            arg0: AuthorizedPartyAppIdKey));
+                }
+
+                return value;
+            }
+        }
 
         /// <summary>
         /// If we should bypass the token validation.
@@ -117,41 +119,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// If the EZAuth is enabled.
         /// </summary>
         internal bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
-
-        /// <summary>
-        /// Try to get the service info based on the service id.
-        /// </summary>
-        /// <param name="appId">The service id to look for.</param>
-        /// <param name="serviceInfo">The service info we found based on the service id.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        internal bool TryGetServiceByAppId(string appId, out ServiceInfo serviceInfo)
-        {
-            serviceInfo = null;
-
-            if (appId is null)
-            {
-                throw new ArgumentNullException(nameof(appId));
-            }
-
-            if (appId.Equals(ConfiguredService.ApplicationId, StringComparison.OrdinalIgnoreCase))
-            {
-                serviceInfo = ConfiguredService;
-                return true;
-            }
-
-            return serviceInfo != null;
-        }
-
-        /// <summary>
-        /// Verify if the service id is valid by checking if we have the service info for it.
-        /// </summary>
-        /// <param name="testId"></param>
-        /// <returns></returns>
-        internal bool VerifyServiceId(string testId)
-        {
-            return TryGetServiceByAppId(testId, out _);
-        }
 
         /// <summary>
         /// Get config value from environment variable or use the default value.
@@ -176,20 +143,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     provider: CultureInfo.CurrentCulture);
         }
 
-        private static ServiceInfo GetAADServiceInfo(string tenantId)
+        /// <summary>
+        /// Get the issuer string based on the token schema version.
+        /// </summary>
+        /// <param name="tokenSchemaVersion">v2 will return v2 odic url, v1 will return v1</param>
+        /// <returns></returns>
+        internal string GetOpenIDConfigurationUrlString(SupportedTokenSchemaVersions tokenSchemaVersion)
         {
-            /* The authority URL is based on the tenant id. if we provide common, it returns a template version of the issure URL.
-             * But if we were to provide the actual tenant id, it will return the actual issuer URL with the tenant id in the issure string.
-             * Examples below using a random GUID: fa1f83dc-7b13-456e-8358-ba27aebd79ad
-             * https://login.windows.net/common/.well-known/openid-configuration : "https://sts.windows.net/{tenantid}/"
-             * https://login.windows.net/common/v2.0/.well-known/openid-configuration : "https://login.microsoftonline.com/{tenantid}/v2.0"
-             * https://login.windows.net/fa1f83dc-7b13-456e-8358-ba27aebd79ad/.well-known/openid-configuration : "https://sts.windows.net/fa1f83dc-7b13-456e-8358-ba27aebd79ad/"
-             * https://login.windows.net/fa1f83dc-7b13-456e-8358-ba27aebd79ad/v2.0/.well-known/openid-configuration : "https://login.microsoftonline.com/fa1f83dc-7b13-456e-8358-ba27aebd79ad/v2.0"
-             */
+            return tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
+                AuthorityUrl + OpenIdConfigurationPathV2 :
+                AuthorityUrl + OpenIdConfigurationPath;
+        }
 
-            return new ServiceInfo(
-                appId: AzureActiveDirectoryAppId,
-                authorityUrl: AzureActiveDirectoryAuthority + "/" + tenantId);
+        /// <summary>
+        /// Validate the authorization party is accurate to the one in configuration.
+        /// </summary>
+        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
+        /// <returns>True if azp/appid value matches the configured value.</returns>
+        internal bool ValidateAuthorizationParty(string authoizedPartyValueFromTokenOrHeader)
+        {
+            return  AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
         }
     }
 }

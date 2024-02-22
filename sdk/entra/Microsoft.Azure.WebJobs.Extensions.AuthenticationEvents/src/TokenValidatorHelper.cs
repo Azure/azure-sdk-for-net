@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Token_Version, version, String.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Token_Version, version, string.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
             }
         }
     }

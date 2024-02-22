@@ -210,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             return new AuthenticationEventsTriggerAttribute()
             {
-                TenantId = tenantId,
+                AuthorizedPartyAppId = tenantId,
                 AudienceAppId = audienceAppId
             };
         }

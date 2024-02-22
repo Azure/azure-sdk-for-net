@@ -9,6 +9,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal abstract class TokenValidator
     {
-        internal abstract Task<(bool Valid, Dictionary<string, string> Claims)> GetClaimsAndValidate(HttpRequestMessage request, ConfigurationManager configurationManager);
+        internal abstract Task<(bool Valid, Dictionary<string, string> Claims)> ValidateAndGetClaims(HttpRequestMessage request, ConfigurationManager configurationManager);
     }
 }

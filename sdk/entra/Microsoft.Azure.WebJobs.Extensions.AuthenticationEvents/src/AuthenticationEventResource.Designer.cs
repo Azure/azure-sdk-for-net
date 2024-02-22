@@ -332,11 +332,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please supply the TenantId {0} in variables in your binding configuration..
+        ///   Looks up a localized string similar to Please supply the Authority URL {0} in variables in your binding configuration..
         /// </summary>
-        internal static string Ex_Trigger_TenantId_Required {
+        internal static string Ex_Trigger_AuthorityUrl_Required {
             get {
-                return ResourceManager.GetString("Ex_Trigger_TenantId_Required", resourceCulture);
+                return ResourceManager.GetString("Ex_Trigger_AuthorityUrl_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the AuthorizedPartyApplicationId {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_AuthorizedPartyApplicationId_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_AuthorizedPartyApplicationId_Required", resourceCulture);
             }
         }
         

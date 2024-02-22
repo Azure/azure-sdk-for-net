@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.IdentityModel.JsonWebTokens;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal class TokenValidatorEZAuth : TokenValidator
     {
-        internal override Task<(bool Valid, Dictionary<string, string> Claims)> GetClaimsAndValidate(
+        internal override Task<(bool Valid, Dictionary<string, string> Claims)> ValidateAndGetClaims(
             HttpRequestMessage request,
             ConfigurationManager configurationManager)
         {
@@ -23,12 +25,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 AuthenticationEventJsonElement jPrincipal = new AuthenticationEventJsonElement(principal);
 
                 foreach (AuthenticationEventJsonElement jVal in jPrincipal.GetPropertyValue<AuthenticationEventJsonElement>("claims").Elements)
+                {
                     Claims.Add(jVal.GetPropertyValue("typ"), jVal.GetPropertyValue("val"));
+                }
 
                 SupportedTokenSchemaVersions tokenSchemaVersion = TokenValidatorHelper.ParseSupportedTokenVersion(Claims["ver"]);
+                string authorizedPartyKey = tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.AzpKey : ConfigurationManager.AppIdKey;
 
-                return Task.FromResult((Claims.Any(x => x.Key.Equals(tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? ConfigurationManager.TOKEN_V2_VERIFY : ConfigurationManager.TOKEN_V1_VERIFY) &&
-                    configurationManager.VerifyServiceId(x.Value)), Claims));
+                return Task.FromResult((configurationManager.ValidateAuthorizationParty(Claims[authorizedPartyKey]), Claims));
             }
             catch (Exception)
             {
