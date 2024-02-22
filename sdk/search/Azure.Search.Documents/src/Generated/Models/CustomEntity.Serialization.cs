@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFuzzyEditDistance");
                 }
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<CustomEntityAlias> collection && collection.IsUndefined))
             {
                 if (Aliases != null)
                 {

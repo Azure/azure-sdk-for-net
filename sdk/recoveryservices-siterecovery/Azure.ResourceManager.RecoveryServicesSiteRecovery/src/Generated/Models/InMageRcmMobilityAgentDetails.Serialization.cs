@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReasonsBlockingUpgrade))
+            if (options.Format != "W" && !(ReasonsBlockingUpgrade is ChangeTrackingList<AgentUpgradeBlockedReason> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reasonsBlockingUpgrade"u8);
                 writer.WriteStartArray();

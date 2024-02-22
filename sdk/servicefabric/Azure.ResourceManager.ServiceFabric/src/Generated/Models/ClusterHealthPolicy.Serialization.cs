@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
+            if (!(ApplicationHealthPolicies is ChangeTrackingDictionary<string, ApplicationHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();

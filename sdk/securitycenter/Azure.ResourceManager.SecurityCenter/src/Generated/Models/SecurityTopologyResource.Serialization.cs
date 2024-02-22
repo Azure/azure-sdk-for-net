@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("calculatedDateTime"u8);
                 writer.WriteStringValue(CalculatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TopologyResources))
+            if (options.Format != "W" && !(TopologyResources is ChangeTrackingList<TopologySingleResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topologyResources"u8);
                 writer.WriteStartArray();

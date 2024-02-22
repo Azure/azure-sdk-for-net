@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MoverResources))
+            if (options.Format != "W" && !(MoverResources is ChangeTrackingList<AffectedMoverResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();

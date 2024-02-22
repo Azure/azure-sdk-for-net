@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentResult))
+            if (options.Format != "W" && !(AssessmentResult is ChangeTrackingList<ComplianceSegment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessmentResult"u8);
                 writer.WriteStartArray();

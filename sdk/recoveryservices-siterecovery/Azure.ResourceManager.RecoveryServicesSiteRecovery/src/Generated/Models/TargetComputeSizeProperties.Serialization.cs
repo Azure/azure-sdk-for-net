@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("maxNicsCount"u8);
                 writer.WriteNumberValue(MaxNicsCount.Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("highIopsSupported"u8);
                 writer.WriteStringValue(HighIopsSupported);
             }
-            if (Optional.IsCollectionDefined(HyperVGenerations))
+            if (!(HyperVGenerations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hyperVGenerations"u8);
                 writer.WriteStartArray();

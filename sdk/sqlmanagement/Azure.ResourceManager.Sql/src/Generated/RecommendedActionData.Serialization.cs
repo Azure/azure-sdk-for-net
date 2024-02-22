@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
+            if (options.Format != "W" && !(EstimatedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("estimatedImpact"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ObservedImpact))
+            if (options.Format != "W" && !(ObservedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("observedImpact"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TimeSeries))
+            if (options.Format != "W" && !(TimeSeries is ChangeTrackingList<RecommendedActionMetricInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("timeSeries"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedObjects))
+            if (options.Format != "W" && !(LinkedObjects is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("linkedObjects"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();

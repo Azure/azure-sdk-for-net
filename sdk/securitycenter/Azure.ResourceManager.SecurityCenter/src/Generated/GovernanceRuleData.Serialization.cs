@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
+            if (!(ExcludedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedScopes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConditionSets))
+            if (!(ConditionSets is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();

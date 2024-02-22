@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteStringValue(StepId);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (!(Responses is ChangeTrackingList<TroubleshooterResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();

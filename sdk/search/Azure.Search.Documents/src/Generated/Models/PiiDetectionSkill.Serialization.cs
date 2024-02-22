@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("modelVersion");
                 }
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (!(PiiCategories is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();

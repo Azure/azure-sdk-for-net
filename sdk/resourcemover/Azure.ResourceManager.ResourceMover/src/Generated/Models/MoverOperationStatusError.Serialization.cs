@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingList<MoverOperationStatusError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalInfo))
+            if (options.Format != "W" && !(AdditionalInfo is ChangeTrackingList<MoverOperationErrorAdditionalInfo> collection0 && collection0.IsUndefined))
             {
                 if (AdditionalInfo != null)
                 {

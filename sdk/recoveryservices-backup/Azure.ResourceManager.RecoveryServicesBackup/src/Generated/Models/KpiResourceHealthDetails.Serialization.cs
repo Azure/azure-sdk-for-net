@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceHealthDetails))
+            if (!(ResourceHealthDetails is ChangeTrackingList<ResourceHealthDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("stacksetName"u8);
                 writer.WriteStringValue(StacksetName);
             }
-            if (Optional.IsCollectionDefined(ExcludedAccountIds))
+            if (!(ExcludedAccountIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedAccountIds"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (Optional.IsCollectionDefined(SearchResults))
+            if (!(SearchResults is ChangeTrackingList<SearchResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteStartArray();

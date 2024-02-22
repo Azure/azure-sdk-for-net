@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupMembers))
+            if (!(GroupMembers is ChangeTrackingList<ServerTrustGroupServerInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustScopes))
+            if (!(TrustScopes is ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<ManagementLockOwner> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();

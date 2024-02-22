@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BaseResourceStatus))
+            if (!(BaseResourceStatus is ChangeTrackingList<ResourceAzStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("baseResourceStatus"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (Optional.IsCollectionDefined(ImpactedRegions))
+            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();

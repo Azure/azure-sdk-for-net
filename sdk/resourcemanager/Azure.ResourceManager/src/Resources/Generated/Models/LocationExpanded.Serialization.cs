@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsCollectionDefined(PaymentSchedule))
+            if (!(PaymentSchedule is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paymentSchedule"u8);
                 writer.WriteStartArray();

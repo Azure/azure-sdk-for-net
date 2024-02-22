@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedPerDatabaseMinPerformanceLevels))
+            if (options.Format != "W" && !(SupportedPerDatabaseMinPerformanceLevels is ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedPerDatabaseMinPerformanceLevels"u8);
                 writer.WriteStartArray();

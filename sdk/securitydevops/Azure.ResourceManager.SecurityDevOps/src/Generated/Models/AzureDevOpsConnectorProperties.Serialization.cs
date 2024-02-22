@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (Optional.IsCollectionDefined(Orgs))
+            if (!(Orgs is ChangeTrackingList<AzureDevOpsOrgMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();

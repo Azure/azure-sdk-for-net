@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("affectedResourceSubtype"u8);
                 writer.WriteStringValue(AffectedResourceSubtype);
             }
-            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
+            if (!(AffectedResourceCorrelationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedResourceCorrelationIds"u8);
                 writer.WriteStartArray();

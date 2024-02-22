@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("includedMaxSize"u8);
                 writer.WriteObjectValue(IncludedMaxSize);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
+            if (options.Format != "W" && !(SupportedStorageSizes is ChangeTrackingList<MaxSizeRangeCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageSizes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("standaloneSupported"u8);
                 writer.WriteBooleanValue(IsStandaloneSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();

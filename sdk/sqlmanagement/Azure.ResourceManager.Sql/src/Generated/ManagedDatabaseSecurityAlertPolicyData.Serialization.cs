@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(DisabledAlerts))
+            if (!(DisabledAlerts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (!(EmailAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();

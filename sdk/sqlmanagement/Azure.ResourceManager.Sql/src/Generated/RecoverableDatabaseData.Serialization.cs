@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("lastAvailableBackupDate"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingDictionary<string, SqlDatabaseKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();

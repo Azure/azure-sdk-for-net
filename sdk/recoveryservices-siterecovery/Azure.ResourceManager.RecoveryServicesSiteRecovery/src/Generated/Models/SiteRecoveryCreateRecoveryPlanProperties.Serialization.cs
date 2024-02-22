@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ProviderSpecificContent))
+            if (!(ProviderSpecificContent is ChangeTrackingList<RecoveryPlanProviderSpecificContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();

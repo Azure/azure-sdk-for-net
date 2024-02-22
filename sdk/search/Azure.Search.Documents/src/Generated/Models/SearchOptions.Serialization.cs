@@ -22,7 +22,7 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("count"u8);
                 writer.WriteBooleanValue(IncludeTotalCount.Value);
             }
-            if (Optional.IsCollectionDefined(Facets))
+            if (!(Facets is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsCollectionDefined(ScoringParameters))
+            if (!(ScoringParameters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("semanticFields"u8);
                 writer.WriteStringValue(SemanticFieldsRaw);
             }
-            if (Optional.IsCollectionDefined(VectorQueries))
+            if (!(VectorQueries is ChangeTrackingList<VectorQuery> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vectorQueries"u8);
                 writer.WriteStartArray();

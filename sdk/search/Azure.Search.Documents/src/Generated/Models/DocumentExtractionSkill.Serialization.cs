@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataToExtract");
                 }
             }
-            if (Optional.IsCollectionDefined(Configuration))
+            if (!(Configuration is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 if (Configuration != null)
                 {

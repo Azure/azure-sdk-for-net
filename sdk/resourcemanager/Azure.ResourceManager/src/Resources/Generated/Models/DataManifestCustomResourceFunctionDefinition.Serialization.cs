@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("fullyQualifiedResourceType"u8);
                 writer.WriteStringValue(FullyQualifiedResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(DefaultProperties))
+            if (!(DefaultProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultProperties"u8);
                 writer.WriteStartArray();

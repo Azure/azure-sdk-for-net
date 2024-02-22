@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("maintenanceEndTime"u8);
                 writer.WriteStringValue(MaintenanceEndTime);
             }
-            if (Optional.IsCollectionDefined(Info))
+            if (!(Info is ChangeTrackingList<ResourceHealthKeyValueItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteStartArray();

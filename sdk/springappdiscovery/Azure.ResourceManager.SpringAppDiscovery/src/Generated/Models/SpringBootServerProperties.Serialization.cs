@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
-            if (Optional.IsCollectionDefined(FqdnAndIPAddressList))
+            if (!(FqdnAndIPAddressList is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdnAndIpAddressList"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WritePropertyName("springBootApps"u8);
                 writer.WriteNumberValue(SpringBootApps.Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

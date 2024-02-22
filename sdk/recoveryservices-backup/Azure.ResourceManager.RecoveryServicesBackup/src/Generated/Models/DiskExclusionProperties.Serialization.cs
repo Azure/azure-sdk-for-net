@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DiskLunList))
+            if (!(DiskLunList is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskLunList"u8);
                 writer.WriteStartArray();

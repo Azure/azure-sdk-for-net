@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Offerings))
+            if (!(Offerings is ChangeTrackingList<SecurityCenterCloudOffering> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();

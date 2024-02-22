@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("numberOfFilesUnrestorable"u8);
                 writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FullBackupSets))
+            if (options.Format != "W" && !(FullBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fullBackupSets"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiffBackupSets))
+            if (options.Format != "W" && !(DiffBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("diffBackupSets"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LogBackupSets))
+            if (options.Format != "W" && !(LogBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("logBackupSets"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UnrestorableFileList))
+            if (options.Format != "W" && !(UnrestorableFileList is ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("unrestorableFiles"u8);
                 writer.WriteStartArray();

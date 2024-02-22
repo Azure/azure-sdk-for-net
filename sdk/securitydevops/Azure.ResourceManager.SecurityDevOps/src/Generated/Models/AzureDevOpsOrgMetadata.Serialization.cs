@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Projects))
+            if (!(Projects is ChangeTrackingList<AzureDevOpsProjectMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("projects"u8);
                 writer.WriteStartArray();

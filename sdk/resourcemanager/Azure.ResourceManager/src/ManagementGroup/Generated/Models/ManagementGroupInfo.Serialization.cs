@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
-            if (Optional.IsCollectionDefined(Path))
+            if (!(Path is ChangeTrackingList<ManagementGroupPathElement> collection && collection.IsUndefined))
             {
                 if (Path != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
+            if (!(ManagementGroupAncestors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (ManagementGroupAncestors != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("managementGroupAncestors");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
+            if (!(ManagementGroupAncestorChain is ChangeTrackingList<ManagementGroupPathElement> collection1 && collection1.IsUndefined))
             {
                 if (ManagementGroupAncestorChain != null)
                 {

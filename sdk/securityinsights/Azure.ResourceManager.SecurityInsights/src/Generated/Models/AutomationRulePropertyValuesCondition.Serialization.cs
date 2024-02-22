@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PropertyValues))
+            if (!(PropertyValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();

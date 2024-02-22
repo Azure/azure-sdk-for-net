@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Repos))
+            if (!(Repos is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("repos"u8);
                 writer.WriteStartArray();

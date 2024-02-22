@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteStringValue(NetworkInterface);
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityGroups))
+            if (!(NetworkSecurityGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityGroups"u8);
                 writer.WriteStartArray();

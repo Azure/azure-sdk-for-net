@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ScoringProfiles))
+            if (!(ScoringProfiles is ChangeTrackingList<ScoringProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scoringProfiles"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("corsOptions");
                 }
             }
-            if (Optional.IsCollectionDefined(Suggesters))
+            if (!(Suggesters is ChangeTrackingList<SearchSuggester> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suggesters"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Analyzers))
+            if (!(Analyzers is ChangeTrackingList<LexicalAnalyzer> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("analyzers"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tokenizers))
+            if (!(Tokenizers is ChangeTrackingList<LexicalTokenizer> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("tokenizers"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (!(TokenFilters is ChangeTrackingList<TokenFilter> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (!(CharFilters is ChangeTrackingList<CharFilter> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Normalizers))
+            if (!(Normalizers is ChangeTrackingList<LexicalNormalizer> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("normalizers"u8);
                 writer.WriteStartArray();

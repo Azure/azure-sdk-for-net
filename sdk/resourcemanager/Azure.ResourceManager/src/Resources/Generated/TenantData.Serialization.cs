@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Domains))
+            if (options.Format != "W" && !(Domains is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();

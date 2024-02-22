@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteObjectValue(TitleField);
             }
-            if (Optional.IsCollectionDefined(ContentFields))
+            if (!(ContentFields is ChangeTrackingList<SemanticField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeywordsFields))
+            if (!(KeywordsFields is ChangeTrackingList<SemanticField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();

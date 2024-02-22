@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("commentsCount"u8);
                 writer.WriteNumberValue(CommentsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AlertProductNames))
+            if (options.Format != "W" && !(AlertProductNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alertProductNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
+            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();

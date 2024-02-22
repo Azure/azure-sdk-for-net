@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
+            if (options.Format != "W" && !(SupportedMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedMaxSizes"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
+            if (options.Format != "W" && !(SupportedLicenseTypes is ChangeTrackingList<LicenseTypeCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedLicenseTypes"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("supportedAutoPauseDelay"u8);
                 writer.WriteObjectValue(SupportedAutoPauseDelay);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
+            if (options.Format != "W" && !(SupportedMinCapacities is ChangeTrackingList<MinCapacityCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedMinCapacities"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("computeModel"u8);
                 writer.WriteStringValue(ComputeModel);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<MaintenanceConfigurationCapability> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("isLastStep"u8);
                 writer.WriteBooleanValue(IsLastStep.Value);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StepInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("automatedCheckResults"u8);
                 writer.WriteObjectValue(AutomatedCheckResults);
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();

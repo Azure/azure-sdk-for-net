@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            if (!(InnerHealthErrors is ChangeTrackingList<SiteRecoveryInnerHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("innerHealthErrors"u8);
                 writer.WriteStartArray();

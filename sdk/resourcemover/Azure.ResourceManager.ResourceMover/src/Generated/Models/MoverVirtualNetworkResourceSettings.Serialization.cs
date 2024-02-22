@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableDdosProtection");
                 }
             }
-            if (Optional.IsCollectionDefined(AddressSpace))
+            if (!(AddressSpace is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (AddressSpace != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("addressSpace");
                 }
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 if (DnsServers != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("dnsServers");
                 }
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<SubnetResourceSettings> collection2 && collection2.IsUndefined))
             {
                 if (Subnets != null)
                 {

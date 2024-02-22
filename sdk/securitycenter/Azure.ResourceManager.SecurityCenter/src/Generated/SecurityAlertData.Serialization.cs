@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
+            if (options.Format != "W" && !(ResourceIdentifiers is ChangeTrackingList<SecurityAlertResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
+            if (options.Format != "W" && !(RemediationSteps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedLinks))
+            if (options.Format != "W" && !(ExtendedLinks is ChangeTrackingList<IDictionary<string, string>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedLinks"u8);
                 writer.WriteStartArray();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("processingEndTimeUtc"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Entities))
+            if (options.Format != "W" && !(Entities is ChangeTrackingList<SecurityAlertEntity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("correlationKey"u8);
                 writer.WriteStringValue(CorrelationKey);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("compromisedEntity"u8);
                 writer.WriteStringValue(CompromisedEntity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Techniques))
+            if (options.Format != "W" && !(Techniques is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubTechniques))
+            if (options.Format != "W" && !(SubTechniques is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("subTechniques"u8);
                 writer.WriteStartArray();

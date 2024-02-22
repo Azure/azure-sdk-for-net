@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("confidenceLevel"u8);
                 writer.WriteStringValue(ConfidenceLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfidenceReasons))
+            if (options.Format != "W" && !(ConfidenceReasons is ChangeTrackingList<SecurityInsightsAlertConfidenceReason> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("confidenceReasons"u8);
                 writer.WriteStartArray();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("productVersion"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
+            if (options.Format != "W" && !(RemediationSteps is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStartArray();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("systemAlertId"u8);
                 writer.WriteStringValue(SystemAlertId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
+            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertLink"u8);
                 writer.WriteStringValue(AlertLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
+            if (options.Format != "W" && !(ResourceIdentifiers is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();

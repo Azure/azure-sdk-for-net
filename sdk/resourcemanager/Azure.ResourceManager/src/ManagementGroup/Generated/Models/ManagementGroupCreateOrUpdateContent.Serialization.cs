@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && !(Children is ChangeTrackingList<ManagementGroupChildOptions> collection && collection.IsUndefined))
             {
                 if (Children != null)
                 {

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("markingRef"u8);
                 writer.WriteNumberValue(MarkingRef.Value);
             }
-            if (Optional.IsCollectionDefined(Selectors))
+            if (!(Selectors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();

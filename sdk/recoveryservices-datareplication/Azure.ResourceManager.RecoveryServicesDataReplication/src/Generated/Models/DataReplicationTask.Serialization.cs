@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteObjectValue(CustomProperties);
             }
-            if (Optional.IsCollectionDefined(ChildrenWorkflows))
+            if (!(ChildrenWorkflows is ChangeTrackingList<DataReplicationWorkflowData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childrenWorkflows"u8);
                 writer.WriteStartArray();

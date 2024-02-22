@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
+            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<SqlServerVersionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedManagedInstanceVersions))
+            if (options.Format != "W" && !(SupportedManagedInstanceVersions is ChangeTrackingList<ManagedInstanceVersionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedManagedInstanceVersions"u8);
                 writer.WriteStartArray();

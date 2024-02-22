@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicableScenarios))
+            if (!(ApplicableScenarios is ChangeTrackingList<MetadataEntityScenario> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicableScenarios"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedValues))
+            if (!(SupportedValues is ChangeTrackingList<MetadataSupportedValueDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedValues"u8);
                 writer.WriteStartArray();

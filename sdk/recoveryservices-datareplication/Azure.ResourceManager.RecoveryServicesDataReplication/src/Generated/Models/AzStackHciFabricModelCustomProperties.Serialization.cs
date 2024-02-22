@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("azStackHciSiteId"u8);
             writer.WriteStringValue(AzStackHciSiteId);
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApplianceName))
+            if (options.Format != "W" && !(ApplianceName is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStartArray();

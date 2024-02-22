@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("jitApprovalMode"u8);
                 writer.WriteStringValue(JitApprovalMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(JitApprovers))
+            if (!(JitApprovers is ChangeTrackingList<JitApprover> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("jitApprovers"u8);
                 writer.WriteStartArray();

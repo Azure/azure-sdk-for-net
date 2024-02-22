@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("deprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
+            if (options.Format != "W" && !(ReplacedBy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replacedBy"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<PlanExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();

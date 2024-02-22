@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            if (options.Format != "W" && !(SupportedFamilies is ChangeTrackingList<InstancePoolFamilyCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
                 writer.WriteStartArray();

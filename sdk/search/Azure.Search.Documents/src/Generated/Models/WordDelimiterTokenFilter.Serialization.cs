@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (Optional.IsCollectionDefined(ProtectedWords))
+            if (!(ProtectedWords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();

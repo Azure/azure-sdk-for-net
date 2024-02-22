@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("dra"u8);
                 writer.WriteObjectValue(Dra);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            if (options.Format != "W" && !(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();

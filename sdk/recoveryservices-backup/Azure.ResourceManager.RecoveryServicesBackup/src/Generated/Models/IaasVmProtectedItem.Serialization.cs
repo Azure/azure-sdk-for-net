@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthDetails))
+            if (!(HealthDetails is ChangeTrackingList<IaasVmHealthDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthDetails"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KpisHealths))
+            if (!(KpisHealths is ChangeTrackingDictionary<string, KpiResourceHealthDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("kpisHealths"u8);
                 writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();

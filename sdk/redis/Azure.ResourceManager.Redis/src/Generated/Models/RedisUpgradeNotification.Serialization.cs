@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpsellNotification))
+            if (options.Format != "W" && !(UpsellNotification is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upsellNotification"u8);
                 writer.WriteStartObject();

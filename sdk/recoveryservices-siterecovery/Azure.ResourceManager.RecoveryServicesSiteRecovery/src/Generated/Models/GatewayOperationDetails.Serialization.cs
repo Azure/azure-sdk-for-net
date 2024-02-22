@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataStores))
+            if (options.Format != "W" && !(DataStores is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();

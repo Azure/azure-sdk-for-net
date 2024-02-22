@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("clusterState"u8);
                 writer.WriteStringValue(ClusterState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterCertificateThumbprints))
+            if (options.Format != "W" && !(ClusterCertificateThumbprints is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsCollectionDefined(LoadBalancingRules))
+            if (!(LoadBalancingRules is ChangeTrackingList<ManagedClusterLoadBalancingRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("allowRdpAccess"u8);
                 writer.WriteBooleanValue(IsRdpAccessAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Clients))
+            if (!(Clients is ChangeTrackingList<ManagedClusterClientCertificate> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("clients"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (!(FabricSettings is ChangeTrackingList<ClusterFabricSettingsSection> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("clusterUpgradeCadence"u8);
                 writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (!(AddOnFeatures is ChangeTrackingList<ManagedClusterAddOnFeature> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("addonFeatures"u8);
                 writer.WriteStartArray();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsCollectionDefined(IPTags))
+            if (!(IPTags is ChangeTrackingList<ManagedClusterIPTag> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableServicePublicIP"u8);
                 writer.WriteBooleanValue(IsServicePublicIPEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AuxiliarySubnets))
+            if (!(AuxiliarySubnets is ChangeTrackingList<ManagedClusterSubnet> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("auxiliarySubnets"u8);
                 writer.WriteStartArray();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            if (!(ServiceEndpoints is ChangeTrackingList<ManagedClusterServiceEndpoint> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (Optional.IsCollectionDefined(DeployedImages))
+            if (!(DeployedImages is ChangeTrackingList<SphereImageData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployedImages"u8);
                 writer.WriteStartArray();

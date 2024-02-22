@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
+            if (options.Format != "W" && !(AssessmentDefinitions is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessmentDefinitions"u8);
                 writer.WriteStartArray();

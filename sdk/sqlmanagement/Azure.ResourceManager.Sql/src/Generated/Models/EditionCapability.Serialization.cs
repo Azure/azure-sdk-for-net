@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServiceLevelObjectives))
+            if (options.Format != "W" && !(SupportedServiceLevelObjectives is ChangeTrackingList<ServiceObjectiveCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedServiceLevelObjectives"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("readScale"u8);
                 writer.WriteObjectValue(ReadScale);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<StorageCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageCapabilities"u8);
                 writer.WriteStartArray();

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("authType");
                 }
             }
-            if (Optional.IsCollectionDefined(ValidationDetail))
+            if (!(ValidationDetail is ChangeTrackingList<LinkerValidationResultItemInfo> collection && collection.IsUndefined))
             {
                 if (ValidationDetail != null)
                 {

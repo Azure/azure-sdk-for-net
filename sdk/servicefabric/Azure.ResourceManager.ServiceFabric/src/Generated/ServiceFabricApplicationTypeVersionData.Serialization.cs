@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("appPackageUrl"u8);
                 writer.WriteStringValue(AppPackageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultParameterList))
+            if (options.Format != "W" && !(DefaultParameterList is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("defaultParameterList"u8);
                 writer.WriteStartObject();

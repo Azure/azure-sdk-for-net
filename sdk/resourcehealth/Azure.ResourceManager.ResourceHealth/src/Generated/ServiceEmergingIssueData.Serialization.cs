@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("refreshTimestamp"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(StatusBanners))
+            if (!(StatusBanners is ChangeTrackingList<EmergingIssueBannerType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusBanners"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StatusActiveEvents))
+            if (!(StatusActiveEvents is ChangeTrackingList<EmergingIssueActiveEventType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statusActiveEvents"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Optional.IsCollectionDefined(IPConfigs))
+            if (!(IPConfigs is ChangeTrackingList<HyperVFailoverIPConfigDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();

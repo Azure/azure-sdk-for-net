@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (Optional.IsCollectionDefined(Keywords))
+            if (!(Keywords is ChangeTrackingList<InformationProtectionKeyword> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();

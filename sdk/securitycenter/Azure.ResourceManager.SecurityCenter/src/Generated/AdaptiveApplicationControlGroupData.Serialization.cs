@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("recommendationStatus"u8);
                 writer.WriteStringValue(RecommendationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<AdaptiveApplicationControlIssueSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("sourceSystem"u8);
                 writer.WriteStringValue(SourceSystem.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VmRecommendations))
+            if (!(VmRecommendations is ChangeTrackingList<VmRecommendation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmRecommendations"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PathRecommendations))
+            if (!(PathRecommendations is ChangeTrackingList<PathRecommendation> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pathRecommendations"u8);
                 writer.WriteStartArray();

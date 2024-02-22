@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingDictionary<string, SensitivityLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(InformationTypes))
+            if (!(InformationTypes is ChangeTrackingDictionary<string, SecurityInformationTypeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("informationTypes"u8);
                 writer.WriteStartObject();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(KeyVaultProperties))
+            if (!(KeyVaultProperties is ChangeTrackingList<ServiceBusKeyVaultProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();

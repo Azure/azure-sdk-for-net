@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
+            if (!(AffectedResourceCorrelationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedResourceCorrelationIds"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ChildErrors))
+            if (!(ChildErrors is ChangeTrackingList<DataReplicationInnerHealthErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("childErrors"u8);
                 writer.WriteStartArray();

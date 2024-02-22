@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parents))
+            if (options.Format != "W" && !(Parents is ChangeTrackingList<TopologySingleResourceParent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parents"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && !(Children is ChangeTrackingList<TopologySingleResourceChild> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();

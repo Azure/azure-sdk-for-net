@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("authorizationSource"u8);
                 writer.WriteStringValue(AuthorizationSource);
             }
-            if (Optional.IsCollectionDefined(ManagedByTenants))
+            if (!(ManagedByTenants is ChangeTrackingList<ManagedByTenant> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByTenants"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

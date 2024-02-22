@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Hashes))
+            if (!(Hashes is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();

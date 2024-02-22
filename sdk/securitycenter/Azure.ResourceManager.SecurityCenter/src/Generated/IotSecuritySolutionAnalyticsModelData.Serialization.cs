@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("unhealthyDeviceCount"u8);
                 writer.WriteNumberValue(UnhealthyDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DevicesMetrics))
+            if (options.Format != "W" && !(DevicesMetrics is ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TopAlertedDevices))
+            if (!(TopAlertedDevices is ChangeTrackingList<IotSecurityAlertedDevice> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("topAlertedDevices"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
+            if (!(MostPrevalentDeviceAlerts is ChangeTrackingList<IotSecurityDeviceAlert> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mostPrevalentDeviceAlerts"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
+            if (!(MostPrevalentDeviceRecommendations is ChangeTrackingList<IotSecurityDeviceRecommendation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("mostPrevalentDeviceRecommendations"u8);
                 writer.WriteStartArray();

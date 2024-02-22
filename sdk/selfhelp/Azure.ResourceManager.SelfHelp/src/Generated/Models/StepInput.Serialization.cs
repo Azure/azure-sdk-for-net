@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("responseValidationProperties"u8);
                 writer.WriteObjectValue(ResponseValidationProperties);
             }
-            if (Optional.IsCollectionDefined(ResponseOptions))
+            if (!(ResponseOptions is ChangeTrackingList<ResponseConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responseOptions"u8);
                 writer.WriteStartArray();

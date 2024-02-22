@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
-            if (Optional.IsCollectionDefined(Transactions))
+            if (!(Transactions is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();

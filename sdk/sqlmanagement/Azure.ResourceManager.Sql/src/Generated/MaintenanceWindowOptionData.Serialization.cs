@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
+            if (!(MaintenanceWindowCycles is ChangeTrackingList<MaintenanceWindowTimeRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();

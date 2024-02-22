@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SensitiveInfoTypesIds))
+            if (!(SensitiveInfoTypesIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sensitiveInfoTypesIds"u8);
                 writer.WriteStartArray();

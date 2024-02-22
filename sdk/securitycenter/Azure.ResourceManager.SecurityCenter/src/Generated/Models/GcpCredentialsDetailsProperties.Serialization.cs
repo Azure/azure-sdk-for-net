@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
+            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();

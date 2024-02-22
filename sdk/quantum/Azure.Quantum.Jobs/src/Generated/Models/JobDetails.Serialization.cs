@@ -45,7 +45,7 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(ProviderId);
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.Quantum.Jobs.Models
                 writer.WritePropertyName("outputDataFormat"u8);
                 writer.WriteStringValue(OutputDataFormat);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {

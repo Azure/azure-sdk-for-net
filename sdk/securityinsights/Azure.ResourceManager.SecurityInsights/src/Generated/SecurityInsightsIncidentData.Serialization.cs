@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("incidentNumber"u8);
                 writer.WriteNumberValue(IncidentNumber.Value);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
+            if (options.Format != "W" && !(RelatedAnalyticRuleIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("relatedAnalyticRuleIds"u8);
                 writer.WriteStartArray();

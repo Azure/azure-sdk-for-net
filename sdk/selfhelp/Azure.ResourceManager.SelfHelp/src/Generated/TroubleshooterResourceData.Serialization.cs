@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Steps))
+            if (options.Format != "W" && !(Steps is ChangeTrackingList<SelfHelpStep> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();

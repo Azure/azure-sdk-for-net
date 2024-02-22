@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedElasticPoolPerformanceLevels))
+            if (options.Format != "W" && !(SupportedElasticPoolPerformanceLevels is ChangeTrackingList<ElasticPoolPerformanceLevelCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedElasticPoolPerformanceLevels"u8);
                 writer.WriteStartArray();

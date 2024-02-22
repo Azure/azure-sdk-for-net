@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (Optional.IsCollectionDefined(ManagedDiskUpdateDetails))
+            if (!(ManagedDiskUpdateDetails is ChangeTrackingList<A2AVmManagedDiskUpdateDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedDiskUpdateDetails"u8);
                 writer.WriteStartArray();

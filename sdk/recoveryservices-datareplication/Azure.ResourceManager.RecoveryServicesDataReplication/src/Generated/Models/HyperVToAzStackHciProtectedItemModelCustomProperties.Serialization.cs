@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
+            if (options.Format != "W" && !(ProtectedDisks is ChangeTrackingList<HyperVToAzStackHciProtectedDiskProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedNics))
+            if (options.Format != "W" && !(ProtectedNics is ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedNics"u8);
                 writer.WriteStartArray();

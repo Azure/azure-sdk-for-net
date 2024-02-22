@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TopLevelInventoryList))
+            if (!(TopLevelInventoryList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topLevelInventoryList"u8);
                 writer.WriteStartArray();

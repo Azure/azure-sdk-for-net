@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteStringValue(DiskConfiguration);
             }
-            if (Optional.IsCollectionDefined(VolumeList))
+            if (!(VolumeList is ChangeTrackingList<SiteRecoveryDiskVolumeDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeList"u8);
                 writer.WriteStartArray();

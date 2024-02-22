@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Options))
+            if (!(Options is ChangeTrackingDictionary<string, AutomaticTuningOptions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartObject();

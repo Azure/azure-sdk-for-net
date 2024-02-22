@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
-            if (Optional.IsCollectionDefined(Modules))
+            if (!(Modules is ChangeTrackingList<RedisEnterpriseModule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(PrivateIPs))
+            if (!(PrivateIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();

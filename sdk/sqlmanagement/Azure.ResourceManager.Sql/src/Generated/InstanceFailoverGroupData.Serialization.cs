@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (Optional.IsCollectionDefined(PartnerRegions))
+            if (!(PartnerRegions is ChangeTrackingList<PartnerRegionInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedInstancePairs))
+            if (!(ManagedInstancePairs is ChangeTrackingList<ManagedInstancePairInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();

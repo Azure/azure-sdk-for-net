@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("entitiesDefinitionUri");
                 }
             }
-            if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
+            if (!(InlineEntitiesDefinition is ChangeTrackingList<CustomEntity> collection && collection.IsUndefined))
             {
                 if (InlineEntitiesDefinition != null)
                 {

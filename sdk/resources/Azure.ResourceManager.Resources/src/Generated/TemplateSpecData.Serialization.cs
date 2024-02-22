@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Versions))
+            if (options.Format != "W" && !(Versions is ChangeTrackingDictionary<string, TemplateSpecVersionInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();

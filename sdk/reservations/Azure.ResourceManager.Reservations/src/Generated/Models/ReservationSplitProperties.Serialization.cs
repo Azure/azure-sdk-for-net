@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SplitDestinations))
+            if (!(SplitDestinations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("splitDestinations"u8);
                 writer.WriteStartArray();

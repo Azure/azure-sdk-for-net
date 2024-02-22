@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerNatRules))
+            if (!(LoadBalancerNatRules is ChangeTrackingList<LoadBalancerNatRuleReferenceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerNatRules"u8);
                 writer.WriteStartArray();

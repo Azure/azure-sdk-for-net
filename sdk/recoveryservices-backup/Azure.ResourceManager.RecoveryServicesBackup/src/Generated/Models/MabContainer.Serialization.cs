@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsCollectionDefined(MabContainerHealthDetails))
+            if (!(MabContainerHealthDetails is ChangeTrackingList<MabContainerHealthDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mabContainerHealthDetails"u8);
                 writer.WriteStartArray();
