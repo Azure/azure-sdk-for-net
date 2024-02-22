@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDataSourceResourceSku> array = new List<SynapseDataSourceResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(item));
+                        array.Add(SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceIPAddress> array = new List<LargeInstanceIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item));
+                        array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item, options));
                     }
                     networkInterfaces = array;
                     continue;

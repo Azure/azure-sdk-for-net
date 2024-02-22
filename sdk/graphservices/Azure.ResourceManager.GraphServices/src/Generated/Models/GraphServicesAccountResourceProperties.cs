@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public GraphServicesAccountResourceProperties(string appId)
         {
-            Argument.AssertNotNull(appId, nameof(appId));
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
 
             AppId = appId;
         }

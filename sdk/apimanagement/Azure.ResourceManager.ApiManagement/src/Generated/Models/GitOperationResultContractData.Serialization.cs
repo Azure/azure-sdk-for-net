@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value);
+                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actionLog"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<OperationResultLogItemContract> array = new List<OperationResultLogItemContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item));
+                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item, options));
                             }
                             actionLog = array;
                             continue;

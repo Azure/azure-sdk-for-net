@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<X509CertificateName> array = new List<X509CertificateName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X509CertificateName.DeserializeX509CertificateName(item));
+                        array.Add(X509CertificateName.DeserializeX509CertificateName(item, options));
                     }
                     serverX509Names = array;
                     continue;

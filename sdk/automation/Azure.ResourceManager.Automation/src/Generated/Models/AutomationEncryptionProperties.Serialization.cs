@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value);
+                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

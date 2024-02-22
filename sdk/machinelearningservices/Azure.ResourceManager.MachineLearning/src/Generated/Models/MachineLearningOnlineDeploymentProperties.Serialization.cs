@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Kubernetes": return MachineLearningKubernetesOnlineDeployment.DeserializeMachineLearningKubernetesOnlineDeployment(element);
-                    case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element);
+                    case "Kubernetes": return MachineLearningKubernetesOnlineDeployment.DeserializeMachineLearningKubernetesOnlineDeployment(element, options);
+                    case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element, options);
                 }
             }
-            return UnknownOnlineDeployment.DeserializeUnknownOnlineDeployment(element);
+            return UnknownOnlineDeployment.DeserializeUnknownOnlineDeployment(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineDeploymentProperties>.Write(ModelReaderWriterOptions options)

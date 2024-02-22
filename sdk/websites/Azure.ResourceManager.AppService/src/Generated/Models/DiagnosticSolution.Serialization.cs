@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }

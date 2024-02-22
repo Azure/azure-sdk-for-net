@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         public MonitorPrivateLinkScopeData(AzureLocation location, MonitorPrivateLinkAccessModeSettings accessModeSettings) : base(location)
         {
-            Argument.AssertNotNull(accessModeSettings, nameof(accessModeSettings));
+            if (accessModeSettings == null)
+            {
+                throw new ArgumentNullException(nameof(accessModeSettings));
+            }
 
             PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
             AccessModeSettings = accessModeSettings;

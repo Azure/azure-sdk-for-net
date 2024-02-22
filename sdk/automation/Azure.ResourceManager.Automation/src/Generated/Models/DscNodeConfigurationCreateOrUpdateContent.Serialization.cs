@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configuration"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("incrementNodeConfigurationBuild"u8))

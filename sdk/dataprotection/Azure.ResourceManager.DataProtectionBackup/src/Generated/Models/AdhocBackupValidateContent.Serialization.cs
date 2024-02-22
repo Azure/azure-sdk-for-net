@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("backupInstance"u8))
                 {
-                    backupInstance = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value);
+                    backupInstance = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

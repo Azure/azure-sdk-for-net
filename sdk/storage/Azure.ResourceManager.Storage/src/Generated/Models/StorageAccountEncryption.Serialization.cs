@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value);
+                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value);
+                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value);
+                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

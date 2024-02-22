@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceMaintenanceConfigurationData> array = new List<ContainerServiceMaintenanceConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(item));
+                        array.Add(ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(item, options));
                     }
                     value = array;
                     continue;

@@ -79,8 +79,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AdaptiveApplicationControlGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -128,8 +138,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AdaptiveApplicationControlGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupName, AdaptiveApplicationControlGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +195,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<AdaptiveApplicationControlGroupResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.Get");
             scope.Start();
@@ -220,7 +247,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<AdaptiveApplicationControlGroupResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.Get");
             scope.Start();
@@ -265,7 +299,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.Exists");
             scope.Start();
@@ -308,7 +349,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.Exists");
             scope.Start();
@@ -351,7 +399,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<NullableResponse<AdaptiveApplicationControlGroupResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.GetIfExists");
             scope.Start();
@@ -396,7 +451,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual NullableResponse<AdaptiveApplicationControlGroupResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _adaptiveApplicationControlGroupAdaptiveApplicationControlsClientDiagnostics.CreateScope("AdaptiveApplicationControlGroupCollection.GetIfExists");
             scope.Start();

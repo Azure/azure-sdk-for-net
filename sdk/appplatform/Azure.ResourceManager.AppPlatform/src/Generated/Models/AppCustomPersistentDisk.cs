@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageId"/> is null. </exception>
         public AppCustomPersistentDisk(string storageId)
         {
-            Argument.AssertNotNull(storageId, nameof(storageId));
+            if (storageId == null)
+            {
+                throw new ArgumentNullException(nameof(storageId));
+            }
 
             StorageId = storageId;
         }

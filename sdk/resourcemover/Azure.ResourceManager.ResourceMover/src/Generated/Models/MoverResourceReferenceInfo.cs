@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public MoverResourceReferenceInfo(ResourceIdentifier sourceArmResourceId)
         {
-            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
+            if (sourceArmResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceArmResourceId));
+            }
 
             SourceArmResourceId = sourceArmResourceId;
         }

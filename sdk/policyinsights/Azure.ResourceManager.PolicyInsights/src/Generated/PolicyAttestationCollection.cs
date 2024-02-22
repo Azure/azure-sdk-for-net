@@ -73,8 +73,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PolicyAttestationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
@@ -122,8 +132,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PolicyAttestationResource> CreateOrUpdate(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
@@ -169,7 +189,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual async Task<Response<PolicyAttestationResource>> GetAsync(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
@@ -214,7 +241,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual Response<PolicyAttestationResource> Get(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
@@ -321,7 +355,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
@@ -364,7 +405,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual Response<bool> Exists(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
@@ -407,7 +455,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PolicyAttestationResource>> GetIfExistsAsync(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
             scope.Start();
@@ -452,7 +507,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
         public virtual NullableResponse<PolicyAttestationResource> GetIfExists(string attestationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            if (attestationName == null)
+            {
+                throw new ArgumentNullException(nameof(attestationName));
+            }
+            if (attestationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
+            }
 
             using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
             scope.Start();

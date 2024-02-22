@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<MonitorWorkspaceIntegration> array = new List<MonitorWorkspaceIntegration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item));
+                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item, options));
                     }
                     azureMonitorWorkspaceIntegrations = array;
                     continue;

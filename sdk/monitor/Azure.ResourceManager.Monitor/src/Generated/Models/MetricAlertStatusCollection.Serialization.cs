@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricAlertStatus> array = new List<MetricAlertStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item));
+                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item, options));
                     }
                     value = array;
                     continue;

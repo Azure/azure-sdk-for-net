@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,9 +21,18 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="detectedLanguage"/> or <paramref name="warnings"/> is null. </exception>
         internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IEnumerable<TextAnalyticsWarning> warnings)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(detectedLanguage, nameof(detectedLanguage));
-            Argument.AssertNotNull(warnings, nameof(warnings));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (detectedLanguage == null)
+            {
+                throw new ArgumentNullException(nameof(detectedLanguage));
+            }
+            if (warnings == null)
+            {
+                throw new ArgumentNullException(nameof(warnings));
+            }
 
             Id = id;
             DetectedLanguage = detectedLanguage;

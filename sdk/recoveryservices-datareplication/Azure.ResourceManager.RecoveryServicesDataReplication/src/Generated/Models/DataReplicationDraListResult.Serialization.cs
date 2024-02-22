@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationDraData> array = new List<DataReplicationDraData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationDraData.DeserializeDataReplicationDraData(item));
+                        array.Add(DataReplicationDraData.DeserializeDataReplicationDraData(item, options));
                     }
                     value = array;
                     continue;

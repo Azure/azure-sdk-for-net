@@ -49,8 +49,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WorkflowTaskClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -141,7 +147,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/WorkflowTaskClient.xml" path="doc/members/member[@name='ReassignAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ReassignAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("WorkflowTaskClient.Reassign");
             scope.Start();
@@ -176,7 +185,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/WorkflowTaskClient.xml" path="doc/members/member[@name='Reassign(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response Reassign(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("WorkflowTaskClient.Reassign");
             scope.Start();

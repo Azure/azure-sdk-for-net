@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkPrefix"/> is null. </exception>
         public IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix)
         {
-            Argument.AssertNotNull(networkPrefix, nameof(networkPrefix));
+            if (networkPrefix == null)
+            {
+                throw new ArgumentNullException(nameof(networkPrefix));
+            }
 
             Action = action;
             SequenceNumber = sequenceNumber;

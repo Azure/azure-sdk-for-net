@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmData> array = new List<ManagedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmData.DeserializeManagedHsmData(item));
+                        array.Add(ManagedHsmData.DeserializeManagedHsmData(item, options));
                     }
                     value = array;
                     continue;

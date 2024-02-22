@@ -26,10 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objective"/>, <paramref name="samplingAlgorithm"/>, <paramref name="searchSpace"/> or <paramref name="trial"/> is null. </exception>
         public MachineLearningSweepJob(MachineLearningObjective objective, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial)
         {
-            Argument.AssertNotNull(objective, nameof(objective));
-            Argument.AssertNotNull(samplingAlgorithm, nameof(samplingAlgorithm));
-            Argument.AssertNotNull(searchSpace, nameof(searchSpace));
-            Argument.AssertNotNull(trial, nameof(trial));
+            if (objective == null)
+            {
+                throw new ArgumentNullException(nameof(objective));
+            }
+            if (samplingAlgorithm == null)
+            {
+                throw new ArgumentNullException(nameof(samplingAlgorithm));
+            }
+            if (searchSpace == null)
+            {
+                throw new ArgumentNullException(nameof(searchSpace));
+            }
+            if (trial == null)
+            {
+                throw new ArgumentNullException(nameof(trial));
+            }
 
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Objective = objective;

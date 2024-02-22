@@ -132,7 +132,10 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockableVoiceServicesSubscriptionResource.CheckVoiceServicesNameAvailability");
             scope.Start();
@@ -171,7 +174,10 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockableVoiceServicesSubscriptionResource.CheckVoiceServicesNameAvailability");
             scope.Start();

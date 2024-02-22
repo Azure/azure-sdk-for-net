@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<PropertyChange> array = new List<PropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PropertyChange.DeserializePropertyChange(item));
+                        array.Add(PropertyChange.DeserializePropertyChange(item, options));
                     }
                     propertyChanges = array;
                     continue;

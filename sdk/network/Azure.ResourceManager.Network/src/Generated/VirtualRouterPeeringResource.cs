@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualRouterPeeringResource>> UpdateAsync(WaitUntil waitUntil, VirtualRouterPeeringData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualRouterPeeringClientDiagnostics.CreateScope("VirtualRouterPeeringResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualRouterPeeringResource> Update(WaitUntil waitUntil, VirtualRouterPeeringData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualRouterPeeringClientDiagnostics.CreateScope("VirtualRouterPeeringResource.Update");
             scope.Start();

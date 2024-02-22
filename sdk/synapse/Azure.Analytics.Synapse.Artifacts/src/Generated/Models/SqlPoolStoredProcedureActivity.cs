@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,9 +20,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sqlPool"/> or <paramref name="storedProcedureName"/> is null. </exception>
         public SqlPoolStoredProcedureActivity(string name, SqlPoolReference sqlPool, object storedProcedureName) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sqlPool, nameof(sqlPool));
-            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (sqlPool == null)
+            {
+                throw new ArgumentNullException(nameof(sqlPool));
+            }
+            if (storedProcedureName == null)
+            {
+                throw new ArgumentNullException(nameof(storedProcedureName));
+            }
 
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;

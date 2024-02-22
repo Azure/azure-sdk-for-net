@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Json": return EventGridJsonInputSchemaMapping.DeserializeEventGridJsonInputSchemaMapping(element);
+                    case "Json": return EventGridJsonInputSchemaMapping.DeserializeEventGridJsonInputSchemaMapping(element, options);
                 }
             }
-            return UnknownInputSchemaMapping.DeserializeUnknownInputSchemaMapping(element);
+            return UnknownInputSchemaMapping.DeserializeUnknownInputSchemaMapping(element, options);
         }
 
         BinaryData IPersistableModel<EventGridInputSchemaMapping>.Write(ModelReaderWriterOptions options)

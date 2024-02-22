@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateEndpointConnectionItemData> array = new List<KeyVaultPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;

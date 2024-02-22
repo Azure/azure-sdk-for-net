@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element);
-                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element);
-                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element);
-                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element);
-                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element);
-                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element);
-                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element);
-                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element);
-                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element);
-                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element);
+                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
+                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element, options);
+                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element, options);
+                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element, options);
+                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element, options);
+                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
+                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
+                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
+                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element, options);
+                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element, options);
                 }
             }
-            return UnknownCompute.DeserializeUnknownCompute(element);
+            return UnknownCompute.DeserializeUnknownCompute(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeProperties>.Write(ModelReaderWriterOptions options)

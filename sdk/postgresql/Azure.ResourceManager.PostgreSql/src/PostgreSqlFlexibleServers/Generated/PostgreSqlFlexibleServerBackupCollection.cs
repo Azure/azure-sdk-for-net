@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<PostgreSqlFlexibleServerBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlFlexibleServerBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlFlexibleServerBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
 
             using var scope = _postgreSqlFlexibleServerBackupBackupsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerBackupCollection.GetIfExists");
             scope.Start();

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PipelineComponent": return BatchPipelineComponentDeploymentConfiguration.DeserializeBatchPipelineComponentDeploymentConfiguration(element);
+                    case "PipelineComponent": return BatchPipelineComponentDeploymentConfiguration.DeserializeBatchPipelineComponentDeploymentConfiguration(element, options);
                 }
             }
-            return UnknownBatchDeploymentConfiguration.DeserializeUnknownBatchDeploymentConfiguration(element);
+            return UnknownBatchDeploymentConfiguration.DeserializeUnknownBatchDeploymentConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<BatchDeploymentConfiguration>.Write(ModelReaderWriterOptions options)

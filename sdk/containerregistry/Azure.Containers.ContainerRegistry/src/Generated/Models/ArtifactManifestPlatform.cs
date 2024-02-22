@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,7 +17,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ArtifactManifestPlatform(string digest)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
 
             Digest = digest;
         }

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ThrottlingMetric> array = new List<ThrottlingMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThrottlingMetric.DeserializeThrottlingMetric(item));
+                        array.Add(ThrottlingMetric.DeserializeThrottlingMetric(item, options));
                     }
                     metrics = array;
                     continue;

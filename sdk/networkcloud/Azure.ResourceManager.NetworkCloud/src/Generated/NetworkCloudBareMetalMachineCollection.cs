@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> GetAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineResource> Get(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual Response<bool> Exists(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudBareMetalMachineResource>> GetIfExistsAsync(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudBareMetalMachineResource> GetIfExists(string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
+            if (bareMetalMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineName));
+            }
+            if (bareMetalMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineName));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineCollection.GetIfExists");
             scope.Start();

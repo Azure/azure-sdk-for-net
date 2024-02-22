@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = KeyVaultAccessPolicyProperties.DeserializeKeyVaultAccessPolicyProperties(property.Value);
+                    properties = KeyVaultAccessPolicyProperties.DeserializeKeyVaultAccessPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

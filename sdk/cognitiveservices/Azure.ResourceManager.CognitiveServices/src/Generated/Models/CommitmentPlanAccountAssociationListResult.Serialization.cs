@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentPlanAccountAssociationData> array = new List<CommitmentPlanAccountAssociationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(item));
+                        array.Add(CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(item, options));
                     }
                     value = array;
                     continue;

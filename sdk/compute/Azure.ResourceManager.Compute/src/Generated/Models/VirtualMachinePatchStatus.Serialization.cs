@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    availablePatchSummary = AvailablePatchSummary.DeserializeAvailablePatchSummary(property.Value);
+                    availablePatchSummary = AvailablePatchSummary.DeserializeAvailablePatchSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastPatchInstallationSummary"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    lastPatchInstallationSummary = LastPatchInstallationSummary.DeserializeLastPatchInstallationSummary(property.Value);
+                    lastPatchInstallationSummary = LastPatchInstallationSummary.DeserializeLastPatchInstallationSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationStatuses"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     configurationStatuses = array;
                     continue;

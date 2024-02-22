@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value);
+                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subscriptionKeyParameterNames"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value);
+                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("type"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value);
+                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("license"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value);
+                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))

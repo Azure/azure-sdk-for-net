@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = MetricAlertStatusProperties.DeserializeMetricAlertStatusProperties(property.Value);
+                    properties = MetricAlertStatusProperties.DeserializeMetricAlertStatusProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

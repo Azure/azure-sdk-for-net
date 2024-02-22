@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = ExecutePipelineActivityPolicy.DeserializeExecutePipelineActivityPolicy(property.Value);
+                    policy = ExecutePipelineActivityPolicy.DeserializeExecutePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("pipeline"u8))
                         {
-                            pipeline = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property0.Value);
+                            pipeline = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

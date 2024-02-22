@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)
         {
-            Argument.AssertNotNull(userEmail, nameof(userEmail));
+            if (userEmail == null)
+            {
+                throw new ArgumentNullException(nameof(userEmail));
+            }
 
             VmIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;

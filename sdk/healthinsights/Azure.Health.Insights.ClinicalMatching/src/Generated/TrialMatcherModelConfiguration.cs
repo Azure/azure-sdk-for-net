@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
@@ -56,7 +55,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="clinicalTrials"/> is null. </exception>
         public TrialMatcherModelConfiguration(ClinicalTrials clinicalTrials)
         {
-            Argument.AssertNotNull(clinicalTrials, nameof(clinicalTrials));
+            if (clinicalTrials == null)
+            {
+                throw new ArgumentNullException(nameof(clinicalTrials));
+            }
 
             ClinicalTrials = clinicalTrials;
         }

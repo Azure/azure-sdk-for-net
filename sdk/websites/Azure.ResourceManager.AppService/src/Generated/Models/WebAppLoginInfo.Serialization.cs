@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
+                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tokenStore"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value);
+                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value);
+                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonce"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value);
+                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

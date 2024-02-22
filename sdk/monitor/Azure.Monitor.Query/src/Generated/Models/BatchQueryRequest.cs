@@ -21,9 +21,18 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/> or <paramref name="workspace"/> is null. </exception>
         public BatchQueryRequest(string id, QueryBody body, string workspace)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(workspace, nameof(workspace));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+            if (workspace == null)
+            {
+                throw new ArgumentNullException(nameof(workspace));
+            }
 
             Id = id;
             Headers = new ChangeTrackingDictionary<string, string>();

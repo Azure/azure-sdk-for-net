@@ -593,7 +593,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AppServiceEnvironmentResource>> UpdateAsync(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
@@ -635,7 +638,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AppServiceEnvironmentResource> Update(AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Update");
             scope.Start();
@@ -852,7 +858,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
+            if (diagnosticsName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsName));
+            }
+            if (diagnosticsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsName));
+            }
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetDiagnosticsItem");
             scope.Start();
@@ -891,7 +904,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
+            if (diagnosticsName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsName));
+            }
+            if (diagnosticsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsName));
+            }
 
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetDiagnosticsItem");
             scope.Start();
@@ -1483,7 +1503,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<Response> DisableAllForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(environmentName, nameof(environmentName));
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1521,7 +1544,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response DisableAllForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(environmentName, nameof(environmentName));
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.DisableAllForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1559,7 +1585,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<Response> ResetAllFiltersForHostingEnvironmentRecommendationAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(environmentName, nameof(environmentName));
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();
@@ -1597,7 +1626,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response ResetAllFiltersForHostingEnvironmentRecommendation(string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(environmentName, nameof(environmentName));
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
 
             using var scope = _recommendationsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.ResetAllFiltersForHostingEnvironmentRecommendation");
             scope.Start();

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSolutionMetadata> array = new List<SelfHelpSolutionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
+                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item, options));
                     }
                     value = array;
                     continue;

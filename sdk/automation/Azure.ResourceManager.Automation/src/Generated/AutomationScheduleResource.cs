@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AutomationScheduleResource>> UpdateAsync(AutomationSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleResource.Update");
             scope.Start();
@@ -323,7 +326,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AutomationScheduleResource> Update(AutomationSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleResource.Update");
             scope.Start();

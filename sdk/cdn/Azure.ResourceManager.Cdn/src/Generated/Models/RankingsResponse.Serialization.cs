@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesItem> array = new List<RankingsResponseTablesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item));
+                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item, options));
                     }
                     tables = array;
                     continue;

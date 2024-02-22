@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SapHanaPartitionSettings.DeserializeSapHanaPartitionSettings(property.Value);
+                    partitionSettings = SapHanaPartitionSettings.DeserializeSapHanaPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceParent> array = new List<TopologySingleResourceParent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item));
+                        array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item, options));
                     }
                     parents = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceChild> array = new List<TopologySingleResourceChild>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item));
+                        array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item, options));
                     }
                     children = array;
                     continue;

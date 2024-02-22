@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionSkuProperty> array = new List<ConsumptionSkuProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item));
+                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item, options));
                             }
                             skuProperties = array;
                             continue;

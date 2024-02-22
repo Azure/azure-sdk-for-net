@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item));
+                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item, options));
                     }
                     nodes = array;
                     continue;

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value);
+                            match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterCodeVersionsResult> array = new List<ClusterCodeVersionsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item));
+                        array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item, options));
                     }
                     value = array;
                     continue;

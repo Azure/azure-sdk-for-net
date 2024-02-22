@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             infrastructureExpressRouteConnections = array;
                             continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             workloadExpressRouteConnections = array;
                             continue;

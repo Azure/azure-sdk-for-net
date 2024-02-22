@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<VirtualClusterData> array = new List<VirtualClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualClusterData.DeserializeVirtualClusterData(item));
+                        array.Add(VirtualClusterData.DeserializeVirtualClusterData(item, options));
                     }
                     value = array;
                     continue;

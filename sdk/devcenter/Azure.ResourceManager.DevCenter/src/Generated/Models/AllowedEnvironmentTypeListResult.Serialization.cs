@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<AllowedEnvironmentTypeData> array = new List<AllowedEnvironmentTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item));
+                        array.Add(AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(item, options));
                     }
                     value = array;
                     continue;

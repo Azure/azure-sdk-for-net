@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
         public MonitoringMetricConfigurationData(IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations)
         {
-            Argument.AssertNotNull(metricConfigurations, nameof(metricConfigurations));
+            if (metricConfigurations == null)
+            {
+                throw new ArgumentNullException(nameof(metricConfigurations));
+            }
 
             MetricConfigurations = metricConfigurations.ToList();
         }

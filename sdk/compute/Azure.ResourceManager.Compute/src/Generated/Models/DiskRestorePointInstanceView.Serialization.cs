@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value);
+                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

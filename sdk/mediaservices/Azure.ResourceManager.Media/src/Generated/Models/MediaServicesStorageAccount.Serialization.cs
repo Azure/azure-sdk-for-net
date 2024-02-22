@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
         public AudioOverlay(string inputLabel) : base(inputLabel)
         {
-            Argument.AssertNotNull(inputLabel, nameof(inputLabel));
+            if (inputLabel == null)
+            {
+                throw new ArgumentNullException(nameof(inputLabel));
+            }
 
             OdataType = "#Microsoft.Media.AudioOverlay";
         }

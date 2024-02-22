@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/> or <paramref name="sku"/> is null. </exception>
         public GalleryImageIdentifier(string publisher, string offer, string sku)
         {
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(offer, nameof(offer));
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Publisher = publisher;
             Offer = offer;

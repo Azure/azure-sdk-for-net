@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = TwitterRegistration.DeserializeTwitterRegistration(property.Value);
+                    registration = TwitterRegistration.DeserializeTwitterRegistration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

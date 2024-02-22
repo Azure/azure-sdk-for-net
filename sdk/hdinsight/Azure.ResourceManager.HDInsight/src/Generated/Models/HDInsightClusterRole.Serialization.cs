@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkProfile"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value);
+                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisksGroups"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterDataDiskGroup> array = new List<HDInsightClusterDataDiskGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
+                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item, options));
                     }
                     dataDisksGroups = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptAction> array = new List<ScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptAction.DeserializeScriptAction(item));
+                        array.Add(ScriptAction.DeserializeScriptAction(item, options));
                     }
                     scriptActions = array;
                     continue;

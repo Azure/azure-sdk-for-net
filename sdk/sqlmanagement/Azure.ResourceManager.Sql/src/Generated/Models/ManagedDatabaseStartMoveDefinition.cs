@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
         public ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)
         {
-            Argument.AssertNotNull(destinationManagedDatabaseId, nameof(destinationManagedDatabaseId));
+            if (destinationManagedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(destinationManagedDatabaseId));
+            }
 
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
         }

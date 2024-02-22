@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -19,8 +18,14 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> or <paramref name="id"/> is null. </exception>
         internal HealthcareEntityLink(string dataSource, string id)
         {
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(id, nameof(id));
+            if (dataSource == null)
+            {
+                throw new ArgumentNullException(nameof(dataSource));
+            }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             DataSource = dataSource;
             Id = id;

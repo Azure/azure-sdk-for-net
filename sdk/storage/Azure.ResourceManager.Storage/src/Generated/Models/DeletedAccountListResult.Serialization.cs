@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<DeletedAccountData> array = new List<DeletedAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedAccountData.DeserializeDeletedAccountData(item));
+                        array.Add(DeletedAccountData.DeserializeDeletedAccountData(item, options));
                     }
                     value = array;
                     continue;

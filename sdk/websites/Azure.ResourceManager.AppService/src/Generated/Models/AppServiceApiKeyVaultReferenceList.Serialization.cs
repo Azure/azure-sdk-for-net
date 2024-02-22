@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApiKeyVaultReferenceData> array = new List<ApiKeyVaultReferenceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(item));
+                        array.Add(ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(item, options));
                     }
                     value = array;
                     continue;

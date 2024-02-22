@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual async Task<Response<PrivateEndpointResource>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<PrivateEndpointResource> Get(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<PrivateEndpointResource>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         public virtual NullableResponse<PrivateEndpointResource> GetIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
+            if (privateEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
+            }
 
             using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
             scope.Start();

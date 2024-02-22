@@ -29,8 +29,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> or <paramref name="recoveryPointId"/> is null. </exception>
         public BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, string recoveryPointId) : base(restoreTargetInfo, sourceDataStoreType)
         {
-            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
-            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
+            if (restoreTargetInfo == null)
+            {
+                throw new ArgumentNullException(nameof(restoreTargetInfo));
+            }
+            if (recoveryPointId == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointId));
+            }
 
             RecoveryPointId = recoveryPointId;
             ObjectType = "AzureBackupRecoveryPointBasedRestoreRequest";

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -54,9 +53,18 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="boundingPolygon"/> or <paramref name="words"/> is null. </exception>
         internal DetectedTextLine(string text, IEnumerable<ImagePoint> boundingPolygon, IEnumerable<DetectedTextWord> words)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(boundingPolygon, nameof(boundingPolygon));
-            Argument.AssertNotNull(words, nameof(words));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (boundingPolygon == null)
+            {
+                throw new ArgumentNullException(nameof(boundingPolygon));
+            }
+            if (words == null)
+            {
+                throw new ArgumentNullException(nameof(words));
+            }
 
             Text = text;
             BoundingPolygon = boundingPolygon.ToList();

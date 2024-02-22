@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkSimGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string simGroupName, MobileNetworkSimGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkSimGroupResource> CreateOrUpdate(WaitUntil waitUntil, string simGroupName, MobileNetworkSimGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> GetAsync(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> Get(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkSimGroupResource>> GetIfExistsAsync(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkSimGroupResource> GetIfExists(string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            if (simGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(simGroupName));
+            }
+            if (simGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
+            }
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupCollection.GetIfExists");
             scope.Start();

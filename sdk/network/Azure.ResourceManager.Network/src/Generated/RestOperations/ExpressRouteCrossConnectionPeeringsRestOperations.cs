@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRouteCrossConnectionPeeringList>> ListAsync(string subscriptionId, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, crossConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRouteCrossConnectionPeeringList> List(string subscriptionId, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, crossConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -176,10 +246,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
             _pipeline.Send(message, cancellationToken);
@@ -226,10 +324,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRouteCrossConnectionPeeringData>> GetAsync(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -259,10 +385,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRouteCrossConnectionPeeringData> Get(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
             _pipeline.Send(message, cancellationToken);
@@ -319,11 +473,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -348,11 +533,42 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
+            if (peeringName == null)
+            {
+                throw new ArgumentNullException(nameof(peeringName));
+            }
+            if (peeringName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, crossConnectionName, peeringName, data);
             _pipeline.Send(message, cancellationToken);
@@ -390,10 +606,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRouteCrossConnectionPeeringList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, crossConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,10 +661,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRouteCrossConnectionPeeringList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (crossConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionName));
+            }
+            if (crossConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(crossConnectionName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, crossConnectionName);
             _pipeline.Send(message, cancellationToken);

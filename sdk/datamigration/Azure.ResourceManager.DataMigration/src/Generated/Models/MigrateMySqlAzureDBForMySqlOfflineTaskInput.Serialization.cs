@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> array = new List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item));
+                        array.Add(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;

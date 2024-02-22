@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<DataPolicyManifestData> array = new List<DataPolicyManifestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item));
+                        array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item, options));
                     }
                     value = array;
                     continue;

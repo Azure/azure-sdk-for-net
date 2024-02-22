@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="targetName"/> is null. </exception>
         public JobDefinitionData(StorageMoverCopyMode copyMode, string sourceName, string targetName)
         {
-            Argument.AssertNotNull(sourceName, nameof(sourceName));
-            Argument.AssertNotNull(targetName, nameof(targetName));
+            if (sourceName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceName));
+            }
+            if (targetName == null)
+            {
+                throw new ArgumentNullException(nameof(targetName));
+            }
 
             CopyMode = copyMode;
             SourceName = sourceName;

@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotTriggeredWebJobHistoryResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<WebSiteSlotTriggeredWebJobHistoryResource> Get(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotTriggeredWebJobHistoryResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotTriggeredWebJobHistoryResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
             scope.Start();

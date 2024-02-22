@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerDelegatedSubnetUsage> array = new List<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerDelegatedSubnetUsage.DeserializePostgreSqlFlexibleServerDelegatedSubnetUsage(item));
+                        array.Add(PostgreSqlFlexibleServerDelegatedSubnetUsage.DeserializePostgreSqlFlexibleServerDelegatedSubnetUsage(item, options));
                     }
                     delegatedSubnetsUsage = array;
                     continue;

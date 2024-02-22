@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, DataFactoryElement<string> referenceName)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             SparkJobReferenceType = sparkJobReferenceType;
             ReferenceName = referenceName;

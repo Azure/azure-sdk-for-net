@@ -80,13 +80,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, KubernetesClusterExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -113,13 +158,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, KubernetesClusterExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -171,12 +261,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<KubernetesClusterExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,12 +340,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<KubernetesClusterExtensionData> Get(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
             _pipeline.Send(message, cancellationToken);
@@ -276,12 +450,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, forceDelete);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -309,12 +525,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, forceDelete);
             _pipeline.Send(message, cancellationToken);
@@ -372,13 +630,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, KubernetesClusterExtensionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -405,13 +708,58 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, KubernetesClusterExtensionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -461,11 +809,46 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionsList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -494,11 +877,46 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionsList> List(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName);
             _pipeline.Send(message, cancellationToken);
@@ -542,12 +960,50 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -577,12 +1033,50 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterRp == null)
+            {
+                throw new ArgumentNullException(nameof(clusterRp));
+            }
+            if (clusterRp.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterRp));
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterResourceName));
+            }
+            if (clusterResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterResourceName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName);
             _pipeline.Send(message, cancellationToken);

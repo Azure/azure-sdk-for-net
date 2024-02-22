@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    restrictionInfo = StoragePoolSkuRestrictionInfo.DeserializeStoragePoolSkuRestrictionInfo(property.Value);
+                    restrictionInfo = StoragePoolSkuRestrictionInfo.DeserializeStoragePoolSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

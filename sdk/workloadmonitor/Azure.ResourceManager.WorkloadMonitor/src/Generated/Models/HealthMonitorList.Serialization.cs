@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                     List<HealthMonitorData> array = new List<HealthMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item));
+                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item, options));
                     }
                     value = array;
                     continue;

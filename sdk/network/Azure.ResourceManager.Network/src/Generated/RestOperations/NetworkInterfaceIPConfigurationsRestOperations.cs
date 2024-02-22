@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkInterfaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> List(string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkInterfaceName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkInterfaceName, ipConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationData> Get(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkInterfaceName, ipConfigurationName);
             _pipeline.Send(message, cancellationToken);
@@ -228,10 +326,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkInterfaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -259,10 +381,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkInterfaceName);
             _pipeline.Send(message, cancellationToken);

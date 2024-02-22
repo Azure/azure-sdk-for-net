@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
         public VMwareVCenterData(AzureLocation location, string fqdn) : base(location)
         {
-            Argument.AssertNotNull(fqdn, nameof(fqdn));
+            if (fqdn == null)
+            {
+                throw new ArgumentNullException(nameof(fqdn));
+            }
 
             Fqdn = fqdn;
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();

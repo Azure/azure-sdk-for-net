@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     List<GraphServicesAccountResourceData> array = new List<GraphServicesAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
+                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item, options));
                     }
                     value = array;
                     continue;

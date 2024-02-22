@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
                     continue;
                 }
             }

@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeShareResource>> UpdateAsync(WaitUntil waitUntil, DataBoxEdgeShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeShareResource> Update(WaitUntil waitUntil, DataBoxEdgeShareData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataBoxEdgeShareSharesClientDiagnostics.CreateScope("DataBoxEdgeShareResource.Update");
             scope.Start();

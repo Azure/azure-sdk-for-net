@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);
+                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

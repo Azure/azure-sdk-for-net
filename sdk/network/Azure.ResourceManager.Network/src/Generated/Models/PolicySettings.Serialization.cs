@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value);
+                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
+                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rulesEvaluationResult"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item));
+                        array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item, options));
                     }
                     rulesEvaluationResult = array;
                     continue;

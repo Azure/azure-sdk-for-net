@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubConsumerGroupInfoResource>> UpdateAsync(WaitUntil waitUntil, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<EventHubConsumerGroupInfoResource> Update(WaitUntil waitUntil, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoResource.Update");
             scope.Start();

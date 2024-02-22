@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value);
+                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

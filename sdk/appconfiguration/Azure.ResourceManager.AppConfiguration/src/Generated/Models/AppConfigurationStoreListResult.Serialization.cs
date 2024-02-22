@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationStoreData> array = new List<AppConfigurationStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationStoreData.DeserializeAppConfigurationStoreData(item));
+                        array.Add(AppConfigurationStoreData.DeserializeAppConfigurationStoreData(item, options));
                     }
                     value = array;
                     continue;

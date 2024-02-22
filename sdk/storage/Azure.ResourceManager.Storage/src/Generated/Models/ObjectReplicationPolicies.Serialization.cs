@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ObjectReplicationPolicyData> array = new List<ObjectReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item));
+                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item, options));
                     }
                     value = array;
                     continue;

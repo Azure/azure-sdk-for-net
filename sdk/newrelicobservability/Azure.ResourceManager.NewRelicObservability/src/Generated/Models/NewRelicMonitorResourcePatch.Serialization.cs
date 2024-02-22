@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            newRelicAccountProperties = NewRelicAccountProperties.DeserializeNewRelicAccountProperties(property0.Value);
+                            newRelicAccountProperties = NewRelicAccountProperties.DeserializeNewRelicAccountProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userInfo"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value);
+                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orgCreationSource"u8))

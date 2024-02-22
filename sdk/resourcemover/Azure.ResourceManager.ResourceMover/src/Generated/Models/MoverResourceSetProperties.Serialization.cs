@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value);
+                    errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

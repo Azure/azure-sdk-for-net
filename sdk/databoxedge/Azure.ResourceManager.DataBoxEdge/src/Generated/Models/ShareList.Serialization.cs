@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeShareData> array = new List<DataBoxEdgeShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item));
+                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item, options));
                     }
                     value = array;
                     continue;

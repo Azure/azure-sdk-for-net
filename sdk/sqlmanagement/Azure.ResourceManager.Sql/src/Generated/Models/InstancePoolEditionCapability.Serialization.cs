@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolFamilyCapability> array = new List<InstancePoolFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item));
+                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;

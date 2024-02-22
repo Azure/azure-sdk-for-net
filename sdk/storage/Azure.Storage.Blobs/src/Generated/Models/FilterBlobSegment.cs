@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -22,9 +21,18 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/> or <paramref name="blobs"/> is null. </exception>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(@where, nameof(@where));
-            Argument.AssertNotNull(blobs, nameof(blobs));
+            if (serviceEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpoint));
+            }
+            if (@where == null)
+            {
+                throw new ArgumentNullException(nameof(@where));
+            }
+            if (blobs == null)
+            {
+                throw new ArgumentNullException(nameof(blobs));
+            }
 
             ServiceEndpoint = serviceEndpoint;
             Where = @where;

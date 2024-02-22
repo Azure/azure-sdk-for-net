@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInformation = GenericContainerExtendedInfo.DeserializeGenericContainerExtendedInfo(property.Value);
+                    extendedInformation = GenericContainerExtendedInfo.DeserializeGenericContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<BgpCommunity> array = new List<BgpCommunity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BgpCommunity.DeserializeBgpCommunity(item));
+                                array.Add(BgpCommunity.DeserializeBgpCommunity(item, options));
                             }
                             bgpCommunities = array;
                             continue;

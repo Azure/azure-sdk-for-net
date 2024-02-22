@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value);
+                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

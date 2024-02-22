@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value);
+                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetTags"u8))

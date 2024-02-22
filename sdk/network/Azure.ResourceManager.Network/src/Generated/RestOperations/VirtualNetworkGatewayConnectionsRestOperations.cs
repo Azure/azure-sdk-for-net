@@ -71,10 +71,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,10 +122,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -144,9 +192,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualNetworkGatewayConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -175,9 +244,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualNetworkGatewayConnectionData> Get(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -226,9 +316,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -252,9 +363,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -303,10 +435,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (networkTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(networkTagsObject));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, networkTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -330,10 +486,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateTags(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (networkTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(networkTagsObject));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, networkTagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -382,10 +562,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SetSharedKeyAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey connectionSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(connectionSharedKey, nameof(connectionSharedKey));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (connectionSharedKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionSharedKey));
+            }
 
             using var message = CreateSetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, connectionSharedKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -409,10 +613,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SetSharedKey(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey connectionSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(connectionSharedKey, nameof(connectionSharedKey));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (connectionSharedKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionSharedKey));
+            }
 
             using var message = CreateSetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, connectionSharedKey);
             _pipeline.Send(message, cancellationToken);
@@ -456,9 +684,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConnectionSharedKey>> GetSharedKeyAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -485,9 +734,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConnectionSharedKey> GetSharedKey(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -532,8 +802,22 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualNetworkGatewayConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -559,8 +843,22 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualNetworkGatewayConnectionListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -613,10 +911,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResetSharedKeyAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey connectionResetSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(connectionResetSharedKey, nameof(connectionResetSharedKey));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (connectionResetSharedKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionResetSharedKey));
+            }
 
             using var message = CreateResetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, connectionResetSharedKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -640,10 +962,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResetSharedKey(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey connectionResetSharedKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(connectionResetSharedKey, nameof(connectionResetSharedKey));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (connectionResetSharedKey == null)
+            {
+                throw new ArgumentNullException(nameof(connectionResetSharedKey));
+            }
 
             using var message = CreateResetSharedKeyRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, connectionResetSharedKey);
             _pipeline.Send(message, cancellationToken);
@@ -695,9 +1041,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartPacketCaptureAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateStartPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -721,9 +1088,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartPacketCapture(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateStartPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             _pipeline.Send(message, cancellationToken);
@@ -772,10 +1160,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopPacketCaptureAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateStopPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -799,10 +1211,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StopPacketCapture(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateStopPacketCaptureRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName, content);
             _pipeline.Send(message, cancellationToken);
@@ -846,9 +1282,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetIkeSasAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetIkeSasRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -871,9 +1328,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetIkeSas(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateGetIkeSasRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -917,9 +1395,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResetConnectionAsync(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateResetConnectionRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -941,9 +1440,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResetConnection(string subscriptionId, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (virtualNetworkGatewayConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
+            }
+            if (virtualNetworkGatewayConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
+            }
 
             using var message = CreateResetConnectionRequest(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -979,9 +1499,26 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualNetworkGatewayConnectionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1008,9 +1545,26 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualNetworkGatewayConnectionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);

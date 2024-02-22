@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    name = DataLakeStoreUsageName.DeserializeDataLakeStoreUsageName(property.Value);
+                    name = DataLakeStoreUsageName.DeserializeDataLakeStoreUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

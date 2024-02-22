@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeStorageContainerData> array = new List<DataBoxEdgeStorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(item));
+                        array.Add(DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(item, options));
                     }
                     value = array;
                     continue;

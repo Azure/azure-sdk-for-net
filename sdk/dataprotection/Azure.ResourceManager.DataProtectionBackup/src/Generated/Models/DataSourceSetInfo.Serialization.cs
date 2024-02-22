@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value);
+                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

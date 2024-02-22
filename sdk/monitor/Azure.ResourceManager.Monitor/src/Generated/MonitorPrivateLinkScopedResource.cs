@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> UpdateAsync(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitorPrivateLinkScopedResource> Update(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Update");
             scope.Start();

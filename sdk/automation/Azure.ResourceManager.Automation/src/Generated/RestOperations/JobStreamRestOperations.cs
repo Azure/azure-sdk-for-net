@@ -77,11 +77,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationJobStream>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
+            if (jobStreamId == null)
+            {
+                throw new ArgumentNullException(nameof(jobStreamId));
+            }
+            if (jobStreamId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, jobStreamId, clientRequestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,11 +146,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationJobStream> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
+            if (jobStreamId == null)
+            {
+                throw new ArgumentNullException(nameof(jobStreamId));
+            }
+            if (jobStreamId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, jobStreamId, clientRequestId);
             _pipeline.Send(message, cancellationToken);
@@ -176,10 +246,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationJobStreamListResult>> ListByJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
 
             using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, filter, clientRequestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -209,10 +307,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationJobStreamListResult> ListByJob(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
 
             using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, filter, clientRequestId);
             _pipeline.Send(message, cancellationToken);
@@ -261,11 +387,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationJobStreamListResult>> ListByJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
 
             using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, jobName, filter, clientRequestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -296,11 +453,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationJobStreamListResult> ListByJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (jobName == null)
+            {
+                throw new ArgumentNullException(nameof(jobName));
+            }
+            if (jobName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
+            }
 
             using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, jobName, filter, clientRequestId);
             _pipeline.Send(message, cancellationToken);

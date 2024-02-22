@@ -63,11 +63,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/> or <paramref name="vmImage"/> is null. </exception>
         public NetworkCloudVirtualMachineData(AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
-            Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
-            Argument.AssertNotNull(storageProfile, nameof(storageProfile));
-            Argument.AssertNotNull(vmImage, nameof(vmImage));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (adminUsername == null)
+            {
+                throw new ArgumentNullException(nameof(adminUsername));
+            }
+            if (cloudServicesNetworkAttachment == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServicesNetworkAttachment));
+            }
+            if (storageProfile == null)
+            {
+                throw new ArgumentNullException(nameof(storageProfile));
+            }
+            if (vmImage == null)
+            {
+                throw new ArgumentNullException(nameof(vmImage));
+            }
 
             ExtendedLocation = extendedLocation;
             AdminUsername = adminUsername;

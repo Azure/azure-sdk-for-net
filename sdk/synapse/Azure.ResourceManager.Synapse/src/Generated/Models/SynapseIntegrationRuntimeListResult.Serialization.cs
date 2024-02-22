@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeData> array = new List<SynapseIntegrationRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item));
+                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item, options));
                     }
                     value = array;
                     continue;

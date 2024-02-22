@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthcareApisServicePrivateEndpointConnectionResource.Update");
             scope.Start();

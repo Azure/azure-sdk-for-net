@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value);
+                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

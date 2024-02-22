@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteSummaryData> array = new List<SpringBootSiteSummaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteSummaryData.DeserializeSpringBootSiteSummaryData(item));
+                        array.Add(SpringBootSiteSummaryData.DeserializeSpringBootSiteSummaryData(item, options));
                     }
                     value = array;
                     continue;

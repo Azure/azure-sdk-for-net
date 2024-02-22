@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -53,7 +52,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="license"/> is null. </exception>
         internal ContentFilterCitedDetectionResult(bool filtered, bool detected, string license)
         {
-            Argument.AssertNotNull(license, nameof(license));
+            if (license == null)
+            {
+                throw new ArgumentNullException(nameof(license));
+            }
 
             Filtered = filtered;
             Detected = detected;

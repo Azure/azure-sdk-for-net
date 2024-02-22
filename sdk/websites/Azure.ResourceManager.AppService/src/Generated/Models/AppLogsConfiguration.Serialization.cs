@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

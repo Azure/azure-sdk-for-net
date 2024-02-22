@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ScopeConnectionData> array = new List<ScopeConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeConnectionData.DeserializeScopeConnectionData(item));
+                        array.Add(ScopeConnectionData.DeserializeScopeConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ManagedRuleGroupOverrideSetting> array = new List<ManagedRuleGroupOverrideSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleGroupOverrideSetting.DeserializeManagedRuleGroupOverrideSetting(item));
+                        array.Add(ManagedRuleGroupOverrideSetting.DeserializeManagedRuleGroupOverrideSetting(item, options));
                     }
                     ruleGroupOverrides = array;
                     continue;

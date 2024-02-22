@@ -51,7 +51,10 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public AnalyzeImageOptions(ContentSafetyImageData image)
         {
-            Argument.AssertNotNull(image, nameof(image));
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
 
             Image = image;
             Categories = new ChangeTrackingList<ImageCategory>();

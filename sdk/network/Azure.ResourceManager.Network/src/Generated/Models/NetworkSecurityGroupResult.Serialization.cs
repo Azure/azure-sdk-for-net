@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EvaluatedNetworkSecurityGroup> array = new List<EvaluatedNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item));
+                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item, options));
                     }
                     evaluatedNetworkSecurityGroups = array;
                     continue;

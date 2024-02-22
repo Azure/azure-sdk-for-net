@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            securityToken = SourceControlSecurityTokenProperties.DeserializeSourceControlSecurityTokenProperties(property0.Value);
+                            securityToken = SourceControlSecurityTokenProperties.DeserializeSourceControlSecurityTokenProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

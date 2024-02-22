@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -29,17 +28,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="organizationId"/>, <paramref name="gcpCredentialType"/>, <paramref name="projectId"/>, <paramref name="privateKeyId"/>, <paramref name="privateKey"/>, <paramref name="clientEmail"/>, <paramref name="clientId"/>, <paramref name="authUri"/>, <paramref name="tokenUri"/>, <paramref name="authProviderX509CertUri"/> or <paramref name="clientX509CertUri"/> is null. </exception>
         public GcpCredentialsDetailsProperties(string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri)
         {
-            Argument.AssertNotNull(organizationId, nameof(organizationId));
-            Argument.AssertNotNull(gcpCredentialType, nameof(gcpCredentialType));
-            Argument.AssertNotNull(projectId, nameof(projectId));
-            Argument.AssertNotNull(privateKeyId, nameof(privateKeyId));
-            Argument.AssertNotNull(privateKey, nameof(privateKey));
-            Argument.AssertNotNull(clientEmail, nameof(clientEmail));
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(authUri, nameof(authUri));
-            Argument.AssertNotNull(tokenUri, nameof(tokenUri));
-            Argument.AssertNotNull(authProviderX509CertUri, nameof(authProviderX509CertUri));
-            Argument.AssertNotNull(clientX509CertUri, nameof(clientX509CertUri));
+            if (organizationId == null)
+            {
+                throw new ArgumentNullException(nameof(organizationId));
+            }
+            if (gcpCredentialType == null)
+            {
+                throw new ArgumentNullException(nameof(gcpCredentialType));
+            }
+            if (projectId == null)
+            {
+                throw new ArgumentNullException(nameof(projectId));
+            }
+            if (privateKeyId == null)
+            {
+                throw new ArgumentNullException(nameof(privateKeyId));
+            }
+            if (privateKey == null)
+            {
+                throw new ArgumentNullException(nameof(privateKey));
+            }
+            if (clientEmail == null)
+            {
+                throw new ArgumentNullException(nameof(clientEmail));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (authUri == null)
+            {
+                throw new ArgumentNullException(nameof(authUri));
+            }
+            if (tokenUri == null)
+            {
+                throw new ArgumentNullException(nameof(tokenUri));
+            }
+            if (authProviderX509CertUri == null)
+            {
+                throw new ArgumentNullException(nameof(authProviderX509CertUri));
+            }
+            if (clientX509CertUri == null)
+            {
+                throw new ArgumentNullException(nameof(clientX509CertUri));
+            }
 
             OrganizationId = organizationId;
             GcpCredentialType = gcpCredentialType;

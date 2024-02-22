@@ -71,8 +71,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysisAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetNutrientAnalysisAsync(string partyId, string nutrientAnalysisId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.GetNutrientAnalysis");
             scope.Start();
@@ -108,8 +122,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysis(string,string,RequestContext)']/*" />
         public virtual Response GetNutrientAnalysis(string partyId, string nutrientAnalysisId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.GetNutrientAnalysis");
             scope.Start();
@@ -146,9 +174,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.CreateOrUpdate");
             scope.Start();
@@ -185,9 +230,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.CreateOrUpdate");
             scope.Start();
@@ -223,8 +285,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.Delete");
             scope.Start();
@@ -260,8 +336,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (nutrientAnalysisId == null)
+            {
+                throw new ArgumentNullException(nameof(nutrientAnalysisId));
+            }
+            if (nutrientAnalysisId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nutrientAnalysisId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.Delete");
             scope.Start();
@@ -404,7 +494,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyIdAsync(string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNutrientAnalysesByPartyIdAsync(string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNutrientAnalysesByPartyIdRequest(partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNutrientAnalysesByPartyIdNextPageRequest(nextLink, partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -452,7 +549,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyId(string,string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNutrientAnalysesByPartyId(string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNutrientAnalysesByPartyIdRequest(partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNutrientAnalysesByPartyIdNextPageRequest(nextLink, partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);

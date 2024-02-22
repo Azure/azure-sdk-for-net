@@ -70,7 +70,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();
@@ -112,7 +115,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();

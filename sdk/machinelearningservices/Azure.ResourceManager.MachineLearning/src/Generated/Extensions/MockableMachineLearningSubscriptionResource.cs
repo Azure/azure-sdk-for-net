@@ -190,7 +190,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
@@ -220,7 +223,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);

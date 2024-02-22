@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual async Task<Response<SiteSlotProcessResource>> GetAsync(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<SiteSlotProcessResource> Get(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual Response<bool> Exists(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotProcessResource>> GetIfExistsAsync(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         public virtual NullableResponse<SiteSlotProcessResource> GetIfExists(string processId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(processId, nameof(processId));
+            if (processId == null)
+            {
+                throw new ArgumentNullException(nameof(processId));
+            }
+            if (processId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(processId));
+            }
 
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessCollection.GetIfExists");
             scope.Start();

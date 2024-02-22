@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> or <paramref name="errors"/> is null. </exception>
         internal FacetError(string expression, IEnumerable<FacetErrorDetails> errors) : base(expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
-            Argument.AssertNotNull(errors, nameof(errors));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+            if (errors == null)
+            {
+                throw new ArgumentNullException(nameof(errors));
+            }
 
             Errors = errors.ToList();
             ResultType = "FacetError";

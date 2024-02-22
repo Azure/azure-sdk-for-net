@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBUniqueKey> array = new List<CosmosDBUniqueKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item));
+                        array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item, options));
                     }
                     uniqueKeys = array;
                     continue;

@@ -196,7 +196,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;

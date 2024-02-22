@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item));
+                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item, options));
                     }
                     connections = array;
                     continue;

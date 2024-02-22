@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Default": return PostgreSqlServerPropertiesForDefaultCreate.DeserializePostgreSqlServerPropertiesForDefaultCreate(element);
-                    case "GeoRestore": return PostgreSqlServerPropertiesForGeoRestore.DeserializePostgreSqlServerPropertiesForGeoRestore(element);
-                    case "PointInTimeRestore": return PostgreSqlServerPropertiesForRestore.DeserializePostgreSqlServerPropertiesForRestore(element);
-                    case "Replica": return PostgreSqlServerPropertiesForReplica.DeserializePostgreSqlServerPropertiesForReplica(element);
+                    case "Default": return PostgreSqlServerPropertiesForDefaultCreate.DeserializePostgreSqlServerPropertiesForDefaultCreate(element, options);
+                    case "GeoRestore": return PostgreSqlServerPropertiesForGeoRestore.DeserializePostgreSqlServerPropertiesForGeoRestore(element, options);
+                    case "PointInTimeRestore": return PostgreSqlServerPropertiesForRestore.DeserializePostgreSqlServerPropertiesForRestore(element, options);
+                    case "Replica": return PostgreSqlServerPropertiesForReplica.DeserializePostgreSqlServerPropertiesForReplica(element, options);
                 }
             }
-            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element);
+            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element, options);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)

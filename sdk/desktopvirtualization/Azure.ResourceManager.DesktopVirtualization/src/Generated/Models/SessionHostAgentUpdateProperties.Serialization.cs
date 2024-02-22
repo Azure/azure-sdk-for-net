@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<SessionHostMaintenanceWindowProperties> array = new List<SessionHostMaintenanceWindowProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SessionHostMaintenanceWindowProperties.DeserializeSessionHostMaintenanceWindowProperties(item));
+                        array.Add(SessionHostMaintenanceWindowProperties.DeserializeSessionHostMaintenanceWindowProperties(item, options));
                     }
                     maintenanceWindows = array;
                     continue;

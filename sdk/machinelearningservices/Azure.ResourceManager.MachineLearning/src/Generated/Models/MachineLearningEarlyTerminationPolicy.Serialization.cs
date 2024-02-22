@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element);
-                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element);
-                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element);
+                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element, options);
+                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element, options);
+                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element, options);
                 }
             }
-            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element);
+            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)

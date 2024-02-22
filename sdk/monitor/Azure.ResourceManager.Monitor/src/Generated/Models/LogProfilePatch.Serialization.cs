@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value);
+                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }

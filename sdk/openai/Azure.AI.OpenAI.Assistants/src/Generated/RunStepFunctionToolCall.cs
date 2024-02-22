@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -23,8 +22,14 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="internalDetails"/> is null. </exception>
         internal RunStepFunctionToolCall(string id, InternalRunStepFunctionToolCallDetails internalDetails) : base(id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (internalDetails == null)
+            {
+                throw new ArgumentNullException(nameof(internalDetails));
+            }
 
             Type = "function";
             InternalDetails = internalDetails;

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value);
+                    properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

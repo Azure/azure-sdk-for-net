@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RestoreFileSpecs> array = new List<RestoreFileSpecs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item, options));
                     }
                     restoreFileSpecs = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

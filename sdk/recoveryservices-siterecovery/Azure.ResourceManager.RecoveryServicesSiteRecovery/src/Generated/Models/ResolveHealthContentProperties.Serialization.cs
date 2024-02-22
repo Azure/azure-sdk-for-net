@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ResolveHealthError> array = new List<ResolveHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item));
+                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;

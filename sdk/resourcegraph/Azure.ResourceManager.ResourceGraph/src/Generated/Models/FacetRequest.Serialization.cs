@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = FacetRequestOptions.DeserializeFacetRequestOptions(property.Value);
+                    options0 = FacetRequestOptions.DeserializeFacetRequestOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

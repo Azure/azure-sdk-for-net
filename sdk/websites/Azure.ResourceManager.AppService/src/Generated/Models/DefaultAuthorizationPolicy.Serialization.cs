@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value);
+                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))

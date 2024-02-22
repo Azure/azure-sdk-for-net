@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationJobScheduleResource>> UpdateAsync(WaitUntil waitUntil, AutomationJobScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _automationJobScheduleJobScheduleClientDiagnostics.CreateScope("AutomationJobScheduleResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationJobScheduleResource> Update(WaitUntil waitUntil, AutomationJobScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _automationJobScheduleJobScheduleClientDiagnostics.CreateScope("AutomationJobScheduleResource.Update");
             scope.Start();

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricNeighborGroupData> array = new List<NetworkFabricNeighborGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(item));
+                        array.Add(NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(item, options));
                     }
                     value = array;
                     continue;

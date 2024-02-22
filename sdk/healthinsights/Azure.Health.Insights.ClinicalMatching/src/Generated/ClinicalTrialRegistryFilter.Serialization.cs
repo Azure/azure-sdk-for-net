@@ -325,7 +325,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicLocation> array = new List<GeographicLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicLocation.DeserializeGeographicLocation(item));
+                        array.Add(GeographicLocation.DeserializeGeographicLocation(item, options));
                     }
                     facilityLocations = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicArea> array = new List<GeographicArea>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicArea.DeserializeGeographicArea(item));
+                        array.Add(GeographicArea.DeserializeGeographicArea(item, options));
                     }
                     facilityAreas = array;
                     continue;

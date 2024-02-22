@@ -24,10 +24,22 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystem"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public AdlsGen2FileSystemDataSet(string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            Argument.AssertNotNull(fileSystem, nameof(fileSystem));
-            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            if (fileSystem == null)
+            {
+                throw new ArgumentNullException(nameof(fileSystem));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
+            if (storageAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountName));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
             FileSystem = fileSystem;
             ResourceGroup = resourceGroup;

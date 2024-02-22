@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element);
-                    case "Windows": return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element);
+                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
+                    case "Windows": return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element, options);
                 }
             }
-            return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element);
+            return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<SapOSConfiguration>.Write(ModelReaderWriterOptions options)

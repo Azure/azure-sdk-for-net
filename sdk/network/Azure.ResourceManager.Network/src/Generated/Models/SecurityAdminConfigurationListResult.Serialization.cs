@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityAdminConfigurationData> array = new List<SecurityAdminConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(item));
+                        array.Add(SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(item, options));
                     }
                     value = array;
                     continue;

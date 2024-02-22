@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
                             continue;
                         }
                     }

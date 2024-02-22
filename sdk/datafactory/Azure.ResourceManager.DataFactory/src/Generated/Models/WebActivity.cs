@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public WebActivity(string name, WebActivityMethod method, DataFactoryElement<string> uri) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Method = method;
             Uri = uri;

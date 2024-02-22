@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolSecurityAlertPolicyData> array = new List<SynapseSqlPoolSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(item));
+                        array.Add(SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(item, options));
                     }
                     value = array;
                     continue;

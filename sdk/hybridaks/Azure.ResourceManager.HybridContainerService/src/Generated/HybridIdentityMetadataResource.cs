@@ -278,7 +278,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();

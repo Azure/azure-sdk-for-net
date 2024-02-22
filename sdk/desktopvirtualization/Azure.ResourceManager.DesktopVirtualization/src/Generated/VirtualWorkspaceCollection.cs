@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, VirtualWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, VirtualWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<VirtualWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<VirtualWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Get");
             scope.Start();
@@ -335,7 +369,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Exists");
             scope.Start();
@@ -378,7 +419,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<VirtualWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
 
             using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
             scope.Start();

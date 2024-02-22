@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azPowerShellVersion"/> is null. </exception>
         public AzurePowerShellScript(AzureLocation location, TimeSpan retentionInterval, string azPowerShellVersion) : base(location)
         {
-            Argument.AssertNotNull(azPowerShellVersion, nameof(azPowerShellVersion));
+            if (azPowerShellVersion == null)
+            {
+                throw new ArgumentNullException(nameof(azPowerShellVersion));
+            }
 
             SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();

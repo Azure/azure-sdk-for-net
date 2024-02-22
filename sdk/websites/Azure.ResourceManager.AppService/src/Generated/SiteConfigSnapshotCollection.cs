@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
             scope.Start();
@@ -122,7 +129,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<SiteConfigSnapshotResource> Get(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Get");
             scope.Start();
@@ -167,7 +181,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
             scope.Start();
@@ -210,7 +231,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.Exists");
             scope.Start();
@@ -253,7 +281,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteConfigSnapshotResource>> GetIfExistsAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
             scope.Start();
@@ -298,7 +333,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         public virtual NullableResponse<SiteConfigSnapshotResource> GetIfExists(string snapshotId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
+            if (snapshotId == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotId));
+            }
+            if (snapshotId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotId));
+            }
 
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotCollection.GetIfExists");
             scope.Start();

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpointDetail> array = new List<MachineLearningFqdnEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item));
+                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

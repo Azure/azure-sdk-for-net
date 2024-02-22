@@ -54,10 +54,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="functionAppResourceId"/>, <paramref name="functionName"/> or <paramref name="httpTriggerUri"/> is null. </exception>
         public MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(functionAppResourceId, nameof(functionAppResourceId));
-            Argument.AssertNotNull(functionName, nameof(functionName));
-            Argument.AssertNotNull(httpTriggerUri, nameof(httpTriggerUri));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (functionAppResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppResourceId));
+            }
+            if (functionName == null)
+            {
+                throw new ArgumentNullException(nameof(functionName));
+            }
+            if (httpTriggerUri == null)
+            {
+                throw new ArgumentNullException(nameof(httpTriggerUri));
+            }
 
             Name = name;
             FunctionAppResourceId = functionAppResourceId;

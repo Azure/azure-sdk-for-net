@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value);
+                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

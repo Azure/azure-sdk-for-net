@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,9 +53,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="capacity"/> or <paramref name="rules"/> is null. </exception>
         public AutoscaleProfile(string name, MonitorScaleCapacity capacity, IEnumerable<AutoscaleRule> rules)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(capacity, nameof(capacity));
-            Argument.AssertNotNull(rules, nameof(rules));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (capacity == null)
+            {
+                throw new ArgumentNullException(nameof(capacity));
+            }
+            if (rules == null)
+            {
+                throw new ArgumentNullException(nameof(rules));
+            }
 
             Name = name;
             Capacity = capacity;

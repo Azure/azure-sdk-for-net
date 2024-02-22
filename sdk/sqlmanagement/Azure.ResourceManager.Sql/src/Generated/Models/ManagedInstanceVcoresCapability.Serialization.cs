@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageSizes"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedStorageSizes = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceMaintenanceConfigurationCapability> array = new List<ManagedInstanceMaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item));
+                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;

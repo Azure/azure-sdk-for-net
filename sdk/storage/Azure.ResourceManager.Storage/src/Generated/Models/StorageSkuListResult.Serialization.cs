@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuInformation> array = new List<StorageSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item));
+                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item, options));
                     }
                     value = array;
                     continue;

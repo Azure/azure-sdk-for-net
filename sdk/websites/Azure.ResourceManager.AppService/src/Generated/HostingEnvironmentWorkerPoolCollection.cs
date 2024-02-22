@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HostingEnvironmentWorkerPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HostingEnvironmentWorkerPoolResource> CreateOrUpdate(WaitUntil waitUntil, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> GetAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPoolResource> Get(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<HostingEnvironmentWorkerPoolResource>> GetIfExistsAsync(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
         public virtual NullableResponse<HostingEnvironmentWorkerPoolResource> GetIfExists(string workerPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            if (workerPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(workerPoolName));
+            }
+            if (workerPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExists");
             scope.Start();

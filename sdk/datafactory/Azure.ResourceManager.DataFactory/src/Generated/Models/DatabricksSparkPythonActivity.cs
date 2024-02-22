@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, DataFactoryElement<string> pythonFile) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(pythonFile, nameof(pythonFile));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (pythonFile == null)
+            {
+                throw new ArgumentNullException(nameof(pythonFile));
+            }
 
             PythonFile = pythonFile;
             Parameters = new ChangeTrackingList<BinaryData>();

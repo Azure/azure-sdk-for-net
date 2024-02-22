@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralNetworkRuleSetIPRule> array = new List<IotCentralNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item));
+                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
