@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownModelPerformanceMetricThresholdBase(document.RootElement, options);
+            return DeserializeModelPerformanceMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownModelPerformanceMetricThresholdBase DeserializeUnknownModelPerformanceMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownModelPerformanceMetricThresholdBase(document.RootElement, options);
+                        return DeserializeModelPerformanceMetricThresholdBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ModelPerformanceMetricThresholdBase)} does not support '{options.Format}' format.");
