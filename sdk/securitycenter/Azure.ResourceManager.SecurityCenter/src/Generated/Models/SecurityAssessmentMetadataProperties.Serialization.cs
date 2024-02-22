@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<SecurityAssessmentResourceCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Threats))
+            if (!(Threats is ChangeTrackingList<SecurityThreat> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();

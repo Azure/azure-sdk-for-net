@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();

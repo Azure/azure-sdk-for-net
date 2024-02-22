@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
-            if (Optional.IsCollectionDefined(NodesList))
+            if (!(NodesList is ChangeTrackingList<DistributedNodesInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();

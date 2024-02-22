@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
+            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<SqlMetricAvailability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();

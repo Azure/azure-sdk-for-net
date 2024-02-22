@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Requests))
+            if (!(Requests is ChangeTrackingList<JitNetworkAccessRequestInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartArray();

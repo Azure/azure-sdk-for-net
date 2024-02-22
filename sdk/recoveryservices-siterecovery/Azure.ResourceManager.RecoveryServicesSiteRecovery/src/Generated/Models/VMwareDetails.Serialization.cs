@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProcessServers))
+            if (!(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MasterTargetServers))
+            if (!(MasterTargetServers is ChangeTrackingList<MasterTargetServer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("masterTargetServers"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RunAsAccounts))
+            if (!(RunAsAccounts is ChangeTrackingList<SiteRecoveryRunAsAccount> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("runAsAccounts"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("agentVersionDetails"u8);
                 writer.WriteObjectValue(AgentVersionDetails);
             }
-            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            if (!(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();

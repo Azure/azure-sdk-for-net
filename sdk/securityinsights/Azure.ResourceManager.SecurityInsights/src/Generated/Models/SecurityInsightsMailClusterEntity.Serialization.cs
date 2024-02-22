@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkMessageIds))
+            if (options.Format != "W" && !(NetworkMessageIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkMessageIds"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
+            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();

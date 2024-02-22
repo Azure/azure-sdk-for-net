@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
+            if (!(ExternalDnsSuffixSearchList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("externalDnsSuffixSearchList"u8);
                 writer.WriteStartArray();

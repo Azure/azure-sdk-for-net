@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliedScopes))
+            if (!(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (AppliedScopes != null)
                 {

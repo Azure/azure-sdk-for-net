@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("currentStep"u8);
                 writer.WriteNumberValue(CurrentStep.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StepsList))
+            if (options.Format != "W" && !(StepsList is ChangeTrackingList<UpsertManagedServerOperationStep> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stepsList"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
+            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();

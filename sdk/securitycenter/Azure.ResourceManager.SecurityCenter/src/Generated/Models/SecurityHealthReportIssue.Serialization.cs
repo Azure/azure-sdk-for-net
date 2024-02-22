@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("issueName"u8);
                 writer.WriteStringValue(IssueName);
             }
-            if (Optional.IsCollectionDefined(SecurityValues))
+            if (!(SecurityValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("securityValues"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("remediationScript"u8);
                 writer.WriteStringValue(RemediationScript);
             }
-            if (Optional.IsCollectionDefined(IssueAdditionalData))
+            if (!(IssueAdditionalData is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("issueAdditionalData"u8);
                 writer.WriteStartObject();

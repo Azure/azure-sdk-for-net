@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<SearchPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Search
                     writer.WriteNull("semanticSearch");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<SharedSearchServicePrivateLinkResourceData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VmDisks))
+            if (!(VmDisks is ChangeTrackingList<UpdateDiskContent> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Export))
+            if (!(Export is ChangeTrackingList<IotSecuritySolutionExportOption> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DisabledDataSources))
+            if (!(DisabledDataSources is ChangeTrackingList<IotSecuritySolutionDataSource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
+            if (options.Format != "W" && !(AutoDiscoveredResources is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("autoDiscoveredResources"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
+            if (!(RecommendationsConfiguration is ChangeTrackingList<RecommendationConfigurationProperties> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
                 writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AdditionalWorkspaces))
+            if (!(AdditionalWorkspaces is ChangeTrackingList<AdditionalWorkspacesProperties> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("additionalWorkspaces"u8);
                 writer.WriteStartArray();

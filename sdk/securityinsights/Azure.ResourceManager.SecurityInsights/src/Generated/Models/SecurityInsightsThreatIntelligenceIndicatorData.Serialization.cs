@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
+            if (!(ThreatIntelligenceTags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(IndicatorTypes))
+            if (!(IndicatorTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("indicatorTypes"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("patternVersion"u8);
                 writer.WriteStringValue(PatternVersion);
             }
-            if (Optional.IsCollectionDefined(KillChainPhases))
+            if (!(KillChainPhases is ChangeTrackingList<ThreatIntelligenceKillChainPhase> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("killChainPhases"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParsedPattern))
+            if (!(ParsedPattern is ChangeTrackingList<ThreatIntelligenceParsedPattern> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("parsedPattern"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("externalLastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(ExternalLastUpdatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ExternalReferences))
+            if (!(ExternalReferences is ChangeTrackingList<ThreatIntelligenceExternalReference> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("externalReferences"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GranularMarkings))
+            if (!(GranularMarkings is ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("granularMarkings"u8);
                 writer.WriteStartArray();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (Optional.IsCollectionDefined(ObjectMarkingRefs))
+            if (!(ObjectMarkingRefs is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("objectMarkingRefs"u8);
                 writer.WriteStartArray();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsCollectionDefined(ThreatTypes))
+            if (!(ThreatTypes is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("modified"u8);
                 writer.WriteStringValue(Modified);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingDictionary<string, BinaryData> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();

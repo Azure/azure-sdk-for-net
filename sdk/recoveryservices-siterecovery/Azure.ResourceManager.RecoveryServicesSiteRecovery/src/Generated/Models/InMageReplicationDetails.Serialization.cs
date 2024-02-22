@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(ProtectedDisks))
+            if (!(ProtectedDisks is ChangeTrackingList<InMageProtectedDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
-            if (Optional.IsCollectionDefined(ConsistencyPoints))
+            if (!(ConsistencyPoints is ChangeTrackingDictionary<string, DateTimeOffset> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("consistencyPoints"u8);
                 writer.WriteStartObject();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("infrastructureVmId"u8);
                 writer.WriteStringValue(InfrastructureVmId);
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("azureStorageAccountId"u8);
                 writer.WriteStringValue(AzureStorageAccountId);
             }
-            if (Optional.IsCollectionDefined(Datastores))
+            if (!(Datastores is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

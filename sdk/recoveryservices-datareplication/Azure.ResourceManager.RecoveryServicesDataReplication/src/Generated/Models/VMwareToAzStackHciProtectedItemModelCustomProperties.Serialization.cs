@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
+            if (options.Format != "W" && !(ProtectedDisks is ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedNics))
+            if (options.Format != "W" && !(ProtectedNics is ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedNics"u8);
                 writer.WriteStartArray();

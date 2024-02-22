@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<ApplicationMetricDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
+            if (!(ManagedIdentities is ChangeTrackingList<ApplicationUserAssignedIdentity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();

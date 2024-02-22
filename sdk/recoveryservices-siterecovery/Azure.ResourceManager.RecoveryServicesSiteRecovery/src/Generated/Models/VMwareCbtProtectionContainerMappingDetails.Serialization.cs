@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RoleSizeToNicCountMap))
+            if (options.Format != "W" && !(RoleSizeToNicCountMap is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roleSizeToNicCountMap"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ExcludedSkus))
+            if (!(ExcludedSkus is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedSkus"u8);
                 writer.WriteStartArray();

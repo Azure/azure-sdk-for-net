@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("ramDetails"u8);
                 writer.WriteObjectValue(RamDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
+            if (options.Format != "W" && !(DatastoreSnapshot is ChangeTrackingList<DataStoreUtilizationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("datastoreSnapshot"u8);
                 writer.WriteStartArray();

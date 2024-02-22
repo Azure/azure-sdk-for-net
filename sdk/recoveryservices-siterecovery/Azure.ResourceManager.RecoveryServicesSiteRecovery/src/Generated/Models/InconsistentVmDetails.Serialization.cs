@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("cloudName"u8);
                 writer.WriteStringValue(CloudName);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ErrorIds))
+            if (!(ErrorIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errorIds"u8);
                 writer.WriteStartArray();

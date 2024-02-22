@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (!(RequiredDataConnectors is ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tactics))
+            if (!(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Techniques))
+            if (!(Techniques is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();

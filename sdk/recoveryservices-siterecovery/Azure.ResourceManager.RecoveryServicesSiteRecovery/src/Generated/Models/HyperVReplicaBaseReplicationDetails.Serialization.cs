@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("lastReplicatedTime"u8);
                 writer.WriteStringValue(LastReplicatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (Optional.IsCollectionDefined(VmDiskDetails))
+            if (!(VmDiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vMDiskDetails"u8);
                 writer.WriteStartArray();

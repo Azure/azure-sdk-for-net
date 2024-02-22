@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryPublicIPAddressId"u8);
                 writer.WriteStringValue(RecoveryPublicIPAddressId);
             }
-            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            if (!(RecoveryLBBackendAddressPoolIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("tfoPublicIPAddressId"u8);
                 writer.WriteStringValue(TfoPublicIPAddressId);
             }
-            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            if (!(TfoLBBackendAddressPoolIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();

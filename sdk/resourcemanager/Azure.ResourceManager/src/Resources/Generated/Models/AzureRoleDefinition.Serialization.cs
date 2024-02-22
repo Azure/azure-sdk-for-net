@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("isServiceRole"u8);
                 writer.WriteBooleanValue(IsServiceRole.Value);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<Permission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();

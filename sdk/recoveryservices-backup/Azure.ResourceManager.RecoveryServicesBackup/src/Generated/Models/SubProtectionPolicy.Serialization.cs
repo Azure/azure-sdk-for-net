@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsCollectionDefined(TieringPolicy))
+            if (!(TieringPolicy is ChangeTrackingDictionary<string, BackupTieringPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();

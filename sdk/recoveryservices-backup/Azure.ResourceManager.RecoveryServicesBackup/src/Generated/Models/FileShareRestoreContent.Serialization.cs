@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpecs))
+            if (!(RestoreFileSpecs is ChangeTrackingList<RestoreFileSpecs> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();

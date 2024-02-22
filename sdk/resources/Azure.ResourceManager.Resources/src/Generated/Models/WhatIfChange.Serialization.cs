@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Delta))
+            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();

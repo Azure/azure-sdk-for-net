@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedEditions))
+            if (options.Format != "W" && !(SupportedEditions is ChangeTrackingList<ManagedInstanceEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedInstancePoolEditions))
+            if (options.Format != "W" && !(SupportedInstancePoolEditions is ChangeTrackingList<InstancePoolEditionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedInstancePoolEditions"u8);
                 writer.WriteStartArray();

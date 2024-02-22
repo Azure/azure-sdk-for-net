@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsCollectionDefined(ScheduleList))
+            if (!(ScheduleList is ChangeTrackingList<SqlScheduleItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scheduleList"u8);
                 writer.WriteStartArray();

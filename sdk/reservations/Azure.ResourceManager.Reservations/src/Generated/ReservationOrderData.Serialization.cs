@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WritePropertyName("planInformation"u8);
                 writer.WriteObjectValue(PlanInformation);
             }
-            if (Optional.IsCollectionDefined(Reservations))
+            if (!(Reservations is ChangeTrackingList<ReservationDetailData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();

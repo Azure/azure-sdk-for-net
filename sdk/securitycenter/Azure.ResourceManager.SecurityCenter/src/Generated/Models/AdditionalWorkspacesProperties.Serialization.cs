@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DataTypes))
+            if (!(DataTypes is ChangeTrackingList<AdditionalWorkspaceDataType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();

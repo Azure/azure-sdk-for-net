@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<PredefinedTagValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(UserManagedIdentities))
+            if (!(UserManagedIdentities is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userManagedIdentities"u8);
                 writer.WriteStartArray();

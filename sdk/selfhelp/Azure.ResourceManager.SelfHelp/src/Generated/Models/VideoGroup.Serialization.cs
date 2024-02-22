@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Videos))
+            if (!(Videos is ChangeTrackingList<VideoGroupVideo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();

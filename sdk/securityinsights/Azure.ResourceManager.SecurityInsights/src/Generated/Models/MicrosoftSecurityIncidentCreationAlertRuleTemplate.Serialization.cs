@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (!(RequiredDataConnectors is ChangeTrackingList<AlertRuleTemplateDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DisplayNamesFilter))
+            if (!(DisplayNamesFilter is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
+            if (!(DisplayNamesExcludeFilter is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SeveritiesFilter))
+            if (!(SeveritiesFilter is ChangeTrackingList<SecurityInsightsAlertSeverity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();

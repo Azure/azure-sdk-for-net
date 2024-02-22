@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedScenarios))
+            if (!(AllowedScenarios is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedScenarios"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();

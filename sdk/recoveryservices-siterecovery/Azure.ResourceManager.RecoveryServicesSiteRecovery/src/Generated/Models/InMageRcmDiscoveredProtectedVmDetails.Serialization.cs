@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("vCenterFqdn"u8);
                 writer.WriteStringValue(VCenterFqdn);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Datastores))
+            if (options.Format != "W" && !(Datastores is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();

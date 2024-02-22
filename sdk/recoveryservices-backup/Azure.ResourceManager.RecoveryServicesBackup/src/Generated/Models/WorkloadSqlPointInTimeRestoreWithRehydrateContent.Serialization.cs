@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isNonRecoverable"u8);
                 writer.WriteBooleanValue(IsNonRecoverable.Value);
             }
-            if (Optional.IsCollectionDefined(AlternateDirectoryPaths))
+            if (!(AlternateDirectoryPaths is ChangeTrackingList<SqlDataDirectoryMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternateDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();

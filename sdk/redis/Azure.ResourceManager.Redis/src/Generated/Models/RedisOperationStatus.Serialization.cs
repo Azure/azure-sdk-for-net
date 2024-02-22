@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<OperationStatusResult> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

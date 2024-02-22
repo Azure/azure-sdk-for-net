@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            if (!(SourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            if (!(DestinationAddressPrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();

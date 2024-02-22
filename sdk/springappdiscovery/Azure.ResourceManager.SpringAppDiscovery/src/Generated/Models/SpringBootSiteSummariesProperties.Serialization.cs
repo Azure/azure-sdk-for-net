@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WritePropertyName("discoveredApps"u8);
                 writer.WriteNumberValue(DiscoveredApps.Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

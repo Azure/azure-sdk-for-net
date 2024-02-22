@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsCollectionDefined(Facets))
+            if (!(Facets is ChangeTrackingList<Facet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FileEntityIds))
+            if (options.Format != "W" && !(FileEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("fileEntityIds"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("recipient"u8);
                 writer.WriteStringValue(Recipient);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Uris))
+            if (options.Format != "W" && !(Uris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
+            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatDetectionMethods))
+            if (options.Format != "W" && !(ThreatDetectionMethods is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("threatDetectionMethods"u8);
                 writer.WriteStartArray();

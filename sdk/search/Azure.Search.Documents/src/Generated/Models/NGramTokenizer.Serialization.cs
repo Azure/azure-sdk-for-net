@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (Optional.IsCollectionDefined(TokenChars))
+            if (!(TokenChars is ChangeTrackingList<TokenCharacterKind> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();

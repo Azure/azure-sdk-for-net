@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Impacts))
+            if (!(Impacts is ChangeTrackingList<EmergingIssueImpact> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impacts"u8);
                 writer.WriteStartArray();

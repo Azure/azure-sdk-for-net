@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteStringValue(PerformAutoResync);
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SeedDiskTags))
+            if (!(SeedDiskTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("seedDiskTags"u8);
                 writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetDiskTags))
+            if (!(TargetDiskTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetDiskTags"u8);
                 writer.WriteStartObject();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();

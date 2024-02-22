@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Recommendations))
+            if (options.Format != "W" && !(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();

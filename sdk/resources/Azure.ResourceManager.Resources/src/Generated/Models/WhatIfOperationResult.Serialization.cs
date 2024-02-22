@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Changes))
+            if (!(Changes is ChangeTrackingList<WhatIfChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("changes"u8);
                 writer.WriteStartArray();

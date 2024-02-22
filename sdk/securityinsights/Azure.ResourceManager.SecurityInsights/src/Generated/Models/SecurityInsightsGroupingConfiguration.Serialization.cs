@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
             writer.WriteStringValue(MatchingMethod.ToString());
-            if (Optional.IsCollectionDefined(GroupByEntities))
+            if (!(GroupByEntities is ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GroupByAlertDetails))
+            if (!(GroupByAlertDetails is ChangeTrackingList<SecurityInsightsAlertDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GroupByCustomDetails))
+            if (!(GroupByCustomDetails is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();

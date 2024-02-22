@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("hostIpAddressEntityId"u8);
                 writer.WriteStringValue(HostIPAddressEntityId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressEntityIds))
+            if (options.Format != "W" && !(IPAddressEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressEntityIds"u8);
                 writer.WriteStartArray();

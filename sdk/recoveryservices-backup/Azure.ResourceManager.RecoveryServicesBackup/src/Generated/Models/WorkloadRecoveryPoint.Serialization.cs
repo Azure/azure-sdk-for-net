@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();

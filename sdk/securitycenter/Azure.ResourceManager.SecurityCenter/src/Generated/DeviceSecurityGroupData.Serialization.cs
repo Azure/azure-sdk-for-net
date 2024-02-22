@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ThresholdRules))
+            if (!(ThresholdRules is ChangeTrackingList<ThresholdCustomAlertRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TimeWindowRules))
+            if (!(TimeWindowRules is ChangeTrackingList<TimeWindowCustomAlertRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowlistRules))
+            if (!(AllowlistRules is ChangeTrackingList<AllowlistCustomAlertRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DenylistRules))
+            if (!(DenylistRules is ChangeTrackingList<DenylistCustomAlertRule> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();

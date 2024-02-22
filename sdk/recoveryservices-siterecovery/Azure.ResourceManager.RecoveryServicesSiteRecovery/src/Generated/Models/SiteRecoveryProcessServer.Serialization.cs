@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
+            if (!(MobilityServiceUpdates is ChangeTrackingList<MobilityServiceUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mobilityServiceUpdates"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

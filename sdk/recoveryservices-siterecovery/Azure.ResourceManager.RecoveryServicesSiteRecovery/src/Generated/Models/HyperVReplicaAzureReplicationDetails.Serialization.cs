@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AzureVmDiskDetails))
+            if (!(AzureVmDiskDetails is ChangeTrackingList<SiteRecoveryVmDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureVmDiskDetails"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            if (!(SeedManagedDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("seedManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
+            if (!(ProtectedManagedDisks is ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllAvailableOSUpgradeConfigurations))
+            if (!(AllAvailableOSUpgradeConfigurations is ChangeTrackingList<OSUpgradeSupportedVersions> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("allAvailableOSUpgradeConfigurations"u8);
                 writer.WriteStartArray();

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (!(RequiredDataConnectors is ChangeTrackingList<AlertRuleTemplateDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tactics))
+            if (!(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Techniques))
+            if (!(Techniques is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();

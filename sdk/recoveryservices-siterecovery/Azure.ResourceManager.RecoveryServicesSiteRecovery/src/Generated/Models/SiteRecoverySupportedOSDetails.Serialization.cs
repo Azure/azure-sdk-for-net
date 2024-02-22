@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsCollectionDefined(OSVersions))
+            if (!(OSVersions is ChangeTrackingList<SiteRecoveryOSVersionWrapper> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("osVersions"u8);
                 writer.WriteStartArray();

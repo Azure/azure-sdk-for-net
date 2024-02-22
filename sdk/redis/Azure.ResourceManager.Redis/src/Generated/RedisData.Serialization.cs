@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
-            if (Optional.IsCollectionDefined(TenantSettings))
+            if (!(TenantSettings is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Redis
                     writer.WriteNull("accessKeys");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedServers))
+            if (options.Format != "W" && !(LinkedServers is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("linkedServers"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<RedisInstanceDetails> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<RedisPrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

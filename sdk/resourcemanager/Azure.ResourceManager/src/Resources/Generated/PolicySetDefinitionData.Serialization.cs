@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
+            if (!(PolicyDefinitionGroups is ChangeTrackingList<PolicyDefinitionGroup> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitionGroups"u8);
                 writer.WriteStartArray();

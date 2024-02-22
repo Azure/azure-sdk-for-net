@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (!(Workspaces is ChangeTrackingList<SqlSynapseLinkWorkspaceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();

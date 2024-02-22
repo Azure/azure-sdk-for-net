@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (Optional.IsCollectionDefined(InquiryDetails))
+            if (!(InquiryDetails is ChangeTrackingList<WorkloadInquiryDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inquiryDetails"u8);
                 writer.WriteStartArray();

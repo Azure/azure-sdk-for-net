@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationProperties))
+            if (!(ApplicationProperties is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

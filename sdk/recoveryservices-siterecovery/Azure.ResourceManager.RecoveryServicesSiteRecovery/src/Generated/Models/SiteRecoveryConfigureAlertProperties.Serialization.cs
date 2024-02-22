@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sendToOwners"u8);
                 writer.WriteStringValue(SendToOwners);
             }
-            if (Optional.IsCollectionDefined(CustomEmailAddresses))
+            if (!(CustomEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();

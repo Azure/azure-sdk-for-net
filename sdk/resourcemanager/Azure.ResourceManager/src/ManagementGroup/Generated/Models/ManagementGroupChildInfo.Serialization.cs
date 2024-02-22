@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<ManagementGroupChildInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<SiteRecoveryAgentDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();

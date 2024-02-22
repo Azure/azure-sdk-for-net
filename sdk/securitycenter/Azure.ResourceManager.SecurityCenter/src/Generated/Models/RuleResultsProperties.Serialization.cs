@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingList<IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();

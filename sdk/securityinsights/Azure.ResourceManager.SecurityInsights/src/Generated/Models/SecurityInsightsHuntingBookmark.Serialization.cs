@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();

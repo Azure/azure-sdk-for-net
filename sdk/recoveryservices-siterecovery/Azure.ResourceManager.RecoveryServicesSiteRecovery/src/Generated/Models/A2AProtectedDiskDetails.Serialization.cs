@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
+            if (!(AllowedDiskLevelOperation is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (Optional.IsCollectionDefined(PartnerServers))
+            if (!(PartnerServers is ChangeTrackingList<PartnerServerInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailoverDatabases))
+            if (!(FailoverDatabases is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();

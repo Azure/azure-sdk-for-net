@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WritePropertyName("requestSubmitTime"u8);
                 writer.WriteStringValue(RequestSubmitOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(QuotaRequestValue))
+            if (!(QuotaRequestValue is ChangeTrackingList<SubContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

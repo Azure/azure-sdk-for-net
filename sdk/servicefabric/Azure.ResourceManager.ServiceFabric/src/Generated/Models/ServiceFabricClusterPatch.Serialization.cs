@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (!(AddOnFeatures is ChangeTrackingList<ClusterAddOnFeature> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("addOnFeatures"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("certificateCommonNames"u8);
                 writer.WriteObjectValue(CertificateCommonNames);
             }
-            if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
+            if (!(ClientCertificateCommonNames is ChangeTrackingList<ClusterClientCertificateCommonName> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateCommonNames"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
+            if (!(ClientCertificateThumbprints is ChangeTrackingList<ClusterClientCertificateThumbprint> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("eventStoreServiceEnabled"u8);
                 writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (!(FabricSettings is ChangeTrackingList<SettingsSectionDescription> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NodeTypes))
+            if (!(NodeTypes is ChangeTrackingList<ClusterNodeTypeDescription> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("waveUpgradePaused"u8);
                 writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingList<ClusterNotification> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartArray();

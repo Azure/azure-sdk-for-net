@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            if (options.Format != "W" && !(SupportedFamilies is ChangeTrackingList<ManagedInstanceFamilyCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<StorageCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageCapabilities"u8);
                 writer.WriteStartArray();

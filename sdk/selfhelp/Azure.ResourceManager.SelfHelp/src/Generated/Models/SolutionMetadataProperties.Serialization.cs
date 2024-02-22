@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredInputs))
+            if (options.Format != "W" && !(RequiredInputs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredInputs"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("dpmAgentVersion"u8);
                 writer.WriteStringValue(DpmAgentVersion);
             }
-            if (Optional.IsCollectionDefined(DpmServers))
+            if (!(DpmServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dpmServers"u8);
                 writer.WriteStartArray();

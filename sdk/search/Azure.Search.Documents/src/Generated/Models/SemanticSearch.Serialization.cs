@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("defaultConfiguration"u8);
                 writer.WriteStringValue(DefaultConfigurationName);
             }
-            if (Optional.IsCollectionDefined(Configurations))
+            if (!(Configurations is ChangeTrackingList<SemanticConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sendToOwners"u8);
             writer.WriteBooleanValue(SendToOwners);
-            if (Optional.IsCollectionDefined(CustomEmailAddresses))
+            if (!(CustomEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();

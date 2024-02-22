@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<InMageRcmDiskContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();

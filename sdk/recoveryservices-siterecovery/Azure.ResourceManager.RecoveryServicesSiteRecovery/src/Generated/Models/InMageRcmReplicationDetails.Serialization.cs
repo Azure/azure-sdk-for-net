@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("agentUpgradeAttemptToVersion"u8);
                 writer.WriteStringValue(AgentUpgradeAttemptToVersion);
             }
-            if (Optional.IsCollectionDefined(ProtectedDisks))
+            if (!(ProtectedDisks is ChangeTrackingList<InMageRcmProtectedDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("mobilityAgentDetails"u8);
                 writer.WriteObjectValue(MobilityAgentDetails);
             }
-            if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
+            if (!(LastAgentUpgradeErrorDetails is ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("lastAgentUpgradeErrorDetails"u8);
                 writer.WriteStartArray();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AgentUpgradeBlockingErrorDetails))
+            if (!(AgentUpgradeBlockingErrorDetails is ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("agentUpgradeBlockingErrorDetails"u8);
                 writer.WriteStartArray();
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<InMageRcmNicDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();

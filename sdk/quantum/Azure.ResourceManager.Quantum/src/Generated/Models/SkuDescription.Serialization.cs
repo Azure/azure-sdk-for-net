@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WritePropertyName("autoAdd"u8);
                 writer.WriteBooleanValue(AutoAdd.Value);
             }
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(QuotaDimensions))
+            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PricingDetails))
+            if (!(PricingDetails is ChangeTrackingList<PricingDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pricingDetails"u8);
                 writer.WriteStartArray();

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Members))
+            if (!(Members is ChangeTrackingList<JobTarget> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

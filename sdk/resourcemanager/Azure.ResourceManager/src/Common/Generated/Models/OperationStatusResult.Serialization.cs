@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Operations))
+            if (options.Format != "W" && !(Operations is ChangeTrackingList<OperationStatusResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

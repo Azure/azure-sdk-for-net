@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();

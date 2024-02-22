@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("recentlyResolved"u8);
                 writer.WriteObjectValue(RecentlyResolved);
             }
-            if (Optional.IsCollectionDefined(RecommendedActions))
+            if (!(RecommendedActions is ChangeTrackingList<ResourceHealthRecommendedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
+            if (!(ServiceImpactingEvents is ChangeTrackingList<ServiceImpactingEvent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceImpactingEvents"u8);
                 writer.WriteStartArray();

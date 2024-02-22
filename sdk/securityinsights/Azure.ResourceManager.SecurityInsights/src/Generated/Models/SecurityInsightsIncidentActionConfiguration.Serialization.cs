@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();

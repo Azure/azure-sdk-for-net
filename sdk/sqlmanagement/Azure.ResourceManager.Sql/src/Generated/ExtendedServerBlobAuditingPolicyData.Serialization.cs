@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
+            if (!(AuditActionsAndGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();

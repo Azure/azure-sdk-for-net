@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("registrationPolicy"u8);
                 writer.WriteStringValue(RegistrationPolicy);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
+            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();

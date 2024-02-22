@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("maxRefundLimit"u8);
                 writer.WriteObjectValue(MaxRefundLimit);
             }
-            if (Optional.IsCollectionDefined(PolicyErrors))
+            if (!(PolicyErrors is ChangeTrackingList<ReservationRefundPolicyError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyErrors"u8);
                 writer.WriteStartArray();

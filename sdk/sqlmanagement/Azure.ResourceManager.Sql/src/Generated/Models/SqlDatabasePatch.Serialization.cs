@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingDictionary<string, SqlDatabaseKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();

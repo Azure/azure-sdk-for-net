@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteStringValue(IsEnabled.ToString());
-            if (Optional.IsCollectionDefined(AdditionalExtensionProperties))
+            if (!(AdditionalExtensionProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalExtensionProperties"u8);
                 writer.WriteStartObject();

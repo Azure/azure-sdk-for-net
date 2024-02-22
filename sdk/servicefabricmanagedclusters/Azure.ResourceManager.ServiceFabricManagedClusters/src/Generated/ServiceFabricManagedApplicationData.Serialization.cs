@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
+            if (!(ManagedIdentities is ChangeTrackingList<ApplicationUserAssignedIdentityInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();

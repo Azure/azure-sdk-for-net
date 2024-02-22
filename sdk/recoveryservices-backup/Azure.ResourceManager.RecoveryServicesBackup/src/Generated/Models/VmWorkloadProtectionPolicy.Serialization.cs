@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsCollectionDefined(SubProtectionPolicy))
+            if (!(SubProtectionPolicy is ChangeTrackingList<SubProtectionPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();

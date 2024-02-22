@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("managementId"u8);
                 writer.WriteStringValue(ManagementId);
             }
-            if (Optional.IsCollectionDefined(ProtectedDisks))
+            if (!(ProtectedDisks is ChangeTrackingList<A2AProtectedDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UnprotectedDisks))
+            if (!(UnprotectedDisks is ChangeTrackingList<A2AUnprotectedDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("unprotectedDisks"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
+            if (!(ProtectedManagedDisks is ChangeTrackingList<A2AProtectedManagedDiskDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("selectedTfoAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedTfoAzureNetworkId);
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();

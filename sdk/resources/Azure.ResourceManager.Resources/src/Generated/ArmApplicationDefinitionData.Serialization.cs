@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Authorizations))
+            if (!(Authorizations is ChangeTrackingList<ArmApplicationAuthorization> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Artifacts))
+            if (!(Artifacts is ChangeTrackingList<ArmApplicationDefinitionArtifact> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("managementPolicy"u8);
                 writer.WriteObjectValue(ManagementPolicy);
             }
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<ArmApplicationPolicy> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();

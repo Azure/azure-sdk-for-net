@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
+            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();

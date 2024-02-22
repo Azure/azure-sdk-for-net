@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
+            if (options.Format != "W" && !(RecommendedActions is ChangeTrackingList<RecommendedActionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();

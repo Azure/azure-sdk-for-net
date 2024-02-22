@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfChildGroups");
                 }
             }
-            if (Optional.IsCollectionDefined(ParentDisplayNameChain))
+            if (!(ParentDisplayNameChain is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (ParentDisplayNameChain != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("parentDisplayNameChain");
                 }
             }
-            if (Optional.IsCollectionDefined(ParentNameChain))
+            if (!(ParentNameChain is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (ParentNameChain != null)
                 {

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("moveStatus"u8);
                 writer.WriteObjectValue(MoveStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
+            if (options.Format != "W" && !(DependsOn is ChangeTrackingList<MoverResourceDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DependsOnOverrides))
+            if (!(DependsOnOverrides is ChangeTrackingList<MoverResourceDependencyOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dependsOnOverrides"u8);
                 writer.WriteStartArray();

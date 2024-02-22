@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsCollectionDefined(BillingPlans))
+            if (!(BillingPlans is ChangeTrackingDictionary<string, IList<ReservationBillingPlan>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingPlans"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Terms))
+            if (options.Format != "W" && !(Terms is ChangeTrackingList<ReservationTerm> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
+            if (options.Format != "W" && !(SkuProperties is ChangeTrackingList<SkuProperty> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("skuProperties"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("msrp"u8);
                 writer.WriteObjectValue(Msrp);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<SkuRestriction> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<SkuCapability> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();

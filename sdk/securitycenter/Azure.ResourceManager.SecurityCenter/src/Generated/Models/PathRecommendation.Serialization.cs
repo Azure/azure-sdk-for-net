@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
-            if (Optional.IsCollectionDefined(UserSids))
+            if (!(UserSids is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Usernames))
+            if (!(Usernames is ChangeTrackingList<UserRecommendation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();

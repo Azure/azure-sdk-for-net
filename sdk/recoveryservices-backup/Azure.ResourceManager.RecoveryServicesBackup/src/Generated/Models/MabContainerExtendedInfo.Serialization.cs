@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("backupItemType"u8);
                 writer.WriteStringValue(BackupItemType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(BackupItems))
+            if (!(BackupItems is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupItems"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedValues))
+            if (options.Format != "W" && !(AllowedValues is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();

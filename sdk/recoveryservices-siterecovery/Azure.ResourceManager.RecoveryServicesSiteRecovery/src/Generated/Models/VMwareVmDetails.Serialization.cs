@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (Optional.IsCollectionDefined(DiskDetails))
+            if (!(DiskDetails is ChangeTrackingList<InMageDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

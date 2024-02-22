@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(AcceptedDataFormats))
+            if (!(AcceptedDataFormats is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("acceptedDataFormats"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AcceptedContentEncodings))
+            if (!(AcceptedContentEncodings is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("acceptedContentEncodings"u8);
                 writer.WriteStartArray();

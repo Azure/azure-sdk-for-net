@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoverySubscriptionId"u8);
                 writer.WriteStringValue(RecoverySubscriptionId);
             }
-            if (Optional.IsCollectionDefined(VmDisks))
+            if (!(VmDisks is ChangeTrackingList<A2AProtectionIntentDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmManagedDisks))
+            if (!(VmManagedDisks is ChangeTrackingList<A2AProtectionIntentManagedDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();

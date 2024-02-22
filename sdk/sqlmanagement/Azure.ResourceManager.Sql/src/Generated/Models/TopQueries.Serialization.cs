@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (!(Queries is ChangeTrackingList<QueryStatisticsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();

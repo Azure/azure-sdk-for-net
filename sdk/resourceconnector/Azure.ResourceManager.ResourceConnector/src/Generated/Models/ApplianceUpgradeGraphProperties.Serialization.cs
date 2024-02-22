@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WritePropertyName("applianceVersion"u8);
                 writer.WriteStringValue(ApplianceVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
+            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<ApplianceSupportedVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();

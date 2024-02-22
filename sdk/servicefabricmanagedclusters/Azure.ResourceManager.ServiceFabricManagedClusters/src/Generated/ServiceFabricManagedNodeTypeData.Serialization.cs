@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("dataDiskLetter"u8);
                 writer.WriteStringValue(DataDiskLetter);
             }
-            if (Optional.IsCollectionDefined(PlacementProperties))
+            if (!(PlacementProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Capacities))
+            if (!(Capacities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("vmImageVersion"u8);
                 writer.WriteStringValue(VmImageVersion);
             }
-            if (Optional.IsCollectionDefined(VmSecrets))
+            if (!(VmSecrets is ChangeTrackingList<NodeTypeVaultSecretGroup> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vmSecrets"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmExtensions))
+            if (!(VmExtensions is ChangeTrackingList<NodeTypeVmssExtension> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("multiplePlacementGroups"u8);
                 writer.WriteBooleanValue(HasMultiplePlacementGroups.Value);
             }
-            if (Optional.IsCollectionDefined(FrontendConfigurations))
+            if (!(FrontendConfigurations is ChangeTrackingList<NodeTypeFrontendConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("frontendConfigurations"u8);
                 writer.WriteStartArray();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalDataDisks))
+            if (!(AdditionalDataDisks is ChangeTrackingList<NodeTypeVmssDataDisk> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("additionalDataDisks"u8);
                 writer.WriteStartArray();
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableOverProvisioning"u8);
                 writer.WriteBooleanValue(IsOverProvisioningEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsCollectionDefined(VmSetupActions))
+            if (!(VmSetupActions is ChangeTrackingList<VmSetupAction> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("vmSetupActions"u8);
                 writer.WriteStartArray();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("dscpConfigurationId"u8);
                 writer.WriteStringValue(DscpConfigurationId);
             }
-            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
+            if (!(AdditionalNetworkInterfaceConfigurations is ChangeTrackingList<AdditionalNetworkInterfaceConfiguration> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
                 writer.WriteStartArray();

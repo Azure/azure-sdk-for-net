@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();

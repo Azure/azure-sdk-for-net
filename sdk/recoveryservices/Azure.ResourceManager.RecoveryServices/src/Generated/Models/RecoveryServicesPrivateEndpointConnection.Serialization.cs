@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<VaultSubResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();

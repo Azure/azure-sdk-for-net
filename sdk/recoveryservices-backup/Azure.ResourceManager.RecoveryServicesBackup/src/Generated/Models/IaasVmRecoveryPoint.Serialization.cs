@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isInstantIlrSessionActive"u8);
                 writer.WriteBooleanValue(IsInstantIlrSessionActive.Value);
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
                 writer.WriteObjectValue(RecoveryPointDiskConfiguration);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();

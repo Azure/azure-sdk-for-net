@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
+            if (!(ExcludedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notScopes"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameterValue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NonComplianceMessages))
+            if (!(NonComplianceMessages is ChangeTrackingList<NonComplianceMessage> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("nonComplianceMessages"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceSelectors))
+            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Overrides))
+            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();

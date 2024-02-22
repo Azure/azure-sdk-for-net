@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
+            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();

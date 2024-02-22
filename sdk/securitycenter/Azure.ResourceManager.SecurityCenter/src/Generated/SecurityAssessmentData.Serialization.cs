@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(AdditionalData))
+            if (!(AdditionalData is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();

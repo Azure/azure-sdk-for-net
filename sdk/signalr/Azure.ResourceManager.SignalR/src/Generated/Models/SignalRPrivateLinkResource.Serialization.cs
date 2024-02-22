@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (!(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (!(ShareablePrivateLinkResourceTypes is ChangeTrackingList<ShareablePrivateLinkResourceType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();

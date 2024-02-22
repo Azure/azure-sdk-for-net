@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryVMNetworkId"u8);
                 writer.WriteStringValue(RecoveryVmNetworkId);
             }
-            if (Optional.IsCollectionDefined(IPConfigs))
+            if (!(IPConfigs is ChangeTrackingList<HyperVIPConfigDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();

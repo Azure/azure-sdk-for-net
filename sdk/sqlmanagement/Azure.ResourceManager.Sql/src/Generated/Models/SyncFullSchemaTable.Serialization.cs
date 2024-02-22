@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Columns))
+            if (options.Format != "W" && !(Columns is ChangeTrackingList<SyncFullSchemaTableColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();

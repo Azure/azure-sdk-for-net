@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("parameters");
                 }
             }
-            if (Optional.IsCollectionDefined(FieldMappings))
+            if (!(FieldMappings is ChangeTrackingList<FieldMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutputFieldMappings))
+            if (!(OutputFieldMappings is ChangeTrackingList<FieldMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputFieldMappings"u8);
                 writer.WriteStartArray();

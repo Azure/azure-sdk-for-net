@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("article"u8);
                 writer.WriteObjectValue(Article);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<ResourceHealthEventLink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("impactMitigationTime"u8);
                 writer.WriteStringValue(ImpactMitigationOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Impact))
+            if (!(Impact is ChangeTrackingList<ResourceHealthEventImpact> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteObjectValue(RecommendedActions);
             }
-            if (Optional.IsCollectionDefined(Faqs))
+            if (!(Faqs is ChangeTrackingList<ResourceHealthEventFaq> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("faqs"u8);
                 writer.WriteStartArray();

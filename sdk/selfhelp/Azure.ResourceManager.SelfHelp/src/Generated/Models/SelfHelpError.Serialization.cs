@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<SelfHelpError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

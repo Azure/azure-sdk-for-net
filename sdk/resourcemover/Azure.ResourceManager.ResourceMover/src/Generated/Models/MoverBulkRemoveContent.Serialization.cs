@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MoverResources))
+            if (!(MoverResources is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();

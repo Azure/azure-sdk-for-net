@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(Location);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatIntelligence))
+            if (options.Format != "W" && !(ThreatIntelligence is ChangeTrackingList<SecurityInsightsThreatIntelligence> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threatIntelligence"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(PlacementProperties))
+            if (!(PlacementProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Capacities))
+            if (!(Capacities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();

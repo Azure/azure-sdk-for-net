@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RelayPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

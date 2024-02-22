@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayNamesFilter))
+            if (!(DisplayNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
+            if (!(DisplayNamesExcludeFilter is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SeveritiesFilter))
+            if (!(SeveritiesFilter is ChangeTrackingList<SecurityInsightsAlertSeverity> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();

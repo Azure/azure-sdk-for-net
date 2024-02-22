@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("physicalLocation"u8);
                 writer.WriteStringValue(PhysicalLocation);
             }
-            if (Optional.IsCollectionDefined(PairedRegions))
+            if (!(PairedRegions is ChangeTrackingList<PairedRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pairedRegion"u8);
                 writer.WriteStartArray();

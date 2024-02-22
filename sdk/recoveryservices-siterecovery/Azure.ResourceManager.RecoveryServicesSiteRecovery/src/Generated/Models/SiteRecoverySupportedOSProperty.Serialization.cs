@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("instanceType"u8);
                 writer.WriteStringValue(InstanceType);
             }
-            if (Optional.IsCollectionDefined(SupportedOS))
+            if (!(SupportedOS is ChangeTrackingList<SiteRecoverySupportedOSDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedOs"u8);
                 writer.WriteStartArray();

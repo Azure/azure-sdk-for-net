@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("logAnalyticsQuery"u8);
                 writer.WriteStringValue(LogAnalyticsQuery);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TopDevicesList))
+            if (options.Format != "W" && !(TopDevicesList is ChangeTrackingList<IotSecurityAggregatedAlertTopDevice> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("topDevicesList"u8);
                 writer.WriteStartArray();

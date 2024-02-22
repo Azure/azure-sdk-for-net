@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Namespaces))
+            if (!(Namespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("isBuiltInOnly"u8);
                 writer.WriteBooleanValue(IsBuiltInOnly.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeAliases))
+            if (!(ResourceTypeAliases is ChangeTrackingList<ResourceTypeAliases> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Effects))
+            if (!(Effects is ChangeTrackingList<DataPolicyManifestEffect> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FieldValues))
+            if (!(FieldValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("fieldValues"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("resourceFunctions"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Standard))
+            if (!(Standard is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("standard"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDefinitions))
+            if (!(CustomDefinitions is ChangeTrackingList<DataManifestCustomResourceFunctionDefinition> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();

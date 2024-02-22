@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<SyncGroupSchemaTableColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CommonNames))
+            if (!(CommonNames is ChangeTrackingList<ClusterServerCertificateCommonName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();

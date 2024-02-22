@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (HttpHeaders != null)
                 {

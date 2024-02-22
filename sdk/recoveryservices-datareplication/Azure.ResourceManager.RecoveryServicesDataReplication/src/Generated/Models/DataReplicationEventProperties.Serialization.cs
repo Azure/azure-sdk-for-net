@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

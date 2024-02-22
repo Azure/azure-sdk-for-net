@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (Optional.IsCollectionDefined(RequiredParameters))
+            if (!(RequiredParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredParameters"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();

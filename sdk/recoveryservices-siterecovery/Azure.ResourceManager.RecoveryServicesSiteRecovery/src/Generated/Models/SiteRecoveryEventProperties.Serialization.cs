@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("eventSpecificDetails"u8);
                 writer.WriteObjectValue(EventSpecificDetails);
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

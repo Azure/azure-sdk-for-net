@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Optional.IsCollectionDefined(Intervals))
+            if (!(Intervals is ChangeTrackingList<QueryMetricInterval> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();

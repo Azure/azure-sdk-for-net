@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            if (options.Format != "W" && !(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();

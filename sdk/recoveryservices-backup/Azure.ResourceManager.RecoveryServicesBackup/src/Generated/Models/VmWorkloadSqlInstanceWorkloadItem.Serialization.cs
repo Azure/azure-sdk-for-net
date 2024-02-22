@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (!(DataDirectoryPaths is ChangeTrackingList<SqlDataDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();

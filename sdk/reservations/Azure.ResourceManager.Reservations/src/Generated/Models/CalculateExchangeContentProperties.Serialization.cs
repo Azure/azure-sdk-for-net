@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationPurchaseContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanPurchase> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToReturn> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
