@@ -107,7 +107,7 @@ hosts[1] = "<host2>.com";
 string[] domains = new string[2];
 domains[0] = "<domain1>.com";
 domains[1] = "<domain2>.com";
-                        DiscoveryGroupData request = new DiscoveryGroupData();
+                        DiscoveryGroupPayload request = new DiscoveryGroupPayload();
 foreach (var host in hosts)
 {
     DiscoverySource seed = new DiscoverySource();

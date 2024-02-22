@@ -41,7 +41,7 @@ List<String> externalIds = new List<String>();
 mapping.ForEach(asset =>
 {
     externalIds.Add(asset["external_id"]);
-    AssetUpdateData assetUpdateRequest = new AssetUpdateData();
+    AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
     assetUpdateRequest.ExternalId = asset["external_id"];
     string filter = $"kind = {asset["kind"]} AND name = {asset["name"]}";
     var taskResponse = client.UpdateAssets(filter, assetUpdateRequest);

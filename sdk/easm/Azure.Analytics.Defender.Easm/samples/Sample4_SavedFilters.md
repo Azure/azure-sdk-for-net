@@ -19,7 +19,7 @@ To create a Saved Filter, we need to send a filter, name, and description to the
 
 ```C# Snippet:Sample4_SavedFilters_Create_Saved_Filter
 string savedFilterName = "Sample saved filter";
-SavedFilterData savedFilterRequest = new SavedFilterData("IP Address = 1.1.1.1", "Monitored Addresses");
+SavedFilterPayload savedFilterRequest = new SavedFilterPayload("IP Address = 1.1.1.1", "Monitored Addresses");
 client.CreateOrReplaceSavedFilter(savedFilterName, savedFilterRequest);
 ```
 
@@ -52,7 +52,7 @@ string monitorFilter = savedFilterResponse.Value.Filter;
 The monitored assets can be updated with an assets update call:
 
 ```C# Snippet:Sample4_SavedFilters_Update_Monitored_Assets
-AssetUpdateData assetUpdateRequest = new AssetUpdateData();
+AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
 assetUpdateRequest.State = AssetUpdateState.Confirmed;
 client.UpdateAssets(monitorFilter, assetUpdateRequest);
 ```
@@ -63,6 +63,6 @@ client.UpdateAssets(monitorFilter, assetUpdateRequest);
 Should your needs change, the filter can be updated with no need to update the scripts it's used in. Simply submit a new `SavedFiltersPut` request to replace the old description and filter with a new set.
 
 ```C# Snippet:Sample4_SavedFilters_New_Saved_Filter
-SavedFilterData newSavedFilterData = new SavedFilterData("IP Address = 0.0.0.0", "Monitoring Addresses");
+SavedFilterPayload newSavedFilterData = new SavedFilterPayload("IP Address = 0.0.0.0", "Monitoring Addresses");
 client.CreateOrReplaceSavedFilter(savedFilterName, newSavedFilterData);
 ```

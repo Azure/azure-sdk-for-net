@@ -48,7 +48,7 @@ To start a discovery from a template, we can use `DiscoveryRun` method with a te
 
 ```C# Snippet:Sample3_DiscoTemplates_Run_Disco_Group
 string groupName = "Discovery Group from Template";
-DiscoveryGroupData discoGroupRequest = new DiscoveryGroupData();
+DiscoveryGroupPayload discoGroupRequest = new DiscoveryGroupPayload();
 discoGroupRequest.TemplateId = templateId;
 client.CreateOrReplaceDiscoveryGroup(groupName, discoGroupRequest);
 client.RunDiscoveryGroup(groupName);
