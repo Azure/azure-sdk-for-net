@@ -194,12 +194,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             if (IsEnabled(EventLevel.Informational, Keywords.ResourceAttributes))
             {
                 IEnumerable<KeyValuePair<string, object>> attributes = resource.Attributes;
-                WriteResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Convert.ToString(kvp.Value, InvariantCulture))));
+                ResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Convert.ToString(kvp.Value, InvariantCulture)!)));
             }
         }
 
         [Event(EventIds.ResourceAttributes, Keywords = Keywords.ResourceAttributes, Level = EventLevel.Informational)]
-        private void WriteResourceAttributes(IEnumerable<KeyValuePair<string, string>> attributes)
+        private void ResourceAttributes(IEnumerable<KeyValuePair<string, string>> attributes)
         {
             WriteEvent(EventIds.ResourceAttributes, attributes);
         }
