@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("recipientType"u8);
                 writer.WriteStringValue(RecipientType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NotificationRecipients))
+            if (!(NotificationRecipients is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationRecipients"u8);
                 writer.WriteStartArray();

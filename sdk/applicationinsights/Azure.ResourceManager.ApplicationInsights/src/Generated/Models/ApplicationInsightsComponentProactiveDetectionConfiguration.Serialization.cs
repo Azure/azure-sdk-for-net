@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("CustomEmails"u8);
                 writer.WriteStartArray();

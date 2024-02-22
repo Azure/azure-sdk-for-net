@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Steps))
+            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();

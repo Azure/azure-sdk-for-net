@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
+            if (!(ServerCertificateThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serverCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServerX509Names))
+            if (!(ServerX509Names is ChangeTrackingList<X509CertificateName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serverX509Names"u8);
                 writer.WriteStartArray();

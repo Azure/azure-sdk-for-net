@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (Optional.IsCollectionDefined(ResourceFiles))
+            if (!(ResourceFiles is ChangeTrackingList<BatchResourceFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentSettings))
+            if (!(EnvironmentSettings is ChangeTrackingList<BatchEnvironmentSetting> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();

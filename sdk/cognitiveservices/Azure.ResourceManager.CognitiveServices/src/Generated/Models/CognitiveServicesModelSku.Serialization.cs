@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
+            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountCallRateLimit> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();

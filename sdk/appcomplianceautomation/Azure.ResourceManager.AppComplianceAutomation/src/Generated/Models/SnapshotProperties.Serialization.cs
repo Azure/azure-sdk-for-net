@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("reportSystemData"u8);
                 JsonSerializer.Serialize(writer, ReportSystemData);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
+            if (options.Format != "W" && !(ComplianceResults is ChangeTrackingList<ComplianceResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("complianceResults"u8);
                 writer.WriteStartArray();

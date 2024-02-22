@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsCollectionDefined(Action))
+            if (!(Action is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();

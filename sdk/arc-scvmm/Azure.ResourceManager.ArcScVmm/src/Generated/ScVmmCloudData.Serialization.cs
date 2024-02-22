@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("cloudCapacity"u8);
                 writer.WriteObjectValue(CloudCapacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
+            if (options.Format != "W" && !(StorageQoSPolicies is ChangeTrackingList<StorageQoSPolicy> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageQoSPolicies"u8);
                 writer.WriteStartArray();

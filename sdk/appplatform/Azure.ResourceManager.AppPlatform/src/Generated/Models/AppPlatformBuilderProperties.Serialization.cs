@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
-            if (Optional.IsCollectionDefined(BuildpackGroups))
+            if (!(BuildpackGroups is ChangeTrackingList<BuildpacksGroupProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();

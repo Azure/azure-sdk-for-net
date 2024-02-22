@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Logos))
+            if (!(Logos is ChangeTrackingList<PaymentMethodLogo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();

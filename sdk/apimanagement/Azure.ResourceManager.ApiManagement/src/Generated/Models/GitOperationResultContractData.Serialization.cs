@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
+            if (options.Format != "W" && !(ActionLog is ChangeTrackingList<OperationResultLogItemContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionLog"u8);
                 writer.WriteStartArray();

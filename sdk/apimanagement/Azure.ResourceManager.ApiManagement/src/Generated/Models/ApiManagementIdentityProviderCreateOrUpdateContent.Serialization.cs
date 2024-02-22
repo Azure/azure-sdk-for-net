@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
-            if (Optional.IsCollectionDefined(AllowedTenants))
+            if (!(AllowedTenants is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();

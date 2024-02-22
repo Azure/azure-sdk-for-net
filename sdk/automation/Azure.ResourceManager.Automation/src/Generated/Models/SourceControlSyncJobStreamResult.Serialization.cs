@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();

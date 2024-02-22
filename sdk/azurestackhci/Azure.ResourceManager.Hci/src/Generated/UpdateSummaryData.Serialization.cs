@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("hardwareModel"u8);
                 writer.WriteStringValue(HardwareModel);
             }
-            if (Optional.IsCollectionDefined(PackageVersions))
+            if (!(PackageVersions is ChangeTrackingList<HciPackageVersionInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("packageVersions"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();

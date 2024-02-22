@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WritePropertyName("result"u8);
                 writer.WriteObjectValue(Result);
             }
-            if (Optional.IsCollectionDefined(History))
+            if (!(History is ChangeTrackingList<AssignmentDeploymentJobResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteStartArray();

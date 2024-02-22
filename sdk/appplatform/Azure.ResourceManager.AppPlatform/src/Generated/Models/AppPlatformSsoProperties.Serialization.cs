@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scope))
+            if (!(Scope is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();

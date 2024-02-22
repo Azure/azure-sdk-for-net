@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(UriString);
             }
-            if (Optional.IsCollectionDefined(AddonConfigs))
+            if (!(AddonConfigs is ChangeTrackingDictionary<string, IDictionary<string, BinaryData>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("persistentDisk"u8);
                 writer.WriteObjectValue(PersistentDisk);
             }
-            if (Optional.IsCollectionDefined(CustomPersistentDisks))
+            if (!(CustomPersistentDisks is ChangeTrackingList<AppCustomPersistentDisk> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(LoadedCertificates))
+            if (!(LoadedCertificates is ChangeTrackingList<AppLoadedCertificate> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();

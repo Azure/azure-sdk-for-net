@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("verifyToken"u8);
                 writer.WriteStringValue(VerifyToken);
             }
-            if (Optional.IsCollectionDefined(Pages))
+            if (!(Pages is ChangeTrackingList<FacebookPage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pages"u8);
                 writer.WriteStartArray();

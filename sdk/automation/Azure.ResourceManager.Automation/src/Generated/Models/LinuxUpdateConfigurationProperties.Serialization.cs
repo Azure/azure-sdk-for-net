@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("includedPackageClassifications"u8);
                 writer.WriteStringValue(IncludedPackageClassifications.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedPackageNameMasks))
+            if (!(ExcludedPackageNameMasks is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedPackageNameMasks"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedPackageNameMasks))
+            if (!(IncludedPackageNameMasks is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("includedPackageNameMasks"u8);
                 writer.WriteStartArray();

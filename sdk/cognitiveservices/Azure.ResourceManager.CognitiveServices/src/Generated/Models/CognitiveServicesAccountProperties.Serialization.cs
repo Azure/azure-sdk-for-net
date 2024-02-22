@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<CognitiveServicesSkuCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(UserOwnedStorage))
+            if (!(UserOwnedStorage is ChangeTrackingList<ServiceAccountUserOwnedStorage> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userOwnedStorage"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            if (!(AllowedFqdnList is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
+            if (options.Format != "W" && !(Endpoints is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartObject();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("locations"u8);
                 writer.WriteObjectValue(Locations);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
+            if (options.Format != "W" && !(CommitmentPlanAssociations is ChangeTrackingList<CommitmentPlanAssociation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("commitmentPlanAssociations"u8);
                 writer.WriteStartArray();

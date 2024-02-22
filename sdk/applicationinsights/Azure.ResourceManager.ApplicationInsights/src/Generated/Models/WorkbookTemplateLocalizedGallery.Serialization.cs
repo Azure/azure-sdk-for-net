@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Galleries))
+            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();

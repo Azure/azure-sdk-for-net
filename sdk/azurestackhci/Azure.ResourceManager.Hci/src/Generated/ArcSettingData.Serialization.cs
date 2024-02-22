@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("aggregateState"u8);
                 writer.WriteStringValue(AggregateState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PerNodeDetails))
+            if (options.Format != "W" && !(PerNodeDetails is ChangeTrackingList<PerNodeArcState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("perNodeDetails"u8);
                 writer.WriteStartArray();

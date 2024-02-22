@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("controlStatus"u8);
                 writer.WriteStringValue(ControlStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
+            if (options.Format != "W" && !(Assessments is ChangeTrackingList<Assessment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("lastTriggerTime"u8);
                 writer.WriteStringValue(LastTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
+            if (options.Format != "W" && !(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();

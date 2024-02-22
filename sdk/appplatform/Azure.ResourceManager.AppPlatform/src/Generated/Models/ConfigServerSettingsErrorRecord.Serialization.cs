@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();

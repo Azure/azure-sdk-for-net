@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TemplateParameters))
+            if (!(TemplateParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (!(Responses is ChangeTrackingList<ResponseContract> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();

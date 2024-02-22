@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("buildPodName"u8);
                 writer.WriteStringValue(BuildPodName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BuildStages))
+            if (options.Format != "W" && !(BuildStages is ChangeTrackingList<AppPlatformBuildStageProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildStages"u8);
                 writer.WriteStartArray();

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("planInformation"u8);
                 writer.WriteObjectValue(PlanInformation);
             }
-            if (Optional.IsCollectionDefined(SavingsPlans))
+            if (!(SavingsPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlans"u8);
                 writer.WriteStartArray();

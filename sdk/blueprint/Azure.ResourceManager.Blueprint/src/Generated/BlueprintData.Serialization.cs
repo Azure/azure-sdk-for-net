@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("targetScope"u8);
                 writer.WriteStringValue(TargetScope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceGroups))
+            if (!(ResourceGroups is ChangeTrackingDictionary<string, ResourceGroupDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartObject();

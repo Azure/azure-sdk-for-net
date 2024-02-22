@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (!(CustomDomains is ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();

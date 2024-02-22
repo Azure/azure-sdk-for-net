@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteObjectValue(ConnectionType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitionValues))
+            if (options.Format != "W" && !(FieldDefinitionValues is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);
                 writer.WriteStartObject();

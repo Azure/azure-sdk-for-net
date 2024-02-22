@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("RequestUrl"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<HeaderField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Headers"u8);
                 writer.WriteStartArray();

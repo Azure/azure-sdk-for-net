@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(AuthorizationMethods))
+            if (!(AuthorizationMethods is ChangeTrackingList<AuthorizationMethod> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizationMethods"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
+            if (!(ClientAuthenticationMethods is ChangeTrackingList<ClientAuthenticationMethod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TokenBodyParameters))
+            if (!(TokenBodyParameters is ChangeTrackingList<TokenBodyParameterContract> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tokenBodyParameters"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("defaultScope"u8);
                 writer.WriteStringValue(DefaultScope);
             }
-            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (Optional.IsCollectionDefined(GrantTypes))
+            if (!(GrantTypes is ChangeTrackingList<GrantType> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteStartArray();

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("timeFinished"u8);
                 writer.WriteStringValue(TimeFinished);
             }
-            if (Optional.IsCollectionDefined(Deployments))
+            if (!(Deployments is ChangeTrackingList<AssignmentDeploymentJob> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();

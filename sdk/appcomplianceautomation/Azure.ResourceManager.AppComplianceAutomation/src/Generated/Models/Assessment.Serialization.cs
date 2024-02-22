@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
+            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<AssessmentResourceContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();

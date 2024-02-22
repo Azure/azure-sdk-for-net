@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ChannelAffinity))
+            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();

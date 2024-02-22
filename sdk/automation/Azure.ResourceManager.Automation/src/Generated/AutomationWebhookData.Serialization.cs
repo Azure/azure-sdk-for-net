@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastInvokedTime");
                 }
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

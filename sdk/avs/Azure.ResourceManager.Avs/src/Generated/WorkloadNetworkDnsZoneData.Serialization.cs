@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Domain))
+            if (!(Domain is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsServerIPs))
+            if (!(DnsServerIPs is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dnsServerIps"u8);
                 writer.WriteStartArray();

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (Optional.IsCollectionDefined(ParameterSets))
+            if (!(ParameterSets is ChangeTrackingList<AutomationActivityParameterSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameterSets"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutputTypes))
+            if (!(OutputTypes is ChangeTrackingList<AutomationActivityOutputType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();

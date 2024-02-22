@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
+            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHop> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();

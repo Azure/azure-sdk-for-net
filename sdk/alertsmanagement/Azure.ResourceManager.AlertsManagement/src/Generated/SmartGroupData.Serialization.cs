@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WritePropertyName("lastModifiedUserName"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<SmartGroupAggregatedProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (!(ResourceTypes is ChangeTrackingList<SmartGroupAggregatedProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceGroups))
+            if (!(ResourceGroups is ChangeTrackingList<SmartGroupAggregatedProperty> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonitorServices))
+            if (!(MonitorServices is ChangeTrackingList<SmartGroupAggregatedProperty> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("monitorServices"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonitorConditions))
+            if (!(MonitorConditions is ChangeTrackingList<SmartGroupAggregatedProperty> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("monitorConditions"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlertStates))
+            if (!(AlertStates is ChangeTrackingList<SmartGroupAggregatedProperty> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("alertStates"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlertSeverities))
+            if (!(AlertSeverities is ChangeTrackingList<SmartGroupAggregatedProperty> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("alertSeverities"u8);
                 writer.WriteStartArray();

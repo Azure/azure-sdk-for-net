@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DnsNames))
+            if (options.Format != "W" && !(DnsNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsNames"u8);
                 writer.WriteStartArray();

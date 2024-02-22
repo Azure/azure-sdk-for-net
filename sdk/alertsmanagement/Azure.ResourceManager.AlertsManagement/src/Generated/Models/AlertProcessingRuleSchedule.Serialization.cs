@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsCollectionDefined(Recurrences))
+            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ValidationSet))
+            if (!(ValidationSet is ChangeTrackingList<AutomationActivityParameterValidationSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationSet"u8);
                 writer.WriteStartArray();

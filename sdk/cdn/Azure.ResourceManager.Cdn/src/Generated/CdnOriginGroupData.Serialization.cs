@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(Origins))
+            if (!(Origins is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();

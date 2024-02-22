@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -37,7 +38,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
+            if (!(AudioChannelParticipantOrdering is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("audioChannelParticipantOrdering"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ChannelAffinity))
+            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();

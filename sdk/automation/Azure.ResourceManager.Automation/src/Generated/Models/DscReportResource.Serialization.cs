@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("sourceInfo"u8);
                 writer.WriteStringValue(SourceInfo);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<DscReportResourceNavigation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();

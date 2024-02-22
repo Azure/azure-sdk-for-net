@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteStringValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (!(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();

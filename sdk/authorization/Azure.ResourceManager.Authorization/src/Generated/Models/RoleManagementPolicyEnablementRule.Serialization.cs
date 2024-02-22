@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnablementRules))
+            if (!(EnablementRules is ChangeTrackingList<RoleAssignmentEnablementRuleType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();

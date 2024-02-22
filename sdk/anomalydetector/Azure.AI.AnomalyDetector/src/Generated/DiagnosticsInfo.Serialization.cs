@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("modelState"u8);
                 writer.WriteObjectValue(ModelState);
             }
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (!(VariableStates is ChangeTrackingList<VariableState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();

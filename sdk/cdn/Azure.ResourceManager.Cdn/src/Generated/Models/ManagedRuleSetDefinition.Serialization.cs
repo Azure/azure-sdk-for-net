@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RuleGroups))
+            if (options.Format != "W" && !(RuleGroups is ChangeTrackingList<ManagedRuleGroupDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();

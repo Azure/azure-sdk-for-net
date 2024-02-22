@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
-            if (Optional.IsCollectionDefined(HttpErrorRanges))
+            if (!(HttpErrorRanges is ChangeTrackingList<HttpErrorRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();

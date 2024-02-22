@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
+            if (options.Format != "W" && !(RequiredTraffics is ChangeTrackingList<AppPlatformServiceRequiredTraffic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredTraffics"u8);
                 writer.WriteStartArray();

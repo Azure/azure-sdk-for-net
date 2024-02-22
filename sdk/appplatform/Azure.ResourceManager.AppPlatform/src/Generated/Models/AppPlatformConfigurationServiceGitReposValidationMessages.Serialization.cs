@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (Optional.IsCollectionDefined(Aggregates))
+            if (!(Aggregates is ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();

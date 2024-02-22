@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            if (Optional.IsCollectionDefined(SearchPaths))
+            if (!(SearchPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
-            if (Optional.IsCollectionDefined(Visibility))
+            if (!(Visibility is ChangeTrackingList<BatchCertificateVisibility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();
