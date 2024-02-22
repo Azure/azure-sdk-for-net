@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPlacementPolicyProperties(document.RootElement, options);
+            return DeserializePlacementPolicyProperties(document.RootElement, options);
         }
 
         internal static UnknownPlacementPolicyProperties DeserializeUnknownPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPlacementPolicyProperties(document.RootElement, options);
+                        return DeserializePlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
