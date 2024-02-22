@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSupportedStackData> array = new List<AppPlatformSupportedStackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(item));
+                        array.Add(AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(item, options));
                     }
                     value = array;
                     continue;

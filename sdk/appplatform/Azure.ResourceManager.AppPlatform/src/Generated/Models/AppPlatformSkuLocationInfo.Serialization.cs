@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuZoneDetails> array = new List<AppPlatformSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuZoneDetails.DeserializeAppPlatformSkuZoneDetails(item));
+                        array.Add(AppPlatformSkuZoneDetails.DeserializeAppPlatformSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;

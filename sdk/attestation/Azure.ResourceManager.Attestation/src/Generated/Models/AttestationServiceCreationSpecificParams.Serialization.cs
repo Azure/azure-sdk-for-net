@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
+                    policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

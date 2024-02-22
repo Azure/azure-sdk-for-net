@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayData> array = new List<AppPlatformGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayData.DeserializeAppPlatformGatewayData(item));
+                        array.Add(AppPlatformGatewayData.DeserializeAppPlatformGatewayData(item, options));
                     }
                     value = array;
                     continue;

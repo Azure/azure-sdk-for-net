@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitProperty = ConfigurationServiceGitProperty.DeserializeConfigurationServiceGitProperty(property.Value);
+                    gitProperty = ConfigurationServiceGitProperty.DeserializeConfigurationServiceGitProperty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

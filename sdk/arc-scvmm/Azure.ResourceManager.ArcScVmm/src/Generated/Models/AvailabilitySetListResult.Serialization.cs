@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmAvailabilitySetData> array = new List<ScVmmAvailabilitySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(item));
+                        array.Add(ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(item, options));
                     }
                     value = array;
                     continue;

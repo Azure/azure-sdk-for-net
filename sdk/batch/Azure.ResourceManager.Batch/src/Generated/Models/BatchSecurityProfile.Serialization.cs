@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value);
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

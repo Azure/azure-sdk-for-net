@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<ExtensionData> array = new List<ExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionData.DeserializeExtensionData(item));
+                        array.Add(ExtensionData.DeserializeExtensionData(item, options));
                     }
                     value = array;
                     continue;

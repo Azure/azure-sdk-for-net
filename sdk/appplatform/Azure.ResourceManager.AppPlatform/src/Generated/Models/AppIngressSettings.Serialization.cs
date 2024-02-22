@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    clientAuth = IngressSettingsClientAuth.DeserializeIngressSettingsClientAuth(property.Value);
+                    clientAuth = IngressSettingsClientAuth.DeserializeIngressSettingsClientAuth(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

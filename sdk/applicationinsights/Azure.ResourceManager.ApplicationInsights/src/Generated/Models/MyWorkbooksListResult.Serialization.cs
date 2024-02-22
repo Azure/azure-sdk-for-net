@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<MyWorkbookData> array = new List<MyWorkbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MyWorkbookData.DeserializeMyWorkbookData(item));
+                        array.Add(MyWorkbookData.DeserializeMyWorkbookData(item, options));
                     }
                     value = array;
                     continue;

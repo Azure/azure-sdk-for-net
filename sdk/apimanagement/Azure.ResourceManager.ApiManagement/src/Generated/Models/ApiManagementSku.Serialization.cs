@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value);
+                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuLocationInfo> array = new List<ApiManagementSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuLocationInfo.DeserializeApiManagementSkuLocationInfo(item));
+                        array.Add(ApiManagementSkuLocationInfo.DeserializeApiManagementSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCosts> array = new List<ApiManagementSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCosts.DeserializeApiManagementSkuCosts(item));
+                        array.Add(ApiManagementSkuCosts.DeserializeApiManagementSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCapabilities> array = new List<ApiManagementSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item));
+                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuRestrictions> array = new List<ApiManagementSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuRestrictions.DeserializeApiManagementSkuRestrictions(item));
+                        array.Add(ApiManagementSkuRestrictions.DeserializeApiManagementSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

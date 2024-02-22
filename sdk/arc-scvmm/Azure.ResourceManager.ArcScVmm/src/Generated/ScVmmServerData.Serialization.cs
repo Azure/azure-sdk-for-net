@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value);
+                            credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fqdn"u8))

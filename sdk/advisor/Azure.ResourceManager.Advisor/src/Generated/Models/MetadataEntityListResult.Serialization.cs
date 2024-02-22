@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<MetadataEntityData> array = new List<MetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item, options));
                     }
                     value = array;
                     continue;

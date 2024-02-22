@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig.DeserializeVirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(property.Value);
+                    dynamicMemoryConfig = VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig.DeserializeVirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

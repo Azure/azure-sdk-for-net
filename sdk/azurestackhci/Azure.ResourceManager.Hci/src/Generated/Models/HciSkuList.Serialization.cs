@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciSkuData> array = new List<HciSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciSkuData.DeserializeHciSkuData(item));
+                        array.Add(HciSkuData.DeserializeHciSkuData(item, options));
                     }
                     value = array;
                     continue;
