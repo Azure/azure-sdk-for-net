@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
         }
 
         internal static UnknownThreatIntelligenceInformation DeserializeUnknownThreatIntelligenceInformation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+                        return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{options.Format}' format.");

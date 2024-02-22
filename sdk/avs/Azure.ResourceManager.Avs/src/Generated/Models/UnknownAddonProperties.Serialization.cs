@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddonProperties(document.RootElement, options);
+            return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
         }
 
         internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAddonProperties(document.RootElement, options);
+                        return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{options.Format}' format.");

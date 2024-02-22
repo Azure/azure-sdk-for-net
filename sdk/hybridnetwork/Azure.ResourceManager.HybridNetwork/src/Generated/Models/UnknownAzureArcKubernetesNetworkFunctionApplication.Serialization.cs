@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+            return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
         }
 
         internal static UnknownAzureArcKubernetesNetworkFunctionApplication DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
+                        return DeserializeAzureArcKubernetesNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionApplication)} does not support '{options.Format}' format.");

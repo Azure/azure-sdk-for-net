@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobDetails(document.RootElement, options);
+            return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
         }
 
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobDetails(document.RootElement, options);
+                        return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{options.Format}' format.");

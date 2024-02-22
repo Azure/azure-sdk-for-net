@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionProperties(document.RootElement, options);
+            return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
         }
 
         internal static UnknownFunctionProperties DeserializeUnknownFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFunctionProperties(document.RootElement, options);
+                        return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");

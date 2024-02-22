@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+            return DeserializeDatasetStorageFormat(document.RootElement, options);
         }
 
         internal static UnknownDatasetStorageFormat DeserializeUnknownDatasetStorageFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+                        return DeserializeDatasetStorageFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DatasetStorageFormat)} does not support '{options.Format}' format.");

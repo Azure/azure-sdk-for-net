@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseAdminRule(document.RootElement, options);
+            return DeserializeBaseAdminRuleData(document.RootElement, options);
         }
 
         internal static UnknownBaseAdminRule DeserializeUnknownBaseAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBaseAdminRule(document.RootElement, options);
+                        return DeserializeBaseAdminRuleData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support '{options.Format}' format.");
