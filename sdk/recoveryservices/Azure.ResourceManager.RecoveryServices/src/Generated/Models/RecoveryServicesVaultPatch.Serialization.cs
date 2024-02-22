@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value);
+                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value);
+                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SwitchCaseActivity : IUtf8JsonSerializable
+    public partial class SwitchCaseActivity : IUtf8JsonSerializable, IJsonModel<SwitchCaseActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwitchCaseActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SwitchCaseActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwitchCaseActivity DeserializeSwitchCaseActivity(JsonElement element)
+        SwitchCaseActivity IJsonModel<SwitchCaseActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwitchCaseActivity(document.RootElement, options);
+        }
+
+        internal static SwitchCaseActivity DeserializeSwitchCaseActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> value = default;
             Optional<IList<PipelineActivity>> activities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -58,13 +99,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivity> array = new List<PipelineActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivity.DeserializePipelineActivity(item));
+                        array.Add(PipelineActivity.DeserializePipelineActivity(item, options));
                     }
                     activities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SwitchCaseActivity(value.Value, Optional.ToList(activities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SwitchCaseActivity(value.Value, Optional.ToList(activities), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SwitchCaseActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SwitchCaseActivity IPersistableModel<SwitchCaseActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSwitchCaseActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SwitchCaseActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

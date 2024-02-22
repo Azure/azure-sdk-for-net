@@ -333,7 +333,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
@@ -372,7 +379,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<GuestConfigurationAssignmentReport> GetReport(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ProbeData> array = new List<ProbeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProbeData.DeserializeProbeData(item));
+                        array.Add(ProbeData.DeserializeProbeData(item, options));
                     }
                     value = array;
                     continue;

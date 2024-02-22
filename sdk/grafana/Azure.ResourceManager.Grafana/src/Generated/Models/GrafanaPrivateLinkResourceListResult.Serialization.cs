@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<GrafanaPrivateLinkResourceData> array = new List<GrafanaPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(item));
+                        array.Add(GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

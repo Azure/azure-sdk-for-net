@@ -75,7 +75,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability");
             scope.Start();
@@ -113,7 +116,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability");
             scope.Start();

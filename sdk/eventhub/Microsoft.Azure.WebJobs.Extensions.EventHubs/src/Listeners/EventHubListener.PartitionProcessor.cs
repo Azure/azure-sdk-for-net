@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        await _executor.TryExecuteAsync(input, _functionExecutionToken).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 _logger.LogDebug($"Partition Processor received events and is attempting to invoke function ({details})");
 
                                 UpdateCheckpointContext(triggerEvents, context);
-                                await TriggerExecute(triggerEvents, context, _functionExecutionToken).ConfigureAwait(false);
+                                await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
 
                                 // If there is a background timer task, cancel it and dispose of the cancellation token. If there
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else
                     {
                         UpdateCheckpointContext(events, context);
-                        await TriggerExecute(events, context, _functionExecutionToken).ConfigureAwait(false);
+                        await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
                         eventToCheckpoint = events.LastOrDefault();
                     }
 
@@ -225,7 +225,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 // Don't checkpoint if cancellation has been requested as this can lead to data loss,
                 // since the user may not actually process the event.
 
-                if (eventToCheckpoint != null && !linkedCts.IsCancellationRequested)
+                if (eventToCheckpoint != null &&
+                    // IMPORTANT - explicitly check each token to avoid data loss as the linkedCts is not canceled atomically when each of the
+                    // sources are canceled.
+                    !_functionExecutionToken.IsCancellationRequested && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
@@ -283,7 +286,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
 
                         UpdateCheckpointContext(triggerEvents, _mostRecentPartitionContext);
-                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, _functionExecutionToken).ConfigureAwait(false);
+                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);

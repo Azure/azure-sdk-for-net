@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
         public JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessPortRule> ports)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(ports, nameof(ports));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (ports == null)
+            {
+                throw new ArgumentNullException(nameof(ports));
+            }
 
             Id = id;
             Ports = ports.ToList();

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item, options));
                     }
                     summary = array;
                     continue;

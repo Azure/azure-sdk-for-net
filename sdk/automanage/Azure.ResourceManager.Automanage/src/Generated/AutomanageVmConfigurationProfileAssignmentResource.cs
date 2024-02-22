@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomanageVmConfigurationProfileAssignmentResource>> UpdateAsync(WaitUntil waitUntil, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentResource.Update");
             scope.Start();
@@ -396,7 +399,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomanageVmConfigurationProfileAssignmentResource> Update(WaitUntil waitUntil, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentResource.Update");
             scope.Start();

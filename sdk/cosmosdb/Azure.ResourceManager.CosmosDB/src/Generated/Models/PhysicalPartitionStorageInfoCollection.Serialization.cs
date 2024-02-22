@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionStorageInfo> array = new List<PhysicalPartitionStorageInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item));
+                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item, options));
                     }
                     physicalPartitionStorageInfoCollection = array;
                     continue;

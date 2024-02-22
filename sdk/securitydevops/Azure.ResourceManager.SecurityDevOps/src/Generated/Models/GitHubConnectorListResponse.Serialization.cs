@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubConnectorData> array = new List<GitHubConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubConnectorData.DeserializeGitHubConnectorData(item));
+                        array.Add(GitHubConnectorData.DeserializeGitHubConnectorData(item, options));
                     }
                     value = array;
                     continue;

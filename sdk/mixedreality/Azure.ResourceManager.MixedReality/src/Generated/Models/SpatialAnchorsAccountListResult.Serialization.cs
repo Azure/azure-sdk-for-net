@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     List<SpatialAnchorsAccountData> array = new List<SpatialAnchorsAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(item));
+                        array.Add(SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(item, options));
                     }
                     value = array;
                     continue;

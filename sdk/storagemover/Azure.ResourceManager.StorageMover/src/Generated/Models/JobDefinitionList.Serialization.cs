@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     List<JobDefinitionData> array = new List<JobDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobDefinitionData.DeserializeJobDefinitionData(item));
+                        array.Add(JobDefinitionData.DeserializeJobDefinitionData(item, options));
                     }
                     value = array;
                     continue;

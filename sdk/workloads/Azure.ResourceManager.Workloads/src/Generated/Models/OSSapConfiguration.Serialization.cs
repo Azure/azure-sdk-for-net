@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value);
+                    deployerVmPackages = DeployerVmPackages.DeserializeDeployerVmPackages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sapFqdn"u8))

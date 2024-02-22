@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AbnormalTimePeriod> array = new List<AbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item, options));
                             }
                             payload = array;
                             continue;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorDefinition> array = new List<DetectorDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item, options));
                             }
                             nonCorrelatedDetectors = array;
                             continue;

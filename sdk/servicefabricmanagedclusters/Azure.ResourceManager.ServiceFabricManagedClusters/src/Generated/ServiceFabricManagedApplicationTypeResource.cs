@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> UpdateAsync(ServiceFabricManagedApplicationTypePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.Update");
             scope.Start();
@@ -380,7 +383,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +396,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ServiceFabricManagedApplicationTypeResource> Update(ServiceFabricManagedApplicationTypePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.Update");
             scope.Start();
@@ -422,7 +428,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -436,8 +442,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.AddTag");
             scope.Start();
@@ -484,7 +496,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,8 +510,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ServiceFabricManagedApplicationTypeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.AddTag");
             scope.Start();
@@ -546,7 +564,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,7 +577,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.SetTags");
             scope.Start();
@@ -603,7 +624,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -616,7 +637,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricManagedApplicationTypeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.SetTags");
             scope.Start();
@@ -660,7 +684,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -673,7 +697,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.RemoveTag");
             scope.Start();
@@ -720,7 +747,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -733,7 +760,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ServiceFabricManagedApplicationTypeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.RemoveTag");
             scope.Start();

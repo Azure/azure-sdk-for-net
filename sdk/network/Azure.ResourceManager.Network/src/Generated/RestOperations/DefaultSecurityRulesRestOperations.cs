@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityRuleListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/> or <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
-            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
+            if (defaultSecurityRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
+            }
+            if (defaultSecurityRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/> or <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityRuleData> Get(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
-            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
+            if (defaultSecurityRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
+            }
+            if (defaultSecurityRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -228,10 +326,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -259,10 +381,34 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (networkSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkSecurityGroupName));
+            }
+            if (networkSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkSecurityGroupName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkSecurityGroupName);
             _pipeline.Send(message, cancellationToken);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureFileStorageReadSettings : IUtf8JsonSerializable
+    public partial class AzureFileStorageReadSettings : IUtf8JsonSerializable, IJsonModel<AzureFileStorageReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileStorageReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureFileStorageReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureFileStorageReadSettings DeserializeAzureFileStorageReadSettings(JsonElement element)
+        AzureFileStorageReadSettings IJsonModel<AzureFileStorageReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFileStorageReadSettings(document.RootElement, options);
+        }
+
+        internal static AzureFileStorageReadSettings DeserializeAzureFileStorageReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -236,5 +259,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureFileStorageReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
+
+        BinaryData IPersistableModel<AzureFileStorageReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureFileStorageReadSettings IPersistableModel<AzureFileStorageReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureFileStorageReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureFileStorageReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

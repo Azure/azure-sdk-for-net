@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value);
+                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))

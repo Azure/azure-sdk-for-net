@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value);
+                    display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelName"u8))

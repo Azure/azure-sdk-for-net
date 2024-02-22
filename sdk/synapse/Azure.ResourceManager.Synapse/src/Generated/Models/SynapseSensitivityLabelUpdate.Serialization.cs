@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            sensitivityLabel = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(property0.Value);
+                            sensitivityLabel = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(property0.Value, options);
                             continue;
                         }
                     }

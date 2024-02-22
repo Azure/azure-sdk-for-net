@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricAvailability> array = new List<MonitorMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item));
+                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
                     dimensions = array;
                     continue;

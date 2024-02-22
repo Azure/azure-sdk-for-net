@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountKey> array = new List<StorageAccountKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountKey.DeserializeStorageAccountKey(item));
+                        array.Add(StorageAccountKey.DeserializeStorageAccountKey(item, options));
                     }
                     keys = array;
                     continue;

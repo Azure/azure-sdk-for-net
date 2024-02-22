@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
+                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item, options));
                     }
                     bgpPeeringAddresses = array;
                     continue;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
+                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alerts"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
+                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

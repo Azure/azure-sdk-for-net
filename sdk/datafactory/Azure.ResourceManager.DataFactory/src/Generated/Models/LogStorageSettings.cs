@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogStorageSettings(DataFactoryLinkedServiceReference linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             LinkedServiceName = linkedServiceName;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -39,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/> for deserialization. </summary>
+        internal LogStorageSettings()
+        {
         }
 
         /// <summary> Log storage linked service reference. </summary>

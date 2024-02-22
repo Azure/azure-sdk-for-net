@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public DedicatedHostData(AzureLocation location, ComputeSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             VirtualMachines = new ChangeTrackingList<SubResource>();

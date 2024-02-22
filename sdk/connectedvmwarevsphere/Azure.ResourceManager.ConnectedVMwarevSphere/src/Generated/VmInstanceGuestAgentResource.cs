@@ -278,7 +278,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VmInstanceGuestAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, VmInstanceGuestAgentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _vmInstanceGuestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("VmInstanceGuestAgentResource.CreateOrUpdate");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VmInstanceGuestAgentResource> CreateOrUpdate(WaitUntil waitUntil, VmInstanceGuestAgentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _vmInstanceGuestAgentVmInstanceGuestAgentsClientDiagnostics.CreateScope("VmInstanceGuestAgentResource.CreateOrUpdate");
             scope.Start();

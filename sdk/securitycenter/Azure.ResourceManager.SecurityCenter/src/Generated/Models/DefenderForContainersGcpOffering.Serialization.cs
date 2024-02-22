@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value);
+                    nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataPipelineNativeCloudConnection"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value);
+                    dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("auditLogsAutoProvisioningFlag"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value);
+                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AdminRuleGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleCollectionName, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AdminRuleGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ruleCollectionName, AdminRuleGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual async Task<Response<AdminRuleGroupResource>> GetAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual Response<AdminRuleGroupResource> Get(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<AdminRuleGroupResource>> GetIfExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         public virtual NullableResponse<AdminRuleGroupResource> GetIfExists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+            if (ruleCollectionName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleCollectionName));
+            }
+            if (ruleCollectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
+            }
 
             using var scope = _adminRuleGroupAdminRuleCollectionsClientDiagnostics.CreateScope("AdminRuleGroupCollection.GetIfExists");
             scope.Start();

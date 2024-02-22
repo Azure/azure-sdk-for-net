@@ -273,7 +273,7 @@ ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
         {
             return new ToolOutput(toolCall, GetUserFavoriteCity());
         }
-        using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Parameters);
+        using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
         if (functionToolCall.Name == getCityNicknameTool.Name)
         {
             string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();

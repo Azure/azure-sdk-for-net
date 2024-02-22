@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="returnReason"/> is null. </exception>
         public EdgeOrderItemReturnContent(string returnReason)
         {
-            Argument.AssertNotNull(returnReason, nameof(returnReason));
+            if (returnReason == null)
+            {
+                throw new ArgumentNullException(nameof(returnReason));
+            }
 
             ReturnReason = returnReason;
         }

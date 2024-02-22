@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
+                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
+                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"u8))

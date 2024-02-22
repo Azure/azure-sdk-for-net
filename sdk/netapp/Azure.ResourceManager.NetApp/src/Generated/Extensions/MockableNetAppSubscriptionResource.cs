@@ -142,7 +142,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
@@ -181,7 +184,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
@@ -220,7 +226,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
@@ -259,7 +268,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
@@ -298,7 +310,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
@@ -337,7 +352,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
@@ -446,7 +464,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -485,7 +506,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -525,7 +549,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -568,7 +595,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -663,7 +693,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
+            if (quotaLimitName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaLimitName));
+            }
+            if (quotaLimitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaLimitName));
+            }
 
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppQuotaLimit");
             scope.Start();
@@ -703,7 +740,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
+            if (quotaLimitName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaLimitName));
+            }
+            if (quotaLimitName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaLimitName));
+            }
 
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppQuotaLimit");
             scope.Start();

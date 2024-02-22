@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -36,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/> for deserialization. </summary>
+        internal DataFactoryCredentialReference()
+        {
         }
 
         /// <summary> Credential reference type. </summary>

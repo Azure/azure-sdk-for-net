@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerFirewallRuleData> array = new List<MySqlFlexibleServerFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(item));
+                        array.Add(MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

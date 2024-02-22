@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SynapseSparkJobDefinitionActivity : IUtf8JsonSerializable
+    public partial class SynapseSparkJobDefinitionActivity : IUtf8JsonSerializable, IJsonModel<SynapseSparkJobDefinitionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSparkJobDefinitionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseSparkJobDefinitionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -255,8 +264,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseSparkJobDefinitionActivity DeserializeSynapseSparkJobDefinitionActivity(JsonElement element)
+        SynapseSparkJobDefinitionActivity IJsonModel<SynapseSparkJobDefinitionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSparkJobDefinitionActivity(document.RootElement, options);
+        }
+
+        internal static SynapseSparkJobDefinitionActivity DeserializeSynapseSparkJobDefinitionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -305,7 +328,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -350,7 +373,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -364,7 +387,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -380,7 +403,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("sparkJob"u8))
                         {
-                            sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value);
+                            sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("args"u8))
@@ -500,7 +523,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            targetBigDataPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value);
+                            targetBigDataPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("executorSize"u8))
@@ -554,7 +577,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value);
+                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sparkConfig"u8))
@@ -586,5 +609,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
         }
+
+        BinaryData IPersistableModel<SynapseSparkJobDefinitionActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseSparkJobDefinitionActivity IPersistableModel<SynapseSparkJobDefinitionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSparkJobDefinitionActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSparkJobDefinitionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightPigActivity(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
@@ -53,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ScriptLinkedService = scriptLinkedService;
             Defines = defines;
             ActivityType = activityType ?? "HDInsightPig";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

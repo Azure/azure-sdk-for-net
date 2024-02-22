@@ -90,10 +90,38 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ComponentVersionResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, string componentName, string orderBy = null, int? top = null, string skip = null, string stage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName, componentName, orderBy, top, skip, stage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,10 +153,38 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ComponentVersionResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string registryName, string componentName, string orderBy = null, int? top = null, string skip = null, string stage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName, componentName, orderBy, top, skip, stage);
             _pipeline.Send(message, cancellationToken);
@@ -181,11 +237,46 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, componentName, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -211,11 +302,46 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, componentName, version);
             _pipeline.Send(message, cancellationToken);
@@ -265,11 +391,46 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MachineLearningComponentVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, componentName, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -300,11 +461,46 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MachineLearningComponentVersionData> Get(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, componentName, version);
             _pipeline.Send(message, cancellationToken);
@@ -364,12 +560,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, registryName, componentName, version, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -395,12 +629,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="componentName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string registryName, string componentName, string version, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, registryName, componentName, version, data);
             _pipeline.Send(message, cancellationToken);
@@ -443,11 +715,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ComponentVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string componentName, string orderBy = null, int? top = null, string skip = null, string stage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName, componentName, orderBy, top, skip, stage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -480,11 +783,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ComponentVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string componentName, string orderBy = null, int? top = null, string skip = null, string stage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName, componentName, orderBy, top, skip, stage);
             _pipeline.Send(message, cancellationToken);

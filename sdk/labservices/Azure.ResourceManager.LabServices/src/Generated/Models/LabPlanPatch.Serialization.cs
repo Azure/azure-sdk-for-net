@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value);
+                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedRegions"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"u8))

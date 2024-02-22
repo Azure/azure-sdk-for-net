@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    metadata = SearchMetadata.DeserializeSearchMetadata(property.Value);
+                    metadata = SearchMetadata.DeserializeSearchMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSearchSchemaValue> array = new List<OperationalInsightsSearchSchemaValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(item));
+                        array.Add(OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(item, options));
                     }
                     value = array;
                     continue;

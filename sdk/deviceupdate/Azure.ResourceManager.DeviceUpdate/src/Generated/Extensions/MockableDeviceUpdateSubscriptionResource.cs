@@ -71,7 +71,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DeviceUpdateNameAvailabilityResult>> CheckDeviceUpdateNameAvailabilityAsync(DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableDeviceUpdateSubscriptionResource.CheckDeviceUpdateNameAvailability");
             scope.Start();
@@ -109,7 +112,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DeviceUpdateNameAvailabilityResult> CheckDeviceUpdateNameAvailability(DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableDeviceUpdateSubscriptionResource.CheckDeviceUpdateNameAvailability");
             scope.Start();

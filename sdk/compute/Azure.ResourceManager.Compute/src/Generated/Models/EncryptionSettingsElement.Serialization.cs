@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value);
+                    diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value);
+                    keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

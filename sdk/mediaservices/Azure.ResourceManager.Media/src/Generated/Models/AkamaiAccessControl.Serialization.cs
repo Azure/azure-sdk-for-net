@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<AkamaiSignatureHeaderAuthenticationKey> array = new List<AkamaiSignatureHeaderAuthenticationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AkamaiSignatureHeaderAuthenticationKey.DeserializeAkamaiSignatureHeaderAuthenticationKey(item));
+                        array.Add(AkamaiSignatureHeaderAuthenticationKey.DeserializeAkamaiSignatureHeaderAuthenticationKey(item, options));
                     }
                     akamaiSignatureHeaderAuthenticationKeyList = array;
                     continue;

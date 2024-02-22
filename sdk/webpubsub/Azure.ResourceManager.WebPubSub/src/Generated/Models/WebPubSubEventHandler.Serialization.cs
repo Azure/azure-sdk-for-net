@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value);
+                    auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

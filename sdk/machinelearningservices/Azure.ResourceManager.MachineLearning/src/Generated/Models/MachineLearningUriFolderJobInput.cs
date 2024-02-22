@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MachineLearningUriFolderJobInput(Uri uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Uri = uri;
             JobInputType = JobInputType.UriFolder;

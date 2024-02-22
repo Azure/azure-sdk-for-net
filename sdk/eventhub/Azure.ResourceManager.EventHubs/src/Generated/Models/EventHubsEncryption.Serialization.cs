@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsKeyVaultProperties> array = new List<EventHubsKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item));
+                        array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;

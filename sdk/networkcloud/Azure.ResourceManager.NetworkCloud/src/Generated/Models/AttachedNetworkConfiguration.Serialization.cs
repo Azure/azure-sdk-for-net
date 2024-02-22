@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<L2NetworkAttachmentConfiguration> array = new List<L2NetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L2NetworkAttachmentConfiguration.DeserializeL2NetworkAttachmentConfiguration(item));
+                        array.Add(L2NetworkAttachmentConfiguration.DeserializeL2NetworkAttachmentConfiguration(item, options));
                     }
                     l2Networks = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<L3NetworkAttachmentConfiguration> array = new List<L3NetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L3NetworkAttachmentConfiguration.DeserializeL3NetworkAttachmentConfiguration(item));
+                        array.Add(L3NetworkAttachmentConfiguration.DeserializeL3NetworkAttachmentConfiguration(item, options));
                     }
                     l3Networks = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<TrunkedNetworkAttachmentConfiguration> array = new List<TrunkedNetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrunkedNetworkAttachmentConfiguration.DeserializeTrunkedNetworkAttachmentConfiguration(item));
+                        array.Add(TrunkedNetworkAttachmentConfiguration.DeserializeTrunkedNetworkAttachmentConfiguration(item, options));
                     }
                     trunkedNetworks = array;
                     continue;

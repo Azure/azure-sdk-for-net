@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleAssociationData> array = new List<DataCollectionRuleAssociationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(item));
+                        array.Add(DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(item, options));
                     }
                     value = array;
                     continue;

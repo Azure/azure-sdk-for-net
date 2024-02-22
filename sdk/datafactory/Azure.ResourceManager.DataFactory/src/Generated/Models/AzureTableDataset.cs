@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
         public AzureTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(tableName, nameof(tableName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
 
             TableName = tableName;
             DatasetType = "AzureTable";
@@ -43,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "AzureTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureTableDataset"/> for deserialization. </summary>
+        internal AzureTableDataset()
+        {
         }
 
         /// <summary> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </summary>

@@ -60,9 +60,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/> or <paramref name="retentionPolicy"/> is null. </exception>
         public LogProfileData(AzureLocation location, IEnumerable<AzureLocation> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
         {
-            Argument.AssertNotNull(locations, nameof(locations));
-            Argument.AssertNotNull(categories, nameof(categories));
-            Argument.AssertNotNull(retentionPolicy, nameof(retentionPolicy));
+            if (locations == null)
+            {
+                throw new ArgumentNullException(nameof(locations));
+            }
+            if (categories == null)
+            {
+                throw new ArgumentNullException(nameof(categories));
+            }
+            if (retentionPolicy == null)
+            {
+                throw new ArgumentNullException(nameof(retentionPolicy));
+            }
 
             Locations = locations.ToList();
             Categories = categories.ToList();

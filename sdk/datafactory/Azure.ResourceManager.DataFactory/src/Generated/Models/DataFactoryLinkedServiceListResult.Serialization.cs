@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +14,73 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class DataFactoryLinkedServiceListResult
+    internal partial class DataFactoryLinkedServiceListResult : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceListResult>
     {
-        internal static DataFactoryLinkedServiceListResult DeserializeDataFactoryLinkedServiceListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryLinkedServiceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFactoryLinkedServiceListResult IJsonModel<DataFactoryLinkedServiceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryLinkedServiceListResult(document.RootElement, options);
+        }
+
+        internal static DataFactoryLinkedServiceListResult DeserializeDataFactoryLinkedServiceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<DataFactoryLinkedServiceData> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceData> array = new List<DataFactoryLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryLinkedServiceData.DeserializeDataFactoryLinkedServiceData(item));
+                        array.Add(DataFactoryLinkedServiceData.DeserializeDataFactoryLinkedServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -39,8 +98,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryLinkedServiceListResult(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryLinkedServiceListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFactoryLinkedServiceListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryLinkedServiceListResult IPersistableModel<DataFactoryLinkedServiceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryLinkedServiceListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryLinkedServiceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

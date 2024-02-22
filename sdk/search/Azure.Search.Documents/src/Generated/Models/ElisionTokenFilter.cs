@@ -19,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ElisionTokenFilter(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Articles = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";

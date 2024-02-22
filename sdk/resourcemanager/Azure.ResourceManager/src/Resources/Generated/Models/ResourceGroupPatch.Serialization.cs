@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
+                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))

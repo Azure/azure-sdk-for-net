@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = KikChannelProperties.DeserializeKikChannelProperties(property.Value);
+                    properties = KikChannelProperties.DeserializeKikChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

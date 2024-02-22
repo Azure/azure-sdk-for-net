@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricIPPrefixData> array = new List<NetworkFabricIPPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(item));
+                        array.Add(NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(item, options));
                     }
                     value = array;
                     continue;

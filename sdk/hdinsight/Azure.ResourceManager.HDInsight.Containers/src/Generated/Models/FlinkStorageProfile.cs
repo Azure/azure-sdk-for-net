@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageUriString"/> is null. </exception>
         public FlinkStorageProfile(string storageUriString)
         {
-            Argument.AssertNotNull(storageUriString, nameof(storageUriString));
+            if (storageUriString == null)
+            {
+                throw new ArgumentNullException(nameof(storageUriString));
+            }
 
             StorageUriString = storageUriString;
         }

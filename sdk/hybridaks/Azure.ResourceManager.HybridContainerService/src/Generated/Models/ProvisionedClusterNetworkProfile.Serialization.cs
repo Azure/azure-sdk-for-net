@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"u8))

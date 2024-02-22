@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
         public ApplicationInsightsComponentData(AzureLocation location, string kind) : base(location)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
+            if (kind == null)
+            {
+                throw new ArgumentNullException(nameof(kind));
+            }
 
             Kind = kind;
             PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();

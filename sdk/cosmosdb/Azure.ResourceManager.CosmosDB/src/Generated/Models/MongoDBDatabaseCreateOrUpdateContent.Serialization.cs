@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = MongoDBDatabaseResourceInfo.DeserializeMongoDBDatabaseResourceInfo(property0.Value);
+                            resource = MongoDBDatabaseResourceInfo.DeserializeMongoDBDatabaseResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            options0 = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(property0.Value);
+                            options0 = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(property0.Value, options);
                             continue;
                         }
                     }

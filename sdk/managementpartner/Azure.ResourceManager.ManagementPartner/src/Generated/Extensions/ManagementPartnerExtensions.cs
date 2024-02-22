@@ -44,7 +44,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> Returns a <see cref="PartnerResponseResource"/> object. </returns>
         public static PartnerResponseResource GetPartnerResponseResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagementPartnerArmClient(client).GetPartnerResponseResource(id);
         }
@@ -61,7 +64,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> An object representing collection of PartnerResponseResources and their operations over a PartnerResponseResource. </returns>
         public static PartnerResponseCollection GetPartnerResponses(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponses();
         }
@@ -99,7 +105,10 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static async Task<Response<PartnerResponseResource>> GetPartnerResponseAsync(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponseAsync(partnerId, cancellationToken).ConfigureAwait(false);
         }
@@ -137,7 +146,10 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static Response<PartnerResponseResource> GetPartnerResponse(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponse(partnerId, cancellationToken);
         }
@@ -169,7 +181,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> An async collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationResponse> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableManagementPartnerTenantResource(tenantResource).GetOperationsAsync(cancellationToken);
         }
@@ -201,7 +216,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationResponse> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableManagementPartnerTenantResource(tenantResource).GetOperations(cancellationToken);
         }

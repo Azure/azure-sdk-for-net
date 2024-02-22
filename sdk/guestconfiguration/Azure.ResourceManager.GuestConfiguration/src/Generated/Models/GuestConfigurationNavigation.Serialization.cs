@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
                     configurationParameter = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
                     configurationProtectedParameter = array;
                     continue;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value);
+                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

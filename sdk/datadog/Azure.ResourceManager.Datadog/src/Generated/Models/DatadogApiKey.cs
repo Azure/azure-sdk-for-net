@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public DatadogApiKey(string key)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             Key = key;
         }

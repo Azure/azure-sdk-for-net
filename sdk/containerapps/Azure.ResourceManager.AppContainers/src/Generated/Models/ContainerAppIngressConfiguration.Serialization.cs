@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRevisionTrafficWeight> array = new List<ContainerAppRevisionTrafficWeight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item));
+                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item, options));
                     }
                     traffic = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCustomDomain> array = new List<ContainerAppCustomDomain>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item));
+                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppIPSecurityRestrictionRule> array = new List<ContainerAppIPSecurityRestrictionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item));
+                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item, options));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value);
+                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clientCertificateMode"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value);
+                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

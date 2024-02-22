@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="username"/> is null. </exception>
         public EloquaLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> username)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(username, nameof(username));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             Endpoint = endpoint;
             Username = username;
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Eloqua";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/> for deserialization. </summary>
+        internal EloquaLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Eloqua server. (i.e. eloqua.example.com). </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public SybaseLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(database, nameof(database));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (database == null)
+            {
+                throw new ArgumentNullException(nameof(database));
+            }
 
             Server = server;
             Database = database;
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Sybase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
+        internal SybaseLinkedService()
+        {
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>

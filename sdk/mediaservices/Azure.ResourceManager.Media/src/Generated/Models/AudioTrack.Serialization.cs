@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dashSettings"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mpeg4TrackId"u8))

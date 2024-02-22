@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vMwareSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareMigrateFabricModelCustomProperties(ResourceIdentifier vMwareSiteId, ResourceIdentifier migrationSolutionId)
         {
-            Argument.AssertNotNull(vMwareSiteId, nameof(vMwareSiteId));
-            Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
+            if (vMwareSiteId == null)
+            {
+                throw new ArgumentNullException(nameof(vMwareSiteId));
+            }
+            if (migrationSolutionId == null)
+            {
+                throw new ArgumentNullException(nameof(migrationSolutionId));
+            }
 
             VMwareSiteId = vMwareSiteId;
             MigrationSolutionId = migrationSolutionId;

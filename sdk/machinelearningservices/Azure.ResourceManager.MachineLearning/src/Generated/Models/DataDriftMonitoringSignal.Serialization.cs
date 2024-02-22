@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataSegment = null;
                         continue;
                     }
-                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value);
+                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("featureDataTypeOverride"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         features = null;
                         continue;
                     }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value);
+                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThresholds"u8))
@@ -195,19 +195,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<DataDriftMetricThresholdBase> array = new List<DataDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item));
+                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))

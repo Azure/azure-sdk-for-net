@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public DeleteActivity(string name, DatasetReference dataset) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(dataset, nameof(dataset));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
 
             Dataset = dataset;
             ActivityType = "Delete";
@@ -58,6 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dataset = dataset;
             StoreSettings = storeSettings;
             ActivityType = activityType ?? "Delete";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/> for deserialization. </summary>
+        internal DeleteActivity()
+        {
         }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>

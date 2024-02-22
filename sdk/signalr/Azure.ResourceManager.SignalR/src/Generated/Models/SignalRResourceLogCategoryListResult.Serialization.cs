@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRResourceLogCategory> array = new List<SignalRResourceLogCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item));
+                        array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item, options));
                     }
                     categories = array;
                     continue;

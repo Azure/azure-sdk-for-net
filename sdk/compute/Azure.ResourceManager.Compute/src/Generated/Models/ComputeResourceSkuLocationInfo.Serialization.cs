@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSkuZoneDetails> array = new List<ComputeResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item));
+                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;

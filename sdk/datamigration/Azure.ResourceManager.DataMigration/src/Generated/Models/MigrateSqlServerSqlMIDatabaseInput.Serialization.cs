@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFilePaths"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public TwilioLinkedService(DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
         {
-            Argument.AssertNotNull(userName, nameof(userName));
-            Argument.AssertNotNull(password, nameof(password));
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             UserName = userName;
             Password = password;
@@ -43,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserName = userName;
             Password = password;
             LinkedServiceType = linkedServiceType ?? "Twilio";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/> for deserialization. </summary>
+        internal TwilioLinkedService()
+        {
         }
 
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>

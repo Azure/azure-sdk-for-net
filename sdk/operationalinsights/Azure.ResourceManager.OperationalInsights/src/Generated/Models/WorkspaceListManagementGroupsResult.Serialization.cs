@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsManagementGroup> array = new List<OperationalInsightsManagementGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item));
+                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item, options));
                     }
                     value = array;
                     continue;

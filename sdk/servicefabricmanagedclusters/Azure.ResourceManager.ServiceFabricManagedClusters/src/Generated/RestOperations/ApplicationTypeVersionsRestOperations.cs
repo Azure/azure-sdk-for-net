@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01-preview";
+            _apiVersion = apiVersion ?? "2023-12-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,11 +72,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceFabricManagedApplicationTypeVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,11 +142,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceFabricManagedApplicationTypeVersionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version);
             _pipeline.Send(message, cancellationToken);
@@ -171,12 +241,50 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricManagedApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -202,12 +310,50 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricManagedApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version, data);
             _pipeline.Send(message, cancellationToken);
@@ -261,12 +407,50 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceFabricManagedApplicationTypeVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricManagedApplicationTypeVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -296,12 +480,50 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceFabricManagedApplicationTypeVersionData> Update(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, ServiceFabricManagedApplicationTypeVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version, patch);
             _pipeline.Send(message, cancellationToken);
@@ -354,11 +576,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -384,11 +641,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationTypeName"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName, version);
             _pipeline.Send(message, cancellationToken);
@@ -436,10 +728,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationTypeVersionResourceList>> ListByApplicationTypesAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
 
             using var message = CreateListByApplicationTypesRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,10 +787,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationTypeVersionResourceList> ListByApplicationTypes(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
 
             using var message = CreateListByApplicationTypesRequest(subscriptionId, resourceGroupName, clusterName, applicationTypeName);
             _pipeline.Send(message, cancellationToken);
@@ -513,11 +861,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationTypeVersionResourceList>> ListByApplicationTypesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
 
             using var message = CreateListByApplicationTypesNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, applicationTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -546,11 +925,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationTypeVersionResourceList> ListByApplicationTypesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (applicationTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationTypeName));
+            }
+            if (applicationTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationTypeName));
+            }
 
             using var message = CreateListByApplicationTypesNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, applicationTypeName);
             _pipeline.Send(message, cancellationToken);

@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> UpdateAsync(CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> Update(CommunicationServiceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
             scope.Start();
@@ -520,7 +526,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
@@ -562,7 +571,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CommunicationServiceKeys> RegenerateKey(RegenerateCommunicationServiceKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
@@ -605,8 +617,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
             scope.Start();
@@ -667,8 +685,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
             scope.Start();
@@ -728,7 +752,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
             scope.Start();
@@ -785,7 +812,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
             scope.Start();
@@ -842,7 +872,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
             scope.Start();
@@ -902,7 +935,10 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
             scope.Start();

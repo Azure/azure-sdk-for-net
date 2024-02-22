@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisServicePrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<HealthcareApisServicePrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -228,7 +242,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -271,7 +292,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -314,7 +342,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthcareApisServicePrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -359,7 +394,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual NullableResponse<HealthcareApisServicePrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _healthcareApisServicePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
         public CommonDataServiceForAppsLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType)
         {
-            Argument.AssertNotNull(deploymentType, nameof(deploymentType));
-            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
+            if (deploymentType == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentType));
+            }
+            if (authenticationType == null)
+            {
+                throw new ArgumentNullException(nameof(authenticationType));
+            }
 
             DeploymentType = deploymentType;
             AuthenticationType = authenticationType;
@@ -63,6 +68,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalCredential = servicePrincipalCredential;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "CommonDataServiceForApps";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/> for deserialization. </summary>
+        internal CommonDataServiceForAppsLinkedService()
+        {
         }
 
         /// <summary> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </summary>

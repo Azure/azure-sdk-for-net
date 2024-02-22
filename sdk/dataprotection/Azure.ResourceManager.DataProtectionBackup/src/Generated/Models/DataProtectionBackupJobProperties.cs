@@ -69,19 +69,58 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="activityId"/>, <paramref name="backupInstanceFriendlyName"/>, <paramref name="dataSourceId"/>, <paramref name="dataSourceName"/>, <paramref name="dataSourceType"/>, <paramref name="operation"/>, <paramref name="operationCategory"/>, <paramref name="sourceResourceGroup"/>, <paramref name="sourceSubscriptionId"/>, <paramref name="status"/>, <paramref name="subscriptionId"/>, <paramref name="supportedActions"/> or <paramref name="vaultName"/> is null. </exception>
         public DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
         {
-            Argument.AssertNotNull(activityId, nameof(activityId));
-            Argument.AssertNotNull(backupInstanceFriendlyName, nameof(backupInstanceFriendlyName));
-            Argument.AssertNotNull(dataSourceId, nameof(dataSourceId));
-            Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
-            Argument.AssertNotNull(dataSourceType, nameof(dataSourceType));
-            Argument.AssertNotNull(operation, nameof(operation));
-            Argument.AssertNotNull(operationCategory, nameof(operationCategory));
-            Argument.AssertNotNull(sourceResourceGroup, nameof(sourceResourceGroup));
-            Argument.AssertNotNull(sourceSubscriptionId, nameof(sourceSubscriptionId));
-            Argument.AssertNotNull(status, nameof(status));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(supportedActions, nameof(supportedActions));
-            Argument.AssertNotNull(vaultName, nameof(vaultName));
+            if (activityId == null)
+            {
+                throw new ArgumentNullException(nameof(activityId));
+            }
+            if (backupInstanceFriendlyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupInstanceFriendlyName));
+            }
+            if (dataSourceId == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceId));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (dataSourceType == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceType));
+            }
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+            if (operationCategory == null)
+            {
+                throw new ArgumentNullException(nameof(operationCategory));
+            }
+            if (sourceResourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResourceGroup));
+            }
+            if (sourceSubscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceSubscriptionId));
+            }
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (supportedActions == null)
+            {
+                throw new ArgumentNullException(nameof(supportedActions));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;

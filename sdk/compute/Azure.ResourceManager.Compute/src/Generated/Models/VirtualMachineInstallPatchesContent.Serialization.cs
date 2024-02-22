@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value);
+                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value);
+                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

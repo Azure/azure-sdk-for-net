@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AzureReachabilityReportLocation(string country)
         {
-            Argument.AssertNotNull(country, nameof(country));
+            if (country == null)
+            {
+                throw new ArgumentNullException(nameof(country));
+            }
 
             Country = country;
         }

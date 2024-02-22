@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value);
+                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupConfiguration"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value);
+                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value);
+                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))

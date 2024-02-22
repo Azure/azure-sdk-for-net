@@ -82,7 +82,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// The available derived classes include <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/> and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
-        /// <param name="serviceDnsName"> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </param>
+        /// <param name="serviceDnsName">
+        /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
+        /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
+        /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
+        ///
+        /// </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -131,7 +136,12 @@ namespace Azure.ResourceManager.ServiceFabric
         public PartitionSchemeDescription PartitionDescription { get; set; }
         /// <summary> The activation Mode of the service package. </summary>
         public ArmServicePackageActivationMode? ServicePackageActivationMode { get; set; }
-        /// <summary> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </summary>
+        /// <summary>
+        /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
+        /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
+        /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
+        ///
+        /// </summary>
         public string ServiceDnsName { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }

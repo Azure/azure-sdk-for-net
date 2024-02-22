@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsResolverInboundEndpointData> array = new List<DnsResolverInboundEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(item));
+                        array.Add(DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(item, options));
                     }
                     value = array;
                     continue;

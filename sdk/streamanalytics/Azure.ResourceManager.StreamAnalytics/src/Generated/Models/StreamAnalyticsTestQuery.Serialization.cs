@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 if (property.NameEquals("streamingJob"u8))
                 {
-                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value);
+                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DynamicsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "DynamicsEntity";
         }
@@ -40,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             EntityName = entityName;
             DatasetType = datasetType ?? "DynamicsEntity";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/> for deserialization. </summary>
+        internal DynamicsEntityDataset()
+        {
         }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>

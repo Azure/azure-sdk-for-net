@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionCalculatedSavingsProperties> array = new List<ConsumptionCalculatedSavingsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item));
+                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item, options));
                     }
                     calculatedSavings = array;
                     continue;

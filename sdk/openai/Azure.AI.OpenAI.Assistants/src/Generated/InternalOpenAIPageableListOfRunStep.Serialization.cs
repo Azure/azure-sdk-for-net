@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStep> array = new List<RunStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStep.DeserializeRunStep(item));
+                        array.Add(RunStep.DeserializeRunStep(item, options));
                     }
                     data = array;
                     continue;

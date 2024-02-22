@@ -54,10 +54,22 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="endpointUri"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         public RoutingCosmosDBSqlApiProperties(string name, Uri endpointUri, string databaseName, string containerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(endpointUri, nameof(endpointUri));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (endpointUri == null)
+            {
+                throw new ArgumentNullException(nameof(endpointUri));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             Name = name;
             EndpointUri = endpointUri;

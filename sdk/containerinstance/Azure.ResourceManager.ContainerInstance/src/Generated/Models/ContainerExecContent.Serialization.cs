@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    terminalSize = ContainerExecRequestTerminalSize.DeserializeContainerExecRequestTerminalSize(property.Value);
+                    terminalSize = ContainerExecRequestTerminalSize.DeserializeContainerExecRequestTerminalSize(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

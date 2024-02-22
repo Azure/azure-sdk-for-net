@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public CosmosDBAccountCorsPolicy(string allowedOrigins)
         {
-            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException(nameof(allowedOrigins));
+            }
 
             AllowedOrigins = allowedOrigins;
         }

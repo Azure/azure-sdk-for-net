@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityPartnerProviderData> array = new List<SecurityPartnerProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(item));
+                        array.Add(SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(item, options));
                     }
                     value = array;
                     continue;

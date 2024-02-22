@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonRedshiftTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "AmazonRedshiftTable";
         }
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             DatasetType = datasetType ?? "AmazonRedshiftTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/> for deserialization. </summary>
+        internal AmazonRedshiftTableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

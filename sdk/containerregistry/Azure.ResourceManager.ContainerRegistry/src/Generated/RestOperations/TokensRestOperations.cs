@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryTokenListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryTokenListResult> List(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryTokenData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string tokenName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, tokenName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryTokenData> Get(string subscriptionId, string resourceGroupName, string registryName, string tokenName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, tokenName);
             _pipeline.Send(message, cancellationToken);
@@ -241,11 +339,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string tokenName, ContainerRegistryTokenData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, tokenName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -270,11 +399,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string registryName, string tokenName, ContainerRegistryTokenData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, tokenName, data);
             _pipeline.Send(message, cancellationToken);
@@ -320,10 +480,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string registryName, string tokenName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, tokenName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -348,10 +536,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string registryName, string tokenName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, tokenName);
             _pipeline.Send(message, cancellationToken);
@@ -403,11 +619,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string tokenName, ContainerRegistryTokenPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, tokenName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -432,11 +679,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string registryName, string tokenName, ContainerRegistryTokenPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (tokenName == null)
+            {
+                throw new ArgumentNullException(nameof(tokenName));
+            }
+            if (tokenName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(tokenName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, tokenName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -474,10 +752,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryTokenListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -505,10 +807,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryTokenListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);

@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element);
-                    case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element);
+                    case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element, options);
+                    case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
                 }
             }
             string odataType = "#Microsoft.Media.ImageFormat";

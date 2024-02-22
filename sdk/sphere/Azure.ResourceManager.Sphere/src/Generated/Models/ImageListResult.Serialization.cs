@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereImageData> array = new List<SphereImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereImageData.DeserializeSphereImageData(item));
+                        array.Add(SphereImageData.DeserializeSphereImageData(item, options));
                     }
                     value = array;
                     continue;

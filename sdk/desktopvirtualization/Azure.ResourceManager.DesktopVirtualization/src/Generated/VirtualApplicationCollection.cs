@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<VirtualApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<VirtualApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual NullableResponse<VirtualApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetIfExists");
             scope.Start();

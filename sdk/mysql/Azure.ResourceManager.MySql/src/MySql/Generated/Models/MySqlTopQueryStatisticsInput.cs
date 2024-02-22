@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -56,9 +55,18 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregationFunction"/>, <paramref name="observedMetric"/> or <paramref name="aggregationWindow"/> is null. </exception>
         public MySqlTopQueryStatisticsInput(int numberOfTopQueries, string aggregationFunction, string observedMetric, DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow)
         {
-            Argument.AssertNotNull(aggregationFunction, nameof(aggregationFunction));
-            Argument.AssertNotNull(observedMetric, nameof(observedMetric));
-            Argument.AssertNotNull(aggregationWindow, nameof(aggregationWindow));
+            if (aggregationFunction == null)
+            {
+                throw new ArgumentNullException(nameof(aggregationFunction));
+            }
+            if (observedMetric == null)
+            {
+                throw new ArgumentNullException(nameof(observedMetric));
+            }
+            if (aggregationWindow == null)
+            {
+                throw new ArgumentNullException(nameof(aggregationWindow));
+            }
 
             NumberOfTopQueries = numberOfTopQueries;
             AggregationFunction = aggregationFunction;

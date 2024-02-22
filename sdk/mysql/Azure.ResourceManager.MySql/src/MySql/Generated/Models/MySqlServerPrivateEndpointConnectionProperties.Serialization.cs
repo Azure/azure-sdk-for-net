@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = MySqlServerPrivateLinkServiceConnectionStateProperty.DeserializeMySqlServerPrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = MySqlServerPrivateLinkServiceConnectionStateProperty.DeserializeMySqlServerPrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

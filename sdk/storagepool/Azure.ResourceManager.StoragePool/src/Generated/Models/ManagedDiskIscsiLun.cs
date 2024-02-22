@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="managedDiskAzureResourceId"/> is null. </exception>
         public ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(managedDiskAzureResourceId, nameof(managedDiskAzureResourceId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (managedDiskAzureResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(managedDiskAzureResourceId));
+            }
 
             Name = name;
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;

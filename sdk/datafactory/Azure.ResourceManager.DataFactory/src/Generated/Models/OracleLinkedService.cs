@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OracleLinkedService(DataFactoryElement<string> connectionString)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
 
             ConnectionString = connectionString;
             LinkedServiceType = "Oracle";
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Oracle";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OracleLinkedService"/> for deserialization. </summary>
+        internal OracleLinkedService()
+        {
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>

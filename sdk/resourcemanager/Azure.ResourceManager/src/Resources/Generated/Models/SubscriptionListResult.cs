@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         internal SubscriptionListResult(string nextLink)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             Value = new ChangeTrackingList<SubscriptionData>();
             NextLink = nextLink;

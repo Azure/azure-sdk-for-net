@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HdfsLinkedService(DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Uri = uri;
             LinkedServiceType = "Hdfs";
@@ -46,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserName = userName;
             Password = password;
             LinkedServiceType = linkedServiceType ?? "Hdfs";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/> for deserialization. </summary>
+        internal HdfsLinkedService()
+        {
         }
 
         /// <summary> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </summary>

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ResourceNavigationLink> array = new List<ResourceNavigationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item));
+                        array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item, options));
                     }
                     value = array;
                     continue;

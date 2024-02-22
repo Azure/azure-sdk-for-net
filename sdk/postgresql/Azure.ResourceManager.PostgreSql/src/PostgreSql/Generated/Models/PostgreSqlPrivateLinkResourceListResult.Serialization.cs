@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlPrivateLinkResourceData> array = new List<PostgreSqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(item));
+                        array.Add(PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

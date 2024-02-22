@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabParameter> array = new List<DevTestLabParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabParameter.DeserializeDevTestLabParameter(item));
+                        array.Add(DevTestLabParameter.DeserializeDevTestLabParameter(item, options));
                     }
                     parameters = array;
                     continue;

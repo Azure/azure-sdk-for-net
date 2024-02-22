@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsWatchlistResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsWatchlistData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
             scope.Start();
@@ -396,7 +399,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsWatchlistResource> Update(WaitUntil waitUntil, SecurityInsightsWatchlistData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         public MarketoLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             Endpoint = endpoint;
             ClientId = clientId;
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Marketo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarketoLinkedService"/> for deserialization. </summary>
+        internal MarketoLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </summary>

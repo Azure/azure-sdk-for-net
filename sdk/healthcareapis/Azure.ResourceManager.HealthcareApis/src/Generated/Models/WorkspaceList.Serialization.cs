@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisWorkspaceData> array = new List<HealthcareApisWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(item));
+                        array.Add(HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

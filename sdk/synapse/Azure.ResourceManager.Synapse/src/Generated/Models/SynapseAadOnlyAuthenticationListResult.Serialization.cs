@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseAadOnlyAuthenticationData> array = new List<SynapseAadOnlyAuthenticationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(item));
+                        array.Add(SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(item, options));
                     }
                     value = array;
                     continue;

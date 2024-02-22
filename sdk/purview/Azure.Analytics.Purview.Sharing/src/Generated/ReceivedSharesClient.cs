@@ -50,8 +50,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ReceivedSharesClient(Uri endpoint, TokenCredential credential, PurviewShareClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewShareClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -80,7 +86,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShareAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceivedShareAsync(string receivedShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.GetReceivedShare");
             scope.Start();
@@ -115,7 +128,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetReceivedShare(string,RequestContext)']/*" />
         public virtual Response GetReceivedShare(string receivedShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.GetReceivedShare");
             scope.Start();
@@ -149,7 +169,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistrationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ActivateTenantEmailRegistrationAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.ActivateTenantEmailRegistration");
             scope.Start();
@@ -183,7 +206,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='ActivateTenantEmailRegistration(RequestContent,RequestContext)']/*" />
         public virtual Response ActivateTenantEmailRegistration(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.ActivateTenantEmailRegistration");
             scope.Start();
@@ -279,7 +305,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
@@ -306,7 +335,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
@@ -380,8 +412,18 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShareAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrReplaceReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.CreateOrReplaceReceivedShare");
             scope.Start();
@@ -418,8 +460,18 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceReceivedShare(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrReplaceReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.CreateOrReplaceReceivedShare");
             scope.Start();
@@ -455,7 +507,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShareAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteReceivedShareAsync(WaitUntil waitUntil, string receivedShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.DeleteReceivedShare");
             scope.Start();
@@ -491,7 +550,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='DeleteReceivedShare(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteReceivedShare(WaitUntil waitUntil, string receivedShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(receivedShareId, nameof(receivedShareId));
+            if (receivedShareId == null)
+            {
+                throw new ArgumentNullException(nameof(receivedShareId));
+            }
+            if (receivedShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(receivedShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ReceivedSharesClient.DeleteReceivedShare");
             scope.Start();

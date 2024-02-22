@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<UserIdentityContract> array = new List<UserIdentityContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item, options));
                             }
                             identities = array;
                             continue;

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property.Value);
+                    match = ApplicationGatewayProbeHealthResponseMatch.DeserializeApplicationGatewayProbeHealthResponseMatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPool"u8))

@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PredictionResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, PredictionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PredictionResourceFormatResource> Update(WaitUntil waitUntil, PredictionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatResource.Update");
             scope.Start();
@@ -525,7 +531,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionModelStatus"/> is null. </exception>
         public virtual async Task<Response> ModelStatusAsync(PredictionModelStatus predictionModelStatus, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(predictionModelStatus, nameof(predictionModelStatus));
+            if (predictionModelStatus == null)
+            {
+                throw new ArgumentNullException(nameof(predictionModelStatus));
+            }
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatResource.ModelStatus");
             scope.Start();
@@ -567,7 +576,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionModelStatus"/> is null. </exception>
         public virtual Response ModelStatus(PredictionModelStatus predictionModelStatus, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(predictionModelStatus, nameof(predictionModelStatus));
+            if (predictionModelStatus == null)
+            {
+                throw new ArgumentNullException(nameof(predictionModelStatus));
+            }
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatResource.ModelStatus");
             scope.Start();

@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = PineconeChatExtensionParameters.DeserializePineconeChatExtensionParameters(property.Value);
+                    parameters = PineconeChatExtensionParameters.DeserializePineconeChatExtensionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

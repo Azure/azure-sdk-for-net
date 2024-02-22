@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value);
+                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUpdated"u8))

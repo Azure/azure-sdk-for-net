@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
+                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value);
+                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contentDistributionEndpoint"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;

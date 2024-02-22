@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public NetworkDeviceSkuData(string model)
         {
-            Argument.AssertNotNull(model, nameof(model));
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
             Model = model;
             SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();

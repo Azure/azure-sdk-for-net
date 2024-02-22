@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsARecordResource"/> object. </returns>
         public static DnsARecordResource GetDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsARecordResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsAaaaRecordResource"/> object. </returns>
         public static DnsAaaaRecordResource GetDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsAaaaRecordResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCaaRecordResource"/> object. </returns>
         public static DnsCaaRecordResource GetDnsCaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsCaaRecordResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCnameRecordResource"/> object. </returns>
         public static DnsCnameRecordResource GetDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsCnameRecordResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsMXRecordResource"/> object. </returns>
         public static DnsMXRecordResource GetDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsMXRecordResource(id);
         }
@@ -144,7 +159,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsNSRecordResource"/> object. </returns>
         public static DnsNSRecordResource GetDnsNSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsNSRecordResource(id);
         }
@@ -163,7 +181,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsPtrRecordResource"/> object. </returns>
         public static DnsPtrRecordResource GetDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsPtrRecordResource(id);
         }
@@ -182,7 +203,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSoaRecordResource"/> object. </returns>
         public static DnsSoaRecordResource GetDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsSoaRecordResource(id);
         }
@@ -201,7 +225,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSrvRecordResource"/> object. </returns>
         public static DnsSrvRecordResource GetDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsSrvRecordResource(id);
         }
@@ -220,7 +247,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsTxtRecordResource"/> object. </returns>
         public static DnsTxtRecordResource GetDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsTxtRecordResource(id);
         }
@@ -239,7 +269,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource"/> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDnsArmClient(client).GetDnsZoneResource(id);
         }
@@ -256,7 +289,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
         public static DnsZoneCollection GetDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZones();
         }
@@ -294,7 +330,10 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static async Task<Response<DnsZoneResource>> GetDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZoneAsync(zoneName, cancellationToken).ConfigureAwait(false);
         }
@@ -332,7 +371,10 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static Response<DnsZoneResource> GetDnsZone(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZone(zoneName, cancellationToken);
         }
@@ -369,7 +411,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsZoneResource> GetDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
         }
@@ -406,7 +451,10 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsZoneResource> GetDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZones(top, cancellationToken);
         }
@@ -438,7 +486,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -470,7 +521,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }

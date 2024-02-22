@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipLinkResourceFormatData> array = new List<RelationshipLinkResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(item));
+                        array.Add(RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

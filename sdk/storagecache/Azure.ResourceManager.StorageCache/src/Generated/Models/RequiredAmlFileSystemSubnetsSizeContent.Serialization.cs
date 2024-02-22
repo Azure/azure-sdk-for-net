@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

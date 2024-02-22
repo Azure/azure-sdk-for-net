@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value);
+                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

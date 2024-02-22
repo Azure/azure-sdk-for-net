@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class DataFactoryPipelinePolicy : IUtf8JsonSerializable
+    internal partial class DataFactoryPipelinePolicy : IUtf8JsonSerializable, IJsonModel<DataFactoryPipelinePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryPipelinePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryPipelinePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelinePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryPipelinePolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
                 writer.WriteObjectValue(ElapsedTimeMetric);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryPipelinePolicy DeserializeDataFactoryPipelinePolicy(JsonElement element)
+        DataFactoryPipelinePolicy IJsonModel<DataFactoryPipelinePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelinePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryPipelinePolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryPipelinePolicy(document.RootElement, options);
+        }
+
+        internal static DataFactoryPipelinePolicy DeserializeDataFactoryPipelinePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("elapsedTimeMetric"u8))
@@ -38,11 +80,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    elapsedTimeMetric = PipelineElapsedTimeMetricPolicy.DeserializePipelineElapsedTimeMetricPolicy(property.Value);
+                    elapsedTimeMetric = PipelineElapsedTimeMetricPolicy.DeserializePipelineElapsedTimeMetricPolicy(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryPipelinePolicy(elapsedTimeMetric.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryPipelinePolicy(elapsedTimeMetric.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFactoryPipelinePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelinePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryPipelinePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryPipelinePolicy IPersistableModel<DataFactoryPipelinePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelinePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryPipelinePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryPipelinePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryPipelinePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

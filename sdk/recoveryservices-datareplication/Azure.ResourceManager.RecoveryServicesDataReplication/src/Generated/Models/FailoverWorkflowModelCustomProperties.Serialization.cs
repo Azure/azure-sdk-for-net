@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<FailoverProtectedItemProperties> array = new List<FailoverProtectedItemProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item));
+                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item, options));
                     }
                     protectedItemDetails = array;
                     continue;

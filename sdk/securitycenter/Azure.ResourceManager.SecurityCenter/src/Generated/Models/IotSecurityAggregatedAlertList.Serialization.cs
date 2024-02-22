@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<IotSecurityAggregatedAlertData> array = new List<IotSecurityAggregatedAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(item));
+                        array.Add(IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(item, options));
                     }
                     value = array;
                     continue;

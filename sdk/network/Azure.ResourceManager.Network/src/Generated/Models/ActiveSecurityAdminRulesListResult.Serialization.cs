@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveBaseSecurityAdminRule> array = new List<ActiveBaseSecurityAdminRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item));
+                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item, options));
                     }
                     value = array;
                     continue;

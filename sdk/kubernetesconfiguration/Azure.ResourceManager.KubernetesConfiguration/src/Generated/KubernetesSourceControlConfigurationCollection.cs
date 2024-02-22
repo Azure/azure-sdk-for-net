@@ -94,8 +94,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KubernetesSourceControlConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlConfigurationName, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -143,8 +153,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KubernetesSourceControlConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlConfigurationName, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -190,7 +210,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual async Task<Response<KubernetesSourceControlConfigurationResource>> GetAsync(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.Get");
             scope.Start();
@@ -235,7 +262,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual Response<KubernetesSourceControlConfigurationResource> Get(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.Get");
             scope.Start();
@@ -340,7 +374,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.Exists");
             scope.Start();
@@ -383,7 +424,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.Exists");
             scope.Start();
@@ -426,7 +474,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<KubernetesSourceControlConfigurationResource>> GetIfExistsAsync(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetIfExists");
             scope.Start();
@@ -471,7 +526,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
         public virtual NullableResponse<KubernetesSourceControlConfigurationResource> GetIfExists(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+            if (sourceControlConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlConfigurationName));
+            }
+            if (sourceControlConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlConfigurationName));
+            }
 
             using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetIfExists");
             scope.Start();

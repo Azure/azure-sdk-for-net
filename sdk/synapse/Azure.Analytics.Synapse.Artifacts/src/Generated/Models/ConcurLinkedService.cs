@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
         public ConcurLinkedService(object clientId, object username)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(username, nameof(username));
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             ClientId = clientId;
             Username = username;

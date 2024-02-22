@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorVmInfo> array = new List<DynatraceMonitorVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo(item));
+                        array.Add(DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo(item, options));
                     }
                     value = array;
                     continue;

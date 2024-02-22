@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    exec = ContainerExec.DeserializeContainerExec(property.Value);
+                    exec = ContainerExec.DeserializeContainerExec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("httpGet"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value);
+                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))

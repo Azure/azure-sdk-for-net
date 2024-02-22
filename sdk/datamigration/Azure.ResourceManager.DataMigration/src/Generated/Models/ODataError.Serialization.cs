@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeODataError(item));
+                        array.Add(DeserializeODataError(item, options));
                     }
                     details = array;
                     continue;

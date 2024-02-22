@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = AzureStaticWebAppsRegistration.DeserializeAzureStaticWebAppsRegistration(property.Value);
+                    registration = AzureStaticWebAppsRegistration.DeserializeAzureStaticWebAppsRegistration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

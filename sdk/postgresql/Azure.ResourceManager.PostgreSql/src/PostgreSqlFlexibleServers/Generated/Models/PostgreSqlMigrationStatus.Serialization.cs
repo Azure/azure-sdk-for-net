@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value);
+                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

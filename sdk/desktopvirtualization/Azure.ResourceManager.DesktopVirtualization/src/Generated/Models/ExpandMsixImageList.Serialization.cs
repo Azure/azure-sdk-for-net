@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<ExpandMsixImage> array = new List<ExpandMsixImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpandMsixImage.DeserializeExpandMsixImage(item));
+                        array.Add(ExpandMsixImage.DeserializeExpandMsixImage(item, options));
                     }
                     value = array;
                     continue;

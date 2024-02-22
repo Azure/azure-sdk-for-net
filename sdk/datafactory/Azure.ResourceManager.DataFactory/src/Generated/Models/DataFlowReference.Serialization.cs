@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowReference : IUtf8JsonSerializable
+    public partial class DataFlowReference : IUtf8JsonSerializable, IJsonModel<DataFlowReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFlowReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
@@ -71,8 +80,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element)
+        DataFlowReference IJsonModel<DataFlowReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowReference(document.RootElement, options);
+        }
+
+        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,5 +153,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFlowReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFlowReference IPersistableModel<DataFlowReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

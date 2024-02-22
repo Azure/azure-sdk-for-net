@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlLogFile> array = new List<MySqlLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlLogFile.DeserializeMySqlLogFile(item));
+                        array.Add(MySqlLogFile.DeserializeMySqlLogFile(item, options));
                     }
                     value = array;
                     continue;

@@ -129,7 +129,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
+                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -196,7 +196,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
