@@ -11,12 +11,12 @@ using Azure.Communication;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for holding participant from the call. </summary>
-    public partial class HoldRequest
+    internal partial class HoldRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="HoldRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HoldRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Participant to be held from the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        public HoldRequest(CommunicationIdentifierModel targetParticipant)
+        public HoldRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
             if (targetParticipant == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HoldRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HoldRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Participant to be held from the call. </param>
         /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal HoldRequest(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo, string operationContext, string operationCallbackUri)
+        internal HoldRequestInternal(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo, string operationContext, string operationCallbackUri)
         {
             TargetParticipant = targetParticipant;
             PlaySourceInfo = playSourceInfo;

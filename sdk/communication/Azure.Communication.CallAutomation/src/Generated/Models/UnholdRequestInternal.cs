@@ -11,15 +11,15 @@ using Azure.Communication;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for holding participant from the call. </summary>
-    public partial class UnholdRequest
+    internal partial class UnholdRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="UnholdRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnholdRequestInternal"/>. </summary>
         /// <param name="targetParticipant">
         /// Participants to be hold from the call.
         /// Only ACS Users are supported.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        public UnholdRequest(CommunicationIdentifierModel targetParticipant)
+        public UnholdRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
             if (targetParticipant == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnholdRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnholdRequestInternal"/>. </summary>
         /// <param name="targetParticipant">
         /// Participants to be hold from the call.
         /// Only ACS Users are supported.
         /// </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal UnholdRequest(CommunicationIdentifierModel targetParticipant, string operationContext)
+        internal UnholdRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext)
         {
             TargetParticipant = targetParticipant;
             OperationContext = operationContext;

@@ -400,11 +400,11 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new StartHoldMusicRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
-                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
-                    Loop = options.Loop,
                     OperationContext = options.OperationContext,
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
                 return CallMediaRestClient.StartHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
@@ -429,11 +429,11 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new StartHoldMusicRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
-                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
+                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
-                    Loop = options.Loop,
                     OperationContext = options.OperationContext,
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
                 return await CallMediaRestClient.StartHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);

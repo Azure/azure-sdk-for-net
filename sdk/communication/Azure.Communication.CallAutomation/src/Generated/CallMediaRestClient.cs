@@ -704,7 +704,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequest holdRequest)
+        internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequestInternal holdRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -729,7 +729,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="holdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
-        public async Task<Response> HoldAsync(string callConnectionId, HoldRequest holdRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> HoldAsync(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -756,7 +756,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="holdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
-        public Response Hold(string callConnectionId, HoldRequest holdRequest, CancellationToken cancellationToken = default)
+        public Response Hold(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -778,7 +778,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUnholdRequest(string callConnectionId, UnholdRequest unholdRequest)
+        internal HttpMessage CreateUnholdRequest(string callConnectionId, UnholdRequestInternal unholdRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -803,7 +803,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unholdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
-        public async Task<Response> UnholdAsync(string callConnectionId, UnholdRequest unholdRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> UnholdAsync(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -830,7 +830,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unholdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
-        public Response Unhold(string callConnectionId, UnholdRequest unholdRequest, CancellationToken cancellationToken = default)
+        public Response Unhold(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
