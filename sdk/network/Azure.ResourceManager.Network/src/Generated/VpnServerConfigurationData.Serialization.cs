@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VpnProtocols))
+            if (!(VpnProtocols is ChangeTrackingList<VpnGatewayTunnelingProtocol> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vpnProtocols"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnAuthenticationTypes))
+            if (!(VpnAuthenticationTypes is ChangeTrackingList<VpnAuthenticationType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vpnAuthenticationTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientRootCertificates))
+            if (!(VpnClientRootCertificates is ChangeTrackingList<VpnServerConfigVpnClientRootCertificate> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientRevokedCertificates))
+            if (!(VpnClientRevokedCertificates is ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientRevokedCertificates"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RadiusServerRootCertificates))
+            if (!(RadiusServerRootCertificates is ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("radiusServerRootCertificates"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RadiusClientRootCertificates))
+            if (!(RadiusClientRootCertificates is ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("radiusClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
+            if (!(VpnClientIPsecPolicies is ChangeTrackingList<IPsecPolicy> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
             }
-            if (Optional.IsCollectionDefined(RadiusServers))
+            if (!(RadiusServers is ChangeTrackingList<RadiusServer> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("radiusServers"u8);
                 writer.WriteStartArray();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(P2SVpnGateways))
+            if (options.Format != "W" && !(P2SVpnGateways is ChangeTrackingList<P2SVpnGatewayData> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("p2SVpnGateways"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
+            if (!(ConfigurationPolicyGroups is ChangeTrackingList<VpnServerConfigurationPolicyGroupData> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("configurationPolicyGroups"u8);
                 writer.WriteStartArray();

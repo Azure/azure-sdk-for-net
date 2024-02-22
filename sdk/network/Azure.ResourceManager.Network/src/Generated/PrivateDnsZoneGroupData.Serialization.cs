@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PrivateDnsZoneConfigs))
+            if (!(PrivateDnsZoneConfigs is ChangeTrackingList<PrivateDnsZoneConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateDnsZoneConfigs"u8);
                 writer.WriteStartArray();

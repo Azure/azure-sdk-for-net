@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("azureLocation"u8);
                 writer.WriteStringValue(AzureLocation.Value);
             }
-            if (Optional.IsCollectionDefined(Latencies))
+            if (!(Latencies is ChangeTrackingList<AzureReachabilityReportLatencyInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("latencies"u8);
                 writer.WriteStartArray();

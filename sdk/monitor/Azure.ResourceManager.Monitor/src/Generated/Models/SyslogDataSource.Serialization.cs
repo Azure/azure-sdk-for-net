@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<SyslogDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FacilityNames))
+            if (!(FacilityNames is ChangeTrackingList<SyslogDataSourceFacilityName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogLevels))
+            if (!(LogLevels is ChangeTrackingList<SyslogDataSourceLogLevel> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();

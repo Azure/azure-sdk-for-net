@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssueInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            if (options.Format != "W" && !(Context is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartObject();

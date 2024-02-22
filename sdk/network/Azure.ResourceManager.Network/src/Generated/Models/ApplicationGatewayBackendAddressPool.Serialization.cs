@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackendIPConfigurations))
+            if (options.Format != "W" && !(BackendIPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackendAddresses))
+            if (!(BackendAddresses is ChangeTrackingList<ApplicationGatewayBackendAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("backendAddresses"u8);
                 writer.WriteStartArray();

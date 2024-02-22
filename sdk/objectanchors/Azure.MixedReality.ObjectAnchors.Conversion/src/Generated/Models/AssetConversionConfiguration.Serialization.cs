@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             writer.WritePropertyName("gravity"u8);
             writer.WriteObjectValue(GravityWrapper);
-            if (Optional.IsCollectionDefined(KeyFrameIndexes))
+            if (!(KeyFrameIndexes is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 if (KeyFrameIndexes != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("keyFrameIndexes");
                 }
             }
-            if (Optional.IsCollectionDefined(GroundTruthTrajectoryCameraPoses))
+            if (!(GroundTruthTrajectoryCameraPoses is ChangeTrackingList<TrajectoryPose> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("gtTrajectory"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     writer.WriteNull("supportingPlane");
                 }
             }
-            if (Optional.IsCollectionDefined(TestTrajectoryCameraPoses))
+            if (!(TestTrajectoryCameraPoses is ChangeTrackingList<TrajectoryPose> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("testTrajectory"u8);
                 writer.WriteStartArray();

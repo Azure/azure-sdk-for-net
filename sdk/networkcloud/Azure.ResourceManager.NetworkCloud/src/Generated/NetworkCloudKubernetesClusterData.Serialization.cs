@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
+            if (options.Format != "W" && !(AttachedNetworkIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("attachedNetworkIds"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgrades))
+            if (options.Format != "W" && !(AvailableUpgrades is ChangeTrackingList<AvailableUpgrade> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableUpgrades"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FeatureStatuses))
+            if (options.Format != "W" && !(FeatureStatuses is ChangeTrackingList<FeatureStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("featureStatuses"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("networkConfiguration"u8);
             writer.WriteObjectValue(NetworkConfiguration);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<KubernetesClusterNode> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();

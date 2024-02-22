@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(UserAssignedIdentity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
             writer.WriteObjectValue(ControlPlaneAccessInterface);
-            if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
+            if (!(ControlPlaneAccessVirtualIPv4Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
                 writer.WriteStartArray();

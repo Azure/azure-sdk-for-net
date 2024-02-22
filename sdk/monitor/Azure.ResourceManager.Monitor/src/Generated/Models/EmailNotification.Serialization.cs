@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();

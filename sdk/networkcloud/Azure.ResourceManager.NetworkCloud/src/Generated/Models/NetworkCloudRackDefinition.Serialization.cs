@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (Optional.IsCollectionDefined(BareMetalMachineConfigurationData))
+            if (!(BareMetalMachineConfigurationData is ChangeTrackingList<BareMetalMachineConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bareMetalMachineConfigurationData"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(RackSerialNumber);
             writer.WritePropertyName("rackSkuId"u8);
             writer.WriteStringValue(RackSkuId);
-            if (Optional.IsCollectionDefined(StorageApplianceConfigurationData))
+            if (!(StorageApplianceConfigurationData is ChangeTrackingList<StorageApplianceConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageApplianceConfigurationData"u8);
                 writer.WriteStartArray();

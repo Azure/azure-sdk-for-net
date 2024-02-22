@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("additionalHostInformation"u8);
                 writer.WriteStringValue(AdditionalHostInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Interfaces))
+            if (options.Format != "W" && !(Interfaces is ChangeTrackingList<HardwareInventoryNetworkInterface> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nics))
+            if (options.Format != "W" && !(Nics is ChangeTrackingList<NetworkCloudNic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nics"u8);
                 writer.WriteStartArray();

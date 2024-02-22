@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DeploymentTypes))
+            if (!(DeploymentTypes is ChangeTrackingList<NetworkConfigurationDeploymentType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deploymentTypes"u8);
                 writer.WriteStartArray();

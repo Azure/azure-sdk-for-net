@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("groupMetaData"u8);
                 writer.WriteObjectValue(GroupMetaData);
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<NetAppVolumeGroupVolume> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();

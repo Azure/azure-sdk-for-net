@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (Optional.IsCollectionDefined(AssociatedWorkspaces))
+            if (!(AssociatedWorkspaces is ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("associatedWorkspaces"u8);
                 writer.WriteStartArray();

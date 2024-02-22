@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
+            if (options.Format != "W" && !(Claims is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteObjectValue(OperationName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

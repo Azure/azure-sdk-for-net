@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<AutoscaleRuleMetricDimension> collection && collection.IsUndefined))
             {
                 if (Dimensions != null)
                 {

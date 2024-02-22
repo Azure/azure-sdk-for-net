@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("defaultSkuName"u8);
                 writer.WriteStringValue(DefaultSkuName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
+            if (options.Format != "W" && !(SupportedStorageEditions is ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerSkus))
+            if (options.Format != "W" && !(SupportedServerSkus is ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerSkus"u8);
                 writer.WriteStartArray();

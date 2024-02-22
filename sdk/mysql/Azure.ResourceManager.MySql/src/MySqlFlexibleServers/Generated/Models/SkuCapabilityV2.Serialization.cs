@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("supportedMemoryPerVCoreMB"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVCoreMB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedZones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHAMode))
+            if (options.Format != "W" && !(SupportedHAMode is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();

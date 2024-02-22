@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("simState"u8);
                 writer.WriteStringValue(SimState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
+            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (Optional.IsCollectionDefined(StaticIPConfiguration))
+            if (!(StaticIPConfiguration is ChangeTrackingList<SimStaticIPProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();

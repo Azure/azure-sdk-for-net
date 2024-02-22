@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
+            if (!(NetworkIntentPolicyConfigurations is ChangeTrackingList<NetworkIntentPolicyConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();

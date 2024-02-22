@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("azureStackEdgeDevice"u8);
                 JsonSerializer.Serialize(writer, AzureStackEdgeDevice);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AzureStackEdgeDevices))
+            if (options.Format != "W" && !(AzureStackEdgeDevices is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureStackEdgeDevices"u8);
                 writer.WriteStartArray();

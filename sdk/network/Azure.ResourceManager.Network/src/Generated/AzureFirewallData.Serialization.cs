@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationRuleCollections))
+            if (!(ApplicationRuleCollections is ChangeTrackingList<AzureFirewallApplicationRuleCollectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("applicationRuleCollections"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NatRuleCollections))
+            if (!(NatRuleCollections is ChangeTrackingList<AzureFirewallNatRuleCollectionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("natRuleCollections"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkRuleCollections))
+            if (!(NetworkRuleCollections is ChangeTrackingList<AzureFirewallNetworkRuleCollectionData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("networkRuleCollections"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<AzureFirewallIPConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("hubIPAddresses"u8);
                 writer.WriteObjectValue(HubIPAddresses);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
+            if (options.Format != "W" && !(IPGroups is ChangeTrackingList<AzureFirewallIPGroups> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(AdditionalProperties))
+            if (!(AdditionalProperties is ChangeTrackingDictionary<string, string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartObject();

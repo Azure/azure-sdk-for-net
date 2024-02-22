@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("expressRouteConnection"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteConnection);
             }
-            if (Optional.IsCollectionDefined(Connections))
+            if (!(Connections is ChangeTrackingList<ExpressRouteCircuitConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PeeredConnections))
+            if (options.Format != "W" && !(PeeredConnections is ChangeTrackingList<PeerExpressRouteCircuitConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("peeredConnections"u8);
                 writer.WriteStartArray();

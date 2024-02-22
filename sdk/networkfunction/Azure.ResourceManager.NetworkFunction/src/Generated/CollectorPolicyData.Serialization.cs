@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("ingestionPolicy"u8);
                 writer.WriteObjectValue(IngestionPolicy);
             }
-            if (Optional.IsCollectionDefined(EmissionPolicies))
+            if (!(EmissionPolicies is ChangeTrackingList<EmissionPoliciesPropertiesFormat> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emissionPolicies"u8);
                 writer.WriteStartArray();

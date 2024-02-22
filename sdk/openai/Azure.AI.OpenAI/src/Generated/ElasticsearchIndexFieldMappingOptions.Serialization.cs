@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("filepathField"u8);
                 writer.WriteStringValue(FilepathFieldName);
             }
-            if (Optional.IsCollectionDefined(ContentFieldNames))
+            if (!(ContentFieldNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contentFields"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("contentFieldsSeparator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
             }
-            if (Optional.IsCollectionDefined(VectorFieldNames))
+            if (!(VectorFieldNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vectorFields"u8);
                 writer.WriteStartArray();

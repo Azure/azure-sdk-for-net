@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WritePropertyName("authAppId"u8);
                 writer.WriteStringValue(AuthAppId);
             }
-            if (Optional.IsCollectionDefined(DataPartitionNames))
+            if (!(DataPartitionNames is ChangeTrackingList<DataPartitionName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataPartitionNames"u8);
                 writer.WriteStartArray();

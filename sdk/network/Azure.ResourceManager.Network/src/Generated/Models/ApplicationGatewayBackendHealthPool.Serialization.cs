@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+            if (!(BackendHttpSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendHttpSettingsCollection"u8);
                 writer.WriteStartArray();

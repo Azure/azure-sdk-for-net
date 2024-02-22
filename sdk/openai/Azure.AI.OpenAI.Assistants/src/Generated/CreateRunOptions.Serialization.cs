@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("additional_instructions");
                 }
             }
-            if (Optional.IsCollectionDefined(OverrideTools))
+            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 if (OverrideTools != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("tools");
                 }
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {

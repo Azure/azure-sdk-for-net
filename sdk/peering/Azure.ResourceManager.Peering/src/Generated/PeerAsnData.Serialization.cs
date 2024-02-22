@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(PeerContactDetail))
+            if (!(PeerContactDetail is ChangeTrackingList<PeerAsnContactDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();

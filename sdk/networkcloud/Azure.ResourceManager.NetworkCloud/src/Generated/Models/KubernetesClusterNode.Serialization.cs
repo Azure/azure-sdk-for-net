@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
+            if (options.Format != "W" && !(Labels is ChangeTrackingList<KubernetesLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAttachments))
+            if (options.Format != "W" && !(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Taints))
+            if (options.Format != "W" && !(Taints is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("taints"u8);
                 writer.WriteStartArray();

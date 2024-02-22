@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedZones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHaMode))
+            if (options.Format != "W" && !(SupportedHaMode is ChangeTrackingList<PostgreSqlFlexibleServerHAMode> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedHaMode"u8);
                 writer.WriteStartArray();

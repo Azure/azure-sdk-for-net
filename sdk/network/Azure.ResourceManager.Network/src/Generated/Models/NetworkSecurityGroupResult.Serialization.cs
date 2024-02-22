@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("securityRuleAccessResult"u8);
                 writer.WriteStringValue(SecurityRuleAccessResult.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EvaluatedNetworkSecurityGroups))
+            if (options.Format != "W" && !(EvaluatedNetworkSecurityGroups is ChangeTrackingList<EvaluatedNetworkSecurityGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evaluatedNetworkSecurityGroups"u8);
                 writer.WriteStartArray();

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
+            if (!(BootStrapConfigurationBlobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bootStrapConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
+            if (!(CloudInitConfigurationBlobs is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("cloudInitConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceNics))
+            if (options.Format != "W" && !(VirtualApplianceNics is ChangeTrackingList<VirtualApplianceNicProperties> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualApplianceNics"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalNics))
+            if (!(AdditionalNics is ChangeTrackingList<VirtualApplianceAdditionalNicProperties> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("additionalNics"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
+            if (!(InternetIngressPublicIPs is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceSites))
+            if (options.Format != "W" && !(VirtualApplianceSites is ChangeTrackingList<WritableSubResource> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("virtualApplianceSites"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceConnections))
+            if (options.Format != "W" && !(VirtualApplianceConnections is ChangeTrackingList<WritableSubResource> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("virtualApplianceConnections"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundSecurityRules))
+            if (options.Format != "W" && !(InboundSecurityRules is ChangeTrackingList<WritableSubResource> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("inboundSecurityRules"u8);
                 writer.WriteStartArray();

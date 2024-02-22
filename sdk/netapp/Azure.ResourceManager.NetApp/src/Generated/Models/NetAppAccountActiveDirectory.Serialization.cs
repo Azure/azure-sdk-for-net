@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("site"u8);
                 writer.WriteStringValue(Site);
             }
-            if (Optional.IsCollectionDefined(BackupOperators))
+            if (!(BackupOperators is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupOperators"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Administrators))
+            if (!(Administrators is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("administrators"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapSigning"u8);
                 writer.WriteBooleanValue(IsLdapSigningEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(SecurityOperators))
+            if (!(SecurityOperators is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("securityOperators"u8);
                 writer.WriteStartArray();

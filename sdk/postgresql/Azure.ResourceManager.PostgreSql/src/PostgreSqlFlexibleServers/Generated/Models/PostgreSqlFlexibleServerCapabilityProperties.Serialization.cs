@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerEditions))
+            if (options.Format != "W" && !(SupportedServerEditions is ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
+            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("fastProvisioningSupported"u8);
                 writer.WriteStringValue(SupportFastProvisioning.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFastProvisioningEditions))
+            if (options.Format != "W" && !(SupportedFastProvisioningEditions is ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedFastProvisioningEditions"u8);
                 writer.WriteStartArray();

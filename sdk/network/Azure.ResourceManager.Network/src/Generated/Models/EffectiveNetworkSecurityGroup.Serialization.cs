@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("association"u8);
                 writer.WriteObjectValue(Association);
             }
-            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TagToIPAddresses))
+            if (!(TagToIPAddresses is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tagMap"u8);
                 writer.WriteStartObject();

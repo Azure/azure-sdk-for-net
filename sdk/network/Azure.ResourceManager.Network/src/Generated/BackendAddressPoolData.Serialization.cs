@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(TunnelInterfaces))
+            if (!(TunnelInterfaces is ChangeTrackingList<GatewayLoadBalancerTunnelInterface> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tunnelInterfaces"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
+            if (!(LoadBalancerBackendAddresses is ChangeTrackingList<LoadBalancerBackendAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddresses"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackendIPConfigurations))
+            if (options.Format != "W" && !(BackendIPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("backendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
+            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("outboundRule"u8);
                 JsonSerializer.Serialize(writer, OutboundRule);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundRules))
+            if (options.Format != "W" && !(OutboundRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRules))
+            if (options.Format != "W" && !(InboundNatRules is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();

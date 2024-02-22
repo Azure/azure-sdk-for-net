@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
-            if (Optional.IsCollectionDefined(DocumentStreamIds))
+            if (!(DocumentStreamIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingList<KeyValuePairString> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStartArray();

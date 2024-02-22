@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectedAgents))
+            if (options.Format != "W" && !(ConnectedAgents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectedAgents"u8);
                 writer.WriteStartArray();

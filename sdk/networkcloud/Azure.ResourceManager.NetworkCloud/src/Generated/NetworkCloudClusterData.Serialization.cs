@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgradeVersions))
+            if (options.Format != "W" && !(AvailableUpgradeVersions is ChangeTrackingList<ClusterAvailableUpgradeVersion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availableUpgradeVersions"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
+            if (options.Format != "W" && !(WorkloadResourceIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("workloadResourceIds"u8);
                 writer.WriteStartArray();

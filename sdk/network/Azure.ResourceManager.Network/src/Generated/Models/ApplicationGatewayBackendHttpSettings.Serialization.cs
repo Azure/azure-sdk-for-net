@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (Optional.IsCollectionDefined(AuthenticationCertificates))
+            if (!(AuthenticationCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            if (!(TrustedRootCertificates is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();

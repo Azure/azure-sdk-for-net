@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
             }
-            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
+            if (!(ServiceLevelObjectives is ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceLevelObjectives"u8);
                 writer.WriteStartArray();

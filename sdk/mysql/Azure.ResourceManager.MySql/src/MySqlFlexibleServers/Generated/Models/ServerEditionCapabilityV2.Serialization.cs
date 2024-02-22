@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("defaultStorageSize"u8);
                 writer.WriteNumberValue(DefaultStorageSize.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
+            if (options.Format != "W" && !(SupportedStorageEditions is ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedSkus))
+            if (options.Format != "W" && !(SupportedSkus is ChangeTrackingList<SkuCapabilityV2> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();

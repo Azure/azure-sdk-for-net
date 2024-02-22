@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ruleSequence"u8);
                 writer.WriteNumberValue(RuleSequence.Value);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<ApplicationGatewayRewriteRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();

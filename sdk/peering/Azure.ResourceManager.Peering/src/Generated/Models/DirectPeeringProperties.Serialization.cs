@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (!(Connections is ChangeTrackingList<PeeringDirectConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();

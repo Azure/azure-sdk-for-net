@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateDnsZoneId"u8);
                 writer.WriteStringValue(PrivateDnsZoneId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecordSets))
+            if (options.Format != "W" && !(RecordSets is ChangeTrackingList<RecordSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recordSets"u8);
                 writer.WriteStartArray();

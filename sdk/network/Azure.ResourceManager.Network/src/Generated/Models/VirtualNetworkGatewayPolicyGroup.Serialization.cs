@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(PolicyMembers))
+            if (!(PolicyMembers is ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyMembers"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VngClientConnectionConfigurations))
+            if (options.Format != "W" && !(VngClientConnectionConfigurations is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vngClientConnectionConfigurations"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("defaultIopsTier"u8);
                 writer.WriteStringValue(DefaultIopsTier);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedIopsTiers))
+            if (options.Format != "W" && !(SupportedIopsTiers is ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedIopsTiers"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("nonCompliantPolicies"u8);
                 writer.WriteNumberValue(NonCompliantPolicies.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceDetails))
+            if (!(ResourceDetails is ChangeTrackingList<ComplianceDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDetails))
+            if (!(PolicyDetails is ChangeTrackingList<ComplianceDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyGroupDetails))
+            if (!(PolicyGroupDetails is ChangeTrackingList<ComplianceDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("policyGroupDetails"u8);
                 writer.WriteStartArray();

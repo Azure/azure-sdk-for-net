@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Optional.IsCollectionDefined(ServiceResources))
+            if (!(ServiceResources is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceResources"u8);
                 writer.WriteStartArray();

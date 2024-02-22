@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DelegatedSubnetsUsage))
+            if (options.Format != "W" && !(DelegatedSubnetsUsage is ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedSubnetsUsage"u8);
                 writer.WriteStartArray();

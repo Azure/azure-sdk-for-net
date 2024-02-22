@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(EmissionDestinations))
+            if (!(EmissionDestinations is ChangeTrackingList<EmissionPolicyDestination> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();

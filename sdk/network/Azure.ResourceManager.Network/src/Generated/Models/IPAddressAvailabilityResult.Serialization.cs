@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(Available.Value);
             }
-            if (Optional.IsCollectionDefined(AvailableIPAddresses))
+            if (!(AvailableIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableIPAddresses"u8);
                 writer.WriteStartArray();

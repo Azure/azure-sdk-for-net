@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
-            if (Optional.IsCollectionDefined(Webhooks))
+            if (!(Webhooks is ChangeTrackingList<WebhookNotification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("webhooks"u8);
                 writer.WriteStartArray();

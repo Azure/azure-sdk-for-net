@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
+            if (!(P2SConnectionConfigurations is ChangeTrackingList<P2SConnectionConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
                 writer.WriteObjectValue(VpnClientConnectionHealth);
             }
-            if (Optional.IsCollectionDefined(CustomDnsServers))
+            if (!(CustomDnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("customDnsServers"u8);
                 writer.WriteStartArray();

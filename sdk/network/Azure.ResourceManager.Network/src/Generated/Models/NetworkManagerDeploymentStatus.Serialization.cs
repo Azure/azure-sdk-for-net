@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ConfigurationIds))
+            if (!(ConfigurationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();

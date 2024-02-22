@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sourceStatus"u8);
                 writer.WriteStringValue(SourceStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(States))
+            if (!(States is ChangeTrackingList<ConnectionStateSnapshot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();

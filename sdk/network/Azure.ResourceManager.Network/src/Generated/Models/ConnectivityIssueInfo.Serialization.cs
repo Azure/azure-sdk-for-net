@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectivityIssueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Contexts))
+            if (options.Format != "W" && !(Contexts is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();

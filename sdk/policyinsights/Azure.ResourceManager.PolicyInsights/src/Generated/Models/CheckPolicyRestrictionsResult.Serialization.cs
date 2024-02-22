@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(FieldRestrictions))
+            if (options.Format != "W" && !(FieldRestrictions is ChangeTrackingList<FieldRestrictions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldRestrictions"u8);
                 writer.WriteStartArray();

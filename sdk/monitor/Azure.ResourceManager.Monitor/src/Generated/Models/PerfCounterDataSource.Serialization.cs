@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<PerfCounterDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("samplingFrequencyInSeconds"u8);
                 writer.WriteNumberValue(SamplingFrequencyInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(CounterSpecifiers))
+            if (!(CounterSpecifiers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("counterSpecifiers"u8);
                 writer.WriteStartArray();

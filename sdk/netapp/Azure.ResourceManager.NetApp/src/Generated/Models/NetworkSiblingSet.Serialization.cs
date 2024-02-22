@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NicInfoList))
+            if (!(NicInfoList is ChangeTrackingList<NicInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nicInfoList"u8);
                 writer.WriteStartArray();

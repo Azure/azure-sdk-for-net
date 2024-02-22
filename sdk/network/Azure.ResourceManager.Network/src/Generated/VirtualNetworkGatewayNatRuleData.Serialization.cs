@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InternalMappings))
+            if (!(InternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalMappings))
+            if (!(ExternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();

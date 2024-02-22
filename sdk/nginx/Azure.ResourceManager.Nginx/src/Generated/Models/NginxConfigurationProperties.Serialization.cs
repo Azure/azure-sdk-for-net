@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<NginxConfigurationFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedFiles))
+            if (!(ProtectedFiles is ChangeTrackingList<NginxConfigurationFile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();

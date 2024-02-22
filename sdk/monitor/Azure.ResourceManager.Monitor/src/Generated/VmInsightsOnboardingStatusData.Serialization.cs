@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("dataStatus"u8);
                 writer.WriteStringValue(DataStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<DataContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

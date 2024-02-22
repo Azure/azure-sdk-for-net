@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ActionDetails))
+            if (!(ActionDetails is ChangeTrackingList<NotificationActionDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();

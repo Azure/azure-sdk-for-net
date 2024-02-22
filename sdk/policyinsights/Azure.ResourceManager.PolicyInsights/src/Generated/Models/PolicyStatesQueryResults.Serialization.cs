@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(ODataNextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PolicyState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

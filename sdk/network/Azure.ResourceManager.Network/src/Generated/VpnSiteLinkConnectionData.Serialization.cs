@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsCollectionDefined(VpnGatewayCustomBgpAddresses))
+            if (!(VpnGatewayCustomBgpAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vpnGatewayCustomBgpAddresses"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
+            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IngressNatRules))
+            if (!(IngressNatRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EgressNatRules))
+            if (!(EgressNatRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();

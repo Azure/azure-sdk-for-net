@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("actionGroupId"u8);
             writer.WriteStringValue(ActionGroupId);
-            if (Optional.IsCollectionDefined(WebhookProperties))
+            if (!(WebhookProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("webhookProperties"u8);
                 writer.WriteStartObject();

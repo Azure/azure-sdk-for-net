@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EvaluatedExpressions))
+            if (!(EvaluatedExpressions is ChangeTrackingList<ExpressionEvaluationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evaluatedExpressions"u8);
                 writer.WriteStartArray();

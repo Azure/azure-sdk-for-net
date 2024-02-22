@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("radiusServerAuthCertificate"u8);
                 writer.WriteStringValue(RadiusServerAuthCertificate);
             }
-            if (Optional.IsCollectionDefined(ClientRootCertificates))
+            if (!(ClientRootCertificates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientRootCertificates"u8);
                 writer.WriteStartArray();

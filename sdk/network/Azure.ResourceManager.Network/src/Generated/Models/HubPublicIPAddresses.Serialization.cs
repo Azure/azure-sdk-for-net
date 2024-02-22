@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Addresses))
+            if (!(Addresses is ChangeTrackingList<AzureFirewallPublicIPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();

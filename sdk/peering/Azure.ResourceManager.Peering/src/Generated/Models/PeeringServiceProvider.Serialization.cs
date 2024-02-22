@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (Optional.IsCollectionDefined(PeeringLocations))
+            if (!(PeeringLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringLocations"u8);
                 writer.WriteStartArray();

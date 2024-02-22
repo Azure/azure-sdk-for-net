@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<MetricSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Logs))
+            if (!(Logs is ChangeTrackingList<LogSettings> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();

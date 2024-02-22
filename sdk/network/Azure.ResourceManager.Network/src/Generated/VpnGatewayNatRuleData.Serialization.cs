@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InternalMappings))
+            if (!(InternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalMappings))
+            if (!(ExternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EgressVpnSiteLinkConnections))
+            if (options.Format != "W" && !(EgressVpnSiteLinkConnections is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("egressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IngressVpnSiteLinkConnections))
+            if (options.Format != "W" && !(IngressVpnSiteLinkConnections is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ingressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();

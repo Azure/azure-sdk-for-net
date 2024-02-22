@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisabledSslProtocols))
+            if (!(DisabledSslProtocols is ChangeTrackingList<ApplicationGatewaySslProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledSslProtocols"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CipherSuites))
+            if (!(CipherSuites is ChangeTrackingList<ApplicationGatewaySslCipherSuite> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();

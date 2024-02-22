@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (Optional.IsCollectionDefined(DatabaseNames))
+            if (!(DatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databaseNames"u8);
                 writer.WriteStartArray();

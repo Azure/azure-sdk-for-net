@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("sendMetrics"u8);
                 writer.WriteStringValue(SendMetrics.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<NewRelicObservabilityFilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
             }
-            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
+            if (!(ServiceLevelObjectives is ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceLevelObjectives"u8);
                 writer.WriteStartArray();

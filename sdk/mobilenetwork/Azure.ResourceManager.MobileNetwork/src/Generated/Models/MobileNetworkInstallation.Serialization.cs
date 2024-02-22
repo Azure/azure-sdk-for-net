@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("reinstallRequired"u8);
                 writer.WriteStringValue(ReinstallRequired.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Reasons))
+            if (options.Format != "W" && !(Reasons is ChangeTrackingList<MobileNetworkInstallationReason> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();

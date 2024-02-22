@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();

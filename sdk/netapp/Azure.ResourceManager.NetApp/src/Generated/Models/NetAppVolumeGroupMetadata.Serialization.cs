@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("applicationIdentifier"u8);
                 writer.WriteStringValue(ApplicationIdentifier);
             }
-            if (Optional.IsCollectionDefined(GlobalPlacementRules))
+            if (!(GlobalPlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("globalPlacementRules"u8);
                 writer.WriteStartArray();

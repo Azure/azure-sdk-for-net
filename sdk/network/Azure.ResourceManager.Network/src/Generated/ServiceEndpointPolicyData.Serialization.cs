@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceEndpointPolicyDefinitions))
+            if (!(ServiceEndpointPolicyDefinitions is ChangeTrackingList<ServiceEndpointPolicyDefinitionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpointPolicyDefinitions"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Subnets))
+            if (options.Format != "W" && !(Subnets is ChangeTrackingList<SubnetData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("serviceAlias"u8);
                 writer.WriteStringValue(ServiceAlias);
             }
-            if (Optional.IsCollectionDefined(ContextualServiceEndpointPolicies))
+            if (!(ContextualServiceEndpointPolicies is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("contextualServiceEndpointPolicies"u8);
                 writer.WriteStartArray();

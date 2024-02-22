@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            if (!(TrustedRootCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();

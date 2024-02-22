@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<RouteFilterRuleData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Peerings))
+            if (options.Format != "W" && !(Peerings is ChangeTrackingList<ExpressRouteCircuitPeeringData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPv6Peerings))
+            if (options.Format != "W" && !(IPv6Peerings is ChangeTrackingList<ExpressRouteCircuitPeeringData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Peerings"u8);
                 writer.WriteStartArray();

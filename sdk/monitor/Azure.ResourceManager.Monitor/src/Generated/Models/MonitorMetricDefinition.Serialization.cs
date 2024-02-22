@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            if (!(SupportedAggregationTypes is ChangeTrackingList<MonitorAggregationType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            if (!(MetricAvailabilities is ChangeTrackingList<MonitorMetricAvailability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MonitorLocalizableString> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();

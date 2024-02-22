@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requiredMemberName"u8);
                 writer.WriteStringValue(RequiredMemberName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Fqdns))
+            if (options.Format != "W" && !(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();

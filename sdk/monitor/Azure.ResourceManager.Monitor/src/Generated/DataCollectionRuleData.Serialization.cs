@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(StreamDeclarations))
+            if (!(StreamDeclarations is ChangeTrackingDictionary<string, DataStreamDeclaration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("streamDeclarations"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(Destinations);
             }
-            if (Optional.IsCollectionDefined(DataFlows))
+            if (!(DataFlows is ChangeTrackingList<DataFlow> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();

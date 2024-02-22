@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WritePropertyName("success"u8);
                 writer.WriteBooleanValue(Success.Value);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

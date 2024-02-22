@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ContainerNetworkInterfaces))
+            if (options.Format != "W" && !(ContainerNetworkInterfaces is ChangeTrackingList<ContainerNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containerNetworkInterfaces"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerNetworkInterfaceConfigurations))
+            if (!(ContainerNetworkInterfaceConfigurations is ChangeTrackingList<ContainerNetworkInterfaceConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfigurations"u8);
                 writer.WriteStartArray();

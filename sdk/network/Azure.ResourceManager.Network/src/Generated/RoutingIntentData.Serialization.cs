@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RoutingPolicies))
+            if (!(RoutingPolicies is ChangeTrackingList<RoutingPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routingPolicies"u8);
                 writer.WriteStartArray();

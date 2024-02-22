@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryGroups))
+            if (!(CategoryGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryGroups"u8);
                 writer.WriteStartArray();

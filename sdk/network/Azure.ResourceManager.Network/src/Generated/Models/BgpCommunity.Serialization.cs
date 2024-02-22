@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
-            if (Optional.IsCollectionDefined(CommunityPrefixes))
+            if (!(CommunityPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
