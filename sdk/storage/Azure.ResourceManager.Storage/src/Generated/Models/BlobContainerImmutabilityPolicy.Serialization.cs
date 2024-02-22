@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpdateHistory))
+            if (options.Format != "W" && !(UpdateHistory is ChangeTrackingList<UpdateHistoryEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("updateHistory"u8);
                 writer.WriteStartArray();

@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<TimeSeriesAggregateCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();

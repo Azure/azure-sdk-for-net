@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("internalIpAddress"u8);
                 writer.WriteStringValue(InternalIPAddress.ToString());
             }
-            if (Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (!(OutboundIPAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualIPMappings))
+            if (!(VirtualIPMappings is ChangeTrackingList<VirtualIPMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vipMappings"u8);
                 writer.WriteStartArray();

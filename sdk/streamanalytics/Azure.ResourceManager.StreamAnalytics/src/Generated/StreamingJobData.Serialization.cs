@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamingJobInputData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<StreamingJobOutputData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<StreamingJobFunctionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();

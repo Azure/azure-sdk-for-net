@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();

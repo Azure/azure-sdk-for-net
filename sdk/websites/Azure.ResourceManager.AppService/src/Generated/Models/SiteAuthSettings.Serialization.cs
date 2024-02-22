@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("tokenStoreEnabled"u8);
                 writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            if (!(AllowedExternalRedirectUrls is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("validateIssuer"u8);
                 writer.WriteBooleanValue(ValidateIssuer.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            if (!(AllowedAudiences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalLoginParams))
+            if (!(AdditionalLoginParams is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("additionalLoginParams"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("googleClientSecretSettingName"u8);
                 writer.WriteStringValue(GoogleClientSecretSettingName);
             }
-            if (Optional.IsCollectionDefined(GoogleOAuthScopes))
+            if (!(GoogleOAuthScopes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("googleOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("facebookAppSecretSettingName"u8);
                 writer.WriteStringValue(FacebookAppSecretSettingName);
             }
-            if (Optional.IsCollectionDefined(FacebookOAuthScopes))
+            if (!(FacebookOAuthScopes is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("facebookOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("gitHubClientSecretSettingName"u8);
                 writer.WriteStringValue(GitHubClientSecretSettingName);
             }
-            if (Optional.IsCollectionDefined(GitHubOAuthScopes))
+            if (!(GitHubOAuthScopes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("gitHubOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("microsoftAccountClientSecretSettingName"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecretSettingName);
             }
-            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
+            if (!(MicrosoftAccountOAuthScopes is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("microsoftAccountOAuthScopes"u8);
                 writer.WriteStartArray();

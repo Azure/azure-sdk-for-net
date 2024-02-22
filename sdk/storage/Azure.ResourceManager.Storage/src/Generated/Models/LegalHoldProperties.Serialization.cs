@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<LegalHoldTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();

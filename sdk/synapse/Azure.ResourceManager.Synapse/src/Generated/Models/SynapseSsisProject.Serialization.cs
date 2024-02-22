@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsCollectionDefined(EnvironmentRefs))
+            if (!(EnvironmentRefs is ChangeTrackingList<SynapseSsisEnvironmentReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("environmentRefs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<SynapseSsisParameter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

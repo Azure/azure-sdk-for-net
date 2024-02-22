@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ConnectionStringNames))
+            if (!(ConnectionStringNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionStringNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AppSettingNames))
+            if (!(AppSettingNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appSettingNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureStorageConfigNames))
+            if (!(AzureStorageConfigNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("azureStorageConfigNames"u8);
                 writer.WriteStartArray();

@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            if (!(StorageLinkedServices is ChangeTrackingList<LinkedServiceReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("combiner"u8);
                 writer.WriteObjectValue(Combiner);
             }
-            if (Optional.IsCollectionDefined(CommandEnvironment))
+            if (!(CommandEnvironment is ChangeTrackingList<object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("commandEnvironment"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Defines))
+            if (!(Defines is ChangeTrackingDictionary<string, object> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();

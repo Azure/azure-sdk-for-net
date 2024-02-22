@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceResourceNames> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("osDiskName"u8);
                 writer.WriteStringValue(OSDiskName);
             }
-            if (Optional.IsCollectionDefined(DataDiskNames))
+            if (!(DataDiskNames is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskNames"u8);
                 writer.WriteStartObject();

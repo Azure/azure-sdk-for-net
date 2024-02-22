@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);
             }
-            if (Optional.IsCollectionDefined(ValidStreamingUnits))
+            if (!(ValidStreamingUnits is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validStreamingUnits"u8);
                 writer.WriteStartArray();

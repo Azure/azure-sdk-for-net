@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HostNames))
+            if (options.Format != "W" && !(HostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
+            if (options.Format != "W" && !(EnabledHostNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("enabledHostNames"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(HostNameSslStates))
+            if (!(HostNameSslStates is ChangeTrackingList<HostNameSslState> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("hostNameSslStates"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
+            if (options.Format != "W" && !(TrafficManagerHostNames is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 if (TrafficManagerHostNames != null)
                 {

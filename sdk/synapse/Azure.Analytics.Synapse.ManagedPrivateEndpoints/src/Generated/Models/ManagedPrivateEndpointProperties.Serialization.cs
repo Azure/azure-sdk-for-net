@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (!(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();

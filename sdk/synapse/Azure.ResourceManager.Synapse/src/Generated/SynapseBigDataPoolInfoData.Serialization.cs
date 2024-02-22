@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
-            if (Optional.IsCollectionDefined(CustomLibraries))
+            if (!(CustomLibraries is ChangeTrackingList<BigDataPoolLibraryInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteStringValue(LeaseDuration.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

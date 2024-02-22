@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(MetaData))
+            if (!(MetaData is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Solutions))
+            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();

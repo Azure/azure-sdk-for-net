@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("transientFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(TransientFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilesNotSyncingErrors))
+            if (options.Format != "W" && !(FilesNotSyncingErrors is ChangeTrackingList<ServerEndpointFilesNotSyncingError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filesNotSyncingErrors"u8);
                 writer.WriteStartArray();

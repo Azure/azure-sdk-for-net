@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
+            if (options.Format != "W" && !(CustomDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("buildProperties"u8);
                 writer.WriteObjectValue(BuildProperties);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UserProvidedFunctionApps))
+            if (options.Format != "W" && !(UserProvidedFunctionApps is ChangeTrackingList<StaticSiteUserProvidedFunctionAppData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("userProvidedFunctionApps"u8);
                 writer.WriteStartArray();

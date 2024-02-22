@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Junctions))
+            if (!(Junctions is ChangeTrackingList<NamespaceJunction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("junctions"u8);
                 writer.WriteStartArray();

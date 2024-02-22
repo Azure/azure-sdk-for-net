@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<WebPubSubPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<WebPubSubSharedPrivateLinkData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();

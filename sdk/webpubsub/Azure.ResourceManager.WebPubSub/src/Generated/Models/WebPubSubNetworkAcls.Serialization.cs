@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpoints))
+            if (!(PrivateEndpoints is ChangeTrackingList<PrivateEndpointAcl> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EventHandlers))
+            if (!(EventHandlers is ChangeTrackingList<WebPubSubEventHandler> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();

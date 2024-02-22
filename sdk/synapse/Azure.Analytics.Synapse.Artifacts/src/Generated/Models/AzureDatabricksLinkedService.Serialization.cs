@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("newClusterNodeType"u8);
                 writer.WriteObjectValue(NewClusterNodeType);
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkConf))
+            if (!(NewClusterSparkConf is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkConf"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
+            if (!(NewClusterSparkEnvVars is ChangeTrackingDictionary<string, object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterCustomTags))
+            if (!(NewClusterCustomTags is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("newClusterCustomTags"u8);
                 writer.WriteStartObject();

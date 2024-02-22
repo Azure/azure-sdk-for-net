@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LastOutputEventTimestamps))
+            if (options.Format != "W" && !(LastOutputEventTimestamps is ChangeTrackingList<LastOutputEventTimestamp> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("lastOutputEventTimestamps"u8);
                 writer.WriteStartArray();

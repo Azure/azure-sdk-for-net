@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("totalFileCount"u8);
                 writer.WriteNumberValue(TotalFileCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<FilesNotTieringError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

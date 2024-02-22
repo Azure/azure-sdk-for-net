@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("health"u8);
                 writer.WriteObjectValue(Health);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
+            if (options.Format != "W" && !(MountAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mountAddresses"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("directoryServicesSettings"u8);
                 writer.WriteObjectValue(DirectoryServicesSettings);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrimingJobs))
+            if (options.Format != "W" && !(PrimingJobs is ChangeTrackingList<PrimingJob> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("primingJobs"u8);
                 writer.WriteStartArray();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SpaceAllocation))
+            if (options.Format != "W" && !(SpaceAllocation is ChangeTrackingList<StorageTargetSpaceAllocation> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("spaceAllocation"u8);
                 writer.WriteStartArray();

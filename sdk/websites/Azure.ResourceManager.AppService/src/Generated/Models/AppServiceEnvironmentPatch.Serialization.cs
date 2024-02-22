@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("suspended"u8);
                 writer.WriteBooleanValue(IsSuspended.Value);
             }
-            if (Optional.IsCollectionDefined(ClusterSettings))
+            if (!(ClusterSettings is ChangeTrackingList<AppServiceNameValuePair> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clusterSettings"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
+            if (!(UserWhitelistedIPRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges"u8);
                 writer.WriteStartArray();

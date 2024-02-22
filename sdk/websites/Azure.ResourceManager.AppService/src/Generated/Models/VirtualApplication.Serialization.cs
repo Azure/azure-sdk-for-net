@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualDirectories))
+            if (!(VirtualDirectories is ChangeTrackingList<VirtualDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();

@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 writer.WriteObjectValue(Protocol, "ProtocolSettings");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (!(Cors is ChangeTrackingList<ShareCorsRule> collection && collection.IsUndefined))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

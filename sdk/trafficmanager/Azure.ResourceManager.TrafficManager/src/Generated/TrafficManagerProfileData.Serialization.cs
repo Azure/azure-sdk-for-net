@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WritePropertyName("monitorConfig"u8);
                 writer.WriteObjectValue(MonitorConfig);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerEndpointData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
                 writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
+            if (!(AllowedEndpointRecordTypes is ChangeTrackingList<AllowedEndpointRecordType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedEndpointRecordTypes"u8);
                 writer.WriteStartArray();

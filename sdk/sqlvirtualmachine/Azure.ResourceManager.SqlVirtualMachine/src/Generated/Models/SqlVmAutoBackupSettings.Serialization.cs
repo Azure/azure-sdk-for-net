@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("fullBackupFrequency"u8);
                 writer.WriteStringValue(FullBackupFrequency.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DaysOfWeek))
+            if (!(DaysOfWeek is ChangeTrackingList<SqlVmAutoBackupDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();

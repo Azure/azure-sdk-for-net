@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();

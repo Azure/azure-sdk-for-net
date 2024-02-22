@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();

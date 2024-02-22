@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (Optional.IsCollectionDefined(AppSettingsOverrides))
+            if (!(AppSettingsOverrides is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appSettingsOverrides"u8);
                 writer.WriteStartObject();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("failedFileList"u8);
                 writer.WriteStringValue(FailedFileList);
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpec))
+            if (!(RestoreFileSpec is ChangeTrackingList<RestoreFileSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
+            if (!(ConnectivityEndpoints is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteStringValue(ManagedVirtualNetwork);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<SynapsePrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("workspaceUID"u8);
                 writer.WriteStringValue(WorkspaceUid.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtraProperties))
+            if (options.Format != "W" && !(ExtraProperties is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extraProperties"u8);
                 writer.WriteStartObject();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("cspWorkspaceAdminProperties"u8);
                 writer.WriteObjectValue(CspWorkspaceAdminProperties);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
+            if (options.Format != "W" && !(Settings is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();

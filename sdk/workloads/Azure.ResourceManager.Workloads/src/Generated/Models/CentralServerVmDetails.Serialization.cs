@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageDetails))
+            if (options.Format != "W" && !(StorageDetails is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageDetails"u8);
                 writer.WriteStartArray();

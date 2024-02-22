@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<DetectorAbnormalTimePeriod> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Solutions))
+            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();

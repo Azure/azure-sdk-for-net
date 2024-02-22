@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<LinkedServiceReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();

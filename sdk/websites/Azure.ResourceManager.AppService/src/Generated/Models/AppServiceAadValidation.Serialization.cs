@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("destinationAccount"u8);
                 writer.WriteStringValue(DestinationAccount);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ObjectReplicationPolicyRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

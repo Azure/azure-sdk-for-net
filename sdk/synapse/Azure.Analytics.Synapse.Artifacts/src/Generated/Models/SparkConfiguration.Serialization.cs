@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ConfigMergeRule))
+            if (!(ConfigMergeRule is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();

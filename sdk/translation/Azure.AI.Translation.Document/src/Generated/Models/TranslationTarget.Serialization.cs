@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document
             }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(LanguageCode);
-            if (Optional.IsCollectionDefined(Glossaries))
+            if (!(Glossaries is ChangeTrackingList<TranslationGlossary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("glossaries"u8);
                 writer.WriteStartArray();

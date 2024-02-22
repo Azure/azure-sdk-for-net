@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UtilityAddresses))
+            if (options.Format != "W" && !(UtilityAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("utilityAddresses"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

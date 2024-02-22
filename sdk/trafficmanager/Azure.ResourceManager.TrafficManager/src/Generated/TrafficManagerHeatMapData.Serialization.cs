@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerHeatMapEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficFlows))
+            if (!(TrafficFlows is ChangeTrackingList<TrafficManagerHeatMapTrafficFlow> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trafficFlows"u8);
                 writer.WriteStartArray();

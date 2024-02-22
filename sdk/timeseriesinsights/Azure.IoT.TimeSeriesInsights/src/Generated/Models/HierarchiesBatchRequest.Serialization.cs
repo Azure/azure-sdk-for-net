@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("get"u8);
                 writer.WriteObjectValue(Get);
             }
-            if (Optional.IsCollectionDefined(Put))
+            if (!(Put is ChangeTrackingList<TimeSeriesHierarchy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("put"u8);
                 writer.WriteStartArray();

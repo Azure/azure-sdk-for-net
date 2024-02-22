@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (!(Cors is ChangeTrackingList<BlobCorsRule> collection && collection.IsUndefined))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

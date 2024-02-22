@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("numberOfWorkers");
                 }
             }
-            if (Optional.IsCollectionDefined(DefaultDocuments))
+            if (!(DefaultDocuments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (DefaultDocuments != null)
                 {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("publishingUsername");
                 }
             }
-            if (Optional.IsCollectionDefined(AppSettings))
+            if (!(AppSettings is ChangeTrackingList<AppServiceNameValuePair> collection0 && collection0.IsUndefined))
             {
                 if (AppSettings != null)
                 {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("appSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConnectionStrings))
+            if (!(ConnectionStrings is ChangeTrackingList<ConnStringInfo> collection1 && collection1.IsUndefined))
             {
                 if (ConnectionStrings != null)
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("machineKey");
                 }
             }
-            if (Optional.IsCollectionDefined(HandlerMappings))
+            if (!(HandlerMappings is ChangeTrackingList<HttpRequestHandlerMapping> collection2 && collection2.IsUndefined))
             {
                 if (HandlerMappings != null)
                 {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("managedPipelineMode");
                 }
             }
-            if (Optional.IsCollectionDefined(VirtualApplications))
+            if (!(VirtualApplications is ChangeTrackingList<VirtualApplication> collection3 && collection3.IsUndefined))
             {
                 if (VirtualApplications != null)
                 {
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("keyVaultReferenceIdentity");
                 }
             }
-            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            if (!(IPSecurityRestrictions is ChangeTrackingList<AppServiceIPSecurityRestriction> collection4 && collection4.IsUndefined))
             {
                 if (IPSecurityRestrictions != null)
                 {
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("ipSecurityRestrictions");
                 }
             }
-            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
+            if (!(ScmIPSecurityRestrictions is ChangeTrackingList<AppServiceIPSecurityRestriction> collection5 && collection5.IsUndefined))
             {
                 if (ScmIPSecurityRestrictions != null)
                 {
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("minimumElasticInstanceCount");
                 }
             }
-            if (Optional.IsCollectionDefined(AzureStorageAccounts))
+            if (!(AzureStorageAccounts is ChangeTrackingDictionary<string, AppServiceStorageAccessInfo> collection6 && collection6.IsUndefined))
             {
                 if (AzureStorageAccounts != null)
                 {

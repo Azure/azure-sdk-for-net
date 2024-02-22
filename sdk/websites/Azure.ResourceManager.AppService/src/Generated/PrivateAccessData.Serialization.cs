@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualNetworks))
+            if (!(VirtualNetworks is ChangeTrackingList<PrivateAccessVirtualNetwork> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();

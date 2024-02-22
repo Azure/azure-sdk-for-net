@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
+            if (options.Format != "W" && !(Conditions is ChangeTrackingList<OutstandingCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();

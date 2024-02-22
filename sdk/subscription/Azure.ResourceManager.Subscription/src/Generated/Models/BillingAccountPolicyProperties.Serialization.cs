@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceTenants))
+            if (!(ServiceTenants is ChangeTrackingList<ServiceTenant> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTenants"u8);
                 writer.WriteStartArray();

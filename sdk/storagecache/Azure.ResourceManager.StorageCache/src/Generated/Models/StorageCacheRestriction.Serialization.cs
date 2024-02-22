@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
+            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

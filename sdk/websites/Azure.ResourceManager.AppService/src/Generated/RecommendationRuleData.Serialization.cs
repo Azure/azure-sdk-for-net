@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryTags))
+            if (options.Format != "W" && !(CategoryTags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryTags"u8);
                 writer.WriteStartArray();

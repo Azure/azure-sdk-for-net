@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
-            if (Optional.IsCollectionDefined(DataFlows))
+            if (!(DataFlows is ChangeTrackingList<DataFlowResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<LinkedServiceResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();

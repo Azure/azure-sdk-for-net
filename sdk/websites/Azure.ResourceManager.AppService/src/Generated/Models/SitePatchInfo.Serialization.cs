@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HostNames))
+            if (options.Format != "W" && !(HostNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
+            if (options.Format != "W" && !(EnabledHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("enabledHostNames"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(HostNameSslStates))
+            if (!(HostNameSslStates is ChangeTrackingList<HostNameSslState> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostNameSslStates"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
+            if (options.Format != "W" && !(TrafficManagerHostNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("trafficManagerHostNames"u8);
                 writer.WriteStartArray();

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ConfigMergeRule))
+            if (!(ConfigMergeRule is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();

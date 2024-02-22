@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(KustoPoolResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedDatabaseNames))
+            if (options.Format != "W" && !(AttachedDatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attachedDatabaseNames"u8);
                 writer.WriteStartArray();

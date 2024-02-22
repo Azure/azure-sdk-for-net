@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AgreementKeys))
+            if (!(AgreementKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();

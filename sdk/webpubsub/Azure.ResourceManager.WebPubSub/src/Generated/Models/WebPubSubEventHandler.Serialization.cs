@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("userEventPattern"u8);
                 writer.WriteStringValue(UserEventPattern);
             }
-            if (Optional.IsCollectionDefined(SystemEvents))
+            if (!(SystemEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();

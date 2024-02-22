@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Jars))
+            if (!(Jars is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PythonFiles))
+            if (!(PythonFiles is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("pyFiles"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Archives))
+            if (!(Archives is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Configuration))
+            if (!(Configuration is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteStartObject();

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Entries))
+            if (options.Format != "W" && !(Entries is ChangeTrackingList<WebAppMSDeployLogEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("entries"u8);
                 writer.WriteStartArray();

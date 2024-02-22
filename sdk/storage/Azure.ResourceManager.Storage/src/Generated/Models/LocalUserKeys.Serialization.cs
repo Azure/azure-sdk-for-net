@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();

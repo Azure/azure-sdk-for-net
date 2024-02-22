@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(Availabilities))
+            if (!(Availabilities is ChangeTrackingList<MetricAvailability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilities"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
+            if (!(SupportedTimeGrainTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedTimeGrainTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            if (!(SupportedAggregationTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();

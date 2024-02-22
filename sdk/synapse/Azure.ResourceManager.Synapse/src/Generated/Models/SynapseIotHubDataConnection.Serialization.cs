@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(EventSystemProperties))
+            if (!(EventSystemProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eventSystemProperties"u8);
                 writer.WriteStartArray();

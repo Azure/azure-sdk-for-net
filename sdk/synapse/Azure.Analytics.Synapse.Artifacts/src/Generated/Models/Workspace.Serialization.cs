@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
+            if (!(ConnectivityEndpoints is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteStringValue(ManagedVirtualNetwork);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnection> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

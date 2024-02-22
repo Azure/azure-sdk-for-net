@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("sapInstanceNr"u8);
                 writer.WriteStringValue(SapInstanceNr);
             }
-            if (Optional.IsCollectionDefined(SapHostFileEntries))
+            if (!(SapHostFileEntries is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sapHostFileEntries"u8);
                 writer.WriteStartArray();

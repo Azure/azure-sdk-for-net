@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PermissionScopes))
+            if (!(PermissionScopes is ChangeTrackingList<StoragePermissionScope> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();

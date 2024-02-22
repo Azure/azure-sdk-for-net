@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("totalRecallErrorsCount"u8);
                 writer.WriteNumberValue(TotalRecallErrorsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecallErrors))
+            if (options.Format != "W" && !(RecallErrors is ChangeTrackingList<ServerEndpointRecallError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recallErrors"u8);
                 writer.WriteStartArray();

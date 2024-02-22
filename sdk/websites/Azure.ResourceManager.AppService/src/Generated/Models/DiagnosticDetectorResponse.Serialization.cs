@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<DiagnosticMetricSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+            if (!(AbnormalTimePeriods is ChangeTrackingList<DetectorAbnormalTimePeriod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(SecondaryConsentEnabled))
+            if (!(SecondaryConsentEnabled is ChangeTrackingList<SecondaryConsentEnabled> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secondaryConsentEnabled"u8);
                 writer.WriteStartArray();

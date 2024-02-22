@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsCollectionDefined(PropertyColumns))
+            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();

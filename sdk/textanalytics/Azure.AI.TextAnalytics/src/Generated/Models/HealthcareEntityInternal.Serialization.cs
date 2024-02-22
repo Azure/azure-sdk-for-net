@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<EntityDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();

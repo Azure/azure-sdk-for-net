@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventTypes))
+            if (!(EventTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
-            if (Optional.IsCollectionDefined(ExemptedPrincipals))
+            if (!(ExemptedPrincipals is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();

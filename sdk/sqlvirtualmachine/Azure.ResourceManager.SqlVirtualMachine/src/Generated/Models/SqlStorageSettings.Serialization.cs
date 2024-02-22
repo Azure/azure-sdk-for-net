@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();

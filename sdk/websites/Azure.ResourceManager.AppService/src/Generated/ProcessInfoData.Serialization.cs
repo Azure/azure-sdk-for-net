@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("parent"u8);
                 writer.WriteStringValue(Parent);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Threads))
+            if (!(Threads is ChangeTrackingList<ProcessThreadInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OpenFileHandles))
+            if (!(OpenFileHandles is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("open_file_handles"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Modules))
+            if (!(Modules is ChangeTrackingList<ProcessModuleInfoData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("time_stamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("environment_variables"u8);
                 writer.WriteStartObject();

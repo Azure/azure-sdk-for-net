@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.TrafficManager
                     writer.WriteNull("minChildEndpointsIPv6");
                 }
             }
-            if (Optional.IsCollectionDefined(GeoMapping))
+            if (!(GeoMapping is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("geoMapping"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<TrafficManagerEndpointSubnetInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (!(CustomHeaders is ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();

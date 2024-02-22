@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingDictionary<string, AppServiceCertificateProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartObject();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppServiceCertificateNotRenewableReasons))
+            if (options.Format != "W" && !(AppServiceCertificateNotRenewableReasons is ChangeTrackingList<AppServiceCertificateNotRenewableReason> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appServiceCertificateNotRenewableReasons"u8);
                 writer.WriteStartArray();

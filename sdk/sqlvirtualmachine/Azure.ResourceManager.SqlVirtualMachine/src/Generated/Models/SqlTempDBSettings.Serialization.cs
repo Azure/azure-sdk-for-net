@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
+            if (!(LogicalUnitNumbers is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();

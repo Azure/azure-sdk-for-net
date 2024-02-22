@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
             writer.WriteObjectValue(SparkJob);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("className"u8);
                 writer.WriteObjectValue(ClassName);
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PythonCodeReference))
+            if (!(PythonCodeReference is ChangeTrackingList<object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FilesV2))
+            if (!(FilesV2 is ChangeTrackingList<object> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (!(SparkConfig is ChangeTrackingDictionary<string, object> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();

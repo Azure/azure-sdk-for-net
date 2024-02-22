@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();

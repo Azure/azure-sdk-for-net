@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(ManagedByExtended))
+            if (!(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WritePropertyName("targetIqn"u8);
                 writer.WriteStringValue(TargetIqn);
             }
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();

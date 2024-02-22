@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("conflictingAppResourceId"u8);
                 writer.WriteStringValue(ConflictingAppResourceId);
             }
-            if (Optional.IsCollectionDefined(CNameRecords))
+            if (!(CNameRecords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (!(TxtRecords is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (!(ARecords is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateCNameRecords))
+            if (!(AlternateCNameRecords is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateTxtRecords))
+            if (!(AlternateTxtRecords is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();

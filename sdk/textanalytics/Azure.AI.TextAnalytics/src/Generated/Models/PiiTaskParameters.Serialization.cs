@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (!(PiiCategories is ChangeTrackingList<PiiEntityCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            if (options.Format != "W" && !(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
