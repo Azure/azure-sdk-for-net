@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ManifestArtifactFormat> array = new List<ManifestArtifactFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item));
+                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item, options));
                     }
                     artifacts = array;
                     continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningBatchEndpointData> array = new List<MachineLearningBatchEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(item));
+                        array.Add(MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(item, options));
                     }
                     value = array;
                     continue;

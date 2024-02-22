@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     List<ConnectedClusterData> array = new List<ConnectedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedClusterData.DeserializeConnectedClusterData(item));
+                        array.Add(ConnectedClusterData.DeserializeConnectedClusterData(item, options));
                     }
                     value = array;
                     continue;

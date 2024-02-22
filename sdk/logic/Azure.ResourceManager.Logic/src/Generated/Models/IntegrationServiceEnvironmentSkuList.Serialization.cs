@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceEnvironmentSkuDefinition> array = new List<IntegrationServiceEnvironmentSkuDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition(item));
+                        array.Add(IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition(item, options));
                     }
                     value = array;
                     continue;

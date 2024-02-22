@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    properties = HybridComputePrivateLinkResourceProperties.DeserializeHybridComputePrivateLinkResourceProperties(property.Value);
+                    properties = HybridComputePrivateLinkResourceProperties.DeserializeHybridComputePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

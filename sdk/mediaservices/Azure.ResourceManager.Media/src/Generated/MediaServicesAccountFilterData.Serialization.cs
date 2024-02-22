@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            presentationTimeRange = PresentationTimeRange.DeserializePresentationTimeRange(property0.Value);
+                            presentationTimeRange = PresentationTimeRange.DeserializePresentationTimeRange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firstQuality"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            firstQuality = FirstQuality.DeserializeFirstQuality(property0.Value);
+                            firstQuality = FirstQuality.DeserializeFirstQuality(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tracks"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Media
                             List<FilterTrackSelection> array = new List<FilterTrackSelection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item));
+                                array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item, options));
                             }
                             tracks = array;
                             continue;

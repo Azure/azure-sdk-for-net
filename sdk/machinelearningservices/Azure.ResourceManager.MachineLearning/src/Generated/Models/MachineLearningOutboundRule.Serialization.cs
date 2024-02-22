@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element);
-                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element);
-                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element);
+                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element, options);
+                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element, options);
+                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element, options);
                 }
             }
-            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element);
+            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)

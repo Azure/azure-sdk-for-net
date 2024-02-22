@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningOnlineEndpointProperties.DeserializeMachineLearningOnlineEndpointProperties(property.Value);
+                    properties = MachineLearningOnlineEndpointProperties.DeserializeMachineLearningOnlineEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

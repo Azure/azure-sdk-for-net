@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                         primaryVerificationKey = null;
                         continue;
                     }
-                    primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value);
+                    primaryVerificationKey = ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alternateVerificationKeys"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyRestrictionTokenKey> array = new List<ContentKeyPolicyRestrictionTokenKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item));
+                        array.Add(ContentKeyPolicyRestrictionTokenKey.DeserializeContentKeyPolicyRestrictionTokenKey(item, options));
                     }
                     alternateVerificationKeys = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyTokenClaim> array = new List<ContentKeyPolicyTokenClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item));
+                        array.Add(ContentKeyPolicyTokenClaim.DeserializeContentKeyPolicyTokenClaim(item, options));
                     }
                     requiredClaims = array;
                     continue;

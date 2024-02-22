@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            parametersSchema = IntegrationAccountMapPropertiesParametersSchema.DeserializeIntegrationAccountMapPropertiesParametersSchema(property0.Value);
+                            parametersSchema = IntegrationAccountMapPropertiesParametersSchema.DeserializeIntegrationAccountMapPropertiesParametersSchema(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdTime"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))

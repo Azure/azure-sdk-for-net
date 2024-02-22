@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionReadiness> array = new List<KubernetesVersionReadiness>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item));
+                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item, options));
                     }
                     readiness = array;
                     continue;

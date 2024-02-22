@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDeployment> array = new List<KubernetesDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
+                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item, options));
                     }
                     deployments = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesPod> array = new List<KubernetesPod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesPod.DeserializeKubernetesPod(item));
+                        array.Add(KubernetesPod.DeserializeKubernetesPod(item, options));
                     }
                     pods = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesReplicaSet> array = new List<KubernetesReplicaSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
+                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item, options));
                     }
                     replicaSets = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesStatefulSet> array = new List<KubernetesStatefulSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
+                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item, options));
                     }
                     statefulSets = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDaemonSet> array = new List<KubernetesDaemonSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
+                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item, options));
                     }
                     daemonSets = array;
                     continue;

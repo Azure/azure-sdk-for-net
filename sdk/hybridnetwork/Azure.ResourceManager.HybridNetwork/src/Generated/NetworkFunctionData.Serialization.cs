@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = NetworkFunctionPropertiesFormat.DeserializeNetworkFunctionPropertiesFormat(property.Value);
+                    properties = NetworkFunctionPropertiesFormat.DeserializeNetworkFunctionPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
