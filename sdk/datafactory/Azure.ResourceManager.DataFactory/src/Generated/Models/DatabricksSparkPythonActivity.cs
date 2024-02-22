@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, DataFactoryElement<string> pythonFile) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(pythonFile, nameof(pythonFile));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (pythonFile == null)
+            {
+                throw new ArgumentNullException(nameof(pythonFile));
+            }
 
             PythonFile = pythonFile;
             Parameters = new ChangeTrackingList<BinaryData>();
@@ -50,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             Libraries = libraries;
             ActivityType = activityType ?? "DatabricksSparkPython";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
         }
 
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>

@@ -269,8 +269,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedSequenceNumber = 0;
             await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber), CancellationToken.None);
-            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber, -1, long.MinValue));
-            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber, -1, long.MinValue));
+            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), "-1", string.Empty));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), "-1", string.Empty));
         }
 
         /// <summary>
@@ -297,11 +297,10 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 0;
-            var expectedOffset = 0;
 
-            await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedOffset), CancellationToken.None);
-            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber, -1, expectedOffset));
-            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber, -1, expectedOffset));
+            await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber), CancellationToken.None);
+            mockLog.Verify(log => log.UpdateCheckpointStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), "-1", string.Empty));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedSequenceNumber.ToString(), "-1", string.Empty));
         }
 
         /// <summary>
@@ -325,9 +324,8 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 456;
-            var expectedOffset = 123;
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedOffset), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedException.Message, expectedSequenceNumber, -1, expectedOffset));
+            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedException.Message, expectedSequenceNumber.ToString(), "-1", string.Empty));
         }
 
         /// <summary>
@@ -350,9 +348,8 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 6;
-            var expectedOffset = 4;
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber, expectedOffset), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedException.Message, expectedSequenceNumber, -1, expectedOffset));
+            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(log => log.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, expectedException.Message, expectedSequenceNumber.ToString(), "-1", string.Empty));
         }
 
         /// <summary>
@@ -370,9 +367,8 @@ namespace Azure.Messaging.EventHubs.Tests
             target.Logger = mockLog.Object;
 
             var expectedSequenceNumber = 999;
-            var expectedOffset = 999;
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber , expectedOffset), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, ex.Message, expectedSequenceNumber, -1, expectedOffset));
+            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(expectedSequenceNumber), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, ex.Message, expectedSequenceNumber.ToString(), "-1", string.Empty));
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HBaseLinkedService(DataFactoryElement<string> host, HBaseAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
 
             Host = host;
             AuthenticationType = authenticationType;
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "HBase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HBaseLinkedService"/> for deserialization. </summary>
+        internal HBaseLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </summary>

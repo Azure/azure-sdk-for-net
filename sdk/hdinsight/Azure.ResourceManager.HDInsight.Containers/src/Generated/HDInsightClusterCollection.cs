@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HDInsightClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HDInsightClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HDInsightClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<HDInsightClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<HDInsightClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual NullableResponse<HDInsightClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterCollection.GetIfExists");
             scope.Start();

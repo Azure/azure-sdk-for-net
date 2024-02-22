@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string input = default;
-            IReadOnlyList<CodeInterpreterToolCallOutput> outputs = default;
+            IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("outputs"u8))
                 {
-                    List<CodeInterpreterToolCallOutput> array = new List<CodeInterpreterToolCallOutput>();
+                    List<RunStepCodeInterpreterToolCallOutput> array = new List<RunStepCodeInterpreterToolCallOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodeInterpreterToolCallOutput.DeserializeCodeInterpreterToolCallOutput(item));
+                        array.Add(RunStepCodeInterpreterToolCallOutput.DeserializeRunStepCodeInterpreterToolCallOutput(item));
                     }
                     outputs = array;
                     continue;

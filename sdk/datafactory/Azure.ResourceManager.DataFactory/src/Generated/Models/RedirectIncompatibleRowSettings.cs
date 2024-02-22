@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RedirectIncompatibleRowSettings(DataFactoryElement<string> linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             LinkedServiceName = linkedServiceName;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -35,6 +38,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceName = linkedServiceName;
             Path = path;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedirectIncompatibleRowSettings"/> for deserialization. </summary>
+        internal RedirectIncompatibleRowSettings()
+        {
         }
 
         /// <summary> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </summary>

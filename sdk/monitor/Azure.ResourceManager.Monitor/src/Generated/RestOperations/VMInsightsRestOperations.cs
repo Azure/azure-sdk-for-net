@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<VmInsightsOnboardingStatusData>> GetOnboardingStatusAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateGetOnboardingStatusRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<VmInsightsOnboardingStatusData> GetOnboardingStatus(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateGetOnboardingStatusRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);

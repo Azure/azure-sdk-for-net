@@ -25,7 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> is null. </exception>
         public BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, DateTimeOffset recoverOn) : base(restoreTargetInfo, sourceDataStoreType)
         {
-            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
+            if (restoreTargetInfo == null)
+            {
+                throw new ArgumentNullException(nameof(restoreTargetInfo));
+            }
 
             RecoverOn = recoverOn;
             ObjectType = "AzureBackupRecoveryTimeBasedRestoreRequest";

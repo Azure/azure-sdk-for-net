@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(connection, nameof(connection));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
+            if (connection == null)
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="connection"/> is null. </exception>
         public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(connection, nameof(connection));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
+            if (connection == null)
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<WorkspacePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<WorkspacePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkspacePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<WorkspacePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

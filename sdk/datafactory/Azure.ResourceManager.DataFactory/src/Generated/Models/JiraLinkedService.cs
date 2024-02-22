@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="username"/> is null. </exception>
         public JiraLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> username)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(username, nameof(username));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             Host = host;
             Username = username;
@@ -55,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Jira";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JiraLinkedService"/> for deserialization. </summary>
+        internal JiraLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the Jira service. (e.g. jira.example.com). </summary>

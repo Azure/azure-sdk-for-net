@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(DataFactoryElement<string> dataLakeStoreUri)
         {
-            Argument.AssertNotNull(dataLakeStoreUri, nameof(dataLakeStoreUri));
+            if (dataLakeStoreUri == null)
+            {
+                throw new ArgumentNullException(nameof(dataLakeStoreUri));
+            }
 
             DataLakeStoreUri = dataLakeStoreUri;
             LinkedServiceType = "AzureDataLakeStore";
@@ -56,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureDataLakeStore";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/> for deserialization. </summary>
+        internal AzureDataLakeStoreLinkedService()
+        {
         }
 
         /// <summary> Data Lake Store service URI. Type: string (or Expression with resultType string). </summary>

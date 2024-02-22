@@ -71,7 +71,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
             scope.Start();
@@ -113,7 +116,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
             scope.Start();

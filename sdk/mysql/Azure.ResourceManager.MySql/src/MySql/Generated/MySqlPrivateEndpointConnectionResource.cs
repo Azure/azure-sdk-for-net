@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, MySqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<MySqlPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, MySqlPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionResource.Update");
             scope.Start();

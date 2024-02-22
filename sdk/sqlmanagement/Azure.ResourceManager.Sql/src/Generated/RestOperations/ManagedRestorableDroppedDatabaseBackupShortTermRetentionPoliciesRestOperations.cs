@@ -72,10 +72,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedBackupShortTermRetentionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,10 +134,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedBackupShortTermRetentionPolicyData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName);
             _pipeline.Send(message, cancellationToken);
@@ -169,11 +225,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -199,11 +286,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -257,11 +375,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,11 +436,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId, policyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -338,10 +518,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedBackupShortTermRetentionPolicyListResult>> ListByRestorableDroppedDatabaseAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateListByRestorableDroppedDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -369,10 +577,38 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedBackupShortTermRetentionPolicyListResult> ListByRestorableDroppedDatabase(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateListByRestorableDroppedDatabaseRequest(subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId);
             _pipeline.Send(message, cancellationToken);
@@ -415,11 +651,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedBackupShortTermRetentionPolicyListResult>> ListByRestorableDroppedDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateListByRestorableDroppedDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -448,11 +715,42 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedBackupShortTermRetentionPolicyListResult> ListByRestorableDroppedDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (restorableDroppedDatabaseId == null)
+            {
+                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
+            }
+            if (restorableDroppedDatabaseId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
+            }
 
             using var message = CreateListByRestorableDroppedDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName, restorableDroppedDatabaseId);
             _pipeline.Send(message, cancellationToken);

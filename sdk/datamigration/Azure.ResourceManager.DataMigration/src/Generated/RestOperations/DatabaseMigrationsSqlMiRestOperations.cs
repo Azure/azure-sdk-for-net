@@ -79,10 +79,38 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatabaseMigrationSqlMIData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, migrationOperationId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -114,10 +142,38 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatabaseMigrationSqlMIData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, migrationOperationId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -174,11 +230,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -203,11 +290,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, data);
             _pipeline.Send(message, cancellationToken);
@@ -258,11 +376,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,11 +436,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, input);
             _pipeline.Send(message, cancellationToken);
@@ -342,11 +522,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CutoverAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateCutoverRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,11 +582,42 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cutover(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (managedInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceName));
+            }
+            if (managedInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
+            }
+            if (targetDBName == null)
+            {
+                throw new ArgumentNullException(nameof(targetDBName));
+            }
+            if (targetDBName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDBName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateCutoverRequest(subscriptionId, resourceGroupName, managedInstanceName, targetDBName, input);
             _pipeline.Send(message, cancellationToken);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WarehouseLinkedService : IUtf8JsonSerializable
+    public partial class WarehouseLinkedService : IUtf8JsonSerializable, IJsonModel<WarehouseLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WarehouseLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WarehouseLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WarehouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WarehouseLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -120,8 +129,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static WarehouseLinkedService DeserializeWarehouseLinkedService(JsonElement element)
+        WarehouseLinkedService IJsonModel<WarehouseLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WarehouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WarehouseLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWarehouseLinkedService(document.RootElement, options);
+        }
+
+        internal static WarehouseLinkedService DeserializeWarehouseLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -284,5 +307,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new WarehouseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, artifactId, endpoint, workspaceId.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential);
         }
+
+        BinaryData IPersistableModel<WarehouseLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WarehouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WarehouseLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WarehouseLinkedService IPersistableModel<WarehouseLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WarehouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWarehouseLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WarehouseLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WarehouseLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

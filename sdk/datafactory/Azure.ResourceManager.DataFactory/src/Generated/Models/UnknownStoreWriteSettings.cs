@@ -25,5 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/> for deserialization. </summary>
+        internal UnknownStoreWriteSettings()
+        {
+        }
     }
 }

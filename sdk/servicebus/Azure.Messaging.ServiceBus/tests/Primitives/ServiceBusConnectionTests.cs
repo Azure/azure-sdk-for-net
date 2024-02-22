@@ -206,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithConnectionStringCreatesTheTransportClient()
+        public void ConstructorWithConnectionStringCreatesTheTransportClient()
         {
             var connection = new ServiceBusConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", new ServiceBusClientOptions());
             Assert.That(connection.InnerClient, Is.Not.Null);
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
+        public void ConstructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
         {
             var sasToken = new SharedAccessSignature("hub", "root", "abc1234").Value;
             var connection = new ObservableTransportClientMock($"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={ sasToken }", new ServiceBusClientOptions());
@@ -233,7 +233,39 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithTokenCredentialCreatesTheTransportClient()
+        public void ConstructorWithConnectionStringAndDevelopmentEmulatorDoesNotUseTls()
+        {
+            var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
+            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
+            var connection = new ReadableTransportOptionsMock(fakeConnection);
+
+            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithConnectionStringAnNoDevelopmentEmulatorUsesTls()
+        {
+            var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
+            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName";
+            var connection = new ReadableTransportOptionsMock(fakeConnection);
+
+            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+            Assert.That(connection.UseTls.Value, Is.True, "The options should use TLS for communcating with the service.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusConnection" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithTokenCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.ServiceBus.com";
             var keyName = "aWonderfulKey";
@@ -252,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithSharedKeyCredentialCreatesTheTransportClient()
+        public void ConstructorWithSharedKeyCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.ServiceBus.com";
             var keyName = "aWonderfulKey";
@@ -270,7 +302,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public void ContructorWithSasCredentialCreatesTheTransportClient()
+        public void ConstructorWithSasCredentialCreatesTheTransportClient()
         {
             var fullyQualifiedNamespace = "my.ServiceBus.com";
             var keyName = "aWonderfulKey";
@@ -431,6 +463,50 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Allows for the options used by the client to be exposed for testing purposes.
+        /// </summary>
+        ///
+        internal class ReadableTransportOptionsMock : ServiceBusConnection
+        {
+            public ServiceBusClientOptions TransportClientOptions;
+
+            public bool? UseTls;
+
+            private ObservableTransportClient _transportClient;
+
+            public ReadableTransportOptionsMock(string connectionString,
+                                       ServiceBusClientOptions clientOptions = default) : base(connectionString, clientOptions ?? new())
+            {
+            }
+
+            public ReadableTransportOptionsMock(string fullyQualifiedNamespace,
+                                       TokenCredential credential,
+                                       ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions ?? new())
+            {
+            }
+
+            public ReadableTransportOptionsMock(string fullyQualifiedNamespace,
+                                       AzureNamedKeyCredential credential,
+                                       ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions ?? new())
+            {
+            }
+
+            public ReadableTransportOptionsMock(string fullyQualifiedNamespace,
+                                       AzureSasCredential credential,
+                                       ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions ?? new())
+            {
+            }
+
+            internal override TransportClient CreateTransportClient(ServiceBusTokenCredential credential, ServiceBusClientOptions options, bool useTls = true)
+            {
+                UseTls = useTls;
+                TransportClientOptions = options;
+                _transportClient = new ObservableTransportClient();
+                return _transportClient;
+            }
+        }
+
+        /// <summary>
         ///   Allows for the operations performed by the client to be observed for testing purposes.
         /// </summary>
         ///
@@ -501,7 +577,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
 
             internal override TransportClient CreateTransportClient(ServiceBusTokenCredential credential,
-                                                                    ServiceBusClientOptions options)
+                                                                    ServiceBusClientOptions options,
+                                                                    bool useTls)
             {
                 TransportClientCredential = credential;
                 TransportClient ??= new();

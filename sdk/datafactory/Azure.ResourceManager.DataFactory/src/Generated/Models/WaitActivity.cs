@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
         public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (waitTimeInSeconds == null)
+            {
+                throw new ArgumentNullException(nameof(waitTimeInSeconds));
+            }
 
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = "Wait";
@@ -42,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = activityType ?? "Wait";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/> for deserialization. </summary>
+        internal WaitActivity()
+        {
         }
 
         /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>

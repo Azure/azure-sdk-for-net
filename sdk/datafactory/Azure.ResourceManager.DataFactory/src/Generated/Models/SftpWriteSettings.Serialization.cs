@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SftpWriteSettings : IUtf8JsonSerializable
+    public partial class SftpWriteSettings : IUtf8JsonSerializable, IJsonModel<SftpWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SftpWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SftpWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SftpWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SftpWriteSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationTimeout))
             {
@@ -70,8 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
+        SftpWriteSettings IJsonModel<SftpWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SftpWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SftpWriteSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSftpWriteSettings(document.RootElement, options);
+        }
+
+        internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -156,5 +179,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SftpWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, Optional.ToList(metadata), additionalProperties, operationTimeout.Value, useTempFileRename.Value);
         }
+
+        BinaryData IPersistableModel<SftpWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SftpWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SftpWriteSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SftpWriteSettings IPersistableModel<SftpWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SftpWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSftpWriteSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SftpWriteSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SftpWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

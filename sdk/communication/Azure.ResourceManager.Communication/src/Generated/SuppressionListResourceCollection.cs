@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SuppressionListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SuppressionListResource> CreateOrUpdate(WaitUntil waitUntil, string suppressionListName, SuppressionListResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual async Task<Response<SuppressionListResource>> GetAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual Response<SuppressionListResource> Get(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual Response<bool> Exists(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual async Task<NullableResponse<SuppressionListResource>> GetIfExistsAsync(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
         public virtual NullableResponse<SuppressionListResource> GetIfExists(string suppressionListName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(suppressionListName, nameof(suppressionListName));
+            if (suppressionListName == null)
+            {
+                throw new ArgumentNullException(nameof(suppressionListName));
+            }
+            if (suppressionListName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(suppressionListName));
+            }
 
             using var scope = _suppressionListResourceSuppressionListsClientDiagnostics.CreateScope("SuppressionListResourceCollection.GetIfExists");
             scope.Start();

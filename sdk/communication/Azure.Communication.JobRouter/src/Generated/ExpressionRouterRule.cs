@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -15,12 +15,18 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>
         /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>
-        internal ExpressionRouterRule(RouterRuleKind kind, string language, string expression) : base(kind)
+        internal ExpressionRouterRule(RouterRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string language, string expression) : base(kind, serializedAdditionalRawData)
         {
             Language = language;
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/> for deserialization. </summary>
+        internal ExpressionRouterRule()
+        {
         }
         /// <summary> An expression to evaluate. Should contain return statement with calculated values. </summary>
         public string Expression { get; }

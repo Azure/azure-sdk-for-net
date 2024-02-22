@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SiteSlotNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfigResource.Update");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SiteSlotNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfigResource.Update");
             scope.Start();
@@ -368,7 +374,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteSlotNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfigResource.CreateOrUpdate");
             scope.Start();
@@ -415,7 +424,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteSlotNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteSlotNetworkConfigResource.CreateOrUpdate");
             scope.Start();

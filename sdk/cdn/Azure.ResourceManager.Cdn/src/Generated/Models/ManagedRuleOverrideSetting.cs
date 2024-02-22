@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverrideSetting(string ruleId)
         {
-            Argument.AssertNotNull(ruleId, nameof(ruleId));
+            if (ruleId == null)
+            {
+                throw new ArgumentNullException(nameof(ruleId));
+            }
 
             RuleId = ruleId;
         }

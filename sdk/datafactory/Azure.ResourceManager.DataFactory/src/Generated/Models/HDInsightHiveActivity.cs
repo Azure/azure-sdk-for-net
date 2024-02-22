@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightHiveActivity(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
@@ -59,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Variables = variables;
             QueryTimeout = queryTimeout;
             ActivityType = activityType ?? "HDInsightHive";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/> for deserialization. </summary>
+        internal HDInsightHiveActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

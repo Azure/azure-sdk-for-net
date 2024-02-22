@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -23,12 +22,30 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/> or <paramref name="nextMarker"/> is null. </exception>
         internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string directoryPath, StringEncoded prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(shareName, nameof(shareName));
-            Argument.AssertNotNull(directoryPath, nameof(directoryPath));
-            Argument.AssertNotNull(prefix, nameof(prefix));
-            Argument.AssertNotNull(segment, nameof(segment));
-            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
+            if (serviceEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(serviceEndpoint));
+            }
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (directoryPath == null)
+            {
+                throw new ArgumentNullException(nameof(directoryPath));
+            }
+            if (prefix == null)
+            {
+                throw new ArgumentNullException(nameof(prefix));
+            }
+            if (segment == null)
+            {
+                throw new ArgumentNullException(nameof(segment));
+            }
+            if (nextMarker == null)
+            {
+                throw new ArgumentNullException(nameof(nextMarker));
+            }
 
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;

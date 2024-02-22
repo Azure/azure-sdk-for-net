@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -56,11 +55,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="queryFunctionType"/>, <paramref name="bindingType"/>, <paramref name="inputs"/> or <paramref name="output"/> is null. </exception>
         public StreamAnalyticsQueryFunction(string name, string queryFunctionType, string bindingType, IEnumerable<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(queryFunctionType, nameof(queryFunctionType));
-            Argument.AssertNotNull(bindingType, nameof(bindingType));
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(output, nameof(output));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (queryFunctionType == null)
+            {
+                throw new ArgumentNullException(nameof(queryFunctionType));
+            }
+            if (bindingType == null)
+            {
+                throw new ArgumentNullException(nameof(bindingType));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (output == null)
+            {
+                throw new ArgumentNullException(nameof(output));
+            }
 
             Name = name;
             QueryFunctionType = queryFunctionType;

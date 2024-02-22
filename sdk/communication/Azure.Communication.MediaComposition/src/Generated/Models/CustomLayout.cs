@@ -24,7 +24,10 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="inputGroups"/> is null. </exception>
         public CustomLayout(IDictionary<string, InputGroup> inputGroups)
         {
-            Argument.AssertNotNull(inputGroups, nameof(inputGroups));
+            if (inputGroups == null)
+            {
+                throw new ArgumentNullException(nameof(inputGroups));
+            }
 
             Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
             InputGroups = inputGroups;

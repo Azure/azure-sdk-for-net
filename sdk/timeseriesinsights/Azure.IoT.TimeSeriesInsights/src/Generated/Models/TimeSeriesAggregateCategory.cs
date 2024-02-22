@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -21,8 +20,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="values"/> is null. </exception>
         public TimeSeriesAggregateCategory(string label, IEnumerable<object> values)
         {
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(values, nameof(values));
+            if (label == null)
+            {
+                throw new ArgumentNullException(nameof(label));
+            }
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             Label = label;
             Values = values.ToList();

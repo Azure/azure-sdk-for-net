@@ -49,8 +49,14 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ConversationsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -78,7 +84,10 @@ namespace Azure.AI.Language.Conversations
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeConversationAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversation");
             scope.Start();
@@ -112,7 +121,10 @@ namespace Azure.AI.Language.Conversations
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversation(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeConversation(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversation");
             scope.Start();
@@ -211,7 +223,10 @@ namespace Azure.AI.Language.Conversations
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> AnalyzeConversationsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversations");
             scope.Start();
@@ -246,7 +261,10 @@ namespace Azure.AI.Language.Conversations
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversations(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> AnalyzeConversations(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversations");
             scope.Start();

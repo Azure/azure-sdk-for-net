@@ -49,8 +49,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WorkflowsClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

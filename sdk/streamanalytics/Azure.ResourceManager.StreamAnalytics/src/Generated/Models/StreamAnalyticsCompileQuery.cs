@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public StreamAnalyticsCompileQuery(string query, StreamingJobType jobType)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
 
             Query = query;
             Inputs = new ChangeTrackingList<StreamAnalyticsQueryInput>();

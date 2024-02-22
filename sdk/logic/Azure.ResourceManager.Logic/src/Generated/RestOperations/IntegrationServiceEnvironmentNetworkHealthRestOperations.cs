@@ -68,9 +68,30 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyDictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>>> GetAsync(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
+            if (resourceGroup.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
+            }
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,9 +123,30 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyDictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>> Get(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
+            if (resourceGroup.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
+            }
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             _pipeline.Send(message, cancellationToken);

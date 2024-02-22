@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public HubspotLinkedService(DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             ClientId = clientId;
             LinkedServiceType = "Hubspot";
@@ -52,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Hubspot";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HubspotLinkedService"/> for deserialization. </summary>
+        internal HubspotLinkedService()
+        {
         }
 
         /// <summary> The client ID associated with your Hubspot application. </summary>

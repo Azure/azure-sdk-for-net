@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="accountKey"/> is null. </exception>
         public AppPlatformStorageAccount(string accountName, string accountKey)
         {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(accountKey, nameof(accountKey));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountKey == null)
+            {
+                throw new ArgumentNullException(nameof(accountKey));
+            }
 
             AccountName = accountName;
             AccountKey = accountKey;

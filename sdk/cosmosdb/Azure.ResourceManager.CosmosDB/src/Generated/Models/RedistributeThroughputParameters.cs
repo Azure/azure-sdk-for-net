@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public RedistributeThroughputParameters(AzureLocation location, RedistributeThroughputPropertiesResource resource) : base(location)
         {
-            Argument.AssertNotNull(resource, nameof(resource));
+            if (resource == null)
+            {
+                throw new ArgumentNullException(nameof(resource));
+            }
 
             Resource = resource;
         }

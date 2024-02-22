@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -19,8 +18,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null. </exception>
         public KeyVaultRoleAssignmentPropertiesInternal(string roleDefinitionId, string principalId)
         {
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(principalId, nameof(principalId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (principalId == null)
+            {
+                throw new ArgumentNullException(nameof(principalId));
+            }
 
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;

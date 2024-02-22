@@ -86,7 +86,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapCollection.CreateOrUpdate");
             scope.Start();
@@ -132,7 +135,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, CloudServiceSwapData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapCollection.CreateOrUpdate");
             scope.Start();

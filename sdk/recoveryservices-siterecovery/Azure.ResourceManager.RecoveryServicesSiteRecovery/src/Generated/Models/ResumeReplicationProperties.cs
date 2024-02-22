@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="providerSpecificDetails"/> is null. </exception>
         public ResumeReplicationProperties(ResumeReplicationProviderSpecificContent providerSpecificDetails)
         {
-            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
+            if (providerSpecificDetails == null)
+            {
+                throw new ArgumentNullException(nameof(providerSpecificDetails));
+            }
 
             ProviderSpecificDetails = providerSpecificDetails;
         }

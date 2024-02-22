@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         protected DataFactoryDatasetProperties(DataFactoryLinkedServiceReference linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             LinkedServiceName = linkedServiceName;
             Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
@@ -53,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Annotations = annotations;
             Folder = folder;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetProperties"/> for deserialization. </summary>
+        internal DataFactoryDatasetProperties()
+        {
         }
 
         /// <summary> Type of dataset. </summary>

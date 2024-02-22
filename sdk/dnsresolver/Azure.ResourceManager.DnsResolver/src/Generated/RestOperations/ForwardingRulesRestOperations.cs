@@ -84,11 +84,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsForwardingRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -120,11 +151,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsForwardingRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -185,11 +247,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsForwardingRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, DnsForwardingRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -219,11 +312,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsForwardingRuleData> Update(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, DnsForwardingRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -278,10 +402,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -306,10 +458,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -355,10 +535,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsForwardingRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -388,10 +596,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsForwardingRuleData> Get(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
+            if (forwardingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(forwardingRuleName));
+            }
+            if (forwardingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -446,9 +682,30 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -476,9 +733,30 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleListResult> List(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
             _pipeline.Send(message, cancellationToken);
@@ -521,10 +799,34 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, rulesetName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,10 +855,34 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (rulesetName == null)
+            {
+                throw new ArgumentNullException(nameof(rulesetName));
+            }
+            if (rulesetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesetName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, rulesetName, top);
             _pipeline.Send(message, cancellationToken);

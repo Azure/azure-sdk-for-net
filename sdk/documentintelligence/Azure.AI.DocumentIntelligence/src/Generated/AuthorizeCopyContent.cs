@@ -51,7 +51,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeCopyContent(string modelId)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
 
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();

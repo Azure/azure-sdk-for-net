@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public ConnectivityCheckRequestDestination(string address, long port)
         {
-            Argument.AssertNotNull(address, nameof(address));
+            if (address == null)
+            {
+                throw new ArgumentNullException(nameof(address));
+            }
 
             Address = address;
             Port = port;

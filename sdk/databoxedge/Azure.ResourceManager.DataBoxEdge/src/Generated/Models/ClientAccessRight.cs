@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public ClientAccessRight(string client, EdgeClientPermissionType accessPermission)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             Client = client;
             AccessPermission = accessPermission;

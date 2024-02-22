@@ -71,10 +71,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoverResourceSetData>> CreateAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, moverResourceSetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,10 +127,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoverResourceSetData> Create(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, moverResourceSetName, data);
             _pipeline.Send(message, cancellationToken);
@@ -159,10 +207,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoverResourceSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, moverResourceSetName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -190,10 +262,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoverResourceSetData> Update(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, moverResourceSetName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -240,9 +336,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoverResourceSetData>> GetAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, moverResourceSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,9 +388,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoverResourceSetData> Get(string subscriptionId, string resourceGroupName, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, moverResourceSetName);
             _pipeline.Send(message, cancellationToken);
@@ -331,9 +469,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PrepareAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreatePrepareRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -357,9 +516,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Prepare(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreatePrepareRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -411,9 +591,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> InitiateMoveAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateInitiateMoveRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -437,9 +638,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response InitiateMove(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateInitiateMoveRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -491,9 +713,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CommitAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateCommitRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -517,9 +760,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Commit(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateCommitRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -571,9 +835,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DiscardAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateDiscardRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -597,9 +882,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Discard(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateDiscardRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -643,9 +949,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResolveDependenciesAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateResolveDependenciesRequest(subscriptionId, resourceGroupName, moverResourceSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -668,9 +995,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResolveDependencies(string subscriptionId, string resourceGroupName, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateResolveDependenciesRequest(subscriptionId, resourceGroupName, moverResourceSetName);
             _pipeline.Send(message, cancellationToken);
@@ -722,9 +1070,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BulkRemoveAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateBulkRemoveRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -748,9 +1117,30 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BulkRemove(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
 
             using var message = CreateBulkRemoveRequest(subscriptionId, resourceGroupName, moverResourceSetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -788,7 +1178,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListMoveCollectionsBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -813,7 +1210,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoveCollectionResultList> ListMoveCollectionsBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListMoveCollectionsBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -858,8 +1262,22 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListMoveCollectionsByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -885,8 +1303,22 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoveCollectionResultList> ListMoveCollectionsByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListMoveCollectionsByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -936,10 +1368,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RequiredForResourcesList>> ListRequiredForAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(sourceId, nameof(sourceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (sourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceId));
+            }
 
             using var message = CreateListRequiredForRequest(subscriptionId, resourceGroupName, moverResourceSetName, sourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -967,10 +1423,34 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RequiredForResourcesList> ListRequiredFor(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
-            Argument.AssertNotNull(sourceId, nameof(sourceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (moverResourceSetName == null)
+            {
+                throw new ArgumentNullException(nameof(moverResourceSetName));
+            }
+            if (moverResourceSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(moverResourceSetName));
+            }
+            if (sourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceId));
+            }
 
             using var message = CreateListRequiredForRequest(subscriptionId, resourceGroupName, moverResourceSetName, sourceId);
             _pipeline.Send(message, cancellationToken);
@@ -1010,8 +1490,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1037,8 +1527,18 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoveCollectionResultList> ListMoveCollectionsBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1079,9 +1579,26 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MoveCollectionResultList>> ListMoveCollectionsByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListMoveCollectionsByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1108,9 +1625,26 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MoveCollectionResultList> ListMoveCollectionsByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListMoveCollectionsByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);

@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IPv6FirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, IPv6FirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IPv6FirewallRuleResource> Update(WaitUntil waitUntil, IPv6FirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _iPv6FirewallRuleClientDiagnostics.CreateScope("IPv6FirewallRuleResource.Update");
             scope.Start();

@@ -33,6 +33,7 @@ namespace Microsoft.Azure.WebJobs
         private readonly string _topicName;
         private readonly string _subscriptionName;
         private bool? _autoCompleteMessages;
+        private int? _maxMessageBatchSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusTriggerAttribute"/> class.
@@ -107,10 +108,32 @@ namespace Microsoft.Azure.WebJobs
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
+        /// a batch of messages.
+        /// </summary>
+        public int MaxMessageBatchSize
+        {
+            get
+            {
+                return _maxMessageBatchSize.HasValue ? _maxMessageBatchSize.Value : 1000;
+            }
+            set
+            {
+                _maxMessageBatchSize = value;
+            }
+        }
+
+        /// <summary>
         /// Gets a boolean to check if auto complete messages option was set on the trigger.
         /// Since a nullable property can't be used in the attribute. This is a work around for it.
         /// </summary>
         internal bool IsAutoCompleteMessagesOptionSet { get { return _autoCompleteMessages.HasValue; } }
+
+        /// <summary>
+        /// Gets a boolean to check if maximum message batch option was set on the trigger.
+        /// Since a nullable property can't be used in the attribute. This is a work around for it.
+        /// </summary>
+        internal bool IsMaxMessageBatchSizeOptionSet { get { return _maxMessageBatchSize.HasValue; } }
 
         private string DebuggerDisplay
         {

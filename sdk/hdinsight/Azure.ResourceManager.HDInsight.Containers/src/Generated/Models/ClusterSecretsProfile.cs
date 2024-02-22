@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultResourceId"/> is null. </exception>
         public ClusterSecretsProfile(ResourceIdentifier keyVaultResourceId)
         {
-            Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
+            if (keyVaultResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultResourceId));
+            }
 
             KeyVaultResourceId = keyVaultResourceId;
             Secrets = new ChangeTrackingList<ClusterSecretReference>();

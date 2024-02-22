@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         public SourceCodeRepoAuthInfo(SourceCodeRepoAuthTokenType tokenType, string token)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
 
             TokenType = tokenType;
             Token = token;

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="counters"/> is null. </exception>
         public DataBoxEdgeMetricCounterSet(IEnumerable<DataBoxEdgeMetricCounter> counters)
         {
-            Argument.AssertNotNull(counters, nameof(counters));
+            if (counters == null)
+            {
+                throw new ArgumentNullException(nameof(counters));
+            }
 
             Counters = counters.ToList();
         }

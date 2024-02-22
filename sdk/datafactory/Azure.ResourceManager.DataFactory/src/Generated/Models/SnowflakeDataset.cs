@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SnowflakeDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "SnowflakeTable";
         }
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "SnowflakeTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnowflakeDataset"/> for deserialization. </summary>
+        internal SnowflakeDataset()
+        {
         }
 
         /// <summary> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </summary>

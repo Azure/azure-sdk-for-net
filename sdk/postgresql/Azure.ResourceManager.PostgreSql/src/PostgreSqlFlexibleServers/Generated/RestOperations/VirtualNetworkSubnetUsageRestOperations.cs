@@ -69,8 +69,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteAsync(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
+            {
+                throw new ArgumentNullException(nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
+            }
 
             using var message = CreateExecuteRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,8 +107,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> Execute(string subscriptionId, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
+            {
+                throw new ArgumentNullException(nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
+            }
 
             using var message = CreateExecuteRequest(subscriptionId, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             _pipeline.Send(message, cancellationToken);

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="dataProducts"/> is null. </exception>
         public PublisherInformation(string publisherName, IEnumerable<DataProductInformation> dataProducts)
         {
-            Argument.AssertNotNull(publisherName, nameof(publisherName));
-            Argument.AssertNotNull(dataProducts, nameof(dataProducts));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (dataProducts == null)
+            {
+                throw new ArgumentNullException(nameof(dataProducts));
+            }
 
             PublisherName = publisherName;
             DataProducts = dataProducts.ToList();

@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="web"/> is null. </exception>
         internal ClusterConnectivityProfile(WebConnectivityEndpoint web)
         {
-            Argument.AssertNotNull(web, nameof(web));
+            if (web == null)
+            {
+                throw new ArgumentNullException(nameof(web));
+            }
 
             Web = web;
             Ssh = new ChangeTrackingList<SshConnectivityEndpoint>();

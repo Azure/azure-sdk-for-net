@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
         public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList)
         {
-            Argument.AssertNotNull(addressList, nameof(addressList));
+            if (addressList == null)
+            {
+                throw new ArgumentNullException(nameof(addressList));
+            }
 
             Action = action;
             AddressList = addressList.ToList();

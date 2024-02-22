@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AzureSearchLinkedService(DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Uri = uri;
             LinkedServiceType = "AzureSearch";
@@ -42,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Key = key;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "AzureSearch";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedService"/> for deserialization. </summary>
+        internal AzureSearchLinkedService()
+        {
         }
 
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> or <paramref name="shareName"/> is null. </exception>
         public AppPlatformAzureFileVolume(string mountPath, string shareName) : base(mountPath)
         {
-            Argument.AssertNotNull(mountPath, nameof(mountPath));
-            Argument.AssertNotNull(shareName, nameof(shareName));
+            if (mountPath == null)
+            {
+                throw new ArgumentNullException(nameof(mountPath));
+            }
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
 
             ShareName = shareName;
             UnderlyingResourceType = UnderlyingResourceType.AzureFileVolume;
