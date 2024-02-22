@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     links = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     previousLinks = array;
                     continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = CloudServiceSwapProperties.DeserializeCloudServiceSwapProperties(property.Value);
+                    properties = CloudServiceSwapProperties.DeserializeCloudServiceSwapProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

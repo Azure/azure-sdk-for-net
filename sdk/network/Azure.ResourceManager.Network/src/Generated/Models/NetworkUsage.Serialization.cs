@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value);
+                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

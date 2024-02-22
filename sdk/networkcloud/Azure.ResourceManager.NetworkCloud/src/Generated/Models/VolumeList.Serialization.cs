@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudVolumeData> array = new List<NetworkCloudVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(item));
+                        array.Add(NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(item, options));
                     }
                     value = array;
                     continue;

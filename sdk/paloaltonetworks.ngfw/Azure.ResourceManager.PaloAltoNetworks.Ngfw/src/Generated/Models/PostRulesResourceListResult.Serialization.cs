@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<PostRulestackRuleData> array = new List<PostRulestackRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostRulestackRuleData.DeserializePostRulestackRuleData(item));
+                        array.Add(PostRulestackRuleData.DeserializePostRulestackRuleData(item, options));
                     }
                     value = array;
                     continue;

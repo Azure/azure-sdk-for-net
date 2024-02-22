@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value);
+                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionInDays"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value);
+                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             List<OperationalInsightsPrivateLinkScopedResourceInfo> array = new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item));
+                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value);
+                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultDataCollectionRuleResourceId"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<SubscriptionStateOverrideAction> array = new List<SubscriptionStateOverrideAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionStateOverrideAction.DeserializeSubscriptionStateOverrideAction(item));
+                        array.Add(SubscriptionStateOverrideAction.DeserializeSubscriptionStateOverrideAction(item, options));
                     }
                     subscriptionStateOverrideActions = array;
                     continue;

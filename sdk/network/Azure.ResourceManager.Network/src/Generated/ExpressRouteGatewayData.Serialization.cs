@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoScaleConfiguration = ExpressRouteGatewayPropertiesAutoScaleConfiguration.DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(property0.Value);
+                            autoScaleConfiguration = ExpressRouteGatewayPropertiesAutoScaleConfiguration.DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnections"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                             }
                             expressRouteConnections = array;
                             continue;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PolicySignaturesOverridesForIdpsData> array = new List<PolicySignaturesOverridesForIdpsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item));
+                        array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item, options));
                     }
                     value = array;
                     continue;

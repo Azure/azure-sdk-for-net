@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringRegisteredPrefixData> array = new List<PeeringRegisteredPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item));
+                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item, options));
                     }
                     value = array;
                     continue;

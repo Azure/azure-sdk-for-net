@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartitionName> array = new List<DataPartitionName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartitionName.DeserializeDataPartitionName(item));
+                        array.Add(DataPartitionName.DeserializeDataPartitionName(item, options));
                     }
                     dataPartitionNames = array;
                     continue;

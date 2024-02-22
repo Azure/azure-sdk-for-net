@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlQueryTextData> array = new List<MySqlQueryTextData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlQueryTextData.DeserializeMySqlQueryTextData(item));
+                        array.Add(MySqlQueryTextData.DeserializeMySqlQueryTextData(item, options));
                     }
                     value = array;
                     continue;

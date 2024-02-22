@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            aadConfiguration = NetworkCloudAadConfiguration.DeserializeNetworkCloudAadConfiguration(property0.Value);
+                            aadConfiguration = NetworkCloudAadConfiguration.DeserializeNetworkCloudAadConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("administratorConfiguration"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value);
+                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkIds"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<AvailableUpgrade> array = new List<AvailableUpgrade>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailableUpgrade.DeserializeAvailableUpgrade(item));
+                                array.Add(AvailableUpgrade.DeserializeAvailableUpgrade(item, options));
                             }
                             availableUpgrades = array;
                             continue;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("controlPlaneNodeConfiguration"u8))
                         {
-                            controlPlaneNodeConfiguration = ControlPlaneNodeConfiguration.DeserializeControlPlaneNodeConfiguration(property0.Value);
+                            controlPlaneNodeConfiguration = ControlPlaneNodeConfiguration.DeserializeControlPlaneNodeConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("detailedStatus"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<FeatureStatus> array = new List<FeatureStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FeatureStatus.DeserializeFeatureStatus(item));
+                                array.Add(FeatureStatus.DeserializeFeatureStatus(item, options));
                             }
                             featureStatuses = array;
                             continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<InitialAgentPoolConfiguration> array = new List<InitialAgentPoolConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InitialAgentPoolConfiguration.DeserializeInitialAgentPoolConfiguration(item));
+                                array.Add(InitialAgentPoolConfiguration.DeserializeInitialAgentPoolConfiguration(item, options));
                             }
                             initialAgentPoolConfigurations = array;
                             continue;
@@ -422,12 +422,12 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkConfiguration"u8))
                         {
-                            networkConfiguration = KubernetesClusterNetworkConfiguration.DeserializeKubernetesClusterNetworkConfiguration(property0.Value);
+                            networkConfiguration = KubernetesClusterNetworkConfiguration.DeserializeKubernetesClusterNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nodes"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesClusterNode> array = new List<KubernetesClusterNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesClusterNode.DeserializeKubernetesClusterNode(item));
+                                array.Add(KubernetesClusterNode.DeserializeKubernetesClusterNode(item, options));
                             }
                             nodes = array;
                             continue;

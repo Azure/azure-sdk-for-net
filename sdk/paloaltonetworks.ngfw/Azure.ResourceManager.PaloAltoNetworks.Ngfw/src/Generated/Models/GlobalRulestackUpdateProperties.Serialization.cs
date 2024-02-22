@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value);
+                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
