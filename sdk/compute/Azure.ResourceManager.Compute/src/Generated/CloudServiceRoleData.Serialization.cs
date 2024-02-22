@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
+                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableTable> array = new List<RestorableTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTable.DeserializeRestorableTable(item));
+                        array.Add(RestorableTable.DeserializeRestorableTable(item, options));
                     }
                     value = array;
                     continue;

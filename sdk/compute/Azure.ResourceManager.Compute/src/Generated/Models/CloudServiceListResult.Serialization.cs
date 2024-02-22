@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceData> array = new List<CloudServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceData.DeserializeCloudServiceData(item));
+                        array.Add(CloudServiceData.DeserializeCloudServiceData(item, options));
                     }
                     value = array;
                     continue;

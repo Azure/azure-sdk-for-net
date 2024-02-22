@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerGroupData> array = new List<ContainerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item));
+                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item, options));
                     }
                     value = array;
                     continue;

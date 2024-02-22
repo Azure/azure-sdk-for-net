@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    name = QuotaName.DeserializeQuotaName(property.Value);
+                    name = QuotaName.DeserializeQuotaName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("template"u8))
                 {
-                    template = MessageTemplate.DeserializeMessageTemplate(property.Value);
+                    template = MessageTemplate.DeserializeMessageTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelRegistrationId"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxJobData> array = new List<DataBoxJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxJobData.DeserializeDataBoxJobData(item));
+                        array.Add(DataBoxJobData.DeserializeDataBoxJobData(item, options));
                     }
                     value = array;
                     continue;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDaprSecret> array = new List<ContainerAppDaprSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(item));
+                        array.Add(ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(item, options));
                     }
                     value = array;
                     continue;

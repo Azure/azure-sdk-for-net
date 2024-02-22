@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DedicatedHostInstanceViewWithName> array = new List<DedicatedHostInstanceViewWithName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostInstanceViewWithName.DeserializeDedicatedHostInstanceViewWithName(item));
+                        array.Add(DedicatedHostInstanceViewWithName.DeserializeDedicatedHostInstanceViewWithName(item, options));
                     }
                     hosts = array;
                     continue;

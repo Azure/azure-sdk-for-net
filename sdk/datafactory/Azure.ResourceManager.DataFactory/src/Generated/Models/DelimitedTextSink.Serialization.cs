@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreWriteSettings.DeserializeStoreWriteSettings(property.Value);
+                    storeSettings = StoreWriteSettings.DeserializeStoreWriteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("formatSettings"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    formatSettings = DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(property.Value);
+                    formatSettings = DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
