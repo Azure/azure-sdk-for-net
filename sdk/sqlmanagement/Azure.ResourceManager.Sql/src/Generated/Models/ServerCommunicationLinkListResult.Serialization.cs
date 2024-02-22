@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerCommunicationLinkData> array = new List<SqlServerCommunicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item));
+                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -109,33 +108,19 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(Value))
             {
-                if (Value.Any() || hasPropertyOverride)
+                if (Value.Any())
                 {
                     builder.Append("  value:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in Value)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in Value)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

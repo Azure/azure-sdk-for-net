@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
+                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestedParameters"u8))
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
+                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,40 +111,18 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentParameters), out propertyOverride);
-            if (Optional.IsDefined(CurrentParameters) || hasPropertyOverride)
+            if (Optional.IsDefined(CurrentParameters))
             {
                 builder.Append("  currentParameters:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, CurrentParameters, options, 2, false);
-                }
+                AppendChildObject(builder, CurrentParameters, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedParameters), out propertyOverride);
-            if (Optional.IsDefined(RequestedParameters) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedParameters))
             {
                 builder.Append("  requestedParameters:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, RequestedParameters, options, 2, false);
-                }
+                AppendChildObject(builder, RequestedParameters, options, 2, false);
             }
 
             builder.AppendLine("}");

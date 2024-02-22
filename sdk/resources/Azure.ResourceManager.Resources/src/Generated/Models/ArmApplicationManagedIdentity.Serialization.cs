@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                     Dictionary<string, ArmApplicationUserAssignedIdentity> dictionary = new Dictionary<string, ArmApplicationUserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmApplicationUserAssignedIdentity.DeserializeArmApplicationUserAssignedIdentity(property0.Value));
+                        dictionary.Add(property0.Name, ArmApplicationUserAssignedIdentity.DeserializeArmApplicationUserAssignedIdentity(property0.Value, options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -154,62 +153,32 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            if (Optional.IsDefined(PrincipalId))
             {
                 builder.Append("  principalId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            if (Optional.IsDefined(TenantId))
             {
                 builder.Append("  tenantId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
-            if (Optional.IsCollectionDefined(UserAssignedIdentities) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                if (UserAssignedIdentities.Any() || hasPropertyOverride)
+                if (UserAssignedIdentities.Any())
                 {
                     builder.Append("  userAssignedIdentities:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" {");
+                    foreach (var item in UserAssignedIdentities)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.Append($"    {item.Key}:");
+                        AppendChildObject(builder, item.Value, options, 4, false);
                     }
-                    else
-                    {
-                        builder.AppendLine(" {");
-                        foreach (var item in UserAssignedIdentities)
-                        {
-                            builder.Append($"    '{item.Key}':");
-                            AppendChildObject(builder, item.Value, options, 4, false);
-                        }
-                        builder.AppendLine("  }");
-                    }
+                    builder.AppendLine("  }");
                 }
             }
 

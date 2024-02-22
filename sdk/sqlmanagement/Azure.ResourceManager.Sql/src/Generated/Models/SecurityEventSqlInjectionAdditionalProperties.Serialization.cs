@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -175,133 +174,71 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatId), out propertyOverride);
-            if (Optional.IsDefined(ThreatId) || hasPropertyOverride)
+            if (Optional.IsDefined(ThreatId))
             {
                 builder.Append("  threatId:");
-                if (hasPropertyOverride)
+                if (ThreatId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ThreatId}'''");
                 }
                 else
                 {
-                    if (ThreatId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ThreatId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ThreatId}'");
-                    }
+                    builder.AppendLine($" '{ThreatId}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Statement), out propertyOverride);
-            if (Optional.IsDefined(Statement) || hasPropertyOverride)
+            if (Optional.IsDefined(Statement))
             {
                 builder.Append("  statement:");
-                if (hasPropertyOverride)
+                if (Statement.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Statement}'''");
                 }
                 else
                 {
-                    if (Statement.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Statement}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Statement}'");
-                    }
+                    builder.AppendLine($" '{Statement}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatementHighlightOffset), out propertyOverride);
-            if (Optional.IsDefined(StatementHighlightOffset) || hasPropertyOverride)
+            if (Optional.IsDefined(StatementHighlightOffset))
             {
                 builder.Append("  statementHighlightOffset:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {StatementHighlightOffset.Value}");
-                }
+                builder.AppendLine($" {StatementHighlightOffset.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatementHighlightLength), out propertyOverride);
-            if (Optional.IsDefined(StatementHighlightLength) || hasPropertyOverride)
+            if (Optional.IsDefined(StatementHighlightLength))
             {
                 builder.Append("  statementHighlightLength:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {StatementHighlightLength.Value}");
-                }
+                builder.AppendLine($" {StatementHighlightLength.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
-            if (Optional.IsDefined(ErrorCode) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorCode))
             {
                 builder.Append("  errorCode:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {ErrorCode.Value}");
-                }
+                builder.AppendLine($" {ErrorCode.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorSeverity), out propertyOverride);
-            if (Optional.IsDefined(ErrorSeverity) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorSeverity))
             {
                 builder.Append("  errorSeverity:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {ErrorSeverity.Value}");
-                }
+                builder.AppendLine($" {ErrorSeverity.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
-            if (Optional.IsDefined(ErrorMessage) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 builder.Append("  errorMessage:");
-                if (hasPropertyOverride)
+                if (ErrorMessage.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorMessage}'''");
                 }
                 else
                 {
-                    if (ErrorMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ErrorMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ErrorMessage}'");
-                    }
+                    builder.AppendLine($" '{ErrorMessage}'");
                 }
             }
 

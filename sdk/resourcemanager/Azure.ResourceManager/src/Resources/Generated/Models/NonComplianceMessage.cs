@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public NonComplianceMessage(string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Message = message;
         }

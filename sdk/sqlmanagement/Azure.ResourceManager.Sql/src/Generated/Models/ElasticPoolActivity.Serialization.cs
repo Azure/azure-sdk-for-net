@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -437,408 +436,210 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            if (Optional.IsDefined(Location))
             {
                 builder.Append("  location:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Location.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Location.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (Optional.IsDefined(Id))
             {
                 builder.Append("  id:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Id.ToString()}'");
-                }
+                builder.AppendLine($" '{Id.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (Optional.IsDefined(SystemData))
             {
                 builder.Append("  systemData:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
-                }
+                builder.AppendLine($" '{SystemData.ToString()}'");
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            if (Optional.IsDefined(EndOn))
             {
                 builder.Append("    endTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
-            if (Optional.IsDefined(ErrorCode) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorCode))
             {
                 builder.Append("    errorCode:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {ErrorCode.Value}");
-                }
+                builder.AppendLine($" {ErrorCode.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
-            if (Optional.IsDefined(ErrorMessage) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 builder.Append("    errorMessage:");
-                if (hasPropertyOverride)
+                if (ErrorMessage.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorMessage}'''");
                 }
                 else
                 {
-                    if (ErrorMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ErrorMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ErrorMessage}'");
-                    }
+                    builder.AppendLine($" '{ErrorMessage}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorSeverity), out propertyOverride);
-            if (Optional.IsDefined(ErrorSeverity) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorSeverity))
             {
                 builder.Append("    errorSeverity:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {ErrorSeverity.Value}");
-                }
+                builder.AppendLine($" {ErrorSeverity.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operation), out propertyOverride);
-            if (Optional.IsDefined(Operation) || hasPropertyOverride)
+            if (Optional.IsDefined(Operation))
             {
                 builder.Append("    operation:");
-                if (hasPropertyOverride)
+                if (Operation.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Operation}'''");
                 }
                 else
                 {
-                    if (Operation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Operation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Operation}'");
-                    }
+                    builder.AppendLine($" '{Operation}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationId), out propertyOverride);
-            if (Optional.IsDefined(OperationId) || hasPropertyOverride)
+            if (Optional.IsDefined(OperationId))
             {
                 builder.Append("    operationId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{OperationId.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{OperationId.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PercentComplete), out propertyOverride);
-            if (Optional.IsDefined(PercentComplete) || hasPropertyOverride)
+            if (Optional.IsDefined(PercentComplete))
             {
                 builder.Append("    percentComplete:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {PercentComplete.Value}");
-                }
+                builder.AppendLine($" {PercentComplete.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuMax), out propertyOverride);
-            if (Optional.IsDefined(RequestedDatabaseDtuMax) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDatabaseDtuMax))
             {
                 builder.Append("    requestedDatabaseDtuMax:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDatabaseDtuMax.Value}");
-                }
+                builder.AppendLine($" {RequestedDatabaseDtuMax.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuMin), out propertyOverride);
-            if (Optional.IsDefined(RequestedDatabaseDtuMin) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDatabaseDtuMin))
             {
                 builder.Append("    requestedDatabaseDtuMin:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDatabaseDtuMin.Value}");
-                }
+                builder.AppendLine($" {RequestedDatabaseDtuMin.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDtu), out propertyOverride);
-            if (Optional.IsDefined(RequestedDtu) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDtu))
             {
                 builder.Append("    requestedDtu:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDtu.Value}");
-                }
+                builder.AppendLine($" {RequestedDtu.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedElasticPoolName), out propertyOverride);
-            if (Optional.IsDefined(RequestedElasticPoolName) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedElasticPoolName))
             {
                 builder.Append("    requestedElasticPoolName:");
-                if (hasPropertyOverride)
+                if (RequestedElasticPoolName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RequestedElasticPoolName}'''");
                 }
                 else
                 {
-                    if (RequestedElasticPoolName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{RequestedElasticPoolName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{RequestedElasticPoolName}'");
-                    }
+                    builder.AppendLine($" '{RequestedElasticPoolName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedStorageLimitInGB), out propertyOverride);
-            if (Optional.IsDefined(RequestedStorageLimitInGB) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedStorageLimitInGB))
             {
                 builder.Append("    requestedStorageLimitInGB:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{RequestedStorageLimitInGB.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{RequestedStorageLimitInGB.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticPoolName), out propertyOverride);
-            if (Optional.IsDefined(ElasticPoolName) || hasPropertyOverride)
+            if (Optional.IsDefined(ElasticPoolName))
             {
                 builder.Append("    elasticPoolName:");
-                if (hasPropertyOverride)
+                if (ElasticPoolName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ElasticPoolName}'''");
                 }
                 else
                 {
-                    if (ElasticPoolName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ElasticPoolName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ElasticPoolName}'");
-                    }
+                    builder.AppendLine($" '{ElasticPoolName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
-            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            if (Optional.IsDefined(ServerName))
             {
                 builder.Append("    serverName:");
-                if (hasPropertyOverride)
+                if (ServerName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
                 }
                 else
                 {
-                    if (ServerName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ServerName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ServerName}'");
-                    }
+                    builder.AppendLine($" '{ServerName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (Optional.IsDefined(StartOn))
             {
                 builder.Append("    startTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (Optional.IsDefined(State))
             {
                 builder.Append("    state:");
-                if (hasPropertyOverride)
+                if (State.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{State}'''");
                 }
                 else
                 {
-                    if (State.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{State}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{State}'");
-                    }
+                    builder.AppendLine($" '{State}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedStorageLimitInMB), out propertyOverride);
-            if (Optional.IsDefined(RequestedStorageLimitInMB) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedStorageLimitInMB))
             {
                 builder.Append("    requestedStorageLimitInMB:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedStorageLimitInMB.Value}");
-                }
+                builder.AppendLine($" {RequestedStorageLimitInMB.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuGuarantee), out propertyOverride);
-            if (Optional.IsDefined(RequestedDatabaseDtuGuarantee) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDatabaseDtuGuarantee))
             {
                 builder.Append("    requestedDatabaseDtuGuarantee:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDatabaseDtuGuarantee.Value}");
-                }
+                builder.AppendLine($" {RequestedDatabaseDtuGuarantee.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuCap), out propertyOverride);
-            if (Optional.IsDefined(RequestedDatabaseDtuCap) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDatabaseDtuCap))
             {
                 builder.Append("    requestedDatabaseDtuCap:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDatabaseDtuCap.Value}");
-                }
+                builder.AppendLine($" {RequestedDatabaseDtuCap.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDtuGuarantee), out propertyOverride);
-            if (Optional.IsDefined(RequestedDtuGuarantee) || hasPropertyOverride)
+            if (Optional.IsDefined(RequestedDtuGuarantee))
             {
                 builder.Append("    requestedDtuGuarantee:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {RequestedDtuGuarantee.Value}");
-                }
+                builder.AppendLine($" {RequestedDtuGuarantee.Value}");
             }
 
             builder.AppendLine("  }");

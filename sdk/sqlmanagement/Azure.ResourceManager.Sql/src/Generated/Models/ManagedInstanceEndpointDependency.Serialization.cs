@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEndpointDetail> array = new List<ManagedInstanceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item));
+                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -119,55 +118,33 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
-            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            if (Optional.IsDefined(DomainName))
             {
                 builder.Append("  domainName:");
-                if (hasPropertyOverride)
+                if (DomainName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DomainName}'''");
                 }
                 else
                 {
-                    if (DomainName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DomainName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DomainName}'");
-                    }
+                    builder.AppendLine($" '{DomainName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointDetails), out propertyOverride);
-            if (Optional.IsCollectionDefined(EndpointDetails) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
-                if (EndpointDetails.Any() || hasPropertyOverride)
+                if (EndpointDetails.Any())
                 {
                     builder.Append("  endpointDetails:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in EndpointDetails)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in EndpointDetails)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

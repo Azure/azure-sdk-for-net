@@ -138,42 +138,42 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseBlob), out propertyOverride);
             if (Optional.IsDefined(BaseBlob) || hasPropertyOverride)
             {
-                builder.Append("  baseBlob:");
+                builder.Append("  baseBlob: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, BaseBlob, options, 2, false);
+                    AppendChildObject(builder, BaseBlob, options, 2, false, "  baseBlob: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Snapshot), out propertyOverride);
             if (Optional.IsDefined(Snapshot) || hasPropertyOverride)
             {
-                builder.Append("  snapshot:");
+                builder.Append("  snapshot: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Snapshot, options, 2, false);
+                    AppendChildObject(builder, Snapshot, options, 2, false, "  snapshot: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
             if (Optional.IsDefined(Version) || hasPropertyOverride)
             {
-                builder.Append("  version:");
+                builder.Append("  version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Version, options, 2, false);
+                    AppendChildObject(builder, Version, options, 2, false, "  version: ");
                 }
             }
 
@@ -181,12 +181,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -207,12 +210,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

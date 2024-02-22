@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -104,55 +103,33 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Retention), out propertyOverride);
-            if (Optional.IsDefined(Retention) || hasPropertyOverride)
+            if (Optional.IsDefined(Retention))
             {
                 builder.Append("  retention:");
-                if (hasPropertyOverride)
+                if (Retention.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Retention}'''");
                 }
                 else
                 {
-                    if (Retention.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Retention}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Retention}'");
-                    }
+                    builder.AppendLine($" '{Retention}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
-            if (Optional.IsDefined(TimeGrain) || hasPropertyOverride)
+            if (Optional.IsDefined(TimeGrain))
             {
                 builder.Append("  timeGrain:");
-                if (hasPropertyOverride)
+                if (TimeGrain.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeGrain}'''");
                 }
                 else
                 {
-                    if (TimeGrain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{TimeGrain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{TimeGrain}'");
-                    }
+                    builder.AppendLine($" '{TimeGrain}'");
                 }
             }
 

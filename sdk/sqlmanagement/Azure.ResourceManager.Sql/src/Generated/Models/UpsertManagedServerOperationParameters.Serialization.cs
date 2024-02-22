@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -134,84 +133,46 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
-            if (Optional.IsDefined(Family) || hasPropertyOverride)
+            if (Optional.IsDefined(Family))
             {
                 builder.Append("  family:");
-                if (hasPropertyOverride)
+                if (Family.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Family}'''");
                 }
                 else
                 {
-                    if (Family.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Family}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Family}'");
-                    }
+                    builder.AppendLine($" '{Family}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (Optional.IsDefined(Tier) || hasPropertyOverride)
+            if (Optional.IsDefined(Tier))
             {
                 builder.Append("  tier:");
-                if (hasPropertyOverride)
+                if (Tier.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Tier}'''");
                 }
                 else
                 {
-                    if (Tier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Tier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Tier}'");
-                    }
+                    builder.AppendLine($" '{Tier}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
-            if (Optional.IsDefined(VCores) || hasPropertyOverride)
+            if (Optional.IsDefined(VCores))
             {
                 builder.Append("  vCores:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {VCores.Value}");
-                }
+                builder.AppendLine($" {VCores.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInGB), out propertyOverride);
-            if (Optional.IsDefined(StorageSizeInGB) || hasPropertyOverride)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 builder.Append("  storageSizeInGB:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {StorageSizeInGB.Value}");
-                }
+                builder.AppendLine($" {StorageSizeInGB.Value}");
             }
 
             builder.AppendLine("}");

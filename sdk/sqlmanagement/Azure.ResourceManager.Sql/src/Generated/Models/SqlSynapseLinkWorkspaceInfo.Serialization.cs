@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -108,47 +107,25 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 builder.Append("  workspaceId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{WorkspaceId.ToString()}'");
-                }
+                builder.AppendLine($" '{WorkspaceId.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkConnectionName), out propertyOverride);
-            if (Optional.IsDefined(LinkConnectionName) || hasPropertyOverride)
+            if (Optional.IsDefined(LinkConnectionName))
             {
                 builder.Append("  linkConnectionName:");
-                if (hasPropertyOverride)
+                if (LinkConnectionName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{LinkConnectionName}'''");
                 }
                 else
                 {
-                    if (LinkConnectionName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{LinkConnectionName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{LinkConnectionName}'");
-                    }
+                    builder.AppendLine($" '{LinkConnectionName}'");
                 }
             }
 

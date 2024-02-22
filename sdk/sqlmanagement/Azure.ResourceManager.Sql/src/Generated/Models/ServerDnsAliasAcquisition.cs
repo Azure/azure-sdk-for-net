@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="oldServerDnsAliasId"/> is null. </exception>
         public ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId)
         {
-            Argument.AssertNotNull(oldServerDnsAliasId, nameof(oldServerDnsAliasId));
+            if (oldServerDnsAliasId == null)
+            {
+                throw new ArgumentNullException(nameof(oldServerDnsAliasId));
+            }
 
             OldServerDnsAliasId = oldServerDnsAliasId;
         }

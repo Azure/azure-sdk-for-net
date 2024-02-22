@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricInterval> array = new List<QueryMetricInterval>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item));
+                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item, options));
                     }
                     intervals = array;
                     continue;
@@ -152,121 +151,75 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (Optional.IsDefined(DatabaseName))
             {
                 builder.Append("  databaseName:");
-                if (hasPropertyOverride)
+                if (DatabaseName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
                 }
                 else
                 {
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DatabaseName}'");
-                    }
+                    builder.AppendLine($" '{DatabaseName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryId), out propertyOverride);
-            if (Optional.IsDefined(QueryId) || hasPropertyOverride)
+            if (Optional.IsDefined(QueryId))
             {
                 builder.Append("  queryId:");
-                if (hasPropertyOverride)
+                if (QueryId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QueryId}'''");
                 }
                 else
                 {
-                    if (QueryId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{QueryId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{QueryId}'");
-                    }
+                    builder.AppendLine($" '{QueryId}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
-            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            if (Optional.IsDefined(StartTime))
             {
                 builder.Append("  startTime:");
-                if (hasPropertyOverride)
+                if (StartTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StartTime}'''");
                 }
                 else
                 {
-                    if (StartTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StartTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StartTime}'");
-                    }
+                    builder.AppendLine($" '{StartTime}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
-            if (Optional.IsDefined(EndTime) || hasPropertyOverride)
+            if (Optional.IsDefined(EndTime))
             {
                 builder.Append("  endTime:");
-                if (hasPropertyOverride)
+                if (EndTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EndTime}'''");
                 }
                 else
                 {
-                    if (EndTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{EndTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{EndTime}'");
-                    }
+                    builder.AppendLine($" '{EndTime}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Intervals), out propertyOverride);
-            if (Optional.IsCollectionDefined(Intervals) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(Intervals))
             {
-                if (Intervals.Any() || hasPropertyOverride)
+                if (Intervals.Any())
                 {
                     builder.Append("  intervals:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in Intervals)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in Intervals)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -115,77 +114,47 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
+            if (Optional.IsDefined(PolicyDefinitionId))
             {
                 builder.Append("  policyDefinitionId:");
-                if (hasPropertyOverride)
+                if (PolicyDefinitionId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PolicyDefinitionId}'''");
                 }
                 else
                 {
-                    if (PolicyDefinitionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{PolicyDefinitionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{PolicyDefinitionId}'");
-                    }
+                    builder.AppendLine($" '{PolicyDefinitionId}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (Optional.IsDefined(Parameters) || hasPropertyOverride)
+            if (Optional.IsDefined(Parameters))
             {
                 builder.Append("  parameters:");
-                if (hasPropertyOverride)
+                if (Parameters.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Parameters}'''");
                 }
                 else
                 {
-                    if (Parameters.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Parameters}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Parameters}'");
-                    }
+                    builder.AppendLine($" '{Parameters}'");
                 }
             }
 

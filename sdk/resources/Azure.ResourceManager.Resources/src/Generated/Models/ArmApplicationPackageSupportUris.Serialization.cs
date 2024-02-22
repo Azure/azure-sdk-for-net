@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -112,40 +111,18 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzurePublicCloudUri), out propertyOverride);
-            if (Optional.IsDefined(AzurePublicCloudUri) || hasPropertyOverride)
+            if (Optional.IsDefined(AzurePublicCloudUri))
             {
                 builder.Append("  publicAzure:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{AzurePublicCloudUri.AbsoluteUri}'");
-                }
+                builder.AppendLine($" '{AzurePublicCloudUri.AbsoluteUri}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureGovernmentUri), out propertyOverride);
-            if (Optional.IsDefined(AzureGovernmentUri) || hasPropertyOverride)
+            if (Optional.IsDefined(AzureGovernmentUri))
             {
                 builder.Append("  governmentCloud:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{AzureGovernmentUri.AbsoluteUri}'");
-                }
+                builder.AppendLine($" '{AzureGovernmentUri.AbsoluteUri}'");
             }
 
             builder.AppendLine("}");

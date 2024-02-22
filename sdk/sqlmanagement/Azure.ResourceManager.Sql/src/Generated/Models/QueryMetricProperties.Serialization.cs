@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -209,154 +208,76 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            if (Optional.IsDefined(DisplayName))
             {
                 builder.Append("  displayName:");
-                if (hasPropertyOverride)
+                if (DisplayName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DisplayName}'''");
                 }
                 else
                 {
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DisplayName}'");
-                    }
+                    builder.AppendLine($" '{DisplayName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Unit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (Optional.IsDefined(Value))
             {
                 builder.Append("  value:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Value.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Value.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Min), out propertyOverride);
-            if (Optional.IsDefined(Min) || hasPropertyOverride)
+            if (Optional.IsDefined(Min))
             {
                 builder.Append("  min:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Min.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Min.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Max), out propertyOverride);
-            if (Optional.IsDefined(Max) || hasPropertyOverride)
+            if (Optional.IsDefined(Max))
             {
                 builder.Append("  max:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Max.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Max.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Avg), out propertyOverride);
-            if (Optional.IsDefined(Avg) || hasPropertyOverride)
+            if (Optional.IsDefined(Avg))
             {
                 builder.Append("  avg:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Avg.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Avg.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sum), out propertyOverride);
-            if (Optional.IsDefined(Sum) || hasPropertyOverride)
+            if (Optional.IsDefined(Sum))
             {
                 builder.Append("  sum:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Sum.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Sum.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Stdev), out propertyOverride);
-            if (Optional.IsDefined(Stdev) || hasPropertyOverride)
+            if (Optional.IsDefined(Stdev))
             {
                 builder.Append("  stdev:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Stdev.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Stdev.Value.ToString()}'");
             }
 
             builder.AppendLine("}");

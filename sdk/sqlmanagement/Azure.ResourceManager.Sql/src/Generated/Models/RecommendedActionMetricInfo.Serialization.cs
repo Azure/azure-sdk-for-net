@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -145,107 +144,61 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricName), out propertyOverride);
-            if (Optional.IsDefined(MetricName) || hasPropertyOverride)
+            if (Optional.IsDefined(MetricName))
             {
                 builder.Append("  metricName:");
-                if (hasPropertyOverride)
+                if (MetricName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{MetricName}'''");
                 }
                 else
                 {
-                    if (MetricName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{MetricName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{MetricName}'");
-                    }
+                    builder.AppendLine($" '{MetricName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
+                if (Unit.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Unit}'''");
                 }
                 else
                 {
-                    if (Unit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Unit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Unit}'");
-                    }
+                    builder.AppendLine($" '{Unit}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
-            if (Optional.IsDefined(TimeGrain) || hasPropertyOverride)
+            if (Optional.IsDefined(TimeGrain))
             {
                 builder.Append("  timeGrain:");
-                if (hasPropertyOverride)
+                if (TimeGrain.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeGrain}'''");
                 }
                 else
                 {
-                    if (TimeGrain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{TimeGrain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{TimeGrain}'");
-                    }
+                    builder.AppendLine($" '{TimeGrain}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (Optional.IsDefined(StartOn))
             {
                 builder.Append("  startTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (Optional.IsDefined(Value))
             {
                 builder.Append("  value:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Value.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Value.Value.ToString()}'");
             }
 
             builder.AppendLine("}");

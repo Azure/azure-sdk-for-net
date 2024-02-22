@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVcoresCapability> array = new List<ManagedInstanceVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item));
+                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item, options));
                     }
                     supportedVcoresValues = array;
                     continue;
@@ -181,135 +180,81 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            if (Optional.IsDefined(Sku))
             {
                 builder.Append("  sku:");
-                if (hasPropertyOverride)
+                if (Sku.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Sku}'''");
                 }
                 else
                 {
-                    if (Sku.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Sku}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Sku}'");
-                    }
+                    builder.AppendLine($" '{Sku}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedLicenseTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedLicenseTypes) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
-                if (SupportedLicenseTypes.Any() || hasPropertyOverride)
+                if (SupportedLicenseTypes.Any())
                 {
                     builder.Append("  supportedLicenseTypes:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedLicenseTypes)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedLicenseTypes)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedVcoresValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedVcoresValues) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedVcoresValues))
             {
-                if (SupportedVcoresValues.Any() || hasPropertyOverride)
+                if (SupportedVcoresValues.Any())
                 {
                     builder.Append("  supportedVcoresValues:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedVcoresValues)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedVcoresValues)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (Optional.IsDefined(Reason))
             {
                 builder.Append("  reason:");
-                if (hasPropertyOverride)
+                if (Reason.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
                 }
                 else
                 {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Reason}'");
-                    }
+                    builder.AppendLine($" '{Reason}'");
                 }
             }
 

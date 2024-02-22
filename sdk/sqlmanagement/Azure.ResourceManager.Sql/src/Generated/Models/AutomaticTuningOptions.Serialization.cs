@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -142,68 +141,30 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
-            if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
+            if (Optional.IsDefined(DesiredState))
             {
                 builder.Append("  desiredState:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{DesiredState.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{DesiredState.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
-            if (Optional.IsDefined(ActualState) || hasPropertyOverride)
+            if (Optional.IsDefined(ActualState))
             {
                 builder.Append("  actualState:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ActualState.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{ActualState.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
-            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            if (Optional.IsDefined(ReasonCode))
             {
                 builder.Append("  reasonCode:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {ReasonCode.Value}");
-                }
+                builder.AppendLine($" {ReasonCode.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
-            if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
+            if (Optional.IsDefined(ReasonDesc))
             {
                 builder.Append("  reasonDesc:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ReasonDesc.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{ReasonDesc.Value.ToSerialString()}'");
             }
 
             builder.AppendLine("}");

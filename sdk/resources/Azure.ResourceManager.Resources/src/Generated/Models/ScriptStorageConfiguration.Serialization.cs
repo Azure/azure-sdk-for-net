@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -104,55 +103,33 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountName), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountName) || hasPropertyOverride)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 builder.Append("  storageAccountName:");
-                if (hasPropertyOverride)
+                if (StorageAccountName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageAccountName}'''");
                 }
                 else
                 {
-                    if (StorageAccountName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StorageAccountName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StorageAccountName}'");
-                    }
+                    builder.AppendLine($" '{StorageAccountName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountKey), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountKey) || hasPropertyOverride)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 builder.Append("  storageAccountKey:");
-                if (hasPropertyOverride)
+                if (StorageAccountKey.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StorageAccountKey}'''");
                 }
                 else
                 {
-                    if (StorageAccountKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StorageAccountKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StorageAccountKey}'");
-                    }
+                    builder.AppendLine($" '{StorageAccountKey}'");
                 }
             }
 

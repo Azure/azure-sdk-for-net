@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Validation), out propertyOverride);
             if (Optional.IsDefined(Validation) || hasPropertyOverride)
             {
-                builder.Append("  validation:");
+                builder.Append("  validation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Validation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Validation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Validation}'");
+                        builder.AppendLine($"'{Validation}'");
                     }
                 }
             }
@@ -159,21 +159,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
             if (Optional.IsDefined(ValidationKey) || hasPropertyOverride)
             {
-                builder.Append("  validationKey:");
+                builder.Append("  validationKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ValidationKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ValidationKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ValidationKey}'");
+                        builder.AppendLine($"'{ValidationKey}'");
                     }
                 }
             }
@@ -181,21 +181,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Decryption), out propertyOverride);
             if (Optional.IsDefined(Decryption) || hasPropertyOverride)
             {
-                builder.Append("  decryption:");
+                builder.Append("  decryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Decryption.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Decryption}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Decryption}'");
+                        builder.AppendLine($"'{Decryption}'");
                     }
                 }
             }
@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DecryptionKey), out propertyOverride);
             if (Optional.IsDefined(DecryptionKey) || hasPropertyOverride)
             {
-                builder.Append("  decryptionKey:");
+                builder.Append("  decryptionKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DecryptionKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DecryptionKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DecryptionKey}'");
+                        builder.AppendLine($"'{DecryptionKey}'");
                     }
                 }
             }
@@ -226,12 +226,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -252,12 +255,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

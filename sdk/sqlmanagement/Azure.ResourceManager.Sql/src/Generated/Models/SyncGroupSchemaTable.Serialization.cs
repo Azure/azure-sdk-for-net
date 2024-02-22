@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTableColumn> array = new List<SyncGroupSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item));
+                        array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -119,55 +118,33 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(Columns))
             {
-                if (Columns.Any() || hasPropertyOverride)
+                if (Columns.Any())
                 {
                     builder.Append("  columns:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in Columns)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in Columns)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
-            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            if (Optional.IsDefined(QuotedName))
             {
                 builder.Append("  quotedName:");
-                if (hasPropertyOverride)
+                if (QuotedName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QuotedName}'''");
                 }
                 else
                 {
-                    if (QuotedName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{QuotedName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{QuotedName}'");
-                    }
+                    builder.AppendLine($" '{QuotedName}'");
                 }
             }
 

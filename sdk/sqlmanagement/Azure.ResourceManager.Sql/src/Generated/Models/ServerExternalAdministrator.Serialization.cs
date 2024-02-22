@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -168,105 +167,51 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorType), out propertyOverride);
-            if (Optional.IsDefined(AdministratorType) || hasPropertyOverride)
+            if (Optional.IsDefined(AdministratorType))
             {
                 builder.Append("  administratorType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{AdministratorType.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{AdministratorType.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
-            if (Optional.IsDefined(PrincipalType) || hasPropertyOverride)
+            if (Optional.IsDefined(PrincipalType))
             {
                 builder.Append("  principalType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{PrincipalType.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{PrincipalType.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Login), out propertyOverride);
-            if (Optional.IsDefined(Login) || hasPropertyOverride)
+            if (Optional.IsDefined(Login))
             {
                 builder.Append("  login:");
-                if (hasPropertyOverride)
+                if (Login.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Login}'''");
                 }
                 else
                 {
-                    if (Login.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Login}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Login}'");
-                    }
+                    builder.AppendLine($" '{Login}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sid), out propertyOverride);
-            if (Optional.IsDefined(Sid) || hasPropertyOverride)
+            if (Optional.IsDefined(Sid))
             {
                 builder.Append("  sid:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Sid.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Sid.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            if (Optional.IsDefined(TenantId))
             {
                 builder.Append("  tenantId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureADOnlyAuthenticationEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled) || hasPropertyOverride)
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 builder.Append("  azureADOnlyAuthentication:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsAzureADOnlyAuthenticationEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
-                }
+                var boolValue = IsAzureADOnlyAuthenticationEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
             }
 
             builder.AppendLine("}");

@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerJobStepResource>> UpdateAsync(WaitUntil waitUntil, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerJobStepResource> Update(WaitUntil waitUntil, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepResource.Update");
             scope.Start();

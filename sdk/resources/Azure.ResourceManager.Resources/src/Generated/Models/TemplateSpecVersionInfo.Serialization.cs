@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -123,64 +122,34 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (Optional.IsDefined(Description))
             {
                 builder.Append("  description:");
-                if (hasPropertyOverride)
+                if (Description.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Description}'''");
                 }
                 else
                 {
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Description}'");
-                    }
+                    builder.AppendLine($" '{Description}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeCreated), out propertyOverride);
-            if (Optional.IsDefined(TimeCreated) || hasPropertyOverride)
+            if (Optional.IsDefined(TimeCreated))
             {
                 builder.Append("  timeCreated:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(TimeCreated.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(TimeCreated.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeModified), out propertyOverride);
-            if (Optional.IsDefined(TimeModified) || hasPropertyOverride)
+            if (Optional.IsDefined(TimeModified))
             {
                 builder.Append("  timeModified:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(TimeModified.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(TimeModified.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
             builder.AppendLine("}");

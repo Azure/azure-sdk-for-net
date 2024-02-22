@@ -255,108 +255,108 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
             if (Optional.IsDefined(CorrelationId) || hasPropertyOverride)
             {
-                builder.Append("  correlationId:");
+                builder.Append("  correlationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CorrelationId.Value.ToString()}'");
+                    builder.AppendLine($"'{CorrelationId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanOverwrite), out propertyOverride);
             if (Optional.IsDefined(CanOverwrite) || hasPropertyOverride)
             {
-                builder.Append("  overwrite:");
+                builder.Append("  overwrite: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = CanOverwrite.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CloneCustomHostNames), out propertyOverride);
             if (Optional.IsDefined(CloneCustomHostNames) || hasPropertyOverride)
             {
-                builder.Append("  cloneCustomHostNames:");
+                builder.Append("  cloneCustomHostNames: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = CloneCustomHostNames.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CloneSourceControl), out propertyOverride);
             if (Optional.IsDefined(CloneSourceControl) || hasPropertyOverride)
             {
-                builder.Append("  cloneSourceControl:");
+                builder.Append("  cloneSourceControl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = CloneSourceControl.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceWebAppId), out propertyOverride);
             if (Optional.IsDefined(SourceWebAppId) || hasPropertyOverride)
             {
-                builder.Append("  sourceWebAppId:");
+                builder.Append("  sourceWebAppId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SourceWebAppId.ToString()}'");
+                    builder.AppendLine($"'{SourceWebAppId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceWebAppLocation), out propertyOverride);
             if (Optional.IsDefined(SourceWebAppLocation) || hasPropertyOverride)
             {
-                builder.Append("  sourceWebAppLocation:");
+                builder.Append("  sourceWebAppLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SourceWebAppLocation.Value.ToString()}'");
+                    builder.AppendLine($"'{SourceWebAppLocation.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironment), out propertyOverride);
             if (Optional.IsDefined(HostingEnvironment) || hasPropertyOverride)
             {
-                builder.Append("  hostingEnvironment:");
+                builder.Append("  hostingEnvironment: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (HostingEnvironment.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{HostingEnvironment}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{HostingEnvironment}'");
+                        builder.AppendLine($"'{HostingEnvironment}'");
                     }
                 }
             }
@@ -366,17 +366,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AppSettingsOverrides.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  appSettingsOverrides:");
+                    builder.Append("  appSettingsOverrides: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in AppSettingsOverrides)
                         {
-                            builder.Append($"    '{item.Key}':");
+                            builder.Append($"    '{item.Key}': ");
                             if (item.Value == null)
                             {
                                 builder.Append("null");
@@ -384,12 +384,12 @@ namespace Azure.ResourceManager.AppService.Models
                             }
                             if (item.Value.Contains(Environment.NewLine))
                             {
-                                builder.AppendLine(" '''");
+                                builder.AppendLine("'''");
                                 builder.AppendLine($"{item.Value}'''");
                             }
                             else
                             {
-                                builder.AppendLine($" '{item.Value}'");
+                                builder.AppendLine($"'{item.Value}'");
                             }
                         }
                         builder.AppendLine("  }");
@@ -400,50 +400,50 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigureLoadBalancing), out propertyOverride);
             if (Optional.IsDefined(ConfigureLoadBalancing) || hasPropertyOverride)
             {
-                builder.Append("  configureLoadBalancing:");
+                builder.Append("  configureLoadBalancing: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = ConfigureLoadBalancing.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficManagerProfileId), out propertyOverride);
             if (Optional.IsDefined(TrafficManagerProfileId) || hasPropertyOverride)
             {
-                builder.Append("  trafficManagerProfileId:");
+                builder.Append("  trafficManagerProfileId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TrafficManagerProfileId.ToString()}'");
+                    builder.AppendLine($"'{TrafficManagerProfileId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficManagerProfileName), out propertyOverride);
             if (Optional.IsDefined(TrafficManagerProfileName) || hasPropertyOverride)
             {
-                builder.Append("  trafficManagerProfileName:");
+                builder.Append("  trafficManagerProfileName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TrafficManagerProfileName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TrafficManagerProfileName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TrafficManagerProfileName}'");
+                        builder.AppendLine($"'{TrafficManagerProfileName}'");
                     }
                 }
             }
@@ -452,12 +452,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -478,12 +481,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

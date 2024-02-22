@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -192,106 +191,52 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (Optional.IsDefined(Id))
             {
                 builder.Append("  id:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Id.ToString()}'");
-                }
+                builder.AppendLine($" '{Id.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (Optional.IsDefined(SystemData))
             {
                 builder.Append("  systemData:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
-                }
+                builder.AppendLine($" '{SystemData.ToString()}'");
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 builder.Append("    provisioningState:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoint), out propertyOverride);
-            if (Optional.IsDefined(PrivateEndpoint) || hasPropertyOverride)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 builder.Append("    privateEndpoint:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, PrivateEndpoint, options, 4, false);
-                }
+                AppendChildObject(builder, PrivateEndpoint, options, 4, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
-            if (Optional.IsDefined(ConnectionState) || hasPropertyOverride)
+            if (Optional.IsDefined(ConnectionState))
             {
                 builder.Append("    privateLinkServiceConnectionState:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, ConnectionState, options, 4, false);
-                }
+                AppendChildObject(builder, ConnectionState, options, 4, false);
             }
 
             builder.AppendLine("  }");

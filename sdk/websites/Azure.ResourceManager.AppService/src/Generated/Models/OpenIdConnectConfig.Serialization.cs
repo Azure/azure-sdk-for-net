@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpoint), out propertyOverride);
             if (Optional.IsDefined(AuthorizationEndpoint) || hasPropertyOverride)
             {
-                builder.Append("  authorizationEndpoint:");
+                builder.Append("  authorizationEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AuthorizationEndpoint.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AuthorizationEndpoint}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AuthorizationEndpoint}'");
+                        builder.AppendLine($"'{AuthorizationEndpoint}'");
                     }
                 }
             }
@@ -174,21 +174,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpoint), out propertyOverride);
             if (Optional.IsDefined(TokenEndpoint) || hasPropertyOverride)
             {
-                builder.Append("  tokenEndpoint:");
+                builder.Append("  tokenEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TokenEndpoint.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TokenEndpoint}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TokenEndpoint}'");
+                        builder.AppendLine($"'{TokenEndpoint}'");
                     }
                 }
             }
@@ -196,21 +196,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
             if (Optional.IsDefined(Issuer) || hasPropertyOverride)
             {
-                builder.Append("  issuer:");
+                builder.Append("  issuer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Issuer.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Issuer}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Issuer}'");
+                        builder.AppendLine($"'{Issuer}'");
                     }
                 }
             }
@@ -218,35 +218,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificationUri), out propertyOverride);
             if (Optional.IsDefined(CertificationUri) || hasPropertyOverride)
             {
-                builder.Append("  certificationUri:");
+                builder.Append("  certificationUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CertificationUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{CertificationUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WellKnownOpenIdConfiguration), out propertyOverride);
             if (Optional.IsDefined(WellKnownOpenIdConfiguration) || hasPropertyOverride)
             {
-                builder.Append("  wellKnownOpenIdConfiguration:");
+                builder.Append("  wellKnownOpenIdConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (WellKnownOpenIdConfiguration.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{WellKnownOpenIdConfiguration}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{WellKnownOpenIdConfiguration}'");
+                        builder.AppendLine($"'{WellKnownOpenIdConfiguration}'");
                     }
                 }
             }
@@ -255,12 +255,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -281,12 +284,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

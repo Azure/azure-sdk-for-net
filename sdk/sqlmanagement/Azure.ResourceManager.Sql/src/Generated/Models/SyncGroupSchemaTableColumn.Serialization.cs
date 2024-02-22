@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -115,77 +114,47 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
-            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            if (Optional.IsDefined(QuotedName))
             {
                 builder.Append("  quotedName:");
-                if (hasPropertyOverride)
+                if (QuotedName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{QuotedName}'''");
                 }
                 else
                 {
-                    if (QuotedName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{QuotedName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{QuotedName}'");
-                    }
+                    builder.AppendLine($" '{QuotedName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataSize), out propertyOverride);
-            if (Optional.IsDefined(DataSize) || hasPropertyOverride)
+            if (Optional.IsDefined(DataSize))
             {
                 builder.Append("  dataSize:");
-                if (hasPropertyOverride)
+                if (DataSize.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataSize}'''");
                 }
                 else
                 {
-                    if (DataSize.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DataSize}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DataSize}'");
-                    }
+                    builder.AppendLine($" '{DataSize}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
-            if (Optional.IsDefined(DataType) || hasPropertyOverride)
+            if (Optional.IsDefined(DataType))
             {
                 builder.Append("  dataType:");
-                if (hasPropertyOverride)
+                if (DataType.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DataType}'''");
                 }
                 else
                 {
-                    if (DataType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DataType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DataType}'");
-                    }
+                    builder.AppendLine($" '{DataType}'");
                 }
             }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -112,40 +111,18 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
-            if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
+            if (Optional.IsDefined(FailoverPolicy))
             {
                 builder.Append("  failoverPolicy:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{FailoverPolicy.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{FailoverPolicy.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServer), out propertyOverride);
-            if (Optional.IsDefined(TargetServer) || hasPropertyOverride)
+            if (Optional.IsDefined(TargetServer))
             {
                 builder.Append("  targetServer:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{TargetServer.ToString()}'");
-                }
+                builder.AppendLine($" '{TargetServer.ToString()}'");
             }
 
             builder.AppendLine("}");

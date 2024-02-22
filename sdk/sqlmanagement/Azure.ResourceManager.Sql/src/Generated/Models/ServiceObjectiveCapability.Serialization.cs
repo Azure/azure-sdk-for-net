@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zoneRedundant"u8))
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value);
+                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMinCapacities"u8))
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MinCapacityCapability> array = new List<MinCapacityCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item));
+                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item, options));
                     }
                     supportedMinCapacities = array;
                     continue;
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -321,264 +320,146 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (Optional.IsDefined(Id))
             {
                 builder.Append("  id:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Id.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Id.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaxSizes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedMaxSizes) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedMaxSizes))
             {
-                if (SupportedMaxSizes.Any() || hasPropertyOverride)
+                if (SupportedMaxSizes.Any())
                 {
                     builder.Append("  supportedMaxSizes:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaxSizes)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedMaxSizes)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerformanceLevel), out propertyOverride);
-            if (Optional.IsDefined(PerformanceLevel) || hasPropertyOverride)
+            if (Optional.IsDefined(PerformanceLevel))
             {
                 builder.Append("  performanceLevel:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, PerformanceLevel, options, 2, false);
-                }
+                AppendChildObject(builder, PerformanceLevel, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            if (Optional.IsDefined(Sku))
             {
                 builder.Append("  sku:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, Sku, options, 2, false);
-                }
+                AppendChildObject(builder, Sku, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedLicenseTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedLicenseTypes) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
-                if (SupportedLicenseTypes.Any() || hasPropertyOverride)
+                if (SupportedLicenseTypes.Any())
                 {
                     builder.Append("  supportedLicenseTypes:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedLicenseTypes)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedLicenseTypes)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
-            if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
+            if (Optional.IsDefined(IncludedMaxSize))
             {
                 builder.Append("  includedMaxSize:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, IncludedMaxSize, options, 2, false);
-                }
+                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
-            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 builder.Append("  zoneRedundant:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
-                }
+                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAutoPauseDelay), out propertyOverride);
-            if (Optional.IsDefined(SupportedAutoPauseDelay) || hasPropertyOverride)
+            if (Optional.IsDefined(SupportedAutoPauseDelay))
             {
                 builder.Append("  supportedAutoPauseDelay:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false);
-                }
+                AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMinCapacities), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedMinCapacities) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedMinCapacities))
             {
-                if (SupportedMinCapacities.Any() || hasPropertyOverride)
+                if (SupportedMinCapacities.Any())
                 {
                     builder.Append("  supportedMinCapacities:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMinCapacities)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedMinCapacities)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeModel), out propertyOverride);
-            if (Optional.IsDefined(ComputeModel) || hasPropertyOverride)
+            if (Optional.IsDefined(ComputeModel))
             {
                 builder.Append("  computeModel:");
-                if (hasPropertyOverride)
+                if (ComputeModel.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ComputeModel}'''");
                 }
                 else
                 {
-                    if (ComputeModel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ComputeModel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ComputeModel}'");
-                    }
+                    builder.AppendLine($" '{ComputeModel}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaintenanceConfigurations), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
-                if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
+                if (SupportedMaintenanceConfigurations.Any())
                 {
                     builder.Append("  supportedMaintenanceConfigurations:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaintenanceConfigurations)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedMaintenanceConfigurations)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (Optional.IsDefined(Reason))
             {
                 builder.Append("  reason:");
-                if (hasPropertyOverride)
+                if (Reason.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
                 }
                 else
                 {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Reason}'");
-                    }
+                    builder.AppendLine($" '{Reason}'");
                 }
             }
 

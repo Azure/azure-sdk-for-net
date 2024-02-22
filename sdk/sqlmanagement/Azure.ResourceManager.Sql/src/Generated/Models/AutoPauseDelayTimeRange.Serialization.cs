@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -172,96 +171,42 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
-            if (Optional.IsDefined(MinValue) || hasPropertyOverride)
+            if (Optional.IsDefined(MinValue))
             {
                 builder.Append("  minValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {MinValue.Value}");
-                }
+                builder.AppendLine($" {MinValue.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
-            if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
+            if (Optional.IsDefined(MaxValue))
             {
                 builder.Append("  maxValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {MaxValue.Value}");
-                }
+                builder.AppendLine($" {MaxValue.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepSize), out propertyOverride);
-            if (Optional.IsDefined(StepSize) || hasPropertyOverride)
+            if (Optional.IsDefined(StepSize))
             {
                 builder.Append("  stepSize:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {StepSize.Value}");
-                }
+                builder.AppendLine($" {StepSize.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
-            if (Optional.IsDefined(Default) || hasPropertyOverride)
+            if (Optional.IsDefined(Default))
             {
                 builder.Append("  default:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {Default.Value}");
-                }
+                builder.AppendLine($" {Default.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Unit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotPauseValue), out propertyOverride);
-            if (Optional.IsDefined(DoNotPauseValue) || hasPropertyOverride)
+            if (Optional.IsDefined(DoNotPauseValue))
             {
                 builder.Append("  doNotPauseValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {DoNotPauseValue.Value}");
-                }
+                builder.AppendLine($" {DoNotPauseValue.Value}");
             }
 
             builder.AppendLine("}");

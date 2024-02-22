@@ -12,7 +12,6 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value);
+                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -262,231 +261,129 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (Optional.IsDefined(Id))
             {
                 builder.Append("  id:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Id.ToString()}'");
-                }
+                builder.AppendLine($" '{Id.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (Optional.IsDefined(SystemData))
             {
                 builder.Append("  systemData:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
-                }
+                builder.AppendLine($" '{SystemData.ToString()}'");
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventOn), out propertyOverride);
-            if (Optional.IsDefined(EventOn) || hasPropertyOverride)
+            if (Optional.IsDefined(EventOn))
             {
                 builder.Append("    eventTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(EventOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(EventOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityEventType), out propertyOverride);
-            if (Optional.IsDefined(SecurityEventType) || hasPropertyOverride)
+            if (Optional.IsDefined(SecurityEventType))
             {
                 builder.Append("    securityEventType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{SecurityEventType.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{SecurityEventType.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscription), out propertyOverride);
-            if (Optional.IsDefined(Subscription) || hasPropertyOverride)
+            if (Optional.IsDefined(Subscription))
             {
                 builder.Append("    subscription:");
-                if (hasPropertyOverride)
+                if (Subscription.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subscription}'''");
                 }
                 else
                 {
-                    if (Subscription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Subscription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Subscription}'");
-                    }
+                    builder.AppendLine($" '{Subscription}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Server), out propertyOverride);
-            if (Optional.IsDefined(Server) || hasPropertyOverride)
+            if (Optional.IsDefined(Server))
             {
                 builder.Append("    server:");
-                if (hasPropertyOverride)
+                if (Server.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Server}'''");
                 }
                 else
                 {
-                    if (Server.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Server}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Server}'");
-                    }
+                    builder.AppendLine($" '{Server}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Database), out propertyOverride);
-            if (Optional.IsDefined(Database) || hasPropertyOverride)
+            if (Optional.IsDefined(Database))
             {
                 builder.Append("    database:");
-                if (hasPropertyOverride)
+                if (Database.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Database}'''");
                 }
                 else
                 {
-                    if (Database.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Database}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Database}'");
-                    }
+                    builder.AppendLine($" '{Database}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientIP), out propertyOverride);
-            if (Optional.IsDefined(ClientIP) || hasPropertyOverride)
+            if (Optional.IsDefined(ClientIP))
             {
                 builder.Append("    clientIp:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ClientIP.ToString()}'");
-                }
+                builder.AppendLine($" '{ClientIP.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationName), out propertyOverride);
-            if (Optional.IsDefined(ApplicationName) || hasPropertyOverride)
+            if (Optional.IsDefined(ApplicationName))
             {
                 builder.Append("    applicationName:");
-                if (hasPropertyOverride)
+                if (ApplicationName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ApplicationName}'''");
                 }
                 else
                 {
-                    if (ApplicationName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ApplicationName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ApplicationName}'");
-                    }
+                    builder.AppendLine($" '{ApplicationName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalName), out propertyOverride);
-            if (Optional.IsDefined(PrincipalName) || hasPropertyOverride)
+            if (Optional.IsDefined(PrincipalName))
             {
                 builder.Append("    principalName:");
-                if (hasPropertyOverride)
+                if (PrincipalName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrincipalName}'''");
                 }
                 else
                 {
-                    if (PrincipalName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{PrincipalName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{PrincipalName}'");
-                    }
+                    builder.AppendLine($" '{PrincipalName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityEventSqlInjectionAdditionalProperties), out propertyOverride);
-            if (Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties) || hasPropertyOverride)
+            if (Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
             {
                 builder.Append("    securityEventSqlInjectionAdditionalProperties:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, SecurityEventSqlInjectionAdditionalProperties, options, 4, false);
-                }
+                AppendChildObject(builder, SecurityEventSqlInjectionAdditionalProperties, options, 4, false);
             }
 
             builder.AppendLine("  }");

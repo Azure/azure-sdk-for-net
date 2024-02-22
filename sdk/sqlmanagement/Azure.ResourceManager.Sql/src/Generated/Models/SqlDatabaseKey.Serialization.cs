@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -134,70 +133,40 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Thumbprint), out propertyOverride);
-            if (Optional.IsDefined(Thumbprint) || hasPropertyOverride)
+            if (Optional.IsDefined(Thumbprint))
             {
                 builder.Append("  thumbprint:");
-                if (hasPropertyOverride)
+                if (Thumbprint.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Thumbprint}'''");
                 }
                 else
                 {
-                    if (Thumbprint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Thumbprint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Thumbprint}'");
-                    }
+                    builder.AppendLine($" '{Thumbprint}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            if (Optional.IsDefined(CreatedOn))
             {
                 builder.Append("  creationDate:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subregion), out propertyOverride);
-            if (Optional.IsDefined(Subregion) || hasPropertyOverride)
+            if (Optional.IsDefined(Subregion))
             {
                 builder.Append("  subregion:");
-                if (hasPropertyOverride)
+                if (Subregion.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Subregion}'''");
                 }
                 else
                 {
-                    if (Subregion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Subregion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Subregion}'");
-                    }
+                    builder.AppendLine($" '{Subregion}'");
                 }
             }
 

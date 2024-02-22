@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -166,157 +165,95 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(SubscriptionId) || hasPropertyOverride)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 builder.Append("  subscriptionId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{SubscriptionId.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{SubscriptionId.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroupName), out propertyOverride);
-            if (Optional.IsDefined(ResourceGroupName) || hasPropertyOverride)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 builder.Append("  resourceGroupName:");
-                if (hasPropertyOverride)
+                if (ResourceGroupName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceGroupName}'''");
                 }
                 else
                 {
-                    if (ResourceGroupName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ResourceGroupName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ResourceGroupName}'");
-                    }
+                    builder.AppendLine($" '{ResourceGroupName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
-            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            if (Optional.IsDefined(ServerName))
             {
                 builder.Append("  serverName:");
-                if (hasPropertyOverride)
+                if (ServerName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
                 }
                 else
                 {
-                    if (ServerName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ServerName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ServerName}'");
-                    }
+                    builder.AppendLine($" '{ServerName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (Optional.IsDefined(DatabaseName))
             {
                 builder.Append("  databaseName:");
-                if (hasPropertyOverride)
+                if (DatabaseName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
                 }
                 else
                 {
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DatabaseName}'");
-                    }
+                    builder.AppendLine($" '{DatabaseName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaName), out propertyOverride);
-            if (Optional.IsDefined(SchemaName) || hasPropertyOverride)
+            if (Optional.IsDefined(SchemaName))
             {
                 builder.Append("  schemaName:");
-                if (hasPropertyOverride)
+                if (SchemaName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{SchemaName}'''");
                 }
                 else
                 {
-                    if (SchemaName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{SchemaName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{SchemaName}'");
-                    }
+                    builder.AppendLine($" '{SchemaName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            if (Optional.IsDefined(TableName))
             {
                 builder.Append("  tableName:");
-                if (hasPropertyOverride)
+                if (TableName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TableName}'''");
                 }
                 else
                 {
-                    if (TableName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{TableName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{TableName}'");
-                    }
+                    builder.AppendLine($" '{TableName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Credential), out propertyOverride);
-            if (Optional.IsDefined(Credential) || hasPropertyOverride)
+            if (Optional.IsDefined(Credential))
             {
                 builder.Append("  credential:");
-                if (hasPropertyOverride)
+                if (Credential.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Credential}'''");
                 }
                 else
                 {
-                    if (Credential.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Credential}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Credential}'");
-                    }
+                    builder.AppendLine($" '{Credential}'");
                 }
             }
 

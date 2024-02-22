@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -119,69 +118,39 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkServiceId), out propertyOverride);
-            if (Optional.IsDefined(PrivateLinkServiceId) || hasPropertyOverride)
+            if (Optional.IsDefined(PrivateLinkServiceId))
             {
                 builder.Append("  privateLinkServiceId:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{PrivateLinkServiceId.ToString()}'");
-                }
+                builder.AppendLine($" '{PrivateLinkServiceId.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnectionName), out propertyOverride);
-            if (Optional.IsDefined(PrivateEndpointConnectionName) || hasPropertyOverride)
+            if (Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 builder.Append("  privateEndpointConnectionName:");
-                if (hasPropertyOverride)
+                if (PrivateEndpointConnectionName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{PrivateEndpointConnectionName}'''");
                 }
                 else
                 {
-                    if (PrivateEndpointConnectionName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{PrivateEndpointConnectionName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{PrivateEndpointConnectionName}'");
-                    }
+                    builder.AppendLine($" '{PrivateEndpointConnectionName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
+                if (Status.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
                 }
                 else
                 {
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Status}'");
-                    }
+                    builder.AppendLine($" '{Status}'");
                 }
             }
 

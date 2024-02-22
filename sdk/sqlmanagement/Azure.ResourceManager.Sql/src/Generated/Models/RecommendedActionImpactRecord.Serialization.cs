@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -149,98 +148,52 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DimensionName), out propertyOverride);
-            if (Optional.IsDefined(DimensionName) || hasPropertyOverride)
+            if (Optional.IsDefined(DimensionName))
             {
                 builder.Append("  dimensionName:");
-                if (hasPropertyOverride)
+                if (DimensionName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DimensionName}'''");
                 }
                 else
                 {
-                    if (DimensionName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DimensionName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DimensionName}'");
-                    }
+                    builder.AppendLine($" '{DimensionName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
+                if (Unit.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Unit}'''");
                 }
                 else
                 {
-                    if (Unit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Unit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Unit}'");
-                    }
+                    builder.AppendLine($" '{Unit}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteValue), out propertyOverride);
-            if (Optional.IsDefined(AbsoluteValue) || hasPropertyOverride)
+            if (Optional.IsDefined(AbsoluteValue))
             {
                 builder.Append("  absoluteValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{AbsoluteValue.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{AbsoluteValue.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueAbsolute), out propertyOverride);
-            if (Optional.IsDefined(ChangeValueAbsolute) || hasPropertyOverride)
+            if (Optional.IsDefined(ChangeValueAbsolute))
             {
                 builder.Append("  changeValueAbsolute:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ChangeValueAbsolute.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{ChangeValueAbsolute.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueRelative), out propertyOverride);
-            if (Optional.IsDefined(ChangeValueRelative) || hasPropertyOverride)
+            if (Optional.IsDefined(ChangeValueRelative))
             {
                 builder.Append("  changeValueRelative:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{ChangeValueRelative.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{ChangeValueRelative.Value.ToString()}'");
             }
 
             builder.AppendLine("}");

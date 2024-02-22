@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
+                    properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,70 +118,40 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (Optional.IsDefined(Id))
             {
                 builder.Append("  id:");
-                if (hasPropertyOverride)
+                if (Id.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Id}'''");
                 }
                 else
                 {
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Id}'");
-                    }
+                    builder.AppendLine($" '{Id}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationId), out propertyOverride);
-            if (Optional.IsDefined(OperationId) || hasPropertyOverride)
+            if (Optional.IsDefined(OperationId))
             {
                 builder.Append("  operationId:");
-                if (hasPropertyOverride)
+                if (OperationId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{OperationId}'''");
                 }
                 else
                 {
-                    if (OperationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{OperationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{OperationId}'");
-                    }
+                    builder.AppendLine($" '{OperationId}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsDefined(Properties) || hasPropertyOverride)
+            if (Optional.IsDefined(Properties))
             {
                 builder.Append("  properties:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, Properties, options, 2, false);
-                }
+                AppendChildObject(builder, Properties, options, 2, false);
             }
 
             builder.AppendLine("}");

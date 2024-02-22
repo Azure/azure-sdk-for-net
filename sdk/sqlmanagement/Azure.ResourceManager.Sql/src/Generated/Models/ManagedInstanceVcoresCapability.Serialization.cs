@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageSizes"u8))
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedStorageSizes = array;
                     continue;
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceMaintenanceConfigurationCapability> array = new List<ManagedInstanceMaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item));
+                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -230,171 +229,93 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
+                if (Name.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Name}'''");
                 }
                 else
                 {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Name}'");
-                    }
+                    builder.AppendLine($" '{Name}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (Optional.IsDefined(Value))
             {
                 builder.Append("  value:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {Value.Value}");
-                }
+                builder.AppendLine($" {Value.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
-            if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
+            if (Optional.IsDefined(IncludedMaxSize))
             {
                 builder.Append("  includedMaxSize:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, IncludedMaxSize, options, 2, false);
-                }
+                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageSizes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedStorageSizes) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedStorageSizes))
             {
-                if (SupportedStorageSizes.Any() || hasPropertyOverride)
+                if (SupportedStorageSizes.Any())
                 {
                     builder.Append("  supportedStorageSizes:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedStorageSizes)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedStorageSizes)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInstancePoolSupported), out propertyOverride);
-            if (Optional.IsDefined(IsInstancePoolSupported) || hasPropertyOverride)
+            if (Optional.IsDefined(IsInstancePoolSupported))
             {
                 builder.Append("  instancePoolSupported:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsInstancePoolSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
-                }
+                var boolValue = IsInstancePoolSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStandaloneSupported), out propertyOverride);
-            if (Optional.IsDefined(IsStandaloneSupported) || hasPropertyOverride)
+            if (Optional.IsDefined(IsStandaloneSupported))
             {
                 builder.Append("  standaloneSupported:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsStandaloneSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
-                }
+                var boolValue = IsStandaloneSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaintenanceConfigurations), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
-                if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
+                if (SupportedMaintenanceConfigurations.Any())
                 {
                     builder.Append("  supportedMaintenanceConfigurations:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedMaintenanceConfigurations)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedMaintenanceConfigurations)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (Optional.IsDefined(Reason))
             {
                 builder.Append("  reason:");
-                if (hasPropertyOverride)
+                if (Reason.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
                 }
                 else
                 {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Reason}'");
-                    }
+                    builder.AppendLine($" '{Reason}'");
                 }
             }
 

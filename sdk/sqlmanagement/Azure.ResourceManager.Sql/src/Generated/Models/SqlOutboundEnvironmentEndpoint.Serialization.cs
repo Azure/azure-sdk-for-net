@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEndpointDependency> array = new List<ManagedInstanceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEndpointDependency.DeserializeManagedInstanceEndpointDependency(item));
+                        array.Add(ManagedInstanceEndpointDependency.DeserializeManagedInstanceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -119,55 +118,33 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            if (Optional.IsDefined(Category))
             {
                 builder.Append("  category:");
-                if (hasPropertyOverride)
+                if (Category.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Category}'''");
                 }
                 else
                 {
-                    if (Category.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Category}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Category}'");
-                    }
+                    builder.AppendLine($" '{Category}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(Endpoints) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(Endpoints))
             {
-                if (Endpoints.Any() || hasPropertyOverride)
+                if (Endpoints.Any())
                 {
                     builder.Append("  endpoints:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in Endpoints)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in Endpoints)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

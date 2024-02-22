@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
+                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item, options));
                     }
                     stepsList = array;
                     continue;
@@ -134,69 +133,39 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
-            if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
+            if (Optional.IsDefined(TotalSteps))
             {
                 builder.Append("  totalSteps:");
-                if (hasPropertyOverride)
+                if (TotalSteps.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TotalSteps}'''");
                 }
                 else
                 {
-                    if (TotalSteps.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{TotalSteps}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{TotalSteps}'");
-                    }
+                    builder.AppendLine($" '{TotalSteps}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
-            if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
+            if (Optional.IsDefined(CurrentStep))
             {
                 builder.Append("  currentStep:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {CurrentStep.Value}");
-                }
+                builder.AppendLine($" {CurrentStep.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepsList), out propertyOverride);
-            if (Optional.IsCollectionDefined(StepsList) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(StepsList))
             {
-                if (StepsList.Any() || hasPropertyOverride)
+                if (StepsList.Any())
                 {
                     builder.Append("  stepsList:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in StepsList)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in StepsList)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

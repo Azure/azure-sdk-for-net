@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -93,33 +92,19 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUsageId), out propertyOverride);
-            if (Optional.IsDefined(ResourceUsageId) || hasPropertyOverride)
+            if (Optional.IsDefined(ResourceUsageId))
             {
                 builder.Append("  resourceUsageId:");
-                if (hasPropertyOverride)
+                if (ResourceUsageId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceUsageId}'''");
                 }
                 else
                 {
-                    if (ResourceUsageId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ResourceUsageId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ResourceUsageId}'");
-                    }
+                    builder.AppendLine($" '{ResourceUsageId}'");
                 }
             }
 

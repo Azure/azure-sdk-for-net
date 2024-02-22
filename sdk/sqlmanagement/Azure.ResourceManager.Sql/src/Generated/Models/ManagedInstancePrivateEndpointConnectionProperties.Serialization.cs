@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -124,61 +123,31 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoint), out propertyOverride);
-            if (Optional.IsDefined(PrivateEndpoint) || hasPropertyOverride)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 builder.Append("  privateEndpoint:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, PrivateEndpoint, options, 2, false);
-                }
+                AppendChildObject(builder, PrivateEndpoint, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkServiceConnectionState), out propertyOverride);
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState) || hasPropertyOverride)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 builder.Append("  privateLinkServiceConnectionState:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, PrivateLinkServiceConnectionState, options, 2, false);
-                }
+                AppendChildObject(builder, PrivateLinkServiceConnectionState, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 builder.Append("  provisioningState:");
-                if (hasPropertyOverride)
+                if (ProvisioningState.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ProvisioningState}'''");
                 }
                 else
                 {
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ProvisioningState}'");
-                    }
+                    builder.AppendLine($" '{ProvisioningState}'");
                 }
             }
 

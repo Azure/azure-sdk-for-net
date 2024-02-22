@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMinPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item, options));
                     }
                     supportedPerDatabaseMinPerformanceLevels = array;
                     continue;
@@ -164,97 +163,51 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
-            if (Optional.IsDefined(Limit) || hasPropertyOverride)
+            if (Optional.IsDefined(Limit))
             {
                 builder.Append("  limit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Limit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Limit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Unit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedPerDatabaseMinPerformanceLevels), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedPerDatabaseMinPerformanceLevels) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMinPerformanceLevels))
             {
-                if (SupportedPerDatabaseMinPerformanceLevels.Any() || hasPropertyOverride)
+                if (SupportedPerDatabaseMinPerformanceLevels.Any())
                 {
                     builder.Append("  supportedPerDatabaseMinPerformanceLevels:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (Optional.IsDefined(Reason))
             {
                 builder.Append("  reason:");
-                if (hasPropertyOverride)
+                if (Reason.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
                 }
                 else
                 {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Reason}'");
-                    }
+                    builder.AppendLine($" '{Reason}'");
                 }
             }
 

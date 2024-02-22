@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -108,48 +107,26 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
-            if (Optional.IsDefined(ErrorCode) || hasPropertyOverride)
+            if (Optional.IsDefined(ErrorCode))
             {
                 builder.Append("  errorCode:");
-                if (hasPropertyOverride)
+                if (ErrorCode.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ErrorCode}'''");
                 }
                 else
                 {
-                    if (ErrorCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ErrorCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ErrorCode}'");
-                    }
+                    builder.AppendLine($" '{ErrorCode}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRetryable), out propertyOverride);
-            if (Optional.IsDefined(IsRetryable) || hasPropertyOverride)
+            if (Optional.IsDefined(IsRetryable))
             {
                 builder.Append("  isRetryable:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{IsRetryable.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{IsRetryable.Value.ToSerialString()}'");
             }
 
             builder.AppendLine("}");

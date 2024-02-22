@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public ArmSku(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
         }

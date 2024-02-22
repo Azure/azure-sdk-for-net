@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -109,77 +108,47 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactName), out propertyOverride);
-            if (Optional.IsDefined(ContactName) || hasPropertyOverride)
+            if (Optional.IsDefined(ContactName))
             {
                 builder.Append("  contactName:");
-                if (hasPropertyOverride)
+                if (ContactName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ContactName}'''");
                 }
                 else
                 {
-                    if (ContactName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ContactName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ContactName}'");
-                    }
+                    builder.AppendLine($" '{ContactName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
-            if (Optional.IsDefined(Email) || hasPropertyOverride)
+            if (Optional.IsDefined(Email))
             {
                 builder.Append("  email:");
-                if (hasPropertyOverride)
+                if (Email.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Email}'''");
                 }
                 else
                 {
-                    if (Email.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Email}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Email}'");
-                    }
+                    builder.AppendLine($" '{Email}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phone), out propertyOverride);
-            if (Optional.IsDefined(Phone) || hasPropertyOverride)
+            if (Optional.IsDefined(Phone))
             {
                 builder.Append("  phone:");
-                if (hasPropertyOverride)
+                if (Phone.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Phone}'''");
                 }
                 else
                 {
-                    if (Phone.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Phone}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Phone}'");
-                    }
+                    builder.AppendLine($" '{Phone}'");
                 }
             }
 

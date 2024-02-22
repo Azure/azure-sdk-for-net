@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -114,83 +113,45 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartDay), out propertyOverride);
-            if (Optional.IsDefined(StartDay) || hasPropertyOverride)
+            if (Optional.IsDefined(StartDay))
             {
                 builder.Append("  startDay:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{StartDay.ToString()}'");
-                }
+                builder.AppendLine($" '{StartDay.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
-            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            if (Optional.IsDefined(StartTime))
             {
                 builder.Append("  startTime:");
-                if (hasPropertyOverride)
+                if (StartTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StartTime}'''");
                 }
                 else
                 {
-                    if (StartTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StartTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StartTime}'");
-                    }
+                    builder.AppendLine($" '{StartTime}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopDay), out propertyOverride);
-            if (Optional.IsDefined(StopDay) || hasPropertyOverride)
+            if (Optional.IsDefined(StopDay))
             {
                 builder.Append("  stopDay:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{StopDay.ToString()}'");
-                }
+                builder.AppendLine($" '{StopDay.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopTime), out propertyOverride);
-            if (Optional.IsDefined(StopTime) || hasPropertyOverride)
+            if (Optional.IsDefined(StopTime))
             {
                 builder.Append("  stopTime:");
-                if (hasPropertyOverride)
+                if (StopTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StopTime}'''");
                 }
                 else
                 {
-                    if (StopTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StopTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StopTime}'");
-                    }
+                    builder.AppendLine($" '{StopTime}'");
                 }
             }
 

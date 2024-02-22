@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxValue"u8))
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"u8))
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logSize"u8))
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
+                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -168,103 +167,49 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
-            if (Optional.IsDefined(MinValue) || hasPropertyOverride)
+            if (Optional.IsDefined(MinValue))
             {
                 builder.Append("  minValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, MinValue, options, 2, false);
-                }
+                AppendChildObject(builder, MinValue, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
-            if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
+            if (Optional.IsDefined(MaxValue))
             {
                 builder.Append("  maxValue:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, MaxValue, options, 2, false);
-                }
+                AppendChildObject(builder, MaxValue, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSize), out propertyOverride);
-            if (Optional.IsDefined(ScaleSize) || hasPropertyOverride)
+            if (Optional.IsDefined(ScaleSize))
             {
                 builder.Append("  scaleSize:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, ScaleSize, options, 2, false);
-                }
+                AppendChildObject(builder, ScaleSize, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSize), out propertyOverride);
-            if (Optional.IsDefined(LogSize) || hasPropertyOverride)
+            if (Optional.IsDefined(LogSize))
             {
                 builder.Append("  logSize:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, LogSize, options, 2, false);
-                }
+                AppendChildObject(builder, LogSize, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (Optional.IsDefined(Reason))
             {
                 builder.Append("  reason:");
-                if (hasPropertyOverride)
+                if (Reason.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Reason}'''");
                 }
                 else
                 {
-                    if (Reason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Reason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Reason}'");
-                    }
+                    builder.AppendLine($" '{Reason}'");
                 }
             }
 

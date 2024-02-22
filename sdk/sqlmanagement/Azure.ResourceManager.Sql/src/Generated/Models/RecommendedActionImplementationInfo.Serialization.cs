@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -108,47 +107,25 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
-            if (Optional.IsDefined(Method) || hasPropertyOverride)
+            if (Optional.IsDefined(Method))
             {
                 builder.Append("  method:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Method.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{Method.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Script), out propertyOverride);
-            if (Optional.IsDefined(Script) || hasPropertyOverride)
+            if (Optional.IsDefined(Script))
             {
                 builder.Append("  script:");
-                if (hasPropertyOverride)
+                if (Script.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Script}'''");
                 }
                 else
                 {
-                    if (Script.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Script}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Script}'");
-                    }
+                    builder.AppendLine($" '{Script}'");
                 }
             }
 

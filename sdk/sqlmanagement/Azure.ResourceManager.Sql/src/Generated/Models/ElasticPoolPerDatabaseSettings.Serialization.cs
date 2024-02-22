@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -112,40 +111,18 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCapacity), out propertyOverride);
-            if (Optional.IsDefined(MinCapacity) || hasPropertyOverride)
+            if (Optional.IsDefined(MinCapacity))
             {
                 builder.Append("  minCapacity:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{MinCapacity.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{MinCapacity.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
-            if (Optional.IsDefined(MaxCapacity) || hasPropertyOverride)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 builder.Append("  maxCapacity:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{MaxCapacity.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{MaxCapacity.Value.ToString()}'");
             }
 
             builder.AppendLine("}");

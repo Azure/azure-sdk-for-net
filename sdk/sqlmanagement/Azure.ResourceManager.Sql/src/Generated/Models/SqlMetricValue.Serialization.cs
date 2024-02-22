@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -172,97 +171,43 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
-            if (Optional.IsDefined(Count) || hasPropertyOverride)
+            if (Optional.IsDefined(Count))
             {
                 builder.Append("  count:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {Count.Value}");
-                }
+                builder.AppendLine($" {Count.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Average), out propertyOverride);
-            if (Optional.IsDefined(Average) || hasPropertyOverride)
+            if (Optional.IsDefined(Average))
             {
                 builder.Append("  average:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Average.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Average.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
-            if (Optional.IsDefined(Maximum) || hasPropertyOverride)
+            if (Optional.IsDefined(Maximum))
             {
                 builder.Append("  maximum:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Maximum.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Maximum.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
-            if (Optional.IsDefined(Minimum) || hasPropertyOverride)
+            if (Optional.IsDefined(Minimum))
             {
                 builder.Append("  minimum:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Minimum.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Minimum.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (Optional.IsDefined(Timestamp))
             {
                 builder.Append("  timestamp:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
-            if (Optional.IsDefined(Total) || hasPropertyOverride)
+            if (Optional.IsDefined(Total))
             {
                 builder.Append("  total:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Total.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Total.Value.ToString()}'");
             }
 
             builder.AppendLine("}");

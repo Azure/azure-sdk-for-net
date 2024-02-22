@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -104,55 +103,33 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyIdentifier), out propertyOverride);
-            if (Optional.IsDefined(KeyIdentifier) || hasPropertyOverride)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 builder.Append("  keyIdentifier:");
-                if (hasPropertyOverride)
+                if (KeyIdentifier.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{KeyIdentifier}'''");
                 }
                 else
                 {
-                    if (KeyIdentifier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{KeyIdentifier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{KeyIdentifier}'");
-                    }
+                    builder.AppendLine($" '{KeyIdentifier}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
-            if (Optional.IsDefined(IdentityClientId) || hasPropertyOverride)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 builder.Append("  identityClientId:");
-                if (hasPropertyOverride)
+                if (IdentityClientId.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{IdentityClientId}'''");
                 }
                 else
                 {
-                    if (IdentityClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{IdentityClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{IdentityClientId}'");
-                    }
+                    builder.AppendLine($" '{IdentityClientId}'");
                 }
             }
 

@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricValue> array = new List<SqlMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
+                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item, options));
                     }
                     metricValues = array;
                     continue;
@@ -179,113 +178,59 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, Name, options, 2, false);
-                }
+                AppendChildObject(builder, Name, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (Optional.IsDefined(StartOn))
             {
                 builder.Append("  startTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            if (Optional.IsDefined(EndOn))
             {
                 builder.Append("  endTime:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
-            if (Optional.IsDefined(TimeGrain) || hasPropertyOverride)
+            if (Optional.IsDefined(TimeGrain))
             {
                 builder.Append("  timeGrain:");
-                if (hasPropertyOverride)
+                if (TimeGrain.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{TimeGrain}'''");
                 }
                 else
                 {
-                    if (TimeGrain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{TimeGrain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{TimeGrain}'");
-                    }
+                    builder.AppendLine($" '{TimeGrain}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Unit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(MetricValues) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(MetricValues))
             {
-                if (MetricValues.Any() || hasPropertyOverride)
+                if (MetricValues.Any())
                 {
                     builder.Append("  metricValues:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in MetricValues)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in MetricValues)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

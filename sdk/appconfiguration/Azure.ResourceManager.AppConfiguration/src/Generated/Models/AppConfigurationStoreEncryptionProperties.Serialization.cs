@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         keyVaultProperties = null;
                         continue;
                     }
-                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,26 +104,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
-            if (Optional.IsDefined(KeyVaultProperties) || hasPropertyOverride)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 builder.Append("  keyVaultProperties:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, KeyVaultProperties, options, 2, false);
-                }
+                AppendChildObject(builder, KeyVaultProperties, options, 2, false);
             }
 
             builder.AppendLine("}");

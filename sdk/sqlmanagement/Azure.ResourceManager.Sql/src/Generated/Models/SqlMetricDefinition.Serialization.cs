@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"u8))
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
+                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -164,97 +163,51 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (Optional.IsDefined(Name))
             {
                 builder.Append("  name:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    AppendChildObject(builder, Name, options, 2, false);
-                }
+                AppendChildObject(builder, Name, options, 2, false);
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAggregationType), out propertyOverride);
-            if (Optional.IsDefined(PrimaryAggregationType) || hasPropertyOverride)
+            if (Optional.IsDefined(PrimaryAggregationType))
             {
                 builder.Append("  primaryAggregationType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{PrimaryAggregationType.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{PrimaryAggregationType.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUriString), out propertyOverride);
-            if (Optional.IsDefined(ResourceUriString) || hasPropertyOverride)
+            if (Optional.IsDefined(ResourceUriString))
             {
                 builder.Append("  resourceUri:");
-                if (hasPropertyOverride)
+                if (ResourceUriString.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ResourceUriString}'''");
                 }
                 else
                 {
-                    if (ResourceUriString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ResourceUriString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ResourceUriString}'");
-                    }
+                    builder.AppendLine($" '{ResourceUriString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            if (Optional.IsDefined(Unit))
             {
                 builder.Append("  unit:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{Unit.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{Unit.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricAvailabilities), out propertyOverride);
-            if (Optional.IsCollectionDefined(MetricAvailabilities) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(MetricAvailabilities))
             {
-                if (MetricAvailabilities.Any() || hasPropertyOverride)
+                if (MetricAvailabilities.Any())
                 {
                     builder.Append("  metricAvailabilities:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in MetricAvailabilities)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in MetricAvailabilities)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

@@ -22,9 +22,18 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public ArmPlan(string name, string publisher, string product)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(product, nameof(product));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
 
             Name = name;
             Publisher = publisher;

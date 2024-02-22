@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatisticsProperties> array = new List<QueryStatisticsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item, options));
                     }
                     queries = array;
                     continue;
@@ -182,149 +181,87 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfQueries), out propertyOverride);
-            if (Optional.IsDefined(NumberOfQueries) || hasPropertyOverride)
+            if (Optional.IsDefined(NumberOfQueries))
             {
                 builder.Append("  numberOfQueries:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {NumberOfQueries.Value}");
-                }
+                builder.AppendLine($" {NumberOfQueries.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationFunction), out propertyOverride);
-            if (Optional.IsDefined(AggregationFunction) || hasPropertyOverride)
+            if (Optional.IsDefined(AggregationFunction))
             {
                 builder.Append("  aggregationFunction:");
-                if (hasPropertyOverride)
+                if (AggregationFunction.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{AggregationFunction}'''");
                 }
                 else
                 {
-                    if (AggregationFunction.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{AggregationFunction}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{AggregationFunction}'");
-                    }
+                    builder.AppendLine($" '{AggregationFunction}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservationMetric), out propertyOverride);
-            if (Optional.IsDefined(ObservationMetric) || hasPropertyOverride)
+            if (Optional.IsDefined(ObservationMetric))
             {
                 builder.Append("  observationMetric:");
-                if (hasPropertyOverride)
+                if (ObservationMetric.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ObservationMetric}'''");
                 }
                 else
                 {
-                    if (ObservationMetric.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ObservationMetric}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ObservationMetric}'");
-                    }
+                    builder.AppendLine($" '{ObservationMetric}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
-            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
+            if (Optional.IsDefined(IntervalType))
             {
                 builder.Append("  intervalType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{IntervalType.Value.ToString()}'");
-                }
+                builder.AppendLine($" '{IntervalType.Value.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
-            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            if (Optional.IsDefined(StartTime))
             {
                 builder.Append("  startTime:");
-                if (hasPropertyOverride)
+                if (StartTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{StartTime}'''");
                 }
                 else
                 {
-                    if (StartTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{StartTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{StartTime}'");
-                    }
+                    builder.AppendLine($" '{StartTime}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
-            if (Optional.IsDefined(EndTime) || hasPropertyOverride)
+            if (Optional.IsDefined(EndTime))
             {
                 builder.Append("  endTime:");
-                if (hasPropertyOverride)
+                if (EndTime.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{EndTime}'''");
                 }
                 else
                 {
-                    if (EndTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{EndTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{EndTime}'");
-                    }
+                    builder.AppendLine($" '{EndTime}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queries), out propertyOverride);
-            if (Optional.IsCollectionDefined(Queries) || hasPropertyOverride)
+            if (Optional.IsCollectionDefined(Queries))
             {
-                if (Queries.Any() || hasPropertyOverride)
+                if (Queries.Any())
                 {
                     builder.Append("  queries:");
-                    if (hasPropertyOverride)
+                    builder.AppendLine(" [");
+                    foreach (var item in Queries)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        AppendChildObject(builder, item, options, 4, true);
                     }
-                    else
-                    {
-                        builder.AppendLine(" [");
-                        foreach (var item in Queries)
-                        {
-                            AppendChildObject(builder, item, options, 4, true);
-                        }
-                        builder.AppendLine("  ]");
-                    }
+                    builder.AppendLine("  ]");
                 }
             }
 

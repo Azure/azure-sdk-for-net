@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -160,135 +159,81 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MembershipType), out propertyOverride);
-            if (Optional.IsDefined(MembershipType) || hasPropertyOverride)
+            if (Optional.IsDefined(MembershipType))
             {
                 builder.Append("  membershipType:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" '{MembershipType.Value.ToSerialString()}'");
-                }
+                builder.AppendLine($" '{MembershipType.Value.ToSerialString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
-            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            if (Optional.IsDefined(ServerName))
             {
                 builder.Append("  serverName:");
-                if (hasPropertyOverride)
+                if (ServerName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ServerName}'''");
                 }
                 else
                 {
-                    if (ServerName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ServerName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ServerName}'");
-                    }
+                    builder.AppendLine($" '{ServerName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (Optional.IsDefined(DatabaseName))
             {
                 builder.Append("  databaseName:");
-                if (hasPropertyOverride)
+                if (DatabaseName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{DatabaseName}'''");
                 }
                 else
                 {
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{DatabaseName}'");
-                    }
+                    builder.AppendLine($" '{DatabaseName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticPoolName), out propertyOverride);
-            if (Optional.IsDefined(ElasticPoolName) || hasPropertyOverride)
+            if (Optional.IsDefined(ElasticPoolName))
             {
                 builder.Append("  elasticPoolName:");
-                if (hasPropertyOverride)
+                if (ElasticPoolName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ElasticPoolName}'''");
                 }
                 else
                 {
-                    if (ElasticPoolName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ElasticPoolName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ElasticPoolName}'");
-                    }
+                    builder.AppendLine($" '{ElasticPoolName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardMapName), out propertyOverride);
-            if (Optional.IsDefined(ShardMapName) || hasPropertyOverride)
+            if (Optional.IsDefined(ShardMapName))
             {
                 builder.Append("  shardMapName:");
-                if (hasPropertyOverride)
+                if (ShardMapName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{ShardMapName}'''");
                 }
                 else
                 {
-                    if (ShardMapName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{ShardMapName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{ShardMapName}'");
-                    }
+                    builder.AppendLine($" '{ShardMapName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshCredential), out propertyOverride);
-            if (Optional.IsDefined(RefreshCredential) || hasPropertyOverride)
+            if (Optional.IsDefined(RefreshCredential))
             {
                 builder.Append("  refreshCredential:");
-                if (hasPropertyOverride)
+                if (RefreshCredential.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{RefreshCredential}'''");
                 }
                 else
                 {
-                    if (RefreshCredential.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{RefreshCredential}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{RefreshCredential}'");
-                    }
+                    builder.AppendLine($" '{RefreshCredential}'");
                 }
             }
 

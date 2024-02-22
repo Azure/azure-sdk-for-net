@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -164,114 +163,60 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (Optional.IsDefined(Status))
             {
                 builder.Append("  status:");
-                if (hasPropertyOverride)
+                if (Status.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{Status}'''");
                 }
                 else
                 {
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{Status}'");
-                    }
+                    builder.AppendLine($" '{Status}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstStripeName), out propertyOverride);
-            if (Optional.IsDefined(FirstStripeName) || hasPropertyOverride)
+            if (Optional.IsDefined(FirstStripeName))
             {
                 builder.Append("  firstStripeName:");
-                if (hasPropertyOverride)
+                if (FirstStripeName.Contains(Environment.NewLine))
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine(" '''");
+                    builder.AppendLine($"{FirstStripeName}'''");
                 }
                 else
                 {
-                    if (FirstStripeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine(" '''");
-                        builder.AppendLine($"{FirstStripeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" '{FirstStripeName}'");
-                    }
+                    builder.AppendLine($" '{FirstStripeName}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfStripes), out propertyOverride);
-            if (Optional.IsDefined(NumberOfStripes) || hasPropertyOverride)
+            if (Optional.IsDefined(NumberOfStripes))
             {
                 builder.Append("  numberOfStripes:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {NumberOfStripes.Value}");
-                }
+                builder.AppendLine($" {NumberOfStripes.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupSizeInMB), out propertyOverride);
-            if (Optional.IsDefined(BackupSizeInMB) || hasPropertyOverride)
+            if (Optional.IsDefined(BackupSizeInMB))
             {
                 builder.Append("  backupSizeMB:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($" {BackupSizeInMB.Value}");
-                }
+                builder.AppendLine($" {BackupSizeInMB.Value}");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreStartedOn), out propertyOverride);
-            if (Optional.IsDefined(RestoreStartedOn) || hasPropertyOverride)
+            if (Optional.IsDefined(RestoreStartedOn))
             {
                 builder.Append("  restoreStartedTimestampUtc:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(RestoreStartedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(RestoreStartedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreFinishedOn), out propertyOverride);
-            if (Optional.IsDefined(RestoreFinishedOn) || hasPropertyOverride)
+            if (Optional.IsDefined(RestoreFinishedOn))
             {
                 builder.Append("  restoreFinishedTimestampUtc:");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($" {propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(RestoreFinishedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
-                }
+                var formattedDateTimeString = TypeFormatters.ToString(RestoreFinishedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
             }
 
             builder.AppendLine("}");

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadClassifierResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadClassifierResource> CreateOrUpdate(WaitUntil waitUntil, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual async Task<Response<WorkloadClassifierResource>> GetAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual Response<WorkloadClassifierResource> Get(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual Response<bool> Exists(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadClassifierResource>> GetIfExistsAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
         public virtual NullableResponse<WorkloadClassifierResource> GetIfExists(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var scope = _workloadClassifierClientDiagnostics.CreateScope("WorkloadClassifierCollection.GetIfExists");
             scope.Start();
