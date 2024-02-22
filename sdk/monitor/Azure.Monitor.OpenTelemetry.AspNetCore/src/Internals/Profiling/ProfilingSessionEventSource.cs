@@ -179,13 +179,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         {
             if (resource is null)
             {
-                throw new ArgumentNullException(nameof(resource));
+                return;
             }
 
             if (IsEnabled(EventLevel.Informational, Keywords.ResourceAttributes))
             {
                 IEnumerable<KeyValuePair<string, object>> attributes = resource.Attributes;
-                ResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Convert.ToString(kvp.Value, InvariantCulture)!)));
+                ResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, SafeConvertToString(kvp.Value))));
+            }
+
+            static string SafeConvertToString(object? value)
+            {
+                const int maxLength = 128;
+                try
+                {
+                    string converted = Convert.ToString(value, InvariantCulture) ?? "";
+                    return converted.Length <= maxLength ? converted : converted.Substring(0, maxLength);
+                }
+                catch
+                {
+                    return "";
+                }
             }
         }
 
