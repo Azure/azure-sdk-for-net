@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsDisasterRecoveryData> array = new List<EventHubsDisasterRecoveryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(item));
+                        array.Add(EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(item, options));
                     }
                     value = array;
                     continue;

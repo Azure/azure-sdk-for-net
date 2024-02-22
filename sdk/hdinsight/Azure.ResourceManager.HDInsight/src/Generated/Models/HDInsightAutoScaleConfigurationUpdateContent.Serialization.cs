@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

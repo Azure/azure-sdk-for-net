@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPolicyViolation> array = new List<DevTestLabPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPolicyViolation.DeserializeDevTestLabPolicyViolation(item));
+                        array.Add(DevTestLabPolicyViolation.DeserializeDevTestLabPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;

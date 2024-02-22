@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryWithResourceIdentity"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value);
+                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

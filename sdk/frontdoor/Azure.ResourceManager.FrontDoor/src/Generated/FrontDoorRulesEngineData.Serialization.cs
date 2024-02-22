@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<RulesEngineRule> array = new List<RulesEngineRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RulesEngineRule.DeserializeRulesEngineRule(item));
+                                array.Add(RulesEngineRule.DeserializeRulesEngineRule(item, options));
                             }
                             rules = array;
                             continue;

@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ThrottlingPolicy": return EventHubsThrottlingPolicy.DeserializeEventHubsThrottlingPolicy(element);
+                    case "ThrottlingPolicy": return EventHubsThrottlingPolicy.DeserializeEventHubsThrottlingPolicy(element, options);
                 }
             }
-            return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element);
+            return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element, options);
         }
 
         BinaryData IPersistableModel<EventHubsApplicationGroupPolicy>.Write(ModelReaderWriterOptions options)

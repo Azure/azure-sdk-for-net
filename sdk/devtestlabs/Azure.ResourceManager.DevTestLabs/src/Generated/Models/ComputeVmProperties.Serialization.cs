@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeVmInstanceViewStatus> array = new List<ComputeVmInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item));
+                        array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeDataDisk> array = new List<ComputeDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item));
+                        array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;

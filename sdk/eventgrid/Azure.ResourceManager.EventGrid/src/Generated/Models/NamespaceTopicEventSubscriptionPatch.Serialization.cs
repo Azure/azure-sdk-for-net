@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value);
+                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventDeliverySchema"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value);
+                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value, options);
                             continue;
                         }
                     }

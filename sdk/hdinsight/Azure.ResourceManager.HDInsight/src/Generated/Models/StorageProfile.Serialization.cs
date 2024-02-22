@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightStorageAccountInfo> array = new List<HDInsightStorageAccountInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item));
+                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item, options));
                     }
                     storageaccounts = array;
                     continue;

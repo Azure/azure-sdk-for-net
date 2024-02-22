@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightApplicationData> array = new List<HDInsightApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightApplicationData.DeserializeHDInsightApplicationData(item));
+                        array.Add(HDInsightApplicationData.DeserializeHDInsightApplicationData(item, options));
                     }
                     value = array;
                     continue;
