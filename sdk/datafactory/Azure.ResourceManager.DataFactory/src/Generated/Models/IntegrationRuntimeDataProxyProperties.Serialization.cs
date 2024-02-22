@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = EntityReference.DeserializeEntityReference(property.Value);
+                    connectVia = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))

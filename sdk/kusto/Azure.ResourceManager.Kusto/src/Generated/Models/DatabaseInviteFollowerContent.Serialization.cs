@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

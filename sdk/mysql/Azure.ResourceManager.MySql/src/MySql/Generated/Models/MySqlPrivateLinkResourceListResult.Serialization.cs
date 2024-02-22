@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPrivateLinkResourceData> array = new List<MySqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPrivateLinkResourceData.DeserializeMySqlPrivateLinkResourceData(item));
+                        array.Add(MySqlPrivateLinkResourceData.DeserializeMySqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

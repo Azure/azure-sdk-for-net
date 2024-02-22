@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         public CosmosSqlDataTransferDataSourceSink(string databaseName, string containerName)
         {
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             DatabaseName = databaseName;
             ContainerName = containerName;

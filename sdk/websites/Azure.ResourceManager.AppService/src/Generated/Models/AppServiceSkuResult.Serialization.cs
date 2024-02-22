@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<GlobalCsmSkuDescription> array = new List<GlobalCsmSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item));
+                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item, options));
                     }
                     skus = array;
                     continue;

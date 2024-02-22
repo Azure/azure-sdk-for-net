@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value);
+                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

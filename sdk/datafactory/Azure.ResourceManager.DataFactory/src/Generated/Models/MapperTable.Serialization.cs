@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperTableSchema> array = new List<MapperTableSchema>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperTableSchema.DeserializeMapperTableSchema(item));
+                                array.Add(MapperTableSchema.DeserializeMapperTableSchema(item, options));
                             }
                             schema = array;
                             continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                                array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item, options));
                             }
                             dslConnectorProperties = array;
                             continue;

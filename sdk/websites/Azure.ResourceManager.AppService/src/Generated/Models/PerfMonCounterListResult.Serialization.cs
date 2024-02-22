@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PerfMonResponseInfo> array = new List<PerfMonResponseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfMonResponseInfo.DeserializePerfMonResponseInfo(item));
+                        array.Add(PerfMonResponseInfo.DeserializePerfMonResponseInfo(item, options));
                     }
                     value = array;
                     continue;

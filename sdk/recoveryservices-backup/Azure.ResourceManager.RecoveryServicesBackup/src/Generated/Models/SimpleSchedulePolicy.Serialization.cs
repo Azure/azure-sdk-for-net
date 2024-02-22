@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduleWeeklyFrequency"u8))

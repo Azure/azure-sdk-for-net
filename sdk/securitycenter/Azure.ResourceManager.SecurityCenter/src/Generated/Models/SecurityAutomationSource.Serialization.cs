@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationRuleSet> array = new List<SecurityAutomationRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
+                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item, options));
                     }
                     ruleSets = array;
                     continue;

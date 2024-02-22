@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item));
+                        array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item, options));
                     }
                     defaultValues = array;
                     continue;

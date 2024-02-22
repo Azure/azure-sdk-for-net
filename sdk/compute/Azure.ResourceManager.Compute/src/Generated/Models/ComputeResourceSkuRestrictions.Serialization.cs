@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    restrictionInfo = ComputeResourceSkuRestrictionInfo.DeserializeComputeResourceSkuRestrictionInfo(property.Value);
+                    restrictionInfo = ComputeResourceSkuRestrictionInfo.DeserializeComputeResourceSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))

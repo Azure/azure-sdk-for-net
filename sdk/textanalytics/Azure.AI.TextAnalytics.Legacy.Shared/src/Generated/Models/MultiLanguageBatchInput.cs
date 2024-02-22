@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public MultiLanguageBatchInput(IEnumerable<MultiLanguageInput> documents)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            if (documents == null)
+            {
+                throw new ArgumentNullException(nameof(documents));
+            }
 
             Documents = documents.ToList();
         }

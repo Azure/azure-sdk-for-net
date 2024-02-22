@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value);
+                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timestamp"u8))

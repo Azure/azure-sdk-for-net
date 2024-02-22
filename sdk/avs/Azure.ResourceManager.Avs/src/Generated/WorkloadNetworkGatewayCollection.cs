@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkGatewayResource>> GetAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual Response<WorkloadNetworkGatewayResource> Get(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkGatewayResource>> GetIfExistsAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkGatewayResource> GetIfExists(string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var scope = _workloadNetworkGatewayWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkGatewayCollection.GetIfExists");
             scope.Start();

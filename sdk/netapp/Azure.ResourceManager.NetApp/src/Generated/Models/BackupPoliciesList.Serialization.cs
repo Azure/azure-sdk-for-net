@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppBackupPolicyData> array = new List<NetAppBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item));
+                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

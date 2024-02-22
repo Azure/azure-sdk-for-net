@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item, options));
                             }
                             changes = array;
                             continue;

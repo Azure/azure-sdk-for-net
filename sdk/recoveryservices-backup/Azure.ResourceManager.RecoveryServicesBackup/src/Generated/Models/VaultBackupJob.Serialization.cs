@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<VaultBackupJobErrorInfo> array = new List<VaultBackupJobErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item));
+                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value);
+                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

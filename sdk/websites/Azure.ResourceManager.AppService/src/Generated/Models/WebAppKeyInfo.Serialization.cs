@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = WebAppKeyInfoProperties.DeserializeWebAppKeyInfoProperties(property.Value);
+                    properties = WebAppKeyInfoProperties.DeserializeWebAppKeyInfoProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

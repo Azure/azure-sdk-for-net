@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServicePlanData> array = new List<AppServicePlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServicePlanData.DeserializeAppServicePlanData(item));
+                        array.Add(AppServicePlanData.DeserializeAppServicePlanData(item, options));
                     }
                     value = array;
                     continue;

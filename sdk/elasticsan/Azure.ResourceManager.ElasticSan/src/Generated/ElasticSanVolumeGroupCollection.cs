@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticSanVolumeGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeGroupName, ElasticSanVolumeGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticSanVolumeGroupResource> CreateOrUpdate(WaitUntil waitUntil, string volumeGroupName, ElasticSanVolumeGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<ElasticSanVolumeGroupResource>> GetAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<ElasticSanVolumeGroupResource> Get(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticSanVolumeGroupResource>> GetIfExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual NullableResponse<ElasticSanVolumeGroupResource> GetIfExists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            if (volumeGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(volumeGroupName));
+            }
+            if (volumeGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
+            }
 
             using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupCollection.GetIfExists");
             scope.Start();

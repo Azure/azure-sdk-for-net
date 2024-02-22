@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementCacheData> array = new List<ApiManagementCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementCacheData.DeserializeApiManagementCacheData(item));
+                        array.Add(ApiManagementCacheData.DeserializeApiManagementCacheData(item, options));
                     }
                     value = array;
                     continue;

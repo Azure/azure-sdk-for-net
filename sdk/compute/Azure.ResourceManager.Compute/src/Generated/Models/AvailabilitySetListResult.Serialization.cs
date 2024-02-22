@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<AvailabilitySetData> array = new List<AvailabilitySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilitySetData.DeserializeAvailabilitySetData(item));
+                        array.Add(AvailabilitySetData.DeserializeAvailabilitySetData(item, options));
                     }
                     value = array;
                     continue;

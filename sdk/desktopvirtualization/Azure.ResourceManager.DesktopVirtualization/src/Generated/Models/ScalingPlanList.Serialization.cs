@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<ScalingPlanData> array = new List<ScalingPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingPlanData.DeserializeScalingPlanData(item));
+                        array.Add(ScalingPlanData.DeserializeScalingPlanData(item, options));
                     }
                     value = array;
                     continue;

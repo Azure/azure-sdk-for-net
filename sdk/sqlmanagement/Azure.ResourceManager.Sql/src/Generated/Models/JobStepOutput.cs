@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -54,10 +53,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
         {
-            Argument.AssertNotNull(serverName, nameof(serverName));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(tableName, nameof(tableName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             ServerName = serverName;
             DatabaseName = databaseName;

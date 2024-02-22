@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDetail> array = new List<PricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item));
+                        array.Add(PricingDetail.DeserializePricingDetail(item, options));
                     }
                     pricingDetails = array;
                     continue;

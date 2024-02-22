@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<NetworkSecurityPerimeterProfileAccessRule> array = new List<NetworkSecurityPerimeterProfileAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item));
+                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;

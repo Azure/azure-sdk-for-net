@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

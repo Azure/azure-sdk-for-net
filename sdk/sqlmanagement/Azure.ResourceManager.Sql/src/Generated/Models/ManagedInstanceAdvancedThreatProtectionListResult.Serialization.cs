@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceAdvancedThreatProtectionData> array = new List<ManagedInstanceAdvancedThreatProtectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(item));
+                        array.Add(ManagedInstanceAdvancedThreatProtectionData.DeserializeManagedInstanceAdvancedThreatProtectionData(item, options));
                     }
                     value = array;
                     continue;

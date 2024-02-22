@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSimGroupData> array = new List<MobileNetworkSimGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(item));
+                        array.Add(MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

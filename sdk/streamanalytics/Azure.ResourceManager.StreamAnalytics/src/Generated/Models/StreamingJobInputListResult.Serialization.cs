@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobInputData> array = new List<StreamingJobInputData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
+                        array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item, options));
                     }
                     value = array;
                     continue;

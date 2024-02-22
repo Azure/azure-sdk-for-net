@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value);
+                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("email"u8))

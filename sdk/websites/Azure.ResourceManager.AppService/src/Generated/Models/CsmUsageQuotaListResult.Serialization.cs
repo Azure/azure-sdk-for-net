@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<CsmUsageQuota> array = new List<CsmUsageQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CsmUsageQuota.DeserializeCsmUsageQuota(item));
+                        array.Add(CsmUsageQuota.DeserializeCsmUsageQuota(item, options));
                     }
                     value = array;
                     continue;

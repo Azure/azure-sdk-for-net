@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeploymentResource>> UpdateAsync(WaitUntil waitUntil, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereDeploymentResource> Update(WaitUntil waitUntil, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentResource.Update");
             scope.Start();

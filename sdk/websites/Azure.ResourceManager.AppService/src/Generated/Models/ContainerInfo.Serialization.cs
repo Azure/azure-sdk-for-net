@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
+                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
+                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

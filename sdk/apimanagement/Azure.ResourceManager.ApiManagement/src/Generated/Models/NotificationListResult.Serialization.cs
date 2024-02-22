@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementNotificationData> array = new List<ApiManagementNotificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementNotificationData.DeserializeApiManagementNotificationData(item));
+                        array.Add(ApiManagementNotificationData.DeserializeApiManagementNotificationData(item, options));
                     }
                     value = array;
                     continue;

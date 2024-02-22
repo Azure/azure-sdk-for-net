@@ -52,7 +52,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
         public ClinicalTrialMetadata(IEnumerable<string> conditions)
         {
-            Argument.AssertNotNull(conditions, nameof(conditions));
+            if (conditions == null)
+            {
+                throw new ArgumentNullException(nameof(conditions));
+            }
 
             Phases = new ChangeTrackingList<ClinicalTrialPhase>();
             Conditions = conditions.ToList();

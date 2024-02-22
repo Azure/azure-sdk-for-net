@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value);
+                    codeConfiguration = GitHubActionCodeConfiguration.DeserializeGitHubActionCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerConfiguration"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value);
+                    containerConfiguration = GitHubActionContainerConfiguration.DeserializeGitHubActionContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isLinux"u8))

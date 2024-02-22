@@ -24,12 +24,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adxResourceId"/>, <paramref name="adxEndpointUri"/>, <paramref name="adxDatabaseName"/>, <paramref name="eventHubEndpointUri"/>, <paramref name="eventHubEntityPath"/> or <paramref name="eventHubNamespaceResourceId"/> is null. </exception>
         public DataExplorerConnectionProperties(ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId)
         {
-            Argument.AssertNotNull(adxResourceId, nameof(adxResourceId));
-            Argument.AssertNotNull(adxEndpointUri, nameof(adxEndpointUri));
-            Argument.AssertNotNull(adxDatabaseName, nameof(adxDatabaseName));
-            Argument.AssertNotNull(eventHubEndpointUri, nameof(eventHubEndpointUri));
-            Argument.AssertNotNull(eventHubEntityPath, nameof(eventHubEntityPath));
-            Argument.AssertNotNull(eventHubNamespaceResourceId, nameof(eventHubNamespaceResourceId));
+            if (adxResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(adxResourceId));
+            }
+            if (adxEndpointUri == null)
+            {
+                throw new ArgumentNullException(nameof(adxEndpointUri));
+            }
+            if (adxDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(adxDatabaseName));
+            }
+            if (eventHubEndpointUri == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointUri));
+            }
+            if (eventHubEntityPath == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEntityPath));
+            }
+            if (eventHubNamespaceResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubNamespaceResourceId));
+            }
 
             AdxResourceId = adxResourceId;
             AdxEndpointUri = adxEndpointUri;

@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adjustments"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditExpired"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("charges"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalance"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventType"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditCurrency"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
+                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditExpiredInBillingCurrency"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("newCreditInBillingCurrency"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adjustmentsInBillingCurrency"u8))
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("chargesInBillingCurrency"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
         internal AutocompleteItem(string text, string queryPlusText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(queryPlusText, nameof(queryPlusText));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (queryPlusText == null)
+            {
+                throw new ArgumentNullException(nameof(queryPlusText));
+            }
 
             Text = text;
             QueryPlusText = queryPlusText;

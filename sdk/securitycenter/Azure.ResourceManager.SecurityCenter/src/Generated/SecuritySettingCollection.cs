@@ -83,7 +83,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecuritySettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SecuritySettingName settingName, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +133,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecuritySettingResource> CreateOrUpdate(WaitUntil waitUntil, SecuritySettingName settingName, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingCollection.CreateOrUpdate");
             scope.Start();

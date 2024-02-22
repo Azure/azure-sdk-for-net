@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
+                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value);
+                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reviewDateTime"u8))

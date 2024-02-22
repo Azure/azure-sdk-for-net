@@ -72,8 +72,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceSecurityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deviceSecurityGroupName, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -121,8 +131,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceSecurityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string deviceSecurityGroupName, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -168,7 +188,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual async Task<Response<DeviceSecurityGroupResource>> GetAsync(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.Get");
             scope.Start();
@@ -213,7 +240,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual Response<DeviceSecurityGroupResource> Get(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.Get");
             scope.Start();
@@ -318,7 +352,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.Exists");
             scope.Start();
@@ -361,7 +402,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.Exists");
             scope.Start();
@@ -404,7 +452,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceSecurityGroupResource>> GetIfExistsAsync(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.GetIfExists");
             scope.Start();
@@ -449,7 +504,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="deviceSecurityGroupName"/> is null. </exception>
         public virtual NullableResponse<DeviceSecurityGroupResource> GetIfExists(string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
+            }
+            if (deviceSecurityGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
+            }
 
             using var scope = _deviceSecurityGroupClientDiagnostics.CreateScope("DeviceSecurityGroupCollection.GetIfExists");
             scope.Start();

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerEditionCapability> array = new List<MySqlFlexibleServerEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerEditionCapability.DeserializeMySqlFlexibleServerEditionCapability(item));
+                        array.Add(MySqlFlexibleServerEditionCapability.DeserializeMySqlFlexibleServerEditionCapability(item, options));
                     }
                     supportedFlexibleServerEditions = array;
                     continue;

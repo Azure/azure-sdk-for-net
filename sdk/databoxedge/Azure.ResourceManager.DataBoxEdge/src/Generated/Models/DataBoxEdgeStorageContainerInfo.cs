@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountCredentialId"/> or <paramref name="containerName"/> is null. </exception>
         public DataBoxEdgeStorageContainerInfo(ResourceIdentifier storageAccountCredentialId, string containerName, DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
-            Argument.AssertNotNull(storageAccountCredentialId, nameof(storageAccountCredentialId));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (storageAccountCredentialId == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountCredentialId));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             StorageAccountCredentialId = storageAccountCredentialId;
             ContainerName = containerName;

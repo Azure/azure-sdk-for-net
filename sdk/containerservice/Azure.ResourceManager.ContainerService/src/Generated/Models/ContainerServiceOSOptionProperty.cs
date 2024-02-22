@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>
         internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage)
         {
-            Argument.AssertNotNull(osType, nameof(osType));
+            if (osType == null)
+            {
+                throw new ArgumentNullException(nameof(osType));
+            }
 
             OSType = osType;
             EnableFipsImage = enableFipsImage;

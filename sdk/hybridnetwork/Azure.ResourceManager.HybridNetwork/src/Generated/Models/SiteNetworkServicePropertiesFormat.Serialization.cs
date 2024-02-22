@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property.Value);
+                    managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("siteReference"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkServiceDesignVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    networkServiceDesignVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("desiredStateConfigurationGroupValueReferences"u8))

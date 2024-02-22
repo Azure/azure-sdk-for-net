@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    templateArtifactProfile = ArmTemplateArtifactProfile.DeserializeArmTemplateArtifactProfile(property.Value);
+                    templateArtifactProfile = ArmTemplateArtifactProfile.DeserializeArmTemplateArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))

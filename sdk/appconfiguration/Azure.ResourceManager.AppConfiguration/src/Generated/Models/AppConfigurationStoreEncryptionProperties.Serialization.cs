@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         keyVaultProperties = null;
                         continue;
                     }
-                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

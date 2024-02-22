@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableState> array = new List<VariableState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item));
+                        array.Add(VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyState> array = new List<AnomalyState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyState.DeserializeAnomalyState(item));
+                        array.Add(AnomalyState.DeserializeAnomalyState(item, options));
                     }
                     results = array;
                     continue;

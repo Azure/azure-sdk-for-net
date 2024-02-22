@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value);
+                    installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logsAgent"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value);
+                    logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value);
+                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("format"u8))

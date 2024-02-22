@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<SecurityPolicyWebApplicationFirewallAssociation> array = new List<SecurityPolicyWebApplicationFirewallAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item));
+                        array.Add(SecurityPolicyWebApplicationFirewallAssociation.DeserializeSecurityPolicyWebApplicationFirewallAssociation(item, options));
                     }
                     associations = array;
                     continue;

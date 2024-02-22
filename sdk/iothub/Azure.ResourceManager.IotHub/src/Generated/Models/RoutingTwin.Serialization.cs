@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = RoutingTwinProperties.DeserializeRoutingTwinProperties(property.Value);
+                    properties = RoutingTwinProperties.DeserializeRoutingTwinProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebAppMinorVersion> array = new List<WebAppMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebAppMinorVersion.DeserializeWebAppMinorVersion(item));
+                        array.Add(WebAppMinorVersion.DeserializeWebAppMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunBranchStatus> array = new List<ChaosExperimentRunBranchStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunBranchStatus.DeserializeChaosExperimentRunBranchStatus(item));
+                        array.Add(ChaosExperimentRunBranchStatus.DeserializeChaosExperimentRunBranchStatus(item, options));
                     }
                     branches = array;
                     continue;

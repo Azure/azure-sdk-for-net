@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> Returns a <see cref="CloudHsmClusterResource"/> object. </returns>
         public static CloudHsmClusterResource GetCloudHsmClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHardwareSecurityModulesArmClient(client).GetCloudHsmClusterResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> object. </returns>
         public static HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHardwareSecurityModulesArmClient(client).GetHardwareSecurityModulesPrivateEndpointConnectionResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
         public static DedicatedHsmResource GetDedicatedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHardwareSecurityModulesArmClient(client).GetDedicatedHsmResource(id);
         }
@@ -103,7 +112,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An object representing collection of CloudHsmClusterResources and their operations over a CloudHsmClusterResource. </returns>
         public static CloudHsmClusterCollection GetCloudHsmClusters(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusters();
         }
@@ -141,7 +153,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         [ForwardsClientCalls]
         public static async Task<Response<CloudHsmClusterResource>> GetCloudHsmClusterAsync(this ResourceGroupResource resourceGroupResource, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusterAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -179,7 +194,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         [ForwardsClientCalls]
         public static Response<CloudHsmClusterResource> GetCloudHsmCluster(this ResourceGroupResource resourceGroupResource, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmCluster(cloudHsmClusterName, cancellationToken);
         }
@@ -196,7 +214,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An object representing collection of DedicatedHsmResources and their operations over a DedicatedHsmResource. </returns>
         public static DedicatedHsmCollection GetDedicatedHsms(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsms();
         }
@@ -234,7 +255,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         [ForwardsClientCalls]
         public static async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -272,7 +296,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         [ForwardsClientCalls]
         public static Response<DedicatedHsmResource> GetDedicatedHsm(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsm(name, cancellationToken);
         }
@@ -309,7 +336,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An async collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CloudHsmClusterResource> GetCloudHsmClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClustersAsync(skiptoken, cancellationToken);
         }
@@ -346,7 +376,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CloudHsmClusterResource> GetCloudHsmClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClusters(skiptoken, cancellationToken);
         }
@@ -383,7 +416,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An async collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedHsmResource> GetDedicatedHsmsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsAsync(top, cancellationToken);
         }
@@ -420,7 +456,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> A collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DedicatedHsmResource> GetDedicatedHsms(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsms(top, cancellationToken);
         }

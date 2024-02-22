@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value);
+                    outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requiredTraffics"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRequiredTraffic> array = new List<AppPlatformServiceRequiredTraffic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item));
+                        array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item, options));
                     }
                     requiredTraffics = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value);
+                    ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundType"u8))

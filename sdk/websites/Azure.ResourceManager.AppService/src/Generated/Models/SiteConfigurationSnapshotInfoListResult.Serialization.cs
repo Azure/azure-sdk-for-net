@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteConfigurationSnapshotInfo> array = new List<SiteConfigurationSnapshotInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(item));
+                        array.Add(SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(item, options));
                     }
                     value = array;
                     continue;

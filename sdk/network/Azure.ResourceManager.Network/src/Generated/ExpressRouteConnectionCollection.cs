@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, ExpressRouteConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, ExpressRouteConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<ExpressRouteConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+            if (connectionName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionName));
+            }
+            if (connectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionName));
+            }
 
             using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
             scope.Start();

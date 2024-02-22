@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SourceControlSyncJobStream> array = new List<SourceControlSyncJobStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(item));
+                        array.Add(SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(item, options));
                     }
                     value = array;
                     continue;

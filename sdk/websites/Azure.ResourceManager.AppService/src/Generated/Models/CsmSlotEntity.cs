@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetSlot"/> is null. </exception>
         public CsmSlotEntity(string targetSlot, bool preserveVnet)
         {
-            Argument.AssertNotNull(targetSlot, nameof(targetSlot));
+            if (targetSlot == null)
+            {
+                throw new ArgumentNullException(nameof(targetSlot));
+            }
 
             TargetSlot = targetSlot;
             PreserveVnet = preserveVnet;

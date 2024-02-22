@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value);
+                    storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("container"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value);
+                    refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

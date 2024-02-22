@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PolicyContractData> array = new List<PolicyContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyContractData.DeserializePolicyContractData(item));
+                        array.Add(PolicyContractData.DeserializePolicyContractData(item, options));
                     }
                     value = array;
                     continue;

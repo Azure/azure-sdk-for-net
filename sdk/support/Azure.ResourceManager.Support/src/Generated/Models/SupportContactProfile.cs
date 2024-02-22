@@ -57,12 +57,30 @@ namespace Azure.ResourceManager.Support.Models
         /// <exception cref="ArgumentNullException"> <paramref name="firstName"/>, <paramref name="lastName"/>, <paramref name="primaryEmailAddress"/>, <paramref name="preferredTimeZone"/>, <paramref name="country"/> or <paramref name="preferredSupportLanguage"/> is null. </exception>
         public SupportContactProfile(string firstName, string lastName, PreferredContactMethod preferredContactMethod, string primaryEmailAddress, string preferredTimeZone, string country, string preferredSupportLanguage)
         {
-            Argument.AssertNotNull(firstName, nameof(firstName));
-            Argument.AssertNotNull(lastName, nameof(lastName));
-            Argument.AssertNotNull(primaryEmailAddress, nameof(primaryEmailAddress));
-            Argument.AssertNotNull(preferredTimeZone, nameof(preferredTimeZone));
-            Argument.AssertNotNull(country, nameof(country));
-            Argument.AssertNotNull(preferredSupportLanguage, nameof(preferredSupportLanguage));
+            if (firstName == null)
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
+            if (lastName == null)
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
+            if (primaryEmailAddress == null)
+            {
+                throw new ArgumentNullException(nameof(primaryEmailAddress));
+            }
+            if (preferredTimeZone == null)
+            {
+                throw new ArgumentNullException(nameof(preferredTimeZone));
+            }
+            if (country == null)
+            {
+                throw new ArgumentNullException(nameof(country));
+            }
+            if (preferredSupportLanguage == null)
+            {
+                throw new ArgumentNullException(nameof(preferredSupportLanguage));
+            }
 
             FirstName = firstName;
             LastName = lastName;

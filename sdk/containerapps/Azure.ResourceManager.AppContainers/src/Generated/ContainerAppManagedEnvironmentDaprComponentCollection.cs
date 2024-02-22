@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentDaprComponentResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentDaprComponentResource> Get(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<bool> Exists(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppManagedEnvironmentDaprComponentResource>> GetIfExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppManagedEnvironmentDaprComponentResource> GetIfExists(string componentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
+            if (componentName == null)
+            {
+                throw new ArgumentNullException(nameof(componentName));
+            }
+            if (componentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(componentName));
+            }
 
             using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
             scope.Start();

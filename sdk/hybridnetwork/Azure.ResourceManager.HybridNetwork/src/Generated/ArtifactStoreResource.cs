@@ -356,7 +356,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
             scope.Start();
@@ -398,7 +401,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
             scope.Start();
@@ -489,7 +495,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProxyArtifactVersionsListOverview> GetProxyArtifactsAsync(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
@@ -519,7 +528,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProxyArtifactVersionsListOverview> GetProxyArtifacts(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
@@ -552,9 +564,22 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
         public virtual async Task<ArmOperation<ProxyArtifactVersionsListOverview>> UpdateStateProxyArtifactAsync(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+            if (artifactVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactVersionName));
+            }
+            if (artifactVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactVersionName));
+            }
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactChangeState == null)
+            {
+                throw new ArgumentNullException(nameof(artifactChangeState));
+            }
 
             using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
@@ -599,9 +624,22 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
         public virtual ArmOperation<ProxyArtifactVersionsListOverview> UpdateStateProxyArtifact(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
+            if (artifactVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactVersionName));
+            }
+            if (artifactVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactVersionName));
+            }
+            if (artifactName == null)
+            {
+                throw new ArgumentNullException(nameof(artifactName));
+            }
+            if (artifactChangeState == null)
+            {
+                throw new ArgumentNullException(nameof(artifactChangeState));
+            }
 
             using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
@@ -647,8 +685,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
             scope.Start();
@@ -709,8 +753,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
             scope.Start();
@@ -770,7 +820,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
             scope.Start();
@@ -827,7 +880,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
             scope.Start();
@@ -884,7 +940,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
             scope.Start();
@@ -944,7 +1003,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
             scope.Start();

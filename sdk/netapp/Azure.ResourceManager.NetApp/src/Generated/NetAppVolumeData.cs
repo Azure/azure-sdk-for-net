@@ -60,8 +60,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
         {
-            Argument.AssertNotNull(creationToken, nameof(creationToken));
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            if (creationToken == null)
+            {
+                throw new ArgumentNullException(nameof(creationToken));
+            }
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
 
             Zones = new ChangeTrackingList<string>();
             CreationToken = creationToken;

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEndpointDependency> array = new List<ManagedInstanceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEndpointDependency.DeserializeManagedInstanceEndpointDependency(item));
+                        array.Add(ManagedInstanceEndpointDependency.DeserializeManagedInstanceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

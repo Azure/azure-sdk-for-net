@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = ServerSku.DeserializeServerSku(property.Value);
+                    sku = ServerSku.DeserializeServerSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

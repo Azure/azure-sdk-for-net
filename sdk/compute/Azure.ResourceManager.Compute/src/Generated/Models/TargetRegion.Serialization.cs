@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"u8))

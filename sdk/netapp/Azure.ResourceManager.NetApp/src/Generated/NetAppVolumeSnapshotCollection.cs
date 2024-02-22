@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeSnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeSnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeSnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<NetAppVolumeSnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppVolumeSnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual NullableResponse<NetAppVolumeSnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
+            }
 
             using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotCollection.GetIfExists");
             scope.Start();

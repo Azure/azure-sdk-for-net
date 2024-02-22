@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridIdentityMetadataData> array = new List<HybridIdentityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item));
+                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item, options));
                     }
                     value = array;
                     continue;

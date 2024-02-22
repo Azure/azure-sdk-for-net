@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTriggerBase(document.RootElement, options);
+            return DeserializeMachineLearningTriggerBase(document.RootElement, options);
         }
 
         internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTriggerBase(document.RootElement, options);
+                        return DeserializeMachineLearningTriggerBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support '{options.Format}' format.");

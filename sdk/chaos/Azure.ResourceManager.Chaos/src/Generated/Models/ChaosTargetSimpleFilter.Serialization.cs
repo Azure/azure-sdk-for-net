@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    parameters = ChaosTargetSimpleFilterParameters.DeserializeChaosTargetSimpleFilterParameters(property.Value);
+                    parameters = ChaosTargetSimpleFilterParameters.DeserializeChaosTargetSimpleFilterParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
@@ -53,8 +52,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> or <paramref name="modelVersion"/> is null. </exception>
         internal OncoPhenotypeResults(IEnumerable<OncoPhenotypePatientResult> patients, string modelVersion)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            if (patients == null)
+            {
+                throw new ArgumentNullException(nameof(patients));
+            }
+            if (modelVersion == null)
+            {
+                throw new ArgumentNullException(nameof(modelVersion));
+            }
 
             Patients = patients.ToList();
             ModelVersion = modelVersion;

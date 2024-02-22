@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     List<FederatedIdentityCredentialData> array = new List<FederatedIdentityCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item));
+                        array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item, options));
                     }
                     value = array;
                     continue;

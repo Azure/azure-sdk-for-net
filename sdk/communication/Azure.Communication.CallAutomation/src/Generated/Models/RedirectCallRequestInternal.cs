@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,8 +19,14 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
         public RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target)
         {
-            Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-            Argument.AssertNotNull(target, nameof(target));
+            if (incomingCallContext == null)
+            {
+                throw new ArgumentNullException(nameof(incomingCallContext));
+            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
 
             IncomingCallContext = incomingCallContext;
             Target = target;

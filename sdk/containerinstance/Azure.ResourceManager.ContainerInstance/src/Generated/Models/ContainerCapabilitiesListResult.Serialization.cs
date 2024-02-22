@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerCapabilities> array = new List<ContainerCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item));
+                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item, options));
                     }
                     value = array;
                     continue;

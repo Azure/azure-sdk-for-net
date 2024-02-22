@@ -429,7 +429,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AppServicePlanResource>> UpdateAsync(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Update");
             scope.Start();
@@ -471,7 +474,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AppServicePlanResource> Update(AppServicePlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.Update");
             scope.Start();
@@ -910,7 +916,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public virtual async Task<Response> RebootWorkerAsync(string workerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
+            if (workerName == null)
+            {
+                throw new ArgumentNullException(nameof(workerName));
+            }
+            if (workerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerName));
+            }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.RebootWorker");
             scope.Start();
@@ -949,7 +962,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workerName"/> is null. </exception>
         public virtual Response RebootWorker(string workerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workerName, nameof(workerName));
+            if (workerName == null)
+            {
+                throw new ArgumentNullException(nameof(workerName));
+            }
+            if (workerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerName));
+            }
 
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.RebootWorker");
             scope.Start();

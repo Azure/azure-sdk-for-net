@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DeletedAutomationAccount> array = new List<DeletedAutomationAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedAutomationAccount.DeserializeDeletedAutomationAccount(item));
+                        array.Add(DeletedAutomationAccount.DeserializeDeletedAutomationAccount(item, options));
                     }
                     value = array;
                     continue;

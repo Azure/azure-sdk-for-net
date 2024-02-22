@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Enable national cloud support for US Gov and China clouds
 
 ### Other Changes
 

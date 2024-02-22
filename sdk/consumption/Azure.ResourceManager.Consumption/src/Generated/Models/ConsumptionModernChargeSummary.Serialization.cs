@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("chargesBilledSeparately"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceCharges"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingAccountId"u8))

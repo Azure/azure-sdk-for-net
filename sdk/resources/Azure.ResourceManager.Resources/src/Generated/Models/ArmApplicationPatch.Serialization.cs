@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value);
+                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
+                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value);
+                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value);
+                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publisherTenantId"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item, options));
                             }
                             authorizations = array;
                             continue;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value);
+                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportUrls"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value);
+                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationArtifact> array = new List<ArmApplicationArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
+                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item, options));
                             }
                             artifacts = array;
                             continue;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                     }

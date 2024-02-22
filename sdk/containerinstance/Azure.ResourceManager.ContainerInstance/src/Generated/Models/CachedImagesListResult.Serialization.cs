@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<CachedImages> array = new List<CachedImages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CachedImages.DeserializeCachedImages(item));
+                        array.Add(CachedImages.DeserializeCachedImages(item, options));
                     }
                     value = array;
                     continue;

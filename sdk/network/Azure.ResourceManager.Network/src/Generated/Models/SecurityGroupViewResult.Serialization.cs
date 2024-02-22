@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityGroupNetworkInterface> array = new List<SecurityGroupNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityGroupNetworkInterface.DeserializeSecurityGroupNetworkInterface(item));
+                        array.Add(SecurityGroupNetworkInterface.DeserializeSecurityGroupNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;

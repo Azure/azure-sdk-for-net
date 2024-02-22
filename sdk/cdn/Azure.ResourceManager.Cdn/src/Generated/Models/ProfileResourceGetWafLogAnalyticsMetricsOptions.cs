@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsMetricsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             Metrics = metrics.ToList();
             DateTimeBegin = dateTimeBegin;

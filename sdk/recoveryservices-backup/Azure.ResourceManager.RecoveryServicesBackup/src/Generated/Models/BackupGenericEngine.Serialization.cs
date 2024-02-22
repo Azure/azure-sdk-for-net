@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerEngine": return BackupServerEngine.DeserializeBackupServerEngine(element);
-                    case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element);
+                    case "AzureBackupServerEngine": return BackupServerEngine.DeserializeBackupServerEngine(element, options);
+                    case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element, options);
                 }
             }
-            return UnknownBackupEngineBase.DeserializeUnknownBackupEngineBase(element);
+            return UnknownBackupEngineBase.DeserializeUnknownBackupEngineBase(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericEngine>.Write(ModelReaderWriterOptions options)

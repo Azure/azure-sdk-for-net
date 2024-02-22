@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
+                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            currentSku = SqlSku.DeserializeSqlSku(property0.Value);
+                            currentSku = SqlSku.DeserializeSqlSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"u8))
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Sql.Models
                             Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
                             }
                             keys = dictionary;
                             continue;

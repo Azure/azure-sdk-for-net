@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PublicCertificateData> array = new List<PublicCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicCertificateData.DeserializePublicCertificateData(item));
+                        array.Add(PublicCertificateData.DeserializePublicCertificateData(item, options));
                     }
                     value = array;
                     continue;

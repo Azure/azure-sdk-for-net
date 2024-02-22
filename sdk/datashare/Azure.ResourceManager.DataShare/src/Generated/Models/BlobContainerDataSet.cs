@@ -24,10 +24,22 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public BlobContainerDataSet(string containerName, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
-            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
+            if (storageAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountName));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
             ContainerName = containerName;
             ResourceGroup = resourceGroup;

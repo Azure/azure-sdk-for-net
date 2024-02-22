@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -23,10 +22,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
         public AzureMLUpdateResourceActivity(string name, DataFactoryElement<string> trainedModelName, DataFactoryLinkedServiceReference trainedModelLinkedServiceName, DataFactoryElement<string> trainedModelFilePath) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(trainedModelName, nameof(trainedModelName));
-            Argument.AssertNotNull(trainedModelLinkedServiceName, nameof(trainedModelLinkedServiceName));
-            Argument.AssertNotNull(trainedModelFilePath, nameof(trainedModelFilePath));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (trainedModelName == null)
+            {
+                throw new ArgumentNullException(nameof(trainedModelName));
+            }
+            if (trainedModelLinkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(trainedModelLinkedServiceName));
+            }
+            if (trainedModelFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(trainedModelFilePath));
+            }
 
             TrainedModelName = trainedModelName;
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;

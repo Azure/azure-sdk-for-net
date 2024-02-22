@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="secretUri"/> is null. </exception>
         public KeyVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri)
         {
-            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
-            Argument.AssertNotNull(secretUri, nameof(secretUri));
+            if (sourceVault == null)
+            {
+                throw new ArgumentNullException(nameof(sourceVault));
+            }
+            if (secretUri == null)
+            {
+                throw new ArgumentNullException(nameof(secretUri));
+            }
 
             SourceVault = sourceVault;
             SecretUri = secretUri;

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value);
+                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationOverride"u8))

@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                             }
                             shareMappings = array;
                             continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
+                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostPlatformType"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
+                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceTrustedAccessRole> array = new List<ContainerServiceTrustedAccessRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(item));
+                        array.Add(ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(item, options));
                     }
                     value = array;
                     continue;

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
+                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value);
+                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("coverageLevel"u8))

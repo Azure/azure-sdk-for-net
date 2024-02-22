@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                        array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item, options));
                     }
                     value = array;
                     continue;

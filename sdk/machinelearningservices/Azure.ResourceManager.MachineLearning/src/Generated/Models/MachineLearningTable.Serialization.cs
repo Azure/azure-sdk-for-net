@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         intellectualProperty = null;
                         continue;
                     }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))

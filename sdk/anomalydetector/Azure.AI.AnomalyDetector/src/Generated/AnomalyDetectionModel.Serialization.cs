@@ -105,7 +105,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    modelInfo = ModelInfo.DeserializeModelInfo(property.Value);
+                    modelInfo = ModelInfo.DeserializeModelInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

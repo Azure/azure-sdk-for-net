@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
         public PipelineActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
-            Argument.AssertNotNull(activity, nameof(activity));
-            Argument.AssertNotNull(dependencyConditions, nameof(dependencyConditions));
+            if (activity == null)
+            {
+                throw new ArgumentNullException(nameof(activity));
+            }
+            if (dependencyConditions == null)
+            {
+                throw new ArgumentNullException(nameof(dependencyConditions));
+            }
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();

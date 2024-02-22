@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SecurityEvent> array = new List<SecurityEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityEvent.DeserializeSecurityEvent(item));
+                        array.Add(SecurityEvent.DeserializeSecurityEvent(item, options));
                     }
                     value = array;
                     continue;

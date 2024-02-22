@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

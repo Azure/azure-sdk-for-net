@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -23,9 +22,18 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
         public SentimentResponse(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<SentimentResponseDocumentsItem> documents) : base(errors, modelVersion)
         {
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
-            Argument.AssertNotNull(documents, nameof(documents));
+            if (errors == null)
+            {
+                throw new ArgumentNullException(nameof(errors));
+            }
+            if (modelVersion == null)
+            {
+                throw new ArgumentNullException(nameof(modelVersion));
+            }
+            if (documents == null)
+            {
+                throw new ArgumentNullException(nameof(documents));
+            }
 
             Documents = documents.ToList();
         }

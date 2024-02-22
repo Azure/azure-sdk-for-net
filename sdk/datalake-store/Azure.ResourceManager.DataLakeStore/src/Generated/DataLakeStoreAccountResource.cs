@@ -489,7 +489,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeStoreAccountResource>> UpdateAsync(WaitUntil waitUntil, DataLakeStoreAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountResource.Update");
             scope.Start();
@@ -535,7 +538,10 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DataLakeStoreAccountResource> Update(WaitUntil waitUntil, DataLakeStoreAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountResource.Update");
             scope.Start();

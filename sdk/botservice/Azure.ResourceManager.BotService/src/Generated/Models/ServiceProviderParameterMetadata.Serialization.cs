@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    constraints = ServiceProviderParameterMetadataConstraints.DeserializeServiceProviderParameterMetadataConstraints(property.Value);
+                    constraints = ServiceProviderParameterMetadataConstraints.DeserializeServiceProviderParameterMetadataConstraints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

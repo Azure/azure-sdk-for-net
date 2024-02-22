@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
         public ChatMessageImageContentItem(ChatMessageImageUrl imageUrl)
         {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
+            if (imageUrl == null)
+            {
+                throw new ArgumentNullException(nameof(imageUrl));
+            }
 
             Type = "image_url";
             ImageUrl = imageUrl;

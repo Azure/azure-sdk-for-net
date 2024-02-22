@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item));
+                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     seedNodes = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value);
+                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deallocated"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

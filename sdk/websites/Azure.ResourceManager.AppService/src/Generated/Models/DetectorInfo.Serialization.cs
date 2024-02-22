@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
+                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;

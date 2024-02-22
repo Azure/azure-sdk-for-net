@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value);
+                    applicationPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ephemeralPorts"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value);
+                    ephemeralPorts = ClusterEndpointRangeDescription.DeserializeClusterEndpointRangeDescription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPrimary"u8))

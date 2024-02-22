@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ExperimentExecutionActionTargetDetailsProperties> array = new List<ExperimentExecutionActionTargetDetailsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExperimentExecutionActionTargetDetailsProperties.DeserializeExperimentExecutionActionTargetDetailsProperties(item));
+                        array.Add(ExperimentExecutionActionTargetDetailsProperties.DeserializeExperimentExecutionActionTargetDetailsProperties(item, options));
                     }
                     targets = array;
                     continue;

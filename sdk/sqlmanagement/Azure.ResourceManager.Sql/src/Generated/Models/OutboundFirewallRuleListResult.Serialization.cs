@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<OutboundFirewallRuleData> array = new List<OutboundFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(item));
+                        array.Add(OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

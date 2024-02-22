@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value);
+                    autoScaleProperties = MachineLearningAutoScaleProperties.DeserializeMachineLearningAutoScaleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoPauseProperties"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value);
+                    autoPauseProperties = MachineLearningAutoPauseProperties.DeserializeMachineLearningAutoPauseProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkVersion"u8))

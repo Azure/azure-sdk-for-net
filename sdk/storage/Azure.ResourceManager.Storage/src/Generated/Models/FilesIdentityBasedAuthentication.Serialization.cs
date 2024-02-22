@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value);
+                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultSharePermission"u8))

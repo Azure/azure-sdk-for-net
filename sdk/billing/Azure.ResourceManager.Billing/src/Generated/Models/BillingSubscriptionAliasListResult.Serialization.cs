@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingSubscriptionAliasData> array = new List<BillingSubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item));
+                        array.Add(BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(item, options));
                     }
                     value = array;
                     continue;

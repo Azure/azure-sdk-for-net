@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunActionStatus> array = new List<ChaosExperimentRunActionStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunActionStatus.DeserializeChaosExperimentRunActionStatus(item));
+                        array.Add(ChaosExperimentRunActionStatus.DeserializeChaosExperimentRunActionStatus(item, options));
                     }
                     actions = array;
                     continue;

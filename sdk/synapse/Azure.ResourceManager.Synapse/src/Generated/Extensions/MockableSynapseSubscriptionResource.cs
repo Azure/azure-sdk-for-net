@@ -258,7 +258,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("MockableSynapseSubscriptionResource.CheckKustoPoolNameAvailability");
             scope.Start();
@@ -301,7 +304,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("MockableSynapseSubscriptionResource.CheckKustoPoolNameAvailability");
             scope.Start();

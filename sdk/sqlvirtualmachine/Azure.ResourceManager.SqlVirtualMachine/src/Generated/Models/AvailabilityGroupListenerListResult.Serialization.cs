@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupListenerData> array = new List<AvailabilityGroupListenerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item));
+                        array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item, options));
                     }
                     value = array;
                     continue;

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+            return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
         }
 
         internal static UnknownSecurityMLAnalyticsSetting DeserializeUnknownSecurityMLAnalyticsSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+                        return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingData)} does not support '{options.Format}' format.");

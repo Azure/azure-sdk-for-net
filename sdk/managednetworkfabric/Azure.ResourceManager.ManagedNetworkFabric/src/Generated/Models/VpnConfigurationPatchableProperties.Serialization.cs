@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value);
+                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(property.Value);
+                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

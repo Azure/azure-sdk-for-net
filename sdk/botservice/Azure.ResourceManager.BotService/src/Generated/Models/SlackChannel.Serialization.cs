@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = SlackChannelProperties.DeserializeSlackChannelProperties(property.Value);
+                    properties = SlackChannelProperties.DeserializeSlackChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> is null. </exception>
         public RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole)
         {
-            Argument.AssertNotNull(linkedRedisCacheId, nameof(linkedRedisCacheId));
+            if (linkedRedisCacheId == null)
+            {
+                throw new ArgumentNullException(nameof(linkedRedisCacheId));
+            }
 
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;

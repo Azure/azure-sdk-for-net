@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteSlotDomainOwnershipIdentifierResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteSlotDomainOwnershipIdentifierResource> CreateOrUpdate(WaitUntil waitUntil, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> GetAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> Get(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotDomainOwnershipIdentifierResource>> GetIfExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         public virtual NullableResponse<SiteSlotDomainOwnershipIdentifierResource> GetIfExists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
+            if (domainOwnershipIdentifierName == null)
+            {
+                throw new ArgumentNullException(nameof(domainOwnershipIdentifierName));
+            }
+            if (domainOwnershipIdentifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainOwnershipIdentifierName));
+            }
 
             using var scope = _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteSlotDomainOwnershipIdentifierCollection.GetIfExists");
             scope.Start();

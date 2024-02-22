@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value);
+                    wsdlService = LogicWsdlService.DeserializeLogicWsdlService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("wsdlImportMethod"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value);
+                    deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessRoute"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scoringRoute"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

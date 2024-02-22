@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterAllowedConnection> array = new List<SecurityCenterAllowedConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item));
+                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item, options));
                     }
                     value = array;
                     continue;

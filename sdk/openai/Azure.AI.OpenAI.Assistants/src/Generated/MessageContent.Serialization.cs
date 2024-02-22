@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return MessageTextContent.DeserializeMessageTextContent(element);
-                    case "image_file": return MessageImageFileContent.DeserializeMessageImageFileContent(element);
+                    case "text": return MessageTextContent.DeserializeMessageTextContent(element, options);
+                    case "image_file": return MessageImageFileContent.DeserializeMessageImageFileContent(element, options);
                 }
             }
-            return UnknownMessageContent.DeserializeUnknownMessageContent(element);
+            return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);
         }
 
         BinaryData IPersistableModel<MessageContent>.Write(ModelReaderWriterOptions options)

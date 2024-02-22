@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolOutput> array = new List<ToolOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolOutput.DeserializeToolOutput(item));
+                        array.Add(ToolOutput.DeserializeToolOutput(item, options));
                     }
                     toolOutputs = array;
                     continue;

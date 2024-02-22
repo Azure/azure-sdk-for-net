@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))

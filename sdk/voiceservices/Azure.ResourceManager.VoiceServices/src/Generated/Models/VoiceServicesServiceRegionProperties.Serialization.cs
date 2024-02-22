@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 if (property.NameEquals("primaryRegionProperties"u8))
                 {
-                    primaryRegionProperties = VoiceServicesPrimaryRegionProperties.DeserializeVoiceServicesPrimaryRegionProperties(property.Value);
+                    primaryRegionProperties = VoiceServicesPrimaryRegionProperties.DeserializeVoiceServicesPrimaryRegionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

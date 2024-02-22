@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaId, ApiSchemaData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string schemaId, ApiSchemaData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual async Task<Response<ApiSchemaResource>> GetAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual Response<ApiSchemaResource> Get(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiSchemaResource>> GetIfExistsAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         public virtual NullableResponse<ApiSchemaResource> GetIfExists(string schemaId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaId, nameof(schemaId));
+            if (schemaId == null)
+            {
+                throw new ArgumentNullException(nameof(schemaId));
+            }
+            if (schemaId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaId));
+            }
 
             using var scope = _apiSchemaClientDiagnostics.CreateScope("ApiSchemaCollection.GetIfExists");
             scope.Start();

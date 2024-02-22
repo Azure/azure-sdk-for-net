@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StaticSiteUser> array = new List<StaticSiteUser>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteUser.DeserializeStaticSiteUser(item));
+                        array.Add(StaticSiteUser.DeserializeStaticSiteUser(item, options));
                     }
                     value = array;
                     continue;

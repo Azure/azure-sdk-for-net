@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value);
+                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preferences"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value);
+                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notificationEmailList"u8))

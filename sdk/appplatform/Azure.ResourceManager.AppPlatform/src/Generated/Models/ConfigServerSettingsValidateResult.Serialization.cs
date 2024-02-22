@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerSettingsErrorRecord> array = new List<ConfigServerSettingsErrorRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item));
+                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item, options));
                     }
                     details = array;
                     continue;

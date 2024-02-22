@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
+                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

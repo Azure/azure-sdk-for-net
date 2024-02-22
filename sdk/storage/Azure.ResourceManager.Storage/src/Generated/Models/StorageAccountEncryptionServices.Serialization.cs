@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("file"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("table"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queue"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
+                    queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

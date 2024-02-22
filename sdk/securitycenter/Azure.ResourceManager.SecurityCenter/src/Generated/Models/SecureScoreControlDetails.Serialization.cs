@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value);
+                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("score"u8))

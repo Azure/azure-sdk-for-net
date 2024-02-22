@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;

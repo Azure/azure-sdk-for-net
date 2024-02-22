@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Chaos.Models
                             {
                                 continue;
                             }
-                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value);
+                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value, options);
                             continue;
                         }
                     }

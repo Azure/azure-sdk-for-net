@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="synonyms"/> is null. </exception>
         public SynonymTokenFilter(string name, IEnumerable<string> synonyms) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(synonyms, nameof(synonyms));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (synonyms == null)
+            {
+                throw new ArgumentNullException(nameof(synonyms));
+            }
 
             Synonyms = synonyms.ToList();
             ODataType = "#Microsoft.Azure.Search.SynonymTokenFilter";

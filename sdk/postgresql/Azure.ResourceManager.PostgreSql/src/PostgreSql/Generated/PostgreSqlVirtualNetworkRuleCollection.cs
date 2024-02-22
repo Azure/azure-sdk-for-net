@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlVirtualNetworkRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkRuleName, PostgreSqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlVirtualNetworkRuleResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkRuleName, PostgreSqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlVirtualNetworkRuleResource>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<PostgreSqlVirtualNetworkRuleResource> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlVirtualNetworkRuleResource>> GetIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlVirtualNetworkRuleResource> GetIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            if (virtualNetworkRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
+            }
+            if (virtualNetworkRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();

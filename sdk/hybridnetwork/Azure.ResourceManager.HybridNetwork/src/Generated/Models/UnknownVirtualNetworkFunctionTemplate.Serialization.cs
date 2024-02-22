@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownVirtualNetworkFunctionTemplate(document.RootElement, options);
+            return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
         }
 
         internal static UnknownVirtualNetworkFunctionTemplate DeserializeUnknownVirtualNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownVirtualNetworkFunctionTemplate(document.RootElement, options);
+                        return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");

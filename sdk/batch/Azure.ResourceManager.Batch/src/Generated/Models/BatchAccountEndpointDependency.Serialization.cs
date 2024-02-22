@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEndpointDetail> array = new List<BatchEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEndpointDetail.DeserializeBatchEndpointDetail(item));
+                        array.Add(BatchEndpointDetail.DeserializeBatchEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

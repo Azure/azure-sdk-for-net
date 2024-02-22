@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMSDeployLogEntry> array = new List<WebAppMSDeployLogEntry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item));
+                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item, options));
                             }
                             entries = array;
                             continue;

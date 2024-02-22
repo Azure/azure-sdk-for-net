@@ -1,14 +1,11 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2024-02-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added a new property 'virtualMachineId' to the 'GalleryArtifactVersionFullSource'.
+- Updated the api-version tag from 'package-2023-10-02' to the newer 'package-2023-07-03'. This is for the latest Gallery RP release (Galleries, CommunityGalleries, etc).
 
 ## 1.4.0-beta.1 (2024-01-26)
 

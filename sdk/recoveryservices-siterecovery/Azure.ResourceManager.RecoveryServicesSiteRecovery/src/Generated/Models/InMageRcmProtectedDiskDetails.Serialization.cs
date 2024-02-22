@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
+                    irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
+                    resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

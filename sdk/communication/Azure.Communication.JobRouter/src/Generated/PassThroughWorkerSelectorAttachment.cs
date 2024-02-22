@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             Kind = WorkerSelectorAttachmentKind.PassThrough;
             Key = key;

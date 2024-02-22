@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item, options));
                     }
                     tags = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);
+                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

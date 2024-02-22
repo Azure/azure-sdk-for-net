@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPTag> array = new List<ServiceFabricManagedClusterIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item));
+                        array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item, options));
                     }
                     ipTags = array;
                     continue;

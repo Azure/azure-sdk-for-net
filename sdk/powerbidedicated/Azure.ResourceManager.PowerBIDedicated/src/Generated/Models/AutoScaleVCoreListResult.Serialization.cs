@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<AutoScaleVCoreData> array = new List<AutoScaleVCoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoScaleVCoreData.DeserializeAutoScaleVCoreData(item));
+                        array.Add(AutoScaleVCoreData.DeserializeAutoScaleVCoreData(item, options));
                     }
                     value = array;
                     continue;

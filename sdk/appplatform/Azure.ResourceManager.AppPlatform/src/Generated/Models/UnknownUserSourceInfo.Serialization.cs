@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUserSourceInfo(document.RootElement, options);
+            return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
         }
 
         internal static UnknownUserSourceInfo DeserializeUnknownUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownUserSourceInfo(document.RootElement, options);
+                        return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support '{options.Format}' format.");

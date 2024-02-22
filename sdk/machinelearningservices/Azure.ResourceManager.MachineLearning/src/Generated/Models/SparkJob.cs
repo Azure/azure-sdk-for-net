@@ -24,8 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="codeId"/> or <paramref name="entry"/> is null. </exception>
         public SparkJob(string codeId, SparkJobEntry entry)
         {
-            Argument.AssertNotNull(codeId, nameof(codeId));
-            Argument.AssertNotNull(entry, nameof(entry));
+            if (codeId == null)
+            {
+                throw new ArgumentNullException(nameof(codeId));
+            }
+            if (entry == null)
+            {
+                throw new ArgumentNullException(nameof(entry));
+            }
 
             Archives = new ChangeTrackingList<string>();
             CodeId = codeId;
