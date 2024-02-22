@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         forecastingSettings = null;
                         continue;
                     }
-                    forecastingSettings = ForecastingSettings.DeserializeForecastingSettings(property.Value);
+                    forecastingSettings = ForecastingSettings.DeserializeForecastingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryMetric"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         trainingSettings = null;
                         continue;
                     }
-                    trainingSettings = ForecastingTrainingSettings.DeserializeForecastingTrainingSettings(property.Value);
+                    trainingSettings = ForecastingTrainingSettings.DeserializeForecastingTrainingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cvSplitColumnNames"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value);
+                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fixedParameters"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         fixedParameters = null;
                         continue;
                     }
-                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value);
+                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value);
+                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nCrossValidations"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nCrossValidations = null;
                         continue;
                     }
-                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value);
+                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<TableParameterSubspace> array = new List<TableParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item, options));
                     }
                     searchSpace = array;
                     continue;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value);
+                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         testData = null;
                         continue;
                     }
-                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testDataSize"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<UpdateRunData> array = new List<UpdateRunData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunData.DeserializeUpdateRunData(item));
+                        array.Add(UpdateRunData.DeserializeUpdateRunData(item, options));
                     }
                     value = array;
                     continue;

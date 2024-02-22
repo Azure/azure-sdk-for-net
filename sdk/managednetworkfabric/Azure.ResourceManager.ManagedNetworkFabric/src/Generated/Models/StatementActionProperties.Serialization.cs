@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCommunityProperties = ActionIPCommunityProperties.DeserializeActionIPCommunityProperties(property.Value);
+                    ipCommunityProperties = ActionIPCommunityProperties.DeserializeActionIPCommunityProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityProperties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipExtendedCommunityProperties = ActionIPExtendedCommunityProperties.DeserializeActionIPExtendedCommunityProperties(property.Value);
+                    ipExtendedCommunityProperties = ActionIPExtendedCommunityProperties.DeserializeActionIPExtendedCommunityProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchPrivateLinkResource> array = new List<SearchPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item));
+                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

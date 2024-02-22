@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RedisEnterprisePrivateLinkServiceConnectionState.DeserializeRedisEnterprisePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = RedisEnterprisePrivateLinkServiceConnectionState.DeserializeRedisEnterprisePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

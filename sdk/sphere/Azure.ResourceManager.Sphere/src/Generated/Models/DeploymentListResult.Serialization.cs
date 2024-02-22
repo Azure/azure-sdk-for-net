@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereDeploymentData> array = new List<SphereDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereDeploymentData.DeserializeSphereDeploymentData(item));
+                        array.Add(SphereDeploymentData.DeserializeSphereDeploymentData(item, options));
                     }
                     value = array;
                     continue;

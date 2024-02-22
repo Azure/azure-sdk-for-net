@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))

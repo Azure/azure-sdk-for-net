@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<AuthorizationPolicyResourceFormatData> array = new List<AuthorizationPolicyResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(item));
+                        array.Add(AuthorizationPolicyResourceFormatData.DeserializeAuthorizationPolicyResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value);
+                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("accessControl"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value);
+                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            sku = LogicSku.DeserializeLogicSku(property0.Value);
+                            sku = LogicSku.DeserializeLogicSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationAccount"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowParameterInfo> dictionary = new Dictionary<string, LogicWorkflowParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value));
+                                dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;

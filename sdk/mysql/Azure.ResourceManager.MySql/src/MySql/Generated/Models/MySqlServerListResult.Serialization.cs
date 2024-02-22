@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerData> array = new List<MySqlServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerData.DeserializeMySqlServerData(item));
+                        array.Add(MySqlServerData.DeserializeMySqlServerData(item, options));
                     }
                     value = array;
                     continue;

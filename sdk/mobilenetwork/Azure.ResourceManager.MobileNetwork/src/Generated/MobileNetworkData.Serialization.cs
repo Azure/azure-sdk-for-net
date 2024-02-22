@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("publicLandMobileNetworkIdentifier"u8))
                         {
-                            publicLandMobileNetworkIdentifier = MobileNetworkPlmnId.DeserializeMobileNetworkPlmnId(property0.Value);
+                            publicLandMobileNetworkIdentifier = MobileNetworkPlmnId.DeserializeMobileNetworkPlmnId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceKey"u8))

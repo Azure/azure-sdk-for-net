@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value);
+                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

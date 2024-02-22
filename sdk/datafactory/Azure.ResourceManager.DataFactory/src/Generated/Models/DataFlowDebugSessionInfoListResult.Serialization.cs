@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFlowDebugSessionInfo> array = new List<DataFlowDebugSessionInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item));
+                        array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item, options));
                     }
                     value = array;
                     continue;

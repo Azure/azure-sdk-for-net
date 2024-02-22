@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<EntityData> array = new List<EntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityData.DeserializeEntityData(item));
+                        array.Add(EntityData.DeserializeEntityData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkVmGroupData> array = new List<WorkloadNetworkVmGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(item));
+                        array.Add(WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(item, options));
                     }
                     value = array;
                     continue;

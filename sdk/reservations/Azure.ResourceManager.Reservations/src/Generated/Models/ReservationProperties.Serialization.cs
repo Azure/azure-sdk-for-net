@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingPlan"u8))
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value);
+                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mergeProperties"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value);
+                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("swapProperties"u8))
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value);
+                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("appliedScopeProperties"u8))
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value);
+                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingScopeId"u8))
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("term"u8))
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value);
+                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

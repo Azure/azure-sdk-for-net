@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightAutoScaleSchedule> array = new List<HDInsightAutoScaleSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightAutoScaleSchedule.DeserializeHDInsightAutoScaleSchedule(item));
+                        array.Add(HDInsightAutoScaleSchedule.DeserializeHDInsightAutoScaleSchedule(item, options));
                     }
                     schedule = array;
                     continue;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceRecommendation> array = new List<AppServiceRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceRecommendation.DeserializeAppServiceRecommendation(item));
+                        array.Add(AppServiceRecommendation.DeserializeAppServiceRecommendation(item, options));
                     }
                     value = array;
                     continue;

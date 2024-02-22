@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            key = IntegrationAccountKeyVaultKeyReference.DeserializeIntegrationAccountKeyVaultKeyReference(property0.Value);
+                            key = IntegrationAccountKeyVaultKeyReference.DeserializeIntegrationAccountKeyVaultKeyReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicCertificate"u8))

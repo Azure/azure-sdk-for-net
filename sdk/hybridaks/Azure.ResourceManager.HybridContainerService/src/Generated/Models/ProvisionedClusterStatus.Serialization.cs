@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterAddonStatusProfile> array = new List<ProvisionedClusterAddonStatusProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item));
+                        array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item, options));
                     }
                     controlPlaneStatus = array;
                     continue;

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountTrackingEvent> array = new List<IntegrationAccountTrackingEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item));
+                        array.Add(IntegrationAccountTrackingEvent.DeserializeIntegrationAccountTrackingEvent(item, options));
                     }
                     events = array;
                     continue;

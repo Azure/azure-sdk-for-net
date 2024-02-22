@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVVirtualMachine": return HyperVVmDetails.DeserializeHyperVVmDetails(element);
-                    case "ReplicationGroupDetails": return ReplicationGroupDetails.DeserializeReplicationGroupDetails(element);
-                    case "VMwareVirtualMachine": return VMwareVmDetails.DeserializeVMwareVmDetails(element);
-                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element);
+                    case "HyperVVirtualMachine": return HyperVVmDetails.DeserializeHyperVVmDetails(element, options);
+                    case "ReplicationGroupDetails": return ReplicationGroupDetails.DeserializeReplicationGroupDetails(element, options);
+                    case "VMwareVirtualMachine": return VMwareVmDetails.DeserializeVMwareVmDetails(element, options);
+                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
-            return UnknownConfigurationSettings.DeserializeUnknownConfigurationSettings(element);
+            return UnknownConfigurationSettings.DeserializeUnknownConfigurationSettings(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryReplicationProviderSettings>.Write(ModelReaderWriterOptions options)

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item, options));
                     }
                     commonDslConnectorProperties = array;
                     continue;

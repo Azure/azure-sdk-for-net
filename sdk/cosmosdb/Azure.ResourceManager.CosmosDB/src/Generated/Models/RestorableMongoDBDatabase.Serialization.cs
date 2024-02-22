@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            resource = ExtendedRestorableMongoDBDatabaseResourceInfo.DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(property0.Value);
+                            resource = ExtendedRestorableMongoDBDatabaseResourceInfo.DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorPrivateEndpointConnectionData> array = new List<MonitorPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item));
+                                array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("accessModeSettings"u8))
                         {
-                            accessModeSettings = MonitorPrivateLinkAccessModeSettings.DeserializeMonitorPrivateLinkAccessModeSettings(property0.Value);
+                            accessModeSettings = MonitorPrivateLinkAccessModeSettings.DeserializeMonitorPrivateLinkAccessModeSettings(property0.Value, options);
                             continue;
                         }
                     }

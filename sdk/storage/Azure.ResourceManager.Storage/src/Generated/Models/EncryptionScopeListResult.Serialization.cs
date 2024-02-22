@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<EncryptionScopeData> array = new List<EncryptionScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionScopeData.DeserializeEncryptionScopeData(item));
+                        array.Add(EncryptionScopeData.DeserializeEncryptionScopeData(item, options));
                     }
                     value = array;
                     continue;

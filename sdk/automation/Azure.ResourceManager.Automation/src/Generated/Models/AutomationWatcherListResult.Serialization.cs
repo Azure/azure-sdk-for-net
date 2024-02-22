@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationWatcherData> array = new List<AutomationWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationWatcherData.DeserializeAutomationWatcherData(item));
+                        array.Add(AutomationWatcherData.DeserializeAutomationWatcherData(item, options));
                     }
                     value = array;
                     continue;

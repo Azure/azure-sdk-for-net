@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value);
+                    scriptUriManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item, options));
                     }
                     groups = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkPeeringPolicyData> array = new List<ManagedNetworkPeeringPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item));
+                        array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item, options));
                     }
                     peerings = array;
                     continue;

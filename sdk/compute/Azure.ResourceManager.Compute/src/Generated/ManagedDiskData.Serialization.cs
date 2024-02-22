@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = DiskSku.DeserializeDiskSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
+                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationData"u8))
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            creationData = DiskCreationData.DeserializeDiskCreationData(property0.Value);
+                            creationData = DiskCreationData.DeserializeDiskCreationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGB"u8))
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maxShares"u8))
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Compute
                             List<ShareInfoElement> array = new List<ShareInfoElement>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareInfoElement.DeserializeShareInfoElement(item));
+                                array.Add(ShareInfoElement.DeserializeShareInfoElement(item, options));
                             }
                             shareInfo = array;
                             continue;
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value);
+                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value);
+                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("completionPercent"u8))

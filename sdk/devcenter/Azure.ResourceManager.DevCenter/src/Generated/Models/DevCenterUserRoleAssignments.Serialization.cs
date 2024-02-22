@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     Dictionary<string, DevCenterEnvironmentRole> dictionary = new Dictionary<string, DevCenterEnvironmentRole>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value));
+                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value, options));
                     }
                     roles = dictionary;
                     continue;

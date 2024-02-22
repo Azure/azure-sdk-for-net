@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))

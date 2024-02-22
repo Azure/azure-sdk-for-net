@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ExpressRouteServiceProviderBandwidthsOffered> array = new List<ExpressRouteServiceProviderBandwidthsOffered>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteServiceProviderBandwidthsOffered.DeserializeExpressRouteServiceProviderBandwidthsOffered(item));
+                                array.Add(ExpressRouteServiceProviderBandwidthsOffered.DeserializeExpressRouteServiceProviderBandwidthsOffered(item, options));
                             }
                             bandwidthsOffered = array;
                             continue;

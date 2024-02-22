@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    plan = ComputePlan.DeserializeComputePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value);
+                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
+                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
+                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySet"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            billingProfile = BillingProfile.DeserializeBillingProfile(property0.Value);
+                            billingProfile = BillingProfile.DeserializeBillingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("host"u8))
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
+                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("licenseType"u8))
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property0.Value);
+                            scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property0.Value);
+                            capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicationProfile"u8))
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value);
+                            applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))

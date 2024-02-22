@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);
+                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

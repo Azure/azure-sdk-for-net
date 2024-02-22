@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2APolicyCreationContent.DeserializeA2APolicyCreationContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationPolicyCreationContent.DeserializeA2ACrossClusterMigrationPolicyCreationContent(element);
-                    case "HyperVReplica2012": return HyperVReplicaPolicyContent.DeserializeHyperVReplicaPolicyContent(element);
-                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzurePolicyContent.DeserializeHyperVReplicaAzurePolicyContent(element);
-                    case "InMage": return InMagePolicyContent.DeserializeInMagePolicyContent(element);
-                    case "InMageAzureV2": return InMageAzureV2PolicyContent.DeserializeInMageAzureV2PolicyContent(element);
-                    case "InMageRcm": return InMageRcmPolicyCreationContent.DeserializeInMageRcmPolicyCreationContent(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackPolicyCreationContent.DeserializeInMageRcmFailbackPolicyCreationContent(element);
-                    case "VMwareCbt": return VMwareCbtPolicyCreationContent.DeserializeVMwareCbtPolicyCreationContent(element);
+                    case "A2A": return A2APolicyCreationContent.DeserializeA2APolicyCreationContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationPolicyCreationContent.DeserializeA2ACrossClusterMigrationPolicyCreationContent(element, options);
+                    case "HyperVReplica2012": return HyperVReplicaPolicyContent.DeserializeHyperVReplicaPolicyContent(element, options);
+                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzurePolicyContent.DeserializeHyperVReplicaAzurePolicyContent(element, options);
+                    case "InMage": return InMagePolicyContent.DeserializeInMagePolicyContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2PolicyContent.DeserializeInMageAzureV2PolicyContent(element, options);
+                    case "InMageRcm": return InMageRcmPolicyCreationContent.DeserializeInMageRcmPolicyCreationContent(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackPolicyCreationContent.DeserializeInMageRcmFailbackPolicyCreationContent(element, options);
+                    case "VMwareCbt": return VMwareCbtPolicyCreationContent.DeserializeVMwareCbtPolicyCreationContent(element, options);
                 }
             }
-            return UnknownPolicyProviderSpecificContent.DeserializeUnknownPolicyProviderSpecificContent(element);
+            return UnknownPolicyProviderSpecificContent.DeserializeUnknownPolicyProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<PolicyProviderSpecificContent>.Write(ModelReaderWriterOptions options)

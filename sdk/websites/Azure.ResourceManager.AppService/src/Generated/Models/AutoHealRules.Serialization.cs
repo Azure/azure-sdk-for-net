@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value);
+                    triggers = AutoHealTriggers.DeserializeAutoHealTriggers(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value);
+                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item));
+                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreference = array;
                     continue;

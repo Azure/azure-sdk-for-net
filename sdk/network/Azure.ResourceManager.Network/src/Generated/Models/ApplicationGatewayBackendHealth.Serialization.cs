@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthPool> array = new List<ApplicationGatewayBackendHealthPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item));
+                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item, options));
                     }
                     backendAddressPools = array;
                     continue;

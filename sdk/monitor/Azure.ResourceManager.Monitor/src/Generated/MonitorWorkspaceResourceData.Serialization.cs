@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property0.Value);
+                            metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property0.Value);
+                            defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorWorkspacePrivateEndpointConnection> array = new List<MonitorWorkspacePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item));
+                                array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

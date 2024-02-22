@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BotService
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = BotServicePrivateLinkServiceConnectionState.DeserializeBotServicePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = BotServicePrivateLinkServiceConnectionState.DeserializeBotServicePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(property.Value);
+                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ExternalSecuritySolution> array = new List<ExternalSecuritySolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExternalSecuritySolution.DeserializeExternalSecuritySolution(item));
+                        array.Add(ExternalSecuritySolution.DeserializeExternalSecuritySolution(item, options));
                     }
                     value = array;
                     continue;

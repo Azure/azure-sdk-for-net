@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionAppMinorVersion> array = new List<FunctionAppMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item));
+                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;

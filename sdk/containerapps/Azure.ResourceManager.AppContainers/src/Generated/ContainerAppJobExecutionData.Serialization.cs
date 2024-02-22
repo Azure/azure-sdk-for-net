@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value);
+                            template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value, options);
                             continue;
                         }
                     }

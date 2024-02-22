@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricData> array = new List<NetworkFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricData.DeserializeNetworkFabricData(item));
+                        array.Add(NetworkFabricData.DeserializeNetworkFabricData(item, options));
                     }
                     value = array;
                     continue;

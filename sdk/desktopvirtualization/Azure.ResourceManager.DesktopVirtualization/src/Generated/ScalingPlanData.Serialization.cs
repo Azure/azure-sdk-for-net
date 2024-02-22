@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item, options));
                             }
                             schedules = array;
                             continue;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item, options));
                             }
                             hostPoolReferences = array;
                             continue;

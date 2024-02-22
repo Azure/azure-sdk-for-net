@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value);
+                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value, options);
                             continue;
                         }
                     }

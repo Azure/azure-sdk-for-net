@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             {
                                 continue;
                             }
-                            ingestionPolicy = IngestionPolicyPropertiesFormat.DeserializeIngestionPolicyPropertiesFormat(property0.Value);
+                            ingestionPolicy = IngestionPolicyPropertiesFormat.DeserializeIngestionPolicyPropertiesFormat(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("emissionPolicies"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             List<EmissionPoliciesPropertiesFormat> array = new List<EmissionPoliciesPropertiesFormat>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmissionPoliciesPropertiesFormat.DeserializeEmissionPoliciesPropertiesFormat(item));
+                                array.Add(EmissionPoliciesPropertiesFormat.DeserializeEmissionPoliciesPropertiesFormat(item, options));
                             }
                             emissionPolicies = array;
                             continue;

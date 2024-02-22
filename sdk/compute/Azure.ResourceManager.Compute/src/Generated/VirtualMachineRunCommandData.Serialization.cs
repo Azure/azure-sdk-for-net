@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value);
+                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             parameters = array;
                             continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             protectedParameters = array;
                             continue;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value);
+                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))

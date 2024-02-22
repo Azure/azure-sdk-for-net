@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value);
+                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value);
+                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

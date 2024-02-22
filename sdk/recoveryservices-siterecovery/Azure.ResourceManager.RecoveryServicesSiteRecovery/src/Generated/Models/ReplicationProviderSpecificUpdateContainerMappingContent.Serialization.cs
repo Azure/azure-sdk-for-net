@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUpdateContainerMappingContent.DeserializeA2AUpdateContainerMappingContent(element);
-                    case "InMageRcm": return InMageRcmUpdateContainerMappingContent.DeserializeInMageRcmUpdateContainerMappingContent(element);
+                    case "A2A": return A2AUpdateContainerMappingContent.DeserializeA2AUpdateContainerMappingContent(element, options);
+                    case "InMageRcm": return InMageRcmUpdateContainerMappingContent.DeserializeInMageRcmUpdateContainerMappingContent(element, options);
                 }
             }
-            return UnknownReplicationProviderSpecificUpdateContainerMappingContent.DeserializeUnknownReplicationProviderSpecificUpdateContainerMappingContent(element);
+            return UnknownReplicationProviderSpecificUpdateContainerMappingContent.DeserializeUnknownReplicationProviderSpecificUpdateContainerMappingContent(element, options);
         }
 
         BinaryData IPersistableModel<ReplicationProviderSpecificUpdateContainerMappingContent>.Write(ModelReaderWriterOptions options)

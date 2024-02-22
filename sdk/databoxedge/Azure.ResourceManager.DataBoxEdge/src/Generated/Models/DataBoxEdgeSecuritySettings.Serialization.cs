@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("deviceAdminPassword"u8))
                         {
-                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
+                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
                             continue;
                         }
                     }

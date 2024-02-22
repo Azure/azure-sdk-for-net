@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ConnectorMappingResourceFormatData> array = new List<ConnectorMappingResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(item));
+                        array.Add(ConnectorMappingResourceFormatData.DeserializeConnectorMappingResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

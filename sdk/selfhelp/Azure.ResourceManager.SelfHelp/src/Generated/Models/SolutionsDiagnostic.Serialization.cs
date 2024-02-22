@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformCertificateProperties.DeserializeAppPlatformCertificateProperties(property.Value);
+                    properties = AppPlatformCertificateProperties.DeserializeAppPlatformCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

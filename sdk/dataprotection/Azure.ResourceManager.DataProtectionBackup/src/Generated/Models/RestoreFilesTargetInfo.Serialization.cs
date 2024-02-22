@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value);
+                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

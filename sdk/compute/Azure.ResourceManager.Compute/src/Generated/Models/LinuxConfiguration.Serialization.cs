@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
+                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    patchSettings = LinuxPatchSettings.DeserializeLinuxPatchSettings(property.Value);
+                    patchSettings = LinuxPatchSettings.DeserializeLinuxPatchSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))

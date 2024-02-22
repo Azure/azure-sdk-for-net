@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item));
+                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item, options));
                     }
                     excludeExtensions = array;
                     continue;

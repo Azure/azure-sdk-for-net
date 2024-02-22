@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value);
+                    hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

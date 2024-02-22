@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
+                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
+                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
                             continue;
                         }
                     }

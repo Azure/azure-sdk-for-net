@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountAssemblyDefinitionData> array = new List<IntegrationAccountAssemblyDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(item));
+                        array.Add(IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(item, options));
                     }
                     value = array;
                     continue;

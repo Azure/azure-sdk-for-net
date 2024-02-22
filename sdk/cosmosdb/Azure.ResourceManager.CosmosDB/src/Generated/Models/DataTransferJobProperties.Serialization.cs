@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

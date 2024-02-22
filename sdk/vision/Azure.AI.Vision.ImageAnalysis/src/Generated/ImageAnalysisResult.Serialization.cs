@@ -123,7 +123,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value);
+                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("denseCaptionsResult"u8))
@@ -132,12 +132,12 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value);
+                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value);
+                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))
@@ -151,7 +151,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value);
+                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("peopleResult"u8))
@@ -160,7 +160,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value);
+                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readResult"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    readResult = ReadResult.DeserializeReadResult(property.Value);
+                    readResult = ReadResult.DeserializeReadResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("smartCropsResult"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value);
+                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tagsResult"u8))
@@ -187,7 +187,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    tagsResult = TagsResult.DeserializeTagsResult(property.Value);
+                    tagsResult = TagsResult.DeserializeTagsResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

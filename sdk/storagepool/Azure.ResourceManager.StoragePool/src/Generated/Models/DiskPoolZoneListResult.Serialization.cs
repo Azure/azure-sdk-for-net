@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolZoneInfo> array = new List<DiskPoolZoneInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item));
+                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item, options));
                     }
                     value = array;
                     continue;

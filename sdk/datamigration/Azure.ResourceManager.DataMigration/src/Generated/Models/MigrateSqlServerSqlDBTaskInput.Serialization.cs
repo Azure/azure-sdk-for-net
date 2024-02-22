@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlDBDatabaseInput> array = new List<MigrateSqlServerSqlDBDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlDBDatabaseInput.DeserializeMigrateSqlServerSqlDBDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlDBDatabaseInput.DeserializeMigrateSqlServerSqlDBDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationOptions = MigrationValidationOptions.DeserializeMigrationValidationOptions(property.Value);
+                    validationOptions = MigrationValidationOptions.DeserializeMigrationValidationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startedOn"u8))
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

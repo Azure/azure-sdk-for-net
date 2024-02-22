@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = UnplannedFailoverProviderSpecificContent.DeserializeUnplannedFailoverProviderSpecificContent(property.Value);
+                    providerSpecificDetails = UnplannedFailoverProviderSpecificContent.DeserializeUnplannedFailoverProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

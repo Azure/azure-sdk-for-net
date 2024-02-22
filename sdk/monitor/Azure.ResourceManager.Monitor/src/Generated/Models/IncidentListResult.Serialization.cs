@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorIncident> array = new List<MonitorIncident>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorIncident.DeserializeMonitorIncident(item));
+                        array.Add(MonitorIncident.DeserializeMonitorIncident(item, options));
                     }
                     value = array;
                     continue;

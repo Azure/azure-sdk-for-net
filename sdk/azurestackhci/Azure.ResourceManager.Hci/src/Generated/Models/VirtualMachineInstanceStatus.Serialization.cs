@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = VirtualMachineInstanceStatusProvisioningStatus.DeserializeVirtualMachineInstanceStatusProvisioningStatus(property.Value);
+                    provisioningStatus = VirtualMachineInstanceStatusProvisioningStatus.DeserializeVirtualMachineInstanceStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

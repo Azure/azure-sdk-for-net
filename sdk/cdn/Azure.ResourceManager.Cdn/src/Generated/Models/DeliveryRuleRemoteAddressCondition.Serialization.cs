@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(property.Value);
+                    parameters = RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

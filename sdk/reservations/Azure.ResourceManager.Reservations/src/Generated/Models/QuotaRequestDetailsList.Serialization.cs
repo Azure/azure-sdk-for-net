@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<QuotaRequestDetailData> array = new List<QuotaRequestDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item));
+                        array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item, options));
                     }
                     value = array;
                     continue;

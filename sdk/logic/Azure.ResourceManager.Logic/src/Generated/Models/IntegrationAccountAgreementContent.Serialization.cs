@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value);
+                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("x12"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value);
+                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edifact"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
+                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

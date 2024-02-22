@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    info = PatientInfo.DeserializePatientInfo(property.Value);
+                    info = PatientInfo.DeserializePatientInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("data"u8))
@@ -112,7 +112,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<PatientDocument> array = new List<PatientDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientDocument.DeserializePatientDocument(item));
+                        array.Add(PatientDocument.DeserializePatientDocument(item, options));
                     }
                     data = array;
                     continue;

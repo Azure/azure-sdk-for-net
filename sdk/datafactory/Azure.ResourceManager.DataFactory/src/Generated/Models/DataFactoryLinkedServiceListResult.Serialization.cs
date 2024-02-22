@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceData> array = new List<DataFactoryLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryLinkedServiceData.DeserializeDataFactoryLinkedServiceData(item));
+                        array.Add(DataFactoryLinkedServiceData.DeserializeDataFactoryLinkedServiceData(item, options));
                     }
                     value = array;
                     continue;

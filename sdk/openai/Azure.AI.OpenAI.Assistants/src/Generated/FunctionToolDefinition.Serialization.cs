@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = InternalFunctionDefinition.DeserializeInternalFunctionDefinition(property.Value);
+                    function = InternalFunctionDefinition.DeserializeInternalFunctionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

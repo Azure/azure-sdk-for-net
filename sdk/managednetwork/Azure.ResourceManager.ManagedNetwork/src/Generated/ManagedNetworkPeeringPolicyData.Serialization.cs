@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     {
                         continue;
                     }
-                    properties = ManagedNetworkPeeringPolicyProperties.DeserializeManagedNetworkPeeringPolicyProperties(property.Value);
+                    properties = ManagedNetworkPeeringPolicyProperties.DeserializeManagedNetworkPeeringPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

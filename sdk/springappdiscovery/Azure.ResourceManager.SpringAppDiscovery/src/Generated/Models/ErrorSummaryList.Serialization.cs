@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteErrorSummaryData> array = new List<SpringBootSiteErrorSummaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteErrorSummaryData.DeserializeSpringBootSiteErrorSummaryData(item));
+                        array.Add(SpringBootSiteErrorSummaryData.DeserializeSpringBootSiteErrorSummaryData(item, options));
                     }
                     value = array;
                     continue;

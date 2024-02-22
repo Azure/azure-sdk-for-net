@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    cniConfig = CniConfig.DeserializeCniConfig(property.Value);
+                    cniConfig = CniConfig.DeserializeCniConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("loadBalancerConfig"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);
+                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

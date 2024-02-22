@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     restoreHookReferences = array;
                     continue;

@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("userPlaneAccessInterface"u8))
                         {
-                            userPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
+                            userPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userPlaneAccessVirtualIpv4Addresses"u8))

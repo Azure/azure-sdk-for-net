@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value);
+                    queryResults = QueryExecutionResult.DeserializeQueryExecutionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

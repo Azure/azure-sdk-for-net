@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    properties = SpringBootSiteErrorSummariesProperties.DeserializeSpringBootSiteErrorSummariesProperties(property.Value);
+                    properties = SpringBootSiteErrorSummariesProperties.DeserializeSpringBootSiteErrorSummariesProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

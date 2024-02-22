@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverUnresolvedDependency> array = new List<MoverUnresolvedDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item));
+                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item, options));
                     }
                     value = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsPrivateLinkResourceData> array = new List<EventHubsPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(item));
+                        array.Add(EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

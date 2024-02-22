@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsPrivateEndpointData> array = new List<StreamAnalyticsPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(item));
+                        array.Add(StreamAnalyticsPrivateEndpointData.DeserializeStreamAnalyticsPrivateEndpointData(item, options));
                     }
                     value = array;
                     continue;

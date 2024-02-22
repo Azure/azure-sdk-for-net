@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    sku = MapsSku.DeserializeMapsSku(property.Value);
+                    sku = MapsSku.DeserializeMapsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Maps.Models
                             List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                             }
                             linkedResources = array;
                             continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Maps.Models
                             {
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = CorsRules.DeserializeCorsRules(property0.Value, options);
                             continue;
                         }
                     }

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Peering
                             List<PeerAsnContactDetail> array = new List<PeerAsnContactDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item));
+                                array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item, options));
                             }
                             peerContactDetail = array;
                             continue;

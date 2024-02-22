@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                             }
                             statuses = array;
                             continue;

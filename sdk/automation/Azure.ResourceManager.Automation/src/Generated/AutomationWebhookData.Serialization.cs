@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))

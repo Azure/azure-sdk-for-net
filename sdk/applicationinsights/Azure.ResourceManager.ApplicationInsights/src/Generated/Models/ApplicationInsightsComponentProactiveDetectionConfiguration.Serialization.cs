@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value);
+                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

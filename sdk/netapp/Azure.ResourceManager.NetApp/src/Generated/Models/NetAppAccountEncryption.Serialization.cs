@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value);
+                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value);
+                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

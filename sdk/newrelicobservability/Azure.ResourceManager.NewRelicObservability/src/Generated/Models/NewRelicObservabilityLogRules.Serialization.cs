@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityFilteringTag> array = new List<NewRelicObservabilityFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item));
+                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;

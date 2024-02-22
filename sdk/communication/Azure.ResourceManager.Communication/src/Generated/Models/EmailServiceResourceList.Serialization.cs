@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<EmailServiceResourceData> array = new List<EmailServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmailServiceResourceData.DeserializeEmailServiceResourceData(item));
+                        array.Add(EmailServiceResourceData.DeserializeEmailServiceResourceData(item, options));
                     }
                     value = array;
                     continue;

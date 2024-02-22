@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningConfiguration(property.Value);
+                    configuration = DefenderForServersAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

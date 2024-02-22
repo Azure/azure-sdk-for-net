@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            credentials = VICredential.DeserializeVICredential(property0.Value);
+                            credentials = VICredential.DeserializeVICredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("statuses"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item, options));
                             }
                             statuses = array;
                             continue;

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<CompatibleVersions> array = new List<CompatibleVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CompatibleVersions.DeserializeCompatibleVersions(item));
+                        array.Add(CompatibleVersions.DeserializeCompatibleVersions(item, options));
                     }
                     compatibleWith = array;
                     continue;

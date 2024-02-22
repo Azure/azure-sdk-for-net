@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("authenticationIdentity"u8))
                 {
-                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentity"u8))
                 {
-                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isResponsive"u8))
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value);
+                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

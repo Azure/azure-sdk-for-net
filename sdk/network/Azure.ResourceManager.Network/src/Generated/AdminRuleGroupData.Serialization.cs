@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                                array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                             }
                             appliesToGroups = array;
                             continue;

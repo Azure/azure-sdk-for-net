@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileEnumValidValuesFormat> array = new List<ProfileEnumValidValuesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item, options));
                     }
                     enumValidValues = array;
                     continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item, options));
                     }
                     dataSourcePrecedenceRules = array;
                     continue;

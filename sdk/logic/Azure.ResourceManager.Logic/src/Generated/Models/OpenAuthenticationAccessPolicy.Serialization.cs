@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<OpenAuthenticationPolicyClaim> array = new List<OpenAuthenticationPolicyClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item));
+                        array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item, options));
                     }
                     claims = array;
                     continue;

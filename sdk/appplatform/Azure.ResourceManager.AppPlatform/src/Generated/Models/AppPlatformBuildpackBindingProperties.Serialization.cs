@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value);
+                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

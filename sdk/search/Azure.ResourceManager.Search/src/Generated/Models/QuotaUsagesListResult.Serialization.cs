@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<QuotaUsageResult> array = new List<QuotaUsageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaUsageResult.DeserializeQuotaUsageResult(item));
+                        array.Add(QuotaUsageResult.DeserializeQuotaUsageResult(item, options));
                     }
                     value = array;
                     continue;

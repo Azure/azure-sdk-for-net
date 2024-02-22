@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVReplicaAzure": return HyperVReplicaAzurePlannedFailoverProviderContent.DeserializeHyperVReplicaAzurePlannedFailoverProviderContent(element);
-                    case "HyperVReplicaAzureFailback": return HyperVReplicaAzureFailbackProviderContent.DeserializeHyperVReplicaAzureFailbackProviderContent(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackPlannedFailoverProviderContent.DeserializeInMageRcmFailbackPlannedFailoverProviderContent(element);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzurePlannedFailoverProviderContent.DeserializeHyperVReplicaAzurePlannedFailoverProviderContent(element, options);
+                    case "HyperVReplicaAzureFailback": return HyperVReplicaAzureFailbackProviderContent.DeserializeHyperVReplicaAzureFailbackProviderContent(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackPlannedFailoverProviderContent.DeserializeInMageRcmFailbackPlannedFailoverProviderContent(element, options);
                 }
             }
-            return UnknownPlannedFailoverProviderSpecificFailoverContent.DeserializeUnknownPlannedFailoverProviderSpecificFailoverContent(element);
+            return UnknownPlannedFailoverProviderSpecificFailoverContent.DeserializeUnknownPlannedFailoverProviderSpecificFailoverContent(element, options);
         }
 
         BinaryData IPersistableModel<PlannedFailoverProviderSpecificFailoverContent>.Write(ModelReaderWriterOptions options)

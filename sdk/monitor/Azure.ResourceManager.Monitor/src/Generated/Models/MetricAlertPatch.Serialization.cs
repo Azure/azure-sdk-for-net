@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value);
+                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoMitigate"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<MetricAlertAction> array = new List<MetricAlertAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetricAlertAction.DeserializeMetricAlertAction(item));
+                                array.Add(MetricAlertAction.DeserializeMetricAlertAction(item, options));
                             }
                             actions = array;
                             continue;

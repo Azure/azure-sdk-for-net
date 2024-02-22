@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value);
+                    sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value);
+                            health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mountAddresses"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value);
+                            upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeSettings"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value);
+                            upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkSettings"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value);
+                            networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryptionSettings"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value);
+                            encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securitySettings"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value);
+                            securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("directoryServicesSettings"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value);
+                            directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zones"u8))
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.StorageCache
                             List<PrimingJob> array = new List<PrimingJob>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrimingJob.DeserializePrimingJob(item));
+                                array.Add(PrimingJob.DeserializePrimingJob(item, options));
                             }
                             primingJobs = array;
                             continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.StorageCache
                             List<StorageTargetSpaceAllocation> array = new List<StorageTargetSpaceAllocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item));
+                                array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item, options));
                             }
                             spaceAllocation = array;
                             continue;

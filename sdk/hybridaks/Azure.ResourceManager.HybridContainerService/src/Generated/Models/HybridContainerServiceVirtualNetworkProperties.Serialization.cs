@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value);
+                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vipPool"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item, options));
                     }
                     vipPool = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item, options));
                     }
                     vmipPool = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value);
+                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     {
                         continue;
                     }
-                    properties = SnapshotProperties.DeserializeSnapshotProperties(property.Value);
+                    properties = SnapshotProperties.DeserializeSnapshotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value);
+                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taggingCriteria"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupTaggingCriteria> array = new List<DataProtectionBackupTaggingCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupTaggingCriteria.DeserializeDataProtectionBackupTaggingCriteria(item));
+                        array.Add(DataProtectionBackupTaggingCriteria.DeserializeDataProtectionBackupTaggingCriteria(item, options));
                     }
                     taggingCriteria = array;
                     continue;

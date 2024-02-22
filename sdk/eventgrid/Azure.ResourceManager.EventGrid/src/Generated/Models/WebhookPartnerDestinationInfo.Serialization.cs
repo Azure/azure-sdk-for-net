@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value);
+                            clientAuthentication = PartnerClientAuthentication.DeserializePartnerClientAuthentication(property0.Value, options);
                             continue;
                         }
                     }

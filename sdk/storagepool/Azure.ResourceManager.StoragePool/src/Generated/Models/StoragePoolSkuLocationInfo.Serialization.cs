@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
+                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;

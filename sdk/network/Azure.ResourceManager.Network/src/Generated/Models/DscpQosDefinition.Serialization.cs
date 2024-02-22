@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     sourceIPRanges = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
                     destinationIPRanges = array;
                     continue;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                     }
                     sourcePortRanges = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                     }
                     destinationPortRanges = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<LoadBalancerVipSwapRequestFrontendIPConfiguration> array = new List<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item));
+                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item, options));
                     }
                     frontendIPConfigurations = array;
                     continue;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementOpenIdConnectProviderData> array = new List<ApiManagementOpenIdConnectProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item));
+                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item, options));
                     }
                     value = array;
                     continue;

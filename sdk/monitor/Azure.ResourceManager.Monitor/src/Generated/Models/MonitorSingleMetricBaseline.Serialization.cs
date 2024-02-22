@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<MonitorTimeSeriesBaseline> array = new List<MonitorTimeSeriesBaseline>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item));
+                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item, options));
                             }
                             baselines = array;
                             continue;

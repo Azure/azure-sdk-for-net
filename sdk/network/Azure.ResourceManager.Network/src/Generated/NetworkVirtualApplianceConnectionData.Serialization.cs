@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
                             continue;
                         }
                     }

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value);
+                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

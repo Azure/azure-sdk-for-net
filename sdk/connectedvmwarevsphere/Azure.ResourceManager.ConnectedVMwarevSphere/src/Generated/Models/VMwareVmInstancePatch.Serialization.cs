@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value);
+                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value);
+                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value, options);
                             continue;
                         }
                     }

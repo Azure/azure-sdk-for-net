@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayRewriteRule> array = new List<ApplicationGatewayRewriteRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayRewriteRule.DeserializeApplicationGatewayRewriteRule(item));
+                                array.Add(ApplicationGatewayRewriteRule.DeserializeApplicationGatewayRewriteRule(item, options));
                             }
                             rewriteRules = array;
                             continue;

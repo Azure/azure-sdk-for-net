@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item));
+                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item, options));
                             }
                             destinations = array;
                             continue;

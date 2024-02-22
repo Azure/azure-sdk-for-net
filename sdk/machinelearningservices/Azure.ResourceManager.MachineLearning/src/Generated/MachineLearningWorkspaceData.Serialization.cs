@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value);
+                            encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("existingWorkspaces"u8))
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value);
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value);
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mlFlowTrackingUri"u8))
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value);
+                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<MachineLearningPrivateEndpointConnectionData> array = new List<MachineLearningPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(item));
+                                array.Add(MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceProvisionedResourceGroup"u8))
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<MachineLearningSharedPrivateLinkResource> array = new List<MachineLearningSharedPrivateLinkResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item));
+                                array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            workspaceHubConfig = WorkspaceHubConfig.DeserializeWorkspaceHubConfig(property0.Value);
+                            workspaceHubConfig = WorkspaceHubConfig.DeserializeWorkspaceHubConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceId"u8))

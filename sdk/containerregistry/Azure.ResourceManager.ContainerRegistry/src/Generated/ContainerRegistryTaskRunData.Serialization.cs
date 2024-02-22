@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value);
+                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runResult"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value);
+                            runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

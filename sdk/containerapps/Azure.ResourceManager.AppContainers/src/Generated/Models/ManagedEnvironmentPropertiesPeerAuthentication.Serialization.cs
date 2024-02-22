@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    mtls = Mtls.DeserializeMtls(property.Value);
+                    mtls = Mtls.DeserializeMtls(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

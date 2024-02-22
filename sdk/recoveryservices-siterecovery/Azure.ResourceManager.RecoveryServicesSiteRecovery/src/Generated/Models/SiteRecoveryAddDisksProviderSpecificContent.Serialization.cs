@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element);
+                    case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element, options);
                 }
             }
-            return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element);
+            return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddDisksProviderSpecificContent>.Write(ModelReaderWriterOptions options)

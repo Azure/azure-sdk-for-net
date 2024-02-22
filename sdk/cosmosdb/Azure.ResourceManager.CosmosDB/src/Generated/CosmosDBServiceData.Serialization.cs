@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    properties = CosmosDBServiceProperties.DeserializeCosmosDBServiceProperties(property.Value);
+                    properties = CosmosDBServiceProperties.DeserializeCosmosDBServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
