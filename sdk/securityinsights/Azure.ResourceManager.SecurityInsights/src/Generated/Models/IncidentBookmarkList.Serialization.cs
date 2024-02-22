@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsHuntingBookmark> array = new List<SecurityInsightsHuntingBookmark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(item));
+                        array.Add(SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatistics> array = new List<QueryStatistics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatistics.DeserializeQueryStatistics(item));
+                        array.Add(QueryStatistics.DeserializeQueryStatistics(item, options));
                     }
                     value = array;
                     continue;

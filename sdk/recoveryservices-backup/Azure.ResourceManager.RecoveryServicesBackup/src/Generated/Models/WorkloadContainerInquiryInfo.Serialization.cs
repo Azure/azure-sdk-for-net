@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inquiryDetails"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item, options));
                     }
                     inquiryDetails = array;
                     continue;

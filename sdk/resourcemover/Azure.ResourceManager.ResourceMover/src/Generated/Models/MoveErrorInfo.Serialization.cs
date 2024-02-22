@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item, options));
                     }
                     moveResources = array;
                     continue;

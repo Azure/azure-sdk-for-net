@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                                 parent = null;
                                 continue;
                             }
-                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value);
+                            parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value, options);
                             continue;
                         }
                     }

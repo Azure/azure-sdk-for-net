@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value);
+                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationStatus"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AdaptiveApplicationControlIssueSummary> array = new List<AdaptiveApplicationControlIssueSummary>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item));
+                                array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item, options));
                             }
                             issues = array;
                             continue;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<VmRecommendation> array = new List<VmRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmRecommendation.DeserializeVmRecommendation(item));
+                                array.Add(VmRecommendation.DeserializeVmRecommendation(item, options));
                             }
                             vmRecommendations = array;
                             continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PathRecommendation> array = new List<PathRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PathRecommendation.DeserializePathRecommendation(item));
+                                array.Add(PathRecommendation.DeserializePathRecommendation(item, options));
                             }
                             pathRecommendations = array;
                             continue;

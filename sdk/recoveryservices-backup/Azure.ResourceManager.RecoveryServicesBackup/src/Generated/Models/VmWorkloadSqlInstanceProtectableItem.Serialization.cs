@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))

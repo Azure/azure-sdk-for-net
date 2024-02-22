@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Property": return SecurityInsightsPropertyConditionProperties.DeserializeSecurityInsightsPropertyConditionProperties(element);
-                    case "PropertyArrayChanged": return SecurityInsightsPropertyArrayChangedConditionProperties.DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(element);
-                    case "PropertyChanged": return SecurityInsightsPropertyChangedConditionProperties.DeserializeSecurityInsightsPropertyChangedConditionProperties(element);
+                    case "Property": return SecurityInsightsPropertyConditionProperties.DeserializeSecurityInsightsPropertyConditionProperties(element, options);
+                    case "PropertyArrayChanged": return SecurityInsightsPropertyArrayChangedConditionProperties.DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(element, options);
+                    case "PropertyChanged": return SecurityInsightsPropertyChangedConditionProperties.DeserializeSecurityInsightsPropertyChangedConditionProperties(element, options);
                 }
             }
-            return UnknownAutomationRuleCondition.DeserializeUnknownAutomationRuleCondition(element);
+            return UnknownAutomationRuleCondition.DeserializeUnknownAutomationRuleCondition(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAutomationRuleCondition>.Write(ModelReaderWriterOptions options)

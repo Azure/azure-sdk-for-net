@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDatabaseReplicationLinkData> array = new List<SqlServerDatabaseReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(item));
+                        array.Add(SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(item, options));
                     }
                     value = array;
                     continue;

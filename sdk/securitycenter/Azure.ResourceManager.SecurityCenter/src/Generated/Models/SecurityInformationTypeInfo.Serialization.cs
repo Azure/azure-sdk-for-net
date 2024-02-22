@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionKeyword> array = new List<InformationProtectionKeyword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item));
+                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item, options));
                     }
                     keywords = array;
                     continue;

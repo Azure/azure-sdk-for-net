@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesVaultData> array = new List<RecoveryServicesVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(item));
+                        array.Add(RecoveryServicesVaultData.DeserializeRecoveryServicesVaultData(item, options));
                     }
                     value = array;
                     continue;

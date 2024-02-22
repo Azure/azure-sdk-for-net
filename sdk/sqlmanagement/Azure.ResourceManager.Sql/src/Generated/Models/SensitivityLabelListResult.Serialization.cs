@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SensitivityLabelData> array = new List<SensitivityLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item));
+                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item, options));
                     }
                     value = array;
                     continue;

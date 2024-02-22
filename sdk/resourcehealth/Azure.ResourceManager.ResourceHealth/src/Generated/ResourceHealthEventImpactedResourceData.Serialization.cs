@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthKeyValueItem> array = new List<ResourceHealthKeyValueItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item));
+                                array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item, options));
                             }
                             info = array;
                             continue;

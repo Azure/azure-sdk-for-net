@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AsrJobDetails": return AsrJobDetails.DeserializeAsrJobDetails(element);
-                    case "ExportJobDetails": return ExportJobDetails.DeserializeExportJobDetails(element);
-                    case "FailoverJobDetails": return FailoverJobDetails.DeserializeFailoverJobDetails(element);
-                    case "SwitchProtectionJobDetails": return SwitchProtectionJobDetails.DeserializeSwitchProtectionJobDetails(element);
-                    case "TestFailoverJobDetails": return TestFailoverJobDetails.DeserializeTestFailoverJobDetails(element);
+                    case "AsrJobDetails": return AsrJobDetails.DeserializeAsrJobDetails(element, options);
+                    case "ExportJobDetails": return ExportJobDetails.DeserializeExportJobDetails(element, options);
+                    case "FailoverJobDetails": return FailoverJobDetails.DeserializeFailoverJobDetails(element, options);
+                    case "SwitchProtectionJobDetails": return SwitchProtectionJobDetails.DeserializeSwitchProtectionJobDetails(element, options);
+                    case "TestFailoverJobDetails": return TestFailoverJobDetails.DeserializeTestFailoverJobDetails(element, options);
                 }
             }
-            return UnknownJobDetails.DeserializeUnknownJobDetails(element);
+            return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobDetails>.Write(ModelReaderWriterOptions options)

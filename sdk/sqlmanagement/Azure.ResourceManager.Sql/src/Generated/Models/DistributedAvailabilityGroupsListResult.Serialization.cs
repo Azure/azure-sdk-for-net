@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DistributedAvailabilityGroupData> array = new List<DistributedAvailabilityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item));
+                        array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item, options));
                     }
                     value = array;
                     continue;

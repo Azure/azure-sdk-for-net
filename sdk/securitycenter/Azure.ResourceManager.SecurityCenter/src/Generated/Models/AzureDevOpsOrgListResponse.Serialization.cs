@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<DevOpsOrgData> array = new List<DevOpsOrgData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevOpsOrgData.DeserializeDevOpsOrgData(item));
+                        array.Add(DevOpsOrgData.DeserializeDevOpsOrgData(item, options));
                     }
                     value = array;
                     continue;

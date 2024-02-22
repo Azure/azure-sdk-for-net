@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerBlobAuditingPolicyData> array = new List<SqlServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(item));
+                        array.Add(SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(item, options));
                     }
                     value = array;
                     continue;

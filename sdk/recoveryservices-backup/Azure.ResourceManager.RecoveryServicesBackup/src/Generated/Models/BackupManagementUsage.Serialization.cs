@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    name = BackupNameInfo.DeserializeBackupNameInfo(property.Value);
+                    name = BackupNameInfo.DeserializeBackupNameInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

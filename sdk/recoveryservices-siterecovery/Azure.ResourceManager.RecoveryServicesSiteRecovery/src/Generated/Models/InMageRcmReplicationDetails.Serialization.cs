@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmProtectedDiskDetails> array = new List<InMageRcmProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item));
+                        array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value);
+                    mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastAgentUpgradeErrorDetails"u8))
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmLastAgentUpgradeErrorDetails> array = new List<InMageRcmLastAgentUpgradeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item));
+                        array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item, options));
                     }
                     lastAgentUpgradeErrorDetails = array;
                     continue;
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmAgentUpgradeBlockingErrorDetails> array = new List<InMageRcmAgentUpgradeBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item));
+                        array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item, options));
                     }
                     agentUpgradeBlockingErrorDetails = array;
                     continue;
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicDetails> array = new List<InMageRcmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item));
+                        array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value);
+                    discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

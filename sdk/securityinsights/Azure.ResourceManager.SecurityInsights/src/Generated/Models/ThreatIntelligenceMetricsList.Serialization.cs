@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetrics> array = new List<ThreatIntelligenceMetrics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(item));
+                        array.Add(ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(item, options));
                     }
                     value = array;
                     continue;
